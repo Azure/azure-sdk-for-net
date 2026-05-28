@@ -8,16 +8,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.CosmosDB.Mocking
 {
-    // MPG transforms @head + @@responseAsBool into a raw Response-returning method;
-    // 1.4.0 GA shipped Response<bool>. Suppress the generated overload and re-emit the
-    // bool-unwrapping signature (HTTP 200 -> true, 404 -> false).
+    // MPG transforms @head + @@responseAsBool into a raw Response-returning method emitted on
+    // the extension class only; the mockable does not receive a CheckNameExistsDatabaseAccount
+    // overload of its own, so we simply add the bool-unwrapping signature here (HTTP 200 -> true,
+    // 404 -> false) to preserve the 1.4.0 GA Response<bool> contract for mock scenarios.
     // TODO: remove once https://github.com/Azure/azure-sdk-for-net/issues/59089 is resolved.
-    [CodeGenSuppress("CheckNameExistsDatabaseAccount", typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("CheckNameExistsDatabaseAccountAsync", typeof(string), typeof(CancellationToken))]
     public partial class MockableCosmosDBTenantResource
     {
         /// <summary>

@@ -11,6 +11,21 @@
 # property is a non-partial expression-bodied getter, so it cannot be redecorated from
 # an SDK-side custom partial class without a generator change.
 #
+# We attempted the canonical fix of suppressing AdditionalProperties on the polymorphic
+# base CosmosDBServiceProperties and re-emitting it with [WirePath]:
+#     [CodeGenSuppress("AdditionalProperties")]
+#     public partial class CosmosDBServiceProperties
+#     {
+#         [WirePath("AdditionalProperties")]
+#         public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
+#     }
+# but this triggers a generator bug that emits 15 CS0103 errors across all 5 derived
+# *ServiceProperties.Serialization.cs files — the deserializer local var is declared as
+# `additionalProperties` but the Add call references the non-existent identifier
+# `additionalBinaryDataProperties`. Tracked at
+# https://github.com/Azure/azure-sdk-for-net/issues/59501 — remove this baseline entry
+# once that fix lands.
+#
 # Precedent: the same baseline pattern already exists in
 # eng/apicompatbaselines/Azure.ResourceManager.CognitiveServices.txt for
 # CognitiveServices.Models.ServiceAccountApiProperties.AdditionalProperties.

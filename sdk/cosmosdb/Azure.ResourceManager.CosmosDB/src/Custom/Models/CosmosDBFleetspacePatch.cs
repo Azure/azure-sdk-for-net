@@ -6,8 +6,10 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    // Restore { get; set; } for ProvisioningState (baseline AutoRest surface).
-    [CodeGenSuppress("ProvisioningState")]
+    // Restore { get; set; } for ProvisioningState (baseline AutoRest surface). The generator no
+    // longer emits ProvisioningState on this wrapper (spec marks it as Lifecycle.Read so the
+    // implicit-flatten skips it on an input wrapper), so no [CodeGenSuppress] is needed — we
+    // are adding a member, not replacing one.
     public partial class CosmosDBFleetspacePatch
     {
         /// <summary> A provisioning state of the Fleetspace. </summary>

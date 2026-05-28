@@ -12,10 +12,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     // 1.4.0 GA exposed these properties as { get; set; } at top level via x-ms-client-flatten;
     // MPG emits get-only proxies because DatabaseAccountCreateUpdateProperties has required ctor
-    // args (BuildSetterForSafeFlatten cannot synthesize lazy-create setters). Suppress and re-emit
-    // with both accessors. Element types (Uri, IList<ResourceIdentifier>, etc.) come from
-    // @@alternateType in client.tsp. Identity is inherited from TrackedResource (not aliased here).
+    // args `locations` and `databaseAccountOfferType` (BuildSetterForSafeFlatten cannot synthesize
+    // lazy-create setters when the inner holder has required params). Suppress and re-emit each
+    // proxy with `set => Properties.X = value;` — safe because the public ctor always assigns
+    // Properties via the required `locations` parameter. Element types (Uri, IList<...>, etc.)
+    // come from @@alternateType in client.tsp; Identity is inherited from TrackedResource.
     // Restored 2-arg ctor matches the previously shipped public surface.
+    // TODO: revisit when https://github.com/Azure/azure-sdk-for-net/issues/59498 is fixed
+    // (root cause: implicit-flatten cannot inject lazy setters when the inner Properties model
+    // has required ctor args); a single root-cause fix would let us delete this entire file.
     [CodeGenSuppress("AnalyticalStorageSchemaType")]
     [CodeGenSuppress("ApiServerVersion")]
     [CodeGenSuppress("BackupPolicy")]

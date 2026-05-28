@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     // CosmosDBAccountKeyList extends CosmosDBAccountReadOnlyKeyList; both emit
     // `internal static FromResponse(Response)`, causing CS0108 because MPG does not emit `new`
     // on the derived helper. Suppress and re-emit with `new` to make the hide explicit.
+    // TODO: remove once https://github.com/Azure/azure-sdk-for-net/issues/59499 is fixed.
     [CodeGenSuppress("FromResponse", typeof(Response))]
     public partial class CosmosDBAccountKeyList
     {

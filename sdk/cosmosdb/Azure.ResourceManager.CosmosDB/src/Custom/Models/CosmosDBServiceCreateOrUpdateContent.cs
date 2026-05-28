@@ -9,11 +9,14 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     // Back-compat: 1.4.0 GA exposed InstanceSize/InstanceCount/ServiceType as top-level
-    // { get; set; } via x-ms-client-flatten. MPG cannot flatten because the inner
-    // ServiceResourceCreateUpdateProperties is a discriminated base with required ctor args
-    // (BuildSetterForSafeFlatten cannot synthesize lazy-create setters). Re-emit as proxies
-    // onto Properties; setters guard null Properties, and ServiceType (the discriminator)
-    // additionally rejects null to avoid corrupting the request body.
+    // { get; set; } via x-ms-client-flatten. MPG cannot auto-flatten because the inner
+    // ServiceResourceCreateUpdateProperties is `@discriminator("serviceType")` (a polymorphic
+    // abstract base with required ctor args), so the setter cannot lazy-construct a Properties
+    // instance for the user — there is no concrete derived type to instantiate without already
+    // knowing the desired serviceType. The caller therefore must assign `Properties` (a typed
+    // derived class, e.g. DataTransferServiceResourceCreateUpdateProperties) before using these
+    // proxies; the null guard surfaces this requirement via InvalidOperationException, and the
+    // ServiceType setter additionally rejects null to protect the discriminator on the wire.
     public partial class CosmosDBServiceCreateOrUpdateContent
     {
         private const string PropertiesNotInitializedMessage =
