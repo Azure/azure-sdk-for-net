@@ -1,10 +1,21 @@
 # Azure.AI.Projects approved analyzer suppressions.
-#
-# Format: one entry per line. Comments start with '#'. Supported entry prefixes:
-#   nowarn:CODE        — allow the given diagnostic code to appear in <NoWarn>.
-#
-# Every entry must be preceded by a justification comment explaining why the
-# suppression is project-wide rather than scoped to a specific call site.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# AAIP001 is the [Experimental] marker for this library's own preview surface
+# (memory stores, evaluations, red teams, etc.). The library intentionally calls
+# its own experimental APIs from both hand-written customizations and generated
+# code. The diagnostic exists so external consumers explicitly acknowledge
+# experimental usage; internal use across the assembly is by design. File-scoped
+# pragmas would be wiped on every codegen regen of the ~27 affected generated
+# files and add no review value.
+nowarn:AAIP001
+
+# OPENAI001 is the [Experimental] marker on the OpenAI SDK types this library
+# wraps (ResponseItem, OpenAIContext, etc.). The library is intentionally a
+# wrapper / extension of those preview surfaces and exposes them to its own
+# callers via Azure.AI.Projects.Memory and ResponseItemHelpers. Acknowledging
+# the opt-in once at the assembly level matches the design intent.
+nowarn:OPENAI001
 
 # AAIP001 is the [Experimental] marker for this library's own preview surface
 # (memory stores, evaluations, red teams, etc.). The library intentionally calls
