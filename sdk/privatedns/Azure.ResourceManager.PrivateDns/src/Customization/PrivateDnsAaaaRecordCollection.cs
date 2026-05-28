@@ -398,3 +398,5 @@ namespace Azure.ResourceManager.PrivateDns
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
