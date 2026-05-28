@@ -61,6 +61,11 @@ namespace Azure.Data.AppConfiguration
                 writer.WriteEndObject();
             }
 
+            if (setting.Description != null)
+            {
+                writer.WriteString("description", setting.Description);
+            }
+
             if (setting.ETag != default)
             {
                 writer.WriteString("etag", setting.ETag.ToString());
@@ -166,6 +171,10 @@ namespace Azure.Data.AppConfiguration
             else if (property.NameEquals("value"))
             {
                 setting.Value = property.Value.GetString();
+            }
+            else if (property.NameEquals("description"))
+            {
+                setting.Description = property.Value.GetString();
             }
         }
 

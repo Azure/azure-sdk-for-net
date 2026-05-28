@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Added a `Description` property to `ConfigurationSetting` and `ConfigurationSnapshot`, along with corresponding `SettingFields.Description` and `SnapshotFields.Description` selector values.
+- Added `ConfigurationClientOptions.ServiceVersion.V2026_04_01` and made it the default service version.
+
 ### Breaking Changes
 
 ### Bugs Fixed

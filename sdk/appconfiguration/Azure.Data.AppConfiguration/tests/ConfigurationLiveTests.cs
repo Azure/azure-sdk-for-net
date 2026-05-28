@@ -19,7 +19,8 @@ namespace Azure.Data.AppConfiguration.Tests
     [ClientTestFixture(
         ConfigurationClientOptions.ServiceVersion.V1_0,
         ConfigurationClientOptions.ServiceVersion.V2023_10_01,
-        ConfigurationClientOptions.ServiceVersion.V2023_11_01)]
+        ConfigurationClientOptions.ServiceVersion.V2023_11_01,
+        ConfigurationClientOptions.ServiceVersion.V2026_04_01)]
     public class ConfigurationLiveTests : RecordedTestBase<AppConfigurationTestEnvironment>
     {
         private readonly ConfigurationClientOptions.ServiceVersion _serviceVersion;
@@ -3315,6 +3316,63 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 Assert.That(labels.Length, Is.EqualTo(1));
                 Assert.That(labels[0].Name, Is.EqualTo(testSetting.Label));
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
+        // Validates that the Description property round-trips through the service.
+        [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2026_04_01)]
+        public async Task SetAndGetSettingWithDescription()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+            testSetting.Description = "test_description";
+
+            try
+            {
+                ConfigurationSetting created = await service.AddConfigurationSettingAsync(testSetting);
+                Assert.That(created.Description, Is.EqualTo("test_description"));
+
+                ConfigurationSetting fetched = await service.GetConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+                Assert.That(fetched.Description, Is.EqualTo("test_description"));
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
+        // Validates that SettingFields.Description selects only the description (plus key) on a batch read.
+        [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2026_04_01)]
+        public async Task GetBatchSettingWithDescriptionField()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+            testSetting.Description = "test_description";
+
+            try
+            {
+                await service.AddConfigurationSettingAsync(testSetting);
+
+                SettingSelector selector = new SettingSelector
+                {
+                    KeyFilter = testSetting.Key,
+                    Fields = SettingFields.Key | SettingFields.Description
+                };
+
+                List<ConfigurationSetting> batch = await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync();
+
+                Assert.That(batch, Is.Not.Empty);
+                Assert.That(batch[0].Key, Is.EqualTo(testSetting.Key));
+                Assert.That(batch[0].Description, Is.EqualTo("test_description"));
+                Assert.That(batch[0].Value, Is.Null);
+                Assert.That(batch[0].Label, Is.Null);
+                Assert.That(batch[0].ContentType, Is.Null);
             }
             finally
             {

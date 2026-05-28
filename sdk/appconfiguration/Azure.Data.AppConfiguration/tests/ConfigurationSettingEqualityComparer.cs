@@ -34,6 +34,8 @@ namespace Azure.Data.AppConfiguration.Tests
                 return false;
             if (!string.Equals(x.ContentType, y.ContentType, StringComparison.Ordinal))
                 return false;
+            if (!string.Equals(x.Description, y.Description, StringComparison.Ordinal))
+                return false;
             if (!TagsEquals(x, y))
                 return false;
 
@@ -50,6 +52,7 @@ namespace Azure.Data.AppConfiguration.Tests
             hashCode.Add(setting.LastModified);
             hashCode.Add(setting.ETag);
             hashCode.Add(setting.IsReadOnly);
+            hashCode.Add(setting.Description, StringComparer.Ordinal);
             hashCode.Add(setting.Tags);
             return hashCode.ToHashCode();
         }

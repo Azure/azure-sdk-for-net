@@ -17,7 +17,7 @@ namespace Azure.Data.AppConfiguration
     [CodeGenSuppress("ConfigurationClientOptions", typeof(ServiceVersion))]
     public partial class ConfigurationClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2023_11_01;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2026_04_01;
         private const string AzConfigUsGovCloudHostName = "azconfig.azure.us";
         private const string AzConfigChinaCloudHostName = "azconfig.azure.cn";
         private const string AppConfigUsGovCloudHostName = "appconfig.azure.us";
@@ -42,7 +42,12 @@ namespace Azure.Data.AppConfiguration
             /// <summary>
             /// Version 2023-11-01.
             /// </summary>
-            V2023_11_01 = 2
+            V2023_11_01 = 2,
+
+            /// <summary>
+            /// Version 2026-04-01.
+            /// </summary>
+            V2026_04_01 = 3
         }
 
         /// <summary>
@@ -86,6 +91,7 @@ namespace Azure.Data.AppConfiguration
             ServiceVersion.V1_0 => "1.0",
             ServiceVersion.V2023_10_01 => "2023-10-01",
             ServiceVersion.V2023_11_01 => "2023-11-01",
+            ServiceVersion.V2026_04_01 => "2026-04-01",
 
             _ => throw new NotSupportedException()
         };

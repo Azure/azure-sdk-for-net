@@ -20,6 +20,7 @@ namespace Azure.Data.AppConfiguration.Tests
             ETag = new ETag("test_etag"),
             LastModified = new DateTimeOffset(DateTime.Today).AddHours(5).AddMinutes(15).AddSeconds(32),
             IsReadOnly = true,
+            Description = "test_description",
             Tags = new Dictionary<string, string>
             {
                 { "tag1", "value1" },
@@ -90,6 +91,29 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.That(configurationSetting.Value, Is.EqualTo("value"));
             Assert.That(configurationSetting.Label, Is.EqualTo("label"));
             Assert.That(configurationSetting.ETag.ToString(), Is.EqualTo("etag"));
+        }
+
+        [Test]
+        public void ConfigurationSettingDescriptionRoundTrips()
+        {
+            var comparer = ConfigurationSettingEqualityComparer.Instance;
+            var serialized = JsonSerializer.Serialize(s_testSetting);
+
+            Assert.That(serialized, Does.Contain("\"description\":\"test_description\""));
+
+            var deserialized = JsonSerializer.Deserialize<ConfigurationSetting>(serialized);
+            Assert.That(deserialized.Description, Is.EqualTo("test_description"));
+            Assert.That(comparer.Equals(s_testSetting, deserialized), Is.True);
+        }
+
+        [Test]
+        public void ConfigurationSettingDescriptionDifferenceIsDetected()
+        {
+            var comparer = ConfigurationSettingEqualityComparer.Instance;
+            ConfigurationSetting other = s_testSetting.Clone();
+            other.Description = "different_description";
+
+            Assert.That(comparer.Equals(s_testSetting, other), Is.False);
         }
     }
 }
