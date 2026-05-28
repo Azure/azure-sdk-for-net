@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    internal class AutoImportJobOperationSource : IOperationSource<AutoImportJobResource>
+    /// <summary></summary>
+    internal partial class AutoImportJobOperationSource : IOperationSource<AutoImportJobResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal AutoImportJobOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         AutoImportJobResource IOperationSource<AutoImportJobResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AutoImportJobData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStorageCacheContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            AutoImportJobData data = AutoImportJobData.DeserializeAutoImportJobData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new AutoImportJobResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<AutoImportJobResource> IOperationSource<AutoImportJobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AutoImportJobData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStorageCacheContext.Default);
-            return await Task.FromResult(new AutoImportJobResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            AutoImportJobData data = AutoImportJobData.DeserializeAutoImportJobData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new AutoImportJobResource(_client, data);
         }
     }
 }

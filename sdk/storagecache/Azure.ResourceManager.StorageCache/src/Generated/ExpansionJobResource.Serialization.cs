@@ -8,22 +8,33 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    public partial class ExpansionJobResource : IJsonModel<ExpansionJobData>
+    /// <summary></summary>
+    public partial class ExpansionJobResource : ArmResource, IJsonModel<ExpansionJobData>
     {
-        private static ExpansionJobData s_dataDeserializationInstance;
-        private static ExpansionJobData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ExpansionJobData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ExpansionJobData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ExpansionJobData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExpansionJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ExpansionJobData>)Data).Write(writer, options);
 
-        ExpansionJobData IJsonModel<ExpansionJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExpansionJobData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExpansionJobData IJsonModel<ExpansionJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ExpansionJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExpansionJobData>(Data, options, AzureResourceManagerStorageCacheContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ExpansionJobData IPersistableModel<ExpansionJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExpansionJobData>(data, options, AzureResourceManagerStorageCacheContext.Default);
 
-        string IPersistableModel<ExpansionJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExpansionJobData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExpansionJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

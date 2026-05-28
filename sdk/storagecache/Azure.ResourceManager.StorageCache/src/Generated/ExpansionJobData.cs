@@ -13,99 +13,114 @@ using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    /// <summary>
-    /// A class representing the ExpansionJob data model.
-    /// An expansion job instance. Follows Azure Resource Manager standards: https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/resource-api-reference.md
-    /// </summary>
+    /// <summary> An expansion job instance. Follows Azure Resource Manager standards: https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/resource-api-reference.md. </summary>
     public partial class ExpansionJobData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExpansionJobData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public ExpansionJobData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpansionJobData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </param>
-        /// <param name="newStorageCapacityTiB"> The new storage capacity in TiB for the AML file system after expansion. This must be a multiple of the Sku step size, and greater than the current storage capacity of the AML file system. </param>
-        /// <param name="state"> The operational state of the expansion job. InProgress indicates the expansion is still running. Completed indicates expansion finished successfully. Failed means the expansion was unable to complete due to a fatal error. Deleting indicates the expansion is being rolled back. </param>
-        /// <param name="statusCode"> Server-defined status code for expansion job. </param>
-        /// <param name="statusMessage"> Server-defined status message for expansion job. </param>
-        /// <param name="percentComplete"> The percentage of expansion job completion. </param>
-        /// <param name="startTimeUTC"> The time (in UTC) the expansion job started. </param>
-        /// <param name="completionTimeUTC"> The time (in UTC) when the expansion job completed. Only populated when job reaches a terminal state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExpansionJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExpansionJobProvisioningState? provisioningState, float? newStorageCapacityTiB, ExpansionJobStatusType? state, string statusCode, string statusMessage, float? percentComplete, DateTimeOffset? startTimeUTC, DateTimeOffset? completionTimeUTC, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the expansion job. </param>
+        internal ExpansionJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ExpansionJobProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
-            ProvisioningState = provisioningState;
-            NewStorageCapacityTiB = newStorageCapacityTiB;
-            State = state;
-            StatusCode = statusCode;
-            StatusMessage = statusMessage;
-            PercentComplete = percentComplete;
-            StartTimeUTC = startTimeUTC;
-            CompletionTimeUTC = completionTimeUTC;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExpansionJobData"/> for deserialization. </summary>
-        internal ExpansionJobData()
-        {
-        }
+        /// <summary> Properties of the expansion job. </summary>
+        internal ExpansionJobProperties Properties { get; set; }
 
         /// <summary> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </summary>
-        public ExpansionJobProvisioningState? ProvisioningState { get; }
+        public ExpansionJobProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The new storage capacity in TiB for the AML file system after expansion. This must be a multiple of the Sku step size, and greater than the current storage capacity of the AML file system. </summary>
-        public float? NewStorageCapacityTiB { get; set; }
+        public float? NewStorageCapacityTiB
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NewStorageCapacityTiB;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpansionJobProperties();
+                }
+                Properties.NewStorageCapacityTiB = value;
+            }
+        }
+
         /// <summary> The operational state of the expansion job. InProgress indicates the expansion is still running. Completed indicates expansion finished successfully. Failed means the expansion was unable to complete due to a fatal error. Deleting indicates the expansion is being rolled back. </summary>
-        public ExpansionJobStatusType? State { get; }
+        public ExpansionJobStatusType? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+        }
+
         /// <summary> Server-defined status code for expansion job. </summary>
-        public string StatusCode { get; }
+        public string StatusCode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StatusCode;
+            }
+        }
+
         /// <summary> Server-defined status message for expansion job. </summary>
-        public string StatusMessage { get; }
+        public string StatusMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StatusMessage;
+            }
+        }
+
         /// <summary> The percentage of expansion job completion. </summary>
-        public float? PercentComplete { get; }
+        public float? PercentComplete
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PercentComplete;
+            }
+        }
+
         /// <summary> The time (in UTC) the expansion job started. </summary>
-        public DateTimeOffset? StartTimeUTC { get; }
+        public DateTimeOffset? StartTimeUTC
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartTimeUTC;
+            }
+        }
+
         /// <summary> The time (in UTC) when the expansion job completed. Only populated when job reaches a terminal state. </summary>
-        public DateTimeOffset? CompletionTimeUTC { get; }
+        public DateTimeOffset? CompletionTimeUTC
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CompletionTimeUTC;
+            }
+        }
     }
 }

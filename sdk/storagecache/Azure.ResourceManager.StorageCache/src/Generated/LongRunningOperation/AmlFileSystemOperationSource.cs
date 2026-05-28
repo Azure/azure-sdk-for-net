@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    internal class AmlFileSystemOperationSource : IOperationSource<AmlFileSystemResource>
+    /// <summary></summary>
+    internal partial class AmlFileSystemOperationSource : IOperationSource<AmlFileSystemResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal AmlFileSystemOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         AmlFileSystemResource IOperationSource<AmlFileSystemResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AmlFileSystemData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStorageCacheContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            AmlFileSystemData data = AmlFileSystemData.DeserializeAmlFileSystemData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new AmlFileSystemResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<AmlFileSystemResource> IOperationSource<AmlFileSystemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AmlFileSystemData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStorageCacheContext.Default);
-            return await Task.FromResult(new AmlFileSystemResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            AmlFileSystemData data = AmlFileSystemData.DeserializeAmlFileSystemData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new AmlFileSystemResource(_client, data);
         }
     }
 }

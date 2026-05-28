@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    internal class ExpansionJobOperationSource : IOperationSource<ExpansionJobResource>
+    /// <summary></summary>
+    internal partial class ExpansionJobOperationSource : IOperationSource<ExpansionJobResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ExpansionJobOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ExpansionJobResource IOperationSource<ExpansionJobResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ExpansionJobData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStorageCacheContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ExpansionJobData data = ExpansionJobData.DeserializeExpansionJobData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ExpansionJobResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ExpansionJobResource> IOperationSource<ExpansionJobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ExpansionJobData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStorageCacheContext.Default);
-            return await Task.FromResult(new ExpansionJobResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ExpansionJobData data = ExpansionJobData.DeserializeExpansionJobData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ExpansionJobResource(_client, data);
         }
     }
 }

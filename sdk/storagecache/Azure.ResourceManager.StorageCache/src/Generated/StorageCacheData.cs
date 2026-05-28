@@ -14,158 +14,255 @@ using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    /// <summary>
-    /// A class representing the StorageCache data model.
-    /// A cache instance. Follows Azure Resource Manager standards: https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/resource-api-reference.md
-    /// </summary>
+    /// <summary> A cache instance. Follows Azure Resource Manager standards: https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/resource-api-reference.md. </summary>
     public partial class StorageCacheData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageCacheData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public StorageCacheData(AzureLocation location) : base(location)
         {
-            MountAddresses = new ChangeTrackingList<IPAddress>();
-            Zones = new ChangeTrackingList<string>();
-            PrimingJobs = new ChangeTrackingList<PrimingJob>();
-            SpaceAllocation = new ChangeTrackingList<StorageTargetSpaceAllocation>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageCacheData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the cache. </param>
         /// <param name="identity"> The identity of the cache, if configured. </param>
         /// <param name="sku"> SKU for the cache. </param>
-        /// <param name="cacheSizeGB"> The size of this Cache, in GB. </param>
-        /// <param name="health"> Health of the cache. </param>
-        /// <param name="mountAddresses"> Array of IPv4 addresses that can be used by clients mounting this cache. </param>
-        /// <param name="provisioningState"> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </param>
-        /// <param name="subnet"> Subnet used for the Cache. </param>
-        /// <param name="upgradeStatus"> Upgrade status of the cache. </param>
-        /// <param name="upgradeSettings"> Upgrade settings of the cache. </param>
-        /// <param name="networkSettings"> Specifies network settings of the cache. </param>
-        /// <param name="encryptionSettings"> Specifies encryption settings of the cache. </param>
-        /// <param name="securitySettings"> Specifies security settings of the cache. </param>
-        /// <param name="directoryServicesSettings"> Specifies Directory Services settings of the cache. </param>
-        /// <param name="zones"> Availability zones for resources. This field should only contain a single element in the array. </param>
-        /// <param name="primingJobs"> Specifies the priming jobs defined in the cache. </param>
-        /// <param name="spaceAllocation"> Specifies the space allocation percentage for each storage target in the cache. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageCacheData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, StorageCacheSkuInfo sku, int? cacheSizeGB, StorageCacheHealth health, IReadOnlyList<IPAddress> mountAddresses, StorageCacheProvisioningStateType? provisioningState, ResourceIdentifier subnet, StorageCacheUpgradeStatus upgradeStatus, StorageCacheUpgradeSettings upgradeSettings, StorageCacheNetworkSettings networkSettings, StorageCacheEncryptionSettings encryptionSettings, StorageCacheSecuritySettings securitySettings, StorageCacheDirectorySettings directoryServicesSettings, IList<string> zones, IReadOnlyList<PrimingJob> primingJobs, IReadOnlyList<StorageTargetSpaceAllocation> spaceAllocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal StorageCacheData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, CacheProperties properties, ManagedServiceIdentity identity, StorageCacheSkuInfo sku) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Identity = identity;
             Sku = sku;
-            CacheSizeGB = cacheSizeGB;
-            Health = health;
-            MountAddresses = mountAddresses;
-            ProvisioningState = provisioningState;
-            Subnet = subnet;
-            UpgradeStatus = upgradeStatus;
-            UpgradeSettings = upgradeSettings;
-            NetworkSettings = networkSettings;
-            EncryptionSettings = encryptionSettings;
-            SecuritySettings = securitySettings;
-            DirectoryServicesSettings = directoryServicesSettings;
-            Zones = zones;
-            PrimingJobs = primingJobs;
-            SpaceAllocation = spaceAllocation;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageCacheData"/> for deserialization. </summary>
-        internal StorageCacheData()
-        {
-        }
+        /// <summary> Properties of the cache. </summary>
+        internal CacheProperties Properties { get; set; }
 
         /// <summary> The identity of the cache, if configured. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> SKU for the cache. </summary>
         internal StorageCacheSkuInfo Sku { get; set; }
-        /// <summary> SKU name for this cache. </summary>
-        public string SkuName
+
+        /// <summary> The size of this Cache, in GB. </summary>
+        public int? CacheSizeGB
         {
-            get => Sku is null ? default : Sku.Name;
+            get
+            {
+                return Properties is null ? default : Properties.CacheSizeGB;
+            }
             set
             {
-                if (Sku is null)
-                    Sku = new StorageCacheSkuInfo();
-                Sku.Name = value;
+                if (Properties is null)
+                {
+                    Properties = new CacheProperties();
+                }
+                Properties.CacheSizeGB = value;
             }
         }
 
-        /// <summary> The size of this Cache, in GB. </summary>
-        public int? CacheSizeGB { get; set; }
         /// <summary> Health of the cache. </summary>
-        public StorageCacheHealth Health { get; }
+        public StorageCacheHealth Health
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Health;
+            }
+        }
+
         /// <summary> Array of IPv4 addresses that can be used by clients mounting this cache. </summary>
-        public IReadOnlyList<IPAddress> MountAddresses { get; }
+        public IReadOnlyList<IPAddress> MountAddresses
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CacheProperties();
+                }
+                return Properties.MountAddresses;
+            }
+        }
+
         /// <summary> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </summary>
-        public StorageCacheProvisioningStateType? ProvisioningState { get; }
-        /// <summary> Subnet used for the Cache. </summary>
-        public ResourceIdentifier Subnet { get; set; }
+        public StorageCacheProvisioningStateType? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Subnet used for the cache. </summary>
+        public ResourceIdentifier Subnet
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Subnet;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CacheProperties();
+                }
+                Properties.Subnet = value;
+            }
+        }
+
         /// <summary> Upgrade status of the cache. </summary>
-        public StorageCacheUpgradeStatus UpgradeStatus { get; }
+        public StorageCacheUpgradeStatus UpgradeStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpgradeStatus;
+            }
+        }
+
         /// <summary> Upgrade settings of the cache. </summary>
-        public StorageCacheUpgradeSettings UpgradeSettings { get; set; }
+        public StorageCacheUpgradeSettings UpgradeSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpgradeSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CacheProperties();
+                }
+                Properties.UpgradeSettings = value;
+            }
+        }
+
         /// <summary> Specifies network settings of the cache. </summary>
-        public StorageCacheNetworkSettings NetworkSettings { get; set; }
+        public StorageCacheNetworkSettings NetworkSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CacheProperties();
+                }
+                Properties.NetworkSettings = value;
+            }
+        }
+
         /// <summary> Specifies encryption settings of the cache. </summary>
-        public StorageCacheEncryptionSettings EncryptionSettings { get; set; }
-        /// <summary> Specifies security settings of the cache. </summary>
-        internal StorageCacheSecuritySettings SecuritySettings { get; set; }
+        public StorageCacheEncryptionSettings EncryptionSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EncryptionSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CacheProperties();
+                }
+                Properties.EncryptionSettings = value;
+            }
+        }
+
+        /// <summary> Specifies Directory Services settings of the cache. </summary>
+        public StorageCacheDirectorySettings DirectoryServicesSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DirectoryServicesSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CacheProperties();
+                }
+                Properties.DirectoryServicesSettings = value;
+            }
+        }
+
+        /// <summary> Availability zones for resources. This field should only contain a single element in the array. </summary>
+        public IList<string> Zones
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CacheProperties();
+                }
+                return Properties.Zones;
+            }
+        }
+
+        /// <summary> Specifies the priming jobs defined in the cache. </summary>
+        public IReadOnlyList<PrimingJob> PrimingJobs
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CacheProperties();
+                }
+                return Properties.PrimingJobs;
+            }
+        }
+
+        /// <summary> Specifies the space allocation percentage for each storage target in the cache. </summary>
+        public IReadOnlyList<StorageTargetSpaceAllocation> SpaceAllocation
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CacheProperties();
+                }
+                return Properties.SpaceAllocation;
+            }
+        }
+
         /// <summary> NFS access policies defined for this cache. </summary>
         public IList<NfsAccessPolicy> SecurityAccessPolicies
         {
             get
             {
-                if (SecuritySettings is null)
-                    SecuritySettings = new StorageCacheSecuritySettings();
-                return SecuritySettings.AccessPolicies;
+                if (Properties is null)
+                {
+                    Properties = new CacheProperties();
+                }
+                return Properties.SecurityAccessPolicies;
             }
         }
 
-        /// <summary> Specifies Directory Services settings of the cache. </summary>
-        public StorageCacheDirectorySettings DirectoryServicesSettings { get; set; }
-        /// <summary> Availability zones for resources. This field should only contain a single element in the array. </summary>
-        public IList<string> Zones { get; }
-        /// <summary> Specifies the priming jobs defined in the cache. </summary>
-        public IReadOnlyList<PrimingJob> PrimingJobs { get; }
-        /// <summary> Specifies the space allocation percentage for each storage target in the cache. </summary>
-        public IReadOnlyList<StorageTargetSpaceAllocation> SpaceAllocation { get; }
+        /// <summary> SKU name for this cache. </summary>
+        public string SkuName
+        {
+            get
+            {
+                return Sku is null ? default : Sku.Name;
+            }
+            set
+            {
+                if (Sku is null)
+                {
+                    Sku = new StorageCacheSkuInfo();
+                }
+                Sku.Name = value;
+            }
+        }
     }
 }

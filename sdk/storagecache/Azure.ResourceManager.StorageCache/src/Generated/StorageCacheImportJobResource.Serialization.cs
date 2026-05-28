@@ -8,22 +8,33 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    public partial class StorageCacheImportJobResource : IJsonModel<StorageCacheImportJobData>
+    /// <summary></summary>
+    public partial class StorageCacheImportJobResource : ArmResource, IJsonModel<StorageCacheImportJobData>
     {
-        private static StorageCacheImportJobData s_dataDeserializationInstance;
-        private static StorageCacheImportJobData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<StorageCacheImportJobData> s_dataDeserializationInstance;
 
+        private static IJsonModel<StorageCacheImportJobData> DataDeserializationInstance => s_dataDeserializationInstance ??= new StorageCacheImportJobData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageCacheImportJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StorageCacheImportJobData>)Data).Write(writer, options);
 
-        StorageCacheImportJobData IJsonModel<StorageCacheImportJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageCacheImportJobData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageCacheImportJobData IJsonModel<StorageCacheImportJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<StorageCacheImportJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageCacheImportJobData>(Data, options, AzureResourceManagerStorageCacheContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         StorageCacheImportJobData IPersistableModel<StorageCacheImportJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageCacheImportJobData>(data, options, AzureResourceManagerStorageCacheContext.Default);
 
-        string IPersistableModel<StorageCacheImportJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageCacheImportJobData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StorageCacheImportJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

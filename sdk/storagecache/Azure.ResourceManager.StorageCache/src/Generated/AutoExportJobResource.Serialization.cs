@@ -8,22 +8,33 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    public partial class AutoExportJobResource : IJsonModel<AutoExportJobData>
+    /// <summary></summary>
+    public partial class AutoExportJobResource : ArmResource, IJsonModel<AutoExportJobData>
     {
-        private static AutoExportJobData s_dataDeserializationInstance;
-        private static AutoExportJobData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AutoExportJobData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AutoExportJobData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AutoExportJobData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutoExportJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutoExportJobData>)Data).Write(writer, options);
 
-        AutoExportJobData IJsonModel<AutoExportJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutoExportJobData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutoExportJobData IJsonModel<AutoExportJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AutoExportJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutoExportJobData>(Data, options, AzureResourceManagerStorageCacheContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AutoExportJobData IPersistableModel<AutoExportJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutoExportJobData>(data, options, AzureResourceManagerStorageCacheContext.Default);
 
-        string IPersistableModel<AutoExportJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutoExportJobData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AutoExportJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

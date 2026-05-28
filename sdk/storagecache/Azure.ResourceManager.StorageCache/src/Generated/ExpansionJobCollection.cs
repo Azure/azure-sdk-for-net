@@ -8,67 +8,66 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary>
     /// A class representing a collection of <see cref="ExpansionJobResource"/> and their operations.
     /// Each <see cref="ExpansionJobResource"/> in the collection will belong to the same instance of <see cref="AmlFileSystemResource"/>.
-    /// To get an <see cref="ExpansionJobCollection"/> instance call the GetExpansionJobs method from an instance of <see cref="AmlFileSystemResource"/>.
+    /// To get a <see cref="ExpansionJobCollection"/> instance call the GetExpansionJobs method from an instance of <see cref="AmlFileSystemResource"/>.
     /// </summary>
     public partial class ExpansionJobCollection : ArmCollection, IEnumerable<ExpansionJobResource>, IAsyncEnumerable<ExpansionJobResource>
     {
-        private readonly ClientDiagnostics _expansionJobexpansionJobsClientDiagnostics;
-        private readonly ExpansionJobsRestOperations _expansionJobexpansionJobsRestClient;
+        private readonly ClientDiagnostics _expansionJobsClientDiagnostics;
+        private readonly ExpansionJobs _expansionJobsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ExpansionJobCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ExpansionJobCollection for mocking. </summary>
         protected ExpansionJobCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ExpansionJobCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpansionJobCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ExpansionJobCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _expansionJobexpansionJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageCache", ExpansionJobResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ExpansionJobResource.ResourceType, out string expansionJobexpansionJobsApiVersion);
-            _expansionJobexpansionJobsRestClient = new ExpansionJobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, expansionJobexpansionJobsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ExpansionJobResource.ResourceType, out string expansionJobApiVersion);
+            _expansionJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageCache", ExpansionJobResource.ResourceType.Namespace, Diagnostics);
+            _expansionJobsRestClient = new ExpansionJobs(_expansionJobsClientDiagnostics, Pipeline, Endpoint, expansionJobApiVersion ?? "2026-01-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != AmlFileSystemResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AmlFileSystemResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AmlFileSystemResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create or update an expansion job.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>expansionJobs_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpansionJobs_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpansionJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="expansionJobName"> Name for the expansion job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="data"> Object containing the user-selectable properties of the expansion job. If read-only properties are included, they must match the existing values of those properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="expansionJobName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ExpansionJobResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string expansionJobName, ExpansionJobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(expansionJobName, nameof(expansionJobName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _expansionJobexpansionJobsClientDiagnostics.CreateScope("ExpansionJobCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("ExpansionJobCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _expansionJobexpansionJobsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expansionJobName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageCacheArmOperation<ExpansionJobResource>(new ExpansionJobOperationSource(Client), _expansionJobexpansionJobsClientDiagnostics, Pipeline, _expansionJobexpansionJobsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expansionJobName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expansionJobsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expansionJobName, ExpansionJobData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                StorageCacheArmOperation<ExpansionJobResource> operation = new StorageCacheArmOperation<ExpansionJobResource>(
+                    new ExpansionJobOperationSource(Client),
+                    _expansionJobsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.StorageCache
         /// Create or update an expansion job.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>expansionJobs_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpansionJobs_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpansionJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="expansionJobName"> Name for the expansion job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="data"> Object containing the user-selectable properties of the expansion job. If read-only properties are included, they must match the existing values of those properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="expansionJobName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ExpansionJobResource> CreateOrUpdate(WaitUntil waitUntil, string expansionJobName, ExpansionJobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(expansionJobName, nameof(expansionJobName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _expansionJobexpansionJobsClientDiagnostics.CreateScope("ExpansionJobCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("ExpansionJobCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _expansionJobexpansionJobsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expansionJobName, data, cancellationToken);
-                var operation = new StorageCacheArmOperation<ExpansionJobResource>(new ExpansionJobOperationSource(Client), _expansionJobexpansionJobsClientDiagnostics, Pipeline, _expansionJobexpansionJobsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expansionJobName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expansionJobsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expansionJobName, ExpansionJobData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                StorageCacheArmOperation<ExpansionJobResource> operation = new StorageCacheArmOperation<ExpansionJobResource>(
+                    new ExpansionJobOperationSource(Client),
+                    _expansionJobsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.StorageCache
         /// Returns an expansion job.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>expansionJobs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpansionJobs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpansionJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expansionJobName"> Name for the expansion job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="expansionJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ExpansionJobResource>> GetAsync(string expansionJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(expansionJobName, nameof(expansionJobName));
 
-            using var scope = _expansionJobexpansionJobsClientDiagnostics.CreateScope("ExpansionJobCollection.Get");
+            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("ExpansionJobCollection.Get");
             scope.Start();
             try
             {
-                var response = await _expansionJobexpansionJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expansionJobName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expansionJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expansionJobName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ExpansionJobData> response = Response.FromValue(ExpansionJobData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ExpansionJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.StorageCache
         /// Returns an expansion job.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>expansionJobs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpansionJobs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpansionJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expansionJobName"> Name for the expansion job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="expansionJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ExpansionJobResource> Get(string expansionJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(expansionJobName, nameof(expansionJobName));
 
-            using var scope = _expansionJobexpansionJobsClientDiagnostics.CreateScope("ExpansionJobCollection.Get");
+            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("ExpansionJobCollection.Get");
             scope.Start();
             try
             {
-                var response = _expansionJobexpansionJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expansionJobName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expansionJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expansionJobName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ExpansionJobData> response = Response.FromValue(ExpansionJobData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ExpansionJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,50 @@ namespace Azure.ResourceManager.StorageCache
         /// Returns all the expansion jobs the user has access to under an AML File System.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>expansionJobs_ListByAmlFileSystem</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpansionJobs_ListByAmlFilesystem. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpansionJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExpansionJobResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ExpansionJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpansionJobResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _expansionJobexpansionJobsRestClient.CreateListByAmlFileSystemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _expansionJobexpansionJobsRestClient.CreateListByAmlFileSystemNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExpansionJobResource(Client, ExpansionJobData.DeserializeExpansionJobData(e)), _expansionJobexpansionJobsClientDiagnostics, Pipeline, "ExpansionJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ExpansionJobData, ExpansionJobResource>(new ExpansionJobsGetByAmlFilesystemAsyncCollectionResultOfT(
+                _expansionJobsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ExpansionJobCollection.GetAll"), data => new ExpansionJobResource(Client, data));
         }
 
         /// <summary>
         /// Returns all the expansion jobs the user has access to under an AML File System.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>expansionJobs_ListByAmlFileSystem</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpansionJobs_ListByAmlFilesystem. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpansionJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +323,67 @@ namespace Azure.ResourceManager.StorageCache
         /// <returns> A collection of <see cref="ExpansionJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpansionJobResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _expansionJobexpansionJobsRestClient.CreateListByAmlFileSystemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _expansionJobexpansionJobsRestClient.CreateListByAmlFileSystemNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExpansionJobResource(Client, ExpansionJobData.DeserializeExpansionJobData(e)), _expansionJobexpansionJobsClientDiagnostics, Pipeline, "ExpansionJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ExpansionJobData, ExpansionJobResource>(new ExpansionJobsGetByAmlFilesystemCollectionResultOfT(
+                _expansionJobsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ExpansionJobCollection.GetAll"), data => new ExpansionJobResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>expansionJobs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpansionJobs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpansionJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expansionJobName"> Name for the expansion job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="expansionJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string expansionJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(expansionJobName, nameof(expansionJobName));
 
-            using var scope = _expansionJobexpansionJobsClientDiagnostics.CreateScope("ExpansionJobCollection.Exists");
+            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("ExpansionJobCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _expansionJobexpansionJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expansionJobName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expansionJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expansionJobName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ExpansionJobData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ExpansionJobData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ExpansionJobData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +397,50 @@ namespace Azure.ResourceManager.StorageCache
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>expansionJobs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpansionJobs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpansionJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expansionJobName"> Name for the expansion job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="expansionJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string expansionJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(expansionJobName, nameof(expansionJobName));
 
-            using var scope = _expansionJobexpansionJobsClientDiagnostics.CreateScope("ExpansionJobCollection.Exists");
+            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("ExpansionJobCollection.Exists");
             scope.Start();
             try
             {
-                var response = _expansionJobexpansionJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expansionJobName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expansionJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expansionJobName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ExpansionJobData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ExpansionJobData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ExpansionJobData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +454,54 @@ namespace Azure.ResourceManager.StorageCache
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>expansionJobs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpansionJobs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpansionJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expansionJobName"> Name for the expansion job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="expansionJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ExpansionJobResource>> GetIfExistsAsync(string expansionJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(expansionJobName, nameof(expansionJobName));
 
-            using var scope = _expansionJobexpansionJobsClientDiagnostics.CreateScope("ExpansionJobCollection.GetIfExists");
+            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("ExpansionJobCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _expansionJobexpansionJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expansionJobName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expansionJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expansionJobName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ExpansionJobData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ExpansionJobData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ExpansionJobData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ExpansionJobResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ExpansionJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +515,54 @@ namespace Azure.ResourceManager.StorageCache
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>expansionJobs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpansionJobs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpansionJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expansionJobName"> Name for the expansion job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="expansionJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ExpansionJobResource> GetIfExists(string expansionJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(expansionJobName, nameof(expansionJobName));
 
-            using var scope = _expansionJobexpansionJobsClientDiagnostics.CreateScope("ExpansionJobCollection.GetIfExists");
+            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("ExpansionJobCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _expansionJobexpansionJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expansionJobName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expansionJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expansionJobName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ExpansionJobData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ExpansionJobData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ExpansionJobData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ExpansionJobResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ExpansionJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +582,7 @@ namespace Azure.ResourceManager.StorageCache
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ExpansionJobResource> IAsyncEnumerable<ExpansionJobResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

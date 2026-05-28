@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.StorageCache.Models
     public readonly partial struct ExpansionJobStatusType : IEquatable<ExpansionJobStatusType>
     {
         private readonly string _value;
+        /// <summary> InProgress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> Completed. </summary>
+        private const string CompletedValue = "Completed";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> RollingBack. </summary>
+        private const string RollingBackValue = "RollingBack";
 
         /// <summary> Initializes a new instance of <see cref="ExpansionJobStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExpansionJobStatusType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InProgressValue = "InProgress";
-        private const string CompletedValue = "Completed";
-        private const string FailedValue = "Failed";
-        private const string DeletingValue = "Deleting";
-        private const string RollingBackValue = "RollingBack";
+            _value = value;
+        }
 
         /// <summary> InProgress. </summary>
         public static ExpansionJobStatusType InProgress { get; } = new ExpansionJobStatusType(InProgressValue);
+
         /// <summary> Completed. </summary>
         public static ExpansionJobStatusType Completed { get; } = new ExpansionJobStatusType(CompletedValue);
+
         /// <summary> Failed. </summary>
         public static ExpansionJobStatusType Failed { get; } = new ExpansionJobStatusType(FailedValue);
+
         /// <summary> Deleting. </summary>
         public static ExpansionJobStatusType Deleting { get; } = new ExpansionJobStatusType(DeletingValue);
+
         /// <summary> RollingBack. </summary>
         public static ExpansionJobStatusType RollingBack { get; } = new ExpansionJobStatusType(RollingBackValue);
+
         /// <summary> Determines if two <see cref="ExpansionJobStatusType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExpansionJobStatusType left, ExpansionJobStatusType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExpansionJobStatusType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExpansionJobStatusType left, ExpansionJobStatusType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExpansionJobStatusType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExpansionJobStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExpansionJobStatusType(string value) => new ExpansionJobStatusType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExpansionJobStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExpansionJobStatusType?(string value) => value == null ? null : new ExpansionJobStatusType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExpansionJobStatusType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExpansionJobStatusType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    internal class StorageTargetOperationSource : IOperationSource<StorageTargetResource>
+    /// <summary></summary>
+    internal partial class StorageTargetOperationSource : IOperationSource<StorageTargetResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal StorageTargetOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         StorageTargetResource IOperationSource<StorageTargetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<StorageTargetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStorageCacheContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            StorageTargetData data = StorageTargetData.DeserializeStorageTargetData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new StorageTargetResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<StorageTargetResource> IOperationSource<StorageTargetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<StorageTargetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStorageCacheContext.Default);
-            return await Task.FromResult(new StorageTargetResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            StorageTargetData data = StorageTargetData.DeserializeStorageTargetData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new StorageTargetResource(_client, data);
         }
     }
 }

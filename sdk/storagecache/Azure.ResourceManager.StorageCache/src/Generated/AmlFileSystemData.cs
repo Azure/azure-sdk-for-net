@@ -13,152 +13,231 @@ using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    /// <summary>
-    /// A class representing the AmlFileSystem data model.
-    /// An AML file system instance. Follows Azure Resource Manager standards: https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/resource-api-reference.md
-    /// </summary>
+    /// <summary> An AML file system instance. Follows Azure Resource Manager standards: https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/resource-api-reference.md. </summary>
     public partial class AmlFileSystemData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AmlFileSystemData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public AmlFileSystemData(AzureLocation location) : base(location)
         {
             Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AmlFileSystemData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> The managed identity used by the AML file system, if configured. Current supported identity types: None, UserAssigned. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the AML file system. </param>
+        /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="identity"> The managed identity used by the AML file system, if configured. </param>
         /// <param name="sku"> SKU for the resource. </param>
-        /// <param name="zones"> Availability zones for resources. This field should only contain a single element in the array. </param>
-        /// <param name="storageCapacityTiB"> The size of the AML file system, in TiB. This might be rounded up. </param>
-        /// <param name="currentStorageCapacityTiB"> The current storage capacity of the AML file system, in TiB. This reflects the actual capacity including any expansions. </param>
-        /// <param name="clusterUuid"> The unique identifier of the AML file system cluster. </param>
-        /// <param name="health"> Health of the AML file system. </param>
-        /// <param name="provisioningState"> ARM provisioning state. </param>
-        /// <param name="filesystemSubnet"> Subnet used for managing the AML file system and for client-facing operations. This subnet should have at least a /24 subnet mask within the VNET's address space. </param>
-        /// <param name="clientInfo"> Client information for the AML file system. </param>
-        /// <param name="throughputProvisionedMBps"> Throughput provisioned in MB per sec, calculated as storageCapacityTiB * per-unit storage throughput. </param>
-        /// <param name="encryptionSettings"> Specifies encryption settings of the AML file system. </param>
-        /// <param name="maintenanceWindow"> Start time of a 30-minute weekly maintenance window. </param>
-        /// <param name="hsm"> Hydration and archive settings and status. </param>
-        /// <param name="rootSquashSettings"> Specifies root squash settings of the AML file system. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AmlFileSystemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, StorageCacheSkuName sku, IList<string> zones, float? storageCapacityTiB, float? currentStorageCapacityTiB, Guid? clusterUuid, AmlFileSystemHealth health, AmlFileSystemProvisioningStateType? provisioningState, string filesystemSubnet, AmlFileSystemClientInfo clientInfo, int? throughputProvisionedMBps, AmlFileSystemEncryptionSettings encryptionSettings, AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow, AmlFileSystemPropertiesHsm hsm, AmlFileSystemRootSquashSettings rootSquashSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="zones"> The availability zones. </param>
+        internal AmlFileSystemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, AmlFilesystemProperties properties, string amlFileSystemName, ManagedServiceIdentity identity, StorageCacheSkuName sku, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            AmlFileSystemName = amlFileSystemName;
             Identity = identity;
             Sku = sku;
             Zones = zones;
-            StorageCapacityTiB = storageCapacityTiB;
-            CurrentStorageCapacityTiB = currentStorageCapacityTiB;
-            ClusterUuid = clusterUuid;
-            Health = health;
-            ProvisioningState = provisioningState;
-            FilesystemSubnet = filesystemSubnet;
-            ClientInfo = clientInfo;
-            ThroughputProvisionedMBps = throughputProvisionedMBps;
-            EncryptionSettings = encryptionSettings;
-            MaintenanceWindow = maintenanceWindow;
-            Hsm = hsm;
-            RootSquashSettings = rootSquashSettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AmlFileSystemData"/> for deserialization. </summary>
-        internal AmlFileSystemData()
-        {
-        }
+        /// <summary> Properties of the AML file system. </summary>
+        internal AmlFilesystemProperties Properties { get; set; }
 
-        /// <summary> The managed identity used by the AML file system, if configured. Current supported identity types: None, UserAssigned. </summary>
+        /// <summary> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </summary>
+        public string AmlFileSystemName { get; }
+
+        /// <summary> The managed identity used by the AML file system, if configured. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> SKU for the resource. </summary>
         internal StorageCacheSkuName Sku { get; set; }
-        /// <summary> SKU name for this resource. </summary>
-        public string SkuName
+
+        /// <summary> The availability zones. </summary>
+        public IList<string> Zones { get; }
+
+        /// <summary> The size of the AML file system, in TiB. This might be rounded up. </summary>
+        public float? StorageCapacityTiB
         {
-            get => Sku is null ? default : Sku.Name;
+            get
+            {
+                return Properties is null ? default : Properties.StorageCapacityTiB;
+            }
             set
             {
-                if (Sku is null)
-                    Sku = new StorageCacheSkuName();
-                Sku.Name = value;
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new AmlFilesystemProperties();
+                    }
+                    Properties.StorageCapacityTiB = value.Value;
+                }
             }
         }
 
-        /// <summary> Availability zones for resources. This field should only contain a single element in the array. </summary>
-        public IList<string> Zones { get; }
-        /// <summary> The size of the AML file system, in TiB. This might be rounded up. </summary>
-        public float? StorageCapacityTiB { get; set; }
         /// <summary> The current storage capacity of the AML file system, in TiB. This reflects the actual capacity including any expansions. </summary>
-        public float? CurrentStorageCapacityTiB { get; }
-        /// <summary> The unique identifier of the AML file system cluster. </summary>
-        public Guid? ClusterUuid { get; }
-        /// <summary> Health of the AML file system. </summary>
-        public AmlFileSystemHealth Health { get; }
-        /// <summary> ARM provisioning state. </summary>
-        public AmlFileSystemProvisioningStateType? ProvisioningState { get; }
-        /// <summary> Subnet used for managing the AML file system and for client-facing operations. This subnet should have at least a /24 subnet mask within the VNET's address space. </summary>
-        public string FilesystemSubnet { get; set; }
-        /// <summary> Client information for the AML file system. </summary>
-        public AmlFileSystemClientInfo ClientInfo { get; }
-        /// <summary> Throughput provisioned in MB per sec, calculated as storageCapacityTiB * per-unit storage throughput. </summary>
-        public int? ThroughputProvisionedMBps { get; }
-        /// <summary> Specifies encryption settings of the AML file system. </summary>
-        internal AmlFileSystemEncryptionSettings EncryptionSettings { get; set; }
-        /// <summary> Specifies the location of the encryption key in Key Vault. </summary>
-        public StorageCacheEncryptionKeyVaultKeyReference KeyEncryptionKey
+        public float? CurrentStorageCapacityTiB
         {
-            get => EncryptionSettings is null ? default : EncryptionSettings.KeyEncryptionKey;
+            get
+            {
+                return Properties is null ? default : Properties.CurrentStorageCapacityTiB;
+            }
+        }
+
+        /// <summary> The unique identifier of the AML file system cluster. </summary>
+        public string ClusterUuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClusterUuid;
+            }
+        }
+
+        /// <summary> Health of the AML file system. </summary>
+        public AmlFileSystemHealth Health
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Health;
+            }
+        }
+
+        /// <summary> ARM provisioning state. </summary>
+        public AmlFileSystemProvisioningStateType? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Subnet used for managing the AML file system and for client-facing operations. This subnet should have at least a /24 subnet mask within the VNET's address space. </summary>
+        public string FilesystemSubnet
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FilesystemSubnet;
+            }
             set
             {
-                if (EncryptionSettings is null)
-                    EncryptionSettings = new AmlFileSystemEncryptionSettings();
-                EncryptionSettings.KeyEncryptionKey = value;
+                if (Properties is null)
+                {
+                    Properties = new AmlFilesystemProperties();
+                }
+                Properties.FilesystemSubnet = value;
+            }
+        }
+
+        /// <summary> Client information for the AML file system. </summary>
+        public AmlFileSystemClientInfo ClientInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientInfo;
+            }
+        }
+
+        /// <summary> Throughput provisioned in MB per sec, calculated as storageCapacityTiB * per-unit storage throughput. </summary>
+        public int? ThroughputProvisionedMBps
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ThroughputProvisionedMBps;
             }
         }
 
         /// <summary> Start time of a 30-minute weekly maintenance window. </summary>
-        public AmlFileSystemPropertiesMaintenanceWindow MaintenanceWindow { get; set; }
+        public AmlFileSystemPropertiesMaintenanceWindow MaintenanceWindow
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaintenanceWindow;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AmlFilesystemProperties();
+                }
+                Properties.MaintenanceWindow = value;
+            }
+        }
+
         /// <summary> Hydration and archive settings and status. </summary>
-        public AmlFileSystemPropertiesHsm Hsm { get; set; }
+        public AmlFileSystemPropertiesHsm Hsm
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Hsm;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AmlFilesystemProperties();
+                }
+                Properties.Hsm = value;
+            }
+        }
+
         /// <summary> Specifies root squash settings of the AML file system. </summary>
-        public AmlFileSystemRootSquashSettings RootSquashSettings { get; set; }
+        public AmlFileSystemRootSquashSettings RootSquashSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RootSquashSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AmlFilesystemProperties();
+                }
+                Properties.RootSquashSettings = value;
+            }
+        }
+
+        /// <summary> Specifies the location of the encryption key in Key Vault. </summary>
+        public StorageCacheEncryptionKeyVaultKeyReference KeyEncryptionKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KeyEncryptionKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AmlFilesystemProperties();
+                }
+                Properties.KeyEncryptionKey = value;
+            }
+        }
+
+        /// <summary> SKU name for this resource. </summary>
+        public string SkuName
+        {
+            get
+            {
+                return Sku is null ? default : Sku.Name;
+            }
+            set
+            {
+                if (Sku is null)
+                {
+                    Sku = new StorageCacheSkuName();
+                }
+                Sku.Name = value;
+            }
+        }
     }
 }

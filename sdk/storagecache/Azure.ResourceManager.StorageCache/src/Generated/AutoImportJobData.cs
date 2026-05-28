@@ -13,172 +13,304 @@ using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    /// <summary>
-    /// A class representing the AutoImportJob data model.
-    /// An auto import job instance. Follows Azure Resource Manager standards: https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/resource-api-reference.md
-    /// </summary>
+    /// <summary> An auto import job instance. Follows Azure Resource Manager standards: https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/resource-api-reference.md. </summary>
     public partial class AutoImportJobData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutoImportJobData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public AutoImportJobData(AzureLocation location) : base(location)
         {
-            AutoImportPrefixes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AutoImportJobData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> ARM provisioning state. </param>
-        /// <param name="adminStatus"> The administrative status of the auto import job. Possible values: 'Enable', 'Disable'. Passing in a value of 'Disable' will disable the current active auto import job. By default it is set to 'Enable'. </param>
-        /// <param name="autoImportPrefixes"> An array of blob paths/prefixes that get auto imported to the cluster namespace. It has '/' as the default value. Number of maximum allowed paths is 100. </param>
-        /// <param name="conflictResolutionMode"> How the auto import job will handle conflicts. For example, if the auto import job is trying to bring in a directory, but a file is at that path, how it handles it. Fail indicates that the auto import job should stop immediately and not do anything with the conflict. Skip indicates that it should pass over the conflict. OverwriteIfDirty causes the auto import job to delete and re-import the file or directory if it is a conflicting type, is dirty, or is currently released. OverwriteAlways extends OverwriteIfDirty to include releasing files that had been restored but were not dirty. Please reference https://learn.microsoft.com/en-us/azure/azure-managed-lustre/blob-integration#conflict-resolution-mode for a thorough explanation of these resolution modes. </param>
-        /// <param name="enableDeletions"> Whether or not to enable deletions during auto import. This only affects overwrite-dirty. </param>
-        /// <param name="maximumErrors"> Total non-conflict-oriented errors (e.g., OS errors) Import will tolerate before exiting with failure. -1 means infinite. 0 means exit immediately on any error. </param>
-        /// <param name="state"> The state of the auto import operation. </param>
-        /// <param name="statusCode"> Server-defined status code for auto import job. </param>
-        /// <param name="statusMessage"> Server-defined status message for auto import job. </param>
-        /// <param name="scanStartOn"> Date and time of when the currently running full scan began. </param>
-        /// <param name="scanEndOn"> Date and time of when the full scan ended. </param>
-        /// <param name="totalBlobsWalked"> Total number of blobs walked during full scan. </param>
-        /// <param name="rateOfBlobWalk"> Rate of blobs walked during full scan. </param>
-        /// <param name="totalBlobsImported"> Total number of blobs imported during full scan. </param>
-        /// <param name="rateOfBlobImport"> Rate of blob import during full scan. </param>
-        /// <param name="importedFiles"> Number of files imported during full scan. </param>
-        /// <param name="importedDirectories"> Number of directories imported during full scan. </param>
-        /// <param name="importedSymlinks"> Number of symlinks imported during full scan. </param>
-        /// <param name="preexistingFiles"> Number of preexisting files during full scan. </param>
-        /// <param name="preexistingDirectories"> Number of preexisting directories during full scan. </param>
-        /// <param name="preexistingSymlinks"> Number of preexisting symlinks during full scan. </param>
-        /// <param name="totalErrors"> Total errors encountered during full scan. </param>
-        /// <param name="totalConflicts"> Total conflicts encountered during full scan. </param>
-        /// <param name="blobSyncEvents"> The storage account blob change feed status of the auto import job. </param>
-        /// <param name="lastStartedTimeUTC"> The time (in UTC) the latest auto import job started. </param>
-        /// <param name="lastCompletionTimeUTC"> The time (in UTC) of the last completed auto import job. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutoImportJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AutoImportJobPropertiesProvisioningState? provisioningState, AutoImportJobPropertiesAdminStatus? adminStatus, IList<string> autoImportPrefixes, ConflictResolutionMode? conflictResolutionMode, bool? enableDeletions, long? maximumErrors, AutoImportJobState? state, string statusCode, string statusMessage, DateTimeOffset? scanStartOn, DateTimeOffset? scanEndOn, long? totalBlobsWalked, long? rateOfBlobWalk, long? totalBlobsImported, long? rateOfBlobImport, long? importedFiles, long? importedDirectories, long? importedSymlinks, long? preexistingFiles, long? preexistingDirectories, long? preexistingSymlinks, long? totalErrors, long? totalConflicts, AutoImportJobPropertiesStatusBlobSyncEvents blobSyncEvents, DateTimeOffset? lastStartedTimeUTC, DateTimeOffset? lastCompletionTimeUTC, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the auto import job. </param>
+        internal AutoImportJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, AutoImportJobProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
-            ProvisioningState = provisioningState;
-            AdminStatus = adminStatus;
-            AutoImportPrefixes = autoImportPrefixes;
-            ConflictResolutionMode = conflictResolutionMode;
-            EnableDeletions = enableDeletions;
-            MaximumErrors = maximumErrors;
-            State = state;
-            StatusCode = statusCode;
-            StatusMessage = statusMessage;
-            ScanStartOn = scanStartOn;
-            ScanEndOn = scanEndOn;
-            TotalBlobsWalked = totalBlobsWalked;
-            RateOfBlobWalk = rateOfBlobWalk;
-            TotalBlobsImported = totalBlobsImported;
-            RateOfBlobImport = rateOfBlobImport;
-            ImportedFiles = importedFiles;
-            ImportedDirectories = importedDirectories;
-            ImportedSymlinks = importedSymlinks;
-            PreexistingFiles = preexistingFiles;
-            PreexistingDirectories = preexistingDirectories;
-            PreexistingSymlinks = preexistingSymlinks;
-            TotalErrors = totalErrors;
-            TotalConflicts = totalConflicts;
-            BlobSyncEvents = blobSyncEvents;
-            LastStartedTimeUTC = lastStartedTimeUTC;
-            LastCompletionTimeUTC = lastCompletionTimeUTC;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutoImportJobData"/> for deserialization. </summary>
-        internal AutoImportJobData()
-        {
-        }
+        /// <summary> Properties of the auto import job. </summary>
+        internal AutoImportJobProperties Properties { get; set; }
 
         /// <summary> ARM provisioning state. </summary>
-        public AutoImportJobPropertiesProvisioningState? ProvisioningState { get; }
+        public AutoImportJobPropertiesProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The administrative status of the auto import job. Possible values: 'Enable', 'Disable'. Passing in a value of 'Disable' will disable the current active auto import job. By default it is set to 'Enable'. </summary>
-        public AutoImportJobPropertiesAdminStatus? AdminStatus { get; set; }
+        public AutoImportJobPropertiesAdminStatus? AdminStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdminStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutoImportJobProperties();
+                }
+                Properties.AdminStatus = value;
+            }
+        }
+
         /// <summary> An array of blob paths/prefixes that get auto imported to the cluster namespace. It has '/' as the default value. Number of maximum allowed paths is 100. </summary>
-        public IList<string> AutoImportPrefixes { get; }
+        public IList<string> AutoImportPrefixes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutoImportJobProperties();
+                }
+                return Properties.AutoImportPrefixes;
+            }
+        }
+
         /// <summary> How the auto import job will handle conflicts. For example, if the auto import job is trying to bring in a directory, but a file is at that path, how it handles it. Fail indicates that the auto import job should stop immediately and not do anything with the conflict. Skip indicates that it should pass over the conflict. OverwriteIfDirty causes the auto import job to delete and re-import the file or directory if it is a conflicting type, is dirty, or is currently released. OverwriteAlways extends OverwriteIfDirty to include releasing files that had been restored but were not dirty. Please reference https://learn.microsoft.com/en-us/azure/azure-managed-lustre/blob-integration#conflict-resolution-mode for a thorough explanation of these resolution modes. </summary>
-        public ConflictResolutionMode? ConflictResolutionMode { get; set; }
+        public ConflictResolutionMode? ConflictResolutionMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConflictResolutionMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutoImportJobProperties();
+                }
+                Properties.ConflictResolutionMode = value;
+            }
+        }
+
         /// <summary> Whether or not to enable deletions during auto import. This only affects overwrite-dirty. </summary>
-        public bool? EnableDeletions { get; set; }
+        public bool? EnableDeletions
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableDeletions;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutoImportJobProperties();
+                }
+                Properties.EnableDeletions = value;
+            }
+        }
+
         /// <summary> Total non-conflict-oriented errors (e.g., OS errors) Import will tolerate before exiting with failure. -1 means infinite. 0 means exit immediately on any error. </summary>
-        public long? MaximumErrors { get; set; }
+        public long? MaximumErrors
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaximumErrors;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutoImportJobProperties();
+                }
+                Properties.MaximumErrors = value;
+            }
+        }
+
         /// <summary> The state of the auto import operation. </summary>
-        public AutoImportJobState? State { get; }
+        public AutoImportJobState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+        }
+
         /// <summary> Server-defined status code for auto import job. </summary>
-        public string StatusCode { get; }
+        public string StatusCode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StatusCode;
+            }
+        }
+
         /// <summary> Server-defined status message for auto import job. </summary>
-        public string StatusMessage { get; }
+        public string StatusMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StatusMessage;
+            }
+        }
+
         /// <summary> Date and time of when the currently running full scan began. </summary>
-        public DateTimeOffset? ScanStartOn { get; }
+        public DateTimeOffset? ScanStartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScanStartOn;
+            }
+        }
+
         /// <summary> Date and time of when the full scan ended. </summary>
-        public DateTimeOffset? ScanEndOn { get; }
+        public DateTimeOffset? ScanEndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScanEndOn;
+            }
+        }
+
         /// <summary> Total number of blobs walked during full scan. </summary>
-        public long? TotalBlobsWalked { get; }
+        public long? TotalBlobsWalked
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TotalBlobsWalked;
+            }
+        }
+
         /// <summary> Rate of blobs walked during full scan. </summary>
-        public long? RateOfBlobWalk { get; }
+        public long? RateOfBlobWalk
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RateOfBlobWalk;
+            }
+        }
+
         /// <summary> Total number of blobs imported during full scan. </summary>
-        public long? TotalBlobsImported { get; }
+        public long? TotalBlobsImported
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TotalBlobsImported;
+            }
+        }
+
         /// <summary> Rate of blob import during full scan. </summary>
-        public long? RateOfBlobImport { get; }
+        public long? RateOfBlobImport
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RateOfBlobImport;
+            }
+        }
+
         /// <summary> Number of files imported during full scan. </summary>
-        public long? ImportedFiles { get; }
+        public long? ImportedFiles
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImportedFiles;
+            }
+        }
+
         /// <summary> Number of directories imported during full scan. </summary>
-        public long? ImportedDirectories { get; }
+        public long? ImportedDirectories
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImportedDirectories;
+            }
+        }
+
         /// <summary> Number of symlinks imported during full scan. </summary>
-        public long? ImportedSymlinks { get; }
+        public long? ImportedSymlinks
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImportedSymlinks;
+            }
+        }
+
         /// <summary> Number of preexisting files during full scan. </summary>
-        public long? PreexistingFiles { get; }
+        public long? PreexistingFiles
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PreexistingFiles;
+            }
+        }
+
         /// <summary> Number of preexisting directories during full scan. </summary>
-        public long? PreexistingDirectories { get; }
+        public long? PreexistingDirectories
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PreexistingDirectories;
+            }
+        }
+
         /// <summary> Number of preexisting symlinks during full scan. </summary>
-        public long? PreexistingSymlinks { get; }
+        public long? PreexistingSymlinks
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PreexistingSymlinks;
+            }
+        }
+
         /// <summary> Total errors encountered during full scan. </summary>
-        public long? TotalErrors { get; }
+        public long? TotalErrors
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TotalErrors;
+            }
+        }
+
         /// <summary> Total conflicts encountered during full scan. </summary>
-        public long? TotalConflicts { get; }
+        public long? TotalConflicts
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TotalConflicts;
+            }
+        }
+
         /// <summary> The storage account blob change feed status of the auto import job. </summary>
-        public AutoImportJobPropertiesStatusBlobSyncEvents BlobSyncEvents { get; }
+        public AutoImportJobPropertiesStatusBlobSyncEvents BlobSyncEvents
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BlobSyncEvents;
+            }
+        }
+
         /// <summary> The time (in UTC) the latest auto import job started. </summary>
-        public DateTimeOffset? LastStartedTimeUTC { get; }
+        public DateTimeOffset? LastStartedTimeUTC
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastStartedTimeUTC;
+            }
+        }
+
         /// <summary> The time (in UTC) of the last completed auto import job. </summary>
-        public DateTimeOffset? LastCompletionTimeUTC { get; }
+        public DateTimeOffset? LastCompletionTimeUTC
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastCompletionTimeUTC;
+            }
+        }
     }
 }
