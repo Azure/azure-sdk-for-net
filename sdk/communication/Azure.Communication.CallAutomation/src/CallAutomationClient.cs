@@ -22,6 +22,9 @@ namespace Azure.Communication.CallAutomation
         internal readonly string _resourceEndpoint;
         internal readonly ClientDiagnostics _clientDiagnostics;
         internal readonly HttpPipeline _pipeline;
+        internal readonly AzureKeyCredential _keyCredential;
+        internal readonly TokenCredential _tokenCredential;
+        internal readonly string _acsEndpoint;
 
         internal CallConnectionRestClient CallConnectionRestClient { get; }
         internal AzureCommunicationServicesRestClient AzureCommunicationServicesRestClient { get; }
@@ -95,18 +98,26 @@ namespace Azure.Communication.CallAutomation
         #region private constructors
         private CallAutomationClient(ConnectionString connectionString, CallAutomationClientOptions options)
             : this(new Uri(connectionString.GetRequired("endpoint")), options.BuildHttpPipeline(connectionString), options)
-        { }
+        {
+            _keyCredential = new AzureKeyCredential(connectionString.GetRequired("accesskey"));
+            _acsEndpoint = connectionString.GetRequired("endpoint");
+        }
 
         private CallAutomationClient(string endpoint, TokenCredential tokenCredential, CallAutomationClientOptions options)
             : this(new Uri(endpoint), options.BuildHttpPipeline(tokenCredential), options)
-        { }
+        {
+            _tokenCredential = tokenCredential;
+        }
 
         private CallAutomationClient(Uri endpoint, CallAutomationClientOptions options, ConnectionString connectionString)
         : this(
         endpoint: endpoint,
         httpPipeline: options.CustomBuildHttpPipeline(connectionString),
         options: options)
-        { }
+        {
+            _keyCredential = new AzureKeyCredential(connectionString.GetRequired("accesskey"));
+            _acsEndpoint = connectionString.GetRequired("endpoint");
+        }
 
         private CallAutomationClient(Uri endpoint, HttpPipeline httpPipeline, CallAutomationClientOptions options)
         {
@@ -128,7 +139,10 @@ namespace Azure.Communication.CallAutomation
             CallAutomationClientOptions options,
             TokenCredential tokenCredential)
             : this(pmaEndpoint, options.CustomBuildHttpPipeline(acsEndpoint, tokenCredential), options)
-        { }
+        {
+            _tokenCredential = tokenCredential;
+            _acsEndpoint = acsEndpoint.AbsoluteUri;
+        }
         #endregion
 
         /// <summary>Initializes a new instance of <see cref="CallAutomationClient"/> for mocking.</summary>

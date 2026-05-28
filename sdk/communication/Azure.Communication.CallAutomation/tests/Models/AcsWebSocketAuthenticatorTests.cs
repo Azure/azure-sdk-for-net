@@ -33,7 +33,7 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             Console.WriteLine("✓ HMAC headers (Authorization, x-ms-date, etc.) added to WebSocket.Options");
 
             // Assert - The method completed without errors, headers are added internally
-            Assert.AreEqual(WebSocketState.None, webSocket.State, "WebSocket should be ready for connection");
+            Assert.That(webSocket.State, Is.EqualTo(WebSocketState.None), "WebSocket should be ready for connection");
 
             Console.WriteLine("\nWhat happened internally:");
             Console.WriteLine("  1. User-Agent header added");
@@ -72,7 +72,7 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             Console.WriteLine("  ✓ HMAC authentication headers added");
 
             // Assert
-            Assert.AreEqual(WebSocketState.None, webSocket.State, "WebSocket ready for connection");
+            Assert.That(webSocket.State, Is.EqualTo(WebSocketState.None), "WebSocket ready for connection");
 
             Console.WriteLine("\nResult: WebSocket.Options now contains:");
             Console.WriteLine("  • Custom headers: X-App-Name, X-Session-ID");
@@ -97,7 +97,7 @@ namespace Azure.Communication.CallAutomation.Tests.Models
                 keepAliveInterval: TimeSpan.FromSeconds(45));
 
             // Assert
-            Assert.AreEqual(TimeSpan.FromSeconds(45), webSocket.Options.KeepAliveInterval);
+            Assert.That(webSocket.Options.KeepAliveInterval, Is.EqualTo(TimeSpan.FromSeconds(45)));
             Console.WriteLine($"✓ KeepAliveInterval set to: {webSocket.Options.KeepAliveInterval}");
 
             webSocket.Dispose();
@@ -116,13 +116,13 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var streamUrl = new Uri("wss://test.communication.azure.com/stream");
 
             Console.WriteLine("\n1. WebSocket created (State: None, no headers)");
-            Assert.AreEqual(WebSocketState.None, webSocket.State);
+            Assert.That(webSocket.State, Is.EqualTo(WebSocketState.None));
 
             Console.WriteLine("\n2. Adding authentication headers...");
             await authenticator.AuthenticateWebSocketAsync(webSocket, streamUrl);
 
             Console.WriteLine("\n3. Headers now stored in WebSocket.Options (internal collection)");
-            Assert.AreEqual(WebSocketState.None, webSocket.State, "Still None - ready to connect");
+            Assert.That(webSocket.State, Is.EqualTo(WebSocketState.None), "Still None - ready to connect");
 
             Console.WriteLine("\n4. When you call: await webSocket.ConnectAsync(streamUrl)");
             Console.WriteLine("   → .NET Framework/Core automatically:");
@@ -197,7 +197,7 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             Console.WriteLine("  • Process transcription results");
             Console.WriteLine("  • Manage WebSocket lifecycle");
 
-            Assert.AreEqual(WebSocketState.None, webSocket.State, "Ready for connection");
+            Assert.That(webSocket.State, Is.EqualTo(WebSocketState.None), "Ready for connection");
 
             Console.WriteLine("\n" + new string('✓', 60));
             Console.WriteLine("WORKFLOW COMPLETE - WebSocket ready for authenticated connection!");

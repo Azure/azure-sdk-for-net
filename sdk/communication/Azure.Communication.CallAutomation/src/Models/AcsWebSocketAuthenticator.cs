@@ -10,56 +10,22 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// Provides authentication and configuration for WebSocket connections in Azure Communication Services.
-    /// This allows customers to control WebSocket connections, add headers, configure options for media streaming, transcription, and other WebSocket scenarios.
+    /// Provides authentication for WebSocket connections to Azure Communication Services
+    /// media streaming and transcription endpoints.
+    /// <para>
+    /// Sets required headers (X-Ms-Host, Authorization, date, x-ms-content-sha256) on a
+    /// <see cref="ClientWebSocket"/> before the customer calls <c>ConnectAsync</c>.
+    /// Supports HMAC (connection string / access key) and AAD (TokenCredential) authentication.
+    /// </para>
     /// <example>
-    /// Basic usage with HMAC authentication:
+    /// Recommended usage with CallAutomationClient:
     /// <code>
-    /// var authenticator = new AcsWebSocketAuthenticator(keyCredential, acsEndpoint);
+    /// var client = new CallAutomationClient(connectionString);
+    /// var authenticator = client.GetWebSocketAuthenticator();
     /// var webSocket = new ClientWebSocket();
     ///
-    /// // Customers can configure WebSocket options as needed
     /// webSocket.Options.KeepAliveInterval = TimeSpan.FromSeconds(30);
-    /// webSocket.Options.SetBuffer(4096, 4096);
-    ///
-    /// // Add authentication headers
-    /// await authenticator.AuthenticateWebSocketAsync(webSocket, streamUrl, cancellationToken);
-    ///
-    /// // Connect to WebSocket
-    /// await webSocket.ConnectAsync(streamUrl, cancellationToken);
-    /// </code>
-    ///
-    /// Usage with CallAutomationClient (recommended):
-    /// <code>
-    /// var callAutomationClient = new CallAutomationClient(connectionString);
-    /// var authenticator = new AcsWebSocketAuthenticator(callAutomationClient);
-    /// var webSocket = new ClientWebSocket();
-    ///
-    /// // Configure WebSocket as needed
-    /// webSocket.Options.KeepAliveInterval = TimeSpan.FromSeconds(30);
-    ///
-    /// // Add authentication headers (uses existing CallAutomationClient auth)
-    /// await authenticator.AuthenticateWebSocketAsync(webSocket, streamUrl, cancellationToken);
-    ///
-    /// // Connect to WebSocket
-    /// await webSocket.ConnectAsync(streamUrl, cancellationToken);
-    /// </code>
-    ///
-    /// Custom authentication example:
-    /// <code>
-    /// public class CustomAuthenticator : AcsWebSocketAuthenticator
-    /// {
-    ///     protected override async Task AuthenticateCustomAsync(ClientWebSocket webSocket, Uri streamUrl, CancellationToken cancellationToken)
-    ///     {
-    ///         // Add custom authentication headers
-    ///         webSocket.Options.SetRequestHeader("Custom-Auth", "MyToken");
-    ///         await Task.CompletedTask;
-    ///     }
-    /// }
-    ///
-    /// var authenticator = new CustomAuthenticator();
-    /// var webSocket = new ClientWebSocket();
-    /// await authenticator.AuthenticateWebSocketAsync(webSocket, streamUrl, cancellationToken);
+    /// await authenticator.AuthenticateWebSocketAsync(webSocket, streamUrl);
     /// await webSocket.ConnectAsync(streamUrl, cancellationToken);
     /// </code>
     /// </example>
@@ -139,7 +105,7 @@ namespace Azure.Communication.CallAutomation
 
             if (_callAutomationClient != null)
             {
-                await AddAuthenticationHeadersAsync(webSocket, cancellationToken).ConfigureAwait(false);
+                await AuthenticateFromClientAsync(webSocket, streamUrl, cancellationToken).ConfigureAwait(false);
             }
             else if (_keyCredential != null && _acsEndpoint != null)
             {
@@ -235,26 +201,30 @@ namespace Azure.Communication.CallAutomation
 
         private async Task AuthenticateWithHMACAsync(ClientWebSocket webSocket, Uri streamUrl, CancellationToken cancellationToken)
         {
-            // Generate HMAC authentication header similar to CustomHMACAuthenticationPolicy
-            var utcNowString = DateTimeOffset.UtcNow.ToString("r", System.Globalization.CultureInfo.InvariantCulture);
+            var date = DateTimeOffset.UtcNow.ToString("r", System.Globalization.CultureInfo.InvariantCulture);
 
-            // Create content hash for empty content (WebSocket)
+            // Create content hash for empty content (WebSocket upgrade has no body)
             string contentHash;
             using (var sha256 = System.Security.Cryptography.SHA256.Create())
             {
-                var hashBytes = sha256.ComputeHash(Array.Empty<byte>());
+                var hashBytes = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(string.Empty));
                 contentHash = Convert.ToBase64String(hashBytes);
             }
 
-            var stringToSign = $"GET\n{streamUrl.PathAndQuery}\n{utcNowString};{_acsEndpoint};{contentHash}";
+            // The host used for signing must be the ACS resource endpoint authority
+            var acsHost = new Uri(_acsEndpoint).Authority;
+            var pathAndQuery = streamUrl.PathAndQuery;
+
+            const string signedHeaders = "date;host;x-ms-content-sha256";
+            var stringToSign = $"GET\n{pathAndQuery}\n{date};{acsHost};{contentHash}";
             var signature = ComputeHMAC(stringToSign);
 
-            var authorization = $"HMAC-SHA256 SignedHeaders=x-ms-date;host;x-ms-content-sha256&Signature={signature}";
+            var authorization = $"HMAC-SHA256 SignedHeaders={signedHeaders}&Signature={signature}";
 
-            webSocket.Options.SetRequestHeader("x-ms-date", utcNowString);
+            webSocket.Options.SetRequestHeader("X-Ms-Host", acsHost);
+            webSocket.Options.SetRequestHeader("date", date);
             webSocket.Options.SetRequestHeader("x-ms-content-sha256", contentHash);
             webSocket.Options.SetRequestHeader("Authorization", authorization);
-            webSocket.Options.SetRequestHeader("X-FORWARDED-HOST", _acsEndpoint);
 
             await Task.CompletedTask.ConfigureAwait(false);
         }
@@ -269,58 +239,64 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Adds authentication headers to the WebSocket connection using CallAutomationClient.
-        /// This method tries HMAC authentication first, then falls back to AAD Bearer token.
+        /// Authenticates WebSocket using credentials from the CallAutomationClient.
+        /// Uses HMAC if a key credential is available, otherwise falls back to AAD token.
         /// </summary>
-        /// <param name="webSocket">The ClientWebSocket to add headers to.</param>
-        /// <param name="cancellationToken">Cancellation token.</param>
-        /// <returns>A task representing the authentication header setup.</returns>
-        private async Task AddAuthenticationHeadersAsync(ClientWebSocket webSocket, CancellationToken cancellationToken)
+        private async Task AuthenticateFromClientAsync(ClientWebSocket webSocket, Uri streamUrl, CancellationToken cancellationToken)
         {
-            try
-            {
-                // Try to get current HMAC token info first
-                var hmacTokenResponse = await _callAutomationClient.GetCurrentHmacTokenDirectAsync(cancellationToken).ConfigureAwait(false);
+            var client = _callAutomationClient;
 
-                if (hmacTokenResponse?.Value?.HasValidHmacInfo == true)
+            // Determine the ACS host - prefer explicit ACS endpoint, fallback to resource endpoint
+            var acsHost = !string.IsNullOrEmpty(client._acsEndpoint)
+                ? new Uri(client._acsEndpoint).Authority
+                : new Uri(client._resourceEndpoint).Authority;
+
+            // Always set X-Ms-Host for routing
+            webSocket.Options.SetRequestHeader("X-Ms-Host", acsHost);
+
+            if (client._keyCredential != null)
+            {
+                // Use HMAC with the client's key credential and resource endpoint
+                var date = DateTimeOffset.UtcNow.ToString("r", System.Globalization.CultureInfo.InvariantCulture);
+
+                string contentHash;
+                using (var sha256 = System.Security.Cryptography.SHA256.Create())
                 {
-                    var hmacHeaders = hmacTokenResponse.Value.ToWebSocketHeaders();
-                    if (hmacHeaders != null)
-                    {
-                        foreach (var header in hmacHeaders)
-                        {
-                            webSocket.Options.SetRequestHeader(header.Key, header.Value);
-                        }
-                        return;
-                    }
+                    var hashBytes = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(string.Empty));
+                    contentHash = Convert.ToBase64String(hashBytes);
                 }
-            }
-            catch
-            {
-                // If HMAC fails, try AAD token
-            }
 
-            try
-            {
-                // Try to get current AAD token as fallback
-                var aadTokenResponse = await _callAutomationClient.GetCurrentAadTokenDirectAsync(cancellationToken).ConfigureAwait(false);
+                var pathAndQuery = streamUrl.PathAndQuery;
 
-                if (!string.IsNullOrEmpty(aadTokenResponse?.Value))
-                {
-                    webSocket.Options.SetRequestHeader("Authorization", $"Bearer {aadTokenResponse.Value}");
-                }
+                const string signedHeaders = "date;host;x-ms-content-sha256";
+                var stringToSign = $"GET\n{pathAndQuery}\n{date};{acsHost};{contentHash}";
+
+                using var hmac = new System.Security.Cryptography.HMACSHA256(Convert.FromBase64String(client._keyCredential.Key));
+                var hash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(stringToSign));
+                var signature = Convert.ToBase64String(hash);
+
+                var authorization = $"HMAC-SHA256 SignedHeaders={signedHeaders}&Signature={signature}";
+
+                webSocket.Options.SetRequestHeader("date", date);
+                webSocket.Options.SetRequestHeader("x-ms-content-sha256", contentHash);
+                webSocket.Options.SetRequestHeader("Authorization", authorization);
             }
-            catch
+            else if (client._tokenCredential != null)
             {
-                // If both authentication methods fail, continue without auth
-                // The WebSocket connection might still succeed depending on the server configuration
+                var tokenRequestContext = new TokenRequestContext(new[] { "https://communication.azure.com/.default" });
+                var accessToken = await client._tokenCredential.GetTokenAsync(tokenRequestContext, cancellationToken).ConfigureAwait(false);
+                webSocket.Options.SetRequestHeader("Authorization", $"Bearer {accessToken.Token}");
+            }
+            else
+            {
+                throw new InvalidOperationException("CallAutomationClient does not have accessible credentials for WebSocket authentication. Use AcsWebSocketAuthenticator with explicit credentials instead.");
             }
         }
 
         private string ComputeHMAC(string value)
         {
             using var hmac = new System.Security.Cryptography.HMACSHA256(Convert.FromBase64String(_keyCredential.Key));
-            var hash = hmac.ComputeHash(System.Text.Encoding.ASCII.GetBytes(value));
+            var hash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(value));
             return Convert.ToBase64String(hash);
         }
 
