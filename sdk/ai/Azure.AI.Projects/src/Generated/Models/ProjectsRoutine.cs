@@ -14,16 +14,11 @@ namespace Azure.AI.Projects
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ProjectsRoutine"/>. </summary>
-        /// <param name="name"> The routine name. </param>
         /// <param name="enabled"> Whether the routine is enabled. </param>
-        /// <param name="triggers"> The triggers configured for the routine. </param>
-        /// <param name="action"> The action executed when the routine fires. </param>
-        internal ProjectsRoutine(string name, bool enabled, IDictionary<string, RoutineTrigger> triggers, RoutineAction action)
+        internal ProjectsRoutine(bool enabled)
         {
-            Name = name;
             Enabled = enabled;
-            Triggers = triggers;
-            Action = action;
+            Triggers = new ChangeTrackingDictionary<string, RoutineTrigger>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProjectsRoutine"/>. </summary>

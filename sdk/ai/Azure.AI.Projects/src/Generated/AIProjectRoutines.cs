@@ -8,7 +8,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.Memory;
 
 namespace Azure.AI.Projects
 {
@@ -49,15 +48,10 @@ namespace Azure.AI.Projects
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routineName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult CreateOrUpdateRoutine(string routineName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual ClientResult CreateOrUpdateRoutine(string routineName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-            Argument.AssertNotNull(content, nameof(content));
-
             using PipelineMessage message = CreateCreateOrUpdateRoutineRequest(routineName, content, foundryFeatures, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -74,36 +68,25 @@ namespace Azure.AI.Projects
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routineName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> CreateOrUpdateRoutineAsync(string routineName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual async Task<ClientResult> CreateOrUpdateRoutineAsync(string routineName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-            Argument.AssertNotNull(content, nameof(content));
-
             using PipelineMessage message = CreateCreateOrUpdateRoutineRequest(routineName, content, foundryFeatures, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Create or update a routine. </summary>
         /// <param name="routineName"> The unique name of the routine. </param>
-        /// <param name="triggers"> The triggers configured for the routine. In v1, exactly one trigger entry is supported. </param>
-        /// <param name="action"> The action executed when the routine fires. </param>
         /// <param name="description"> A human-readable description of the routine. </param>
         /// <param name="enabled"> Whether the routine is enabled. </param>
+        /// <param name="triggers"> The triggers configured for the routine. In v1, exactly one trigger entry is supported. </param>
+        /// <param name="action"> The action executed when the routine fires. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routineName"/>, <paramref name="triggers"/> or <paramref name="action"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ProjectsRoutine> CreateOrUpdateRoutine(string routineName, IDictionary<string, RoutineTrigger> triggers, RoutineAction action, string description = default, bool? enabled = default, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<ProjectsRoutine> CreateOrUpdateRoutine(string routineName, string description = default, bool? enabled = default, IDictionary<string, RoutineTrigger> triggers = default, RoutineAction action = default, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-            Argument.AssertNotNull(triggers, nameof(triggers));
-            Argument.AssertNotNull(action, nameof(action));
-
             CreateOrUpdateRoutineRequest spreadModel = new CreateOrUpdateRoutineRequest(description, enabled, triggers ?? new ChangeTrackingDictionary<string, RoutineTrigger>(), action, default);
             ClientResult result = CreateOrUpdateRoutine(routineName, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((ProjectsRoutine)result, result.GetRawResponse());
@@ -111,21 +94,15 @@ namespace Azure.AI.Projects
 
         /// <summary> Create or update a routine. </summary>
         /// <param name="routineName"> The unique name of the routine. </param>
-        /// <param name="triggers"> The triggers configured for the routine. In v1, exactly one trigger entry is supported. </param>
-        /// <param name="action"> The action executed when the routine fires. </param>
         /// <param name="description"> A human-readable description of the routine. </param>
         /// <param name="enabled"> Whether the routine is enabled. </param>
+        /// <param name="triggers"> The triggers configured for the routine. In v1, exactly one trigger entry is supported. </param>
+        /// <param name="action"> The action executed when the routine fires. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routineName"/>, <paramref name="triggers"/> or <paramref name="action"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ProjectsRoutine>> CreateOrUpdateRoutineAsync(string routineName, IDictionary<string, RoutineTrigger> triggers, RoutineAction action, string description = default, bool? enabled = default, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<ProjectsRoutine>> CreateOrUpdateRoutineAsync(string routineName, string description = default, bool? enabled = default, IDictionary<string, RoutineTrigger> triggers = default, RoutineAction action = default, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-            Argument.AssertNotNull(triggers, nameof(triggers));
-            Argument.AssertNotNull(action, nameof(action));
-
             CreateOrUpdateRoutineRequest spreadModel = new CreateOrUpdateRoutineRequest(description, enabled, triggers ?? new ChangeTrackingDictionary<string, RoutineTrigger>(), action, default);
             ClientResult result = await CreateOrUpdateRoutineAsync(routineName, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((ProjectsRoutine)result, result.GetRawResponse());
@@ -142,14 +119,10 @@ namespace Azure.AI.Projects
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult GetRoutine(string routineName, string foundryFeatures, RequestOptions options)
+        internal virtual ClientResult GetRoutine(string routineName, string foundryFeatures, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-
             using PipelineMessage message = CreateGetRoutineRequest(routineName, foundryFeatures, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -165,14 +138,10 @@ namespace Azure.AI.Projects
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetRoutineAsync(string routineName, string foundryFeatures, RequestOptions options)
+        internal virtual async Task<ClientResult> GetRoutineAsync(string routineName, string foundryFeatures, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-
             using PipelineMessage message = CreateGetRoutineRequest(routineName, foundryFeatures, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
@@ -181,13 +150,9 @@ namespace Azure.AI.Projects
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ProjectsRoutine> GetRoutine(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<ProjectsRoutine> GetRoutine(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-
             ClientResult result = GetRoutine(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((ProjectsRoutine)result, result.GetRawResponse());
         }
@@ -196,13 +161,9 @@ namespace Azure.AI.Projects
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ProjectsRoutine>> GetRoutineAsync(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<ProjectsRoutine>> GetRoutineAsync(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-
             ClientResult result = await GetRoutineAsync(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((ProjectsRoutine)result, result.GetRawResponse());
         }
@@ -218,14 +179,10 @@ namespace Azure.AI.Projects
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult EnableRoutine(string routineName, string foundryFeatures, RequestOptions options)
+        internal virtual ClientResult EnableRoutine(string routineName, string foundryFeatures, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-
             using PipelineMessage message = CreateEnableRoutineRequest(routineName, foundryFeatures, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -241,14 +198,10 @@ namespace Azure.AI.Projects
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> EnableRoutineAsync(string routineName, string foundryFeatures, RequestOptions options)
+        internal virtual async Task<ClientResult> EnableRoutineAsync(string routineName, string foundryFeatures, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-
             using PipelineMessage message = CreateEnableRoutineRequest(routineName, foundryFeatures, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
@@ -257,13 +210,9 @@ namespace Azure.AI.Projects
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ProjectsRoutine> EnableRoutine(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<ProjectsRoutine> EnableRoutine(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-
             ClientResult result = EnableRoutine(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((ProjectsRoutine)result, result.GetRawResponse());
         }
@@ -272,13 +221,9 @@ namespace Azure.AI.Projects
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ProjectsRoutine>> EnableRoutineAsync(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<ProjectsRoutine>> EnableRoutineAsync(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-
             ClientResult result = await EnableRoutineAsync(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((ProjectsRoutine)result, result.GetRawResponse());
         }
@@ -294,14 +239,10 @@ namespace Azure.AI.Projects
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult DisableRoutine(string routineName, string foundryFeatures, RequestOptions options)
+        internal virtual ClientResult DisableRoutine(string routineName, string foundryFeatures, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-
             using PipelineMessage message = CreateDisableRoutineRequest(routineName, foundryFeatures, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -317,14 +258,10 @@ namespace Azure.AI.Projects
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> DisableRoutineAsync(string routineName, string foundryFeatures, RequestOptions options)
+        internal virtual async Task<ClientResult> DisableRoutineAsync(string routineName, string foundryFeatures, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-
             using PipelineMessage message = CreateDisableRoutineRequest(routineName, foundryFeatures, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
@@ -333,13 +270,9 @@ namespace Azure.AI.Projects
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ProjectsRoutine> DisableRoutine(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<ProjectsRoutine> DisableRoutine(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-
             ClientResult result = DisableRoutine(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((ProjectsRoutine)result, result.GetRawResponse());
         }
@@ -348,167 +281,11 @@ namespace Azure.AI.Projects
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ProjectsRoutine>> DisableRoutineAsync(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<ProjectsRoutine>> DisableRoutineAsync(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-
             ClientResult result = await DisableRoutineAsync(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((ProjectsRoutine)result, result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// [Protocol Method] List routines.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual CollectionResult GetRoutines(string foundryFeatures, int? limit, string order, string after, string before, RequestOptions options)
-        {
-            return new AIProjectRoutinesGetRoutinesCollectionResult(
-                this,
-                foundryFeatures,
-                limit,
-                order,
-                after,
-                before,
-                options);
-        }
-
-        /// <summary>
-        /// [Protocol Method] List routines.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual AsyncCollectionResult GetRoutinesAsync(string foundryFeatures, int? limit, string order, string after, string before, RequestOptions options)
-        {
-            return new AIProjectRoutinesGetRoutinesAsyncCollectionResult(
-                this,
-                foundryFeatures,
-                limit,
-                order,
-                after,
-                before,
-                options);
-        }
-
-        /// <summary> List routines. </summary>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<ProjectsRoutine> GetRoutines(FoundryFeaturesOptInKeys? foundryFeatures = default, int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
-        {
-            return new AIProjectRoutinesGetRoutinesCollectionResultOfT(
-                this,
-                foundryFeatures?.ToSerialString(),
-                limit,
-                order?.ToString(),
-                after,
-                before,
-                cancellationToken.ToRequestOptions());
-        }
-
-        /// <summary> List routines. </summary>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<ProjectsRoutine> GetRoutinesAsync(FoundryFeaturesOptInKeys? foundryFeatures = default, int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
-        {
-            return new AIProjectRoutinesGetRoutinesAsyncCollectionResultOfT(
-                this,
-                foundryFeatures?.ToSerialString(),
-                limit,
-                order?.ToString(),
-                after,
-                before,
-                cancellationToken.ToRequestOptions());
         }
 
         /// <summary>
@@ -522,14 +299,10 @@ namespace Azure.AI.Projects
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult DeleteRoutine(string routineName, string foundryFeatures, RequestOptions options)
+        internal virtual ClientResult DeleteRoutine(string routineName, string foundryFeatures, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-
             using PipelineMessage message = CreateDeleteRoutineRequest(routineName, foundryFeatures, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -545,14 +318,10 @@ namespace Azure.AI.Projects
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> DeleteRoutineAsync(string routineName, string foundryFeatures, RequestOptions options)
+        internal virtual async Task<ClientResult> DeleteRoutineAsync(string routineName, string foundryFeatures, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-
             using PipelineMessage message = CreateDeleteRoutineRequest(routineName, foundryFeatures, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
@@ -561,13 +330,9 @@ namespace Azure.AI.Projects
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult DeleteRoutine(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult DeleteRoutine(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-
             return DeleteRoutine(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
         }
 
@@ -575,198 +340,10 @@ namespace Azure.AI.Projects
         /// <param name="routineName"> The unique name of the routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult> DeleteRoutineAsync(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult> DeleteRoutineAsync(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-
             return await DeleteRoutineAsync(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// [Protocol Method] List prior runs for a routine.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="routineName"> The unique name of the routine. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="filter"> An optional MLflow search-runs filter expression applied within the routine's experiment. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual CollectionResult GetRoutineRuns(string routineName, string foundryFeatures, string filter, int? limit, string order, string after, string before, RequestOptions options)
-        {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-
-            return new AIProjectRoutinesGetRoutineRunsCollectionResult(
-                this,
-                routineName,
-                foundryFeatures,
-                filter,
-                limit,
-                order,
-                after,
-                before,
-                options);
-        }
-
-        /// <summary>
-        /// [Protocol Method] List prior runs for a routine.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="routineName"> The unique name of the routine. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="filter"> An optional MLflow search-runs filter expression applied within the routine's experiment. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual AsyncCollectionResult GetRoutineRunsAsync(string routineName, string foundryFeatures, string filter, int? limit, string order, string after, string before, RequestOptions options)
-        {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-
-            return new AIProjectRoutinesGetRoutineRunsAsyncCollectionResult(
-                this,
-                routineName,
-                foundryFeatures,
-                filter,
-                limit,
-                order,
-                after,
-                before,
-                options);
-        }
-
-        /// <summary> List prior runs for a routine. </summary>
-        /// <param name="routineName"> The unique name of the routine. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="filter"> An optional MLflow search-runs filter expression applied within the routine's experiment. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<RoutineRun> GetRoutineRuns(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, string filter = default, int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-
-            return new AIProjectRoutinesGetRoutineRunsCollectionResultOfT(
-                this,
-                routineName,
-                foundryFeatures?.ToSerialString(),
-                filter,
-                limit,
-                order?.ToString(),
-                after,
-                before,
-                cancellationToken.ToRequestOptions());
-        }
-
-        /// <summary> List prior runs for a routine. </summary>
-        /// <param name="routineName"> The unique name of the routine. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="filter"> An optional MLflow search-runs filter expression applied within the routine's experiment. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<RoutineRun> GetRoutineRunsAsync(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, string filter = default, int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-
-            return new AIProjectRoutinesGetRoutineRunsAsyncCollectionResultOfT(
-                this,
-                routineName,
-                foundryFeatures?.ToSerialString(),
-                filter,
-                limit,
-                order?.ToString(),
-                after,
-                before,
-                cancellationToken.ToRequestOptions());
         }
 
         /// <summary>
@@ -781,16 +358,11 @@ namespace Azure.AI.Projects
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routineName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult DispatchRoutineAsync(string routineName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual ClientResult DispatchAsyncRoutine(string routineName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using PipelineMessage message = CreateDispatchRoutineAsyncRequest(routineName, content, foundryFeatures, options);
+            using PipelineMessage message = CreateDispatchAsyncRoutineRequest(routineName, content, foundryFeatures, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -806,16 +378,11 @@ namespace Azure.AI.Projects
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routineName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> DispatchRoutineAsyncAsync(string routineName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual async Task<ClientResult> DispatchAsyncRoutineAsync(string routineName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using PipelineMessage message = CreateDispatchRoutineAsyncRequest(routineName, content, foundryFeatures, options);
+            using PipelineMessage message = CreateDispatchAsyncRoutineRequest(routineName, content, foundryFeatures, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
@@ -824,15 +391,11 @@ namespace Azure.AI.Projects
         /// <param name="payload"> A direct action-input override sent downstream when testing a routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<DispatchRoutineResponse> DispatchRoutineAsync(string routineName, RoutineDispatchPayload payload = default, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<DispatchRoutineResponse> DispatchAsyncRoutine(string routineName, RoutineDispatchPayload payload = default, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-
             DispatchRoutineAsyncRequest spreadModel = new DispatchRoutineAsyncRequest(payload, default);
-            ClientResult result = DispatchRoutineAsync(routineName, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            ClientResult result = DispatchAsyncRoutine(routineName, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((DispatchRoutineResponse)result, result.GetRawResponse());
         }
 
@@ -841,15 +404,11 @@ namespace Azure.AI.Projects
         /// <param name="payload"> A direct action-input override sent downstream when testing a routine. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<DispatchRoutineResponse>> DispatchRoutineAsyncAsync(string routineName, RoutineDispatchPayload payload = default, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<DispatchRoutineResponse>> DispatchAsyncRoutineAsync(string routineName, RoutineDispatchPayload payload = default, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
-
             DispatchRoutineAsyncRequest spreadModel = new DispatchRoutineAsyncRequest(payload, default);
-            ClientResult result = await DispatchRoutineAsyncAsync(routineName, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await DispatchAsyncRoutineAsync(routineName, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((DispatchRoutineResponse)result, result.GetRawResponse());
         }
     }
