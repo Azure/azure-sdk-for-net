@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,13 +14,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Billing
 {
     /// <summary>
     /// A class representing a BillingRoleAssignment along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingRoleAssignmentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BillingProfileResource"/> using the GetBillingRoleAssignments method.
+    /// Otherwise you can get one from its parent resource <see cref="EnrollmentAccountResource"/> using the GetBillingRoleAssignments method.
     /// </summary>
     public partial class BillingRoleAssignmentResource : ArmResource
     {
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.Billing
         private readonly BillingRoleAssignments _billingRoleAssignmentsRestClient;
         private readonly BillingRoleAssignmentData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/billingProfiles/billingRoleAssignments";
+        public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/enrollmentAccounts/billingRoleAssignments";
 
         /// <summary> Initializes a new instance of BillingRoleAssignmentResource for mocking. </summary>
         protected BillingRoleAssignmentResource()
@@ -39,7 +41,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BillingRoleAssignmentResource(ArmClient client, BillingRoleAssignmentData data) : this(client, data.Id)
         {
-            HasData = true;
+            this.HasData = true;
             _data = data;
         }
 
@@ -48,10 +50,10 @@ namespace Azure.ResourceManager.Billing
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingRoleAssignmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string billingRoleAssignmentApiVersion);
+            this.TryGetApiVersion(ResourceType, out string billingRoleAssignmentApiVersion);
             _billingRoleAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
             _billingRoleAssignmentsRestClient = new BillingRoleAssignments(_billingRoleAssignmentsClientDiagnostics, Pipeline, Endpoint, billingRoleAssignmentApiVersion ?? "2024-04-01");
-            ValidateResourceId(id);
+            BillingRoleAssignmentResource.ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
@@ -72,11 +74,11 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="billingAccountName"> The billingAccountName. </param>
-        /// <param name="billingProfileName"> The billingProfileName. </param>
+        /// <param name="enrollmentAccountName"> The enrollmentAccountName. </param>
         /// <param name="billingRoleAssignmentName"> The billingRoleAssignmentName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string billingProfileName, string billingRoleAssignmentName)
+        public static ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string enrollmentAccountName, string billingRoleAssignmentName)
         {
-            string resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingRoleAssignments/{billingRoleAssignmentName}";
+            string resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleAssignments/{billingRoleAssignmentName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -91,15 +93,15 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Gets a role assignment for the caller on a billing profile. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// Gets a role assignment for the caller on a enrollment Account. The operation is supported only for billing accounts with agreement type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingRoleAssignments_GetByBillingProfile. </description>
+        /// <description> BillingRoleAssignmentByEnrollmentAccount_GetByEnrollmentAccount. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -122,7 +124,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingRoleAssignmentData> response = Response.FromValue(BillingRoleAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -139,15 +141,15 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Gets a role assignment for the caller on a billing profile. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// Gets a role assignment for the caller on a enrollment Account. The operation is supported only for billing accounts with agreement type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingRoleAssignments_GetByBillingProfile. </description>
+        /// <description> BillingRoleAssignmentByEnrollmentAccount_GetByEnrollmentAccount. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -170,7 +172,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingRoleAssignmentData> response = Response.FromValue(BillingRoleAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -187,15 +189,15 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Deletes a role assignment on a billing profile. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// Deletes a role assignment on a enrollment Account. The operation is supported only for billing accounts with agreement type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingRoleAssignments_DeleteByBillingProfile. </description>
+        /// <description> BillingRoleAssignmentByEnrollmentAccount_DeleteByEnrollmentAccount. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -219,7 +221,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleAssignmentsRestClient.CreateDeleteByBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateDeleteByEnrollmentAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -238,15 +240,15 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Deletes a role assignment on a billing profile. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// Deletes a role assignment on a enrollment Account. The operation is supported only for billing accounts with agreement type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingRoleAssignments_DeleteByBillingProfile. </description>
+        /// <description> BillingRoleAssignmentByEnrollmentAccount_DeleteByEnrollmentAccount. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -270,7 +272,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleAssignmentsRestClient.CreateDeleteByBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateDeleteByEnrollmentAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -280,6 +282,376 @@ namespace Azure.ResourceManager.Billing
                     operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a BillingRoleAssignment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRoleAssignmentByEnrollmentAccount_CreateOrUpdateByEnrollmentAccount. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingRoleAssignmentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> The properties of the billing role assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<BillingRoleAssignmentResource>> UpdateAsync(WaitUntil waitUntil, BillingRoleAssignmentData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingRoleAssignmentResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateCreateOrUpdateByEnrollmentAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingRoleAssignmentData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                BillingArmOperation<BillingRoleAssignmentResource> operation = new BillingArmOperation<BillingRoleAssignmentResource>(
+                    new BillingRoleAssignmentOperationSource(Client),
+                    _billingRoleAssignmentsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a BillingRoleAssignment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRoleAssignmentByEnrollmentAccount_CreateOrUpdateByEnrollmentAccount. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingRoleAssignmentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> The properties of the billing role assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<BillingRoleAssignmentResource> Update(WaitUntil waitUntil, BillingRoleAssignmentData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingRoleAssignmentResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateCreateOrUpdateByEnrollmentAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingRoleAssignmentData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                BillingArmOperation<BillingRoleAssignmentResource> operation = new BillingArmOperation<BillingRoleAssignmentResource>(
+                    new BillingRoleAssignmentOperationSource(Client),
+                    _billingRoleAssignmentsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual async Task<Response<BillingRoleAssignmentResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
+            using DiagnosticScope scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingRoleAssignmentResource.AddTag");
+            scope.Start();
+            try
+            {
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                {
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<BillingRoleAssignmentData> response = Response.FromValue(BillingRoleAssignmentData.FromResponse(result), result);
+                    return Response.FromValue(new BillingRoleAssignmentResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    BillingRoleAssignmentData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    current.Tags[key] = value;
+                    ArmOperation<BillingRoleAssignmentResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual Response<BillingRoleAssignmentResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
+            using DiagnosticScope scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingRoleAssignmentResource.AddTag");
+            scope.Start();
+            try
+            {
+                if (CanUseTagResource(cancellationToken))
+                {
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<BillingRoleAssignmentData> response = Response.FromValue(BillingRoleAssignmentData.FromResponse(result), result);
+                    return Response.FromValue(new BillingRoleAssignmentResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    BillingRoleAssignmentData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    current.Tags[key] = value;
+                    ArmOperation<BillingRoleAssignmentResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual async Task<Response<BillingRoleAssignmentResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tags, nameof(tags));
+
+            using DiagnosticScope scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingRoleAssignmentResource.SetTags");
+            scope.Start();
+            try
+            {
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                {
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<BillingRoleAssignmentData> response = Response.FromValue(BillingRoleAssignmentData.FromResponse(result), result);
+                    return Response.FromValue(new BillingRoleAssignmentResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    BillingRoleAssignmentData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    current.Tags.ReplaceWith(tags);
+                    ArmOperation<BillingRoleAssignmentResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual Response<BillingRoleAssignmentResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tags, nameof(tags));
+
+            using DiagnosticScope scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingRoleAssignmentResource.SetTags");
+            scope.Start();
+            try
+            {
+                if (CanUseTagResource(cancellationToken))
+                {
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<BillingRoleAssignmentData> response = Response.FromValue(BillingRoleAssignmentData.FromResponse(result), result);
+                    return Response.FromValue(new BillingRoleAssignmentResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    BillingRoleAssignmentData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    current.Tags.ReplaceWith(tags);
+                    ArmOperation<BillingRoleAssignmentResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual async Task<Response<BillingRoleAssignmentResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+
+            using DiagnosticScope scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingRoleAssignmentResource.RemoveTag");
+            scope.Start();
+            try
+            {
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                {
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<BillingRoleAssignmentData> response = Response.FromValue(BillingRoleAssignmentData.FromResponse(result), result);
+                    return Response.FromValue(new BillingRoleAssignmentResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    BillingRoleAssignmentData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    current.Tags.Remove(key);
+                    ArmOperation<BillingRoleAssignmentResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual Response<BillingRoleAssignmentResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+
+            using DiagnosticScope scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingRoleAssignmentResource.RemoveTag");
+            scope.Start();
+            try
+            {
+                if (CanUseTagResource(cancellationToken))
+                {
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<BillingRoleAssignmentData> response = Response.FromValue(BillingRoleAssignmentData.FromResponse(result), result);
+                    return Response.FromValue(new BillingRoleAssignmentResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    BillingRoleAssignmentData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    current.Tags.Remove(key);
+                    ArmOperation<BillingRoleAssignmentResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {

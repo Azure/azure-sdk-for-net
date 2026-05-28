@@ -15,7 +15,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The list of reservations and summary of roll out count of reservations in each state. </summary>
-    public partial class ReservationsListResult : IJsonModel<ReservationsListResult>
+    internal partial class ReservationsListResult : IJsonModel<ReservationsListResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

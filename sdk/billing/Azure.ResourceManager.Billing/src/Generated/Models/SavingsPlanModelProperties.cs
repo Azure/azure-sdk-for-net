@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Billing.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SavingsPlanModelProperties"/>. </summary>
-        internal SavingsPlanModelProperties()
+        public SavingsPlanModelProperties()
         {
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Display name. </summary>
-        public string DisplayName { get; }
+        public string DisplayName { get; set; }
 
         /// <summary> The provisioning state of the resource during a long-running operation. </summary>
         public BillingProvisioningState? ProvisioningState { get; }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Billing.Models
         public string UserFriendlyAppliedScopeType { get; }
 
         /// <summary> Subscription that will be charged for purchasing SavingsPlan. </summary>
-        public string BillingScopeId { get; }
+        public string BillingScopeId { get; set; }
 
         /// <summary> Fully-qualified identifier of the billing profile where the savings plan is applied. Present only for Field-led or Customer-led customers. </summary>
         public string BillingProfileId { get; }
@@ -101,31 +101,31 @@ namespace Azure.ResourceManager.Billing.Models
         public string BillingAccountId { get; }
 
         /// <summary> Represents the Savings plan term in ISO 8601 format. </summary>
-        public BillingSavingsPlanTerm? Term { get; }
+        public BillingSavingsPlanTerm? Term { get; set; }
 
         /// <summary> Setting this to true will automatically purchase a new benefit on the expiration date time. </summary>
-        public bool? IsRenewed { get; }
+        public bool? IsRenewed { get; set; }
 
         /// <summary> SavingsPlan Id of the SavingsPlan from which this SavingsPlan is renewed. </summary>
-        public string RenewSource { get; }
+        public string RenewSource { get; set; }
 
         /// <summary> SavingsPlan Id of the SavingsPlan which is purchased because of renew. </summary>
-        public string RenewDestination { get; }
+        public string RenewDestination { get; set; }
 
         /// <summary> Properties specific to renew. </summary>
-        internal BillingRenewProperties RenewProperties { get; }
+        internal BillingRenewProperties RenewProperties { get; set; }
 
         /// <summary> Represents the billing plan in ISO 8601 format. Required only for monthly purchases. </summary>
-        public BillingPlan? BillingPlan { get; }
+        public BillingPlan? BillingPlan { get; set; }
 
         /// <summary> Type of the Applied Scope. </summary>
-        public BillingAppliedScopeType? AppliedScopeType { get; }
+        public BillingAppliedScopeType? AppliedScopeType { get; set; }
 
         /// <summary> Properties specific to applied scope type. Not required if not applicable. </summary>
-        public BillingAppliedScopeProperties AppliedScopeProperties { get; }
+        public BillingAppliedScopeProperties AppliedScopeProperties { get; set; }
 
         /// <summary> Commitment towards the benefit. </summary>
-        public BillingBenefitCommitment Commitment { get; }
+        public BillingBenefitCommitment Commitment { get; set; }
 
         /// <summary> DateTime of the savings plan starting when this version is effective from. </summary>
         public DateTimeOffset? EffectiveOn { get; }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Billing.Models
         public ExtendedStatusInfo ExtendedStatusInfo { get; }
 
         /// <summary> Represents UPN. </summary>
-        public string ProductCode { get; }
+        public string ProductCode { get; set; }
 
         /// <summary> Purchase request. </summary>
         public BillingPurchaseProperties RenewPurchaseProperties
@@ -154,6 +154,14 @@ namespace Azure.ResourceManager.Billing.Models
             get
             {
                 return RenewProperties is null ? default : RenewProperties.PurchaseProperties;
+            }
+            set
+            {
+                if (RenewProperties is null)
+                {
+                    RenewProperties = new BillingRenewProperties();
+                }
+                RenewProperties.PurchaseProperties = value;
             }
         }
     }

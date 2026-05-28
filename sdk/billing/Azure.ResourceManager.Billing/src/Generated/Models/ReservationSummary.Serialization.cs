@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The roll up count summary of reservations in each state. </summary>
-    public partial class ReservationSummary : IJsonModel<ReservationSummary>
+    internal partial class ReservationSummary : IJsonModel<ReservationSummary>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

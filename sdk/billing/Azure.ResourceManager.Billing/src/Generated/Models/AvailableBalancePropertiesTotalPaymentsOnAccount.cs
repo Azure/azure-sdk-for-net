@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Billing.Models
     public partial class AvailableBalancePropertiesTotalPaymentsOnAccount : BillingAmount
     {
         /// <summary> Initializes a new instance of <see cref="AvailableBalancePropertiesTotalPaymentsOnAccount"/>. </summary>
-        internal AvailableBalancePropertiesTotalPaymentsOnAccount()
+        public AvailableBalancePropertiesTotalPaymentsOnAccount()
         {
         }
 

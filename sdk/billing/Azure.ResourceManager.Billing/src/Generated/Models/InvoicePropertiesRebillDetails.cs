@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Billing.Models
     public partial class InvoicePropertiesRebillDetails : RebillDetails
     {
         /// <summary> Initializes a new instance of <see cref="InvoicePropertiesRebillDetails"/>. </summary>
-        internal InvoicePropertiesRebillDetails()
+        public InvoicePropertiesRebillDetails()
         {
         }
 

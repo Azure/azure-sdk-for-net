@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Billing
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingRoleDefinitionData"/>. </summary>
-        internal BillingRoleDefinitionData()
+        public BillingRoleDefinitionData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The properties of a role definition. </summary>
-        public BillingRoleDefinitionProperties Properties { get; }
+        public BillingRoleDefinitionProperties Properties { get; set; }
 
         /// <summary> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
         public IDictionary<string, string> Tags { get; }

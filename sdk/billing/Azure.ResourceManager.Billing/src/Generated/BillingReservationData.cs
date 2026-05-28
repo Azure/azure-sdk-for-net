@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Billing
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingReservationData"/>. </summary>
-        internal BillingReservationData()
+        public BillingReservationData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
@@ -32,34 +32,34 @@ namespace Azure.ResourceManager.Billing
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties associated to this reservation. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="location"> The location of the reservation. </param>
         /// <param name="eTag"></param>
+        /// <param name="tags"> Tags for this reservation. </param>
         /// <param name="sku"> The sku information associated to this reservation. </param>
-        internal BillingReservationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ReservationProperty properties, IDictionary<string, string> tags, string location, int? eTag, ReservationSkuProperty sku) : base(id, name, resourceType, systemData)
+        internal BillingReservationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ReservationProperty properties, string location, int? eTag, IDictionary<string, string> tags, ReservationSkuProperty sku) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
-            Tags = tags;
             Location = location;
             ETag = eTag;
+            Tags = tags;
             Sku = sku;
         }
 
         /// <summary> The properties associated to this reservation. </summary>
-        internal ReservationProperty Properties { get; }
+        internal ReservationProperty Properties { get; set; }
 
-        /// <summary> Resource tags. </summary>
+        /// <summary> The location of the reservation. </summary>
+        public string Location { get; set; }
+
+        /// <summary> Gets or sets the ETag. </summary>
+        public int? ETag { get; set; }
+
+        /// <summary> Tags for this reservation. </summary>
         public IDictionary<string, string> Tags { get; }
 
-        /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; }
-
-        /// <summary> Gets the ETag. </summary>
-        public int? ETag { get; }
-
         /// <summary> The sku information associated to this reservation. </summary>
-        internal ReservationSkuProperty Sku { get; }
+        internal ReservationSkuProperty Sku { get; set; }
 
         /// <summary> The reserved source type of the reservation, e.g. virtual machine. </summary>
         public string ReservedResourceType
@@ -77,6 +77,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.InstanceFlexibility;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationProperty();
+                }
+                Properties.InstanceFlexibility = value;
+            }
         }
 
         /// <summary> The display name of the reservation. </summary>
@@ -93,7 +101,11 @@ namespace Azure.ResourceManager.Billing
         {
             get
             {
-                return Properties is null ? default : Properties.AppliedScopes;
+                if (Properties is null)
+                {
+                    Properties = new ReservationProperty();
+                }
+                return Properties.AppliedScopes;
             }
         }
 
@@ -113,6 +125,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.IsArchived;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationProperty();
+                }
+                Properties.IsArchived = value;
+            }
         }
 
         /// <summary> Capabilities of the reservation. </summary>
@@ -121,6 +141,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.Capabilities;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationProperty();
+                }
+                Properties.Capabilities = value;
             }
         }
 
@@ -158,6 +186,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.BenefitStartOn;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationProperty();
+                }
+                Properties.BenefitStartOn = value;
+            }
         }
 
         /// <summary> DateTime of the last time the reservation was updated. </summary>
@@ -185,6 +221,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.ReservationExpireOn;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationProperty();
+                }
+                Properties.ReservationExpireOn = value;
+            }
         }
 
         /// <summary> This is the date-time when the Azure Hybrid Benefit needs to be reviewed. </summary>
@@ -193,6 +237,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.ReviewOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationProperty();
+                }
+                Properties.ReviewOn = value;
             }
         }
 
@@ -212,6 +264,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.ExtendedStatusInfo;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationProperty();
+                }
+                Properties.ExtendedStatusInfo = value;
+            }
         }
 
         /// <summary> The billing plan options available for this sku. </summary>
@@ -220,6 +280,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.BillingPlan;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationProperty();
+                }
+                Properties.BillingPlan = value;
             }
         }
 
@@ -248,6 +316,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.PurchaseOn;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationProperty();
+                }
+                Properties.PurchaseOn = value;
+            }
         }
 
         /// <summary> This is the date-time when the reservation was purchased. </summary>
@@ -256,6 +332,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.ReservationPurchaseOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationProperty();
+                }
+                Properties.ReservationPurchaseOn = value;
             }
         }
 
@@ -266,6 +350,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.SplitProperties;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationProperty();
+                }
+                Properties.SplitProperties = value;
+            }
         }
 
         /// <summary> Properties of reservation merge. </summary>
@@ -274,6 +366,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.MergeProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationProperty();
+                }
+                Properties.MergeProperties = value;
             }
         }
 
@@ -284,6 +384,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.SwapProperties;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationProperty();
+                }
+                Properties.SwapProperties = value;
+            }
         }
 
         /// <summary> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </summary>
@@ -292,6 +400,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.AppliedScopeProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationProperty();
+                }
+                Properties.AppliedScopeProperties = value;
             }
         }
 
@@ -329,6 +445,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.RenewDestination;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationProperty();
+                }
+                Properties.RenewDestination = value;
+            }
         }
 
         /// <summary> The renew properties for a reservation. </summary>
@@ -337,6 +461,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.RenewProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationProperty();
+                }
+                Properties.RenewProperties = value;
             }
         }
 
@@ -374,6 +506,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.ProductCode;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationProperty();
+                }
+                Properties.ProductCode = value;
+            }
         }
 
         /// <summary> last 7 day utilization trend for a reservation. </summary>
@@ -390,7 +530,11 @@ namespace Azure.ResourceManager.Billing
         {
             get
             {
-                return Properties is null ? default : Properties.Aggregates;
+                if (Properties is null)
+                {
+                    Properties = new ReservationProperty();
+                }
+                return Properties.Aggregates;
             }
         }
 

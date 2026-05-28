@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    internal partial class BillingRoleDefinitionGetByCustomerCollectionResultOfT : Pageable<BillingCustomerRoleDefinitionData>
+    internal partial class BillingRoleDefinitionGetByCustomerCollectionResultOfT : Pageable<BillingRoleDefinitionData>
     {
         private readonly BillingRoleDefinition _client;
         private readonly string _billingAccountName;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of BillingRoleDefinitionGetByCustomerCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<BillingCustomerRoleDefinitionData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<BillingRoleDefinitionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.Billing
                 {
                     yield break;
                 }
-                BillingCustomerRoleDefinitionListResult result = BillingCustomerRoleDefinitionListResult.FromResponse(response);
-                yield return Page<BillingCustomerRoleDefinitionData>.FromValues((IReadOnlyList<BillingCustomerRoleDefinitionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                BillingRoleDefinitionListResult result = BillingRoleDefinitionListResult.FromResponse(response);
+                yield return Page<BillingRoleDefinitionData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

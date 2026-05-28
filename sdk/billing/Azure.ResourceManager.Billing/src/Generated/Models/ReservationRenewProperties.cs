@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Billing.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReservationRenewProperties"/>. </summary>
-        internal ReservationRenewProperties()
+        public ReservationRenewProperties()
         {
         }
 
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The request for reservation purchase. </summary>
-        public ReservationPurchaseRequest PurchaseProperties { get; }
+        public ReservationPurchaseRequest PurchaseProperties { get; set; }
 
         /// <summary> Amount that Microsoft uses for record. Used during refund for calculating refund limit. Tax is not included. This is locked price 30 days before expiry. </summary>
-        public BillingPrice PricingCurrencyTotal { get; }
+        public BillingPrice PricingCurrencyTotal { get; set; }
 
         /// <summary> Currency and amount that customer will be charged in customer's local currency for renewal purchase. Tax is not included. </summary>
-        public BillingPrice BillingCurrencyTotal { get; }
+        public BillingPrice BillingCurrencyTotal { get; set; }
     }
 }

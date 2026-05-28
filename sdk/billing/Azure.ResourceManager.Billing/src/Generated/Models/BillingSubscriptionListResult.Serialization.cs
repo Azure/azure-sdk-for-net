@@ -15,7 +15,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> A container for a list of resources. </summary>
-    public partial class BillingSubscriptionListResult : IJsonModel<BillingSubscriptionListResult>
+    internal partial class BillingSubscriptionListResult : IJsonModel<BillingSubscriptionListResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

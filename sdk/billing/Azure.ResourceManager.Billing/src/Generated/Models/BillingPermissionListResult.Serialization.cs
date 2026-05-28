@@ -15,7 +15,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> A container for a list of resources. </summary>
-    public partial class BillingPermissionListResult : IJsonModel<BillingPermissionListResult>
+    internal partial class BillingPermissionListResult : IJsonModel<BillingPermissionListResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

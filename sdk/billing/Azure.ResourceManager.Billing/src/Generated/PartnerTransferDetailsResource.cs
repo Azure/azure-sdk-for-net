@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Billing
     /// <summary>
     /// A class representing a PartnerTransferDetails along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PartnerTransferDetailsResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BillingCustomerResource"/> using the GetAllPartnerTransferDetails method.
+    /// Otherwise you can get one from its parent resource <see cref="CustomerResource"/> using the GetAllPartnerTransferDetails method.
     /// </summary>
     public partial class PartnerTransferDetailsResource : ArmResource
     {

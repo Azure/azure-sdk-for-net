@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Billing
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingPaymentMethodData"/>. </summary>
-        internal BillingPaymentMethodData()
+        public BillingPaymentMethodData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Payment method properties. </summary>
-        internal PaymentMethodProjectionProperties Properties { get; }
+        internal PaymentMethodProjectionProperties Properties { get; set; }
 
         /// <summary> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
         public IDictionary<string, string> Tags { get; }
@@ -89,6 +89,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.Family;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PaymentMethodProjectionProperties();
+                }
+                Properties.Family = value;
+            }
         }
 
         /// <summary> Last four digits of payment method. </summary>
@@ -105,7 +113,11 @@ namespace Azure.ResourceManager.Billing
         {
             get
             {
-                return Properties is null ? default : Properties.Logos;
+                if (Properties is null)
+                {
+                    Properties = new PaymentMethodProjectionProperties();
+                }
+                return Properties.Logos;
             }
         }
 
@@ -124,6 +136,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PaymentMethodProjectionProperties();
+                }
+                Properties.Status = value;
             }
         }
     }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Billing.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReservationExtendedStatusInfo"/>. </summary>
-        internal ReservationExtendedStatusInfo()
+        public ReservationExtendedStatusInfo()
         {
         }
 
@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The status of the reservation. </summary>
-        public ReservationStatusCode? StatusCode { get; }
+        public ReservationStatusCode? StatusCode { get; set; }
 
         /// <summary> The message giving detailed information about the status code. </summary>
-        public string Message { get; }
+        public string Message { get; set; }
 
         /// <summary> Properties for extended status information. </summary>
-        internal ExtendedStatusDefinitionProperties Properties { get; }
+        internal ExtendedStatusDefinitionProperties Properties { get; set; }
 
         /// <summary> Subscription Id. </summary>
         public string ExtendedStatusDefinitionSubscriptionId
@@ -49,6 +49,14 @@ namespace Azure.ResourceManager.Billing.Models
             get
             {
                 return Properties is null ? default : Properties.SubscriptionId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExtendedStatusDefinitionProperties();
+                }
+                Properties.SubscriptionId = value;
             }
         }
     }

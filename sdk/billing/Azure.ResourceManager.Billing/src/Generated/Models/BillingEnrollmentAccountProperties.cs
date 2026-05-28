@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Billing.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingEnrollmentAccountProperties"/>. </summary>
-        internal BillingEnrollmentAccountProperties()
+        public BillingEnrollmentAccountProperties()
         {
         }
 
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The cost center associated with the enrollment account. </summary>
-        public string CostCenter { get; }
+        public string CostCenter { get; set; }
 
         /// <summary> The name of the enrollment account. </summary>
-        public string DisplayName { get; }
+        public string DisplayName { get; set; }
 
         /// <summary> The name of the department under which the enrollment account exists. </summary>
         public string DepartmentDisplayName { get; }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Billing.Models
         public string DepartmentId { get; }
 
         /// <summary> Boolean flag which enables subscribers to run development and testing workloads on Azure at special Dev/Test rates. </summary>
-        public bool? IsDevTestEnabled { get; }
+        public bool? IsDevTestEnabled { get; set; }
 
         /// <summary> The owner of the enrollment account. </summary>
         public string AccountOwner { get; }

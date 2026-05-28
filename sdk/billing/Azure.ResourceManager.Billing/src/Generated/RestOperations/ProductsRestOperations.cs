@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateGetProductsRequest(string billingAccountName, string billingProfileName, string filter, string orderBy, long? top, long? skip, bool? count, string search, RequestContext context)
+        internal HttpMessage CreateGetProductsRequest(string billingAccountName, string billingProfileName, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -216,9 +216,9 @@ namespace Azure.ResourceManager.Billing
             {
                 uri.AppendQuery("orderBy", orderBy, true);
             }
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (skip != null)
             {
@@ -240,7 +240,30 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateGetByCustomerRequest(string billingAccountName, string customerName, string filter, string orderBy, long? top, long? skip, bool? count, string search, RequestContext context)
+        internal HttpMessage CreateNextGetProductsRequest(Uri nextPage, string billingAccountName, string billingProfileName, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetByCustomerRequest(string billingAccountName, string customerName, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -261,9 +284,9 @@ namespace Azure.ResourceManager.Billing
             {
                 uri.AppendQuery("orderBy", orderBy, true);
             }
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (skip != null)
             {
@@ -285,7 +308,30 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateGetProductsRequest(string billingAccountName, string billingProfileName, string invoiceSectionName, string filter, string orderBy, long? top, long? skip, bool? count, string search, RequestContext context)
+        internal HttpMessage CreateNextGetByCustomerRequest(Uri nextPage, string billingAccountName, string customerName, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetProductsRequest(string billingAccountName, string billingProfileName, string invoiceSectionName, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -308,9 +354,9 @@ namespace Azure.ResourceManager.Billing
             {
                 uri.AppendQuery("orderBy", orderBy, true);
             }
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (skip != null)
             {
@@ -323,6 +369,29 @@ namespace Azure.ResourceManager.Billing
             if (search != null)
             {
                 uri.AppendQuery("search", search, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateNextGetProductsRequest(Uri nextPage, string billingAccountName, string billingProfileName, string invoiceSectionName, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;

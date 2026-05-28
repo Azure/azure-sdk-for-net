@@ -20,11 +20,10 @@ namespace Azure.ResourceManager.Billing
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SavingsPlanOrderModelData"/>. </summary>
-        /// <param name="sku"> Savings plan SKU. </param>
-        internal SavingsPlanOrderModelData(BillingSku sku)
+        public SavingsPlanOrderModelData()
         {
+
             Tags = new ChangeTrackingDictionary<string, string>();
-            Sku = sku;
         }
 
         /// <summary> Initializes a new instance of <see cref="SavingsPlanOrderModelData"/>. </summary>
@@ -45,13 +44,13 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Savings plan order properties. </summary>
-        internal SavingsPlanOrderModelProperties Properties { get; }
+        internal SavingsPlanOrderModelProperties Properties { get; set; }
 
         /// <summary> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Savings plan SKU. </summary>
-        internal BillingSku Sku { get; }
+        internal BillingSku Sku { get; set; }
 
         /// <summary> Display name. </summary>
         public string DisplayName
@@ -59,6 +58,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanOrderModelProperties();
+                }
+                Properties.DisplayName = value;
             }
         }
 
@@ -77,6 +84,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.BillingScopeId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanOrderModelProperties();
+                }
+                Properties.BillingScopeId = value;
             }
         }
 
@@ -114,6 +129,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.Term;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanOrderModelProperties();
+                }
+                Properties.Term = value;
+            }
         }
 
         /// <summary> Represents the billing plan in ISO 8601 format. Required only for monthly purchases. </summary>
@@ -122,6 +145,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.BillingPlan;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanOrderModelProperties();
+                }
+                Properties.BillingPlan = value;
             }
         }
 
@@ -150,6 +181,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.PlanInformation;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanOrderModelProperties();
+                }
+                Properties.PlanInformation = value;
+            }
         }
 
         /// <summary> Gets the SavingsPlans. </summary>
@@ -157,7 +196,11 @@ namespace Azure.ResourceManager.Billing
         {
             get
             {
-                return Properties is null ? default : Properties.SavingsPlans;
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanOrderModelProperties();
+                }
+                return Properties.SavingsPlans;
             }
         }
 
@@ -177,6 +220,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.ProductCode;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanOrderModelProperties();
+                }
+                Properties.ProductCode = value;
+            }
         }
 
         /// <summary> Name of the SKU to be applied. </summary>
@@ -184,7 +235,15 @@ namespace Azure.ResourceManager.Billing
         {
             get
             {
-                return Sku.Name;
+                return Sku is null ? default : Sku.Name;
+            }
+            set
+            {
+                if (Sku is null)
+                {
+                    Sku = new BillingSku();
+                }
+                Sku.Name = value;
             }
         }
     }

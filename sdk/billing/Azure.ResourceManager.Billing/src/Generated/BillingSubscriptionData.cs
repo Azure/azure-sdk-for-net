@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Billing
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingSubscriptionData"/>. </summary>
-        internal BillingSubscriptionData()
+        public BillingSubscriptionData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The properties of a(n) BillingSubscription. </summary>
-        internal BillingSubscriptionProperties Properties { get; }
+        internal BillingSubscriptionProperties Properties { get; set; }
 
         /// <summary> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
         public IDictionary<string, string> Tags { get; }
@@ -53,6 +53,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.AutoRenew;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BillingSubscriptionProperties();
+                }
+                Properties.AutoRenew = value;
+            }
         }
 
         /// <summary> The provisioning tenant of the subscription. </summary>
@@ -61,6 +69,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.SubscriptionAliasBeneficiaryTenantId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BillingSubscriptionProperties();
+                }
+                Properties.SubscriptionAliasBeneficiaryTenantId = value;
             }
         }
 
@@ -71,6 +87,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.Beneficiary;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BillingSubscriptionProperties();
+                }
+                Properties.Beneficiary = value;
+            }
         }
 
         /// <summary> The billing frequency in ISO8601 format of product in the subscription. Example: P1M, P3M, P1Y. </summary>
@@ -79,6 +103,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.BillingFrequency;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BillingSubscriptionProperties();
+                }
+                Properties.BillingFrequency = value;
             }
         }
 
@@ -89,6 +121,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.BillingProfileId;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BillingSubscriptionProperties();
+                }
+                Properties.BillingProfileId = value;
+            }
         }
 
         /// <summary> Dictionary of billing policies associated with the subscription. </summary>
@@ -96,7 +136,11 @@ namespace Azure.ResourceManager.Billing
         {
             get
             {
-                return Properties is null ? default : Properties.BillingPolicies;
+                if (Properties is null)
+                {
+                    Properties = new BillingSubscriptionProperties();
+                }
+                return Properties.BillingPolicies;
             }
         }
 
@@ -125,6 +169,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.ConsumptionCostCenter;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BillingSubscriptionProperties();
+                }
+                Properties.ConsumptionCostCenter = value;
+            }
         }
 
         /// <summary> The fully qualified ID that uniquely identifies a customer. </summary>
@@ -133,6 +185,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.SubscriptionAliasCustomerId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BillingSubscriptionProperties();
+                }
+                Properties.SubscriptionAliasCustomerId = value;
             }
         }
 
@@ -161,6 +221,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.DisplayName;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BillingSubscriptionProperties();
+                }
+                Properties.DisplayName = value;
+            }
         }
 
         /// <summary> The enrollment Account ID associated with the subscription. This field is available only for the Enterprise Agreement Type billing accounts. </summary>
@@ -187,6 +255,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.InvoiceSectionId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BillingSubscriptionProperties();
+                }
+                Properties.InvoiceSectionId = value;
             }
         }
 
@@ -260,6 +336,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.ProductTypeId;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BillingSubscriptionProperties();
+                }
+                Properties.ProductTypeId = value;
+            }
         }
 
         /// <summary> Purchase date of the product in UTC time. </summary>
@@ -277,6 +361,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.Quantity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BillingSubscriptionProperties();
+                }
+                Properties.Quantity = value;
             }
         }
 
@@ -305,6 +397,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.SkuId;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BillingSubscriptionProperties();
+                }
+                Properties.SkuId = value;
+            }
         }
 
         /// <summary> The SKU description of the product for which the subscription is purchased. This field is is only available for billing accounts with agreement type Microsoft Customer Agreement and Microsoft Partner Agreement. </summary>
@@ -323,6 +423,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.SystemOverrides;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BillingSubscriptionProperties();
+                }
+                Properties.SystemOverrides = value;
+            }
         }
 
         /// <summary> Unique identifier of the linked resource. </summary>
@@ -340,6 +448,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.TermDuration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BillingSubscriptionProperties();
+                }
+                Properties.TermDuration = value;
             }
         }
 
@@ -367,6 +483,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.ProvisioningTenantId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BillingSubscriptionProperties();
+                }
+                Properties.ProvisioningTenantId = value;
             }
         }
 
@@ -411,7 +535,11 @@ namespace Azure.ResourceManager.Billing
         {
             get
             {
-                return Properties is null ? default : Properties.SuspensionReasons;
+                if (Properties is null)
+                {
+                    Properties = new BillingSubscriptionProperties();
+                }
+                return Properties.SuspensionReasons;
             }
         }
 
@@ -420,7 +548,11 @@ namespace Azure.ResourceManager.Billing
         {
             get
             {
-                return Properties is null ? default : Properties.SuspensionReasonDetails;
+                if (Properties is null)
+                {
+                    Properties = new BillingSubscriptionProperties();
+                }
+                return Properties.SuspensionReasonDetails;
             }
         }
 

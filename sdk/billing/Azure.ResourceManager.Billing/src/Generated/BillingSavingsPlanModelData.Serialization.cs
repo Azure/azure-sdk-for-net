@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.Billing
     /// <summary> Savings plan. </summary>
     public partial class BillingSavingsPlanModelData : ResourceData, IJsonModel<BillingSavingsPlanModelData>
     {
-        /// <summary> Initializes a new instance of <see cref="BillingSavingsPlanModelData"/> for deserialization. </summary>
-        internal BillingSavingsPlanModelData()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

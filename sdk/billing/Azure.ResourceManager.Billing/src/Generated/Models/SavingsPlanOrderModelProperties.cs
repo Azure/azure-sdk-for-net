@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Billing.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SavingsPlanOrderModelProperties"/>. </summary>
-        internal SavingsPlanOrderModelProperties()
+        public SavingsPlanOrderModelProperties()
         {
             SavingsPlans = new ChangeTrackingList<string>();
         }
@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Display name. </summary>
-        public string DisplayName { get; }
+        public string DisplayName { get; set; }
 
         /// <summary> The provisioning state of the savings plan, e.g. Succeeded. </summary>
         public string ProvisioningState { get; }
 
         /// <summary> Subscription that will be charged for purchasing SavingsPlan. </summary>
-        public string BillingScopeId { get; }
+        public string BillingScopeId { get; set; }
 
         /// <summary> Fully-qualified identifier of the billing profile where the savings plan is applied. Present only for Field-led or Customer-led customers. </summary>
         public string BillingProfileId { get; }
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.Billing.Models
         public string BillingAccountId { get; }
 
         /// <summary> Represents the Savings plan term in ISO 8601 format. </summary>
-        public BillingSavingsPlanTerm? Term { get; }
+        public BillingSavingsPlanTerm? Term { get; set; }
 
         /// <summary> Represents the billing plan in ISO 8601 format. Required only for monthly purchases. </summary>
-        public BillingPlan? BillingPlan { get; }
+        public BillingPlan? BillingPlan { get; set; }
 
         /// <summary> DateTime when the savings plan benefit started. </summary>
         public DateTimeOffset? BenefitStartOn { get; }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Billing.Models
         public DateTimeOffset? ExpiryOn { get; }
 
         /// <summary> Information describing the type of billing plan for this savings plan. </summary>
-        public BillingPlanInformation PlanInformation { get; }
+        public BillingPlanInformation PlanInformation { get; set; }
 
         /// <summary> Gets the SavingsPlans. </summary>
         public IList<string> SavingsPlans { get; } = new ChangeTrackingList<string>();
@@ -98,6 +98,6 @@ namespace Azure.ResourceManager.Billing.Models
         public ExtendedStatusInfo ExtendedStatusInfo { get; }
 
         /// <summary> Represents UPN. </summary>
-        public string ProductCode { get; }
+        public string ProductCode { get; set; }
     }
 }

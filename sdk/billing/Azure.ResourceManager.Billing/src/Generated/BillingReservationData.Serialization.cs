@@ -91,6 +91,16 @@ namespace Azure.ResourceManager.Billing
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location);
+            }
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteNumberValue(ETag.Value);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -106,16 +116,6 @@ namespace Azure.ResourceManager.Billing
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
-            }
-            if (Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteNumberValue(ETag.Value);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -155,9 +155,9 @@ namespace Azure.ResourceManager.Billing
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ReservationProperty properties = default;
-            IDictionary<string, string> tags = default;
             string location = default;
             int? eTag = default;
+            IDictionary<string, string> tags = default;
             ReservationSkuProperty sku = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -202,6 +202,20 @@ namespace Azure.ResourceManager.Billing
                     properties = ReservationProperty.DeserializeReservationProperty(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("etag"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = prop.Value.GetInt32();
+                    continue;
+                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -221,20 +235,6 @@ namespace Azure.ResourceManager.Billing
                         }
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("etag"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    eTag = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("sku"u8))
@@ -258,9 +258,9 @@ namespace Azure.ResourceManager.Billing
                 systemData,
                 additionalBinaryDataProperties,
                 properties,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 eTag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 sku);
         }
     }

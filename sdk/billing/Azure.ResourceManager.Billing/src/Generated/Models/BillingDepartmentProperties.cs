@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Billing.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingDepartmentProperties"/>. </summary>
-        internal BillingDepartmentProperties()
+        public BillingDepartmentProperties()
         {
         }
 
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The cost center associated with the department. </summary>
-        public string CostCenter { get; }
+        public string CostCenter { get; set; }
 
         /// <summary> The name of the department. </summary>
-        public string DisplayName { get; }
+        public string DisplayName { get; set; }
 
         /// <summary> The ID that uniquely identifies the department. </summary>
         public string Id { get; }

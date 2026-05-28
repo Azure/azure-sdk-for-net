@@ -12,7 +12,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The list of reservations and summary of roll out count of reservations in each state. </summary>
-    public partial class ReservationsListResult
+    internal partial class ReservationsListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

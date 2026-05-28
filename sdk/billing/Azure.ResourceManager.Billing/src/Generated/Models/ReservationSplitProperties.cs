@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Billing.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReservationSplitProperties"/>. </summary>
-        internal ReservationSplitProperties()
+        public ReservationSplitProperties()
         {
             SplitDestinations = new ChangeTrackingList<string>();
         }
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.Billing.Models
         public IList<string> SplitDestinations { get; }
 
         /// <summary> Resource id of the reservation from which this is split. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </summary>
-        public string SplitSource { get; }
+        public string SplitSource { get; set; }
     }
 }

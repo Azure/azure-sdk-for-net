@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Billing
 {
     /// <summary>
     /// A class representing a collection of <see cref="BillingSubscriptionResource"/> and their operations.
-    /// Each <see cref="BillingSubscriptionResource"/> in the collection will belong to the same instance of <see cref="BillingProfileResource"/>.
-    /// To get a <see cref="BillingSubscriptionCollection"/> instance call the GetBillingSubscriptions method from an instance of <see cref="BillingProfileResource"/>.
+    /// Each <see cref="BillingSubscriptionResource"/> in the collection will belong to the same instance of <see cref="BillingAccountResource"/>.
+    /// To get a <see cref="BillingSubscriptionCollection"/> instance call the GetBillingSubscriptions method from an instance of <see cref="BillingAccountResource"/>.
     /// </summary>
     public partial class BillingSubscriptionCollection : ArmCollection, IEnumerable<BillingSubscriptionResource>, IAsyncEnumerable<BillingSubscriptionResource>
     {
@@ -38,32 +38,32 @@ namespace Azure.ResourceManager.Billing
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingSubscriptionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(BillingSubscriptionResource.ResourceType, out string billingSubscriptionApiVersion);
+            this.TryGetApiVersion(BillingSubscriptionResource.ResourceType, out string billingSubscriptionApiVersion);
             _billingSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingSubscriptionResource.ResourceType.Namespace, Diagnostics);
             _billingSubscriptionsRestClient = new BillingSubscriptions(_billingSubscriptionsClientDiagnostics, Pipeline, Endpoint, billingSubscriptionApiVersion ?? "2024-04-01");
-            ValidateResourceId(id);
+            BillingSubscriptionCollection.ValidateResourceId(id);
         }
 
         /// <param name="id"></param>
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != BillingProfileResource.ResourceType)
+            if (id.ResourceType != BillingAccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BillingProfileResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BillingAccountResource.ResourceType), nameof(id));
             }
         }
 
         /// <summary>
-        /// Gets a subscription by its billing profile and ID. The operation is supported for billing accounts with agreement type Enterprise Agreement.
+        /// Gets a subscription by its ID. The operation is supported for billing accounts with agreement type Microsoft Customer Agreement,  Microsoft Partner Agreement, and Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingSubscriptions/{billingSubscriptionName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingSubscriptions_GetByBillingProfile. </description>
+        /// <description> BillingSubscriptionOperationGroup_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingSubscriptionsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, billingSubscriptionName, expand, context);
+                HttpMessage message = _billingSubscriptionsRestClient.CreateGetRequest(Id.Name, billingSubscriptionName, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingSubscriptionData> response = Response.FromValue(BillingSubscriptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -105,15 +105,15 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Gets a subscription by its billing profile and ID. The operation is supported for billing accounts with agreement type Enterprise Agreement.
+        /// Gets a subscription by its ID. The operation is supported for billing accounts with agreement type Microsoft Customer Agreement,  Microsoft Partner Agreement, and Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingSubscriptions/{billingSubscriptionName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingSubscriptions_GetByBillingProfile. </description>
+        /// <description> BillingSubscriptionOperationGroup_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingSubscriptionsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, billingSubscriptionName, expand, context);
+                HttpMessage message = _billingSubscriptionsRestClient.CreateGetRequest(Id.Name, billingSubscriptionName, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingSubscriptionData> response = Response.FromValue(BillingSubscriptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -155,15 +155,15 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Lists the subscriptions that are billed to a billing profile. The operation is supported for billing accounts with agreement type Microsoft Customer Agreement or Microsoft Partner Agreement.
+        /// Lists the subscriptions for a billing account.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingSubscriptions. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingSubscriptions_ListByBillingProfile. </description>
+        /// <description> BillingSubscriptionOperationGroup_ListByBillingAccount. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -172,6 +172,8 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// </summary>
         /// <param name="includeDeleted"> Can be used to get deleted billing subscriptions. </param>
+        /// <param name="includeTenantSubscriptions"> Can be used to get tenant-owned billing subscriptions. This field is only applies to Microsoft Online Services Program billing accounts. </param>
+        /// <param name="includeFailed"> Can be used to get failed billing subscriptions. </param>
         /// <param name="expand"> Can be used to expand `Reseller`, `ConsumptionCostCenter`, `LastMonthCharges` and `MonthToDateCharges`. </param>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
         /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
@@ -181,17 +183,18 @@ namespace Azure.ResourceManager.Billing
         /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingSubscriptionResource> GetAllAsync(bool? includeDeleted = default, string expand = default, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BillingSubscriptionResource> GetAllAsync(bool? includeDeleted = default, bool? includeTenantSubscriptions = default, bool? includeFailed = default, string expand = default, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingSubscriptionData, BillingSubscriptionResource>(new BillingSubscriptionsGetByBillingProfileAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingSubscriptionData, BillingSubscriptionResource>(new BillingSubscriptionsGetByBillingAccountAsyncCollectionResultOfT(
                 _billingSubscriptionsRestClient,
-                Id.Parent.Name,
                 Id.Name,
                 includeDeleted,
+                includeTenantSubscriptions,
+                includeFailed,
                 expand,
                 filter,
                 orderBy,
@@ -204,15 +207,15 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Lists the subscriptions that are billed to a billing profile. The operation is supported for billing accounts with agreement type Microsoft Customer Agreement or Microsoft Partner Agreement.
+        /// Lists the subscriptions for a billing account.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingSubscriptions. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingSubscriptions_ListByBillingProfile. </description>
+        /// <description> BillingSubscriptionOperationGroup_ListByBillingAccount. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -221,6 +224,8 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// </summary>
         /// <param name="includeDeleted"> Can be used to get deleted billing subscriptions. </param>
+        /// <param name="includeTenantSubscriptions"> Can be used to get tenant-owned billing subscriptions. This field is only applies to Microsoft Online Services Program billing accounts. </param>
+        /// <param name="includeFailed"> Can be used to get failed billing subscriptions. </param>
         /// <param name="expand"> Can be used to expand `Reseller`, `ConsumptionCostCenter`, `LastMonthCharges` and `MonthToDateCharges`. </param>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
         /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
@@ -230,17 +235,18 @@ namespace Azure.ResourceManager.Billing
         /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingSubscriptionResource> GetAll(bool? includeDeleted = default, string expand = default, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BillingSubscriptionResource> GetAll(bool? includeDeleted = default, bool? includeTenantSubscriptions = default, bool? includeFailed = default, string expand = default, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingSubscriptionData, BillingSubscriptionResource>(new BillingSubscriptionsGetByBillingProfileCollectionResultOfT(
+            return new PageableWrapper<BillingSubscriptionData, BillingSubscriptionResource>(new BillingSubscriptionsGetByBillingAccountCollectionResultOfT(
                 _billingSubscriptionsRestClient,
-                Id.Parent.Name,
                 Id.Name,
                 includeDeleted,
+                includeTenantSubscriptions,
+                includeFailed,
                 expand,
                 filter,
                 orderBy,
@@ -257,11 +263,11 @@ namespace Azure.ResourceManager.Billing
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingSubscriptions/{billingSubscriptionName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingSubscriptions_GetByBillingProfile. </description>
+        /// <description> BillingSubscriptionOperationGroup_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -286,7 +292,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingSubscriptionsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, billingSubscriptionName, expand, context);
+                HttpMessage message = _billingSubscriptionsRestClient.CreateGetRequest(Id.Name, billingSubscriptionName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingSubscriptionData> response = default;
@@ -315,11 +321,11 @@ namespace Azure.ResourceManager.Billing
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingSubscriptions/{billingSubscriptionName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingSubscriptions_GetByBillingProfile. </description>
+        /// <description> BillingSubscriptionOperationGroup_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -344,7 +350,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingSubscriptionsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, billingSubscriptionName, expand, context);
+                HttpMessage message = _billingSubscriptionsRestClient.CreateGetRequest(Id.Name, billingSubscriptionName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingSubscriptionData> response = default;
@@ -373,11 +379,11 @@ namespace Azure.ResourceManager.Billing
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingSubscriptions/{billingSubscriptionName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingSubscriptions_GetByBillingProfile. </description>
+        /// <description> BillingSubscriptionOperationGroup_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -402,7 +408,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingSubscriptionsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, billingSubscriptionName, expand, context);
+                HttpMessage message = _billingSubscriptionsRestClient.CreateGetRequest(Id.Name, billingSubscriptionName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingSubscriptionData> response = default;
@@ -435,11 +441,11 @@ namespace Azure.ResourceManager.Billing
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingSubscriptions/{billingSubscriptionName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingSubscriptions_GetByBillingProfile. </description>
+        /// <description> BillingSubscriptionOperationGroup_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -464,7 +470,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingSubscriptionsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, billingSubscriptionName, expand, context);
+                HttpMessage message = _billingSubscriptionsRestClient.CreateGetRequest(Id.Name, billingSubscriptionName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingSubscriptionData> response = default;
@@ -494,18 +500,18 @@ namespace Azure.ResourceManager.Billing
 
         IEnumerator<BillingSubscriptionResource> IEnumerable<BillingSubscriptionResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return this.GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return this.GetAll().GetEnumerator();
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<BillingSubscriptionResource> IAsyncEnumerable<BillingSubscriptionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return this.GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

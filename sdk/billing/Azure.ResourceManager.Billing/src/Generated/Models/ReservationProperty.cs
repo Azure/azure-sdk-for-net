@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Billing.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReservationProperty"/>. </summary>
-        internal ReservationProperty()
+        public ReservationProperty()
         {
             AppliedScopes = new ChangeTrackingList<string>();
         }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Billing.Models
         public string ReservedResourceType { get; }
 
         /// <summary> Allows reservation discount to be applied across skus within the same auto fit group. Not all skus support instance size flexibility. </summary>
-        public InstanceFlexibility? InstanceFlexibility { get; }
+        public InstanceFlexibility? InstanceFlexibility { get; set; }
 
         /// <summary> The display name of the reservation. </summary>
         public string DisplayName { get; }
@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.Billing.Models
         public string AppliedScopeType { get; }
 
         /// <summary> Indicates if the reservation is archived. </summary>
-        public bool? IsArchived { get; }
+        public bool? IsArchived { get; set; }
 
         /// <summary> Capabilities of the reservation. </summary>
-        public string Capabilities { get; }
+        public string Capabilities { get; set; }
 
         /// <summary> The number of the reservation. </summary>
         public float? Quantity { get; }
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Billing.Models
         public DateTimeOffset? EffectiveOn { get; }
 
         /// <summary> This is the DateTime when the reservation benefit started. </summary>
-        public DateTimeOffset? BenefitStartOn { get; }
+        public DateTimeOffset? BenefitStartOn { get; set; }
 
         /// <summary> DateTime of the last time the reservation was updated. </summary>
         public DateTimeOffset? LastUpdatedOn { get; }
@@ -142,19 +142,19 @@ namespace Azure.ResourceManager.Billing.Models
         public DateTimeOffset? ExpireOn { get; }
 
         /// <summary> This is the date-time when the reservation will expire. </summary>
-        public DateTimeOffset? ReservationExpireOn { get; }
+        public DateTimeOffset? ReservationExpireOn { get; set; }
 
         /// <summary> This is the date-time when the Azure Hybrid Benefit needs to be reviewed. </summary>
-        public DateTimeOffset? ReviewOn { get; }
+        public DateTimeOffset? ReviewOn { get; set; }
 
         /// <summary> The sku description of the reservation. </summary>
         public string SkuDescription { get; }
 
         /// <summary> The message giving detailed information about the status code. </summary>
-        public ReservationExtendedStatusInfo ExtendedStatusInfo { get; }
+        public ReservationExtendedStatusInfo ExtendedStatusInfo { get; set; }
 
         /// <summary> The billing plan options available for this sku. </summary>
-        public ReservationBillingPlan? BillingPlan { get; }
+        public ReservationBillingPlan? BillingPlan { get; set; }
 
         /// <summary> The provisioning state of the reservation for display, e.g. Succeeded. </summary>
         public string DisplayProvisioningState { get; }
@@ -163,22 +163,22 @@ namespace Azure.ResourceManager.Billing.Models
         public string ProvisioningSubState { get; }
 
         /// <summary> This is the date when the reservation was purchased. </summary>
-        public DateTimeOffset? PurchaseOn { get; }
+        public DateTimeOffset? PurchaseOn { get; set; }
 
         /// <summary> This is the date-time when the reservation was purchased. </summary>
-        public DateTimeOffset? ReservationPurchaseOn { get; }
+        public DateTimeOffset? ReservationPurchaseOn { get; set; }
 
         /// <summary> Properties of reservation split. </summary>
-        public ReservationSplitProperties SplitProperties { get; }
+        public ReservationSplitProperties SplitProperties { get; set; }
 
         /// <summary> Properties of reservation merge. </summary>
-        public ReservationMergeProperties MergeProperties { get; }
+        public ReservationMergeProperties MergeProperties { get; set; }
 
         /// <summary> Properties of reservation swap. </summary>
-        public ReservationSwapProperties SwapProperties { get; }
+        public ReservationSwapProperties SwapProperties { get; set; }
 
         /// <summary> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </summary>
-        public ReservationAppliedScopeProperties AppliedScopeProperties { get; }
+        public ReservationAppliedScopeProperties AppliedScopeProperties { get; set; }
 
         /// <summary> Subscription that will be charged for purchasing reservation or savings plan. </summary>
         public string BillingScopeId { get; }
@@ -190,10 +190,10 @@ namespace Azure.ResourceManager.Billing.Models
         public string RenewSource { get; }
 
         /// <summary> Reservation Id of the reservation which is purchased because of renew. Format of the resource Id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </summary>
-        public string RenewDestination { get; }
+        public string RenewDestination { get; set; }
 
         /// <summary> The renew properties for a reservation. </summary>
-        public ReservationRenewProperties RenewProperties { get; }
+        public ReservationRenewProperties RenewProperties { get; set; }
 
         /// <summary> The term of the reservation, e.g. P1Y. </summary>
         public string Term { get; }
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Billing.Models
         internal ReservationPropertyUtilization Utilization { get; }
 
         /// <summary> Represents UPN. </summary>
-        public string ProductCode { get; }
+        public string ProductCode { get; set; }
 
         /// <summary> last 7 day utilization trend for a reservation. </summary>
         public string Trend

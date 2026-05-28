@@ -12,7 +12,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> A container for a list of resources. </summary>
-    public partial class InvoiceSectionWithCreateSubPermissionListResult
+    internal partial class InvoiceSectionWithCreateSubPermissionListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

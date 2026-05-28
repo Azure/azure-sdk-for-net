@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Billing.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionPolicyProperties"/>. </summary>
-        internal SubscriptionPolicyProperties()
+        public SubscriptionPolicyProperties()
         {
             Policies = new ChangeTrackingList<BillingPolicySummary>();
         }

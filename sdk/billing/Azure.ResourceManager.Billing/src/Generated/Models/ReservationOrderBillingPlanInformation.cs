@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Billing.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReservationOrderBillingPlanInformation"/>. </summary>
-        internal ReservationOrderBillingPlanInformation()
+        public ReservationOrderBillingPlanInformation()
         {
             Transactions = new ChangeTrackingList<ReservationPaymentDetail>();
         }
@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Amount of money to be paid for the Order. Tax is not included. </summary>
-        public BillingPrice PricingCurrencyTotal { get; }
+        public BillingPrice PricingCurrencyTotal { get; set; }
 
         /// <summary> Date when the billing plan has started. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn { get; set; }
 
         /// <summary> For recurring billing plans, indicates the date when next payment will be processed. Null when total is paid off. </summary>
-        public DateTimeOffset? NextPaymentDueOn { get; }
+        public DateTimeOffset? NextPaymentDueOn { get; set; }
 
         /// <summary> Gets the Transactions. </summary>
         public IList<ReservationPaymentDetail> Transactions { get; }

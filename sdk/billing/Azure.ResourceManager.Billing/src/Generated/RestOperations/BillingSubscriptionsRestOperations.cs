@@ -143,237 +143,6 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateGetByCustomerRequest(string billingAccountName, string billingProfileName, string customerName, bool? includeDeleted, string expand, string filter, string orderBy, long? top, long? skip, bool? count, string search, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
-            uri.AppendPath(billingAccountName, true);
-            uri.AppendPath("/billingProfiles/", false);
-            uri.AppendPath(billingProfileName, true);
-            uri.AppendPath("/customers/", false);
-            uri.AppendPath(customerName, true);
-            uri.AppendPath("/billingSubscriptions", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            if (includeDeleted != null)
-            {
-                uri.AppendQuery("includeDeleted", TypeFormatters.ConvertToString(includeDeleted), true);
-            }
-            if (expand != null)
-            {
-                uri.AppendQuery("expand", expand, true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("filter", filter, true);
-            }
-            if (orderBy != null)
-            {
-                uri.AppendQuery("orderBy", orderBy, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(top), true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
-            }
-            if (count != null)
-            {
-                uri.AppendQuery("count", TypeFormatters.ConvertToString(count), true);
-            }
-            if (search != null)
-            {
-                uri.AppendQuery("search", search, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetByCustomerAtBillingAccountRequest(string billingAccountName, string customerName, bool? includeDeleted, string expand, string filter, string orderBy, long? top, long? skip, bool? count, string search, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
-            uri.AppendPath(billingAccountName, true);
-            uri.AppendPath("/customers/", false);
-            uri.AppendPath(customerName, true);
-            uri.AppendPath("/billingSubscriptions", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            if (includeDeleted != null)
-            {
-                uri.AppendQuery("includeDeleted", TypeFormatters.ConvertToString(includeDeleted), true);
-            }
-            if (expand != null)
-            {
-                uri.AppendQuery("expand", expand, true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("filter", filter, true);
-            }
-            if (orderBy != null)
-            {
-                uri.AppendQuery("orderBy", orderBy, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(top), true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
-            }
-            if (count != null)
-            {
-                uri.AppendQuery("count", TypeFormatters.ConvertToString(count), true);
-            }
-            if (search != null)
-            {
-                uri.AppendQuery("search", search, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetByEnrollmentAccountRequest(string billingAccountName, string enrollmentAccountName, string filter, string orderBy, long? top, long? skip, bool? count, string search, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
-            uri.AppendPath(billingAccountName, true);
-            uri.AppendPath("/enrollmentAccounts/", false);
-            uri.AppendPath(enrollmentAccountName, true);
-            uri.AppendPath("/billingSubscriptions", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("filter", filter, true);
-            }
-            if (orderBy != null)
-            {
-                uri.AppendQuery("orderBy", orderBy, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(top), true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
-            }
-            if (count != null)
-            {
-                uri.AppendQuery("count", TypeFormatters.ConvertToString(count), true);
-            }
-            if (search != null)
-            {
-                uri.AppendQuery("search", search, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetByInvoiceSectionRequest(string billingAccountName, string billingProfileName, string invoiceSectionName, bool? includeDeleted, string expand, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
-            uri.AppendPath(billingAccountName, true);
-            uri.AppendPath("/billingProfiles/", false);
-            uri.AppendPath(billingProfileName, true);
-            uri.AppendPath("/invoiceSections/", false);
-            uri.AppendPath(invoiceSectionName, true);
-            uri.AppendPath("/billingSubscriptions", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            if (includeDeleted != null)
-            {
-                uri.AppendQuery("includeDeleted", TypeFormatters.ConvertToString(includeDeleted), true);
-            }
-            if (expand != null)
-            {
-                uri.AppendQuery("expand", expand, true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("filter", filter, true);
-            }
-            if (orderBy != null)
-            {
-                uri.AppendQuery("orderBy", orderBy, true);
-            }
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
-            }
-            if (count != null)
-            {
-                uri.AppendQuery("count", TypeFormatters.ConvertToString(count), true);
-            }
-            if (search != null)
-            {
-                uri.AppendQuery("search", search, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateNextGetByInvoiceSectionRequest(Uri nextPage, string billingAccountName, string billingProfileName, string invoiceSectionName, bool? includeDeleted, string expand, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
         internal HttpMessage CreateGetRequest(string billingAccountName, string billingSubscriptionName, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
@@ -632,6 +401,306 @@ namespace Azure.ResourceManager.Billing
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetByCustomerRequest(string billingAccountName, string billingProfileName, string customerName, bool? includeDeleted, string expand, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountName, true);
+            uri.AppendPath("/billingProfiles/", false);
+            uri.AppendPath(billingProfileName, true);
+            uri.AppendPath("/customers/", false);
+            uri.AppendPath(customerName, true);
+            uri.AppendPath("/billingSubscriptions", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (includeDeleted != null)
+            {
+                uri.AppendQuery("includeDeleted", TypeFormatters.ConvertToString(includeDeleted), true);
+            }
+            if (expand != null)
+            {
+                uri.AppendQuery("expand", expand, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            if (orderBy != null)
+            {
+                uri.AppendQuery("orderBy", orderBy, true);
+            }
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+            }
+            if (count != null)
+            {
+                uri.AppendQuery("count", TypeFormatters.ConvertToString(count), true);
+            }
+            if (search != null)
+            {
+                uri.AppendQuery("search", search, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateNextGetByCustomerRequest(Uri nextPage, string billingAccountName, string billingProfileName, string customerName, bool? includeDeleted, string expand, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetByCustomerAtBillingAccountRequest(string billingAccountName, string customerName, bool? includeDeleted, string expand, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountName, true);
+            uri.AppendPath("/customers/", false);
+            uri.AppendPath(customerName, true);
+            uri.AppendPath("/billingSubscriptions", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (includeDeleted != null)
+            {
+                uri.AppendQuery("includeDeleted", TypeFormatters.ConvertToString(includeDeleted), true);
+            }
+            if (expand != null)
+            {
+                uri.AppendQuery("expand", expand, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            if (orderBy != null)
+            {
+                uri.AppendQuery("orderBy", orderBy, true);
+            }
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+            }
+            if (count != null)
+            {
+                uri.AppendQuery("count", TypeFormatters.ConvertToString(count), true);
+            }
+            if (search != null)
+            {
+                uri.AppendQuery("search", search, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateNextGetByCustomerAtBillingAccountRequest(Uri nextPage, string billingAccountName, string customerName, bool? includeDeleted, string expand, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetByEnrollmentAccountRequest(string billingAccountName, string enrollmentAccountName, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountName, true);
+            uri.AppendPath("/enrollmentAccounts/", false);
+            uri.AppendPath(enrollmentAccountName, true);
+            uri.AppendPath("/billingSubscriptions", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            if (orderBy != null)
+            {
+                uri.AppendQuery("orderBy", orderBy, true);
+            }
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+            }
+            if (count != null)
+            {
+                uri.AppendQuery("count", TypeFormatters.ConvertToString(count), true);
+            }
+            if (search != null)
+            {
+                uri.AppendQuery("search", search, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateNextGetByEnrollmentAccountRequest(Uri nextPage, string billingAccountName, string enrollmentAccountName, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetByInvoiceSectionRequest(string billingAccountName, string billingProfileName, string invoiceSectionName, bool? includeDeleted, string expand, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountName, true);
+            uri.AppendPath("/billingProfiles/", false);
+            uri.AppendPath(billingProfileName, true);
+            uri.AppendPath("/invoiceSections/", false);
+            uri.AppendPath(invoiceSectionName, true);
+            uri.AppendPath("/billingSubscriptions", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (includeDeleted != null)
+            {
+                uri.AppendQuery("includeDeleted", TypeFormatters.ConvertToString(includeDeleted), true);
+            }
+            if (expand != null)
+            {
+                uri.AppendQuery("expand", expand, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            if (orderBy != null)
+            {
+                uri.AppendQuery("orderBy", orderBy, true);
+            }
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
+            }
+            if (count != null)
+            {
+                uri.AppendQuery("count", TypeFormatters.ConvertToString(count), true);
+            }
+            if (search != null)
+            {
+                uri.AppendQuery("search", search, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateNextGetByInvoiceSectionRequest(Uri nextPage, string billingAccountName, string billingProfileName, string invoiceSectionName, bool? includeDeleted, string expand, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
     }

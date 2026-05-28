@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.Billing
     {
         private readonly ClientDiagnostics _billingProfilesClientDiagnostics;
         private readonly BillingProfiles _billingProfilesRestClient;
-        private readonly ClientDiagnostics _invoicesClientDiagnostics;
-        private readonly Invoices _invoicesRestClient;
         private readonly ClientDiagnostics _billingRequestsClientDiagnostics;
         private readonly BillingRequests _billingRequestsRestClient;
         private readonly ClientDiagnostics _billingPermissionsClientDiagnostics;
         private readonly BillingPermissions _billingPermissionsRestClient;
         private readonly ClientDiagnostics _billingRoleAssignmentsClientDiagnostics;
         private readonly BillingRoleAssignments _billingRoleAssignmentsRestClient;
+        private readonly ClientDiagnostics _invoicesClientDiagnostics;
+        private readonly Invoices _invoicesRestClient;
         private readonly ClientDiagnostics _productsClientDiagnostics;
         private readonly Products _productsRestClient;
         private readonly ClientDiagnostics _reservationsClientDiagnostics;
@@ -68,14 +68,14 @@ namespace Azure.ResourceManager.Billing
             TryGetApiVersion(ResourceType, out string billingProfileApiVersion);
             _billingProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
             _billingProfilesRestClient = new BillingProfiles(_billingProfilesClientDiagnostics, Pipeline, Endpoint, billingProfileApiVersion ?? "2024-04-01");
-            _invoicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _invoicesRestClient = new Invoices(_invoicesClientDiagnostics, Pipeline, Endpoint, billingProfileApiVersion ?? "2024-04-01");
             _billingRequestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
             _billingRequestsRestClient = new BillingRequests(_billingRequestsClientDiagnostics, Pipeline, Endpoint, billingProfileApiVersion ?? "2024-04-01");
             _billingPermissionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
             _billingPermissionsRestClient = new BillingPermissions(_billingPermissionsClientDiagnostics, Pipeline, Endpoint, billingProfileApiVersion ?? "2024-04-01");
             _billingRoleAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
             _billingRoleAssignmentsRestClient = new BillingRoleAssignments(_billingRoleAssignmentsClientDiagnostics, Pipeline, Endpoint, billingProfileApiVersion ?? "2024-04-01");
+            _invoicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
+            _invoicesRestClient = new Invoices(_invoicesClientDiagnostics, Pipeline, Endpoint, billingProfileApiVersion ?? "2024-04-01");
             _productsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
             _productsRestClient = new Products(_productsClientDiagnostics, Pipeline, Endpoint, billingProfileApiVersion ?? "2024-04-01");
             _reservationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
@@ -315,15 +315,15 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Lists the invoices for a billing profile for a given start date and end date. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// The list of billing requests submitted for the billing profile.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoices. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingRequests. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingProfiles_InvoicesListByBillingProfile. </description>
+        /// <description> BillingProfiles_BillingRequestsListByBillingProfile. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -335,8 +335,6 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="periodStartDate"> The start date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </param>
-        /// <param name="periodEndDate"> The end date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </param>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
         /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
         /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
@@ -344,19 +342,17 @@ namespace Azure.ResourceManager.Billing
         /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
         /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingInvoiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingInvoiceResource> GetByBillingProfileAsync(DateTimeOffset? periodStartDate = default, DateTimeOffset? periodEndDate = default, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingRequestResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingRequestResource> GetByBillingProfileAsync(string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingInvoiceData, BillingInvoiceResource>(new InvoicesGetByBillingProfileAsyncCollectionResultOfT(
-                _invoicesRestClient,
+            return new AsyncPageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestsGetByBillingProfileAsyncCollectionResultOfT(
+                _billingRequestsRestClient,
                 Id.Parent.Name,
                 Id.Name,
-                periodStartDate,
-                periodEndDate,
                 filter,
                 orderBy,
                 maxCount,
@@ -364,60 +360,7 @@ namespace Azure.ResourceManager.Billing
                 count,
                 search,
                 context,
-                "BillingProfileResource.GetByBillingProfile"), data => new BillingInvoiceResource(Client, data));
-        }
-
-        /// <summary>
-        /// Lists the invoices for a billing profile for a given start date and end date. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoices. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BillingProfiles_InvoicesListByBillingProfile. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="BillingProfileResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="periodStartDate"> The start date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </param>
-        /// <param name="periodEndDate"> The end date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </param>
-        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
-        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
-        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
-        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
-        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
-        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingInvoiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingInvoiceResource> GetByBillingProfile(DateTimeOffset? periodStartDate = default, DateTimeOffset? periodEndDate = default, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<BillingInvoiceData, BillingInvoiceResource>(new InvoicesGetByBillingProfileCollectionResultOfT(
-                _invoicesRestClient,
-                Id.Parent.Name,
-                Id.Name,
-                periodStartDate,
-                periodEndDate,
-                filter,
-                orderBy,
-                maxCount,
-                skip,
-                count,
-                search,
-                context,
-                "BillingProfileResource.GetByBillingProfile"), data => new BillingInvoiceResource(Client, data));
+                "BillingProfileResource.GetByBillingProfile"), data => new BillingRequestResource(Client, data));
         }
 
         /// <summary>
@@ -443,89 +386,30 @@ namespace Azure.ResourceManager.Billing
         /// </summary>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
         /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
-        /// <param name="top"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
         /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
         /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
         /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BillingRequestListResult>> GetByBillingProfileAsync(string filter = default, string orderBy = default, long? top = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingRequestResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingRequestResource> GetByBillingProfile(string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _billingRequestsClientDiagnostics.CreateScope("BillingProfileResource.GetByBillingProfile");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _billingRequestsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, filter, orderBy, top, skip, count, search, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BillingRequestListResult> response = Response.FromValue(BillingRequestListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The list of billing requests submitted for the billing profile.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingRequests. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BillingProfiles_BillingRequestsListByBillingProfile. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="BillingProfileResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
-        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
-        /// <param name="top"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
-        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
-        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
-        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BillingRequestListResult> GetByBillingProfile(string filter = default, string orderBy = default, long? top = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _billingRequestsClientDiagnostics.CreateScope("BillingProfileResource.GetByBillingProfile");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _billingRequestsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, filter, orderBy, top, skip, count, search, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<BillingRequestListResult> response = Response.FromValue(BillingRequestListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestsGetByBillingProfileCollectionResultOfT(
+                _billingRequestsRestClient,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingProfileResource.GetByBillingProfile"), data => new BillingRequestResource(Client, data));
         }
 
         /// <summary>
@@ -637,7 +521,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="billingRoleAssignmentProperties"> The properties of the billing role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingRoleAssignmentProperties"/> is null. </exception>
-        public virtual async Task<ArmOperation<BillingRoleAssignmentResource>> CreateByBillingProfileAsync(WaitUntil waitUntil, BillingRoleAssignmentProperties billingRoleAssignmentProperties, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BillingRoleAssignmentData>> CreateByBillingProfileAsync(WaitUntil waitUntil, BillingRoleAssignmentProperties billingRoleAssignmentProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(billingRoleAssignmentProperties, nameof(billingRoleAssignmentProperties));
 
@@ -651,8 +535,8 @@ namespace Azure.ResourceManager.Billing
                 };
                 HttpMessage message = _billingRoleAssignmentsRestClient.CreateCreateByBillingProfileRequest(Id.Parent.Name, Id.Name, BillingRoleAssignmentProperties.ToRequestContent(billingRoleAssignmentProperties), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                BillingArmOperation<BillingRoleAssignmentResource> operation = new BillingArmOperation<BillingRoleAssignmentResource>(
-                    new BillingRoleAssignmentOperationSource(Client),
+                BillingArmOperation<BillingRoleAssignmentData> operation = new BillingArmOperation<BillingRoleAssignmentData>(
+                    new BillingRoleAssignmentDataOperationSource(),
                     _billingRoleAssignmentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -696,7 +580,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="billingRoleAssignmentProperties"> The properties of the billing role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingRoleAssignmentProperties"/> is null. </exception>
-        public virtual ArmOperation<BillingRoleAssignmentResource> CreateByBillingProfile(WaitUntil waitUntil, BillingRoleAssignmentProperties billingRoleAssignmentProperties, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BillingRoleAssignmentData> CreateByBillingProfile(WaitUntil waitUntil, BillingRoleAssignmentProperties billingRoleAssignmentProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(billingRoleAssignmentProperties, nameof(billingRoleAssignmentProperties));
 
@@ -710,8 +594,8 @@ namespace Azure.ResourceManager.Billing
                 };
                 HttpMessage message = _billingRoleAssignmentsRestClient.CreateCreateByBillingProfileRequest(Id.Parent.Name, Id.Name, BillingRoleAssignmentProperties.ToRequestContent(billingRoleAssignmentProperties), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                BillingArmOperation<BillingRoleAssignmentResource> operation = new BillingArmOperation<BillingRoleAssignmentResource>(
-                    new BillingRoleAssignmentOperationSource(Client),
+                BillingArmOperation<BillingRoleAssignmentData> operation = new BillingArmOperation<BillingRoleAssignmentData>(
+                    new BillingRoleAssignmentDataOperationSource(),
                     _billingRoleAssignmentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -731,15 +615,15 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Lists the billing permissions the caller has on a billing profile.
+        /// Lists the invoices for a billing profile for a given start date and end date. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingPermissions. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoices. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingProfiles_ListByBillingProfile. </description>
+        /// <description> BillingProfiles_InvoicesListByBillingProfile. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -751,31 +635,89 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="periodStartDate"> The start date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </param>
+        /// <param name="periodEndDate"> The end date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </param>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BillingPermissionListResult>> GetByBillingProfileAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingInvoiceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingInvoiceData> GetByBillingProfileAsync(DateTimeOffset? periodStartDate = default, DateTimeOffset? periodEndDate = default, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _billingPermissionsClientDiagnostics.CreateScope("BillingProfileResource.GetByBillingProfile");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _billingPermissionsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BillingPermissionListResult> response = Response.FromValue(BillingPermissionListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
+                CancellationToken = cancellationToken
+            };
+            return new InvoicesGetByBillingProfileAsyncCollectionResultOfT(
+                _invoicesRestClient,
+                Id.Parent.Name,
+                Id.Name,
+                periodStartDate,
+                periodEndDate,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingProfileResource.GetByBillingProfile");
+        }
+
+        /// <summary>
+        /// Lists the invoices for a billing profile for a given start date and end date. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BillingProfiles_InvoicesListByBillingProfile. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingProfileResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="periodStartDate"> The start date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </param>
+        /// <param name="periodEndDate"> The end date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </param>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BillingInvoiceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingInvoiceData> GetByBillingProfile(DateTimeOffset? periodStartDate = default, DateTimeOffset? periodEndDate = default, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
             {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new InvoicesGetByBillingProfileCollectionResultOfT(
+                _invoicesRestClient,
+                Id.Parent.Name,
+                Id.Name,
+                periodStartDate,
+                periodEndDate,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingProfileResource.GetByBillingProfile");
         }
 
         /// <summary>
@@ -800,30 +742,46 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BillingPermissionListResult> GetByBillingProfile(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingPermission"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingPermission> GetByBillingProfileAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _billingPermissionsClientDiagnostics.CreateScope("BillingProfileResource.GetByBillingProfile");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _billingPermissionsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<BillingPermissionListResult> response = Response.FromValue(BillingPermissionListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
+                CancellationToken = cancellationToken
+            };
+            return new BillingPermissionsGetByBillingProfileAsyncCollectionResultOfT(_billingPermissionsRestClient, Id.Parent.Name, Id.Name, context, "BillingProfileResource.GetByBillingProfile");
+        }
+
+        /// <summary>
+        /// Lists the billing permissions the caller has on a billing profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingPermissions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BillingProfiles_ListByBillingProfile. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingProfileResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BillingPermission"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingPermission> GetByBillingProfile(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
             {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new BillingPermissionsGetByBillingProfileCollectionResultOfT(_billingPermissionsRestClient, Id.Parent.Name, Id.Name, context, "BillingProfileResource.GetByBillingProfile");
         }
 
         /// <summary>
@@ -849,35 +807,31 @@ namespace Azure.ResourceManager.Billing
         /// </summary>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
         /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
-        /// <param name="top"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
         /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
         /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
         /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ProductListResult>> GetProductsAsync(string filter = default, string orderBy = default, long? top = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingProductResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingProductResource> GetProductsAsync(string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("BillingProfileResource.GetProducts");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _productsRestClient.CreateGetProductsRequest(Id.Parent.Name, Id.Name, filter, orderBy, top, skip, count, search, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ProductListResult> response = Response.FromValue(ProductListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BillingProductData, BillingProductResource>(new ProductsGetProductsAsyncCollectionResultOfT(
+                _productsRestClient,
+                Id.Parent.Name,
+                Id.Name,
+                null,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingProfileResource.GetProducts"), data => new BillingProductResource(Client, data));
         }
 
         /// <summary>
@@ -903,35 +857,31 @@ namespace Azure.ResourceManager.Billing
         /// </summary>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
         /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
-        /// <param name="top"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
         /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
         /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
         /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ProductListResult> GetProducts(string filter = default, string orderBy = default, long? top = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingProductResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingProductResource> GetProducts(string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("BillingProfileResource.GetProducts");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _productsRestClient.CreateGetProductsRequest(Id.Parent.Name, Id.Name, filter, orderBy, top, skip, count, search, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ProductListResult> response = Response.FromValue(ProductListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BillingProductData, BillingProductResource>(new ProductsGetProductsCollectionResultOfT(
+                _productsRestClient,
+                Id.Parent.Name,
+                Id.Name,
+                null,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingProfileResource.GetProducts"), data => new BillingProductResource(Client, data));
         }
 
         /// <summary>
@@ -962,30 +912,25 @@ namespace Azure.ResourceManager.Billing
         /// <param name="selectedState"> The selected provisioning state. </param>
         /// <param name="take"> The number of reservations to return in API response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ReservationsListResult>> GetByBillingProfileAsync(string filter = default, string orderBy = default, float? skiptoken = default, string refreshSummary = default, string selectedState = default, float? take = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingReservationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingReservationResource> GetByBillingProfileAsync(string filter = default, string orderBy = default, float? skiptoken = default, string refreshSummary = default, string selectedState = default, float? take = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingProfileResource.GetByBillingProfile");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _reservationsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, filter, orderBy, skiptoken, refreshSummary, selectedState, take, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ReservationsListResult> response = Response.FromValue(ReservationsListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BillingReservationData, BillingReservationResource>(new ReservationsGetByBillingProfileAsyncCollectionResultOfT(
+                _reservationsRestClient,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                orderBy,
+                skiptoken,
+                refreshSummary,
+                selectedState,
+                take,
+                context,
+                "BillingProfileResource.GetByBillingProfile"), data => new BillingReservationResource(Client, data));
         }
 
         /// <summary>
@@ -1016,30 +961,25 @@ namespace Azure.ResourceManager.Billing
         /// <param name="selectedState"> The selected provisioning state. </param>
         /// <param name="take"> The number of reservations to return in API response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ReservationsListResult> GetByBillingProfile(string filter = default, string orderBy = default, float? skiptoken = default, string refreshSummary = default, string selectedState = default, float? take = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingReservationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingReservationResource> GetByBillingProfile(string filter = default, string orderBy = default, float? skiptoken = default, string refreshSummary = default, string selectedState = default, float? take = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingProfileResource.GetByBillingProfile");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _reservationsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, filter, orderBy, skiptoken, refreshSummary, selectedState, take, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ReservationsListResult> response = Response.FromValue(ReservationsListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BillingReservationData, BillingReservationResource>(new ReservationsGetByBillingProfileCollectionResultOfT(
+                _reservationsRestClient,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                orderBy,
+                skiptoken,
+                refreshSummary,
+                selectedState,
+                take,
+                context,
+                "BillingProfileResource.GetByBillingProfile"), data => new BillingReservationResource(Client, data));
         }
 
         /// <summary>
@@ -1182,35 +1122,33 @@ namespace Azure.ResourceManager.Billing
         /// <param name="type"> The type of transaction. </param>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
         /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
-        /// <param name="top"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
         /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
         /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
         /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TransactionListResult>> GetByBillingProfileAsync(DateTimeOffset periodStartDate, DateTimeOffset periodEndDate, TransactionType @type, string filter = default, string orderBy = default, long? top = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingTransactionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingTransactionData> GetByBillingProfileAsync(DateTimeOffset periodStartDate, DateTimeOffset periodEndDate, TransactionType @type, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _transactionsClientDiagnostics.CreateScope("BillingProfileResource.GetByBillingProfile");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _transactionsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, periodStartDate, periodEndDate, @type.ToString(), filter, orderBy, top, skip, count, search, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TransactionListResult> response = Response.FromValue(TransactionListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new TransactionsGetByBillingProfileAsyncCollectionResultOfT(
+                _transactionsRestClient,
+                Id.Parent.Name,
+                Id.Name,
+                periodStartDate,
+                periodEndDate,
+                @type.ToString(),
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingProfileResource.GetByBillingProfile");
         }
 
         /// <summary>
@@ -1239,35 +1177,33 @@ namespace Azure.ResourceManager.Billing
         /// <param name="type"> The type of transaction. </param>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
         /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
-        /// <param name="top"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
         /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
         /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
         /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TransactionListResult> GetByBillingProfile(DateTimeOffset periodStartDate, DateTimeOffset periodEndDate, TransactionType @type, string filter = default, string orderBy = default, long? top = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingTransactionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingTransactionData> GetByBillingProfile(DateTimeOffset periodStartDate, DateTimeOffset periodEndDate, TransactionType @type, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _transactionsClientDiagnostics.CreateScope("BillingProfileResource.GetByBillingProfile");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _transactionsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, periodStartDate, periodEndDate, @type.ToString(), filter, orderBy, top, skip, count, search, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<TransactionListResult> response = Response.FromValue(TransactionListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new TransactionsGetByBillingProfileCollectionResultOfT(
+                _transactionsRestClient,
+                Id.Parent.Name,
+                Id.Name,
+                periodStartDate,
+                periodEndDate,
+                @type.ToString(),
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingProfileResource.GetByBillingProfile");
         }
 
         /// <summary>
@@ -1740,7 +1676,7 @@ namespace Azure.ResourceManager.Billing
         /// <returns> An object representing collection of BillingRoleAssignments and their operations over a BillingRoleAssignmentResource. </returns>
         public virtual BillingRoleAssignmentCollection GetBillingRoleAssignments()
         {
-            return GetCachedClient(client => new BillingRoleAssignmentCollection(client, Id));
+            return this.GetCachedClient(client => new BillingRoleAssignmentCollection(client, Id));
         }
 
         /// <summary> Gets a role assignment for the caller on a billing profile. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement. </summary>
@@ -1769,18 +1705,18 @@ namespace Azure.ResourceManager.Billing
             return GetBillingRoleAssignments().Get(billingRoleAssignmentName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a <see cref="BillingProfileAvailableBalanceResource"/> along with the instance operations that can be performed on it in the <see cref="BillingProfileResource"/>. </summary>
-        /// <returns> Returns a <see cref="BillingProfileAvailableBalanceResource"/> object. </returns>
-        public virtual BillingProfileAvailableBalanceResource GetBillingProfileAvailableBalance()
+        /// <summary> Gets an object representing a <see cref="AvailableBalanceResource"/> along with the instance operations that can be performed on it in the <see cref="BillingProfileResource"/>. </summary>
+        /// <returns> Returns a <see cref="AvailableBalanceResource"/> object. </returns>
+        public virtual AvailableBalanceResource GetAvailableBalance()
         {
-            return new BillingProfileAvailableBalanceResource(Client, Id.AppendChildResource("availableBalance", "default"));
+            return new AvailableBalanceResource(Client, Id.AppendChildResource("availableBalance", "default"));
         }
 
         /// <summary> Gets a collection of BillingSubscriptions in the <see cref="BillingProfileResource"/>. </summary>
         /// <returns> An object representing collection of BillingSubscriptions and their operations over a BillingSubscriptionResource. </returns>
         public virtual BillingSubscriptionCollection GetBillingSubscriptions()
         {
-            return GetCachedClient(client => new BillingSubscriptionCollection(client, Id));
+            return this.GetCachedClient(client => new BillingSubscriptionCollection(client, Id));
         }
 
         /// <summary> Gets a subscription by its billing profile and ID. The operation is supported for billing accounts with agreement type Enterprise Agreement. </summary>
@@ -1818,11 +1754,11 @@ namespace Azure.ResourceManager.Billing
             return new BillingProfilePolicyResource(Client, Id.AppendChildResource("policies", "default"));
         }
 
-        /// <summary> Gets a collection of BillingCustomers in the <see cref="BillingProfileResource"/>. </summary>
-        /// <returns> An object representing collection of BillingCustomers and their operations over a BillingCustomerResource. </returns>
-        public virtual BillingCustomerCollection GetBillingCustomers()
+        /// <summary> Gets a collection of Customers in the <see cref="BillingProfileResource"/>. </summary>
+        /// <returns> An object representing collection of Customers and their operations over a CustomerResource. </returns>
+        public virtual CustomerCollection GetCustomers()
         {
-            return GetCachedClient(client => new BillingCustomerCollection(client, Id));
+            return this.GetCachedClient(client => new CustomerCollection(client, Id));
         }
 
         /// <summary> Gets a customer by its ID. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement. </summary>
@@ -1831,11 +1767,11 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="customerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BillingCustomerResource>> GetBillingCustomerAsync(string customerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CustomerResource>> GetCustomerAsync(string customerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customerName, nameof(customerName));
 
-            return await GetBillingCustomers().GetAsync(customerName, cancellationToken).ConfigureAwait(false);
+            return await GetCustomers().GetAsync(customerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a customer by its ID. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement. </summary>
@@ -1844,11 +1780,11 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="customerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BillingCustomerResource> GetBillingCustomer(string customerName, CancellationToken cancellationToken = default)
+        public virtual Response<CustomerResource> GetCustomer(string customerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customerName, nameof(customerName));
 
-            return GetBillingCustomers().Get(customerName, cancellationToken);
+            return GetCustomers().Get(customerName, cancellationToken);
         }
 
         /// <summary> Gets a collection of BillingInvoiceSections in the <see cref="BillingProfileResource"/>. </summary>
@@ -1921,7 +1857,7 @@ namespace Azure.ResourceManager.Billing
         /// <returns> An object representing collection of BillingRoleDefinitions and their operations over a BillingRoleDefinitionResource. </returns>
         public virtual BillingRoleDefinitionCollection GetBillingRoleDefinitions()
         {
-            return GetCachedClient(client => new BillingRoleDefinitionCollection(client, Id));
+            return this.GetCachedClient(client => new BillingRoleDefinitionCollection(client, Id));
         }
 
         /// <summary> Gets the definition for a role on a billing profile. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement. </summary>

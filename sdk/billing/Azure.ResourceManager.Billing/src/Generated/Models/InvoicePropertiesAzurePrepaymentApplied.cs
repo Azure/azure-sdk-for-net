@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Billing.Models
     public partial class InvoicePropertiesAzurePrepaymentApplied : BillingAmount
     {
         /// <summary> Initializes a new instance of <see cref="InvoicePropertiesAzurePrepaymentApplied"/>. </summary>
-        internal InvoicePropertiesAzurePrepaymentApplied()
+        public InvoicePropertiesAzurePrepaymentApplied()
         {
         }
 

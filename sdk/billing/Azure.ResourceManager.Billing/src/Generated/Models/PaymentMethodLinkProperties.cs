@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Billing.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PaymentMethodLinkProperties"/>. </summary>
-        internal PaymentMethodLinkProperties()
+        public PaymentMethodLinkProperties()
         {
             Logos = new ChangeTrackingList<PaymentMethodLogo>();
         }
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Billing.Models
         public IReadOnlyList<PaymentMethodLogo> Logos { get; } = new ChangeTrackingList<PaymentMethodLogo>();
 
         /// <summary> Projection of a payment method. Will not be returned in this or future versions. </summary>
-        public PaymentMethodProjectionProperties PaymentMethod { get; }
+        public PaymentMethodProjectionProperties PaymentMethod { get; set; }
 
         /// <summary> Id of payment method. Example: /providers/Microsoft.Billing/paymentMethods/ABCDABCDABC0. </summary>
-        public string PaymentMethodId { get; }
+        public string PaymentMethodId { get; set; }
 
         /// <summary> The type of payment method. </summary>
         public string PaymentMethodType { get; }

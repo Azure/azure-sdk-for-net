@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    internal partial class BillingRoleDefinitionGetByEnrollmentAccountCollectionResultOfT : Pageable<BillingEnrollmentAccountRoleDefinitionData>
+    internal partial class BillingRoleDefinitionGetByEnrollmentAccountCollectionResultOfT : Pageable<BillingRoleDefinitionData>
     {
         private readonly BillingRoleDefinition _client;
         private readonly string _billingAccountName;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of BillingRoleDefinitionGetByEnrollmentAccountCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<BillingEnrollmentAccountRoleDefinitionData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<BillingRoleDefinitionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Billing
                 {
                     yield break;
                 }
-                BillingEnrollmentAccountRoleDefinitionListResult result = BillingEnrollmentAccountRoleDefinitionListResult.FromResponse(response);
-                yield return Page<BillingEnrollmentAccountRoleDefinitionData>.FromValues((IReadOnlyList<BillingEnrollmentAccountRoleDefinitionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                BillingRoleDefinitionListResult result = BillingRoleDefinitionListResult.FromResponse(response);
+                yield return Page<BillingRoleDefinitionData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Billing.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingCustomerProperties"/>. </summary>
-        internal BillingCustomerProperties()
+        public BillingCustomerProperties()
         {
             EnabledAzurePlans = new ChangeTrackingList<BillingAzurePlan>();
             Resellers = new ChangeTrackingList<CreatedSubscriptionReseller>();

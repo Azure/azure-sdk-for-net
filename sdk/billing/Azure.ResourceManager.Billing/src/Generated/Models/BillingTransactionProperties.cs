@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Billing.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingTransactionProperties"/>. </summary>
-        internal BillingTransactionProperties()
+        public BillingTransactionProperties()
         {
         }
 
@@ -109,13 +109,13 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The amount of any Azure credits automatically applied to this transaction. </summary>
-        public BillingAmount AzureCreditApplied { get; }
+        public BillingAmount AzureCreditApplied { get; set; }
 
         /// <summary> Details of the Azure plan. </summary>
-        public string AzurePlan { get; }
+        public string AzurePlan { get; set; }
 
         /// <summary> The ISO 4217 code for the currency in which this transaction is billed. </summary>
-        public string BillingCurrency { get; }
+        public string BillingCurrency { get; set; }
 
         /// <summary>
         /// The name of the billing profile.
@@ -143,111 +143,111 @@ namespace Azure.ResourceManager.Billing.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData BillingProfileDisplayName { get; }
+        public BinaryData BillingProfileDisplayName { get; set; }
 
         /// <summary> The fully qualified ID that uniquely identifies a billing profile. </summary>
-        public ResourceIdentifier BillingProfileId { get; }
+        public ResourceIdentifier BillingProfileId { get; set; }
 
         /// <summary> The amount of Microsoft Azure Consumption Commitment(MACC) decrement through the transaction. </summary>
-        public BillingAmount ConsumptionCommitmentDecremented { get; }
+        public BillingAmount ConsumptionCommitmentDecremented { get; set; }
 
         /// <summary> The name of the customer. </summary>
-        public string CustomerDisplayName { get; }
+        public string CustomerDisplayName { get; set; }
 
         /// <summary> The fully qualified ID that uniquely identifies a customer. </summary>
-        public ResourceIdentifier CustomerId { get; }
+        public ResourceIdentifier CustomerId { get; set; }
 
         /// <summary> The credit type of the transaction. Applies only to credited transactions. </summary>
-        public BillingTransactionCreditType? CreditType { get; }
+        public BillingTransactionCreditType? CreditType { get; set; }
 
         /// <summary> The date of transaction. </summary>
-        public DateTimeOffset? Date { get; }
+        public DateTimeOffset? Date { get; set; }
 
         /// <summary> The percentage discount, if any, applied to this transaction. </summary>
-        public float? Discount { get; }
+        public float? Discount { get; set; }
 
         /// <summary> The price of the product after applying any discounts. </summary>
-        public BillingAmount EffectivePrice { get; }
+        public BillingAmount EffectivePrice { get; set; }
 
         /// <summary> The exchange rate used to convert charged amount to billing currency, if applicable. </summary>
-        public float? ExchangeRate { get; }
+        public float? ExchangeRate { get; set; }
 
         /// <summary> Invoice name on which the transaction was billed or 'Pending' if the transaction is not billed. </summary>
-        public string Invoice { get; }
+        public string Invoice { get; set; }
 
         /// <summary> The fully qualified ID of the invoice on which the transaction was billed. This field is only applicable for transactions which are billed. </summary>
-        public ResourceIdentifier InvoiceId { get; }
+        public ResourceIdentifier InvoiceId { get; set; }
 
         /// <summary> The name of the invoice section. </summary>
-        public string InvoiceSectionDisplayName { get; }
+        public string InvoiceSectionDisplayName { get; set; }
 
         /// <summary> The fully qualified ID that uniquely identifies an invoice section. </summary>
-        public ResourceIdentifier InvoiceSectionId { get; }
+        public ResourceIdentifier InvoiceSectionId { get; set; }
 
         /// <summary> Whether or not the transaction is third party. </summary>
-        public bool? IsThirdParty { get; }
+        public bool? IsThirdParty { get; set; }
 
         /// <summary> Type of the transaction, billed or unbilled. </summary>
-        public BillingTransactionKind? Kind { get; }
+        public BillingTransactionKind? Kind { get; set; }
 
         /// <summary> The retail price of the product. </summary>
-        public BillingAmount MarketPrice { get; }
+        public BillingAmount MarketPrice { get; set; }
 
         /// <summary> The part number of the product for which the transaction took place. The field is only applicable for Enterprise Agreement invoices. </summary>
-        public string PartNumber { get; }
+        public string PartNumber { get; set; }
 
         /// <summary> The ISO 4217 code for the currency in which the product is priced. </summary>
-        public string PricingCurrency { get; }
+        public string PricingCurrency { get; set; }
 
         /// <summary> The description of the product for which the transaction took place. </summary>
-        public string ProductDescription { get; }
+        public string ProductDescription { get; set; }
 
         /// <summary> The family of the product for which the transaction took place. </summary>
-        public string ProductFamily { get; }
+        public string ProductFamily { get; set; }
 
         /// <summary> The ID of the product type for which the transaction took place. </summary>
-        public string ProductTypeId { get; }
+        public string ProductTypeId { get; set; }
 
         /// <summary> The type of the product for which the transaction took place. </summary>
-        public string ProductType { get; }
+        public string ProductType { get; set; }
 
         /// <summary> The quantity purchased in the transaction. </summary>
-        public int? Quantity { get; }
+        public int? Quantity { get; set; }
 
         /// <summary> There reason code for the transaction. </summary>
-        public string ReasonCode { get; }
+        public string ReasonCode { get; set; }
 
         /// <summary> The date of the purchase of the product, or the start date of the month in which usage started. </summary>
-        public DateTimeOffset? ServicePeriodStartOn { get; }
+        public DateTimeOffset? ServicePeriodStartOn { get; set; }
 
         /// <summary> The end date of the product term, or the end date of the month in which usage ended. </summary>
-        public DateTimeOffset? ServicePeriodEndOn { get; }
+        public DateTimeOffset? ServicePeriodEndOn { get; set; }
 
         /// <summary> The pre-tax charged amount for the transaction. </summary>
-        public BillingAmount SubTotal { get; }
+        public BillingAmount SubTotal { get; set; }
 
         /// <summary> The tax amount applied to the transaction. </summary>
-        public BillingAmount Tax { get; }
+        public BillingAmount Tax { get; set; }
 
         /// <summary> The charge associated with the transaction. </summary>
-        public BillingAmount TransactionAmount { get; }
+        public BillingAmount TransactionAmount { get; set; }
 
         /// <summary> The type of transaction. </summary>
-        public string TransactionType { get; }
+        public string TransactionType { get; set; }
 
         /// <summary> The number of units used for a given product. </summary>
-        public float? Units { get; }
+        public float? Units { get; set; }
 
         /// <summary> The unit of measure used to bill for the product. For example, compute services are billed per hour. </summary>
-        public string UnitOfMeasure { get; }
+        public string UnitOfMeasure { get; set; }
 
         /// <summary> The description for the unit of measure for a given product. </summary>
-        public string UnitType { get; }
+        public string UnitType { get; set; }
 
         /// <summary> Identifies the type of tax calculation used for the invoice. The field is applicable only to invoices with special tax calculation logic. </summary>
-        public SpecialTaxationType? SpecialTaxationType { get; }
+        public SpecialTaxationType? SpecialTaxationType { get; set; }
 
         /// <summary> The refund details of a transaction. </summary>
-        public RefundTransactionDetails RefundTransactionDetails { get; }
+        public RefundTransactionDetails RefundTransactionDetails { get; set; }
     }
 }

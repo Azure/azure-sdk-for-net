@@ -296,30 +296,14 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BillingPermissionListResult>> GetByDepartmentAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingPermission"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingPermission> GetByDepartmentAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _billingPermissionsClientDiagnostics.CreateScope("BillingDepartmentResource.GetByDepartment");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _billingPermissionsRestClient.CreateGetByDepartmentRequest(Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BillingPermissionListResult> response = Response.FromValue(BillingPermissionListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new BillingPermissionsGetByDepartmentAsyncCollectionResultOfT(_billingPermissionsRestClient, Id.Parent.Name, Id.Name, context, "BillingDepartmentResource.GetByDepartment");
         }
 
         /// <summary>
@@ -344,37 +328,21 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BillingPermissionListResult> GetByDepartment(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingPermission"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingPermission> GetByDepartment(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _billingPermissionsClientDiagnostics.CreateScope("BillingDepartmentResource.GetByDepartment");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _billingPermissionsRestClient.CreateGetByDepartmentRequest(Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<BillingPermissionListResult> response = Response.FromValue(BillingPermissionListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new BillingPermissionsGetByDepartmentCollectionResultOfT(_billingPermissionsRestClient, Id.Parent.Name, Id.Name, context, "BillingDepartmentResource.GetByDepartment");
         }
 
-        /// <summary> Gets a collection of BillingDepartmentRoleAssignments in the <see cref="BillingDepartmentResource"/>. </summary>
-        /// <returns> An object representing collection of BillingDepartmentRoleAssignments and their operations over a BillingDepartmentRoleAssignmentResource. </returns>
-        public virtual BillingDepartmentRoleAssignmentCollection GetBillingDepartmentRoleAssignments()
+        /// <summary> Gets a collection of BillingRoleAssignments in the <see cref="BillingDepartmentResource"/>. </summary>
+        /// <returns> An object representing collection of BillingRoleAssignments and their operations over a BillingRoleAssignmentResource. </returns>
+        public virtual BillingRoleAssignmentCollection GetBillingRoleAssignments()
         {
-            return GetCachedClient(client => new BillingDepartmentRoleAssignmentCollection(client, Id));
+            return this.GetCachedClient(client => new BillingRoleAssignmentCollection(client, Id));
         }
 
         /// <summary> Gets a role assignment for the caller on a department. The operation is supported only for billing accounts with agreement type Enterprise Agreement. </summary>
@@ -383,11 +351,11 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="billingRoleAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BillingDepartmentRoleAssignmentResource>> GetBillingDepartmentRoleAssignmentAsync(string billingRoleAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingRoleAssignmentResource>> GetBillingRoleAssignmentAsync(string billingRoleAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingRoleAssignmentName, nameof(billingRoleAssignmentName));
 
-            return await GetBillingDepartmentRoleAssignments().GetAsync(billingRoleAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetBillingRoleAssignments().GetAsync(billingRoleAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a role assignment for the caller on a department. The operation is supported only for billing accounts with agreement type Enterprise Agreement. </summary>
@@ -396,31 +364,18 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="billingRoleAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BillingDepartmentRoleAssignmentResource> GetBillingDepartmentRoleAssignment(string billingRoleAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<BillingRoleAssignmentResource> GetBillingRoleAssignment(string billingRoleAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingRoleAssignmentName, nameof(billingRoleAssignmentName));
 
-            return GetBillingDepartmentRoleAssignments().Get(billingRoleAssignmentName, cancellationToken);
+            return GetBillingRoleAssignments().Get(billingRoleAssignmentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BillingEnrollmentAccounts in the <see cref="BillingDepartmentResource"/>. </summary>
-        /// <returns> An object representing collection of BillingEnrollmentAccounts and their operations over a BillingEnrollmentAccountResource. </returns>
-        public virtual BillingEnrollmentAccountCollection GetBillingEnrollmentAccounts()
+        /// <summary> Gets a collection of EnrollmentAccounts in the <see cref="BillingDepartmentResource"/>. </summary>
+        /// <returns> An object representing collection of EnrollmentAccounts and their operations over a EnrollmentAccountResource. </returns>
+        public virtual EnrollmentAccountCollection GetEnrollmentAccounts()
         {
-            return GetCachedClient(client => new BillingEnrollmentAccountCollection(client, Id));
-        }
-
-        /// <summary> Gets an enrollment account by department. The operation is supported only for billing accounts with agreement type Enterprise Agreement. </summary>
-        /// <param name="enrollmentAccountName"> The name of the enrollment account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="enrollmentAccountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="enrollmentAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BillingEnrollmentAccountResource>> GetBillingEnrollmentAccountAsync(string enrollmentAccountName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(enrollmentAccountName, nameof(enrollmentAccountName));
-
-            return await GetBillingEnrollmentAccounts().GetAsync(enrollmentAccountName, cancellationToken).ConfigureAwait(false);
+            return this.GetCachedClient(client => new EnrollmentAccountCollection(client, Id));
         }
 
         /// <summary> Gets an enrollment account by department. The operation is supported only for billing accounts with agreement type Enterprise Agreement. </summary>
@@ -429,18 +384,31 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="enrollmentAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="enrollmentAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BillingEnrollmentAccountResource> GetBillingEnrollmentAccount(string enrollmentAccountName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EnrollmentAccountResource>> GetEnrollmentAccountAsync(string enrollmentAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(enrollmentAccountName, nameof(enrollmentAccountName));
 
-            return GetBillingEnrollmentAccounts().Get(enrollmentAccountName, cancellationToken);
+            return await GetEnrollmentAccounts().GetAsync(enrollmentAccountName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of BillingDepartmentRoleDefinitions in the <see cref="BillingDepartmentResource"/>. </summary>
-        /// <returns> An object representing collection of BillingDepartmentRoleDefinitions and their operations over a BillingDepartmentRoleDefinitionResource. </returns>
-        public virtual BillingDepartmentRoleDefinitionCollection GetBillingDepartmentRoleDefinitions()
+        /// <summary> Gets an enrollment account by department. The operation is supported only for billing accounts with agreement type Enterprise Agreement. </summary>
+        /// <param name="enrollmentAccountName"> The name of the enrollment account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="enrollmentAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="enrollmentAccountName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EnrollmentAccountResource> GetEnrollmentAccount(string enrollmentAccountName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new BillingDepartmentRoleDefinitionCollection(client, Id));
+            Argument.AssertNotNullOrEmpty(enrollmentAccountName, nameof(enrollmentAccountName));
+
+            return GetEnrollmentAccounts().Get(enrollmentAccountName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of BillingRoleDefinitions in the <see cref="BillingDepartmentResource"/>. </summary>
+        /// <returns> An object representing collection of BillingRoleDefinitions and their operations over a BillingRoleDefinitionResource. </returns>
+        public virtual BillingRoleDefinitionCollection GetBillingRoleDefinitions()
+        {
+            return this.GetCachedClient(client => new BillingRoleDefinitionCollection(client, Id));
         }
 
         /// <summary> Gets the definition for a role on a department. The operation is supported for billing accounts with agreement type Enterprise Agreement. </summary>
@@ -449,11 +417,11 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BillingDepartmentRoleDefinitionResource>> GetBillingDepartmentRoleDefinitionAsync(string roleDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingRoleDefinitionResource>> GetBillingRoleDefinitionAsync(string roleDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
 
-            return await GetBillingDepartmentRoleDefinitions().GetAsync(roleDefinitionName, cancellationToken).ConfigureAwait(false);
+            return await GetBillingRoleDefinitions().GetAsync(roleDefinitionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the definition for a role on a department. The operation is supported for billing accounts with agreement type Enterprise Agreement. </summary>
@@ -462,11 +430,11 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BillingDepartmentRoleDefinitionResource> GetBillingDepartmentRoleDefinition(string roleDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<BillingRoleDefinitionResource> GetBillingRoleDefinition(string roleDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
 
-            return GetBillingDepartmentRoleDefinitions().Get(roleDefinitionName, cancellationToken);
+            return GetBillingRoleDefinitions().Get(roleDefinitionName, cancellationToken);
         }
     }
 }

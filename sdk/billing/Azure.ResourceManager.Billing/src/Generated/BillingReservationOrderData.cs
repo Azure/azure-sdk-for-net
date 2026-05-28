@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Billing
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingReservationOrderData"/>. </summary>
-        internal BillingReservationOrderData()
+        public BillingReservationOrderData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The properties associated to this reservation order. </summary>
-        internal ReservationOrderProperty Properties { get; }
+        internal ReservationOrderProperty Properties { get; set; }
 
-        /// <summary> Gets the ETag. </summary>
-        public int? ETag { get; }
+        /// <summary> Gets or sets the ETag. </summary>
+        public int? ETag { get; set; }
 
         /// <summary> Tags for this reservation. </summary>
         public IDictionary<string, string> Tags { get; }
@@ -58,6 +58,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.DisplayName;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationOrderProperty();
+                }
+                Properties.DisplayName = value;
+            }
         }
 
         /// <summary> Enrollment id of the reservation order. </summary>
@@ -66,6 +74,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.EnrollmentId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationOrderProperty();
+                }
+                Properties.EnrollmentId = value;
             }
         }
 
@@ -76,6 +92,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.CustomerId;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationOrderProperty();
+                }
+                Properties.CustomerId = value;
+            }
         }
 
         /// <summary> Billing profile Id associated to this reservation order. </summary>
@@ -84,6 +108,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.BillingProfileId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationOrderProperty();
+                }
+                Properties.BillingProfileId = value;
             }
         }
 
@@ -94,6 +126,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.BillingAccountId;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationOrderProperty();
+                }
+                Properties.BillingAccountId = value;
+            }
         }
 
         /// <summary> This is the DateTime when the reservation order was initially requested for purchase. </summary>
@@ -102,6 +142,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.RequestOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationOrderProperty();
+                }
+                Properties.RequestOn = value;
             }
         }
 
@@ -112,6 +160,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.CreatedOn;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationOrderProperty();
+                }
+                Properties.CreatedOn = value;
+            }
         }
 
         /// <summary> This is the date when the reservation order will expire. </summary>
@@ -120,6 +176,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.ExpireOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationOrderProperty();
+                }
+                Properties.ExpireOn = value;
             }
         }
 
@@ -130,6 +194,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.ReservationExpireOn;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationOrderProperty();
+                }
+                Properties.ReservationExpireOn = value;
+            }
         }
 
         /// <summary> This is the DateTime when the reservation benefit started. </summary>
@@ -139,6 +211,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.BenefitStartOn;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationOrderProperty();
+                }
+                Properties.BenefitStartOn = value;
+            }
         }
 
         /// <summary> Total original quantity of the skus purchased in the reservation order. </summary>
@@ -147,6 +227,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.OriginalQuantity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationOrderProperty();
+                }
+                Properties.OriginalQuantity = value;
             }
         }
 
@@ -175,6 +263,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.BillingPlan;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationOrderProperty();
+                }
+                Properties.BillingPlan = value;
+            }
         }
 
         /// <summary> Information describing the type of billing plan for this reservation order. </summary>
@@ -184,6 +280,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.PlanInformation;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationOrderProperty();
+                }
+                Properties.PlanInformation = value;
+            }
         }
 
         /// <summary> Gets the Reservations. </summary>
@@ -191,7 +295,11 @@ namespace Azure.ResourceManager.Billing
         {
             get
             {
-                return Properties is null ? default : Properties.Reservations;
+                if (Properties is null)
+                {
+                    Properties = new ReservationOrderProperty();
+                }
+                return Properties.Reservations;
             }
         }
 
@@ -202,6 +310,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.ReviewedOn;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationOrderProperty();
+                }
+                Properties.ReviewedOn = value;
+            }
         }
 
         /// <summary> Extended status information for the reservation. </summary>
@@ -211,6 +327,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.ExtendedStatusInfo;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationOrderProperty();
+                }
+                Properties.ExtendedStatusInfo = value;
+            }
         }
 
         /// <summary> Represents UPN. </summary>
@@ -219,6 +343,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.ProductCode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReservationOrderProperty();
+                }
+                Properties.ProductCode = value;
             }
         }
     }

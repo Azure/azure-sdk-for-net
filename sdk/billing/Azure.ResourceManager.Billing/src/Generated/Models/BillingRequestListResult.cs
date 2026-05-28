@@ -12,7 +12,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Paged collection of BillingRequest items. </summary>
-    public partial class BillingRequestListResult
+    internal partial class BillingRequestListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

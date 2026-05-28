@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Billing
 {
     /// <summary>
     /// A class representing a collection of <see cref="BillingRoleDefinitionResource"/> and their operations.
-    /// Each <see cref="BillingRoleDefinitionResource"/> in the collection will belong to the same instance of <see cref="BillingProfileResource"/>.
-    /// To get a <see cref="BillingRoleDefinitionCollection"/> instance call the GetBillingRoleDefinitions method from an instance of <see cref="BillingProfileResource"/>.
+    /// Each <see cref="BillingRoleDefinitionResource"/> in the collection will belong to the same instance of <see cref="EnrollmentAccountResource"/>.
+    /// To get a <see cref="BillingRoleDefinitionCollection"/> instance call the GetBillingRoleDefinitions method from an instance of <see cref="EnrollmentAccountResource"/>.
     /// </summary>
     public partial class BillingRoleDefinitionCollection : ArmCollection, IEnumerable<BillingRoleDefinitionResource>, IAsyncEnumerable<BillingRoleDefinitionResource>
     {
@@ -38,32 +38,32 @@ namespace Azure.ResourceManager.Billing
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingRoleDefinitionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(BillingRoleDefinitionResource.ResourceType, out string billingRoleDefinitionApiVersion);
+            this.TryGetApiVersion(BillingRoleDefinitionResource.ResourceType, out string billingRoleDefinitionApiVersion);
             _billingRoleDefinitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingRoleDefinitionResource.ResourceType.Namespace, Diagnostics);
             _billingRoleDefinitionRestClient = new BillingRoleDefinition(_billingRoleDefinitionClientDiagnostics, Pipeline, Endpoint, billingRoleDefinitionApiVersion ?? "2024-04-01");
-            ValidateResourceId(id);
+            BillingRoleDefinitionCollection.ValidateResourceId(id);
         }
 
         /// <param name="id"></param>
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != BillingProfileResource.ResourceType)
+            if (id.ResourceType != EnrollmentAccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BillingProfileResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EnrollmentAccountResource.ResourceType), nameof(id));
             }
         }
 
         /// <summary>
-        /// Gets the definition for a role on a billing profile. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// Gets the definition for a role on an enrollment account. The operation is supported for billing accounts with agreement type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingRoleDefinitions/{roleDefinitionName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions/{roleDefinitionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingRoleDefinitions_GetByBillingProfile. </description>
+        /// <description> BillingRoleDefinitionByEnrollmentAccount_GetByEnrollmentAccount. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, roleDefinitionName, context);
+                HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, roleDefinitionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingRoleDefinitionData> response = Response.FromValue(BillingRoleDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -104,15 +104,15 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Gets the definition for a role on a billing profile. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
+        /// Gets the definition for a role on an enrollment account. The operation is supported for billing accounts with agreement type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingRoleDefinitions/{roleDefinitionName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions/{roleDefinitionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingRoleDefinitions_GetByBillingProfile. </description>
+        /// <description> BillingRoleDefinitionByEnrollmentAccount_GetByEnrollmentAccount. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, roleDefinitionName, context);
+                HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, roleDefinitionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingRoleDefinitionData> response = Response.FromValue(BillingRoleDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -153,15 +153,15 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Lists the role definitions for a billing profile. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement, Microsoft Customer Agreement or Enterprise Agreement.
+        /// List the definition for an enrollment account. The operation is supported for billing accounts with agreement type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingRoleDefinitions. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingRoleDefinitions_ListByBillingProfile. </description>
+        /// <description> BillingRoleDefinitionByEnrollmentAccount_ListByEnrollmentAccount. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -177,19 +177,19 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingRoleDefinitionData, BillingRoleDefinitionResource>(new BillingRoleDefinitionGetByBillingProfileAsyncCollectionResultOfT(_billingRoleDefinitionRestClient, Id.Parent.Name, Id.Name, context, "BillingRoleDefinitionCollection.GetAll"), data => new BillingRoleDefinitionResource(Client, data));
+            return new AsyncPageableWrapper<BillingRoleDefinitionData, BillingRoleDefinitionResource>(new BillingRoleDefinitionGetByEnrollmentAccountAsyncCollectionResultOfT(_billingRoleDefinitionRestClient, Id.Parent.Name, Id.Name, context, "BillingRoleDefinitionCollection.GetAll"), data => new BillingRoleDefinitionResource(Client, data));
         }
 
         /// <summary>
-        /// Lists the role definitions for a billing profile. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement, Microsoft Customer Agreement or Enterprise Agreement.
+        /// List the definition for an enrollment account. The operation is supported for billing accounts with agreement type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingRoleDefinitions. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingRoleDefinitions_ListByBillingProfile. </description>
+        /// <description> BillingRoleDefinitionByEnrollmentAccount_ListByEnrollmentAccount. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingRoleDefinitionData, BillingRoleDefinitionResource>(new BillingRoleDefinitionGetByBillingProfileCollectionResultOfT(_billingRoleDefinitionRestClient, Id.Parent.Name, Id.Name, context, "BillingRoleDefinitionCollection.GetAll"), data => new BillingRoleDefinitionResource(Client, data));
+            return new PageableWrapper<BillingRoleDefinitionData, BillingRoleDefinitionResource>(new BillingRoleDefinitionGetByEnrollmentAccountCollectionResultOfT(_billingRoleDefinitionRestClient, Id.Parent.Name, Id.Name, context, "BillingRoleDefinitionCollection.GetAll"), data => new BillingRoleDefinitionResource(Client, data));
         }
 
         /// <summary>
@@ -213,11 +213,11 @@ namespace Azure.ResourceManager.Billing
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingRoleDefinitions/{roleDefinitionName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions/{roleDefinitionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingRoleDefinitions_GetByBillingProfile. </description>
+        /// <description> BillingRoleDefinitionByEnrollmentAccount_GetByEnrollmentAccount. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, roleDefinitionName, context);
+                HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, roleDefinitionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingRoleDefinitionData> response = default;
@@ -270,11 +270,11 @@ namespace Azure.ResourceManager.Billing
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingRoleDefinitions/{roleDefinitionName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions/{roleDefinitionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingRoleDefinitions_GetByBillingProfile. </description>
+        /// <description> BillingRoleDefinitionByEnrollmentAccount_GetByEnrollmentAccount. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, roleDefinitionName, context);
+                HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, roleDefinitionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingRoleDefinitionData> response = default;
@@ -327,11 +327,11 @@ namespace Azure.ResourceManager.Billing
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingRoleDefinitions/{roleDefinitionName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions/{roleDefinitionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingRoleDefinitions_GetByBillingProfile. </description>
+        /// <description> BillingRoleDefinitionByEnrollmentAccount_GetByEnrollmentAccount. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, roleDefinitionName, context);
+                HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, roleDefinitionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingRoleDefinitionData> response = default;
@@ -388,11 +388,11 @@ namespace Azure.ResourceManager.Billing
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingRoleDefinitions/{roleDefinitionName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions/{roleDefinitionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingRoleDefinitions_GetByBillingProfile. </description>
+        /// <description> BillingRoleDefinitionByEnrollmentAccount_GetByEnrollmentAccount. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, roleDefinitionName, context);
+                HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, roleDefinitionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingRoleDefinitionData> response = default;
@@ -446,18 +446,18 @@ namespace Azure.ResourceManager.Billing
 
         IEnumerator<BillingRoleDefinitionResource> IEnumerable<BillingRoleDefinitionResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return this.GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return this.GetAll().GetEnumerator();
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<BillingRoleDefinitionResource> IAsyncEnumerable<BillingRoleDefinitionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return this.GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

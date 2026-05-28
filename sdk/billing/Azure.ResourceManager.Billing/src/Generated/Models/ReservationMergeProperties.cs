@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Billing.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReservationMergeProperties"/>. </summary>
-        internal ReservationMergeProperties()
+        public ReservationMergeProperties()
         {
             MergeSources = new ChangeTrackingList<string>();
         }
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Reservation resource id Created due to the merge. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </summary>
-        public string MergeDestination { get; }
+        public string MergeDestination { get; set; }
 
         /// <summary> Resource ids of the source reservation's merged to form this reservation. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </summary>
         public IList<string> MergeSources { get; }

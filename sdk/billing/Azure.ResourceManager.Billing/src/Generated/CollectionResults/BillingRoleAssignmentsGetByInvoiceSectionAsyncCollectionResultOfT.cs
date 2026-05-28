@@ -15,7 +15,7 @@ using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    internal partial class BillingRoleAssignmentsGetByInvoiceSectionAsyncCollectionResultOfT : AsyncPageable<BillingInvoiceSectionRoleAssignmentData>
+    internal partial class BillingRoleAssignmentsGetByInvoiceSectionAsyncCollectionResultOfT : AsyncPageable<BillingRoleAssignmentData>
     {
         private readonly BillingRoleAssignments _client;
         private readonly string _billingAccountName;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of BillingRoleAssignmentsGetByInvoiceSectionAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<BillingInvoiceSectionRoleAssignmentData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<BillingRoleAssignmentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -64,13 +64,14 @@ namespace Azure.ResourceManager.Billing
                 {
                     yield break;
                 }
-                BillingInvoiceSectionRoleAssignmentListResult result = BillingInvoiceSectionRoleAssignmentListResult.FromResponse(response);
-                yield return Page<BillingInvoiceSectionRoleAssignmentData>.FromValues((IReadOnlyList<BillingInvoiceSectionRoleAssignmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
-                nextPage = result.NextLink;
-                if (nextPage == null)
+                BillingRoleAssignmentListResult result = BillingRoleAssignmentListResult.FromResponse(response);
+                yield return Page<BillingRoleAssignmentData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                string nextPageString = result.NextLink;
+                if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }
+                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 

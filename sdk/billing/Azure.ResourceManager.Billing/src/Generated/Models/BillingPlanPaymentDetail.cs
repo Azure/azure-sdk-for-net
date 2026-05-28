@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Billing.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingPlanPaymentDetail"/>. </summary>
-        internal BillingPlanPaymentDetail()
+        public BillingPlanPaymentDetail()
         {
         }
 
@@ -41,19 +41,19 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Date when the payment needs to be done. </summary>
-        public DateTimeOffset? DueOn { get; }
+        public DateTimeOffset? DueOn { get; set; }
 
         /// <summary> Date when the transaction is completed. Null when it is scheduled. </summary>
-        public DateTimeOffset? PaymentCompletedOn { get; }
+        public DateTimeOffset? PaymentCompletedOn { get; set; }
 
         /// <summary> Amount in pricing currency. Tax not included. </summary>
-        public BillingPrice PricingCurrencyTotal { get; }
+        public BillingPrice PricingCurrencyTotal { get; set; }
 
         /// <summary> Amount charged in Billing currency. Tax not included. Is null for future payments. </summary>
-        public BillingPrice BillingCurrencyTotal { get; }
+        public BillingPrice BillingCurrencyTotal { get; set; }
 
         /// <summary> Describes whether the payment is completed, failed, pending, cancelled or scheduled in the future. </summary>
-        public BillingPaymentStatus? Status { get; }
+        public BillingPaymentStatus? Status { get; set; }
 
         /// <summary> Extended status information. </summary>
         public ExtendedStatusInfo ExtendedStatusInfo { get; }

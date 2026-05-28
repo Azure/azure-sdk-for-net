@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Billing.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PaymentMethodProjectionProperties"/>. </summary>
-        internal PaymentMethodProjectionProperties()
+        public PaymentMethodProjectionProperties()
         {
             Logos = new ChangeTrackingList<PaymentMethodLogo>();
         }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Billing.Models
         public string Expiration { get; }
 
         /// <summary> The family of payment method. </summary>
-        public PaymentMethodFamily? Family { get; }
+        public PaymentMethodFamily? Family { get; set; }
 
         /// <summary> Last four digits of payment method. </summary>
         public string LastFourDigits { get; }
@@ -74,6 +74,6 @@ namespace Azure.ResourceManager.Billing.Models
         public string PaymentMethodType { get; }
 
         /// <summary> Status of the payment method. </summary>
-        public PaymentMethodStatus? Status { get; }
+        public PaymentMethodStatus? Status { get; set; }
     }
 }

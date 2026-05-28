@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Billing.Models
     public partial class BillingTransactionData : ProxyResourceWithTags
     {
         /// <summary> Initializes a new instance of <see cref="BillingTransactionData"/>. </summary>
-        internal BillingTransactionData()
+        public BillingTransactionData()
         {
         }
 
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> A transaction. </summary>
-        public BillingTransactionProperties Properties { get; }
+        public BillingTransactionProperties Properties { get; set; }
     }
 }

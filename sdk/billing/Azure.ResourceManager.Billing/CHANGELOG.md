@@ -1,20 +1,24 @@
 # Release History
 
-## 2.0.0-beta.1 (Unreleased)
-
-### Breaking Changes
-
-- Migrated from AutoRest/Swagger to TypeSpec-based code generation. This is a major rebuild of the public API surface:
-  - Many resource and model types have been renamed to follow current ARM .NET design guidelines (for example, the `Operation` model has been renamed to `BillingOperationInfo`).
-  - The `BillingAccountCollectionGetAllOptions` and related parameter-options classes have been removed; the corresponding collection `GetAll` overloads now take individual filter parameters that match the underlying ARM contract.
-  - Several wrapper resources whose ARM paths are shared across multiple scopes (for example `BillingRoleAssignment`, `BillingRoleDefinition`, `Customer`, `EnrollmentAccount`, `Invoice`, `PaymentMethod`, `BillingSubscription`) are now generated per parent scope. Use the new scope-specific accessors (for example `GetBillingAccountBillingRoleAssignments`, `GetBillingProfileBillingRoleAssignments`).
-  - Resource long-running operations (`Update`, `Delete`, `CreateOrUpdate`) now use canonical `ArmOperation`/`ArmOperation<T>` return types throughout.
-  - Several enumerations and models have been renamed for non-ambiguity (for example `ReservationPurchaseRequestPropertiesReservedResourceProperties.InstanceFlexibility` is now exposed as `ReservedInstanceFlexibility` to avoid a clash with the directly flattened property).
-- The `SubscriptionRenewalTermDetails.TermDuration` property is now `string` (ISO8601 duration format), matching the underlying spec and the sibling `BillingSubscriptionData.TermDuration` / `BillingSubscriptionProperties.TermDuration` properties. Previously it was incorrectly exposed as `TimeSpan?` by the legacy generator.
+## 1.3.0-beta.1 (Unreleased)
 
 ### Other Changes
 
-- Underlying generator switched to the `@azure-typespec/http-client-csharp-mgmt` emitter; generation is driven by `tsp-location.yaml` and the TypeSpec spec under `specification/billing/resource-manager/Microsoft.Billing/Billing`.
+- Underlying generator switched to the `@azure-typespec/http-client-csharp-mgmt` emitter; generation is now driven by `tsp-location.yaml` and the TypeSpec spec under `specification/billing/resource-manager/Microsoft.Billing/Billing`.
+
+### Breaking Changes
+
+This beta is the first release built from TypeSpec via the management-plane csharp emitter. The change of generator surfaces a number of cosmetic and structural differences against the 1.2.2 GA API. The most common shapes:
+
+- Resource / collection type renames where the TypeSpec model name differs from the legacy autorest-derived name (for example, payment-method aliases such as `BillingAccountPaymentMethod*`). Where the rename is driven by ARM resource detection rather than `@@clientName`, the legacy type alias cannot be restored without changing the upstream service model and is therefore retained as a breaking change for this beta.
+- Property `WirePath` attribute coverage on `Properties` and `Tags` of several `*Data` types differs from the legacy auto-flattened layout. Runtime serialization is unchanged.
+- A small number of operations whose paths or naming were normalized in the new spec no longer have a 1:1 GA equivalent.
+
+The most common GA call sites have been preserved via custom partials, including:
+
+- `BillingAccountCollection.GetAll(BillingAccountCollectionGetAllOptions, CancellationToken)` and its async counterpart (and the same shape for `BillingAssociatedTenantCollection`, `BillingInvoiceSectionCollection`, `BillingProductCollection`, `BillingProfileCollection`, `BillingRequestCollection`, `BillingSubscriptionAliasCollection`, `BillingSubscriptionCollection`).
+- `BillingAccountPolicyResource.Update(...)` / `BillingProfilePolicyResource.Update(...)` back-compat shims that delegate to the new `CreateOrUpdate(...)` shape.
+- `BillingTransferDetailsResource.Update(...)` / `PartnerTransferDetailsResource.Update(...)` which previously existed only in shape and now throw `NotSupportedException` to preserve binary surface.
 
 ## 1.2.2 (2026-04-20)
 

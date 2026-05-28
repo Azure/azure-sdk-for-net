@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Billing.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReservationSwapProperties"/>. </summary>
-        internal ReservationSwapProperties()
+        public ReservationSwapProperties()
         {
         }
 
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Resource id of the source reservation that gets swapped. Format of the resource id is /providers/microsoft.capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </summary>
-        public string SwapSource { get; }
+        public string SwapSource { get; set; }
 
         /// <summary> Reservation resource id that the original resource gets swapped to. Format of the resource id is /providers/microsoft.capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </summary>
-        public string SwapDestination { get; }
+        public string SwapDestination { get; set; }
     }
 }

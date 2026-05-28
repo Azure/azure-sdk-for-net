@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Billing.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReservationOrderProperty"/>. </summary>
-        internal ReservationOrderProperty()
+        public ReservationOrderProperty()
         {
             Reservations = new ChangeTrackingList<BillingReservationData>();
         }
@@ -69,37 +69,37 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Friendly name for user to easily identified the reservation order. </summary>
-        public string DisplayName { get; }
+        public string DisplayName { get; set; }
 
         /// <summary> Enrollment id of the reservation order. </summary>
-        public string EnrollmentId { get; }
+        public string EnrollmentId { get; set; }
 
         /// <summary> Fully-qualified identifier of the customerId where the benefit is applied. Present only for Enterprise Agreement PartnerLed customers. </summary>
-        public string CustomerId { get; }
+        public string CustomerId { get; set; }
 
         /// <summary> Billing profile Id associated to this reservation order. </summary>
-        public string BillingProfileId { get; }
+        public string BillingProfileId { get; set; }
 
         /// <summary> Billing account Id associated to this reservation order. </summary>
-        public string BillingAccountId { get; }
+        public string BillingAccountId { get; set; }
 
         /// <summary> This is the DateTime when the reservation order was initially requested for purchase. </summary>
-        public DateTimeOffset? RequestOn { get; }
+        public DateTimeOffset? RequestOn { get; set; }
 
         /// <summary> This is the DateTime when the reservation order was created. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn { get; set; }
 
         /// <summary> This is the date when the reservation order will expire. </summary>
-        public DateTimeOffset? ExpireOn { get; }
+        public DateTimeOffset? ExpireOn { get; set; }
 
         /// <summary> This is the date-time when the reservation order will expire. </summary>
-        public DateTimeOffset? ReservationExpireOn { get; }
+        public DateTimeOffset? ReservationExpireOn { get; set; }
 
         /// <summary> This is the DateTime when the reservation benefit started. </summary>
-        public DateTimeOffset? BenefitStartOn { get; }
+        public DateTimeOffset? BenefitStartOn { get; set; }
 
         /// <summary> Total original quantity of the skus purchased in the reservation order. </summary>
-        public int? OriginalQuantity { get; }
+        public int? OriginalQuantity { get; set; }
 
         /// <summary> The term of the reservation, e.g. P1Y. </summary>
         public string Term { get; }
@@ -108,21 +108,21 @@ namespace Azure.ResourceManager.Billing.Models
         public string ProvisioningState { get; }
 
         /// <summary> Represent the billing plans. </summary>
-        public ReservationBillingPlan? BillingPlan { get; }
+        public ReservationBillingPlan? BillingPlan { get; set; }
 
         /// <summary> Information describing the type of billing plan for this reservation order. </summary>
-        public ReservationOrderBillingPlanInformation PlanInformation { get; }
+        public ReservationOrderBillingPlanInformation PlanInformation { get; set; }
 
         /// <summary> Gets the Reservations. </summary>
         public IList<BillingReservationData> Reservations { get; } = new ChangeTrackingList<BillingReservationData>();
 
         /// <summary> This is the date-time when the Azure Hybrid Benefit needs to be reviewed. </summary>
-        public DateTimeOffset? ReviewedOn { get; }
+        public DateTimeOffset? ReviewedOn { get; set; }
 
         /// <summary> Extended status information for the reservation. </summary>
-        public ReservationExtendedStatusInfo ExtendedStatusInfo { get; }
+        public ReservationExtendedStatusInfo ExtendedStatusInfo { get; set; }
 
         /// <summary> Represents UPN. </summary>
-        public string ProductCode { get; }
+        public string ProductCode { get; set; }
     }
 }

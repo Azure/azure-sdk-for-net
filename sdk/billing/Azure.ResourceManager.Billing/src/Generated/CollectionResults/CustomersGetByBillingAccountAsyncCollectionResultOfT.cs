@@ -15,7 +15,7 @@ using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    internal partial class CustomersGetByBillingAccountAsyncCollectionResultOfT : AsyncPageable<BillingAccountCustomerData>
+    internal partial class CustomersGetByBillingAccountAsyncCollectionResultOfT : AsyncPageable<BillingCustomerData>
     {
         private readonly Customers _client;
         private readonly string _billingAccountName;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of CustomersGetByBillingAccountAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<BillingAccountCustomerData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<BillingCustomerData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.Billing
                 {
                     yield break;
                 }
-                BillingAccountCustomerListResult result = BillingAccountCustomerListResult.FromResponse(response);
-                yield return Page<BillingAccountCustomerData>.FromValues((IReadOnlyList<BillingAccountCustomerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                CustomerListResult result = CustomerListResult.FromResponse(response);
+                yield return Page<BillingCustomerData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

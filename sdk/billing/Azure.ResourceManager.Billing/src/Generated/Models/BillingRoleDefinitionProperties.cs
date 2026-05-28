@@ -19,8 +19,11 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Initializes a new instance of <see cref="BillingRoleDefinitionProperties"/>. </summary>
         /// <param name="roleName"> The name of the role. </param>
-        internal BillingRoleDefinitionProperties(string roleName)
+        /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
+        public BillingRoleDefinitionProperties(string roleName)
         {
+            Argument.AssertNotNull(roleName, nameof(roleName));
+
             Permissions = new ChangeTrackingList<BillingPermission>();
             RoleName = roleName;
         }
@@ -45,6 +48,6 @@ namespace Azure.ResourceManager.Billing.Models
         public IReadOnlyList<BillingPermission> Permissions { get; }
 
         /// <summary> The name of the role. </summary>
-        public string RoleName { get; }
+        public string RoleName { get; set; }
     }
 }

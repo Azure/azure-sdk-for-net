@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Billing.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExtendedStatusDefinitionProperties"/>. </summary>
-        internal ExtendedStatusDefinitionProperties()
+        public ExtendedStatusDefinitionProperties()
         {
         }
 
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Subscription Id. </summary>
-        public string SubscriptionId { get; }
+        public string SubscriptionId { get; set; }
     }
 }

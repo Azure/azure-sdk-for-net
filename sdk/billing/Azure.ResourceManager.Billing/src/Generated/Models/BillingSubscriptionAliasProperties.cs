@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> A billing subscription alias. </summary>
-    public partial class BillingSubscriptionAliasProperties : BillingSubscriptionProperties
+    internal partial class BillingSubscriptionAliasProperties : BillingSubscriptionProperties
     {
         /// <summary> Initializes a new instance of <see cref="BillingSubscriptionAliasProperties"/>. </summary>
         public BillingSubscriptionAliasProperties()

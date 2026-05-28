@@ -20,11 +20,10 @@ namespace Azure.ResourceManager.Billing
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingSavingsPlanModelData"/>. </summary>
-        /// <param name="sku"> Savings plan SKU. </param>
-        internal BillingSavingsPlanModelData(BillingSku sku)
+        public BillingSavingsPlanModelData()
         {
+
             Tags = new ChangeTrackingDictionary<string, string>();
-            Sku = sku;
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingSavingsPlanModelData"/>. </summary>
@@ -45,13 +44,13 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Savings plan properties. </summary>
-        internal SavingsPlanModelProperties Properties { get; }
+        internal SavingsPlanModelProperties Properties { get; set; }
 
         /// <summary> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Savings plan SKU. </summary>
-        internal BillingSku Sku { get; }
+        internal BillingSku Sku { get; set; }
 
         /// <summary> Display name. </summary>
         public string DisplayName
@@ -59,6 +58,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanModelProperties();
+                }
+                Properties.DisplayName = value;
             }
         }
 
@@ -96,6 +103,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.BillingScopeId;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanModelProperties();
+                }
+                Properties.BillingScopeId = value;
+            }
         }
 
         /// <summary> Fully-qualified identifier of the billing profile where the savings plan is applied. Present only for Field-led or Customer-led customers. </summary>
@@ -132,6 +147,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.Term;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanModelProperties();
+                }
+                Properties.Term = value;
+            }
         }
 
         /// <summary> Setting this to true will automatically purchase a new benefit on the expiration date time. </summary>
@@ -140,6 +163,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.IsRenewed;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanModelProperties();
+                }
+                Properties.IsRenewed = value;
             }
         }
 
@@ -150,6 +181,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.RenewSource;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanModelProperties();
+                }
+                Properties.RenewSource = value;
+            }
         }
 
         /// <summary> SavingsPlan Id of the SavingsPlan which is purchased because of renew. </summary>
@@ -158,6 +197,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.RenewDestination;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanModelProperties();
+                }
+                Properties.RenewDestination = value;
             }
         }
 
@@ -168,6 +215,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.BillingPlan;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanModelProperties();
+                }
+                Properties.BillingPlan = value;
+            }
         }
 
         /// <summary> Type of the Applied Scope. </summary>
@@ -176,6 +231,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.AppliedScopeType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanModelProperties();
+                }
+                Properties.AppliedScopeType = value;
             }
         }
 
@@ -186,6 +249,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.AppliedScopeProperties;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanModelProperties();
+                }
+                Properties.AppliedScopeProperties = value;
+            }
         }
 
         /// <summary> Commitment towards the benefit. </summary>
@@ -194,6 +265,14 @@ namespace Azure.ResourceManager.Billing
             get
             {
                 return Properties is null ? default : Properties.Commitment;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanModelProperties();
+                }
+                Properties.Commitment = value;
             }
         }
 
@@ -258,6 +337,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.ProductCode;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanModelProperties();
+                }
+                Properties.ProductCode = value;
+            }
         }
 
         /// <summary> Purchase request. </summary>
@@ -267,6 +354,14 @@ namespace Azure.ResourceManager.Billing
             {
                 return Properties is null ? default : Properties.RenewPurchaseProperties;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanModelProperties();
+                }
+                Properties.RenewPurchaseProperties = value;
+            }
         }
 
         /// <summary> Name of the SKU to be applied. </summary>
@@ -274,7 +369,15 @@ namespace Azure.ResourceManager.Billing
         {
             get
             {
-                return Sku.Name;
+                return Sku is null ? default : Sku.Name;
+            }
+            set
+            {
+                if (Sku is null)
+                {
+                    Sku = new BillingSku();
+                }
+                Sku.Name = value;
             }
         }
     }

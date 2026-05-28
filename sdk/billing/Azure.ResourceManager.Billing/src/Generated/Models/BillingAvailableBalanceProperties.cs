@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Billing.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingAvailableBalanceProperties"/>. </summary>
-        internal BillingAvailableBalanceProperties()
+        public BillingAvailableBalanceProperties()
         {
             PaymentsOnAccount = new ChangeTrackingList<BillingPaymentOnAccount>();
         }
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Credit amount for immediate payment. </summary>
-        public BillingAmount Amount { get; }
+        public BillingAmount Amount { get; set; }
 
         /// <summary> The list of payments on accounts. </summary>
         public IReadOnlyList<BillingPaymentOnAccount> PaymentsOnAccount { get; }
 
         /// <summary> Total amount of payments on accounts. </summary>
-        public BillingAmount TotalPaymentsOnAccount { get; }
+        public BillingAmount TotalPaymentsOnAccount { get; set; }
     }
 }

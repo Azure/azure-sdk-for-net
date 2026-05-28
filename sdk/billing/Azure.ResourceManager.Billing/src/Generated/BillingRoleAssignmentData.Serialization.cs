@@ -60,6 +60,16 @@ namespace Azure.ResourceManager.Billing
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BillingRoleAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <param name="billingRoleAssignmentData"> The <see cref="BillingRoleAssignmentData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(BillingRoleAssignmentData billingRoleAssignmentData)
+        {
+            if (billingRoleAssignmentData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(billingRoleAssignmentData, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BillingRoleAssignmentData"/> from. </param>
         internal static BillingRoleAssignmentData FromResponse(Response response)
         {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Billing.Models
     public partial class InvoicePropertiesRefundDetails : RefundDetailsSummary
     {
         /// <summary> Initializes a new instance of <see cref="InvoicePropertiesRefundDetails"/>. </summary>
-        internal InvoicePropertiesRefundDetails()
+        public InvoicePropertiesRefundDetails()
         {
         }
 

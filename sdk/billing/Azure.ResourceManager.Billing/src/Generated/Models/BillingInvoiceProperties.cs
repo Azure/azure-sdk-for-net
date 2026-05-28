@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Billing.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingInvoiceProperties"/>. </summary>
-        internal BillingInvoiceProperties()
+        public BillingInvoiceProperties()
         {
             Documents = new ChangeTrackingList<InvoiceDocument>();
             FailedPayments = new ChangeTrackingList<BillingInvoiceFailedPayment>();
@@ -92,13 +92,13 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The amount due as of now. </summary>
-        public BillingAmount AmountDue { get; }
+        public BillingAmount AmountDue { get; set; }
 
         /// <summary> The amount of Azure prepayment applied to the charges. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
-        public BillingAmount AzurePrepaymentApplied { get; }
+        public BillingAmount AzurePrepaymentApplied { get; set; }
 
         /// <summary> The total charges for the invoice billing period. </summary>
-        public BillingAmount BilledAmount { get; }
+        public BillingAmount BilledAmount { get; set; }
 
         /// <summary> The Id of the active invoice which is originally billed after this invoice was voided. This field is applicable to the void invoices only. </summary>
         public string BilledDocumentId { get; }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Billing.Models
         public ResourceIdentifier BillingProfileId { get; }
 
         /// <summary> The total refund for returns and cancellations during the invoice billing period. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
-        public BillingAmount CreditAmount { get; }
+        public BillingAmount CreditAmount { get; set; }
 
         /// <summary> The Id of the invoice which got voided and this credit note was issued as a result. This field is applicable to the credit notes only. </summary>
         public string CreditForDocumentId { get; }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Billing.Models
         public IReadOnlyList<BillingInvoiceFailedPayment> FailedPayments { get; }
 
         /// <summary> The amount of free Azure credits applied to the charges. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
-        public BillingAmount FreeAzureCreditApplied { get; }
+        public BillingAmount FreeAzureCreditApplied { get; set; }
 
         /// <summary> The date when the invoice was generated. </summary>
         public DateTimeOffset? InvoiceOn { get; }
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Billing.Models
         public string PurchaseOrderNumber { get; }
 
         /// <summary> Rebill details for an invoice. </summary>
-        public RebillDetails RebillDetails { get; }
+        public RebillDetails RebillDetails { get; set; }
 
         /// <summary> The current status of the invoice. </summary>
         public BillingInvoiceStatus? Status { get; }
@@ -167,15 +167,15 @@ namespace Azure.ResourceManager.Billing.Models
         public SpecialTaxationType? SpecialTaxationType { get; }
 
         /// <summary> The pre-tax amount due. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
-        public BillingAmount SubTotal { get; }
+        public BillingAmount SubTotal { get; set; }
 
         /// <summary> The amount of tax charged for the billing period. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
-        public BillingAmount TaxAmount { get; }
+        public BillingAmount TaxAmount { get; set; }
 
         /// <summary> The amount due when the invoice was generated. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
-        public BillingAmount TotalAmount { get; }
+        public BillingAmount TotalAmount { get; set; }
 
         /// <summary> The details of a refund request. </summary>
-        public RefundDetailsSummary RefundDetails { get; }
+        public RefundDetailsSummary RefundDetails { get; set; }
     }
 }

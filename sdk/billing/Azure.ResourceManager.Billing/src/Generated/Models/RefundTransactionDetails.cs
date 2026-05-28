@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Billing.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RefundTransactionDetails"/>. </summary>
-        internal RefundTransactionDetails()
+        public RefundTransactionDetails()
         {
         }
 
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The amount of refund requested. </summary>
-        public BillingAmount AmountRequested { get; }
+        public BillingAmount AmountRequested { get; set; }
 
         /// <summary> The amount refunded. </summary>
-        public BillingAmount AmountRefunded { get; }
+        public BillingAmount AmountRefunded { get; set; }
 
         /// <summary> The ID of refund operation. </summary>
-        public string RefundOperationId { get; }
+        public string RefundOperationId { get; set; }
     }
 }

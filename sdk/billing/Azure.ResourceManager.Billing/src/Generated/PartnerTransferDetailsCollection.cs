@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Billing
 {
     /// <summary>
     /// A class representing a collection of <see cref="PartnerTransferDetailsResource"/> and their operations.
-    /// Each <see cref="PartnerTransferDetailsResource"/> in the collection will belong to the same instance of <see cref="BillingCustomerResource"/>.
-    /// To get a <see cref="PartnerTransferDetailsCollection"/> instance call the GetPartnerTransferDetails method from an instance of <see cref="BillingCustomerResource"/>.
+    /// Each <see cref="PartnerTransferDetailsResource"/> in the collection will belong to the same instance of <see cref="CustomerResource"/>.
+    /// To get a <see cref="PartnerTransferDetailsCollection"/> instance call the GetPartnerTransferDetails method from an instance of <see cref="CustomerResource"/>.
     /// </summary>
     public partial class PartnerTransferDetailsCollection : ArmCollection, IEnumerable<PartnerTransferDetailsResource>, IAsyncEnumerable<PartnerTransferDetailsResource>
     {
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Billing
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != BillingCustomerResource.ResourceType)
+            if (id.ResourceType != CustomerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BillingCustomerResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CustomerResource.ResourceType), nameof(id));
             }
         }
 

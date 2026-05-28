@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Billing.Models
     public partial class RefundTransactionDetailsAmountRequested : BillingAmount
     {
         /// <summary> Initializes a new instance of <see cref="RefundTransactionDetailsAmountRequested"/>. </summary>
-        internal RefundTransactionDetailsAmountRequested()
+        public RefundTransactionDetailsAmountRequested()
         {
         }
 

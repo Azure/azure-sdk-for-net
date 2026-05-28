@@ -15,7 +15,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Paged collection of Transaction items. </summary>
-    public partial class TransactionListResult : IJsonModel<TransactionListResult>
+    internal partial class TransactionListResult : IJsonModel<TransactionListResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

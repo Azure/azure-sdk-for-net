@@ -15,7 +15,7 @@ using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    internal partial class EnrollmentAccountsGetByBillingAccountAsyncCollectionResultOfT : AsyncPageable<BillingAccountEnrollmentAccountData>
+    internal partial class EnrollmentAccountsGetByBillingAccountAsyncCollectionResultOfT : AsyncPageable<BillingEnrollmentAccountData>
     {
         private readonly EnrollmentAccounts _client;
         private readonly string _billingAccountName;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of EnrollmentAccountsGetByBillingAccountAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<BillingAccountEnrollmentAccountData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<BillingEnrollmentAccountData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.Billing
                 {
                     yield break;
                 }
-                BillingAccountEnrollmentAccountListResult result = BillingAccountEnrollmentAccountListResult.FromResponse(response);
-                yield return Page<BillingAccountEnrollmentAccountData>.FromValues((IReadOnlyList<BillingAccountEnrollmentAccountData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                EnrollmentAccountListResult result = EnrollmentAccountListResult.FromResponse(response);
+                yield return Page<BillingEnrollmentAccountData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Billing.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RefundDetailsSummary"/>. </summary>
-        internal RefundDetailsSummary()
+        public RefundDetailsSummary()
         {
         }
 
@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.Billing.Models
         public DateTimeOffset? CompletedOn { get; }
 
         /// <summary> The amount of refund requested. </summary>
-        public BillingAmount AmountRequested { get; }
+        public BillingAmount AmountRequested { get; set; }
 
         /// <summary> The amount refunded. </summary>
-        public BillingAmount AmountRefunded { get; }
+        public BillingAmount AmountRefunded { get; set; }
 
         /// <summary> The invoice ID of the rebill invoice for a refund. </summary>
         public ResourceIdentifier RebillInvoiceId { get; }
