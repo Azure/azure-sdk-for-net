@@ -10,7 +10,7 @@ namespace Azure.Storage
     /// </summary>
     internal partial class Errors
     {
-        public static InvalidDataException InvalidAvroFieldSize(int size, int maxFieldSize)
+        public static InvalidDataException InvalidAvroFieldSize(long size, int maxFieldSize)
             => new InvalidDataException($"Invalid Avro field size: {size}. Size must be between 0 and {maxFieldSize}.");
     }
 }
