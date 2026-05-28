@@ -20,8 +20,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="EmailTemplateContractProperties"/>. </summary>
         /// <param name="subject"> Subject of the Template. </param>
         /// <param name="body"> Email Template Body. This should be a valid XDocument. </param>
-        internal EmailTemplateContractProperties(string subject, string body)
+        /// <exception cref="ArgumentNullException"> <paramref name="subject"/> or <paramref name="body"/> is null. </exception>
+        public EmailTemplateContractProperties(string subject, string body)
         {
+            Argument.AssertNotNull(subject, nameof(subject));
+            Argument.AssertNotNull(body, nameof(body));
+
             Subject = subject;
             Body = body;
             Parameters = new ChangeTrackingList<EmailTemplateParametersContractProperties>();
@@ -48,19 +52,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Subject of the Template. </summary>
         [WirePath("subject")]
-        public string Subject { get; }
+        public string Subject { get; set; }
 
         /// <summary> Email Template Body. This should be a valid XDocument. </summary>
         [WirePath("body")]
-        public string Body { get; }
+        public string Body { get; set; }
 
         /// <summary> Title of the Template. </summary>
         [WirePath("title")]
-        public string Title { get; }
+        public string Title { get; set; }
 
         /// <summary> Description of the Email Template. </summary>
         [WirePath("description")]
-        public string Description { get; }
+        public string Description { get; set; }
 
         /// <summary> Whether the template is the default template provided by API Management or has been edited. </summary>
         [WirePath("isDefault")]

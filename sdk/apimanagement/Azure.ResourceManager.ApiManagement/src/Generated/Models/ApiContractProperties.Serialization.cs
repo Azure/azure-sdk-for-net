@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(ServiceUri))
+            if (Optional.IsDefined(ServiceLink))
             {
                 writer.WritePropertyName("serviceUrl"u8);
-                writer.WriteStringValue(ServiceUri);
+                writer.WriteStringValue(ServiceLink);
             }
             writer.WritePropertyName("path"u8);
             writer.WriteStringValue(Path);
@@ -156,15 +156,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string apiRevisionDescription = default;
             string apiVersionDescription = default;
             ResourceIdentifier apiVersionSetId = default;
-            bool? subscriptionRequired = default;
-            Uri termsOfServiceUri = default;
+            bool? isSubscriptionRequired = default;
+            string termsOfServiceLink = default;
             ApiContactInformation contact = default;
             ApiLicenseInformation license = default;
             McpProperties mcpProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string sourceApiId = default;
+            ResourceIdentifier sourceApiId = default;
             string displayName = default;
-            string serviceUri = default;
+            string serviceLink = default;
             string path = default;
             IList<ApiOperationInvokableProtocol> protocols = default;
             ApiVersionSetContractDetails apiVersionSet = default;
@@ -256,16 +256,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    subscriptionRequired = prop.Value.GetBoolean();
+                    isSubscriptionRequired = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("termsOfServiceUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    termsOfServiceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    termsOfServiceLink = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("contact"u8))
@@ -297,7 +293,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("sourceApiId"u8))
                 {
-                    sourceApiId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceApiId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("displayName"u8))
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("serviceUrl"u8))
                 {
-                    serviceUri = prop.Value.GetString();
+                    serviceLink = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("path"u8))
@@ -360,15 +360,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 apiRevisionDescription,
                 apiVersionDescription,
                 apiVersionSetId,
-                subscriptionRequired,
-                termsOfServiceUri,
+                isSubscriptionRequired,
+                termsOfServiceLink,
                 contact,
                 license,
                 mcpProperties,
                 additionalBinaryDataProperties,
                 sourceApiId,
                 displayName,
-                serviceUri,
+                serviceLink,
                 path,
                 protocols ?? new ChangeTrackingList<ApiOperationInvokableProtocol>(),
                 apiVersionSet,

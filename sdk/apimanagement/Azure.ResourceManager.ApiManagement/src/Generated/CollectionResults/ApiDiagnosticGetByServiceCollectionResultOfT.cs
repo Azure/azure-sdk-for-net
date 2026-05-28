@@ -14,7 +14,7 @@ using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    internal partial class ApiDiagnosticGetByServiceCollectionResultOfT : Pageable<ApiManagementDiagnosticData>
+    internal partial class ApiDiagnosticGetByServiceCollectionResultOfT : Pageable<DiagnosticContractData>
     {
         private readonly ApiDiagnostic _client;
         private readonly Guid _subscriptionId;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ApiDiagnosticGetByServiceCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ApiManagementDiagnosticData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<DiagnosticContractData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement
                     yield break;
                 }
                 DiagnosticListResult result = DiagnosticListResult.FromResponse(response);
-                yield return Page<ApiManagementDiagnosticData>.FromValues((IReadOnlyList<ApiManagementDiagnosticData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<DiagnosticContractData>.FromValues((IReadOnlyList<DiagnosticContractData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

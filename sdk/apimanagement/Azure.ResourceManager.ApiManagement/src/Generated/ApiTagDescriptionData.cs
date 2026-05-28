@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiTagDescriptionData"/>. </summary>
-        internal ApiTagDescriptionData()
+        public ApiTagDescriptionData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> TagDescription entity contract properties. </summary>
         [WirePath("properties")]
-        internal TagDescriptionContractProperties Properties { get; }
+        internal TagDescriptionContractProperties Properties { get; set; }
 
         /// <summary> Description of the Tag. </summary>
         [WirePath("properties.description")]
@@ -48,6 +48,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TagDescriptionContractProperties();
+                }
+                Properties.Description = value;
             }
         }
 
@@ -59,6 +67,14 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return Properties is null ? default : Properties.ExternalDocsUri;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TagDescriptionContractProperties();
+                }
+                Properties.ExternalDocsUri = value;
+            }
         }
 
         /// <summary> Description of the external resources describing the tag. </summary>
@@ -68,6 +84,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.ExternalDocsDescription;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TagDescriptionContractProperties();
+                }
+                Properties.ExternalDocsDescription = value;
             }
         }
 
@@ -79,6 +103,14 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return Properties is null ? default : Properties.TagId;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TagDescriptionContractProperties();
+                }
+                Properties.TagId = value;
+            }
         }
 
         /// <summary> Tag name. </summary>
@@ -88,6 +120,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TagDescriptionContractProperties();
+                }
+                Properties.DisplayName = value;
             }
         }
     }

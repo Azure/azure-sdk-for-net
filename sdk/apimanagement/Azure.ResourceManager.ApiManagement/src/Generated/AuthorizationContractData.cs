@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Authorization type options. </summary>
         [WirePath("properties.authorizationType")]
-        public AuthorizationType? AuthorizationType
+        public ApiManagementAuthorizationType? AuthorizationType
         {
             get
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Authorization error details. </summary>
         [WirePath("properties.error")]
-        public AuthorizationError Error
+        public ApiManagementAuthorizationError Error
         {
             get
             {

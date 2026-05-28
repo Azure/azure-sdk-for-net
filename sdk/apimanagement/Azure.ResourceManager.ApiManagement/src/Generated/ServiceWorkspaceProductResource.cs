@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ServiceWorkspaceProductResource>> UpdateAsync(string ifMatch, ProductPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceWorkspaceProductResource>> UpdateAsync(string ifMatch, ApiManagementProductPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(patch, nameof(patch));
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceProductRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, ProductPatch.ToRequestContent(patch), context);
+                HttpMessage message = _workspaceProductRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, ApiManagementProductPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementProductData> response = Response.FromValue(ApiManagementProductData.FromResponse(result), result);
                 if (response.Value == null)
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ServiceWorkspaceProductResource> Update(string ifMatch, ProductPatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceWorkspaceProductResource> Update(string ifMatch, ApiManagementProductPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(patch, nameof(patch));
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceProductRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, ProductPatch.ToRequestContent(patch), context);
+                HttpMessage message = _workspaceProductRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, ApiManagementProductPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementProductData> response = Response.FromValue(ApiManagementProductData.FromResponse(result), result);
                 if (response.Value == null)
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="policyId"> The identifier of the Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetEntityTagAsync(PolicyIdName policyId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetEntityTagAsync(PolicyName policyId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _workspaceProductPolicyClientDiagnostics.CreateScope("ServiceWorkspaceProductResource.GetEntityTag");
             scope.Start();
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="policyId"> The identifier of the Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetEntityTag(PolicyIdName policyId, CancellationToken cancellationToken = default)
+        public virtual Response GetEntityTag(PolicyName policyId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _workspaceProductPolicyClientDiagnostics.CreateScope("ServiceWorkspaceProductResource.GetEntityTag");
             scope.Start();
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceWorkspaceProductPolicyResource>> GetServiceWorkspaceProductPolicyAsync(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceWorkspaceProductPolicyResource>> GetServiceWorkspaceProductPolicyAsync(PolicyName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
             return await GetServiceWorkspaceProductPolicies().GetAsync(policyId, format, cancellationToken).ConfigureAwait(false);
         }
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ServiceWorkspaceProductPolicyResource> GetServiceWorkspaceProductPolicy(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceWorkspaceProductPolicyResource> GetServiceWorkspaceProductPolicy(PolicyName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
             return GetServiceWorkspaceProductPolicies().Get(policyId, format, cancellationToken);
         }

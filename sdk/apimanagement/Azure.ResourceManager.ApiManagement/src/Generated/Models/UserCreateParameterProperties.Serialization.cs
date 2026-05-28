@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string lastName = default;
             string password = default;
             AppType? appType = default;
-            Confirmation? confirmation = default;
+            ConfirmationEmailType? confirmation = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("state"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    confirmation = new Confirmation(prop.Value.GetString());
+                    confirmation = new ConfirmationEmailType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

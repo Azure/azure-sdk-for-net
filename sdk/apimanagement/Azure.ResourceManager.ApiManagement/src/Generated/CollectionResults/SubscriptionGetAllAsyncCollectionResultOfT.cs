@@ -15,7 +15,7 @@ using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    internal partial class SubscriptionGetAllAsyncCollectionResultOfT : AsyncPageable<ApiManagementSubscriptionData>
+    internal partial class SubscriptionGetAllAsyncCollectionResultOfT : AsyncPageable<SubscriptionContractData>
     {
         private readonly Subscription _client;
         private readonly Guid _subscriptionId;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of SubscriptionGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ApiManagementSubscriptionData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<SubscriptionContractData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ApiManagement
                     yield break;
                 }
                 SubscriptionListResult result = SubscriptionListResult.FromResponse(response);
-                yield return Page<ApiManagementSubscriptionData>.FromValues((IReadOnlyList<ApiManagementSubscriptionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<SubscriptionContractData>.FromValues((IReadOnlyList<SubscriptionContractData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

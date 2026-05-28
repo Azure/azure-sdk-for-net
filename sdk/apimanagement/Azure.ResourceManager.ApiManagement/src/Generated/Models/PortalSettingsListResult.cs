@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="PortalSettingsListResult"/>. </summary>
         internal PortalSettingsListResult()
         {
-            Value = new ChangeTrackingList<PortalSettingsContract>();
+            Value = new ChangeTrackingList<PortalSettingsContractData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PortalSettingsListResult"/>. </summary>
         /// <param name="value"> Descriptions of API Management policies. </param>
         /// <param name="count"> Total record count number. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PortalSettingsListResult(IList<PortalSettingsContract> value, long? count, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PortalSettingsListResult(IList<PortalSettingsContractData> value, long? count, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             Count = count;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Descriptions of API Management policies. </summary>
         [WirePath("value")]
-        public IList<PortalSettingsContract> Value { get; }
+        public IList<PortalSettingsContractData> Value { get; }
 
         /// <summary> Total record count number. </summary>
         [WirePath("count")]

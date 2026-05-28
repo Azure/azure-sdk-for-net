@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementCertificateData"/>. </summary>
-        internal ApiManagementCertificateData()
+        public ApiManagementCertificateData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Certificate properties details. </summary>
         [WirePath("properties")]
-        internal CertificateContractProperties Properties { get; }
+        internal CertificateContractProperties Properties { get; set; }
 
         /// <summary> Subject attribute of the certificate. </summary>
         [WirePath("properties.subject")]
@@ -48,6 +48,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.Subject;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateContractProperties();
+                }
+                Properties.Subject = value;
             }
         }
 
@@ -59,6 +67,14 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return Properties is null ? default : Properties.Thumbprint;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateContractProperties();
+                }
+                Properties.Thumbprint = value;
+            }
         }
 
         /// <summary> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
@@ -69,6 +85,17 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return Properties is null ? default : Properties.ExpireOn;
             }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new CertificateContractProperties();
+                    }
+                    Properties.ExpireOn = value.Value;
+                }
+            }
         }
 
         /// <summary> KeyVault location details of the certificate. </summary>
@@ -78,6 +105,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.KeyVault;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateContractProperties();
+                }
+                Properties.KeyVault = value;
             }
         }
     }

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ApiManagementUserData item in Value)
+                foreach (UserContractData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            IList<ApiManagementUserData> value = default;
+            IList<UserContractData> value = default;
             long? count = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    List<ApiManagementUserData> array = new List<ApiManagementUserData>();
+                    List<UserContractData> array = new List<UserContractData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementUserData.DeserializeApiManagementUserData(item, options));
+                        array.Add(UserContractData.DeserializeUserContractData(item, options));
                     }
                     value = array;
                     continue;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UserCollection(value ?? new ChangeTrackingList<ApiManagementUserData>(), count, nextLink, additionalBinaryDataProperties);
+            return new UserCollection(value ?? new ChangeTrackingList<UserContractData>(), count, nextLink, additionalBinaryDataProperties);
         }
     }
 }

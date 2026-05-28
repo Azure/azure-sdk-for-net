@@ -19,8 +19,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="GroupContractProperties"/>. </summary>
         /// <param name="displayName"> Group name. </param>
-        internal GroupContractProperties(string displayName)
+        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> is null. </exception>
+        public GroupContractProperties(string displayName)
         {
+            Argument.AssertNotNull(displayName, nameof(displayName));
+
             DisplayName = displayName;
         }
 
@@ -43,11 +46,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Group name. </summary>
         [WirePath("displayName")]
-        public string DisplayName { get; }
+        public string DisplayName { get; set; }
 
         /// <summary> Group description. Can contain HTML formatting tags. </summary>
         [WirePath("description")]
-        public string Description { get; }
+        public string Description { get; set; }
 
         /// <summary> true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false. </summary>
         [WirePath("builtIn")]
@@ -55,10 +58,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Group type. </summary>
         [WirePath("type")]
-        public ApiManagementGroupType? Type { get; }
+        public ApiManagementGroupType? Type { get; set; }
 
         /// <summary> For external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null. </summary>
         [WirePath("externalId")]
-        public string ExternalId { get; }
+        public string ExternalId { get; set; }
     }
 }

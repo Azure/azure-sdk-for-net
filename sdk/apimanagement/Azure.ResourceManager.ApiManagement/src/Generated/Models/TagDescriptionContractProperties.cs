@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     internal partial class TagDescriptionContractProperties : TagDescriptionBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="TagDescriptionContractProperties"/>. </summary>
-        internal TagDescriptionContractProperties()
+        public TagDescriptionContractProperties()
         {
         }
 
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Identifier of the tag in the form of /tags/{tagId}. </summary>
         [WirePath("tagId")]
-        public string TagId { get; }
+        public string TagId { get; set; }
 
         /// <summary> Tag name. </summary>
         [WirePath("displayName")]
-        public string DisplayName { get; }
+        public string DisplayName { get; set; }
     }
 }

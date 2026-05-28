@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement
     {
         private readonly ClientDiagnostics _subscriptionClientDiagnostics;
         private readonly Subscription _subscriptionRestClient;
-        private readonly ApiManagementSubscriptionData _data;
+        private readonly SubscriptionContractData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/subscriptions";
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of <see cref="ApiManagementSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ApiManagementSubscriptionResource(ArmClient client, ApiManagementSubscriptionData data) : this(client, data.Id)
+        internal ApiManagementSubscriptionResource(ArmClient client, SubscriptionContractData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ApiManagementSubscriptionData Data
+        public virtual SubscriptionContractData Data
         {
             get
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _subscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApiManagementSubscriptionData> response = Response.FromValue(ApiManagementSubscriptionData.FromResponse(result), result);
+                Response<SubscriptionContractData> response = Response.FromValue(SubscriptionContractData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _subscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApiManagementSubscriptionData> response = Response.FromValue(ApiManagementSubscriptionData.FromResponse(result), result);
+                Response<SubscriptionContractData> response = Response.FromValue(SubscriptionContractData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ApiManagementSubscriptionResource>> UpdateAsync(string ifMatch, SubscriptionPatch patch, bool? notify = default, AppType? appType = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementSubscriptionResource>> UpdateAsync(string ifMatch, ApiManagementSubscriptionPatch patch, bool? notify = default, AppType? appType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(patch, nameof(patch));
@@ -232,9 +232,9 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, SubscriptionPatch.ToRequestContent(patch), notify, appType?.ToString(), context);
+                HttpMessage message = _subscriptionRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ApiManagementSubscriptionPatch.ToRequestContent(patch), notify, appType?.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApiManagementSubscriptionData> response = Response.FromValue(ApiManagementSubscriptionData.FromResponse(result), result);
+                Response<SubscriptionContractData> response = Response.FromValue(SubscriptionContractData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ApiManagementSubscriptionResource> Update(string ifMatch, SubscriptionPatch patch, bool? notify = default, AppType? appType = default, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementSubscriptionResource> Update(string ifMatch, ApiManagementSubscriptionPatch patch, bool? notify = default, AppType? appType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(patch, nameof(patch));
@@ -292,9 +292,9 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, SubscriptionPatch.ToRequestContent(patch), notify, appType?.ToString(), context);
+                HttpMessage message = _subscriptionRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ApiManagementSubscriptionPatch.ToRequestContent(patch), notify, appType?.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApiManagementSubscriptionData> response = Response.FromValue(ApiManagementSubscriptionData.FromResponse(result), result);
+                Response<SubscriptionContractData> response = Response.FromValue(SubscriptionContractData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

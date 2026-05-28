@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ResourceSkuResult item in Value)
+            foreach (AvailableApiManagementServiceSkuResult item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            IList<ResourceSkuResult> value = default;
+            IList<AvailableApiManagementServiceSkuResult> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ResourceSkuResult> array = new List<ResourceSkuResult>();
+                    List<AvailableApiManagementServiceSkuResult> array = new List<AvailableApiManagementServiceSkuResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuResult.DeserializeResourceSkuResult(item, options));
+                        array.Add(AvailableApiManagementServiceSkuResult.DeserializeAvailableApiManagementServiceSkuResult(item, options));
                     }
                     value = array;
                     continue;

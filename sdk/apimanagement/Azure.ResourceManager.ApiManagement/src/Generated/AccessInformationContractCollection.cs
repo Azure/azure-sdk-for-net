@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<AccessInformationContractResource>> CreateOrUpdateAsync(WaitUntil waitUntil, AccessIdName accessName, string ifMatch, TenantAccessInfoCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AccessInformationContractResource>> CreateOrUpdateAsync(WaitUntil waitUntil, AccessName accessName, string ifMatch, TenantAccessInfoCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(content, nameof(content));
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<AccessInformationContractResource> CreateOrUpdate(WaitUntil waitUntil, AccessIdName accessName, string ifMatch, TenantAccessInfoCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AccessInformationContractResource> CreateOrUpdate(WaitUntil waitUntil, AccessName accessName, string ifMatch, TenantAccessInfoCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(content, nameof(content));
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AccessInformationContractResource>> GetAsync(AccessIdName accessName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AccessInformationContractResource>> GetAsync(AccessName accessName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("AccessInformationContractCollection.Get");
             scope.Start();
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AccessInformationContractResource> Get(AccessIdName accessName, CancellationToken cancellationToken = default)
+        public virtual Response<AccessInformationContractResource> Get(AccessName accessName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("AccessInformationContractCollection.Get");
             scope.Start();
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(AccessIdName accessName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(AccessName accessName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("AccessInformationContractCollection.Exists");
             scope.Start();
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(AccessIdName accessName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(AccessName accessName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("AccessInformationContractCollection.Exists");
             scope.Start();
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<AccessInformationContractResource>> GetIfExistsAsync(AccessIdName accessName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<AccessInformationContractResource>> GetIfExistsAsync(AccessName accessName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("AccessInformationContractCollection.GetIfExists");
             scope.Start();
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<AccessInformationContractResource> GetIfExists(AccessIdName accessName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<AccessInformationContractResource> GetIfExists(AccessName accessName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("AccessInformationContractCollection.GetIfExists");
             scope.Start();

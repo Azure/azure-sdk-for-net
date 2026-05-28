@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="policyId"> The identifier of the Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetEntityTagAsync(PolicyIdName policyId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetEntityTagAsync(PolicyName policyId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _graphQLApiResolverPolicyClientDiagnostics.CreateScope("ResolverContractResource.GetEntityTag");
             scope.Start();
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="policyId"> The identifier of the Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetEntityTag(PolicyIdName policyId, CancellationToken cancellationToken = default)
+        public virtual Response GetEntityTag(PolicyName policyId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _graphQLApiResolverPolicyClientDiagnostics.CreateScope("ResolverContractResource.GetEntityTag");
             scope.Start();
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceApiResolverPolicyResource>> GetServiceApiResolverPolicyAsync(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceApiResolverPolicyResource>> GetServiceApiResolverPolicyAsync(PolicyName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
             return await GetServiceApiResolverPolicies().GetAsync(policyId, format, cancellationToken).ConfigureAwait(false);
         }
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ServiceApiResolverPolicyResource> GetServiceApiResolverPolicy(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceApiResolverPolicyResource> GetServiceApiResolverPolicy(PolicyName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
             return GetServiceApiResolverPolicies().Get(policyId, format, cancellationToken);
         }

@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ApiManagementSubscriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sid, SubscriptionCreateContent content, bool? notify = default, ETag? ifMatch = default, AppType? appType = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApiManagementSubscriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sid, ApiManagementSubscriptionCreateOrUpdateContent content, bool? notify = default, ETag? ifMatch = default, AppType? appType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sid, nameof(sid));
             Argument.AssertNotNull(content, nameof(content));
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sid, SubscriptionCreateContent.ToRequestContent(content), notify, ifMatch, appType?.ToString(), context);
+                HttpMessage message = _subscriptionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sid, ApiManagementSubscriptionCreateOrUpdateContent.ToRequestContent(content), notify, ifMatch, appType?.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApiManagementSubscriptionData> response = Response.FromValue(ApiManagementSubscriptionData.FromResponse(result), result);
+                Response<SubscriptionContractData> response = Response.FromValue(SubscriptionContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 ApiManagementArmOperation<ApiManagementSubscriptionResource> operation = new ApiManagementArmOperation<ApiManagementSubscriptionResource>(Response.FromValue(new ApiManagementSubscriptionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ApiManagementSubscriptionResource> CreateOrUpdate(WaitUntil waitUntil, string sid, SubscriptionCreateContent content, bool? notify = default, ETag? ifMatch = default, AppType? appType = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApiManagementSubscriptionResource> CreateOrUpdate(WaitUntil waitUntil, string sid, ApiManagementSubscriptionCreateOrUpdateContent content, bool? notify = default, ETag? ifMatch = default, AppType? appType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sid, nameof(sid));
             Argument.AssertNotNull(content, nameof(content));
@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sid, SubscriptionCreateContent.ToRequestContent(content), notify, ifMatch, appType?.ToString(), context);
+                HttpMessage message = _subscriptionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sid, ApiManagementSubscriptionCreateOrUpdateContent.ToRequestContent(content), notify, ifMatch, appType?.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApiManagementSubscriptionData> response = Response.FromValue(ApiManagementSubscriptionData.FromResponse(result), result);
+                Response<SubscriptionContractData> response = Response.FromValue(SubscriptionContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 ApiManagementArmOperation<ApiManagementSubscriptionResource> operation = new ApiManagementArmOperation<ApiManagementSubscriptionResource>(Response.FromValue(new ApiManagementSubscriptionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _subscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sid, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApiManagementSubscriptionData> response = Response.FromValue(ApiManagementSubscriptionData.FromResponse(result), result);
+                Response<SubscriptionContractData> response = Response.FromValue(SubscriptionContractData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _subscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sid, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApiManagementSubscriptionData> response = Response.FromValue(ApiManagementSubscriptionData.FromResponse(result), result);
+                Response<SubscriptionContractData> response = Response.FromValue(SubscriptionContractData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementSubscriptionData, ApiManagementSubscriptionResource>(new SubscriptionGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SubscriptionContractData, ApiManagementSubscriptionResource>(new SubscriptionGetAllAsyncCollectionResultOfT(
                 _subscriptionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementSubscriptionData, ApiManagementSubscriptionResource>(new SubscriptionGetAllCollectionResultOfT(
+            return new PageableWrapper<SubscriptionContractData, ApiManagementSubscriptionResource>(new SubscriptionGetAllCollectionResultOfT(
                 _subscriptionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -391,14 +391,14 @@ namespace Azure.ResourceManager.ApiManagement
                 HttpMessage message = _subscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sid, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ApiManagementSubscriptionData> response = default;
+                Response<SubscriptionContractData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ApiManagementSubscriptionData.FromResponse(result), result);
+                        response = Response.FromValue(SubscriptionContractData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ApiManagementSubscriptionData)null, result);
+                        response = Response.FromValue((SubscriptionContractData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -448,14 +448,14 @@ namespace Azure.ResourceManager.ApiManagement
                 HttpMessage message = _subscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sid, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ApiManagementSubscriptionData> response = default;
+                Response<SubscriptionContractData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ApiManagementSubscriptionData.FromResponse(result), result);
+                        response = Response.FromValue(SubscriptionContractData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ApiManagementSubscriptionData)null, result);
+                        response = Response.FromValue((SubscriptionContractData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -505,14 +505,14 @@ namespace Azure.ResourceManager.ApiManagement
                 HttpMessage message = _subscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sid, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ApiManagementSubscriptionData> response = default;
+                Response<SubscriptionContractData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ApiManagementSubscriptionData.FromResponse(result), result);
+                        response = Response.FromValue(SubscriptionContractData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ApiManagementSubscriptionData)null, result);
+                        response = Response.FromValue((SubscriptionContractData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -566,14 +566,14 @@ namespace Azure.ResourceManager.ApiManagement
                 HttpMessage message = _subscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sid, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ApiManagementSubscriptionData> response = default;
+                Response<SubscriptionContractData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ApiManagementSubscriptionData.FromResponse(result), result);
+                        response = Response.FromValue(SubscriptionContractData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ApiManagementSubscriptionData)null, result);
+                        response = Response.FromValue((SubscriptionContractData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

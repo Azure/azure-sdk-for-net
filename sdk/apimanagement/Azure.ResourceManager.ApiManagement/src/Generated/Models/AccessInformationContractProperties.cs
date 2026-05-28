@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AccessInformationContractProperties"/>. </summary>
-        internal AccessInformationContractProperties()
+        public AccessInformationContractProperties()
         {
         }
 
@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Access Information type ('access' or 'gitAccess'). </summary>
         [WirePath("id")]
-        public string AccessInfoType { get; }
+        public string AccessInfoType { get; set; }
 
         /// <summary> Principal (User) Identifier. </summary>
         [WirePath("principalId")]
-        public string PrincipalId { get; }
+        public string PrincipalId { get; set; }
 
         /// <summary> Determines whether direct access is enabled. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; }
+        public bool? Enabled { get; set; }
     }
 }

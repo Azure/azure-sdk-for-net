@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement
     {
         private readonly ClientDiagnostics _workspacePolicyClientDiagnostics;
         private readonly WorkspacePolicy _workspacePolicyRestClient;
-        private readonly ApiManagementPolicyData _data;
+        private readonly PolicyContractData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/workspaces/policies";
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of <see cref="ServiceWorkspacePolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ServiceWorkspacePolicyResource(ArmClient client, ApiManagementPolicyData data) : this(client, data.Id)
+        internal ServiceWorkspacePolicyResource(ArmClient client, PolicyContractData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ApiManagementPolicyData Data
+        public virtual PolicyContractData Data
         {
             get
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="serviceName"> The serviceName. </param>
         /// <param name="workspaceId"> The workspaceId. </param>
         /// <param name="policyId"> The policyId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, PolicyIdName policyId)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, PolicyName policyId)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/policies/{policyId}";
             return new ResourceIdentifier(resourceId);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _workspacePolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, format?.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApiManagementPolicyData> response = Response.FromValue(ApiManagementPolicyData.FromResponse(result), result);
+                Response<PolicyContractData> response = Response.FromValue(PolicyContractData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _workspacePolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, format?.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApiManagementPolicyData> response = Response.FromValue(ApiManagementPolicyData.FromResponse(result), result);
+                Response<PolicyContractData> response = Response.FromValue(PolicyContractData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServiceWorkspacePolicyResource>> UpdateAsync(WaitUntil waitUntil, ApiManagementPolicyData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ServiceWorkspacePolicyResource>> UpdateAsync(WaitUntil waitUntil, PolicyContractData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -341,9 +341,9 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacePolicyRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ApiManagementPolicyData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _workspacePolicyRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PolicyContractData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApiManagementPolicyData> response = Response.FromValue(ApiManagementPolicyData.FromResponse(result), result);
+                Response<PolicyContractData> response = Response.FromValue(PolicyContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 ApiManagementArmOperation<ServiceWorkspacePolicyResource> operation = new ApiManagementArmOperation<ServiceWorkspacePolicyResource>(Response.FromValue(new ServiceWorkspacePolicyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ServiceWorkspacePolicyResource> Update(WaitUntil waitUntil, ApiManagementPolicyData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ServiceWorkspacePolicyResource> Update(WaitUntil waitUntil, PolicyContractData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -398,9 +398,9 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacePolicyRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ApiManagementPolicyData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _workspacePolicyRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PolicyContractData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApiManagementPolicyData> response = Response.FromValue(ApiManagementPolicyData.FromResponse(result), result);
+                Response<PolicyContractData> response = Response.FromValue(PolicyContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 ApiManagementArmOperation<ServiceWorkspacePolicyResource> operation = new ApiManagementArmOperation<ServiceWorkspacePolicyResource>(Response.FromValue(new ServiceWorkspacePolicyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);

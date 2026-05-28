@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly UserConfirmationPassword _userConfirmationPasswordRestClient;
         private readonly ClientDiagnostics _userIdentitiesClientDiagnostics;
         private readonly UserIdentities _userIdentitiesRestClient;
-        private readonly ApiManagementUserData _data;
+        private readonly UserContractData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/users";
 
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of <see cref="ApiManagementUserResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ApiManagementUserResource(ArmClient client, ApiManagementUserData data) : this(client, data.Id)
+        internal ApiManagementUserResource(ArmClient client, UserContractData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ApiManagementUserData Data
+        public virtual UserContractData Data
         {
             get
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _userRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApiManagementUserData> response = Response.FromValue(ApiManagementUserData.FromResponse(result), result);
+                Response<UserContractData> response = Response.FromValue(UserContractData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _userRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApiManagementUserData> response = Response.FromValue(ApiManagementUserData.FromResponse(result), result);
+                Response<UserContractData> response = Response.FromValue(UserContractData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ApiManagementUserResource>> UpdateAsync(string ifMatch, ApiManagementUserPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementUserResource>> UpdateAsync(string ifMatch, UserContractPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(patch, nameof(patch));
@@ -239,9 +239,9 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _userRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ApiManagementUserPatch.ToRequestContent(patch), context);
+                HttpMessage message = _userRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, UserContractPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApiManagementUserData> response = Response.FromValue(ApiManagementUserData.FromResponse(result), result);
+                Response<UserContractData> response = Response.FromValue(UserContractData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ApiManagementUserResource> Update(string ifMatch, ApiManagementUserPatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementUserResource> Update(string ifMatch, UserContractPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(patch, nameof(patch));
@@ -294,9 +294,9 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _userRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ApiManagementUserPatch.ToRequestContent(patch), context);
+                HttpMessage message = _userRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, UserContractPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApiManagementUserData> response = Response.FromValue(ApiManagementUserData.FromResponse(result), result);
+                Response<UserContractData> response = Response.FromValue(UserContractData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<GenerateSsoUrlResult>> GenerateSsoUrlAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GenerateSsoUriResult>> GenerateSsoUrlAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _userClientDiagnostics.CreateScope("ApiManagementUserResource.GenerateSsoUrl");
             scope.Start();
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _userRestClient.CreateGenerateSsoUrlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<GenerateSsoUrlResult> response = Response.FromValue(GenerateSsoUrlResult.FromResponse(result), result);
+                Response<GenerateSsoUriResult> response = Response.FromValue(GenerateSsoUriResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GenerateSsoUrlResult> GenerateSsoUrl(CancellationToken cancellationToken = default)
+        public virtual Response<GenerateSsoUriResult> GenerateSsoUrl(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _userClientDiagnostics.CreateScope("ApiManagementUserResource.GenerateSsoUrl");
             scope.Start();
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _userRestClient.CreateGenerateSsoUrlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<GenerateSsoUrlResult> response = Response.FromValue(GenerateSsoUrlResult.FromResponse(result), result);
+                Response<GenerateSsoUriResult> response = Response.FromValue(GenerateSsoUriResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

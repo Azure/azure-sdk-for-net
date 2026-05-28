@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (PolicyDescriptionContract item in Value)
+                foreach (PolicyDescriptionContractData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            IList<PolicyDescriptionContract> value = default;
+            IList<PolicyDescriptionContractData> value = default;
             long? count = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    List<PolicyDescriptionContract> array = new List<PolicyDescriptionContract>();
+                    List<PolicyDescriptionContractData> array = new List<PolicyDescriptionContractData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PolicyDescriptionContract.DeserializePolicyDescriptionContract(item, options));
+                        array.Add(PolicyDescriptionContractData.DeserializePolicyDescriptionContractData(item, options));
                     }
                     value = array;
                     continue;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PolicyDescriptionListResult(value ?? new ChangeTrackingList<PolicyDescriptionContract>(), count, additionalBinaryDataProperties);
+            return new PolicyDescriptionListResult(value ?? new ChangeTrackingList<PolicyDescriptionContractData>(), count, additionalBinaryDataProperties);
         }
     }
 }

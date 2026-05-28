@@ -228,11 +228,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Specifies whether an API or Product subscription is required for accessing the API. </summary>
         [WirePath("properties.subscriptionRequired")]
-        public bool? SubscriptionRequired
+        public bool? IsSubscriptionRequired
         {
             get
             {
-                return Properties is null ? default : Properties.SubscriptionRequired;
+                return Properties is null ? default : Properties.IsSubscriptionRequired;
             }
             set
             {
@@ -240,17 +240,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new ApiCreateOrUpdateProperties();
                 }
-                Properties.SubscriptionRequired = value;
+                Properties.IsSubscriptionRequired = value;
             }
         }
 
         /// <summary> A URL to the Terms of Service for the API. MUST be in the format of a URL. </summary>
         [WirePath("properties.termsOfServiceUrl")]
-        public Uri TermsOfServiceUri
+        public string TermsOfServiceLink
         {
             get
             {
-                return Properties is null ? default : Properties.TermsOfServiceUri;
+                return Properties is null ? default : Properties.TermsOfServiceLink;
             }
             set
             {
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new ApiCreateOrUpdateProperties();
                 }
-                Properties.TermsOfServiceUri = value;
+                Properties.TermsOfServiceLink = value;
             }
         }
 
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> API identifier of the source API. </summary>
         [WirePath("properties.sourceApiId")]
-        public string SourceApiId
+        public ResourceIdentifier SourceApiId
         {
             get
             {
@@ -354,11 +354,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </summary>
         [WirePath("properties.serviceUrl")]
-        public string ServiceUri
+        public string ServiceLink
         {
             get
             {
-                return Properties is null ? default : Properties.ServiceUri;
+                return Properties is null ? default : Properties.ServiceLink;
             }
             set
             {
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new ApiCreateOrUpdateProperties();
                 }
-                Properties.ServiceUri = value;
+                Properties.ServiceLink = value;
             }
         }
 

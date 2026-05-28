@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ApiManagementSubscriptionData item in Value)
+                foreach (SubscriptionContractData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            IList<ApiManagementSubscriptionData> value = default;
+            IList<SubscriptionContractData> value = default;
             long? count = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    List<ApiManagementSubscriptionData> array = new List<ApiManagementSubscriptionData>();
+                    List<SubscriptionContractData> array = new List<SubscriptionContractData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementSubscriptionData.DeserializeApiManagementSubscriptionData(item, options));
+                        array.Add(SubscriptionContractData.DeserializeSubscriptionContractData(item, options));
                     }
                     value = array;
                     continue;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SubscriptionListResult(value ?? new ChangeTrackingList<ApiManagementSubscriptionData>(), count, nextLink, additionalBinaryDataProperties);
+            return new SubscriptionListResult(value ?? new ChangeTrackingList<SubscriptionContractData>(), count, nextLink, additionalBinaryDataProperties);
         }
     }
 }

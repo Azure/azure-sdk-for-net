@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="validStatusCodes"> List of HTTP status codes considered valid for the request response. </param>
         /// <param name="headers"> List of headers to be included in the request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectivityCheckRequestProtocolConfigurationHttpConfiguration(Method? @method, IList<long> validStatusCodes, IList<HTTPHeader> headers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectivityCheckRequestProtocolConfigurationHttpConfiguration(HttpMethodConfiguration? @method, IList<long> validStatusCodes, IList<HTTPHeader> headers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Method = @method;
             ValidStatusCodes = validStatusCodes;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> The HTTP method to be used. </summary>
         [WirePath("method")]
-        public Method? Method { get; set; }
+        public HttpMethodConfiguration? Method { get; set; }
 
         /// <summary> List of HTTP status codes considered valid for the request response. </summary>
         [WirePath("validStatusCodes")]

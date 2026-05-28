@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="apiRevisionDescription"> Description of the API Revision. </param>
         /// <param name="apiVersionDescription"> Description of the API Version. </param>
         /// <param name="apiVersionSetId"> A resource identifier for the related ApiVersionSet. </param>
-        /// <param name="subscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
-        /// <param name="termsOfServiceUri"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
+        /// <param name="isSubscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
+        /// <param name="termsOfServiceLink"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
         /// <param name="contact"> Contact information for the API. </param>
         /// <param name="license"> License information for the API. </param>
         /// <param name="mcpProperties"> Properties specific to MCP API type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiEntityBaseContract(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? subscriptionRequired, Uri termsOfServiceUri, ApiContactInformation contact, ApiLicenseInformation license, McpProperties mcpProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiEntityBaseContract(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, McpProperties mcpProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             AuthenticationSettings = authenticationSettings;
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ApiRevisionDescription = apiRevisionDescription;
             ApiVersionDescription = apiVersionDescription;
             ApiVersionSetId = apiVersionSetId;
-            SubscriptionRequired = subscriptionRequired;
-            TermsOfServiceUri = termsOfServiceUri;
+            IsSubscriptionRequired = isSubscriptionRequired;
+            TermsOfServiceLink = termsOfServiceLink;
             Contact = contact;
             License = license;
             McpProperties = mcpProperties;
@@ -108,11 +108,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Specifies whether an API or Product subscription is required for accessing the API. </summary>
         [WirePath("subscriptionRequired")]
-        public bool? SubscriptionRequired { get; set; }
+        public bool? IsSubscriptionRequired { get; set; }
 
         /// <summary> A URL to the Terms of Service for the API. MUST be in the format of a URL. </summary>
         [WirePath("termsOfServiceUrl")]
-        public Uri TermsOfServiceUri { get; set; }
+        public string TermsOfServiceLink { get; set; }
 
         /// <summary> Contact information for the API. </summary>
         [WirePath("contact")]

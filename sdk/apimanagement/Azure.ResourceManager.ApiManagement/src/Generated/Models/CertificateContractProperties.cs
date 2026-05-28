@@ -21,8 +21,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="subject"> Subject attribute of the certificate. </param>
         /// <param name="thumbprint"> Thumbprint of the certificate. </param>
         /// <param name="expireOn"> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
-        internal CertificateContractProperties(string subject, string thumbprint, DateTimeOffset expireOn)
+        /// <exception cref="ArgumentNullException"> <paramref name="subject"/> or <paramref name="thumbprint"/> is null. </exception>
+        public CertificateContractProperties(string subject, string thumbprint, DateTimeOffset expireOn)
         {
+            Argument.AssertNotNull(subject, nameof(subject));
+            Argument.AssertNotNull(thumbprint, nameof(thumbprint));
+
             Subject = subject;
             Thumbprint = thumbprint;
             ExpireOn = expireOn;
@@ -45,18 +49,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Subject attribute of the certificate. </summary>
         [WirePath("subject")]
-        public string Subject { get; }
+        public string Subject { get; set; }
 
         /// <summary> Thumbprint of the certificate. </summary>
         [WirePath("thumbprint")]
-        public string Thumbprint { get; }
+        public string Thumbprint { get; set; }
 
         /// <summary> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("expirationDate")]
-        public DateTimeOffset ExpireOn { get; }
+        public DateTimeOffset ExpireOn { get; set; }
 
         /// <summary> KeyVault location details of the certificate. </summary>
         [WirePath("keyVault")]
-        public KeyVaultContractProperties KeyVault { get; }
+        public KeyVaultContractProperties KeyVault { get; set; }
     }
 }

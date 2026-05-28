@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ApiManagementDiagnosticData item in Value)
+                foreach (DiagnosticContractData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            IList<ApiManagementDiagnosticData> value = default;
+            IList<DiagnosticContractData> value = default;
             long? count = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    List<ApiManagementDiagnosticData> array = new List<ApiManagementDiagnosticData>();
+                    List<DiagnosticContractData> array = new List<DiagnosticContractData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementDiagnosticData.DeserializeApiManagementDiagnosticData(item, options));
+                        array.Add(DiagnosticContractData.DeserializeDiagnosticContractData(item, options));
                     }
                     value = array;
                     continue;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DiagnosticListResult(value ?? new ChangeTrackingList<ApiManagementDiagnosticData>(), count, nextLink, additionalBinaryDataProperties);
+            return new DiagnosticListResult(value ?? new ChangeTrackingList<DiagnosticContractData>(), count, nextLink, additionalBinaryDataProperties);
         }
     }
 }

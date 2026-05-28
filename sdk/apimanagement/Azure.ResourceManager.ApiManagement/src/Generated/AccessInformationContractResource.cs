@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="serviceName"> The serviceName. </param>
         /// <param name="accessName"> The accessName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, AccessIdName accessName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, AccessName accessName)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}";
             return new ResourceIdentifier(resourceId);
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AccessInformationSecretsContract>> GetSecretsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TenantAccessInfoSecretsDetails>> GetSecretsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("AccessInformationContractResource.GetSecrets");
             scope.Start();
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _tenantAccessRestClient.CreateGetSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AccessInformationSecretsContract> response = Response.FromValue(AccessInformationSecretsContract.FromResponse(result), result);
+                Response<TenantAccessInfoSecretsDetails> response = Response.FromValue(TenantAccessInfoSecretsDetails.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AccessInformationSecretsContract> GetSecrets(CancellationToken cancellationToken = default)
+        public virtual Response<TenantAccessInfoSecretsDetails> GetSecrets(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("AccessInformationContractResource.GetSecrets");
             scope.Start();
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _tenantAccessRestClient.CreateGetSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AccessInformationSecretsContract> response = Response.FromValue(AccessInformationSecretsContract.FromResponse(result), result);
+                Response<TenantAccessInfoSecretsDetails> response = Response.FromValue(TenantAccessInfoSecretsDetails.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TagContractData"/>. </summary>
-        internal TagContractData()
+        public TagContractData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Tag entity contract properties. </summary>
         [WirePath("properties")]
-        internal TagContractProperties Properties { get; }
+        internal TagContractProperties Properties { get; set; }
 
         /// <summary> Tag name. </summary>
         [WirePath("properties.displayName")]
@@ -48,6 +48,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TagContractProperties();
+                }
+                Properties.DisplayName = value;
             }
         }
     }

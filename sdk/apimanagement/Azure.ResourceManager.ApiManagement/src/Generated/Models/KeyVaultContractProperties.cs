@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class KeyVaultContractProperties : KeyVaultContractCreateProperties
     {
         /// <summary> Initializes a new instance of <see cref="KeyVaultContractProperties"/>. </summary>
-        internal KeyVaultContractProperties()
+        public KeyVaultContractProperties()
         {
         }
 
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Last time sync and refresh status of secret from key vault. </summary>
         [WirePath("lastStatus")]
-        public KeyVaultLastAccessStatusContractProperties LastStatus { get; }
+        public KeyVaultLastAccessStatusContractProperties LastStatus { get; set; }
     }
 }

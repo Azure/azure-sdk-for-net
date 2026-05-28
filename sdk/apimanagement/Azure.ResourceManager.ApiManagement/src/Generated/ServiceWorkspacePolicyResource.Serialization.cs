@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary></summary>
-    public partial class ServiceWorkspacePolicyResource : IJsonModel<ApiManagementPolicyData>
+    public partial class ServiceWorkspacePolicyResource : IJsonModel<PolicyContractData>
     {
-        private static IJsonModel<ApiManagementPolicyData> s_dataDeserializationInstance;
+        private static IJsonModel<PolicyContractData> s_dataDeserializationInstance;
 
-        private static IJsonModel<ApiManagementPolicyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ApiManagementPolicyData();
+        private static IJsonModel<PolicyContractData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PolicyContractData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ApiManagementPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementPolicyData>)Data).Write(writer, options);
+        void IJsonModel<PolicyContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PolicyContractData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiManagementPolicyData IJsonModel<ApiManagementPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        PolicyContractData IJsonModel<PolicyContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApiManagementPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementPolicyData>(Data, options, AzureResourceManagerApiManagementContext.Default);
+        BinaryData IPersistableModel<PolicyContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PolicyContractData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiManagementPolicyData IPersistableModel<ApiManagementPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementPolicyData>(data, options, AzureResourceManagerApiManagementContext.Default);
+        PolicyContractData IPersistableModel<PolicyContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PolicyContractData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApiManagementPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<PolicyContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Method? @method = default;
+            HttpMethodConfiguration? @method = default;
             IList<long> validStatusCodes = default;
             IList<HTTPHeader> headers = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    @method = new Method(prop.Value.GetString());
+                    @method = new HttpMethodConfiguration(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("validStatusCodes"u8))

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="SubscriptionListResult"/>. </summary>
         internal SubscriptionListResult()
         {
-            Value = new ChangeTrackingList<ApiManagementSubscriptionData>();
+            Value = new ChangeTrackingList<SubscriptionContractData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionListResult"/>. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionListResult(IList<ApiManagementSubscriptionData> value, long? count, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubscriptionListResult(IList<SubscriptionContractData> value, long? count, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             Count = count;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Page values. </summary>
         [WirePath("value")]
-        public IList<ApiManagementSubscriptionData> Value { get; }
+        public IList<SubscriptionContractData> Value { get; }
 
         /// <summary> Total record count number across all pages. </summary>
         [WirePath("count")]

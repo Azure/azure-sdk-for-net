@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ApiManagementNamedValueResource>> UpdateAsync(WaitUntil waitUntil, string ifMatch, NamedValuePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApiManagementNamedValueResource>> UpdateAsync(WaitUntil waitUntil, string ifMatch, ApiManagementNamedValuePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(patch, nameof(patch));
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namedValueRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, NamedValuePatch.ToRequestContent(patch), context);
+                HttpMessage message = _namedValueRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ApiManagementNamedValuePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ApiManagementArmOperation<ApiManagementNamedValueResource> operation = new ApiManagementArmOperation<ApiManagementNamedValueResource>(
                     new ApiManagementNamedValueOperationSource(Client),
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ApiManagementNamedValueResource> Update(WaitUntil waitUntil, string ifMatch, NamedValuePatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApiManagementNamedValueResource> Update(WaitUntil waitUntil, string ifMatch, ApiManagementNamedValuePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(patch, nameof(patch));
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namedValueRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, NamedValuePatch.ToRequestContent(patch), context);
+                HttpMessage message = _namedValueRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ApiManagementNamedValuePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ApiManagementArmOperation<ApiManagementNamedValueResource> operation = new ApiManagementArmOperation<ApiManagementNamedValueResource>(
                     new ApiManagementNamedValueOperationSource(Client),

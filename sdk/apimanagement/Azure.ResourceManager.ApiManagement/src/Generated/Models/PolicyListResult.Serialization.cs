@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ApiManagementPolicyData item in Value)
+                foreach (PolicyContractData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            IList<ApiManagementPolicyData> value = default;
+            IList<PolicyContractData> value = default;
             long? count = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    List<ApiManagementPolicyData> array = new List<ApiManagementPolicyData>();
+                    List<PolicyContractData> array = new List<PolicyContractData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementPolicyData.DeserializeApiManagementPolicyData(item, options));
+                        array.Add(PolicyContractData.DeserializePolicyContractData(item, options));
                     }
                     value = array;
                     continue;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PolicyListResult(value ?? new ChangeTrackingList<ApiManagementPolicyData>(), count, nextLink, additionalBinaryDataProperties);
+            return new PolicyListResult(value ?? new ChangeTrackingList<PolicyContractData>(), count, nextLink, additionalBinaryDataProperties);
         }
     }
 }

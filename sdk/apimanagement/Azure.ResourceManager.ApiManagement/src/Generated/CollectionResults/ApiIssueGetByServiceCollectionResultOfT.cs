@@ -14,7 +14,7 @@ using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    internal partial class ApiIssueGetByServiceCollectionResultOfT : Pageable<ApiManagementIssueData>
+    internal partial class ApiIssueGetByServiceCollectionResultOfT : Pageable<IssueContractData>
     {
         private readonly ApiIssue _client;
         private readonly Guid _subscriptionId;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ApiIssueGetByServiceCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ApiManagementIssueData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<IssueContractData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ApiManagement
                     yield break;
                 }
                 IssueListResult result = IssueListResult.FromResponse(response);
-                yield return Page<ApiManagementIssueData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<IssueContractData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

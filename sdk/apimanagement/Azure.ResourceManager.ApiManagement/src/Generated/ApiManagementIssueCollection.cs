@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _issueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, issueId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApiManagementIssueData> response = Response.FromValue(ApiManagementIssueData.FromResponse(result), result);
+                Response<IssueContractData> response = Response.FromValue(IssueContractData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _issueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, issueId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApiManagementIssueData> response = Response.FromValue(ApiManagementIssueData.FromResponse(result), result);
+                Response<IssueContractData> response = Response.FromValue(IssueContractData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementIssueData, ApiManagementIssueResource>(new IssueGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<IssueContractData, ApiManagementIssueResource>(new IssueGetByServiceAsyncCollectionResultOfT(
                 _issueRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementIssueData, ApiManagementIssueResource>(new IssueGetByServiceCollectionResultOfT(
+            return new PageableWrapper<IssueContractData, ApiManagementIssueResource>(new IssueGetByServiceCollectionResultOfT(
                 _issueRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -268,14 +268,14 @@ namespace Azure.ResourceManager.ApiManagement
                 HttpMessage message = _issueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, issueId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ApiManagementIssueData> response = default;
+                Response<IssueContractData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ApiManagementIssueData.FromResponse(result), result);
+                        response = Response.FromValue(IssueContractData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ApiManagementIssueData)null, result);
+                        response = Response.FromValue((IssueContractData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -325,14 +325,14 @@ namespace Azure.ResourceManager.ApiManagement
                 HttpMessage message = _issueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, issueId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ApiManagementIssueData> response = default;
+                Response<IssueContractData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ApiManagementIssueData.FromResponse(result), result);
+                        response = Response.FromValue(IssueContractData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ApiManagementIssueData)null, result);
+                        response = Response.FromValue((IssueContractData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -382,14 +382,14 @@ namespace Azure.ResourceManager.ApiManagement
                 HttpMessage message = _issueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, issueId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ApiManagementIssueData> response = default;
+                Response<IssueContractData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ApiManagementIssueData.FromResponse(result), result);
+                        response = Response.FromValue(IssueContractData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ApiManagementIssueData)null, result);
+                        response = Response.FromValue((IssueContractData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -443,14 +443,14 @@ namespace Azure.ResourceManager.ApiManagement
                 HttpMessage message = _issueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, issueId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ApiManagementIssueData> response = default;
+                Response<IssueContractData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ApiManagementIssueData.FromResponse(result), result);
+                        response = Response.FromValue(IssueContractData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ApiManagementIssueData)null, result);
+                        response = Response.FromValue((IssueContractData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

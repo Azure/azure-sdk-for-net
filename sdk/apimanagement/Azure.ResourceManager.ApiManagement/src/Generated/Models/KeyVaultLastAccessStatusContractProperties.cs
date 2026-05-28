@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultLastAccessStatusContractProperties"/>. </summary>
-        internal KeyVaultLastAccessStatusContractProperties()
+        public KeyVaultLastAccessStatusContractProperties()
         {
         }
 
@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Last status code for sync and refresh of secret from key vault. </summary>
         [WirePath("code")]
-        public string Code { get; }
+        public string Code { get; set; }
 
         /// <summary> Details of the error else empty. </summary>
         [WirePath("message")]
-        public string Message { get; }
+        public string Message { get; set; }
 
         /// <summary> Last time secret was accessed. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("timeStampUtc")]
-        public DateTimeOffset? TimeStampUtc { get; }
+        public DateTimeOffset? TimeStampUtc { get; set; }
     }
 }

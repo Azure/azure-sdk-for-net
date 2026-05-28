@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiData"/>. </summary>
-        internal ApiData()
+        public ApiData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> API entity contract properties. </summary>
         [WirePath("properties")]
-        internal ApiContractProperties Properties { get; }
+        internal ApiContractProperties Properties { get; set; }
 
         /// <summary> Description of the API. May include HTML formatting tags. </summary>
         [WirePath("properties.description")]
@@ -48,6 +48,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.Description = value;
             }
         }
 
@@ -59,6 +67,14 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return Properties is null ? default : Properties.AuthenticationSettings;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.AuthenticationSettings = value;
+            }
         }
 
         /// <summary> Protocols over which API is made available. </summary>
@@ -68,6 +84,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.SubscriptionKeyParameterNames;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.SubscriptionKeyParameterNames = value;
             }
         }
 
@@ -79,6 +103,14 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return Properties is null ? default : Properties.ApiType;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.ApiType = value;
+            }
         }
 
         /// <summary> Describes the revision of the API. If no value is provided, default revision 1 is created. </summary>
@@ -88,6 +120,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.ApiRevision;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.ApiRevision = value;
             }
         }
 
@@ -99,6 +139,14 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return Properties is null ? default : Properties.ApiVersion;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.ApiVersion = value;
+            }
         }
 
         /// <summary> Indicates if API revision is current api revision. </summary>
@@ -108,6 +156,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.IsCurrent;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.IsCurrent = value;
             }
         }
 
@@ -129,6 +185,14 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return Properties is null ? default : Properties.ApiRevisionDescription;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.ApiRevisionDescription = value;
+            }
         }
 
         /// <summary> Description of the API Version. </summary>
@@ -138,6 +202,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.ApiVersionDescription;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.ApiVersionDescription = value;
             }
         }
 
@@ -149,25 +221,49 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return Properties is null ? default : Properties.ApiVersionSetId;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.ApiVersionSetId = value;
+            }
         }
 
         /// <summary> Specifies whether an API or Product subscription is required for accessing the API. </summary>
         [WirePath("properties.subscriptionRequired")]
-        public bool? SubscriptionRequired
+        public bool? IsSubscriptionRequired
         {
             get
             {
-                return Properties is null ? default : Properties.SubscriptionRequired;
+                return Properties is null ? default : Properties.IsSubscriptionRequired;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.IsSubscriptionRequired = value;
             }
         }
 
         /// <summary> A URL to the Terms of Service for the API. MUST be in the format of a URL. </summary>
         [WirePath("properties.termsOfServiceUrl")]
-        public Uri TermsOfServiceUri
+        public string TermsOfServiceLink
         {
             get
             {
-                return Properties is null ? default : Properties.TermsOfServiceUri;
+                return Properties is null ? default : Properties.TermsOfServiceLink;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.TermsOfServiceLink = value;
             }
         }
 
@@ -179,6 +275,14 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return Properties is null ? default : Properties.Contact;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.Contact = value;
+            }
         }
 
         /// <summary> License information for the API. </summary>
@@ -188,6 +292,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.License;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.License = value;
             }
         }
 
@@ -199,15 +311,31 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return Properties is null ? default : Properties.McpProperties;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.McpProperties = value;
+            }
         }
 
         /// <summary> API identifier of the source API. </summary>
         [WirePath("properties.sourceApiId")]
-        public string SourceApiId
+        public ResourceIdentifier SourceApiId
         {
             get
             {
                 return Properties is null ? default : Properties.SourceApiId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.SourceApiId = value;
             }
         }
 
@@ -219,15 +347,31 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return Properties is null ? default : Properties.DisplayName;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.DisplayName = value;
+            }
         }
 
         /// <summary> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </summary>
         [WirePath("properties.serviceUrl")]
-        public string ServiceUri
+        public string ServiceLink
         {
             get
             {
-                return Properties is null ? default : Properties.ServiceUri;
+                return Properties is null ? default : Properties.ServiceLink;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.ServiceLink = value;
             }
         }
 
@@ -239,6 +383,14 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return Properties is null ? default : Properties.Path;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.Path = value;
+            }
         }
 
         /// <summary> Describes on which protocols the operations in this API can be invoked. </summary>
@@ -247,7 +399,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             get
             {
-                return Properties is null ? default : Properties.Protocols;
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                return Properties.Protocols;
             }
         }
 
@@ -258,6 +414,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.ApiVersionSet;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.ApiVersionSet = value;
             }
         }
 

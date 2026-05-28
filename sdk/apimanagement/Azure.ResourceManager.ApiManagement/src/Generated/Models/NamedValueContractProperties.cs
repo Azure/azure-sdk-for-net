@@ -16,8 +16,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         /// <summary> Initializes a new instance of <see cref="NamedValueContractProperties"/>. </summary>
         /// <param name="displayName"> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </param>
-        internal NamedValueContractProperties(string displayName)
+        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> is null. </exception>
+        public NamedValueContractProperties(string displayName)
         {
+            Argument.AssertNotNull(displayName, nameof(displayName));
+
             DisplayName = displayName;
         }
 
@@ -39,15 +42,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </summary>
         [WirePath("displayName")]
-        public string DisplayName { get; }
+        public string DisplayName { get; set; }
 
         /// <summary> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
         [WirePath("value")]
-        public string Value { get; }
+        public string Value { get; set; }
 
         /// <summary> KeyVault location details of the namedValue. </summary>
         [WirePath("keyVault")]
-        public KeyVaultContractProperties KeyVault { get; }
+        public KeyVaultContractProperties KeyVault { get; set; }
 
         /// <summary> The provisioning state. </summary>
         [WirePath("provisioningState")]

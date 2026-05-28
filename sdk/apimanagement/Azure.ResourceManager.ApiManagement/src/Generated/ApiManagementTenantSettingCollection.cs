@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="settingsType"> The identifier of the settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApiManagementTenantSettingResource>> GetAsync(SettingsTypeName settingsType, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementTenantSettingResource>> GetAsync(SettingsType settingsType, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _tenantSettingsClientDiagnostics.CreateScope("ApiManagementTenantSettingCollection.Get");
             scope.Start();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="settingsType"> The identifier of the settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApiManagementTenantSettingResource> Get(SettingsTypeName settingsType, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementTenantSettingResource> Get(SettingsType settingsType, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _tenantSettingsClientDiagnostics.CreateScope("ApiManagementTenantSettingCollection.Get");
             scope.Start();
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="settingsType"> The identifier of the settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(SettingsTypeName settingsType, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(SettingsType settingsType, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _tenantSettingsClientDiagnostics.CreateScope("ApiManagementTenantSettingCollection.Exists");
             scope.Start();
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="settingsType"> The identifier of the settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(SettingsTypeName settingsType, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(SettingsType settingsType, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _tenantSettingsClientDiagnostics.CreateScope("ApiManagementTenantSettingCollection.Exists");
             scope.Start();
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="settingsType"> The identifier of the settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<ApiManagementTenantSettingResource>> GetIfExistsAsync(SettingsTypeName settingsType, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ApiManagementTenantSettingResource>> GetIfExistsAsync(SettingsType settingsType, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _tenantSettingsClientDiagnostics.CreateScope("ApiManagementTenantSettingCollection.GetIfExists");
             scope.Start();
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="settingsType"> The identifier of the settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<ApiManagementTenantSettingResource> GetIfExists(SettingsTypeName settingsType, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ApiManagementTenantSettingResource> GetIfExists(SettingsType settingsType, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _tenantSettingsClientDiagnostics.CreateScope("ApiManagementTenantSettingCollection.GetIfExists");
             scope.Start();

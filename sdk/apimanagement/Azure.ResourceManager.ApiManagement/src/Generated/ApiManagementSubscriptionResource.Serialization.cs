@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary></summary>
-    public partial class ApiManagementSubscriptionResource : IJsonModel<ApiManagementSubscriptionData>
+    public partial class ApiManagementSubscriptionResource : IJsonModel<SubscriptionContractData>
     {
-        private static IJsonModel<ApiManagementSubscriptionData> s_dataDeserializationInstance;
+        private static IJsonModel<SubscriptionContractData> s_dataDeserializationInstance;
 
-        private static IJsonModel<ApiManagementSubscriptionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ApiManagementSubscriptionData();
+        private static IJsonModel<SubscriptionContractData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SubscriptionContractData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ApiManagementSubscriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementSubscriptionData>)Data).Write(writer, options);
+        void IJsonModel<SubscriptionContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SubscriptionContractData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiManagementSubscriptionData IJsonModel<ApiManagementSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        SubscriptionContractData IJsonModel<SubscriptionContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApiManagementSubscriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementSubscriptionData>(Data, options, AzureResourceManagerApiManagementContext.Default);
+        BinaryData IPersistableModel<SubscriptionContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SubscriptionContractData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiManagementSubscriptionData IPersistableModel<ApiManagementSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementSubscriptionData>(data, options, AzureResourceManagerApiManagementContext.Default);
+        SubscriptionContractData IPersistableModel<SubscriptionContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SubscriptionContractData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApiManagementSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<SubscriptionContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

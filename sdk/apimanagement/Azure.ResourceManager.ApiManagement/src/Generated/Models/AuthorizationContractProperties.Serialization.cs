@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            AuthorizationType? authorizationType = default;
+            ApiManagementAuthorizationType? authorizationType = default;
             OAuth2GrantType? oAuth2GrantType = default;
             IDictionary<string, string> parameters = default;
-            AuthorizationError error = default;
+            ApiManagementAuthorizationError error = default;
             string status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    authorizationType = new AuthorizationType(prop.Value.GetString());
+                    authorizationType = new ApiManagementAuthorizationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("oauth2grantType"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    error = AuthorizationError.DeserializeAuthorizationError(prop.Value, options);
+                    error = ApiManagementAuthorizationError.DeserializeApiManagementAuthorizationError(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("status"u8))

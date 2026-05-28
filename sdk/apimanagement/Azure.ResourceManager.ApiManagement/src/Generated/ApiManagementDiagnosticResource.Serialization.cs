@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary></summary>
-    public partial class ApiManagementDiagnosticResource : IJsonModel<ApiManagementDiagnosticData>
+    public partial class ApiManagementDiagnosticResource : IJsonModel<DiagnosticContractData>
     {
-        private static IJsonModel<ApiManagementDiagnosticData> s_dataDeserializationInstance;
+        private static IJsonModel<DiagnosticContractData> s_dataDeserializationInstance;
 
-        private static IJsonModel<ApiManagementDiagnosticData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ApiManagementDiagnosticData();
+        private static IJsonModel<DiagnosticContractData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DiagnosticContractData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ApiManagementDiagnosticData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementDiagnosticData>)Data).Write(writer, options);
+        void IJsonModel<DiagnosticContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DiagnosticContractData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiManagementDiagnosticData IJsonModel<ApiManagementDiagnosticData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        DiagnosticContractData IJsonModel<DiagnosticContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApiManagementDiagnosticData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementDiagnosticData>(Data, options, AzureResourceManagerApiManagementContext.Default);
+        BinaryData IPersistableModel<DiagnosticContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiagnosticContractData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiManagementDiagnosticData IPersistableModel<ApiManagementDiagnosticData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementDiagnosticData>(data, options, AzureResourceManagerApiManagementContext.Default);
+        DiagnosticContractData IPersistableModel<DiagnosticContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiagnosticContractData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApiManagementDiagnosticData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<DiagnosticContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

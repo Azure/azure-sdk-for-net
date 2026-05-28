@@ -139,8 +139,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string apiRevisionDescription = default;
             string apiVersionDescription = default;
             ResourceIdentifier apiVersionSetId = default;
-            bool? subscriptionRequired = default;
-            Uri termsOfServiceUri = default;
+            bool? isSubscriptionRequired = default;
+            string termsOfServiceLink = default;
             ApiContactInformation contact = default;
             ApiLicenseInformation license = default;
             McpProperties mcpProperties = default;
@@ -236,16 +236,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    subscriptionRequired = prop.Value.GetBoolean();
+                    isSubscriptionRequired = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("termsOfServiceUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    termsOfServiceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    termsOfServiceLink = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("contact"u8))
@@ -321,8 +317,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 apiRevisionDescription,
                 apiVersionDescription,
                 apiVersionSetId,
-                subscriptionRequired,
-                termsOfServiceUri,
+                isSubscriptionRequired,
+                termsOfServiceLink,
                 contact,
                 license,
                 mcpProperties,

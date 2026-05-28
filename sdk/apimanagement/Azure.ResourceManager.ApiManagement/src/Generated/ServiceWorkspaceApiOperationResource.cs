@@ -216,14 +216,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="operationUpdateContract"> API Operation Update parameters. </param>
+        /// <param name="patch"> API Operation Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="operationUpdateContract"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ServiceWorkspaceApiOperationResource>> UpdateAsync(string ifMatch, OperationUpdateContract operationUpdateContract, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceWorkspaceApiOperationResource>> UpdateAsync(string ifMatch, ApiOperationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
-            Argument.AssertNotNull(operationUpdateContract, nameof(operationUpdateContract));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _workspaceApiOperationClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationResource.Update");
             scope.Start();
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceApiOperationRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, OperationUpdateContract.ToRequestContent(operationUpdateContract), context);
+                HttpMessage message = _workspaceApiOperationRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, ApiOperationPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiOperationData> response = Response.FromValue(ApiOperationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -271,14 +271,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="operationUpdateContract"> API Operation Update parameters. </param>
+        /// <param name="patch"> API Operation Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="operationUpdateContract"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ServiceWorkspaceApiOperationResource> Update(string ifMatch, OperationUpdateContract operationUpdateContract, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceWorkspaceApiOperationResource> Update(string ifMatch, ApiOperationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
-            Argument.AssertNotNull(operationUpdateContract, nameof(operationUpdateContract));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _workspaceApiOperationClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationResource.Update");
             scope.Start();
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceApiOperationRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, OperationUpdateContract.ToRequestContent(operationUpdateContract), context);
+                HttpMessage message = _workspaceApiOperationRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, ApiOperationPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiOperationData> response = Response.FromValue(ApiOperationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="policyId"> The identifier of the Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetEntityTagAsync(PolicyIdName policyId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetEntityTagAsync(PolicyName policyId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _workspaceApiOperationPolicyClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationResource.GetEntityTag");
             scope.Start();
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="policyId"> The identifier of the Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetEntityTag(PolicyIdName policyId, CancellationToken cancellationToken = default)
+        public virtual Response GetEntityTag(PolicyName policyId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _workspaceApiOperationPolicyClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationResource.GetEntityTag");
             scope.Start();
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceWorkspaceApiOperationPolicyResource>> GetServiceWorkspaceApiOperationPolicyAsync(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceWorkspaceApiOperationPolicyResource>> GetServiceWorkspaceApiOperationPolicyAsync(PolicyName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
             return await GetServiceWorkspaceApiOperationPolicies().GetAsync(policyId, format, cancellationToken).ConfigureAwait(false);
         }
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ServiceWorkspaceApiOperationPolicyResource> GetServiceWorkspaceApiOperationPolicy(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceWorkspaceApiOperationPolicyResource> GetServiceWorkspaceApiOperationPolicy(PolicyName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
             return GetServiceWorkspaceApiOperationPolicies().Get(policyId, format, cancellationToken);
         }

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="error"> Authorization error details. </param>
         /// <param name="status"> Status of the Authorization. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AuthorizationContractProperties(AuthorizationType? authorizationType, OAuth2GrantType? oAuth2GrantType, IDictionary<string, string> parameters, AuthorizationError error, string status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AuthorizationContractProperties(ApiManagementAuthorizationType? authorizationType, OAuth2GrantType? oAuth2GrantType, IDictionary<string, string> parameters, ApiManagementAuthorizationError error, string status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthorizationType = authorizationType;
             OAuth2GrantType = oAuth2GrantType;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Authorization type options. </summary>
         [WirePath("authorizationType")]
-        public AuthorizationType? AuthorizationType { get; set; }
+        public ApiManagementAuthorizationType? AuthorizationType { get; set; }
 
         /// <summary> OAuth2 grant type options. </summary>
         [WirePath("oauth2grantType")]
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Authorization error details. </summary>
         [WirePath("error")]
-        public AuthorizationError Error { get; set; }
+        public ApiManagementAuthorizationError Error { get; set; }
 
         /// <summary> Status of the Authorization. </summary>
         [WirePath("status")]

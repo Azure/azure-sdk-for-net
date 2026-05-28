@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             DateTimeOffset? createdOn = default;
-            State? state = default;
+            IssueState? state = default;
             string apiId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string title = default;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    state = new State(prop.Value.GetString());
+                    state = new IssueState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("apiId"u8))

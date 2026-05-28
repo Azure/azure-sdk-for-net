@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagDescriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="tagDescriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ApiTagDescriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string tagDescriptionId, TagDescriptionCreateContent content, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApiTagDescriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string tagDescriptionId, ApiTagDescriptionCreateOrUpdateContent content, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tagDescriptionId, nameof(tagDescriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiTagDescriptionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagDescriptionId, TagDescriptionCreateContent.ToRequestContent(content), ifMatch, context);
+                HttpMessage message = _apiTagDescriptionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagDescriptionId, ApiTagDescriptionCreateOrUpdateContent.ToRequestContent(content), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiTagDescriptionData> response = Response.FromValue(ApiTagDescriptionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagDescriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="tagDescriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ApiTagDescriptionResource> CreateOrUpdate(WaitUntil waitUntil, string tagDescriptionId, TagDescriptionCreateContent content, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApiTagDescriptionResource> CreateOrUpdate(WaitUntil waitUntil, string tagDescriptionId, ApiTagDescriptionCreateOrUpdateContent content, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tagDescriptionId, nameof(tagDescriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiTagDescriptionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagDescriptionId, TagDescriptionCreateContent.ToRequestContent(content), ifMatch, context);
+                HttpMessage message = _apiTagDescriptionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagDescriptionId, ApiTagDescriptionCreateOrUpdateContent.ToRequestContent(content), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiTagDescriptionData> response = Response.FromValue(ApiTagDescriptionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

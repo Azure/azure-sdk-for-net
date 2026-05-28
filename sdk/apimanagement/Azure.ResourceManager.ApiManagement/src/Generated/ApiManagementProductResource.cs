@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ApiManagementProductResource>> UpdateAsync(string ifMatch, ProductPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementProductResource>> UpdateAsync(string ifMatch, ApiManagementProductPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(patch, nameof(patch));
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ProductPatch.ToRequestContent(patch), context);
+                HttpMessage message = _productRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ApiManagementProductPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementProductData> response = Response.FromValue(ApiManagementProductData.FromResponse(result), result);
                 if (response.Value == null)
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ApiManagementProductResource> Update(string ifMatch, ProductPatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementProductResource> Update(string ifMatch, ApiManagementProductPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(patch, nameof(patch));
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ProductPatch.ToRequestContent(patch), context);
+                HttpMessage message = _productRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ApiManagementProductPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementProductData> response = Response.FromValue(ApiManagementProductData.FromResponse(result), result);
                 if (response.Value == null)
@@ -461,8 +461,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiManagementSubscriptionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiManagementSubscriptionData> GetAllAsync(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubscriptionContractData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SubscriptionContractData> GetAllAsync(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -506,8 +506,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiManagementSubscriptionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiManagementSubscriptionData> GetAll(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubscriptionContractData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SubscriptionContractData> GetAll(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -1325,7 +1325,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="policyId"> The identifier of the Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetEntityTagAsync(PolicyIdName policyId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetEntityTagAsync(PolicyName policyId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _apiManagementProductPolicyClientDiagnostics.CreateScope("ApiManagementProductResource.GetEntityTag");
             scope.Start();
@@ -1369,7 +1369,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="policyId"> The identifier of the Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetEntityTag(PolicyIdName policyId, CancellationToken cancellationToken = default)
+        public virtual Response GetEntityTag(PolicyName policyId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _apiManagementProductPolicyClientDiagnostics.CreateScope("ApiManagementProductResource.GetEntityTag");
             scope.Start();
@@ -1584,7 +1584,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiManagementProductPolicyResource>> GetApiManagementProductPolicyAsync(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementProductPolicyResource>> GetApiManagementProductPolicyAsync(PolicyName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
             return await GetApiManagementProductPolicies().GetAsync(policyId, format, cancellationToken).ConfigureAwait(false);
         }
@@ -1594,7 +1594,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ApiManagementProductPolicyResource> GetApiManagementProductPolicy(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementProductPolicyResource> GetApiManagementProductPolicy(PolicyName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
             return GetApiManagementProductPolicies().Get(policyId, format, cancellationToken);
         }

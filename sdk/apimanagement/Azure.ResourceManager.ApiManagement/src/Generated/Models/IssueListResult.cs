@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="IssueListResult"/>. </summary>
         internal IssueListResult()
         {
-            Value = new ChangeTrackingList<ApiManagementIssueData>();
+            Value = new ChangeTrackingList<IssueContractData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IssueListResult"/>. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IssueListResult(IReadOnlyList<ApiManagementIssueData> value, long? count, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IssueListResult(IReadOnlyList<IssueContractData> value, long? count, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             Count = count;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Issue values. </summary>
         [WirePath("value")]
-        public IReadOnlyList<ApiManagementIssueData> Value { get; }
+        public IReadOnlyList<IssueContractData> Value { get; }
 
         /// <summary> Total record count number across all pages. </summary>
         [WirePath("count")]

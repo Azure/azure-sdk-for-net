@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementNamedValueData"/>. </summary>
-        internal ApiManagementNamedValueData()
+        public ApiManagementNamedValueData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> NamedValue entity contract properties. </summary>
         [WirePath("properties")]
-        internal NamedValueContractProperties Properties { get; }
+        internal NamedValueContractProperties Properties { get; set; }
 
         /// <summary> Optional tags that when provided can be used to filter the NamedValue list. </summary>
         [WirePath("properties.tags")]
@@ -47,7 +47,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             get
             {
-                return Properties is null ? default : Properties.Tags;
+                if (Properties is null)
+                {
+                    Properties = new NamedValueContractProperties();
+                }
+                return Properties.Tags;
             }
         }
 
@@ -59,6 +63,14 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return Properties is null ? default : Properties.Secret;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NamedValueContractProperties();
+                }
+                Properties.Secret = value;
+            }
         }
 
         /// <summary> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </summary>
@@ -68,6 +80,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NamedValueContractProperties();
+                }
+                Properties.DisplayName = value;
             }
         }
 
@@ -79,6 +99,14 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return Properties is null ? default : Properties.Value;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NamedValueContractProperties();
+                }
+                Properties.Value = value;
+            }
         }
 
         /// <summary> KeyVault location details of the namedValue. </summary>
@@ -88,6 +116,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.KeyVault;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NamedValueContractProperties();
+                }
+                Properties.KeyVault = value;
             }
         }
 

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement
     {
         private readonly ClientDiagnostics _workspaceDiagnosticClientDiagnostics;
         private readonly WorkspaceDiagnostic _workspaceDiagnosticRestClient;
-        private readonly ApiManagementDiagnosticData _data;
+        private readonly DiagnosticContractData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/workspaces/diagnostics";
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of <see cref="ServiceWorkspaceDiagnosticResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ServiceWorkspaceDiagnosticResource(ArmClient client, ApiManagementDiagnosticData data) : this(client, data.Id)
+        internal ServiceWorkspaceDiagnosticResource(ArmClient client, DiagnosticContractData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ApiManagementDiagnosticData Data
+        public virtual DiagnosticContractData Data
         {
             get
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _workspaceDiagnosticRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApiManagementDiagnosticData> response = Response.FromValue(ApiManagementDiagnosticData.FromResponse(result), result);
+                Response<DiagnosticContractData> response = Response.FromValue(DiagnosticContractData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _workspaceDiagnosticRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApiManagementDiagnosticData> response = Response.FromValue(ApiManagementDiagnosticData.FromResponse(result), result);
+                Response<DiagnosticContractData> response = Response.FromValue(DiagnosticContractData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _workspaceDiagnosticRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, DiagnosticUpdateContract.ToRequestContent(diagnosticUpdateContract), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApiManagementDiagnosticData> response = Response.FromValue(ApiManagementDiagnosticData.FromResponse(result), result);
+                Response<DiagnosticContractData> response = Response.FromValue(DiagnosticContractData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _workspaceDiagnosticRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, DiagnosticUpdateContract.ToRequestContent(diagnosticUpdateContract), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApiManagementDiagnosticData> response = Response.FromValue(ApiManagementDiagnosticData.FromResponse(result), result);
+                Response<DiagnosticContractData> response = Response.FromValue(DiagnosticContractData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

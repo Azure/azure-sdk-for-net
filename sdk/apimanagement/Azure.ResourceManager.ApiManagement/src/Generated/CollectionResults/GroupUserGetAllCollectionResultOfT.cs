@@ -14,7 +14,7 @@ using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    internal partial class GroupUserGetAllCollectionResultOfT : Pageable<ApiManagementUserData>
+    internal partial class GroupUserGetAllCollectionResultOfT : Pageable<UserContractData>
     {
         private readonly GroupUser _client;
         private readonly Guid _subscriptionId;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of GroupUserGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ApiManagementUserData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<UserContractData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement
                     yield break;
                 }
                 UserCollection result = UserCollection.FromResponse(response);
-                yield return Page<ApiManagementUserData>.FromValues((IReadOnlyList<ApiManagementUserData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<UserContractData>.FromValues((IReadOnlyList<UserContractData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

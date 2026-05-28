@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="content"> Deploy Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<OperationResultContract>> DeployAsync(WaitUntil waitUntil, ConfigurationIdName configurationName, ConfigurationDeployContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GitOperationResultContractData>> DeployAsync(WaitUntil waitUntil, ConfigurationName configurationName, ConfigurationDeployContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -637,8 +637,8 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _tenantConfigurationRestClient.CreateDeployRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName.ToString(), ConfigurationDeployContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ApiManagementArmOperation<OperationResultContract> operation = new ApiManagementArmOperation<OperationResultContract>(
-                    new OperationResultContractOperationSource(),
+                ApiManagementArmOperation<GitOperationResultContractData> operation = new ApiManagementArmOperation<GitOperationResultContractData>(
+                    new GitOperationResultContractDataOperationSource(),
                     _tenantConfigurationClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="content"> Deploy Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<OperationResultContract> Deploy(WaitUntil waitUntil, ConfigurationIdName configurationName, ConfigurationDeployContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GitOperationResultContractData> Deploy(WaitUntil waitUntil, ConfigurationName configurationName, ConfigurationDeployContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -697,8 +697,8 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _tenantConfigurationRestClient.CreateDeployRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName.ToString(), ConfigurationDeployContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ApiManagementArmOperation<OperationResultContract> operation = new ApiManagementArmOperation<OperationResultContract>(
-                    new OperationResultContractOperationSource(),
+                ApiManagementArmOperation<GitOperationResultContractData> operation = new ApiManagementArmOperation<GitOperationResultContractData>(
+                    new GitOperationResultContractDataOperationSource(),
                     _tenantConfigurationClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetEntityTagAsync(AccessIdName accessName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetEntityTagAsync(AccessName accessName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("ApiManagementServiceResource.GetEntityTag");
             scope.Start();
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetEntityTag(AccessIdName accessName, CancellationToken cancellationToken = default)
+        public virtual Response GetEntityTag(AccessName accessName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("ApiManagementServiceResource.GetEntityTag");
             scope.Start();
@@ -828,7 +828,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="configurationName"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TenantConfigurationSyncStateContract>> GetSyncStateAsync(ConfigurationIdName configurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TenantConfigurationSyncStateContract>> GetSyncStateAsync(ConfigurationName configurationName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.GetSyncState");
             scope.Start();
@@ -877,7 +877,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="configurationName"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TenantConfigurationSyncStateContract> GetSyncState(ConfigurationIdName configurationName, CancellationToken cancellationToken = default)
+        public virtual Response<TenantConfigurationSyncStateContract> GetSyncState(ConfigurationName configurationName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.GetSyncState");
             scope.Start();
@@ -929,7 +929,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="content"> Save Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<OperationResultContract>> SaveAsync(WaitUntil waitUntil, ConfigurationIdName configurationName, ConfigurationSaveContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GitOperationResultContractData>> SaveAsync(WaitUntil waitUntil, ConfigurationName configurationName, ConfigurationSaveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -943,8 +943,8 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _tenantConfigurationRestClient.CreateSaveRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName.ToString(), ConfigurationSaveContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ApiManagementArmOperation<OperationResultContract> operation = new ApiManagementArmOperation<OperationResultContract>(
-                    new OperationResultContractOperationSource(),
+                ApiManagementArmOperation<GitOperationResultContractData> operation = new ApiManagementArmOperation<GitOperationResultContractData>(
+                    new GitOperationResultContractDataOperationSource(),
                     _tenantConfigurationClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -989,7 +989,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="content"> Save Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<OperationResultContract> Save(WaitUntil waitUntil, ConfigurationIdName configurationName, ConfigurationSaveContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GitOperationResultContractData> Save(WaitUntil waitUntil, ConfigurationName configurationName, ConfigurationSaveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1003,8 +1003,8 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _tenantConfigurationRestClient.CreateSaveRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName.ToString(), ConfigurationSaveContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ApiManagementArmOperation<OperationResultContract> operation = new ApiManagementArmOperation<OperationResultContract>(
-                    new OperationResultContractOperationSource(),
+                ApiManagementArmOperation<GitOperationResultContractData> operation = new ApiManagementArmOperation<GitOperationResultContractData>(
+                    new GitOperationResultContractDataOperationSource(),
                     _tenantConfigurationClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1049,7 +1049,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="content"> Validate Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<OperationResultContract>> ValidateAsync(WaitUntil waitUntil, ConfigurationIdName configurationName, ConfigurationDeployContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GitOperationResultContractData>> ValidateAsync(WaitUntil waitUntil, ConfigurationName configurationName, ConfigurationDeployContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1063,8 +1063,8 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _tenantConfigurationRestClient.CreateValidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName.ToString(), ConfigurationDeployContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ApiManagementArmOperation<OperationResultContract> operation = new ApiManagementArmOperation<OperationResultContract>(
-                    new OperationResultContractOperationSource(),
+                ApiManagementArmOperation<GitOperationResultContractData> operation = new ApiManagementArmOperation<GitOperationResultContractData>(
+                    new GitOperationResultContractDataOperationSource(),
                     _tenantConfigurationClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1109,7 +1109,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="content"> Validate Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<OperationResultContract> Validate(WaitUntil waitUntil, ConfigurationIdName configurationName, ConfigurationDeployContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GitOperationResultContractData> Validate(WaitUntil waitUntil, ConfigurationName configurationName, ConfigurationDeployContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1123,8 +1123,8 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _tenantConfigurationRestClient.CreateValidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName.ToString(), ConfigurationDeployContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ApiManagementArmOperation<OperationResultContract> operation = new ApiManagementArmOperation<OperationResultContract>(
-                    new OperationResultContractOperationSource(),
+                ApiManagementArmOperation<GitOperationResultContractData> operation = new ApiManagementArmOperation<GitOperationResultContractData>(
+                    new GitOperationResultContractDataOperationSource(),
                     _tenantConfigurationClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1602,7 +1602,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<OperationResultContract>> ByServiceAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GitOperationResultContractData>> ByServiceAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _policyRestrictionValidationsClientDiagnostics.CreateScope("ApiManagementServiceResource.ByService");
             scope.Start();
@@ -1614,8 +1614,8 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _policyRestrictionValidationsRestClient.CreateByServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ApiManagementArmOperation<OperationResultContract> operation = new ApiManagementArmOperation<OperationResultContract>(
-                    new OperationResultContractOperationSource(),
+                ApiManagementArmOperation<GitOperationResultContractData> operation = new ApiManagementArmOperation<GitOperationResultContractData>(
+                    new GitOperationResultContractDataOperationSource(),
                     _policyRestrictionValidationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1657,7 +1657,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<OperationResultContract> ByService(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GitOperationResultContractData> ByService(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _policyRestrictionValidationsClientDiagnostics.CreateScope("ApiManagementServiceResource.ByService");
             scope.Start();
@@ -1669,8 +1669,8 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _policyRestrictionValidationsRestClient.CreateByServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ApiManagementArmOperation<OperationResultContract> operation = new ApiManagementArmOperation<OperationResultContract>(
-                    new OperationResultContractOperationSource(),
+                ApiManagementArmOperation<GitOperationResultContractData> operation = new ApiManagementArmOperation<GitOperationResultContractData>(
+                    new GitOperationResultContractDataOperationSource(),
                     _policyRestrictionValidationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1807,8 +1807,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceSkuResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceSkuResult> GetAvailableServiceSkusAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AvailableApiManagementServiceSkuResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AvailableApiManagementServiceSkuResult> GetAvailableServiceSkusAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -1845,8 +1845,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceSkuResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceSkuResult> GetAvailableServiceSkus(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AvailableApiManagementServiceSkuResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AvailableApiManagementServiceSkuResult> GetAvailableServiceSkus(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -2661,8 +2661,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="includeNotTaggedApis"> Include not tagged APIs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TagResourceContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TagResourceContract> ApiGetByTagsAsync(string filter = default, int? top = default, int? skip = default, bool? includeNotTaggedApis = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<TagResourceContractDetails> ApiGetByTagsAsync(string filter = default, int? top = default, int? skip = default, bool? includeNotTaggedApis = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -2707,8 +2707,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="includeNotTaggedApis"> Include not tagged APIs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TagResourceContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TagResourceContract> ApiGetByTags(string filter = default, int? top = default, int? skip = default, bool? includeNotTaggedApis = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<TagResourceContractDetails> ApiGetByTags(string filter = default, int? top = default, int? skip = default, bool? includeNotTaggedApis = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -3065,8 +3065,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkStatusContractByLocation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkStatusContractByLocation> NetworkStatusGetByServiceAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkStatusContractWithLocation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkStatusContractWithLocation> NetworkStatusGetByServiceAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -3103,8 +3103,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkStatusContractByLocation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkStatusContractByLocation> NetworkStatusGetByService(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkStatusContractWithLocation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkStatusContractWithLocation> NetworkStatusGetByService(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -3553,8 +3553,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="includeNotTaggedProducts"> Include not tagged Products. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TagResourceContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TagResourceContract> ProductGetByTagsAsync(string filter = default, int? top = default, int? skip = default, bool? includeNotTaggedProducts = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<TagResourceContractDetails> ProductGetByTagsAsync(string filter = default, int? top = default, int? skip = default, bool? includeNotTaggedProducts = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -3599,8 +3599,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="includeNotTaggedProducts"> Include not tagged Products. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TagResourceContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TagResourceContract> ProductGetByTags(string filter = default, int? top = default, int? skip = default, bool? includeNotTaggedProducts = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<TagResourceContractDetails> ProductGetByTags(string filter = default, int? top = default, int? skip = default, bool? includeNotTaggedProducts = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -3747,14 +3747,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="quotaCounterKey"> Quota counter key identifier. This is the result of expression defined in `counter-key` attribute of the quota-by-key policy. For example, if you specify `counter-key="boo"` in the policy, then it’s accessible by `"boo"` counter key. But if it’s defined as `counter-key="@("b"+"a")"` then it will be accessible by `"ba"` key. </param>
-        /// <param name="quotaCounterValueUpdateContract"> The value of the quota counter to be applied to all quota counter periods. </param>
+        /// <param name="content"> The value of the quota counter to be applied to all quota counter periods. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="quotaCounterKey"/> or <paramref name="quotaCounterValueUpdateContract"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="quotaCounterKey"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="quotaCounterKey"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<QuotaCounterListResult>> UpdateAsync(string quotaCounterKey, QuotaCounterValueUpdateContract quotaCounterValueUpdateContract, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QuotaCounterListResult>> UpdateAsync(string quotaCounterKey, QuotaCounterValueUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
-            Argument.AssertNotNull(quotaCounterValueUpdateContract, nameof(quotaCounterValueUpdateContract));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _quotaByCounterKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.Update");
             scope.Start();
@@ -3764,7 +3764,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaByCounterKeysRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, quotaCounterKey, QuotaCounterValueUpdateContract.ToRequestContent(quotaCounterValueUpdateContract), context);
+                HttpMessage message = _quotaByCounterKeysRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, quotaCounterKey, QuotaCounterValueUpdateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<QuotaCounterListResult> response = Response.FromValue(QuotaCounterListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -3802,14 +3802,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="quotaCounterKey"> Quota counter key identifier. This is the result of expression defined in `counter-key` attribute of the quota-by-key policy. For example, if you specify `counter-key="boo"` in the policy, then it’s accessible by `"boo"` counter key. But if it’s defined as `counter-key="@("b"+"a")"` then it will be accessible by `"ba"` key. </param>
-        /// <param name="quotaCounterValueUpdateContract"> The value of the quota counter to be applied to all quota counter periods. </param>
+        /// <param name="content"> The value of the quota counter to be applied to all quota counter periods. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="quotaCounterKey"/> or <paramref name="quotaCounterValueUpdateContract"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="quotaCounterKey"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="quotaCounterKey"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<QuotaCounterListResult> Update(string quotaCounterKey, QuotaCounterValueUpdateContract quotaCounterValueUpdateContract, CancellationToken cancellationToken = default)
+        public virtual Response<QuotaCounterListResult> Update(string quotaCounterKey, QuotaCounterValueUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
-            Argument.AssertNotNull(quotaCounterValueUpdateContract, nameof(quotaCounterValueUpdateContract));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _quotaByCounterKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.Update");
             scope.Start();
@@ -3819,7 +3819,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaByCounterKeysRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, quotaCounterKey, QuotaCounterValueUpdateContract.ToRequestContent(quotaCounterValueUpdateContract), context);
+                HttpMessage message = _quotaByCounterKeysRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, quotaCounterKey, QuotaCounterValueUpdateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<QuotaCounterListResult> response = Response.FromValue(QuotaCounterListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -3968,15 +3968,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="quotaCounterKey"> Quota counter key identifier. This is the result of expression defined in `counter-key` attribute of the quota-by-key policy. For example, if you specify `counter-key="boo"` in the policy, then it’s accessible by `"boo"` counter key. But if it’s defined as `counter-key="@("b"+"a")"` then it will be accessible by `"ba"` key. </param>
         /// <param name="quotaPeriodKey"> Quota period key identifier. </param>
-        /// <param name="quotaCounterValueUpdateContract"> The value of the Quota counter to be applied on the specified period. </param>
+        /// <param name="content"> The value of the Quota counter to be applied on the specified period. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="quotaCounterKey"/>, <paramref name="quotaPeriodKey"/> or <paramref name="quotaCounterValueUpdateContract"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="quotaCounterKey"/>, <paramref name="quotaPeriodKey"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="quotaCounterKey"/> or <paramref name="quotaPeriodKey"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<QuotaCounterContract>> UpdateAsync(string quotaCounterKey, string quotaPeriodKey, QuotaCounterValueUpdateContract quotaCounterValueUpdateContract, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QuotaCounterContract>> UpdateAsync(string quotaCounterKey, string quotaPeriodKey, QuotaCounterValueUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
             Argument.AssertNotNullOrEmpty(quotaPeriodKey, nameof(quotaPeriodKey));
-            Argument.AssertNotNull(quotaCounterValueUpdateContract, nameof(quotaCounterValueUpdateContract));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _quotaByPeriodKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.Update");
             scope.Start();
@@ -3986,7 +3986,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaByPeriodKeysRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, quotaCounterKey, quotaPeriodKey, QuotaCounterValueUpdateContract.ToRequestContent(quotaCounterValueUpdateContract), context);
+                HttpMessage message = _quotaByPeriodKeysRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, quotaCounterKey, quotaPeriodKey, QuotaCounterValueUpdateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<QuotaCounterContract> response = Response.FromValue(QuotaCounterContract.FromResponse(result), result);
                 if (response.Value == null)
@@ -4025,15 +4025,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="quotaCounterKey"> Quota counter key identifier. This is the result of expression defined in `counter-key` attribute of the quota-by-key policy. For example, if you specify `counter-key="boo"` in the policy, then it’s accessible by `"boo"` counter key. But if it’s defined as `counter-key="@("b"+"a")"` then it will be accessible by `"ba"` key. </param>
         /// <param name="quotaPeriodKey"> Quota period key identifier. </param>
-        /// <param name="quotaCounterValueUpdateContract"> The value of the Quota counter to be applied on the specified period. </param>
+        /// <param name="content"> The value of the Quota counter to be applied on the specified period. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="quotaCounterKey"/>, <paramref name="quotaPeriodKey"/> or <paramref name="quotaCounterValueUpdateContract"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="quotaCounterKey"/>, <paramref name="quotaPeriodKey"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="quotaCounterKey"/> or <paramref name="quotaPeriodKey"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<QuotaCounterContract> Update(string quotaCounterKey, string quotaPeriodKey, QuotaCounterValueUpdateContract quotaCounterValueUpdateContract, CancellationToken cancellationToken = default)
+        public virtual Response<QuotaCounterContract> Update(string quotaCounterKey, string quotaPeriodKey, QuotaCounterValueUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
             Argument.AssertNotNullOrEmpty(quotaPeriodKey, nameof(quotaPeriodKey));
-            Argument.AssertNotNull(quotaCounterValueUpdateContract, nameof(quotaCounterValueUpdateContract));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _quotaByPeriodKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.Update");
             scope.Start();
@@ -4043,7 +4043,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaByPeriodKeysRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, quotaCounterKey, quotaPeriodKey, QuotaCounterValueUpdateContract.ToRequestContent(quotaCounterValueUpdateContract), context);
+                HttpMessage message = _quotaByPeriodKeysRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, quotaCounterKey, quotaPeriodKey, QuotaCounterValueUpdateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<QuotaCounterContract> response = Response.FromValue(QuotaCounterContract.FromResponse(result), result);
                 if (response.Value == null)
@@ -4388,8 +4388,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TagResourceContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TagResourceContract> GetByServiceAsync(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<TagResourceContractDetails> GetByServiceAsync(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -4432,8 +4432,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TagResourceContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TagResourceContract> GetByService(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<TagResourceContractDetails> GetByService(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -5326,7 +5326,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="templateName"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
+        /// <param name="templateName"> Email Template Name Identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> GetEntityTagAsync(TemplateName templateName, CancellationToken cancellationToken = default)
         {
@@ -5370,7 +5370,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="templateName"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
+        /// <param name="templateName"> Email Template Name Identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response GetEntityTag(TemplateName templateName, CancellationToken cancellationToken = default)
         {
@@ -5703,13 +5703,13 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="identityProviderName"> Identity Provider Type identifier. </param>
-        /// <param name="identityProviderCreateContract"> Create parameters. </param>
+        /// <param name="content"> Create parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="identityProviderCreateContract"/> is null. </exception>
-        public virtual async Task<Response<ApiManagementIdentityProviderResource>> CreateOrUpdateAsync(IdentityProviderType identityProviderName, IdentityProviderCreateContract identityProviderCreateContract, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ApiManagementIdentityProviderResource>> CreateOrUpdateAsync(IdentityProviderType identityProviderName, ApiManagementIdentityProviderCreateOrUpdateContent content, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(identityProviderCreateContract, nameof(identityProviderCreateContract));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _identityProviderClientDiagnostics.CreateScope("ApiManagementServiceResource.CreateOrUpdate");
             scope.Start();
@@ -5719,7 +5719,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _identityProviderRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityProviderName.ToString(), IdentityProviderCreateContract.ToRequestContent(identityProviderCreateContract), ifMatch, context);
+                HttpMessage message = _identityProviderRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityProviderName.ToString(), ApiManagementIdentityProviderCreateOrUpdateContent.ToRequestContent(content), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementIdentityProviderData> response = Response.FromValue(ApiManagementIdentityProviderData.FromResponse(result), result);
                 if (response.Value == null)
@@ -5757,13 +5757,13 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="identityProviderName"> Identity Provider Type identifier. </param>
-        /// <param name="identityProviderCreateContract"> Create parameters. </param>
+        /// <param name="content"> Create parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="identityProviderCreateContract"/> is null. </exception>
-        public virtual Response<ApiManagementIdentityProviderResource> CreateOrUpdate(IdentityProviderType identityProviderName, IdentityProviderCreateContract identityProviderCreateContract, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<ApiManagementIdentityProviderResource> CreateOrUpdate(IdentityProviderType identityProviderName, ApiManagementIdentityProviderCreateOrUpdateContent content, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(identityProviderCreateContract, nameof(identityProviderCreateContract));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _identityProviderClientDiagnostics.CreateScope("ApiManagementServiceResource.CreateOrUpdate");
             scope.Start();
@@ -5773,7 +5773,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _identityProviderRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityProviderName.ToString(), IdentityProviderCreateContract.ToRequestContent(identityProviderCreateContract), ifMatch, context);
+                HttpMessage message = _identityProviderRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityProviderName.ToString(), ApiManagementIdentityProviderCreateOrUpdateContent.ToRequestContent(content), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementIdentityProviderData> response = Response.FromValue(ApiManagementIdentityProviderData.FromResponse(result), result);
                 if (response.Value == null)
@@ -6188,7 +6188,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="policyId"> The identifier of the Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetEntityTagAsync(PolicyIdName policyId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetEntityTagAsync(PolicyName policyId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _policyClientDiagnostics.CreateScope("ApiManagementServiceResource.GetEntityTag");
             scope.Start();
@@ -6232,7 +6232,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="policyId"> The identifier of the Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetEntityTag(PolicyIdName policyId, CancellationToken cancellationToken = default)
+        public virtual Response GetEntityTag(PolicyName policyId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _policyClientDiagnostics.CreateScope("ApiManagementServiceResource.GetEntityTag");
             scope.Start();
@@ -7125,7 +7125,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ApiManagementUserResource>> CreateOrUpdateAsync(string userId, UserCreateContent content, bool? notify = default, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementUserResource>> CreateOrUpdateAsync(string userId, ApiManagementUserCreateOrUpdateContent content, bool? notify = default, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNull(content, nameof(content));
@@ -7138,9 +7138,9 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _userRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, userId, UserCreateContent.ToRequestContent(content), notify, ifMatch, context);
+                HttpMessage message = _userRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, userId, ApiManagementUserCreateOrUpdateContent.ToRequestContent(content), notify, ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApiManagementUserData> response = Response.FromValue(ApiManagementUserData.FromResponse(result), result);
+                Response<UserContractData> response = Response.FromValue(UserContractData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -7182,7 +7182,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ApiManagementUserResource> CreateOrUpdate(string userId, UserCreateContent content, bool? notify = default, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementUserResource> CreateOrUpdate(string userId, ApiManagementUserCreateOrUpdateContent content, bool? notify = default, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNull(content, nameof(content));
@@ -7195,9 +7195,9 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _userRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, userId, UserCreateContent.ToRequestContent(content), notify, ifMatch, context);
+                HttpMessage message = _userRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, userId, ApiManagementUserCreateOrUpdateContent.ToRequestContent(content), notify, ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApiManagementUserData> response = Response.FromValue(ApiManagementUserData.FromResponse(result), result);
+                Response<UserContractData> response = Response.FromValue(UserContractData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -7722,7 +7722,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiManagementPolicyResource>> GetApiManagementPolicyAsync(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementPolicyResource>> GetApiManagementPolicyAsync(PolicyName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
             return await GetApiManagementPolicies().GetAsync(policyId, format, cancellationToken).ConfigureAwait(false);
         }
@@ -7732,7 +7732,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ApiManagementPolicyResource> GetApiManagementPolicy(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementPolicyResource> GetApiManagementPolicy(PolicyName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
             return GetApiManagementPolicies().Get(policyId, format, cancellationToken);
         }
@@ -8141,7 +8141,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the details of the email template specified by its identifier. </summary>
-        /// <param name="templateName"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
+        /// <param name="templateName"> Email Template Name Identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public virtual async Task<Response<ApiManagementEmailTemplateResource>> GetApiManagementEmailTemplateAsync(TemplateName templateName, CancellationToken cancellationToken = default)
@@ -8150,7 +8150,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the details of the email template specified by its identifier. </summary>
-        /// <param name="templateName"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
+        /// <param name="templateName"> Email Template Name Identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public virtual Response<ApiManagementEmailTemplateResource> GetApiManagementEmailTemplate(TemplateName templateName, CancellationToken cancellationToken = default)
@@ -8650,7 +8650,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="settingsType"> The identifier of the settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiManagementTenantSettingResource>> GetApiManagementTenantSettingAsync(SettingsTypeName settingsType, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementTenantSettingResource>> GetApiManagementTenantSettingAsync(SettingsType settingsType, CancellationToken cancellationToken = default)
         {
             return await GetApiManagementTenantSettings().GetAsync(settingsType, cancellationToken).ConfigureAwait(false);
         }
@@ -8659,7 +8659,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="settingsType"> The identifier of the settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ApiManagementTenantSettingResource> GetApiManagementTenantSetting(SettingsTypeName settingsType, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementTenantSettingResource> GetApiManagementTenantSetting(SettingsType settingsType, CancellationToken cancellationToken = default)
         {
             return GetApiManagementTenantSettings().Get(settingsType, cancellationToken);
         }
@@ -8675,7 +8675,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AccessInformationContractResource>> GetAccessInformationContractAsync(AccessIdName accessName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AccessInformationContractResource>> GetAccessInformationContractAsync(AccessName accessName, CancellationToken cancellationToken = default)
         {
             return await GetAccessInformationContracts().GetAsync(accessName, cancellationToken).ConfigureAwait(false);
         }
@@ -8684,7 +8684,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<AccessInformationContractResource> GetAccessInformationContract(AccessIdName accessName, CancellationToken cancellationToken = default)
+        public virtual Response<AccessInformationContractResource> GetAccessInformationContract(AccessName accessName, CancellationToken cancellationToken = default)
         {
             return GetAccessInformationContracts().Get(accessName, cancellationToken);
         }

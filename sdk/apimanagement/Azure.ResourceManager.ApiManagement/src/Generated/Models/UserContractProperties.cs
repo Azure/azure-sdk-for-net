@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     internal partial class UserContractProperties : UserEntityBaseParameters
     {
         /// <summary> Initializes a new instance of <see cref="UserContractProperties"/>. </summary>
-        internal UserContractProperties()
+        public UserContractProperties()
         {
             Groups = new ChangeTrackingList<GroupContractProperties>();
         }
@@ -41,19 +41,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> First name. </summary>
         [WirePath("firstName")]
-        public string FirstName { get; }
+        public string FirstName { get; set; }
 
         /// <summary> Last name. </summary>
         [WirePath("lastName")]
-        public string LastName { get; }
+        public string LastName { get; set; }
 
         /// <summary> Email address. </summary>
         [WirePath("email")]
-        public string Email { get; }
+        public string Email { get; set; }
 
         /// <summary> Date of user registration. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("registrationDate")]
-        public DateTimeOffset? RegistrationOn { get; }
+        public DateTimeOffset? RegistrationOn { get; set; }
 
         /// <summary> Collection of groups user is part of. </summary>
         [WirePath("groups")]

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="state"> Status of the issue. </param>
         /// <param name="apiId"> A resource identifier for the API the issue was created for. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IssueContractBaseProperties(DateTimeOffset? createdOn, State? state, string apiId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IssueContractBaseProperties(DateTimeOffset? createdOn, IssueState? state, string apiId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreatedOn = createdOn;
             State = state;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Status of the issue. </summary>
         [WirePath("state")]
-        public State? State { get; set; }
+        public IssueState? State { get; set; }
 
         /// <summary> A resource identifier for the API the issue was created for. </summary>
         [WirePath("apiId")]

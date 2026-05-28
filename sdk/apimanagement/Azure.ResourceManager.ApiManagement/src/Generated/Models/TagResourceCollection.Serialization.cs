@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (TagResourceContract item in Value)
+                foreach (TagResourceContractDetails item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            IList<TagResourceContract> value = default;
+            IList<TagResourceContractDetails> value = default;
             long? count = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    List<TagResourceContract> array = new List<TagResourceContract>();
+                    List<TagResourceContractDetails> array = new List<TagResourceContractDetails>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TagResourceContract.DeserializeTagResourceContract(item, options));
+                        array.Add(TagResourceContractDetails.DeserializeTagResourceContractDetails(item, options));
                     }
                     value = array;
                     continue;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TagResourceCollection(value ?? new ChangeTrackingList<TagResourceContract>(), count, nextLink, additionalBinaryDataProperties);
+            return new TagResourceCollection(value ?? new ChangeTrackingList<TagResourceContractDetails>(), count, nextLink, additionalBinaryDataProperties);
         }
     }
 }

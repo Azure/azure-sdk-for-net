@@ -17,8 +17,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         /// <summary> Initializes a new instance of <see cref="IdentityProviderContractProperties"/>. </summary>
         /// <param name="clientId"> Client Id of the Application in the external Identity Provider. It is App ID for Facebook login, Client ID for Google login, App ID for Microsoft. </param>
-        internal IdentityProviderContractProperties(string clientId)
+        /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> is null. </exception>
+        public IdentityProviderContractProperties(string clientId)
         {
+            Argument.AssertNotNull(clientId, nameof(clientId));
+
             ClientId = clientId;
         }
 
@@ -45,14 +48,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Client Id of the Application in the external Identity Provider. It is App ID for Facebook login, Client ID for Google login, App ID for Microsoft. </summary>
         [WirePath("clientId")]
-        public string ClientId { get; }
+        public string ClientId { get; set; }
 
         /// <summary> Client secret of the Application in external Identity Provider, used to authenticate login request. For example, it is App Secret for Facebook login, API Key for Google login, Public Key for Microsoft. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
         [WirePath("clientSecret")]
-        public string ClientSecret { get; }
+        public string ClientSecret { get; set; }
 
         /// <summary> Certificate full resource ID used in external Identity Provider. </summary>
         [WirePath("certificateId")]
-        public ResourceIdentifier CertificateId { get; }
+        public ResourceIdentifier CertificateId { get; set; }
     }
 }

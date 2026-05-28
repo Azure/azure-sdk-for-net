@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementGroupData"/>. </summary>
-        internal ApiManagementGroupData()
+        public ApiManagementGroupData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Group entity contract properties. </summary>
         [WirePath("properties")]
-        internal GroupContractProperties Properties { get; }
+        internal GroupContractProperties Properties { get; set; }
 
         /// <summary> Group name. </summary>
         [WirePath("properties.displayName")]
@@ -48,6 +48,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GroupContractProperties();
+                }
+                Properties.DisplayName = value;
             }
         }
 
@@ -58,6 +66,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GroupContractProperties();
+                }
+                Properties.Description = value;
             }
         }
 
@@ -79,6 +95,14 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return Properties is null ? default : Properties.Type;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GroupContractProperties();
+                }
+                Properties.Type = value;
+            }
         }
 
         /// <summary> For external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null. </summary>
@@ -88,6 +112,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.ExternalId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GroupContractProperties();
+                }
+                Properties.ExternalId = value;
             }
         }
     }

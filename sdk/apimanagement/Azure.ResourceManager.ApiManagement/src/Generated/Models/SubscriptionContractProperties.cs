@@ -20,8 +20,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="SubscriptionContractProperties"/>. </summary>
         /// <param name="scope"> Scope like /products/{productId} or /apis or /apis/{apiId}. </param>
         /// <param name="state"> Subscription state. Possible states are <i> active – the subscription is active, </i> suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, <i> submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, </i> rejected – the subscription request has been denied by an administrator, <i> cancelled – the subscription has been cancelled by the developer or administrator, </i> expired – the subscription reached its expiration date and was deactivated. </param>
-        internal SubscriptionContractProperties(string scope, SubscriptionState state)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public SubscriptionContractProperties(string scope, SubscriptionState state)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             Scope = scope;
             State = state;
         }
@@ -61,19 +64,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> The user resource identifier of the subscription owner. The value is a valid relative URL in the format of /users/{userId} where {userId} is a user identifier. </summary>
         [WirePath("ownerId")]
-        public string OwnerId { get; }
+        public string OwnerId { get; set; }
 
         /// <summary> Scope like /products/{productId} or /apis or /apis/{apiId}. </summary>
         [WirePath("scope")]
-        public string Scope { get; }
+        public string Scope { get; set; }
 
         /// <summary> The name of the subscription, or null if the subscription has no name. </summary>
         [WirePath("displayName")]
-        public string DisplayName { get; }
+        public string DisplayName { get; set; }
 
         /// <summary> Subscription state. Possible states are <i> active – the subscription is active, </i> suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, <i> submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, </i> rejected – the subscription request has been denied by an administrator, <i> cancelled – the subscription has been cancelled by the developer or administrator, </i> expired – the subscription reached its expiration date and was deactivated. </summary>
         [WirePath("state")]
-        public SubscriptionState State { get; }
+        public SubscriptionState State { get; set; }
 
         /// <summary> Subscription creation date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("createdDate")]
@@ -81,34 +84,34 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Subscription activation date. The setting is for audit purposes only and the subscription is not automatically activated. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("startDate")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn { get; set; }
 
         /// <summary> Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("expirationDate")]
-        public DateTimeOffset? ExpireOn { get; }
+        public DateTimeOffset? ExpireOn { get; set; }
 
         /// <summary> Date when subscription was cancelled or expired. The setting is for audit purposes only and the subscription is not automatically cancelled. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("endDate")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndOn { get; set; }
 
         /// <summary> Upcoming subscription expiration notification date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("notificationDate")]
-        public DateTimeOffset? NotificationOn { get; }
+        public DateTimeOffset? NotificationOn { get; set; }
 
         /// <summary> Subscription primary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
         [WirePath("primaryKey")]
-        public string PrimaryKey { get; }
+        public string PrimaryKey { get; set; }
 
         /// <summary> Subscription secondary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
         [WirePath("secondaryKey")]
-        public string SecondaryKey { get; }
+        public string SecondaryKey { get; set; }
 
         /// <summary> Optional subscription comment added by an administrator when the state is changed to the 'rejected'. </summary>
         [WirePath("stateComment")]
-        public string StateComment { get; }
+        public string StateComment { get; set; }
 
         /// <summary> Determines whether tracing is enabled. </summary>
         [WirePath("allowTracing")]
-        public bool? AllowTracing { get; }
+        public bool? AllowTracing { get; set; }
     }
 }

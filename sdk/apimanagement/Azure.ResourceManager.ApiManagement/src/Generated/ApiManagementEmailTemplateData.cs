@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementEmailTemplateData"/>. </summary>
-        internal ApiManagementEmailTemplateData()
+        public ApiManagementEmailTemplateData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Email Template entity contract properties. </summary>
         [WirePath("properties")]
-        internal EmailTemplateContractProperties Properties { get; }
+        internal EmailTemplateContractProperties Properties { get; set; }
 
         /// <summary> Subject of the Template. </summary>
         [WirePath("properties.subject")]
@@ -48,6 +48,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.Subject;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EmailTemplateContractProperties();
+                }
+                Properties.Subject = value;
             }
         }
 
@@ -59,6 +67,14 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return Properties is null ? default : Properties.Body;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EmailTemplateContractProperties();
+                }
+                Properties.Body = value;
+            }
         }
 
         /// <summary> Title of the Template. </summary>
@@ -69,6 +85,14 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return Properties is null ? default : Properties.Title;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EmailTemplateContractProperties();
+                }
+                Properties.Title = value;
+            }
         }
 
         /// <summary> Description of the Email Template. </summary>
@@ -78,6 +102,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EmailTemplateContractProperties();
+                }
+                Properties.Description = value;
             }
         }
 
@@ -97,7 +129,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             get
             {
-                return Properties is null ? default : Properties.Parameters;
+                if (Properties is null)
+                {
+                    Properties = new EmailTemplateContractProperties();
+                }
+                return Properties.Parameters;
             }
         }
     }

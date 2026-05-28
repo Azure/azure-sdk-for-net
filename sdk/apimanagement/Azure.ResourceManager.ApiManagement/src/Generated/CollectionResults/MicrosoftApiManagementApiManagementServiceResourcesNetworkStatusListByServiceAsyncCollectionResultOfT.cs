@@ -18,7 +18,7 @@ using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    internal partial class MicrosoftApiManagementApiManagementServiceResourcesNetworkStatusListByServiceAsyncCollectionResultOfT : AsyncPageable<NetworkStatusContractByLocation>
+    internal partial class MicrosoftApiManagementApiManagementServiceResourcesNetworkStatusListByServiceAsyncCollectionResultOfT : AsyncPageable<NetworkStatusContractWithLocation>
     {
         private readonly NetworkStatus _client;
         private readonly Guid _subscriptionId;
@@ -48,15 +48,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of MicrosoftApiManagementApiManagementServiceResourcesNetworkStatusListByServiceAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<NetworkStatusContractByLocation>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<NetworkStatusContractWithLocation>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
             if (response is null)
             {
                 yield break;
             }
-            IReadOnlyList<NetworkStatusContractByLocation> result = ParseArrayFromResponse(response);
-            yield return Page<NetworkStatusContractByLocation>.FromValues(result, null, response);
+            IReadOnlyList<NetworkStatusContractWithLocation> result = ParseArrayFromResponse(response);
+            yield return Page<NetworkStatusContractWithLocation>.FromValues(result, null, response);
         }
 
         /// <summary> Get next page. </summary>
@@ -81,14 +81,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Parse the array from the response. </summary>
         /// <param name="response"> The response to parse. </param>
         /// <returns> The parsed array. </returns>
-        private static IReadOnlyList<NetworkStatusContractByLocation> ParseArrayFromResponse(Response response)
+        private static IReadOnlyList<NetworkStatusContractWithLocation> ParseArrayFromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             JsonElement array = document.RootElement;
-            List<NetworkStatusContractByLocation> result = new List<NetworkStatusContractByLocation>();
+            List<NetworkStatusContractWithLocation> result = new List<NetworkStatusContractWithLocation>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<NetworkStatusContractByLocation>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerApiManagementContext.Default));
+                result.Add(ModelReaderWriter.Read<NetworkStatusContractWithLocation>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerApiManagementContext.Default));
             }
             return result;
         }

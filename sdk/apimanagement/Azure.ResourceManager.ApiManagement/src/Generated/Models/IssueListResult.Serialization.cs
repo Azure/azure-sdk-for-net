@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ApiManagementIssueData item in Value)
+                foreach (IssueContractData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            IReadOnlyList<ApiManagementIssueData> value = default;
+            IReadOnlyList<IssueContractData> value = default;
             long? count = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    List<ApiManagementIssueData> array = new List<ApiManagementIssueData>();
+                    List<IssueContractData> array = new List<IssueContractData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementIssueData.DeserializeApiManagementIssueData(item, options));
+                        array.Add(IssueContractData.DeserializeIssueContractData(item, options));
                     }
                     value = array;
                     continue;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IssueListResult(value ?? new ChangeTrackingList<ApiManagementIssueData>(), count, nextLink, additionalBinaryDataProperties);
+            return new IssueListResult(value ?? new ChangeTrackingList<IssueContractData>(), count, nextLink, additionalBinaryDataProperties);
         }
     }
 }

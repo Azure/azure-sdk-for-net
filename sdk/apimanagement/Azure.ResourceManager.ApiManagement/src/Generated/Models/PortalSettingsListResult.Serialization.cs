@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (PortalSettingsContract item in Value)
+                foreach (PortalSettingsContractData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            IList<PortalSettingsContract> value = default;
+            IList<PortalSettingsContractData> value = default;
             long? count = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    List<PortalSettingsContract> array = new List<PortalSettingsContract>();
+                    List<PortalSettingsContractData> array = new List<PortalSettingsContractData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PortalSettingsContract.DeserializePortalSettingsContract(item, options));
+                        array.Add(PortalSettingsContractData.DeserializePortalSettingsContractData(item, options));
                     }
                     value = array;
                     continue;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PortalSettingsListResult(value ?? new ChangeTrackingList<PortalSettingsContract>(), count, additionalBinaryDataProperties);
+            return new PortalSettingsListResult(value ?? new ChangeTrackingList<PortalSettingsContractData>(), count, additionalBinaryDataProperties);
         }
     }
 }

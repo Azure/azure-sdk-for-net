@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="title"> The issue title. </param>
         /// <param name="description"> Text describing the issue. </param>
         /// <param name="userId"> A resource identifier for the user created the issue. </param>
-        internal IssueUpdateContractProperties(DateTimeOffset? createdOn, State? state, string apiId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string title, string description, string userId) : base(createdOn, state, apiId, additionalBinaryDataProperties)
+        internal IssueUpdateContractProperties(DateTimeOffset? createdOn, IssueState? state, string apiId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string title, string description, string userId) : base(createdOn, state, apiId, additionalBinaryDataProperties)
         {
             Title = title;
             Description = description;

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="password"> User Password. If no value is provided, a default password is generated. </param>
         /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy portal. </param>
         /// <param name="confirmation"> Determines the type of confirmation e-mail that will be sent to the newly created user. </param>
-        internal UserCreateParameterProperties(ApiManagementUserState? state, string note, IList<UserIdentityContract> identities, IDictionary<string, BinaryData> additionalBinaryDataProperties, string email, string firstName, string lastName, string password, AppType? appType, Confirmation? confirmation) : base(state, note, identities, additionalBinaryDataProperties)
+        internal UserCreateParameterProperties(ApiManagementUserState? state, string note, IList<UserIdentityContract> identities, IDictionary<string, BinaryData> additionalBinaryDataProperties, string email, string firstName, string lastName, string password, AppType? appType, ConfirmationEmailType? confirmation) : base(state, note, identities, additionalBinaryDataProperties)
         {
             Email = email;
             FirstName = firstName;
@@ -73,6 +73,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Determines the type of confirmation e-mail that will be sent to the newly created user. </summary>
         [WirePath("confirmation")]
-        public Confirmation? Confirmation { get; set; }
+        public ConfirmationEmailType? Confirmation { get; set; }
     }
 }

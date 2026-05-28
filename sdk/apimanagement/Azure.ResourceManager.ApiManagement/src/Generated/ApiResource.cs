@@ -266,14 +266,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="apiUpdateContract"> API Update Contract parameters. </param>
+        /// <param name="patch"> API Update Contract parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="apiUpdateContract"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ApiResource>> UpdateAsync(string ifMatch, ApiUpdateContract apiUpdateContract, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiResource>> UpdateAsync(string ifMatch, ApiPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
-            Argument.AssertNotNull(apiUpdateContract, nameof(apiUpdateContract));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _apiClientDiagnostics.CreateScope("ApiResource.Update");
             scope.Start();
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ApiUpdateContract.ToRequestContent(apiUpdateContract), context);
+                HttpMessage message = _apiRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ApiPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiData> response = Response.FromValue(ApiData.FromResponse(result), result);
                 if (response.Value == null)
@@ -321,14 +321,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="apiUpdateContract"> API Update Contract parameters. </param>
+        /// <param name="patch"> API Update Contract parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="apiUpdateContract"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ApiResource> Update(string ifMatch, ApiUpdateContract apiUpdateContract, CancellationToken cancellationToken = default)
+        public virtual Response<ApiResource> Update(string ifMatch, ApiPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
-            Argument.AssertNotNull(apiUpdateContract, nameof(apiUpdateContract));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _apiClientDiagnostics.CreateScope("ApiResource.Update");
             scope.Start();
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ApiUpdateContract.ToRequestContent(apiUpdateContract), context);
+                HttpMessage message = _apiRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ApiPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiData> response = Response.FromValue(ApiData.FromResponse(result), result);
                 if (response.Value == null)
@@ -670,8 +670,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="includeNotTaggedOperations"> Include not tagged Operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TagResourceContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TagResourceContract> GetByTagsAsync(string filter = default, int? top = default, int? skip = default, bool? includeNotTaggedOperations = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<TagResourceContractDetails> GetByTagsAsync(string filter = default, int? top = default, int? skip = default, bool? includeNotTaggedOperations = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -717,8 +717,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="includeNotTaggedOperations"> Include not tagged Operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TagResourceContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TagResourceContract> GetByTags(string filter = default, int? top = default, int? skip = default, bool? includeNotTaggedOperations = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<TagResourceContractDetails> GetByTags(string filter = default, int? top = default, int? skip = default, bool? includeNotTaggedOperations = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -761,7 +761,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="policyId"> The identifier of the Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetEntityTagAsync(PolicyIdName policyId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetEntityTagAsync(PolicyName policyId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _apiPolicyClientDiagnostics.CreateScope("ApiResource.GetEntityTag");
             scope.Start();
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="policyId"> The identifier of the Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetEntityTag(PolicyIdName policyId, CancellationToken cancellationToken = default)
+        public virtual Response GetEntityTag(PolicyName policyId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _apiPolicyClientDiagnostics.CreateScope("ApiResource.GetEntityTag");
             scope.Start();
@@ -1854,7 +1854,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiPolicyResource>> GetApiPolicyAsync(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiPolicyResource>> GetApiPolicyAsync(PolicyName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
             return await GetApiPolicies().GetAsync(policyId, format, cancellationToken).ConfigureAwait(false);
         }
@@ -1864,7 +1864,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ApiPolicyResource> GetApiPolicy(PolicyIdName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
+        public virtual Response<ApiPolicyResource> GetApiPolicy(PolicyName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
             return GetApiPolicies().Get(policyId, format, cancellationToken);
         }

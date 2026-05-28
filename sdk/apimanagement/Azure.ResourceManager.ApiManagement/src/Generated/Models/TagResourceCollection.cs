@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="TagResourceCollection"/>. </summary>
         internal TagResourceCollection()
         {
-            Value = new ChangeTrackingList<TagResourceContract>();
+            Value = new ChangeTrackingList<TagResourceContractDetails>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TagResourceCollection"/>. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TagResourceCollection(IList<TagResourceContract> value, long? count, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TagResourceCollection(IList<TagResourceContractDetails> value, long? count, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             Count = count;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Page values. </summary>
         [WirePath("value")]
-        public IList<TagResourceContract> Value { get; }
+        public IList<TagResourceContractDetails> Value { get; }
 
         /// <summary> Total record count number across all pages. </summary>
         [WirePath("count")]

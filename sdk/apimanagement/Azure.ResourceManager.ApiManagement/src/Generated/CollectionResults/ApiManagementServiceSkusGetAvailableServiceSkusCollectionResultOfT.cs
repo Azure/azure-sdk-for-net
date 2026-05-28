@@ -14,7 +14,7 @@ using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    internal partial class ApiManagementServiceSkusGetAvailableServiceSkusCollectionResultOfT : Pageable<ResourceSkuResult>
+    internal partial class ApiManagementServiceSkusGetAvailableServiceSkusCollectionResultOfT : Pageable<AvailableApiManagementServiceSkuResult>
     {
         private readonly ApiManagementServiceSkus _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ApiManagementServiceSkusGetAvailableServiceSkusCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ResourceSkuResult>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<AvailableApiManagementServiceSkuResult>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ApiManagement
                     yield break;
                 }
                 ResourceSkuResults result = ResourceSkuResults.FromResponse(response);
-                yield return Page<ResourceSkuResult>.FromValues((IReadOnlyList<ResourceSkuResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<AvailableApiManagementServiceSkuResult>.FromValues((IReadOnlyList<AvailableApiManagementServiceSkuResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TenantAccessInfoData"/>. </summary>
-        internal TenantAccessInfoData()
+        public TenantAccessInfoData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> AccessInformation entity contract properties. </summary>
         [WirePath("properties")]
-        internal AccessInformationContractProperties Properties { get; }
+        internal AccessInformationContractProperties Properties { get; set; }
 
         /// <summary> Access Information type ('access' or 'gitAccess'). </summary>
         [WirePath("properties.id")]
@@ -48,6 +48,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.AccessInfoType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccessInformationContractProperties();
+                }
+                Properties.AccessInfoType = value;
             }
         }
 
@@ -59,6 +67,14 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return Properties is null ? default : Properties.PrincipalId;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccessInformationContractProperties();
+                }
+                Properties.PrincipalId = value;
+            }
         }
 
         /// <summary> Determines whether direct access is enabled. </summary>
@@ -68,6 +84,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.Enabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccessInformationContractProperties();
+                }
+                Properties.Enabled = value;
             }
         }
     }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="PolicyListResult"/>. </summary>
         internal PolicyListResult()
         {
-            Value = new ChangeTrackingList<ApiManagementPolicyData>();
+            Value = new ChangeTrackingList<PolicyContractData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PolicyListResult"/>. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="count"> Total record count number. </param>
         /// <param name="nextLink"> Next page link if any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyListResult(IList<ApiManagementPolicyData> value, long? count, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyListResult(IList<PolicyContractData> value, long? count, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             Count = count;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Policy Contract value. </summary>
         [WirePath("value")]
-        public IList<ApiManagementPolicyData> Value { get; }
+        public IList<PolicyContractData> Value { get; }
 
         /// <summary> Total record count number. </summary>
         [WirePath("count")]

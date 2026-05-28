@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="ResourceSkuResults"/>. </summary>
         /// <param name="value"> The list of skus available for the service. </param>
-        internal ResourceSkuResults(IEnumerable<ResourceSkuResult> value)
+        internal ResourceSkuResults(IEnumerable<AvailableApiManagementServiceSkuResult> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="value"> The list of skus available for the service. </param>
         /// <param name="nextLink"> The uri to fetch the next page of API Management service Skus. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceSkuResults(IList<ResourceSkuResult> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceSkuResults(IList<AvailableApiManagementServiceSkuResult> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> The list of skus available for the service. </summary>
         [WirePath("value")]
-        public IList<ResourceSkuResult> Value { get; }
+        public IList<AvailableApiManagementServiceSkuResult> Value { get; }
 
         /// <summary> The uri to fetch the next page of API Management service Skus. </summary>
         [WirePath("nextLink")]

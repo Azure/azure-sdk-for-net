@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementIdentityProviderData"/>. </summary>
-        internal ApiManagementIdentityProviderData()
+        public ApiManagementIdentityProviderData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Identity Provider contract properties. </summary>
         [WirePath("properties")]
-        internal IdentityProviderContractProperties Properties { get; }
+        internal IdentityProviderContractProperties Properties { get; set; }
 
         /// <summary> Identity Provider Type identifier. </summary>
         [WirePath("properties.type")]
@@ -48,6 +48,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.Type;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IdentityProviderContractProperties();
+                }
+                Properties.Type = value;
             }
         }
 
@@ -59,6 +67,14 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return Properties is null ? default : Properties.SigninTenant;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IdentityProviderContractProperties();
+                }
+                Properties.SigninTenant = value;
+            }
         }
 
         /// <summary> List of Allowed Tenants when configuring Azure Active Directory login. </summary>
@@ -67,7 +83,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             get
             {
-                return Properties is null ? default : Properties.AllowedTenants;
+                if (Properties is null)
+                {
+                    Properties = new IdentityProviderContractProperties();
+                }
+                return Properties.AllowedTenants;
             }
         }
 
@@ -79,6 +99,14 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return Properties is null ? default : Properties.Authority;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IdentityProviderContractProperties();
+                }
+                Properties.Authority = value;
+            }
         }
 
         /// <summary> Signup Policy Name. Only applies to AAD B2C Identity Provider. </summary>
@@ -88,6 +116,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.SignupPolicyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IdentityProviderContractProperties();
+                }
+                Properties.SignupPolicyName = value;
             }
         }
 
@@ -99,6 +135,14 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return Properties is null ? default : Properties.SigninPolicyName;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IdentityProviderContractProperties();
+                }
+                Properties.SigninPolicyName = value;
+            }
         }
 
         /// <summary> Profile Editing Policy Name. Only applies to AAD B2C Identity Provider. </summary>
@@ -108,6 +152,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.ProfileEditingPolicyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IdentityProviderContractProperties();
+                }
+                Properties.ProfileEditingPolicyName = value;
             }
         }
 
@@ -119,6 +171,14 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return Properties is null ? default : Properties.PasswordResetPolicyName;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IdentityProviderContractProperties();
+                }
+                Properties.PasswordResetPolicyName = value;
+            }
         }
 
         /// <summary> The client library to be used in the developer portal. Only applies to AAD and AAD B2C Identity Provider. </summary>
@@ -128,6 +188,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.ClientLibrary;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IdentityProviderContractProperties();
+                }
+                Properties.ClientLibrary = value;
             }
         }
 
@@ -139,6 +207,14 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return Properties is null ? default : Properties.ClientId;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IdentityProviderContractProperties();
+                }
+                Properties.ClientId = value;
+            }
         }
 
         /// <summary> Client secret of the Application in external Identity Provider, used to authenticate login request. For example, it is App Secret for Facebook login, API Key for Google login, Public Key for Microsoft. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
@@ -149,6 +225,14 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return Properties is null ? default : Properties.ClientSecret;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IdentityProviderContractProperties();
+                }
+                Properties.ClientSecret = value;
+            }
         }
 
         /// <summary> Certificate full resource ID used in external Identity Provider. </summary>
@@ -158,6 +242,14 @@ namespace Azure.ResourceManager.ApiManagement
             get
             {
                 return Properties is null ? default : Properties.CertificateId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IdentityProviderContractProperties();
+                }
+                Properties.CertificateId = value;
             }
         }
     }
