@@ -27,9 +27,28 @@ internal class SerializationVisitor : ScmLibraryVisitor
             else if (modifiers.HasFlag(MethodSignatureModifiers.Explicit))
             {
                 modifiers &= ~MethodSignatureModifiers.Explicit;
+                // When the enclosing model derives from another generated model in this library,
+                // the base class will also emit a `static FromResponse(Response)` helper. The C#
+                // compiler treats the derived helper as hiding the base one (CS0108). Emit the
+                // `new` modifier so the derived helper is well-formed without SDK-side
+                // [CodeGenSuppress] customizations.
+                if (BaseHasFromResponse(method.EnclosingType))
+                {
+                    modifiers |= MethodSignatureModifiers.New;
+                }
                 method.Signature.Update(modifiers: modifiers, name: FromResponseMethodName);
             }
         }
         return base.VisitMethod(method);
+    }
+
+    private static bool BaseHasFromResponse(TypeProvider enclosingType)
+    {
+        // The MrwSerializationTypeDefinition is a partial of the underlying model. Its
+        // CSharpType.BaseType reflects the model's declared base class. Any non-framework
+        // base is another generated model in the same library that also emits the static
+        // FromResponse(Response) helper via this same visitor.
+        var baseType = enclosingType.Type.BaseType;
+        return baseType is not null && !baseType.IsFrameworkType;
     }
 }
