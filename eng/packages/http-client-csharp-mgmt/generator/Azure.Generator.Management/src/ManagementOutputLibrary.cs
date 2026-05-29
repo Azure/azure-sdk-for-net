@@ -464,6 +464,17 @@ namespace Azure.Generator.Management
                         operationSources.TryAdd(returnCSharpType, new OperationSourceProvider(returnCSharpType));
                     }
                 }
+                else if (returnType is not null)
+                {
+                    // Non-model LRO return types (e.g. an array/list response without @list) are surfaced as
+                    // ArmOperation<IReadOnlyList<T>>. Register a non-resource OperationSource keyed by the list type
+                    // so the reader lookup in BuildLroHandling succeeds.
+                    var returnCSharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(returnType);
+                    if (returnCSharpType != null && returnCSharpType.IsList)
+                    {
+                        operationSources.TryAdd(returnCSharpType, new OperationSourceProvider(returnCSharpType));
+                    }
+                }
             }
         }
 

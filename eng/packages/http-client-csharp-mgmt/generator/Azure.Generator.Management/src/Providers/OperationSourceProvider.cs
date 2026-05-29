@@ -52,6 +52,12 @@ namespace Azure.Generator.Management.Providers
             {
                 return $"{_resource.ResourceName}OperationSource";
             }
+            else if (_resultType.IsList)
+            {
+                // For list/array result types, base the name on the element type to keep the name
+                // readable and avoid collisions between lists of different element types.
+                return $"{_resultType.Arguments[0].Name}ListOperationSource";
+            }
             else
             {
                 // For non-resource types, use the type name
