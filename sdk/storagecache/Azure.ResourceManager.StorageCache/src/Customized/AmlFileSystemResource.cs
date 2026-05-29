@@ -10,7 +10,8 @@ namespace Azure.ResourceManager.StorageCache
     public partial class AmlFileSystemResource : ArmResource
     {
         //without this customized method, the codegen will generate a method with same name but different parameter:
-        // public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string amlFileSystemName) { throw null; }
+        //public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string amlFileSystemName) { throw null; }
+        //That is the difference SystemName is capitalized in amlFileSystemName.
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
