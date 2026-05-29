@@ -409,7 +409,7 @@ namespace Azure.AI.Projects
         /// <param name="createdByType"> Type of identity that created the resource. </param>
         /// <param name="lastModifiedAt"> Timestamp of last resource modification. </param>
         /// <returns> A new <see cref="Projects.SystemDataV3"/> instance for mocking. </returns>
-        public static SystemDataV3 SystemDataV3(DateTimeOffset? createdAt = default, string createdBy = default, string createdByType = default, DateTimeOffset? lastModifiedAt = default)
+        public static SystemDataV3 SystemDataV3(string createdAt = default, string createdBy = default, string createdByType = default, string lastModifiedAt = default)
         {
             return new SystemDataV3(createdAt, createdBy, createdByType, lastModifiedAt, additionalBinaryDataProperties: null);
         }
@@ -486,13 +486,13 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Represents the response for a model pending upload request. </summary>
-        /// <param name="blobReference"> Container-level read, write, list SAS. </param>
+        /// <param name="blobReferenceForConsumption"> Container-level read, write, list SAS. </param>
         /// <param name="pendingUploadId"> ID for this upload request. </param>
         /// <param name="version"> Version of asset to be created if user did not specify version when initially creating upload. </param>
         /// <returns> A new <see cref="Projects.ModelPendingUploadResponse"/> instance for mocking. </returns>
-        public static ModelPendingUploadResponse ModelPendingUploadResponse(AIProjectBlobReference blobReference = default, string pendingUploadId = default, string version = default)
+        public static ModelPendingUploadResponse ModelPendingUploadResponse(AIProjectBlobReference blobReferenceForConsumption = default, string pendingUploadId = default, string version = default)
         {
-            return new ModelPendingUploadResponse(blobReference, pendingUploadId, version, "TemporaryBlobReference", additionalBinaryDataProperties: null);
+            return new ModelPendingUploadResponse(blobReferenceForConsumption, pendingUploadId, version, "TemporaryBlobReference", additionalBinaryDataProperties: null);
         }
 
         /// <summary> Request to fetch credentials for a model asset. </summary>

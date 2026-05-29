@@ -73,7 +73,7 @@ namespace Azure.AI.Projects
             if (Optional.IsDefined(CreatedAt))
             {
                 writer.WritePropertyName("createdAt"u8);
-                writer.WriteNumberValue(CreatedAt.Value, "U");
+                writer.WriteStringValue(CreatedAt);
             }
             if (Optional.IsDefined(CreatedBy))
             {
@@ -88,7 +88,7 @@ namespace Azure.AI.Projects
             if (Optional.IsDefined(LastModifiedAt))
             {
                 writer.WritePropertyName("lastModifiedAt"u8);
-                writer.WriteNumberValue(LastModifiedAt.Value, "U");
+                writer.WriteStringValue(LastModifiedAt);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -132,20 +132,16 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            DateTimeOffset? createdAt = default;
+            string createdAt = default;
             string createdBy = default;
             string createdByType = default;
-            DateTimeOffset? lastModifiedAt = default;
+            string lastModifiedAt = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("createdAt"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    createdAt = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("createdBy"u8))
@@ -160,11 +156,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("lastModifiedAt"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    lastModifiedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    lastModifiedAt = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

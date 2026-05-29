@@ -5,12 +5,17 @@
 ### Features Added
 - Added `AIProjectModels` client for model weights management, accessible via `AIProjectClient`.
 - Added memory store item CRUD operations for management of memories inside the `MemoryStore`.
+- Added the convenience methods `UploadModelAsync` and `UploadModel` to upload model weights.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+### Sample Updates
+- Added sample for Model weights.
+
 
 ## 2.1.0-beta.2 (2026-05-14)
 

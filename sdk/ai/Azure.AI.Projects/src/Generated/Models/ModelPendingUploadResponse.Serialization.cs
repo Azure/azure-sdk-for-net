@@ -84,8 +84,8 @@ namespace Azure.AI.Projects
             {
                 throw new FormatException($"The model {nameof(ModelPendingUploadResponse)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("blobReference"u8);
-            writer.WriteObjectValue(BlobReference, options);
+            writer.WritePropertyName("blobReferenceForConsumption"u8);
+            writer.WriteObjectValue(BlobReferenceForConsumption, options);
             writer.WritePropertyName("pendingUploadId"u8);
             writer.WriteStringValue(PendingUploadId);
             if (Optional.IsDefined(Version))
@@ -137,16 +137,16 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            AIProjectBlobReference blobReference = default;
+            AIProjectBlobReference blobReferenceForConsumption = default;
             string pendingUploadId = default;
             string version = default;
             PendingUploadType pendingUploadType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("blobReference"u8))
+                if (prop.NameEquals("blobReferenceForConsumption"u8))
                 {
-                    blobReference = AIProjectBlobReference.DeserializeAIProjectBlobReference(prop.Value, options);
+                    blobReferenceForConsumption = AIProjectBlobReference.DeserializeAIProjectBlobReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("pendingUploadId"u8))
@@ -169,7 +169,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ModelPendingUploadResponse(blobReference, pendingUploadId, version, pendingUploadType, additionalBinaryDataProperties);
+            return new ModelPendingUploadResponse(blobReferenceForConsumption, pendingUploadId, version, pendingUploadType, additionalBinaryDataProperties);
         }
     }
 }

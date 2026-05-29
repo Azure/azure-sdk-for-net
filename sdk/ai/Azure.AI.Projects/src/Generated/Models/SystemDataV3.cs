@@ -24,7 +24,7 @@ namespace Azure.AI.Projects
         /// <param name="createdByType"> Type of identity that created the resource. </param>
         /// <param name="lastModifiedAt"> Timestamp of last resource modification. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SystemDataV3(DateTimeOffset? createdAt, string createdBy, string createdByType, DateTimeOffset? lastModifiedAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SystemDataV3(string createdAt, string createdBy, string createdByType, string lastModifiedAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreatedAt = createdAt;
             CreatedBy = createdBy;
@@ -34,7 +34,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Timestamp of resource creation. </summary>
-        public DateTimeOffset? CreatedAt { get; }
+        public string CreatedAt { get; }
 
         /// <summary> Identity that created the resource. </summary>
         public string CreatedBy { get; }
@@ -43,6 +43,6 @@ namespace Azure.AI.Projects
         public string CreatedByType { get; }
 
         /// <summary> Timestamp of last resource modification. </summary>
-        public DateTimeOffset? LastModifiedAt { get; }
+        public string LastModifiedAt { get; }
     }
 }

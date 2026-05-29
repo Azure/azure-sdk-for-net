@@ -3,8 +3,10 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs;
 
 namespace Azure.AI.Projects;
 
@@ -67,5 +69,92 @@ public partial class AIProjectModels
             options: cancellationToken.ToRequestOptions()
         ).ConfigureAwait(false);
         return ClientResult.FromValue((ModelVersion)result, result.GetRawResponse());
+    }
+
+    public virtual Uri UploadModel(string path, string name, string version)
+    {
+        if (!Directory.Exists(path))
+        {
+            throw new ArgumentException($"The provided folder does not exist: {path}");
+        }
+        ModelPendingUploadResponse uploadResponse = StartModelPendingUpload(
+            name: name,
+            version: version,
+            pendingUploadRequest: new()
+        );
+        BlobContainerClient client = GetContainerClientOrRaise(uploadResponse);
+
+        var filesUploaded = false;
+        BlobClient blobClient;
+        foreach (var filePath in Directory.EnumerateFiles(path, "*", SearchOption.AllDirectories))
+        {
+            string fileName = Path.GetFileName(filePath);
+            using (FileStream fileStream = File.OpenRead(filePath))
+            {
+                blobClient = client.GetBlobClient(fileName);
+                blobClient.Upload(fileStream);
+                filesUploaded = true;
+            }
+        }
+
+        if (!filesUploaded)
+        {
+            throw new ArgumentException("The provided folder is empty.");
+        }
+        return uploadResponse.BlobReferenceForConsumption.BlobUri;
+    }
+
+    public virtual async Task<Uri> UploadModelAsync(string path, string name, string version)
+    {
+        if (!Directory.Exists(path))
+        {
+            throw new ArgumentException($"The provided folder does not exist: {path}");
+        }
+        ModelPendingUploadResponse uploadResponse = await StartModelPendingUploadAsync(
+            name: name,
+            version: version,
+            pendingUploadRequest: new()
+        ).ConfigureAwait(false);
+        BlobContainerClient client = GetContainerClientOrRaise(uploadResponse);
+
+        var filesUploaded = false;
+        BlobClient blobClient;
+        foreach (var filePath in Directory.EnumerateFiles(path, "*", SearchOption.AllDirectories))
+        {
+            string fileName = Path.GetFileName(filePath);
+            using (FileStream fileStream = File.OpenRead(filePath))
+            {
+                blobClient = client.GetBlobClient(fileName);
+                await blobClient.UploadAsync(fileStream).ConfigureAwait(false);
+                filesUploaded = true;
+            }
+        }
+
+        if (!filesUploaded)
+        {
+            throw new ArgumentException("The provided folder is empty.");
+        }
+        return uploadResponse.BlobReferenceForConsumption.BlobUri;
+    }
+
+    /// <summary>
+    /// The convenience method to get the container client.
+    /// </summary>
+    /// <param name="pendingUploadResult">The pending upload request.</param>
+    /// <returns></returns>
+    private BlobContainerClient GetContainerClientOrRaise(ModelPendingUploadResponse pendingUploadResult)
+    {
+        if (pendingUploadResult.BlobReferenceForConsumption == null)
+        {
+            throw new InvalidOperationException("Blob reference is not present.");
+        }
+        if (pendingUploadResult.BlobReferenceForConsumption.Credential == null || pendingUploadResult.BlobReferenceForConsumption.Credential.SasUri == null)
+        {
+            throw new InvalidOperationException("SAS credential is not present.");
+        }
+
+        BlobContainerClient containerClient;
+        containerClient = new BlobContainerClient(pendingUploadResult.BlobReferenceForConsumption.Credential.SasUri);
+        return containerClient;
     }
 }

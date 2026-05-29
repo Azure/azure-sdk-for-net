@@ -14,23 +14,23 @@ namespace Azure.AI.Projects
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ModelPendingUploadResponse"/>. </summary>
-        /// <param name="blobReference"> Container-level read, write, list SAS. </param>
+        /// <param name="blobReferenceForConsumption"> Container-level read, write, list SAS. </param>
         /// <param name="pendingUploadId"> ID for this upload request. </param>
-        internal ModelPendingUploadResponse(AIProjectBlobReference blobReference, string pendingUploadId)
+        internal ModelPendingUploadResponse(AIProjectBlobReference blobReferenceForConsumption, string pendingUploadId)
         {
-            BlobReference = blobReference;
+            BlobReferenceForConsumption = blobReferenceForConsumption;
             PendingUploadId = pendingUploadId;
         }
 
         /// <summary> Initializes a new instance of <see cref="ModelPendingUploadResponse"/>. </summary>
-        /// <param name="blobReference"> Container-level read, write, list SAS. </param>
+        /// <param name="blobReferenceForConsumption"> Container-level read, write, list SAS. </param>
         /// <param name="pendingUploadId"> ID for this upload request. </param>
         /// <param name="version"> Version of asset to be created if user did not specify version when initially creating upload. </param>
         /// <param name="pendingUploadType"> The type of pending upload. Only TemporaryBlobReference is supported for models. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ModelPendingUploadResponse(AIProjectBlobReference blobReference, string pendingUploadId, string version, PendingUploadType pendingUploadType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ModelPendingUploadResponse(AIProjectBlobReference blobReferenceForConsumption, string pendingUploadId, string version, PendingUploadType pendingUploadType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            BlobReference = blobReference;
+            BlobReferenceForConsumption = blobReferenceForConsumption;
             PendingUploadId = pendingUploadId;
             Version = version;
             PendingUploadType = pendingUploadType;
@@ -38,7 +38,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Container-level read, write, list SAS. </summary>
-        public AIProjectBlobReference BlobReference { get; }
+        public AIProjectBlobReference BlobReferenceForConsumption { get; }
 
         /// <summary> ID for this upload request. </summary>
         public string PendingUploadId { get; }
