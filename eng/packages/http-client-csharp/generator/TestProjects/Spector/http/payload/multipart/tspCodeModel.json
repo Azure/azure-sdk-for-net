@@ -8,7 +8,7 @@
       "name": "File1ContentType",
       "crossLanguageDefinitionId": "",
       "valueType": {
-        "$id": "6",
+        "$id": "2",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2621,7 +2621,7 @@
                     "name": "contentType",
                     "serializedName": "Content-Type",
                     "type": {
-                      "$ref": "11"
+                      "$ref": "7"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -2753,7 +2753,7 @@
                     "name": "contentType",
                     "serializedName": "Content-Type",
                     "type": {
-                      "$ref": "23"
+                      "$ref": "11"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -2885,7 +2885,7 @@
                     "name": "contentType",
                     "serializedName": "Content-Type",
                     "type": {
-                      "$ref": "27"
+                      "$ref": "15"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -3017,7 +3017,7 @@
                     "name": "contentType",
                     "serializedName": "Content-Type",
                     "type": {
-                      "$ref": "31"
+                      "$ref": "19"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -3149,7 +3149,7 @@
                     "name": "contentType",
                     "serializedName": "Content-Type",
                     "type": {
-                      "$ref": "35"
+                      "$ref": "23"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -3281,7 +3281,7 @@
                     "name": "contentType",
                     "serializedName": "Content-Type",
                     "type": {
-                      "$ref": "39"
+                      "$ref": "27"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -4039,7 +4039,7 @@
                             "name": "contentType",
                             "serializedName": "Content-Type",
                             "type": {
-                              "$ref": "59"
+                              "$ref": "47"
                             },
                             "isApiVersion": false,
                             "optional": false,

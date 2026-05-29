@@ -185,7 +185,7 @@ namespace Azure.Identity
             {
                 throw new InvalidOperationException($"Environment variable '{environmentVariableName}' is not set or is empty.{_troubleshootingMessage}");
             }
-            return credentialSelection.Trim().ToLower();
+            return credentialSelection.Trim().ToLowerInvariant();
         }
 
         /// <summary>

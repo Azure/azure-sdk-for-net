@@ -2080,7 +2080,7 @@
                         "serializedName": "Content-Type",
                         "doc": "Body parameter's content type. Known values are application/json",
                         "type": {
-                          "$ref": "11"
+                          "$ref": "7"
                         },
                         "isApiVersion": false,
                         "optional": false,
@@ -2118,7 +2118,7 @@
                         "name": "accept",
                         "serializedName": "Accept",
                         "type": {
-                          "$ref": "13"
+                          "$ref": "9"
                         },
                         "isApiVersion": false,
                         "optional": false,
@@ -2374,12 +2374,12 @@
                         "isExactName": false
                       },
                       {
-                        "$id": "194",
+                        "$id": "149",
                         "kind": "header",
                         "name": "foo",
                         "serializedName": "foo",
                         "type": {
-                          "$id": "195",
+                          "$id": "150",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2419,12 +2419,12 @@
                         "isExactName": false
                       },
                       {
-                        "$id": "202",
+                        "$id": "153",
                         "kind": "query",
                         "name": "bar",
                         "serializedName": "bar",
                         "type": {
-                          "$id": "203",
+                          "$id": "154",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2728,7 +2728,7 @@
                         "name": "accept",
                         "serializedName": "Accept",
                         "type": {
-                          "$ref": "17"
+                          "$ref": "13"
                         },
                         "isApiVersion": false,
                         "optional": false,

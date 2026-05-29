@@ -597,120 +597,6 @@ function getCollectionContextPath(
   return (
     resource.metadata.parentResourceId ?? resource.metadata.scope.scopeIdPattern
   );
-
-  // Track resources before post-processing to emit diagnostics for filtered resources
-  const resourcesBeforeFiltering = new Set(
-    resources.filter((r) => r.metadata.resourceIdPattern !== "")
-  );
-
-  // Use the shared post-processing function
-  const filteredResources = postProcessArmResources(
-    resources,
-    nonResourceMethodsArray,
-    parentLookup,
-    methodResponseModelIdMap
-  );
-
-  // Emit diagnostics for resources that were filtered out (non-singleton resources without Read operations)
-  const resourcesAfterFiltering = new Set(filteredResources);
-  for (const resource of resourcesBeforeFiltering) {
-    if (!resourcesAfterFiltering.has(resource)) {
-      const model = resourceModelMap.get(resource.resourceModelId);
-      if (model) {
-        sdkContext.program.reportDiagnostic({
-          code: "general-warning",
-          severity: "warning",
-          message: `Resource ${model.name} does not have a Get/Read operation and is not a singleton. All operations will be added to parent resource if available, otherwise treated as non-resource methods.`,
-          target: NoTarget
-        });
-      }
-    }
-  }
-
-  // Update resource names: prioritize explicit ResourceName from TypeSpec, fallback to deriving from client names
-  // This handles the scenario where the same model is used by multiple resource interfaces with different paths.
-  // TypeSpec authors should specify explicit ResourceName parameters in LegacyOperations templates.
-  const modelIdToResources = new Map<string, ArmResourceSchema[]>();
-  for (const resource of filteredResources) {
-    if (!modelIdToResources.has(resource.resourceModelId)) {
-      modelIdToResources.set(resource.resourceModelId, []);
-    }
-    modelIdToResources.get(resource.resourceModelId)!.push(resource);
-  }
-
-  for (const [, resourceList] of modelIdToResources) {
-    if (resourceList.length > 1) {
-      // Multiple resource paths for the same model - use explicit names or derive from client names
-      for (const resource of resourceList) {
-        // Use the metadataKeyToResource map to efficiently find the metadata key
-        // Look for the metadataKey that corresponds to this resource
-        for (const [metadataKey, mappedResource] of metadataKeyToResource) {
-          if (mappedResource === resource) {
-            // Prioritize explicit resource name from TypeSpec (e.g., LegacyOperations ResourceName parameter)
-            const explicitName = resourcePathToExplicitName.get(metadataKey);
-            if (explicitName) {
-              resource.metadata.resourceName = explicitName;
-            } else {
-              // Try to derive from client name using pluralize.singular
-              const clientName = resourcePathToClientName.get(metadataKey);
-              if (clientName) {
-                resource.metadata.resourceName = pluralize.singular(clientName);
-              }
-            }
-            break;
-          }
-        }
-      }
-    }
-    // If there's only one resource for this model, keep using the model name (already set)
-  }
-
-  // Extract name constraints (@pattern, @minLength, @maxLength) from the resource model's "name" property
-  const methodApiVersionsMap = new Map<string, string[]>(
-    Array.from(serviceMethods.entries()).map(([id, m]) => [id, m.apiVersions])
-  );
-  for (const resource of filteredResources) {
-    const sdkModel = models.get(resource.resourceModelId);
-    const typespecModel = sdkModel?.__raw as Model | undefined;
-    const nameProperty = typespecModel?.properties.get("name");
-    const rawPattern = nameProperty
-      ? getPattern(sdkContext.program, nameProperty)
-      : undefined;
-    resource.metadata.nameConstraints = {
-      pattern: rawPattern || undefined,
-      minLength: nameProperty
-        ? getMinLength(sdkContext.program, nameProperty)
-        : undefined,
-      maxLength: nameProperty
-        ? getMaxLength(sdkContext.program, nameProperty)
-        : undefined
-    };
-
-    // Extract RBAC roles from @@clientOption decorator
-    resource.metadata.rbacRoles = extractRbacRoles(sdkModel);
-  }
-
-  // Assign non-resource methods to resources based on operationPath prefix matching.
-  // If a non-resource method's path has a prefix matching a resource's resourceIdPattern,
-  // move it into that resource as an Action (longest prefix wins).
-  assignNonResourceMethodsToResources(
-    filteredResources,
-    nonResourceMethodsArray
-  );
-
-  // Compute per-resource API versions after all post-processing is complete,
-  // so that merged/moved methods are reflected in the final version set.
-  for (const resource of filteredResources) {
-    resource.metadata.apiVersions = resolveResourceApiVersions(
-      resource.metadata.methods,
-      methodApiVersionsMap
-    );
-  }
-
-  return {
-    resources: filteredResources,
-    nonResourceMethods: nonResourceMethodsArray
-  };
 }
 
 function findListTargetResource(
@@ -797,7 +683,7 @@ function getExplicitResourceName(
         return getStringLiteralArg(decorator, 3);
     }
   }
-  return {};
+  return undefined;
 }
 
 function getStringLiteralArg(

@@ -929,7 +929,7 @@
     {
       "$id": "80",
       "kind": "constant",
-      "name": "sayHiContentType",
+      "name": "HelloAgainRequestContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1065,7 +1065,7 @@
     {
       "$id": "96",
       "kind": "constant",
-      "name": "createLiteralContentType1",
+      "name": "HelloLiteralRequestP1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1286,7 +1286,7 @@
     {
       "$id": "122",
       "kind": "constant",
-      "name": "anonymousBodyContentType1",
+      "name": "ThingModelRequiredLiteralString1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1303,7 +1303,7 @@
     {
       "$id": "124",
       "kind": "constant",
-      "name": "ThingModelRequiredLiteralString1",
+      "name": "ThingModelRequiredLiteralInt3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1354,7 +1354,7 @@
     {
       "$id": "130",
       "kind": "constant",
-      "name": "ThingModelRequiredLiteralBool1",
+      "name": "ThingModelOptionalLiteralBool3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1643,7 +1643,7 @@
     {
       "$id": "164",
       "kind": "constant",
-      "name": "ListWithContinuationTokenWithMaxPageContentType",
+      "name": "MultipartRequestRequestContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1660,43 +1660,11 @@
     {
       "$id": "166",
       "kind": "constant",
-      "name": "ListWithContinuationTokenHeaderResponseContentType",
+      "name": "MultipartRequestRequestContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
         "$id": "167",
-        "kind": "string",
-        "name": "string",
-        "crossLanguageDefinitionId": "TypeSpec.string",
-        "decorators": []
-      },
-      "value": "application/json",
-      "decorators": []
-    },
-    {
-      "$id": "151",
-      "kind": "constant",
-      "name": "ListWithPagingContentType",
-      "namespace": "",
-      "usage": "None",
-      "valueType": {
-        "$id": "152",
-        "kind": "string",
-        "name": "string",
-        "crossLanguageDefinitionId": "TypeSpec.string",
-        "decorators": []
-      },
-      "value": "application/json",
-      "decorators": []
-    },
-    {
-      "$id": "153",
-      "kind": "constant",
-      "name": "MultipartRequestRequestContentType",
-      "namespace": "",
-      "usage": "None",
-      "valueType": {
-        "$id": "154",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",

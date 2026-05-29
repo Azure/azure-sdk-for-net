@@ -51,6 +51,7 @@ namespace Azure.Core.Tests.Identity
         #endregion
 
         [Test]
+        [NonParallelizable]
         public void VerifyInvalidConfigurationThrowsCredentialUnavailable([Values] bool specifyTenantId, [Values] bool specifyClientId, [Values] bool specifyTokenFilePath)
         {
             if (specifyTenantId && specifyClientId && specifyTokenFilePath)
