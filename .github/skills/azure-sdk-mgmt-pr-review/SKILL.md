@@ -7,7 +7,7 @@ description: Review Azure SDK management-plane pull requests, check naming conve
 
 Review Azure SDK for .NET management library pull requests against the official API review guidelines.
 
-The review is split into three sequential phases: **Phase 1: Versioning Review** (gate), **Phase 2: API Review**, and **Phase 3: Breaking Change Detection**. Each phase must pass before proceeding to the next.
+The review is split into three phases: **Phase 1: Versioning Review** (blocking for the final verdict), **Phase 2: API Review**, and **Phase 3: Breaking Change Detection**. Run the phases in order, but continue into Phase 2 even when Phase 1 finds blocking versioning violations unless the versioning problem makes the API review scope impossible to determine reliably.
 
 ## Phase 1: Versioning Review
 
@@ -28,7 +28,7 @@ This phase checks version-related rules that are simple and rule-based. **Versio
 
 ## Phase 2: API Review
 
-This phase reviews the API surface for naming conventions, type correctness, and adherence to design guidelines. It runs only after Phase 1 passes.
+This phase reviews the API surface for naming conventions, type correctness, and adherence to design guidelines. It normally runs after Phase 1 even if Phase 1 found blocking versioning violations, so authors receive versioning and API/naming findings in one round.
 
 ### Scope of Review
 

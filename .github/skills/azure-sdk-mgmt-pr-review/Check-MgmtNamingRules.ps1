@@ -127,6 +127,7 @@ $totalLines = $lines.Count
 
 # Load baseline API file for filtering (if provided)
 $baselineLines = @{}
+$baselineTypeKeys = @{}
 if ($BaselineApiFilePath) {
     if (-not (Test-Path $BaselineApiFilePath)) {
         throw "Baseline API file not found: $BaselineApiFilePath"
@@ -158,26 +159,47 @@ $typeStartDepth = 0
 # Collected type info for cross-referencing
 $typeInfos = @{}  # short name -> @{ Kind; Bases; Namespace; Line }
 
-# First pass: collect all type declarations and their base types.
-for ($i = 0; $i -lt $totalLines; $i++) {
-    $line = $lines[$i]
+function Get-TypeKey([string]$namespace, [string]$kind, [string]$name) {
+    return "$namespace|$kind|$name"
+}
 
-    if ($line -match '^\s*namespace\s+([\w.]+)') {
-        $currentNamespace = $Matches[1]
-        continue
+function Get-TypeInfosFromApiLines([string[]]$apiLines) {
+    $infos = @{}
+    $namespace = ''
+
+    for ($lineIndex = 0; $lineIndex -lt $apiLines.Count; $lineIndex++) {
+        $line = $apiLines[$lineIndex]
+
+        if ($line -match '^\s*namespace\s+([\w.]+)') {
+            $namespace = $Matches[1]
+            continue
+        }
+
+        # Match type declarations: public partial class Foo : Bar, IBaz
+        if ($line -match '^\s*public\s+(?:(?:partial|abstract|static|sealed|readonly)\s+)*(?<kind>class|struct|enum|interface)\s+(?<name>\w+)(?:<[^>]+>)?\s*(?::\s*(?<bases>.+?))?\s*$') {
+            $shortName = $Matches['name']
+            $kind = $Matches['kind']
+            $bases = if ($Matches['bases']) { $Matches['bases'].Trim() } else { '' }
+            $infos[$shortName] = @{
+                Kind      = $kind
+                Bases     = $bases
+                Namespace = $namespace
+                Line      = $lineIndex + 1
+                Key       = Get-TypeKey $namespace $kind $shortName
+            }
+        }
     }
 
-    # Match type declarations: public partial class Foo : Bar, IBaz
-    if ($line -match '^\s*public\s+(?:partial\s+|abstract\s+|static\s+|sealed\s+)*(?<kind>class|struct|enum|interface)\s+(?<name>\w+)(?:<[^>]+>)?\s*(?::\s*(?<bases>.+?))?\s*$') {
-        $shortName = $Matches['name']
-        $kind = $Matches['kind']
-        $bases = if ($Matches['bases']) { $Matches['bases'].Trim() } else { '' }
-        $typeInfos[$shortName] = @{
-            Kind      = $kind
-            Bases     = $bases
-            Namespace = $currentNamespace
-            Line      = $i + 1
-        }
+    return $infos
+}
+
+# First pass: collect all type declarations and their base types.
+$typeInfos = Get-TypeInfosFromApiLines $lines
+
+if ($BaselineApiFilePath) {
+    $baselineTypeInfos = Get-TypeInfosFromApiLines (Get-Content $BaselineApiFilePath)
+    foreach ($baselineTypeInfo in $baselineTypeInfos.Values) {
+        $baselineTypeKeys[$baselineTypeInfo.Key] = $true
     }
 }
 
@@ -210,7 +232,7 @@ function Get-PascalCaseTokens([string]$name) {
 #region --- Inventory mode (-ListNewTypes) ---
 
 # Emits a deterministic, complete worklist of public class/struct/enum declarations.
-# When a baseline is provided, each entry is tagged NEW (declaration line absent from
+# When a baseline is provided, each entry is tagged NEW (type name/kind absent from
 # the baseline) or EXISTING. This gives the reviewer a bounded list to apply the
 # contextual-naming judgment to exhaustively, so no new public type is missed across
 # review rounds. Interfaces are excluded (not part of the model naming surface).
@@ -218,10 +240,9 @@ if ($ListNewTypes) {
     $inventory = foreach ($name in $typeInfos.Keys) {
         $info = $typeInfos[$name]
         if ($info.Kind -eq 'interface') { continue }
-        $declLine = $lines[$info.Line - 1].Trim()
         $isNew = $true
-        if ($BaselineApiFilePath -and $baselineLines.Count -gt 0) {
-            $isNew = -not $baselineLines.ContainsKey($declLine)
+        if ($BaselineApiFilePath) {
+            $isNew = -not $baselineTypeKeys.ContainsKey($info.Key)
         }
         [pscustomobject]@{
             Line   = $info.Line
@@ -237,7 +258,7 @@ if ($ListNewTypes) {
     Write-Host "`n=== New public type inventory (contextual-naming worklist) ===" -ForegroundColor Cyan
     Write-Host "File: $(Split-Path $ApiFilePath -Leaf)"
     if ($BaselineApiFilePath) {
-        Write-Host "Baseline: $(Split-Path $BaselineApiFilePath -Leaf) (NEW = absent from baseline)"
+        Write-Host "Baseline: $(Split-Path $BaselineApiFilePath -Leaf) (NEW = type name/kind absent from baseline)"
     } else {
         Write-Host "Baseline: <none> (all public types are in scope)"
     }
