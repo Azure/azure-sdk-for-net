@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Annotation))
@@ -95,11 +100,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(IsWorkloadManagementNetwork))
-            {
-                writer.WritePropertyName("workloadManagementNetwork"u8);
-                writer.WriteBooleanValue(IsWorkloadManagementNetwork.Value);
-            }
             if (Optional.IsDefined(IsWorkloadManagementNetworkEnabled))
             {
                 writer.WritePropertyName("isWorkloadManagementNetworkEnabled"u8);
@@ -135,6 +135,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("nfcSku"u8);
                 writer.WriteStringValue(NfcSku.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(LastOperation))
+            {
+                writer.WritePropertyName("lastOperation"u8);
+                writer.WriteObjectValue(LastOperation, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -163,6 +168,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -176,17 +182,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             NetworkFabricControllerServices workloadServices = default;
             ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default;
             IReadOnlyList<ResourceIdentifier> networkFabricIds = default;
-            bool? workloadManagementNetwork = default;
             IsWorkloadManagementNetworkEnabled? isWorkloadManagementNetworkEnabled = default;
             IReadOnlyList<ResourceIdentifier> tenantInternetGatewayIds = default;
             string ipv4AddressSpace = default;
             string ipv6AddressSpace = default;
             NetworkFabricControllerSKU? nfcSku = default;
+            LastOperationProperties lastOperation = default;
             NetworkFabricProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerManagedNetworkFabricContext.Default);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -320,15 +335,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             networkFabricIds = array;
                             continue;
                         }
-                        if (property0.NameEquals("workloadManagementNetwork"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            workloadManagementNetwork = property0.Value.GetBoolean();
-                            continue;
-                        }
                         if (property0.NameEquals("isWorkloadManagementNetworkEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -378,6 +384,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             nfcSku = new NetworkFabricControllerSKU(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("lastOperation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            lastOperation = LastOperationProperties.DeserializeLastOperationProperties(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -403,6 +418,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                identity,
                 annotation,
                 infrastructureExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>(),
                 workloadExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>(),
@@ -410,12 +426,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 workloadServices,
                 managedResourceGroupConfiguration,
                 networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                workloadManagementNetwork,
                 isWorkloadManagementNetworkEnabled,
                 tenantInternetGatewayIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 ipv4AddressSpace,
                 ipv6AddressSpace,
                 nfcSku,
+                lastOperation,
                 provisioningState,
                 serializedAdditionalRawData);
         }

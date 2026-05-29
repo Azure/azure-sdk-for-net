@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DependencyMap
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.DependencyMap
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<DependencyMapDiscoverySourceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DependencyMapDiscoverySourceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.DependencyMap
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<DependencyMapDiscoverySourceResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<DependencyMapDiscoverySourceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.DependencyMap
                     DependencyMapDiscoverySourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     DependencyMapDiscoverySourcePatch patch = new DependencyMapDiscoverySourcePatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<DependencyMapDiscoverySourceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DependencyMapDiscoverySourceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.DependencyMap
                     DependencyMapDiscoverySourceData current = Get(cancellationToken: cancellationToken).Value.Data;
                     DependencyMapDiscoverySourcePatch patch = new DependencyMapDiscoverySourcePatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<DependencyMapDiscoverySourceResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<DependencyMapDiscoverySourceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.DependencyMap
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<DependencyMapDiscoverySourceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DependencyMapDiscoverySourceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.DependencyMap
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<DependencyMapDiscoverySourceResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<DependencyMapDiscoverySourceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.TrustedSigning
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.TrustedSigning
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TrustedSigningAccountData, TrustedSigningAccountResource>(new CodeSigningAccountsGetByResourceGroupAsyncCollectionResultOfT(_codeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new TrustedSigningAccountResource(Client, data));
+            return new AsyncPageableWrapper<TrustedSigningAccountData, TrustedSigningAccountResource>(new CodeSigningAccountsGetByResourceGroupAsyncCollectionResultOfT(_codeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "TrustedSigningAccountCollection.GetAll"), data => new TrustedSigningAccountResource(Client, data));
         }
 
         /// <summary>
@@ -322,11 +322,11 @@ namespace Azure.ResourceManager.TrustedSigning
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TrustedSigningAccountData, TrustedSigningAccountResource>(new CodeSigningAccountsGetByResourceGroupCollectionResultOfT(_codeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new TrustedSigningAccountResource(Client, data));
+            return new PageableWrapper<TrustedSigningAccountData, TrustedSigningAccountResource>(new CodeSigningAccountsGetByResourceGroupCollectionResultOfT(_codeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "TrustedSigningAccountCollection.GetAll"), data => new TrustedSigningAccountResource(Client, data));
         }
 
         /// <summary>
-        /// Get a trusted Signing Account.
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.TrustedSigning
         }
 
         /// <summary>
-        /// Get a trusted Signing Account.
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.TrustedSigning
         }
 
         /// <summary>
-        /// Get a trusted Signing Account.
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.TrustedSigning
         }
 
         /// <summary>
-        /// Get a trusted Signing Account.
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

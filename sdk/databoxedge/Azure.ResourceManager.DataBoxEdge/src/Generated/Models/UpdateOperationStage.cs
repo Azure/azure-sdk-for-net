@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct UpdateOperationStage : IEquatable<UpdateOperationStage>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="UpdateOperationStage"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public UpdateOperationStage(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string InitialValue = "Initial";
         private const string ScanStartedValue = "ScanStarted";
@@ -40,57 +33,97 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private const string RescanCompleteValue = "RescanComplete";
         private const string RescanFailedValue = "RescanFailed";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateOperationStage"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public UpdateOperationStage(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static UpdateOperationStage Unknown { get; } = new UpdateOperationStage(UnknownValue);
-        /// <summary> Initial. </summary>
+
+        /// <summary> Gets the Initial. </summary>
         public static UpdateOperationStage Initial { get; } = new UpdateOperationStage(InitialValue);
-        /// <summary> ScanStarted. </summary>
+
+        /// <summary> Gets the ScanStarted. </summary>
         public static UpdateOperationStage ScanStarted { get; } = new UpdateOperationStage(ScanStartedValue);
-        /// <summary> ScanComplete. </summary>
+
+        /// <summary> Gets the ScanComplete. </summary>
         public static UpdateOperationStage ScanComplete { get; } = new UpdateOperationStage(ScanCompleteValue);
-        /// <summary> ScanFailed. </summary>
+
+        /// <summary> Gets the ScanFailed. </summary>
         public static UpdateOperationStage ScanFailed { get; } = new UpdateOperationStage(ScanFailedValue);
-        /// <summary> DownloadStarted. </summary>
+
+        /// <summary> Gets the DownloadStarted. </summary>
         public static UpdateOperationStage DownloadStarted { get; } = new UpdateOperationStage(DownloadStartedValue);
-        /// <summary> DownloadComplete. </summary>
+
+        /// <summary> Gets the DownloadComplete. </summary>
         public static UpdateOperationStage DownloadComplete { get; } = new UpdateOperationStage(DownloadCompleteValue);
-        /// <summary> DownloadFailed. </summary>
+
+        /// <summary> Gets the DownloadFailed. </summary>
         public static UpdateOperationStage DownloadFailed { get; } = new UpdateOperationStage(DownloadFailedValue);
-        /// <summary> InstallStarted. </summary>
+
+        /// <summary> Gets the InstallStarted. </summary>
         public static UpdateOperationStage InstallStarted { get; } = new UpdateOperationStage(InstallStartedValue);
-        /// <summary> InstallComplete. </summary>
+
+        /// <summary> Gets the InstallComplete. </summary>
         public static UpdateOperationStage InstallComplete { get; } = new UpdateOperationStage(InstallCompleteValue);
-        /// <summary> InstallFailed. </summary>
+
+        /// <summary> Gets the InstallFailed. </summary>
         public static UpdateOperationStage InstallFailed { get; } = new UpdateOperationStage(InstallFailedValue);
-        /// <summary> RebootInitiated. </summary>
+
+        /// <summary> Gets the RebootInitiated. </summary>
         public static UpdateOperationStage RebootInitiated { get; } = new UpdateOperationStage(RebootInitiatedValue);
-        /// <summary> Success. </summary>
+
+        /// <summary> Gets the Success. </summary>
         public static UpdateOperationStage Success { get; } = new UpdateOperationStage(SuccessValue);
-        /// <summary> Failure. </summary>
+
+        /// <summary> Gets the Failure. </summary>
         public static UpdateOperationStage Failure { get; } = new UpdateOperationStage(FailureValue);
-        /// <summary> RescanStarted. </summary>
+
+        /// <summary> Gets the RescanStarted. </summary>
         public static UpdateOperationStage RescanStarted { get; } = new UpdateOperationStage(RescanStartedValue);
-        /// <summary> RescanComplete. </summary>
+
+        /// <summary> Gets the RescanComplete. </summary>
         public static UpdateOperationStage RescanComplete { get; } = new UpdateOperationStage(RescanCompleteValue);
-        /// <summary> RescanFailed. </summary>
+
+        /// <summary> Gets the RescanFailed. </summary>
         public static UpdateOperationStage RescanFailed { get; } = new UpdateOperationStage(RescanFailedValue);
+
         /// <summary> Determines if two <see cref="UpdateOperationStage"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(UpdateOperationStage left, UpdateOperationStage right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="UpdateOperationStage"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(UpdateOperationStage left, UpdateOperationStage right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="UpdateOperationStage"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="UpdateOperationStage"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator UpdateOperationStage(string value) => new UpdateOperationStage(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="UpdateOperationStage"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator UpdateOperationStage?(string value) => value == null ? null : new UpdateOperationStage(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is UpdateOperationStage other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(UpdateOperationStage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

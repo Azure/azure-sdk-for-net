@@ -1,0 +1,18 @@
+id: owners-label-001
+name: Check Service Label
+description: |
+  Test that the skill checks whether a service label exists.
+tags:
+  - basic
+inputs:
+  prompt: "Does the Key Vault service label exist?"
+expected:
+  output_contains:
+    - "Key Vault"
+    - "label"
+  outcomes:
+    - type: tool_called
+      tool_name: azsdk_check_service_label
+  behavior:
+    max_tool_calls: 3
+    max_response_time_ms: 30000

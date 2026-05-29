@@ -13,43 +13,11 @@ using Azure.ResourceManager.Support.Models;
 
 namespace Azure.ResourceManager.Support
 {
-    /// <summary>
-    /// A class representing the SupportTicketCommunication data model.
-    /// Object that represents a Communication resource.
-    /// </summary>
+    /// <summary> Object that represents a Communication resource. </summary>
     public partial class SupportTicketCommunicationData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SupportTicketCommunicationData"/>. </summary>
         /// <param name="subject"> Subject of the communication. </param>
@@ -60,49 +28,101 @@ namespace Azure.ResourceManager.Support
             Argument.AssertNotNull(subject, nameof(subject));
             Argument.AssertNotNull(body, nameof(body));
 
-            Subject = subject;
-            Body = body;
+            Properties = new CommunicationDetailsProperties(subject, body);
         }
 
         /// <summary> Initializes a new instance of <see cref="SupportTicketCommunicationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="communicationType"> Communication type. </param>
-        /// <param name="communicationDirection"> Direction of communication. </param>
-        /// <param name="sender"> Email address of the sender. This property is required if called by a service principal. </param>
-        /// <param name="subject"> Subject of the communication. </param>
-        /// <param name="body"> Body of the communication. </param>
-        /// <param name="createdOn"> Time in UTC (ISO 8601 format) when the communication was created. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SupportTicketCommunicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SupportTicketCommunicationType? communicationType, SupportTicketCommunicationDirection? communicationDirection, string sender, string subject, string body, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the resource. </param>
+        internal SupportTicketCommunicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CommunicationDetailsProperties properties) : base(id, name, resourceType, systemData)
         {
-            CommunicationType = communicationType;
-            CommunicationDirection = communicationDirection;
-            Sender = sender;
-            Subject = subject;
-            Body = body;
-            CreatedOn = createdOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SupportTicketCommunicationData"/> for deserialization. </summary>
-        internal SupportTicketCommunicationData()
-        {
-        }
+        /// <summary> Properties of the resource. </summary>
+        internal CommunicationDetailsProperties Properties { get; set; }
 
         /// <summary> Communication type. </summary>
-        public SupportTicketCommunicationType? CommunicationType { get; }
+        public SupportTicketCommunicationType? CommunicationType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CommunicationType;
+            }
+        }
+
         /// <summary> Direction of communication. </summary>
-        public SupportTicketCommunicationDirection? CommunicationDirection { get; }
+        public SupportTicketCommunicationDirection? CommunicationDirection
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CommunicationDirection;
+            }
+        }
+
         /// <summary> Email address of the sender. This property is required if called by a service principal. </summary>
-        public string Sender { get; set; }
+        public string Sender
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Sender;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CommunicationDetailsProperties();
+                }
+                Properties.Sender = value;
+            }
+        }
+
         /// <summary> Subject of the communication. </summary>
-        public string Subject { get; set; }
+        public string Subject
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Subject;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CommunicationDetailsProperties();
+                }
+                Properties.Subject = value;
+            }
+        }
+
         /// <summary> Body of the communication. </summary>
-        public string Body { get; set; }
+        public string Body
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Body;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CommunicationDetailsProperties();
+                }
+                Properties.Body = value;
+            }
+        }
+
         /// <summary> Time in UTC (ISO 8601 format) when the communication was created. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
     }
 }

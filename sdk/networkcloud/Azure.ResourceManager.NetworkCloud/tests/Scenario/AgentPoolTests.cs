@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
     public class AgentPoolTests : NetworkCloudManagementTestBase
     {
-        public AgentPoolTests  (bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
-        public AgentPoolTests (bool isAsync) : base(isAsync) {}
+        public AgentPoolTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
+        public AgentPoolTests(bool isAsync) : base(isAsync) { }
 
         [Test, MaxTime(1800000)]
         [RecordedTest]
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             };
 
             // Create
-            ArmOperation<NetworkCloudAgentPoolResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
+            ArmOperation<NetworkCloudAgentPoolResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data, matchConditions: null);
             Assert.AreEqual(agentPoolName, createResult.Value.Data.Name);
 
             // Get
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key2"] = "newvalue2",
                 }
             };
-            ArmOperation<NetworkCloudAgentPoolResource> updateResult = await agentPool.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudAgentPoolResource> updateResult = await agentPool.UpdateAsync(WaitUntil.Completed, patch, matchConditions: null);
             Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
 
             // Delete

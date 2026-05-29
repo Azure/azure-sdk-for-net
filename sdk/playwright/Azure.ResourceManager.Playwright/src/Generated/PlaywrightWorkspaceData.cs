@@ -34,13 +34,18 @@ namespace Azure.ResourceManager.Playwright
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        internal PlaywrightWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, PlaywrightWorkspaceProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        internal PlaywrightWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, PlaywrightWorkspaceProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            Identity = identity;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
         public PlaywrightWorkspaceProperties Properties { get; set; }
+
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LocalRulestackData, LocalRulestackResource>(new LocalRulestacksGetByResourceGroupAsyncCollectionResultOfT(_localRulestacksRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new LocalRulestackResource(Client, data));
+            return new AsyncPageableWrapper<LocalRulestackData, LocalRulestackResource>(new LocalRulestacksGetByResourceGroupAsyncCollectionResultOfT(_localRulestacksRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "LocalRulestackCollection.GetAll"), data => new LocalRulestackResource(Client, data));
         }
 
         /// <summary>
@@ -322,11 +322,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LocalRulestackData, LocalRulestackResource>(new LocalRulestacksGetByResourceGroupCollectionResultOfT(_localRulestacksRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new LocalRulestackResource(Client, data));
+            return new PageableWrapper<LocalRulestackData, LocalRulestackResource>(new LocalRulestacksGetByResourceGroupCollectionResultOfT(_localRulestacksRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "LocalRulestackCollection.GetAll"), data => new LocalRulestackResource(Client, data));
         }
 
         /// <summary>
-        /// Get a LocalRulestackResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Get a LocalRulestackResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Get a LocalRulestackResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Get a LocalRulestackResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

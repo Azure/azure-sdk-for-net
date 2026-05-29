@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         {
             if (id.ResourceType != DeidServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DeidServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DeidServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.HealthDataAIServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthDataAIServicesPrivateEndpointConnectionResourceData, HealthDataAIServicesPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByDeidServiceAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HealthDataAIServicesPrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<HealthDataAIServicesPrivateEndpointConnectionResourceData, HealthDataAIServicesPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByDeidServiceAsyncCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HealthDataAIServicesPrivateEndpointConnectionResourceCollection.GetAll"), data => new HealthDataAIServicesPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -321,11 +327,17 @@ namespace Azure.ResourceManager.HealthDataAIServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthDataAIServicesPrivateEndpointConnectionResourceData, HealthDataAIServicesPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByDeidServiceCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HealthDataAIServicesPrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<HealthDataAIServicesPrivateEndpointConnectionResourceData, HealthDataAIServicesPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByDeidServiceCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HealthDataAIServicesPrivateEndpointConnectionResourceCollection.GetAll"), data => new HealthDataAIServicesPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
-        /// Get a specific private connection
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -382,7 +394,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         }
 
         /// <summary>
-        /// Get a specific private connection
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -439,7 +451,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         }
 
         /// <summary>
-        /// Get a specific private connection
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -500,7 +512,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         }
 
         /// <summary>
-        /// Get a specific private connection
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

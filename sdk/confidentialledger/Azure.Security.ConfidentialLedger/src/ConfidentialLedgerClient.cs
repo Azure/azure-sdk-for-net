@@ -73,7 +73,7 @@ namespace Azure.Security.ConfidentialLedger
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(
                 actualOptions,
-                Array.Empty<HttpPipelinePolicy>(),
+                new HttpPipelinePolicy[] { new ConfidentialLedgerRedirectPolicy() },
                 _tokenCredential == null ?
                     Array.Empty<HttpPipelinePolicy>() :
                     new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) },

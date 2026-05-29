@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DependencyMap
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DependencyMap
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DependencyMapData, DependencyMapResource>(new MapsGetByResourceGroupAsyncCollectionResultOfT(_mapsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new DependencyMapResource(Client, data));
+            return new AsyncPageableWrapper<DependencyMapData, DependencyMapResource>(new MapsGetByResourceGroupAsyncCollectionResultOfT(_mapsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DependencyMapCollection.GetAll"), data => new DependencyMapResource(Client, data));
         }
 
         /// <summary>
@@ -322,11 +322,11 @@ namespace Azure.ResourceManager.DependencyMap
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DependencyMapData, DependencyMapResource>(new MapsGetByResourceGroupCollectionResultOfT(_mapsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new DependencyMapResource(Client, data));
+            return new PageableWrapper<DependencyMapData, DependencyMapResource>(new MapsGetByResourceGroupCollectionResultOfT(_mapsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DependencyMapCollection.GetAll"), data => new DependencyMapResource(Client, data));
         }
 
         /// <summary>
-        /// Get a MapsResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.DependencyMap
         }
 
         /// <summary>
-        /// Get a MapsResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.DependencyMap
         }
 
         /// <summary>
-        /// Get a MapsResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.DependencyMap
         }
 
         /// <summary>
-        /// Get a MapsResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

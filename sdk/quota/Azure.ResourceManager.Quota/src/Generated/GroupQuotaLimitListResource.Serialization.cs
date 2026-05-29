@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Quota
 {
+    /// <summary></summary>
     public partial class GroupQuotaLimitListResource : IJsonModel<GroupQuotaLimitListData>
     {
-        private static GroupQuotaLimitListData s_dataDeserializationInstance;
-        private static GroupQuotaLimitListData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<GroupQuotaLimitListData> s_dataDeserializationInstance;
 
+        private static IJsonModel<GroupQuotaLimitListData> DataDeserializationInstance => s_dataDeserializationInstance ??= new GroupQuotaLimitListData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GroupQuotaLimitListData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GroupQuotaLimitListData>)Data).Write(writer, options);
 
-        GroupQuotaLimitListData IJsonModel<GroupQuotaLimitListData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GroupQuotaLimitListData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GroupQuotaLimitListData IJsonModel<GroupQuotaLimitListData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<GroupQuotaLimitListData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GroupQuotaLimitListData>(Data, options, AzureResourceManagerQuotaContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         GroupQuotaLimitListData IPersistableModel<GroupQuotaLimitListData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GroupQuotaLimitListData>(data, options, AzureResourceManagerQuotaContext.Default);
 
-        string IPersistableModel<GroupQuotaLimitListData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GroupQuotaLimitListData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GroupQuotaLimitListData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

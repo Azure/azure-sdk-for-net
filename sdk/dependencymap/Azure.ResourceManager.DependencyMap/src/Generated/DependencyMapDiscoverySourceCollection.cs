@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DependencyMap
         {
             if (id.ResourceType != DependencyMapResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DependencyMapResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DependencyMapResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.DependencyMap
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DependencyMapDiscoverySourceData, DependencyMapDiscoverySourceResource>(new DiscoverySourcesGetByMapsResourceAsyncCollectionResultOfT(_discoverySourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DependencyMapDiscoverySourceResource(Client, data));
+            return new AsyncPageableWrapper<DependencyMapDiscoverySourceData, DependencyMapDiscoverySourceResource>(new DiscoverySourcesGetByMapsResourceAsyncCollectionResultOfT(
+                _discoverySourcesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DependencyMapDiscoverySourceCollection.GetAll"), data => new DependencyMapDiscoverySourceResource(Client, data));
         }
 
         /// <summary>
@@ -321,11 +327,17 @@ namespace Azure.ResourceManager.DependencyMap
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DependencyMapDiscoverySourceData, DependencyMapDiscoverySourceResource>(new DiscoverySourcesGetByMapsResourceCollectionResultOfT(_discoverySourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DependencyMapDiscoverySourceResource(Client, data));
+            return new PageableWrapper<DependencyMapDiscoverySourceData, DependencyMapDiscoverySourceResource>(new DiscoverySourcesGetByMapsResourceCollectionResultOfT(
+                _discoverySourcesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DependencyMapDiscoverySourceCollection.GetAll"), data => new DependencyMapDiscoverySourceResource(Client, data));
         }
 
         /// <summary>
-        /// Get a DiscoverySourceResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -382,7 +394,7 @@ namespace Azure.ResourceManager.DependencyMap
         }
 
         /// <summary>
-        /// Get a DiscoverySourceResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -439,7 +451,7 @@ namespace Azure.ResourceManager.DependencyMap
         }
 
         /// <summary>
-        /// Get a DiscoverySourceResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -500,7 +512,7 @@ namespace Azure.ResourceManager.DependencyMap
         }
 
         /// <summary>
-        /// Get a DiscoverySourceResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

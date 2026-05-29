@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Localizable string object containing the name and a localized value. </summary>
+    /// <summary>
+    /// Localizable string object containing the name and a localized value.
+    /// Serialized Name: LocalizableString
+    /// </summary>
     public partial class LocalizableString
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LocalizableString"/>. </summary>
-        /// <param name="value"> Non-localized name. </param>
-        /// <param name="localizedValue"> Localized name. </param>
+        /// <param name="value">
+        /// Non-localized name.
+        /// Serialized Name: LocalizableString.value
+        /// </param>
+        /// <param name="localizedValue">
+        /// Localized name.
+        /// Serialized Name: LocalizableString.localizedValue
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal LocalizableString(string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Non-localized name. </summary>
+        /// <summary>
+        /// Non-localized name.
+        /// Serialized Name: LocalizableString.value
+        /// </summary>
         [WirePath("value")]
         public string Value { get; }
-        /// <summary> Localized name. </summary>
+        /// <summary>
+        /// Localized name.
+        /// Serialized Name: LocalizableString.localizedValue
+        /// </summary>
         [WirePath("localizedValue")]
         public string LocalizedValue { get; }
     }

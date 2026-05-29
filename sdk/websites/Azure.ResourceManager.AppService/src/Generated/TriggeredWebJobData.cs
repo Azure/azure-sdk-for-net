@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the TriggeredWebJob data model.
     /// Triggered Web Job Information.
+    /// Serialized Name: TriggeredWebJob
     /// </summary>
     public partial class TriggeredWebJobData : ResourceData
     {
@@ -62,22 +63,62 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="latestRun"> Latest job run information. </param>
-        /// <param name="historyUri"> History URL. </param>
-        /// <param name="schedulerLogsUri"> Scheduler Logs URL. </param>
-        /// <param name="runCommand"> Run command. </param>
-        /// <param name="uri"> Job URL. </param>
-        /// <param name="extraInfoUri"> Extra Info URL. </param>
-        /// <param name="webJobType"> Job type. </param>
-        /// <param name="error"> Error information. </param>
-        /// <param name="isUsingSdk"> Using SDK?. </param>
-        /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string. </param>
-        /// <param name="isStorageAccountRequired"> Checks if Customer provided storage account is required. </param>
-        /// <param name="settings"> Job settings. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: TriggeredWebJob.kind
+        /// </param>
+        /// <param name="latestRun">
+        /// Latest job run information.
+        /// Serialized Name: TriggeredWebJob.properties.latest_run
+        /// </param>
+        /// <param name="historyUri">
+        /// History URL.
+        /// Serialized Name: TriggeredWebJob.properties.history_url
+        /// </param>
+        /// <param name="schedulerLogsUri">
+        /// Scheduler Logs URL.
+        /// Serialized Name: TriggeredWebJob.properties.scheduler_logs_url
+        /// </param>
+        /// <param name="runCommand">
+        /// Run command.
+        /// Serialized Name: TriggeredWebJob.properties.run_command
+        /// </param>
+        /// <param name="uri">
+        /// Job URL.
+        /// Serialized Name: TriggeredWebJob.properties.url
+        /// </param>
+        /// <param name="extraInfoUri">
+        /// Extra Info URL.
+        /// Serialized Name: TriggeredWebJob.properties.extra_info_url
+        /// </param>
+        /// <param name="webJobType">
+        /// Job type.
+        /// Serialized Name: TriggeredWebJob.properties.web_job_type
+        /// </param>
+        /// <param name="error">
+        /// Error information.
+        /// Serialized Name: TriggeredWebJob.properties.error
+        /// </param>
+        /// <param name="isUsingSdk">
+        /// Using SDK?
+        /// Serialized Name: TriggeredWebJob.properties.using_sdk
+        /// </param>
+        /// <param name="publicNetworkAccess">
+        /// Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string.
+        /// Serialized Name: TriggeredWebJob.properties.publicNetworkAccess
+        /// </param>
+        /// <param name="isStorageAccountRequired">
+        /// Checks if Customer provided storage account is required
+        /// Serialized Name: TriggeredWebJob.properties.storageAccountRequired
+        /// </param>
+        /// <param name="settings">
+        /// Job settings.
+        /// Serialized Name: TriggeredWebJob.properties.settings
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TriggeredWebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TriggeredJobRun latestRun, Uri historyUri, Uri schedulerLogsUri, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? isUsingSdk, string publicNetworkAccess, bool? isStorageAccountRequired, IDictionary<string, BinaryData> settings, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal TriggeredWebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, TriggeredJobRun latestRun, Uri historyUri, Uri schedulerLogsUri, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? isUsingSdk, string publicNetworkAccess, bool? isStorageAccountRequired, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             LatestRun = latestRun;
             HistoryUri = historyUri;
             SchedulerLogsUri = schedulerLogsUri;
@@ -90,45 +131,84 @@ namespace Azure.ResourceManager.AppService
             PublicNetworkAccess = publicNetworkAccess;
             IsStorageAccountRequired = isStorageAccountRequired;
             Settings = settings;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Latest job run information. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: TriggeredWebJob.kind
+        /// </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
+        /// <summary>
+        /// Latest job run information.
+        /// Serialized Name: TriggeredWebJob.properties.latest_run
+        /// </summary>
         [WirePath("properties.latest_run")]
         public TriggeredJobRun LatestRun { get; set; }
-        /// <summary> History URL. </summary>
+        /// <summary>
+        /// History URL.
+        /// Serialized Name: TriggeredWebJob.properties.history_url
+        /// </summary>
         [WirePath("properties.history_url")]
         public Uri HistoryUri { get; set; }
-        /// <summary> Scheduler Logs URL. </summary>
+        /// <summary>
+        /// Scheduler Logs URL.
+        /// Serialized Name: TriggeredWebJob.properties.scheduler_logs_url
+        /// </summary>
         [WirePath("properties.scheduler_logs_url")]
         public Uri SchedulerLogsUri { get; set; }
-        /// <summary> Run command. </summary>
+        /// <summary>
+        /// Run command.
+        /// Serialized Name: TriggeredWebJob.properties.run_command
+        /// </summary>
         [WirePath("properties.run_command")]
         public string RunCommand { get; set; }
-        /// <summary> Job URL. </summary>
+        /// <summary>
+        /// Job URL.
+        /// Serialized Name: TriggeredWebJob.properties.url
+        /// </summary>
         [WirePath("properties.url")]
         public Uri Uri { get; set; }
-        /// <summary> Extra Info URL. </summary>
+        /// <summary>
+        /// Extra Info URL.
+        /// Serialized Name: TriggeredWebJob.properties.extra_info_url
+        /// </summary>
         [WirePath("properties.extra_info_url")]
         public Uri ExtraInfoUri { get; set; }
-        /// <summary> Job type. </summary>
+        /// <summary>
+        /// Job type.
+        /// Serialized Name: TriggeredWebJob.properties.web_job_type
+        /// </summary>
         [WirePath("properties.web_job_type")]
         public WebJobType? WebJobType { get; set; }
-        /// <summary> Error information. </summary>
+        /// <summary>
+        /// Error information.
+        /// Serialized Name: TriggeredWebJob.properties.error
+        /// </summary>
         [WirePath("properties.error")]
         public string Error { get; set; }
-        /// <summary> Using SDK?. </summary>
+        /// <summary>
+        /// Using SDK?
+        /// Serialized Name: TriggeredWebJob.properties.using_sdk
+        /// </summary>
         [WirePath("properties.using_sdk")]
         public bool? IsUsingSdk { get; set; }
-        /// <summary> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string. </summary>
+        /// <summary>
+        /// Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string.
+        /// Serialized Name: TriggeredWebJob.properties.publicNetworkAccess
+        /// </summary>
         [WirePath("properties.publicNetworkAccess")]
         public string PublicNetworkAccess { get; set; }
-        /// <summary> Checks if Customer provided storage account is required. </summary>
+        /// <summary>
+        /// Checks if Customer provided storage account is required
+        /// Serialized Name: TriggeredWebJob.properties.storageAccountRequired
+        /// </summary>
         [WirePath("properties.storageAccountRequired")]
         public bool? IsStorageAccountRequired { get; set; }
         /// <summary>
         /// Job settings.
+        /// Serialized Name: TriggeredWebJob.properties.settings
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -159,8 +239,5 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         [WirePath("properties.settings")]
         public IDictionary<string, BinaryData> Settings { get; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

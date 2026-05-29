@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.MachineLearning
             options.Skip = skip;
             options.Count = count;
             options.IsDefault = isDefault;
-            options.SearchText= searchText;
-            options.OrderBy= orderBy;
-            options.OrderByAsc= orderByAsc;
+            options.SearchText = searchText;
+            options.OrderBy = orderBy;
+            options.OrderByAsc = orderByAsc;
 
             if (names is not null)
             {

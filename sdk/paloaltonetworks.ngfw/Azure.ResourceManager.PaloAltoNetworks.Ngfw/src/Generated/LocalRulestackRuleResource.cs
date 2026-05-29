@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Create a LocalRulesResource
+        /// Update a LocalRulestackRule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Create a LocalRulesResource
+        /// Update a LocalRulestackRule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

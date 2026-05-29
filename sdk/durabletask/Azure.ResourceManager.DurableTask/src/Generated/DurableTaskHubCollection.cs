@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DurableTask
         {
             TryGetApiVersion(DurableTaskHubResource.ResourceType, out string durableTaskHubApiVersion);
             _taskHubsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DurableTask", DurableTaskHubResource.ResourceType.Namespace, Diagnostics);
-            _taskHubsRestClient = new TaskHubs(_taskHubsClientDiagnostics, Pipeline, Endpoint, durableTaskHubApiVersion ?? "2025-11-01");
+            _taskHubsRestClient = new TaskHubs(_taskHubsClientDiagnostics, Pipeline, Endpoint, durableTaskHubApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DurableTask
         {
             if (id.ResourceType != DurableTaskSchedulerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DurableTaskSchedulerResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DurableTaskSchedulerResource.ResourceType), nameof(id));
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.DurableTask
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DurableTaskHubData, DurableTaskHubResource>(new TaskHubsGetBySchedulerAsyncCollectionResultOfT(_taskHubsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DurableTaskHubResource(Client, data));
+            return new AsyncPageableWrapper<DurableTaskHubData, DurableTaskHubResource>(new TaskHubsGetBySchedulerAsyncCollectionResultOfT(
+                _taskHubsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DurableTaskHubCollection.GetAll"), data => new DurableTaskHubResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +315,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -321,11 +327,17 @@ namespace Azure.ResourceManager.DurableTask
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DurableTaskHubData, DurableTaskHubResource>(new TaskHubsGetBySchedulerCollectionResultOfT(_taskHubsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DurableTaskHubResource(Client, data));
+            return new PageableWrapper<DurableTaskHubData, DurableTaskHubResource>(new TaskHubsGetBySchedulerCollectionResultOfT(
+                _taskHubsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DurableTaskHubCollection.GetAll"), data => new DurableTaskHubResource(Client, data));
         }
 
         /// <summary>
-        /// Get a Task Hub
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -337,7 +349,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -382,7 +394,7 @@ namespace Azure.ResourceManager.DurableTask
         }
 
         /// <summary>
-        /// Get a Task Hub
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -394,7 +406,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -439,7 +451,7 @@ namespace Azure.ResourceManager.DurableTask
         }
 
         /// <summary>
-        /// Get a Task Hub
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -451,7 +463,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -500,7 +512,7 @@ namespace Azure.ResourceManager.DurableTask
         }
 
         /// <summary>
-        /// Get a Task Hub
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -512,7 +524,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>

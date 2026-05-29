@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class AlertPropertiesDetails : IUtf8JsonSerializable, IJsonModel<AlertPropertiesDetails>
+    /// <summary> Alert details. </summary>
+    public partial class AlertPropertiesDetails : IJsonModel<AlertPropertiesDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertPropertiesDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AlertPropertiesDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AlertPropertiesDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAlertPropertiesDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AlertPropertiesDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AlertPropertiesDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AlertPropertiesDetails IPersistableModel<AlertPropertiesDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AlertPropertiesDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AlertPropertiesDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AlertPropertiesDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertPropertiesDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(TimeGrainType))
             {
                 writer.WritePropertyName("timeGrainType"u8);
@@ -53,7 +93,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 writer.WritePropertyName("resourceGroupFilter"u8);
                 writer.WriteStartArray();
-                foreach (var item in ResourceGroupFilter)
+                foreach (BinaryData item in ResourceGroupFilter)
                 {
                     if (item == null)
                     {
@@ -61,9 +101,9 @@ namespace Azure.ResourceManager.CostManagement.Models
                         continue;
                     }
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item);
+                    writer.WriteRawValue(item);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -75,7 +115,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 writer.WritePropertyName("resourceFilter"u8);
                 writer.WriteStartArray();
-                foreach (var item in ResourceFilter)
+                foreach (BinaryData item in ResourceFilter)
                 {
                     if (item == null)
                     {
@@ -83,9 +123,9 @@ namespace Azure.ResourceManager.CostManagement.Models
                         continue;
                     }
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item);
+                    writer.WriteRawValue(item);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -97,7 +137,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 writer.WritePropertyName("meterFilter"u8);
                 writer.WriteStartArray();
-                foreach (var item in MeterFilter)
+                foreach (BinaryData item in MeterFilter)
                 {
                     if (item == null)
                     {
@@ -105,9 +145,9 @@ namespace Azure.ResourceManager.CostManagement.Models
                         continue;
                     }
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item);
+                    writer.WriteRawValue(item);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -119,9 +159,9 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 writer.WritePropertyName("tagFilter"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(TagFilter);
+                writer.WriteRawValue(TagFilter);
 #else
-                using (JsonDocument document = JsonDocument.Parse(TagFilter, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(TagFilter))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -156,8 +196,13 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 writer.WritePropertyName("contactEmails"u8);
                 writer.WriteStartArray();
-                foreach (var item in ContactEmails)
+                foreach (string item in ContactEmails)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -166,8 +211,13 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 writer.WritePropertyName("contactGroups"u8);
                 writer.WriteStartArray();
-                foreach (var item in ContactGroups)
+                foreach (string item in ContactGroups)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -176,8 +226,13 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 writer.WritePropertyName("contactRoles"u8);
                 writer.WriteStartArray();
-                foreach (var item in ContactRoles)
+                foreach (string item in ContactRoles)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -217,15 +272,15 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("invoicingThreshold"u8);
                 writer.WriteNumberValue(InvoicingThreshold.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -234,22 +289,27 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
         }
 
-        AlertPropertiesDetails IJsonModel<AlertPropertiesDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AlertPropertiesDetails IJsonModel<AlertPropertiesDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AlertPropertiesDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AlertPropertiesDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertPropertiesDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAlertPropertiesDetails(document.RootElement, options);
         }
 
-        internal static AlertPropertiesDetails DeserializeAlertPropertiesDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AlertPropertiesDetails DeserializeAlertPropertiesDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -276,37 +336,36 @@ namespace Azure.ResourceManager.CostManagement.Models
             string enrollmentStartDate = default;
             string enrollmentEndDate = default;
             decimal? invoicingThreshold = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("timeGrainType"u8))
+                if (prop.NameEquals("timeGrainType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    timeGrainType = new AlertTimeGrainType(property.Value.GetString());
+                    timeGrainType = new AlertTimeGrainType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("periodStartDate"u8))
+                if (prop.NameEquals("periodStartDate"u8))
                 {
-                    periodStartDate = property.Value.GetString();
+                    periodStartDate = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("triggeredBy"u8))
+                if (prop.NameEquals("triggeredBy"u8))
                 {
-                    triggeredBy = property.Value.GetString();
+                    triggeredBy = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceGroupFilter"u8))
+                if (prop.NameEquals("resourceGroupFilter"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<BinaryData> array = new List<BinaryData>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -320,14 +379,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                     resourceGroupFilter = array;
                     continue;
                 }
-                if (property.NameEquals("resourceFilter"u8))
+                if (prop.NameEquals("resourceFilter"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<BinaryData> array = new List<BinaryData>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -341,14 +400,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                     resourceFilter = array;
                     continue;
                 }
-                if (property.NameEquals("meterFilter"u8))
+                if (prop.NameEquals("meterFilter"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<BinaryData> array = new List<BinaryData>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -362,143 +421,163 @@ namespace Azure.ResourceManager.CostManagement.Models
                     meterFilter = array;
                     continue;
                 }
-                if (property.NameEquals("tagFilter"u8))
+                if (prop.NameEquals("tagFilter"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    tagFilter = BinaryData.FromString(property.Value.GetRawText());
+                    tagFilter = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("threshold"u8))
+                if (prop.NameEquals("threshold"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    threshold = property.Value.GetDecimal();
+                    threshold = prop.Value.GetDecimal();
                     continue;
                 }
-                if (property.NameEquals("operator"u8))
+                if (prop.NameEquals("operator"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    @operator = new CostManagementAlertOperator(property.Value.GetString());
+                    @operator = new CostManagementAlertOperator(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("amount"u8))
+                if (prop.NameEquals("amount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    amount = property.Value.GetDecimal();
+                    amount = prop.Value.GetDecimal();
                     continue;
                 }
-                if (property.NameEquals("unit"u8))
+                if (prop.NameEquals("unit"u8))
                 {
-                    unit = property.Value.GetString();
+                    unit = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("currentSpend"u8))
+                if (prop.NameEquals("currentSpend"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    currentSpend = property.Value.GetDecimal();
+                    currentSpend = prop.Value.GetDecimal();
                     continue;
                 }
-                if (property.NameEquals("contactEmails"u8))
+                if (prop.NameEquals("contactEmails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     contactEmails = array;
                     continue;
                 }
-                if (property.NameEquals("contactGroups"u8))
+                if (prop.NameEquals("contactGroups"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     contactGroups = array;
                     continue;
                 }
-                if (property.NameEquals("contactRoles"u8))
+                if (prop.NameEquals("contactRoles"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     contactRoles = array;
                     continue;
                 }
-                if (property.NameEquals("overridingAlert"u8))
+                if (prop.NameEquals("overridingAlert"u8))
                 {
-                    overridingAlert = property.Value.GetString();
+                    overridingAlert = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("departmentName"u8))
+                if (prop.NameEquals("departmentName"u8))
                 {
-                    departmentName = property.Value.GetString();
+                    departmentName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("companyName"u8))
+                if (prop.NameEquals("companyName"u8))
                 {
-                    companyName = property.Value.GetString();
+                    companyName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enrollmentNumber"u8))
+                if (prop.NameEquals("enrollmentNumber"u8))
                 {
-                    enrollmentNumber = property.Value.GetString();
+                    enrollmentNumber = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enrollmentStartDate"u8))
+                if (prop.NameEquals("enrollmentStartDate"u8))
                 {
-                    enrollmentStartDate = property.Value.GetString();
+                    enrollmentStartDate = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enrollmentEndDate"u8))
+                if (prop.NameEquals("enrollmentEndDate"u8))
                 {
-                    enrollmentEndDate = property.Value.GetString();
+                    enrollmentEndDate = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("invoicingThreshold"u8))
+                if (prop.NameEquals("invoicingThreshold"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    invoicingThreshold = property.Value.GetDecimal();
+                    invoicingThreshold = prop.Value.GetDecimal();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AlertPropertiesDetails(
                 timeGrainType,
                 periodStartDate,
@@ -522,38 +601,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 enrollmentStartDate,
                 enrollmentEndDate,
                 invoicingThreshold,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<AlertPropertiesDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AlertPropertiesDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AlertPropertiesDetails IPersistableModel<AlertPropertiesDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AlertPropertiesDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAlertPropertiesDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AlertPropertiesDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

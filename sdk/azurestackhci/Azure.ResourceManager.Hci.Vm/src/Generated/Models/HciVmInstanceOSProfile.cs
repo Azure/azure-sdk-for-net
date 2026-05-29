@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     /// <summary> OsProfile - describes the configuration of the operating system and sets login data. </summary>
     public partial class HciVmInstanceOSProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciVmInstanceOSProfile"/>. </summary>
         public HciVmInstanceOSProfile()
@@ -56,25 +27,29 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="computerName"> ComputerName - name of the compute. </param>
         /// <param name="linuxConfiguration"> LinuxConfiguration - linux specific configuration values for the virtual machine instance. </param>
         /// <param name="windowsConfiguration"> Windows Configuration for the virtual machine instance. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmInstanceOSProfile(string adminPassword, string adminUsername, string computerName, HciVmInstanceOSProfileLinuxConfiguration linuxConfiguration, HciVmInstanceOSProfileWindowsConfiguration windowsConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciVmInstanceOSProfile(string adminPassword, string adminUsername, string computerName, HciVmInstanceOSProfileLinuxConfiguration linuxConfiguration, HciVmInstanceOSProfileWindowsConfiguration windowsConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdminPassword = adminPassword;
             AdminUsername = adminUsername;
             ComputerName = computerName;
             LinuxConfiguration = linuxConfiguration;
             WindowsConfiguration = windowsConfiguration;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> AdminPassword - admin password. </summary>
         public string AdminPassword { get; set; }
+
         /// <summary> AdminUsername - admin username. </summary>
         public string AdminUsername { get; set; }
+
         /// <summary> ComputerName - name of the compute. </summary>
         public string ComputerName { get; set; }
+
         /// <summary> LinuxConfiguration - linux specific configuration values for the virtual machine instance. </summary>
         public HciVmInstanceOSProfileLinuxConfiguration LinuxConfiguration { get; set; }
+
         /// <summary> Windows Configuration for the virtual machine instance. </summary>
         public HciVmInstanceOSProfileWindowsConfiguration WindowsConfiguration { get; set; }
     }

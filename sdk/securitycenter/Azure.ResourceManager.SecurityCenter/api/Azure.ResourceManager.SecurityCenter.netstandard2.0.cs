@@ -1703,7 +1703,6 @@ namespace Azure.ResourceManager.SecurityCenter
         public static Azure.ResourceManager.SecurityCenter.SecurityConnectorGitHubRepositoryResource GetSecurityConnectorGitHubRepositoryResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SecurityConnectorGitLabGroupResource GetSecurityConnectorGitLabGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SecurityConnectorGitLabProjectResource GetSecurityConnectorGitLabProjectResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", false)]
         public static Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleResource GetSecurityConnectorGovernanceRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SecurityConnectorResource GetSecurityConnectorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1761,16 +1760,12 @@ namespace Azure.ResourceManager.SecurityCenter
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource> GetSubscriptionAssessmentMetadata(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string assessmentMetadataName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource>> GetSubscriptionAssessmentMetadataAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string assessmentMetadataName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource GetSubscriptionAssessmentMetadataResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", false)]
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource> GetSubscriptionGovernanceRule(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", false)]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource>> GetSubscriptionGovernanceRuleAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. Please use GetGovernanceRuleResource.", false)]
         public static Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource GetSubscriptionGovernanceRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", false)]
         public static Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleCollection GetSubscriptionGovernanceRules(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource GetSubscriptionSecurityAlertResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -2238,7 +2233,6 @@ namespace Azure.ResourceManager.SecurityCenter
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.SecurityConnectorGitLabProjectData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.SecurityConnectorGitLabProjectData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.", false)]
     public partial class SecurityConnectorGovernanceRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleResource>, System.Collections.IEnumerable
     {
@@ -2255,7 +2249,6 @@ namespace Azure.ResourceManager.SecurityCenter
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.", false)]
     public partial class SecurityConnectorGovernanceRuleResource : Azure.ResourceManager.ArmResource
     {
@@ -2292,13 +2285,10 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityConnectorApplicationResource> GetSecurityConnectorApplication(string applicationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityConnectorApplicationResource>> GetSecurityConnectorApplicationAsync(string applicationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.SecurityCenter.SecurityConnectorApplicationCollection GetSecurityConnectorApplications() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.", false)]
         public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleResource> GetSecurityConnectorGovernanceRule(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleResource>> GetSecurityConnectorGovernanceRuleAsync(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.", false)]
         public virtual Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleCollection GetSecurityConnectorGovernanceRules() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityConnectorResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2795,11 +2785,9 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual Azure.Response<bool> Exists(string ruleId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string ruleId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource> Get(string ruleId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. Please use AddRules().", false)]
         public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource> GetAll(System.Guid workspaceId, Azure.ResourceManager.SecurityCenter.Models.RulesResultsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource> GetAll(System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. Please use AddRulesAsync().", false)]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource> GetAllAsync(System.Guid workspaceId, Azure.ResourceManager.SecurityCenter.Models.RulesResultsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource> GetAllAsync(System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2915,7 +2903,6 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.SecurityAssessmentMetadataData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.SecurityAssessmentMetadataData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release. Please use GovernanceRuleCollection.", false)]
     public partial class SubscriptionGovernanceRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource>, System.Collections.IEnumerable
     {
@@ -2932,7 +2919,6 @@ namespace Azure.ResourceManager.SecurityCenter
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release. Please use GovernanceRuleResource.", false)]
     public partial class SubscriptionGovernanceRuleResource : Azure.ResourceManager.ArmResource
     {
@@ -3158,7 +3144,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         public virtual Azure.ResourceManager.SecurityCenter.SecurityConnectorGitHubRepositoryResource GetSecurityConnectorGitHubRepositoryResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SecurityCenter.SecurityConnectorGitLabGroupResource GetSecurityConnectorGitLabGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SecurityCenter.SecurityConnectorGitLabProjectResource GetSecurityConnectorGitLabProjectResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", false)]
         public virtual Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleResource GetSecurityConnectorGovernanceRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SecurityCenter.SecurityConnectorResource GetSecurityConnectorResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -3186,7 +3171,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         public virtual Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentScanResource GetSqlVulnerabilityAssessmentScanResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentScanCollection GetSqlVulnerabilityAssessmentScans(Azure.Core.ResourceIdentifier scope) { throw null; }
         public virtual Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource GetSubscriptionAssessmentMetadataResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. Please use GetGovernanceRuleResource.", false)]
         public virtual Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource GetSubscriptionGovernanceRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource GetSubscriptionSecurityAlertResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -3327,13 +3311,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.SoftwareInventoryResource> GetSoftwareInventoriesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource> GetSubscriptionAssessmentMetadata(string assessmentMetadataName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource>> GetSubscriptionAssessmentMetadataAsync(string assessmentMetadataName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", false)]
         public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource> GetSubscriptionGovernanceRule(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource>> GetSubscriptionGovernanceRuleAsync(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", false)]
         public virtual Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleCollection GetSubscriptionGovernanceRules() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityApplicationResource> GetSubscriptionSecurityApplication(string applicationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3367,9 +3348,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.AadConnectivityStateType Discovered { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.AadConnectivityStateType NotLicensed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.AadConnectivityStateType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.AadConnectivityStateType left, Azure.ResourceManager.SecurityCenter.Models.AadConnectivityStateType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AadConnectivityStateType (string value) { throw null; }
@@ -3422,9 +3401,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.ActionableRemediationState Enabled { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.ActionableRemediationState None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.ActionableRemediationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.ActionableRemediationState left, Azure.ResourceManager.SecurityCenter.Models.ActionableRemediationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.ActionableRemediationState (string value) { throw null; }
@@ -3451,9 +3428,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlEnforcementMode Enforce { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlEnforcementMode None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlEnforcementMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlEnforcementMode left, Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlEnforcementMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlEnforcementMode (string value) { throw null; }
@@ -3472,9 +3447,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlGroupSourceSystem NonAzureAuditD { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlGroupSourceSystem None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlGroupSourceSystem other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlGroupSourceSystem left, Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlGroupSourceSystem right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlGroupSourceSystem (string value) { throw null; }
@@ -3494,9 +3467,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlIssue ViolationsAudited { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlIssue ViolationsBlocked { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlIssue other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlIssue left, Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlIssue right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlIssue (string value) { throw null; }
@@ -3536,9 +3507,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.AdditionalWorkspaceDataType Alerts { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.AdditionalWorkspaceDataType RawEvents { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.AdditionalWorkspaceDataType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.AdditionalWorkspaceDataType left, Azure.ResourceManager.SecurityCenter.Models.AdditionalWorkspaceDataType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AdditionalWorkspaceDataType (string value) { throw null; }
@@ -3566,9 +3535,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public AdditionalWorkspaceType(string value) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.AdditionalWorkspaceType Sentinel { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.AdditionalWorkspaceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.AdditionalWorkspaceType left, Azure.ResourceManager.SecurityCenter.Models.AdditionalWorkspaceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AdditionalWorkspaceType (string value) { throw null; }
@@ -3625,9 +3592,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.AnnotateDefaultBranchState Disabled { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.AnnotateDefaultBranchState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.AnnotateDefaultBranchState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.AnnotateDefaultBranchState left, Azure.ResourceManager.SecurityCenter.Models.AnnotateDefaultBranchState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AnnotateDefaultBranchState (string value) { throw null; }
@@ -3642,9 +3607,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public ApplicationSourceResourceType(string value) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.ApplicationSourceResourceType Assessments { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.ApplicationSourceResourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.ApplicationSourceResourceType left, Azure.ResourceManager.SecurityCenter.Models.ApplicationSourceResourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.ApplicationSourceResourceType (string value) { throw null; }
@@ -3874,9 +3837,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.AuthenticationProvisioningState Invalid { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.AuthenticationProvisioningState Valid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.AuthenticationProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.AuthenticationProvisioningState left, Azure.ResourceManager.SecurityCenter.Models.AuthenticationProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AuthenticationProvisioningState (string value) { throw null; }
@@ -3899,9 +3860,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.AutomationTriggeringRuleOperator NotEquals { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.AutomationTriggeringRuleOperator StartsWith { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.AutomationTriggeringRuleOperator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.AutomationTriggeringRuleOperator left, Azure.ResourceManager.SecurityCenter.Models.AutomationTriggeringRuleOperator right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AutomationTriggeringRuleOperator (string value) { throw null; }
@@ -3919,9 +3878,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.AutomationTriggeringRulePropertyType Number { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.AutomationTriggeringRulePropertyType String { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.AutomationTriggeringRulePropertyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.AutomationTriggeringRulePropertyType left, Azure.ResourceManager.SecurityCenter.Models.AutomationTriggeringRulePropertyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AutomationTriggeringRulePropertyType (string value) { throw null; }
@@ -3937,9 +3894,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.AutoProvisionState Off { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.AutoProvisionState On { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.AutoProvisionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.AutoProvisionState left, Azure.ResourceManager.SecurityCenter.Models.AutoProvisionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AutoProvisionState (string value) { throw null; }
@@ -3955,9 +3910,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.AvailableSubPlanType P1 { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.AvailableSubPlanType P2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.AvailableSubPlanType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.AvailableSubPlanType left, Azure.ResourceManager.SecurityCenter.Models.AvailableSubPlanType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AvailableSubPlanType (string value) { throw null; }
@@ -4333,9 +4286,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.CustomAssessmentAutomationSupportedCloud Aws { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.CustomAssessmentAutomationSupportedCloud Gcp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.CustomAssessmentAutomationSupportedCloud other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.CustomAssessmentAutomationSupportedCloud left, Azure.ResourceManager.SecurityCenter.Models.CustomAssessmentAutomationSupportedCloud right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.CustomAssessmentAutomationSupportedCloud (string value) { throw null; }
@@ -4352,9 +4303,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.CustomAssessmentSeverity Low { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.CustomAssessmentSeverity Medium { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.CustomAssessmentSeverity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.CustomAssessmentSeverity left, Azure.ResourceManager.SecurityCenter.Models.CustomAssessmentSeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.CustomAssessmentSeverity (string value) { throw null; }
@@ -5015,9 +4964,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public DefenderForServersScanningMode(string value) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.DefenderForServersScanningMode Default { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.DefenderForServersScanningMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.DefenderForServersScanningMode left, Azure.ResourceManager.SecurityCenter.Models.DefenderForServersScanningMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.DefenderForServersScanningMode (string value) { throw null; }
@@ -5032,9 +4979,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public DefenderForStorageSettingName(string value) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.DefenderForStorageSettingName Current { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.DefenderForStorageSettingName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.DefenderForStorageSettingName left, Azure.ResourceManager.SecurityCenter.Models.DefenderForStorageSettingName right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.DefenderForStorageSettingName (string value) { throw null; }
@@ -5062,9 +5007,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.DevOpsAutoDiscovery Enabled { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.DevOpsAutoDiscovery NotApplicable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.DevOpsAutoDiscovery other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.DevOpsAutoDiscovery left, Azure.ResourceManager.SecurityCenter.Models.DevOpsAutoDiscovery right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.DevOpsAutoDiscovery (string value) { throw null; }
@@ -5133,9 +5076,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.DevOpsProvisioningState PendingDeletion { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.DevOpsProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.DevOpsProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.DevOpsProvisioningState left, Azure.ResourceManager.SecurityCenter.Models.DevOpsProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.DevOpsProvisioningState (string value) { throw null; }
@@ -5211,9 +5152,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus UpcomingVersionNoLongerSupported { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus VersionNoLongerSupported { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus left, Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus (string value) { throw null; }
@@ -5277,9 +5216,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.ExtensionOperationStatusCode Failed { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.ExtensionOperationStatusCode Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.ExtensionOperationStatusCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.ExtensionOperationStatusCode left, Azure.ResourceManager.SecurityCenter.Models.ExtensionOperationStatusCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.ExtensionOperationStatusCode (string value) { throw null; }
@@ -5308,9 +5245,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolutionKind Ata { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolutionKind Cef { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolutionKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolutionKind left, Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolutionKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolutionKind (string value) { throw null; }
@@ -5565,9 +5500,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleOwnerSourceType ByTag { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleOwnerSourceType Manually { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleOwnerSourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleOwnerSourceType left, Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleOwnerSourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleOwnerSourceType (string value) { throw null; }
@@ -5582,9 +5515,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public GovernanceRuleSourceResourceType(string value) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleSourceResourceType Assessments { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleSourceResourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleSourceResourceType left, Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleSourceResourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleSourceResourceType (string value) { throw null; }
@@ -5600,9 +5531,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleType Integrated { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleType ServiceNow { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleType left, Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.GovernanceRuleType (string value) { throw null; }
@@ -5645,9 +5574,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.HealthReportSource OnPremise { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.HealthReportSource OnPremiseSql { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.HealthReportSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.HealthReportSource left, Azure.ResourceManager.SecurityCenter.Models.HealthReportSource right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.HealthReportSource (string value) { throw null; }
@@ -5679,9 +5606,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.HealthReportStatusName NotApplicable { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.HealthReportStatusName NotHealthy { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.HealthReportStatusName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.HealthReportStatusName left, Azure.ResourceManager.SecurityCenter.Models.HealthReportStatusName right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.HealthReportStatusName (string value) { throw null; }
@@ -5728,9 +5653,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.HybridComputeProvisioningState Invalid { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.HybridComputeProvisioningState Valid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.HybridComputeProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.HybridComputeProvisioningState left, Azure.ResourceManager.SecurityCenter.Models.HybridComputeProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.HybridComputeProvisioningState (string value) { throw null; }
@@ -5763,9 +5686,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.ImplementationEffort Low { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.ImplementationEffort Moderate { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.ImplementationEffort other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.ImplementationEffort left, Azure.ResourceManager.SecurityCenter.Models.ImplementationEffort right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.ImplementationEffort (string value) { throw null; }
@@ -5820,9 +5741,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicyName Custom { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicyName Effective { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicyName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicyName left, Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicyName right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicyName (string value) { throw null; }
@@ -5838,9 +5757,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.InheritFromParentState Disabled { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.InheritFromParentState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.InheritFromParentState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.InheritFromParentState left, Azure.ResourceManager.SecurityCenter.Models.InheritFromParentState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.InheritFromParentState (string value) { throw null; }
@@ -5921,9 +5838,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotSharedCredentials { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType IotVulnerableTlsCipherSuite { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType left, Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType (string value) { throw null; }
@@ -5950,9 +5865,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public IotSecuritySolutionDataSource(string value) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionDataSource TwinData { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionDataSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionDataSource left, Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionDataSource right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionDataSource (string value) { throw null; }
@@ -5967,9 +5880,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public IotSecuritySolutionExportOption(string value) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionExportOption RawEvents { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionExportOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionExportOption left, Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionExportOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionExportOption (string value) { throw null; }
@@ -6010,9 +5921,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.IsExtensionEnabled False { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.IsExtensionEnabled True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.IsExtensionEnabled other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.IsExtensionEnabled left, Azure.ResourceManager.SecurityCenter.Models.IsExtensionEnabled right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.IsExtensionEnabled (string value) { throw null; }
@@ -6079,9 +5988,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortProtocol left, Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortProtocol (string value) { throw null; }
@@ -6112,9 +6019,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortStatus Initiated { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortStatus Revoked { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortStatus left, Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortStatus (string value) { throw null; }
@@ -6131,9 +6036,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortStatusReason NewerRequestInitiated { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortStatusReason UserRequested { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortStatusReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortStatusReason left, Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortStatusReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessPortStatusReason (string value) { throw null; }
@@ -6206,9 +6109,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.KillChainIntent Probing { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.KillChainIntent Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.KillChainIntent other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.KillChainIntent left, Azure.ResourceManager.SecurityCenter.Models.KillChainIntent right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.KillChainIntent (string value) { throw null; }
@@ -6273,9 +6174,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.MipIntegrationStatus NoMipLabels { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.MipIntegrationStatus Ok { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.MipIntegrationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.MipIntegrationStatus left, Azure.ResourceManager.SecurityCenter.Models.MipIntegrationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.MipIntegrationStatus (string value) { throw null; }
@@ -6395,9 +6294,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.PathRecommendationFileType Script { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.PathRecommendationFileType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.PathRecommendationFileType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.PathRecommendationFileType left, Azure.ResourceManager.SecurityCenter.Models.PathRecommendationFileType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.PathRecommendationFileType (string value) { throw null; }
@@ -6460,9 +6357,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.RecommendationAction Recommended { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.RecommendationAction Remove { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.RecommendationAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.RecommendationAction left, Azure.ResourceManager.SecurityCenter.Models.RecommendationAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.RecommendationAction (string value) { throw null; }
@@ -6478,9 +6373,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.RecommendationConfigStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.RecommendationConfigStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.RecommendationConfigStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.RecommendationConfigStatus left, Azure.ResourceManager.SecurityCenter.Models.RecommendationConfigStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.RecommendationConfigStatus (string value) { throw null; }
@@ -6511,9 +6404,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.RecommendationStatus NotRecommended { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.RecommendationStatus Recommended { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.RecommendationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.RecommendationStatus left, Azure.ResourceManager.SecurityCenter.Models.RecommendationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.RecommendationStatus (string value) { throw null; }
@@ -6546,9 +6437,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.RegulatoryComplianceState Skipped { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.RegulatoryComplianceState Unsupported { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.RegulatoryComplianceState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.RegulatoryComplianceState left, Azure.ResourceManager.SecurityCenter.Models.RegulatoryComplianceState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.RegulatoryComplianceState (string value) { throw null; }
@@ -6578,9 +6467,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.ReportedSeverity Low { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.ReportedSeverity Medium { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.ReportedSeverity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.ReportedSeverity left, Azure.ResourceManager.SecurityCenter.Models.ReportedSeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.ReportedSeverity (string value) { throw null; }
@@ -6598,9 +6485,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.ResourceOnboardingState Onboarded { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.ResourceOnboardingState OnboardedByOtherConnector { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.ResourceOnboardingState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.ResourceOnboardingState left, Azure.ResourceManager.SecurityCenter.Models.ResourceOnboardingState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.ResourceOnboardingState (string value) { throw null; }
@@ -6620,9 +6505,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.RuleCategory IaC { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.RuleCategory Secrets { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.RuleCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.RuleCategory left, Azure.ResourceManager.SecurityCenter.Models.RuleCategory right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.RuleCategory (string value) { throw null; }
@@ -6641,9 +6524,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.RuleSeverity Medium { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.RuleSeverity Obsolete { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.RuleSeverity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.RuleSeverity left, Azure.ResourceManager.SecurityCenter.Models.RuleSeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.RuleSeverity (string value) { throw null; }
@@ -6718,9 +6599,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertMinimalSeverity Low { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertMinimalSeverity Medium { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityAlertMinimalSeverity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityAlertMinimalSeverity left, Azure.ResourceManager.SecurityCenter.Models.SecurityAlertMinimalSeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityAlertMinimalSeverity (string value) { throw null; }
@@ -6736,9 +6615,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertNotificationByRoleState Off { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertNotificationByRoleState On { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityAlertNotificationByRoleState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityAlertNotificationByRoleState left, Azure.ResourceManager.SecurityCenter.Models.SecurityAlertNotificationByRoleState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityAlertNotificationByRoleState (string value) { throw null; }
@@ -6754,9 +6631,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertNotificationState Off { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertNotificationState On { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityAlertNotificationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityAlertNotificationState left, Azure.ResourceManager.SecurityCenter.Models.SecurityAlertNotificationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityAlertNotificationState (string value) { throw null; }
@@ -6774,9 +6649,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertReceivingRole Owner { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertReceivingRole ServiceAdmin { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityAlertReceivingRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityAlertReceivingRole left, Azure.ResourceManager.SecurityCenter.Models.SecurityAlertReceivingRole right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityAlertReceivingRole (string value) { throw null; }
@@ -6804,9 +6677,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSeverity Low { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSeverity Medium { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSeverity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSeverity left, Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSeverity (string value) { throw null; }
@@ -6840,9 +6711,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorBundleType StorageAccounts { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorBundleType VirtualMachines { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorBundleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorBundleType left, Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorBundleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorBundleType (string value) { throw null; }
@@ -6888,9 +6757,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertStatus InProgress { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertStatus Resolved { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityAlertStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityAlertStatus left, Azure.ResourceManager.SecurityCenter.Models.SecurityAlertStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityAlertStatus (string value) { throw null; }
@@ -6981,9 +6848,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentODataExpand Links { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentODataExpand Metadata { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentODataExpand other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentODataExpand left, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentODataExpand right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentODataExpand (string value) { throw null; }
@@ -7026,9 +6891,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceCategory IoT { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceCategory Networking { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceCategory left, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceCategory right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceCategory (string value) { throw null; }
@@ -7046,9 +6909,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceStatus NotHealthy { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceStatus OffByPolicy { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceStatus left, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentResourceStatus (string value) { throw null; }
@@ -7065,9 +6926,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentSeverity Low { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentSeverity Medium { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentSeverity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentSeverity left, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentSeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentSeverity (string value) { throw null; }
@@ -7097,9 +6956,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentStatusCode NotApplicable { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentStatusCode Unhealthy { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentStatusCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentStatusCode left, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentStatusCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentStatusCode (string value) { throw null; }
@@ -7139,9 +6996,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentTactic Reconnaissance { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentTactic ResourceDevelopment { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentTactic other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentTactic left, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentTactic right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentTactic (string value) { throw null; }
@@ -7259,9 +7114,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentTechnique ValidAccounts { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentTechnique WindowsManagementInstrumentation { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentTechnique other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentTechnique left, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentTechnique right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentTechnique (string value) { throw null; }
@@ -7279,9 +7132,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentType CustomPolicy { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentType VerifiedPartner { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentType left, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentType (string value) { throw null; }
@@ -7298,9 +7149,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentUserImpact Low { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentUserImpact Moderate { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentUserImpact other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentUserImpact left, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentUserImpact right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentUserImpact (string value) { throw null; }
@@ -7440,9 +7289,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName Github { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName GitLab { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName (string value) { throw null; }
@@ -7471,9 +7318,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudPermission AwsSecurityAudit { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudPermission GcpSecurityCenterAdminViewer { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudPermission other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudPermission left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudPermission right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudPermission (string value) { throw null; }
@@ -7492,9 +7337,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConfigurationStatus NoStatus { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConfigurationStatus NotConfigured { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConfigurationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConfigurationStatus left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConfigurationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConfigurationStatus (string value) { throw null; }
@@ -7510,9 +7353,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConnectionType External { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConnectionType Internal { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConnectionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConnectionType left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConnectionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConnectionType (string value) { throw null; }
@@ -7542,9 +7383,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier Free { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPricingTier (string value) { throw null; }
@@ -7596,9 +7435,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterVmEnforcementSupportState Supported { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityCenterVmEnforcementSupportState Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterVmEnforcementSupportState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityCenterVmEnforcementSupportState left, Azure.ResourceManager.SecurityCenter.Models.SecurityCenterVmEnforcementSupportState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityCenterVmEnforcementSupportState (string value) { throw null; }
@@ -7718,9 +7555,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityControlType BuiltIn { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityControlType Custom { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityControlType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityControlType left, Azure.ResourceManager.SecurityCenter.Models.SecurityControlType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityControlType (string value) { throw null; }
@@ -7768,9 +7603,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityEventSource SubAssessments { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityEventSource SubAssessmentsSnapshot { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityEventSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityEventSource left, Azure.ResourceManager.SecurityCenter.Models.SecurityEventSource right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityEventSource (string value) { throw null; }
@@ -7788,9 +7621,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityFamily VulnerabilityAssessment { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityFamily Waf { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityFamily other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityFamily left, Azure.ResourceManager.SecurityCenter.Models.SecurityFamily right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityFamily (string value) { throw null; }
@@ -7807,9 +7638,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityFamilyProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityFamilyProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityFamilyProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityFamilyProvisioningState left, Azure.ResourceManager.SecurityCenter.Models.SecurityFamilyProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityFamilyProvisioningState (string value) { throw null; }
@@ -7858,9 +7687,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public SecurityScoreODataExpand(string value) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityScoreODataExpand Definition { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityScoreODataExpand other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityScoreODataExpand left, Azure.ResourceManager.SecurityCenter.Models.SecurityScoreODataExpand right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityScoreODataExpand (string value) { throw null; }
@@ -7879,9 +7706,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecuritySettingName WdatpExcludeLinuxPublicPreview { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecuritySettingName WdatpUnifiedSolution { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecuritySettingName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecuritySettingName left, Azure.ResourceManager.SecurityCenter.Models.SecuritySettingName right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecuritySettingName (string value) { throw null; }
@@ -7930,9 +7755,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecuritySolutionStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecuritySolutionStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecuritySolutionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecuritySolutionStatus left, Azure.ResourceManager.SecurityCenter.Models.SecuritySolutionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecuritySolutionStatus (string value) { throw null; }
@@ -7976,9 +7799,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityThreat MissingCoverage { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityThreat ThreatResistance { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityThreat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityThreat left, Azure.ResourceManager.SecurityCenter.Models.SecurityThreat right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityThreat (string value) { throw null; }
@@ -8007,9 +7828,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityTrafficDirection Inbound { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityTrafficDirection Outbound { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityTrafficDirection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityTrafficDirection left, Azure.ResourceManager.SecurityCenter.Models.SecurityTrafficDirection right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityTrafficDirection (string value) { throw null; }
@@ -8025,9 +7844,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityTransportProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityTransportProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityTransportProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityTransportProtocol left, Azure.ResourceManager.SecurityCenter.Models.SecurityTransportProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityTransportProtocol (string value) { throw null; }
@@ -8043,9 +7860,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityValueType IPCidr { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityValueType String { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityValueType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityValueType left, Azure.ResourceManager.SecurityCenter.Models.SecurityValueType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityValueType (string value) { throw null; }
@@ -8057,7 +7872,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public SensitivityLabel() { }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? Enabled { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
         public int? Order { get { throw null; } set { } }
@@ -8116,9 +7930,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.ServerVulnerabilityAssessmentPropertiesProvisioningState Provisioning { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.ServerVulnerabilityAssessmentPropertiesProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.ServerVulnerabilityAssessmentPropertiesProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.ServerVulnerabilityAssessmentPropertiesProvisioningState left, Azure.ResourceManager.SecurityCenter.Models.ServerVulnerabilityAssessmentPropertiesProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.ServerVulnerabilityAssessmentPropertiesProvisioningState (string value) { throw null; }
@@ -8133,9 +7945,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public ServerVulnerabilityAssessmentsAzureSettingSelectedProvider(string value) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.ServerVulnerabilityAssessmentsAzureSettingSelectedProvider MdeTvm { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.ServerVulnerabilityAssessmentsAzureSettingSelectedProvider other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.ServerVulnerabilityAssessmentsAzureSettingSelectedProvider left, Azure.ResourceManager.SecurityCenter.Models.ServerVulnerabilityAssessmentsAzureSettingSelectedProvider right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.ServerVulnerabilityAssessmentsAzureSettingSelectedProvider (string value) { throw null; }
@@ -8150,9 +7960,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public ServerVulnerabilityAssessmentsSettingKindName(string value) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.ServerVulnerabilityAssessmentsSettingKindName AzureServersSetting { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.ServerVulnerabilityAssessmentsSettingKindName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.ServerVulnerabilityAssessmentsSettingKindName left, Azure.ResourceManager.SecurityCenter.Models.ServerVulnerabilityAssessmentsSettingKindName right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.ServerVulnerabilityAssessmentsSettingKindName (string value) { throw null; }
@@ -8301,9 +8109,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanResultRuleStatus InternalError { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanResultRuleStatus NonFinding { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanResultRuleStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanResultRuleStatus left, Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanResultRuleStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanResultRuleStatus (string value) { throw null; }
@@ -8321,9 +8127,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanState InProgress { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanState Passed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanState left, Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanState (string value) { throw null; }
@@ -8339,9 +8143,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanTriggerType OnDemand { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanTriggerType Recurring { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanTriggerType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanTriggerType left, Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanTriggerType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanTriggerType (string value) { throw null; }
@@ -8372,9 +8174,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.SubAssessmentStatusCode NotApplicable { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.SubAssessmentStatusCode Unhealthy { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SubAssessmentStatusCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SubAssessmentStatusCode left, Azure.ResourceManager.SecurityCenter.Models.SubAssessmentStatusCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SubAssessmentStatusCode (string value) { throw null; }
@@ -8497,9 +8297,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.UnmaskedIPLoggingStatus Disabled { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.UnmaskedIPLoggingStatus Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.UnmaskedIPLoggingStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.UnmaskedIPLoggingStatus left, Azure.ResourceManager.SecurityCenter.Models.UnmaskedIPLoggingStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.UnmaskedIPLoggingStatus (string value) { throw null; }
@@ -8578,9 +8376,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.VulnerabilityAssessmentAutoProvisioningType Qualys { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.VulnerabilityAssessmentAutoProvisioningType TVM { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.VulnerabilityAssessmentAutoProvisioningType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.VulnerabilityAssessmentAutoProvisioningType left, Azure.ResourceManager.SecurityCenter.Models.VulnerabilityAssessmentAutoProvisioningType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.VulnerabilityAssessmentAutoProvisioningType (string value) { throw null; }
@@ -8630,9 +8426,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.VulnerabilityAssessmentRuleType NegativeList { get { throw null; } }
         public static Azure.ResourceManager.SecurityCenter.Models.VulnerabilityAssessmentRuleType PositiveList { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.VulnerabilityAssessmentRuleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.VulnerabilityAssessmentRuleType left, Azure.ResourceManager.SecurityCenter.Models.VulnerabilityAssessmentRuleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.VulnerabilityAssessmentRuleType (string value) { throw null; }

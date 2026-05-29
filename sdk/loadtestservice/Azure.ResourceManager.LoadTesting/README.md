@@ -115,7 +115,8 @@ Response<LoadTestingResource> loadTestingResponse = await loadTestingCollection.
 LoadTestingResource resource = loadTestingResponse.Value;
 
 ResourceIdentifier identityId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/sample-rg/providers/microsoft.managedidentity/userassignedidentities/identity1");
-LoadTestingResourcePatch resourcePatchPayload = new LoadTestingResourcePatch {
+LoadTestingResourcePatch resourcePatchPayload = new LoadTestingResourcePatch
+{
     Encryption = new LoadTestingCmkEncryptionProperties
     {
         Identity = new LoadTestingCmkIdentity
@@ -201,15 +202,13 @@ Response<LoadTestingQuotaResource> quotaResponse = await QuotaCollection.GetAsyn
 LoadTestingQuotaResource quotaResource = quotaResponse.Value;
 
 LoadTestingQuotaBucketDimensions dimensions = new LoadTestingQuotaBucketDimensions("<subscription-id>", AzureLocation.WestUS2, null);
-LoadTestingQuotaBucketContent quotaAvailabilityPayload = new LoadTestingQuotaBucketContent(
-    quotaResponse.Value.Data.Id,
-    quotaResource.Data.Name,
-    quotaResource.Data.ResourceType,
-    null,
-    quotaResource.Data.Usage,
-    quotaResource.Data.Limit,
-    50, // new quota value
-    dimensions, null);
+LoadTestingQuotaBucketContent quotaAvailabilityPayload = new LoadTestingQuotaBucketContent
+{
+    CurrentUsage = quotaResource.Data.Usage,
+    CurrentQuota = quotaResource.Data.Limit,
+    NewQuota = 50, // new quota value
+    Dimensions = dimensions
+};
 
 Response<LoadTestingQuotaAvailabilityResult> checkAvailabilityResult = await quotaResponse.Value.CheckLoadTestingQuotaAvailabilityAsync(quotaAvailabilityPayload);
 // IsAvailable property indicates whether the requested quota is available.

@@ -19,20 +19,19 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         private readonly PrefixListGlobalRulestack _client;
         private readonly string _globalRulestackName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of PrefixListGlobalRulestackGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The PrefixListGlobalRulestack client used to send requests. </param>
         /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public PrefixListGlobalRulestackGetAllCollectionResultOfT(PrefixListGlobalRulestack client, string globalRulestackName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public PrefixListGlobalRulestackGetAllCollectionResultOfT(PrefixListGlobalRulestack client, string globalRulestackName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
-
             _client = client;
             _globalRulestackName = globalRulestackName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of PrefixListGlobalRulestackGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     yield break;
                 }
                 PrefixListGlobalRulestackResourceListResult result = PrefixListGlobalRulestackResourceListResult.FromResponse(response);
-                yield return Page<GlobalRulestackPrefixData>.FromValues((IReadOnlyList<GlobalRulestackPrefixData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<GlobalRulestackPrefixData>.FromValues((IReadOnlyList<GlobalRulestackPrefixData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _globalRulestackName, _context) : _client.CreateGetAllRequest(_globalRulestackName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("GlobalRulestackPrefixCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

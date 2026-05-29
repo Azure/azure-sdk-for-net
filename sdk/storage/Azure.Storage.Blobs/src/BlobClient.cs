@@ -940,7 +940,7 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken = default) =>
             UploadAsync(
                 content,
-                options: overwrite ? null : new BlobUploadOptions(){ Conditions = new BlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) }},
+                options: overwrite ? null : new BlobUploadOptions() { Conditions = new BlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) } },
                 cancellationToken: cancellationToken);
 
         /// <summary>

@@ -7,57 +7,115 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The kind of the knowledge source. </summary>
-    internal readonly partial struct KnowledgeSourceKind : IEquatable<KnowledgeSourceKind>
+    public readonly partial struct KnowledgeSourceKind : IEquatable<KnowledgeSourceKind>
     {
         private readonly string _value;
+        /// <summary> A knowledge source that reads data from a Search Index. </summary>
+        private const string SearchIndexValue = "searchIndex";
+        /// <summary> A knowledge source that read and ingest data from Azure Blob Storage to a Search Index. </summary>
+        private const string AzureBlobValue = "azureBlob";
+        /// <summary> A knowledge source that reads data from indexed SharePoint. </summary>
+        private const string IndexedSharePointValue = "indexedSharePoint";
+        /// <summary> A knowledge source that reads data from indexed OneLake. </summary>
+        private const string IndexedOneLakeValue = "indexedOneLake";
+        /// <summary> A knowledge source that retrieves and ingests data from Azure SQL Database or SQL Managed Instance to a Search Index. </summary>
+        private const string IndexedSqlValue = "indexedSql";
+        /// <summary> A knowledge source that reads data from the web. </summary>
+        private const string WebValue = "web";
+        /// <summary> A knowledge source that reads data from remote SharePoint. </summary>
+        private const string RemoteSharePointValue = "remoteSharePoint";
+        /// <summary> A knowledge source that reads data from work IQ. </summary>
+        private const string WorkIQValue = "workIQ";
+        /// <summary> A knowledge source that supports direct file upload and indexing. </summary>
+        private const string FileValue = "file";
+        /// <summary> A knowledge source backed by an MCP (Model Context Protocol) server. </summary>
+        private const string McpServerValue = "mcpServer";
+        /// <summary> A knowledge source that retrieves data from a Fabric Data Agent. </summary>
+        private const string FabricDataAgentValue = "fabricDataAgent";
+        /// <summary> A knowledge source that retrieves data from Microsoft Fabric Ontology ontologies. </summary>
+        private const string FabricOntologyValue = "fabricOntology";
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KnowledgeSourceKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SearchIndexValue = "searchIndex";
-        private const string AzureBlobValue = "azureBlob";
-        private const string WebValue = "web";
-        private const string RemoteSharePointValue = "remoteSharePoint";
-        private const string IndexedSharePointValue = "indexedSharePoint";
-        private const string IndexedOneLakeValue = "indexedOneLake";
-
-        /// <summary> A knowledge source that retrieves data from a Search Index. </summary>
+        /// <summary> A knowledge source that reads data from a Search Index. </summary>
         public static KnowledgeSourceKind SearchIndex { get; } = new KnowledgeSourceKind(SearchIndexValue);
-        /// <summary> A knowledge source that retrieves and ingests data from Azure Blob Storage to a Search Index. </summary>
+
+        /// <summary> A knowledge source that read and ingest data from Azure Blob Storage to a Search Index. </summary>
         public static KnowledgeSourceKind AzureBlob { get; } = new KnowledgeSourceKind(AzureBlobValue);
-        /// <summary> A knowledge source that retrieves data from the web. </summary>
-        public static KnowledgeSourceKind Web { get; } = new KnowledgeSourceKind(WebValue);
-        /// <summary> A knowledge source that retrieves data from a remote SharePoint endpoint. </summary>
-        public static KnowledgeSourceKind RemoteSharePoint { get; } = new KnowledgeSourceKind(RemoteSharePointValue);
-        /// <summary> A knowledge source that retrieves and ingests data from SharePoint to a Search Index. </summary>
+
+        /// <summary> A knowledge source that reads data from indexed SharePoint. </summary>
         public static KnowledgeSourceKind IndexedSharePoint { get; } = new KnowledgeSourceKind(IndexedSharePointValue);
-        /// <summary> A knowledge source that retrieves and ingests data from OneLake to a Search Index. </summary>
+
+        /// <summary> A knowledge source that reads data from indexed OneLake. </summary>
         public static KnowledgeSourceKind IndexedOneLake { get; } = new KnowledgeSourceKind(IndexedOneLakeValue);
+
+        /// <summary> A knowledge source that retrieves and ingests data from Azure SQL Database or SQL Managed Instance to a Search Index. </summary>
+        public static KnowledgeSourceKind IndexedSql { get; } = new KnowledgeSourceKind(IndexedSqlValue);
+
+        /// <summary> A knowledge source that reads data from the web. </summary>
+        public static KnowledgeSourceKind Web { get; } = new KnowledgeSourceKind(WebValue);
+
+        /// <summary> A knowledge source that reads data from remote SharePoint. </summary>
+        public static KnowledgeSourceKind RemoteSharePoint { get; } = new KnowledgeSourceKind(RemoteSharePointValue);
+
+        /// <summary> A knowledge source that reads data from work IQ. </summary>
+        public static KnowledgeSourceKind WorkIQ { get; } = new KnowledgeSourceKind(WorkIQValue);
+
+        /// <summary> A knowledge source that supports direct file upload and indexing. </summary>
+        public static KnowledgeSourceKind File { get; } = new KnowledgeSourceKind(FileValue);
+
+        /// <summary> A knowledge source backed by an MCP (Model Context Protocol) server. </summary>
+        public static KnowledgeSourceKind McpServer { get; } = new KnowledgeSourceKind(McpServerValue);
+
+        /// <summary> A knowledge source that retrieves data from a Fabric Data Agent. </summary>
+        public static KnowledgeSourceKind FabricDataAgent { get; } = new KnowledgeSourceKind(FabricDataAgentValue);
+
+        /// <summary> A knowledge source that retrieves data from Microsoft Fabric Ontology ontologies. </summary>
+        public static KnowledgeSourceKind FabricOntology { get; } = new KnowledgeSourceKind(FabricOntologyValue);
+
         /// <summary> Determines if two <see cref="KnowledgeSourceKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KnowledgeSourceKind left, KnowledgeSourceKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KnowledgeSourceKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KnowledgeSourceKind left, KnowledgeSourceKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KnowledgeSourceKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KnowledgeSourceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KnowledgeSourceKind(string value) => new KnowledgeSourceKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KnowledgeSourceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KnowledgeSourceKind?(string value) => value == null ? null : new KnowledgeSourceKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KnowledgeSourceKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KnowledgeSourceKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

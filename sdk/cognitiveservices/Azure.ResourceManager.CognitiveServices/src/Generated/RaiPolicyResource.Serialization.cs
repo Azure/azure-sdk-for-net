@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
+    /// <summary></summary>
     public partial class RaiPolicyResource : IJsonModel<RaiPolicyData>
     {
-        private static RaiPolicyData s_dataDeserializationInstance;
-        private static RaiPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RaiPolicyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RaiPolicyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RaiPolicyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RaiPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RaiPolicyData>)Data).Write(writer, options);
 
-        RaiPolicyData IJsonModel<RaiPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RaiPolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RaiPolicyData IJsonModel<RaiPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RaiPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RaiPolicyData>(Data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RaiPolicyData IPersistableModel<RaiPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RaiPolicyData>(data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
-        string IPersistableModel<RaiPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RaiPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RaiPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

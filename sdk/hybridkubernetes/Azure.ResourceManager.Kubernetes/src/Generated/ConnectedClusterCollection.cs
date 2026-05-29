@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Kubernetes
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Kubernetes
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConnectedClusterData, ConnectedClusterResource>(new ConnectedClusterGetByResourceGroupAsyncCollectionResultOfT(_connectedClusterRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ConnectedClusterResource(Client, data));
+            return new AsyncPageableWrapper<ConnectedClusterData, ConnectedClusterResource>(new ConnectedClusterGetByResourceGroupAsyncCollectionResultOfT(_connectedClusterRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ConnectedClusterCollection.GetAll"), data => new ConnectedClusterResource(Client, data));
         }
 
         /// <summary>
@@ -322,11 +322,11 @@ namespace Azure.ResourceManager.Kubernetes
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConnectedClusterData, ConnectedClusterResource>(new ConnectedClusterGetByResourceGroupCollectionResultOfT(_connectedClusterRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ConnectedClusterResource(Client, data));
+            return new PageableWrapper<ConnectedClusterData, ConnectedClusterResource>(new ConnectedClusterGetByResourceGroupCollectionResultOfT(_connectedClusterRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ConnectedClusterCollection.GetAll"), data => new ConnectedClusterResource(Client, data));
         }
 
         /// <summary>
-        /// Returns the properties of the specified connected cluster, including name, identity, properties, and additional cluster details.
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Kubernetes
         }
 
         /// <summary>
-        /// Returns the properties of the specified connected cluster, including name, identity, properties, and additional cluster details.
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Kubernetes
         }
 
         /// <summary>
-        /// Returns the properties of the specified connected cluster, including name, identity, properties, and additional cluster details.
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.Kubernetes
         }
 
         /// <summary>
-        /// Returns the properties of the specified connected cluster, including name, identity, properties, and additional cluster details.
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

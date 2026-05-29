@@ -12,7 +12,7 @@ using System.Reflection;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class AppServiceSpecification() :
-    Specification("AppService", typeof(AppServiceExtensions))
+    Specification("AppService", typeof(AppServiceExtensions), serviceDirectory: "websites")
 {
     protected override void Customize()
     {
@@ -29,6 +29,8 @@ public class AppServiceSpecification() :
         RemoveProperty<SiteSlotVirtualNetworkConnectionResource>("CertThumbprint");
         RemoveProperty<SiteVirtualNetworkConnectionResource>("CertThumbprint");
         RemoveProperty<StaticSiteBasicAuthPropertyResource>("BasicAuthName");
+        CustomizeProperty<StaticSiteBasicAuthPropertyResource>("Name", p => { p.IsReadOnly = true; p.GenerateDefaultValue = true; });
+        CustomizeProperty<SiteNetworkConfigResource>("Name", p => { p.IsReadOnly = true; p.GenerateDefaultValue = true; });
         RemoveProperty<StaticSiteBuildUserProvidedFunctionAppResource>("IsForced");
         RemoveProperty<StaticSiteUserProvidedFunctionAppResource>("IsForced");
         RemoveProperty<WebSiteExtensionResource>("SiteExtensionId");
@@ -48,6 +50,7 @@ public class AppServiceSpecification() :
             r.ResourceType = "Microsoft.Web/sites/config";
         });
         CustomizeProperty<SiteAuthSettingsV2>("Name", p => { p.GenerateDefaultValue = true; p.HideAccessors = true; p.IsReadOnly = false; }); // must be `authsettingsV2`
+        CustomizeProperty<SlotConfigNamesResource>("Name", p => { p.GenerateDefaultValue = true; p.HideAccessors = true; p.IsReadOnly = false; }); // must be `slotConfigNames`
 
         // Not generated today:
         // CustomizePropertyIsoDuration<MetricAvailability>("BlobDuration");

@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableContainerServiceFleetArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableContainerServiceFleetArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableContainerServiceFleetArmClient for mocking. </summary>
         protected MockableContainerServiceFleetArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableContainerServiceFleetArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableContainerServiceFleetArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableContainerServiceFleetArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableContainerServiceFleetArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerServiceFleetResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerServiceFleetResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceFleetResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ContainerServiceFleetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ContainerServiceFleetResource"/> object. </returns>
         public virtual ContainerServiceFleetResource GetContainerServiceFleetResource(ResourceIdentifier id)
@@ -46,34 +35,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
             return new ContainerServiceFleetResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="AutoUpgradeProfileResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutoUpgradeProfileResource.CreateResourceIdentifier" /> to create an <see cref="AutoUpgradeProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutoUpgradeProfileResource"/> object. </returns>
-        public virtual AutoUpgradeProfileResource GetAutoUpgradeProfileResource(ResourceIdentifier id)
-        {
-            AutoUpgradeProfileResource.ValidateResourceId(id);
-            return new AutoUpgradeProfileResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerServiceFleetGateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerServiceFleetGateResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceFleetGateResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerServiceFleetGateResource"/> object. </returns>
-        public virtual ContainerServiceFleetGateResource GetContainerServiceFleetGateResource(ResourceIdentifier id)
-        {
-            ContainerServiceFleetGateResource.ValidateResourceId(id);
-            return new ContainerServiceFleetGateResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerServiceFleetMemberResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerServiceFleetMemberResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceFleetMemberResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ContainerServiceFleetMemberResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ContainerServiceFleetMemberResource"/> object. </returns>
         public virtual ContainerServiceFleetMemberResource GetContainerServiceFleetMemberResource(ResourceIdentifier id)
@@ -82,10 +44,25 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
             return new ContainerServiceFleetMemberResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerServiceFleetUpdateRunResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerServiceFleetUpdateRunResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceFleetUpdateRunResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ContainerServiceFleetManagedNamespaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerServiceFleetManagedNamespaceResource"/> object. </returns>
+        public virtual ContainerServiceFleetManagedNamespaceResource GetContainerServiceFleetManagedNamespaceResource(ResourceIdentifier id)
+        {
+            ContainerServiceFleetManagedNamespaceResource.ValidateResourceId(id);
+            return new ContainerServiceFleetManagedNamespaceResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerServiceFleetGateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerServiceFleetGateResource"/> object. </returns>
+        public virtual ContainerServiceFleetGateResource GetContainerServiceFleetGateResource(ResourceIdentifier id)
+        {
+            ContainerServiceFleetGateResource.ValidateResourceId(id);
+            return new ContainerServiceFleetGateResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerServiceFleetUpdateRunResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ContainerServiceFleetUpdateRunResource"/> object. </returns>
         public virtual ContainerServiceFleetUpdateRunResource GetContainerServiceFleetUpdateRunResource(ResourceIdentifier id)
@@ -94,16 +71,22 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
             return new ContainerServiceFleetUpdateRunResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="FleetUpdateStrategyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FleetUpdateStrategyResource.CreateResourceIdentifier" /> to create a <see cref="FleetUpdateStrategyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="FleetUpdateStrategyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FleetUpdateStrategyResource"/> object. </returns>
         public virtual FleetUpdateStrategyResource GetFleetUpdateStrategyResource(ResourceIdentifier id)
         {
             FleetUpdateStrategyResource.ValidateResourceId(id);
             return new FleetUpdateStrategyResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AutoUpgradeProfileResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AutoUpgradeProfileResource"/> object. </returns>
+        public virtual AutoUpgradeProfileResource GetAutoUpgradeProfileResource(ResourceIdentifier id)
+        {
+            AutoUpgradeProfileResource.ValidateResourceId(id);
+            return new AutoUpgradeProfileResource(Client, id);
         }
     }
 }

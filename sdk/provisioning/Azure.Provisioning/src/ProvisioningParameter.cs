@@ -54,8 +54,10 @@ public class ProvisioningParameter : ProvisioningVariable
                 BicepIdentifier,
                 BicepType,
                 ((IBicepValue)Value).Kind == BicepValueKind.Unset ? null : Value.Compile());
-        if (IsSecure) { statement = statement.Decorate("secure"); }
-        if (Description is not null) { statement = statement.Decorate("description", BicepSyntax.Value(Description)); }
+        if (IsSecure)
+        { statement = statement.Decorate("secure"); }
+        if (Description is not null)
+        { statement = statement.Decorate("description", BicepSyntax.Value(Description)); }
         yield return statement;
     }
 }

@@ -17,6 +17,46 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
     /// <summary> The vault specific details required if using SQL authentication to connect to a target. </summary>
     public partial class TargetAuthenticationVaultSecret : IJsonModel<TargetAuthenticationVaultSecret>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TargetAuthenticationVaultSecret PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TargetAuthenticationVaultSecret>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTargetAuthenticationVaultSecret(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TargetAuthenticationVaultSecret)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TargetAuthenticationVaultSecret>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDatabaseWatcherContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TargetAuthenticationVaultSecret)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TargetAuthenticationVaultSecret>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TargetAuthenticationVaultSecret IPersistableModel<TargetAuthenticationVaultSecret>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TargetAuthenticationVaultSecret>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TargetAuthenticationVaultSecret>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -124,45 +164,5 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             }
             return new TargetAuthenticationVaultSecret(akvResourceId, akvTargetUser, akvTargetPassword, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TargetAuthenticationVaultSecret>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TargetAuthenticationVaultSecret>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDatabaseWatcherContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TargetAuthenticationVaultSecret)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TargetAuthenticationVaultSecret IPersistableModel<TargetAuthenticationVaultSecret>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TargetAuthenticationVaultSecret PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TargetAuthenticationVaultSecret>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTargetAuthenticationVaultSecret(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TargetAuthenticationVaultSecret)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TargetAuthenticationVaultSecret>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

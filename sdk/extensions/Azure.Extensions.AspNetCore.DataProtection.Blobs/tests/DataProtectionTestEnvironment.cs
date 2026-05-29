@@ -9,7 +9,7 @@ using Azure.Storage.Blobs;
 
 namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
 {
-    public class DataProtectionTestEnvironment: TestEnvironment
+    public class DataProtectionTestEnvironment : TestEnvironment
     {
         public Uri BlobStorageEndpoint => new(GetVariable("BLOB_STORAGE_ENDPOINT"));
         public BlobClientOptions.ServiceVersion StorageVersion => BlobClientOptions.ServiceVersion.V2019_02_02;
@@ -33,7 +33,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
 
                 return await base.IsEnvironmentReadyAsync();
             }
-            catch (RequestFailedException e) when (e is { Status: 403, ErrorCode: "AuthorizationPermissionMismatch"})
+            catch (RequestFailedException e) when (e is { Status: 403, ErrorCode: "AuthorizationPermissionMismatch" })
             {
                 return false;
             }

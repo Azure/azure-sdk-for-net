@@ -21,12 +21,8 @@ namespace Azure.AI.Projects
         /// <param name="client"> The AIProjectIndexesOperations client used to send requests. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public AIProjectIndexesOperationsGetIndexVersionsAsyncCollectionResultOfT(AIProjectIndexesOperations client, string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
             _client = client;
             _name = name;
             _options = options;
@@ -40,7 +36,7 @@ namespace Azure.AI.Projects
             Uri nextPageUri = null;
             while (true)
             {
-                ClientResult result = ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
+                ClientResult result = await GetNextResponseAsync(message).ConfigureAwait(false);
                 yield return result;
 
                 nextPageUri = ((PagedIndex)result).NextLink;
@@ -60,7 +56,7 @@ namespace Azure.AI.Projects
             Uri nextPage = ((PagedIndex)page).NextLink;
             if (nextPage != null)
             {
-                return ContinuationToken.FromBytes(BinaryData.FromString(nextPage.AbsoluteUri));
+                return ContinuationToken.FromBytes(BinaryData.FromString(nextPage.IsAbsoluteUri ? nextPage.AbsoluteUri : nextPage.OriginalString));
             }
             else
             {
@@ -78,6 +74,13 @@ namespace Azure.AI.Projects
                 yield return item;
                 await Task.Yield();
             }
+        }
+
+        /// <summary> Sends the request in the pipeline message and returns the response. </summary>
+        /// <param name="message"> The pipeline message containing the request to send. </param>
+        private async ValueTask<ClientResult> GetNextResponseAsync(PipelineMessage message)
+        {
+            return ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
         }
     }
 }

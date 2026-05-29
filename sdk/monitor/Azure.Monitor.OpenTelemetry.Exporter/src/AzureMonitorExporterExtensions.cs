@@ -8,6 +8,7 @@ using System.Diagnostics;
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.GenAI;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
@@ -94,9 +95,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 sp.EnsureNoUseAzureMonitorExporterRegistrations();
 
+                builder.AddProcessor(new MainAgentAttributionSpanProcessor());
                 builder.AddProcessor(new CompositeProcessor<Activity>(new BaseProcessor<Activity>[]
                 {
-                    new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(exporterOptions)),
+                    new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(exporterOptions), exporterOptions),
                     new BatchActivityExportProcessor(new AzureMonitorTraceExporter(exporterOptions))
                 }));
             });
@@ -208,6 +210,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 ? new LogFilteringProcessor(exporter)
                 : new BatchLogRecordExportProcessor(exporter);
 
+            loggerOptions.AddProcessor(new MainAgentAttributionLogProcessor());
             return loggerOptions.AddProcessor(processor);
         }
 
@@ -277,9 +280,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 // TODO: Do we need provide an option to alter BatchExportLogRecordProcessorOptions?
                 var exporter = new AzureMonitorLogExporter(exporterOptions);
-                return exporterOptions.EnableTraceBasedLogsSampler
+                BaseProcessor<LogRecord> exportProcessor = exporterOptions.EnableTraceBasedLogsSampler
                     ? new LogFilteringProcessor(exporter)
                     : new BatchLogRecordExportProcessor(exporter);
+
+                return new CompositeProcessor<LogRecord>(new BaseProcessor<LogRecord>[]
+                {
+                    new MainAgentAttributionLogProcessor(),
+                    exportProcessor
+                });
             });
         }
     }

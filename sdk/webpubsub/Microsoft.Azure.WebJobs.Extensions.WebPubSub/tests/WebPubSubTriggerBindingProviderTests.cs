@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Triggers;
 using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using NUnit.Framework;
 
@@ -28,8 +29,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             _configuration["testhub"] = TestHub;
             var resolver = new DefaultNameResolver(_configuration);
             var mockDispater = new Mock<IWebPubSubTriggerDispatcher>(MockBehavior.Strict);
-            var config = new WebPubSubFunctionsOptions();
-            _provider = new WebPubSubTriggerBindingProvider(mockDispater.Object, resolver, config, null);
+            var options = new WebPubSubServiceAccessOptions();
+            var accessFactory = new WebPubSubServiceAccessFactory(_configuration, TestAzureComponentFactory.Instance);
+            _provider = new WebPubSubTriggerBindingProvider(mockDispater.Object, resolver, options, null, accessFactory, NullLogger.Instance);
         }
 
         [TestCase]
@@ -69,7 +71,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         }
 
         public static void TestFunc(
-            [WebPubSubTrigger("%testhub%", WebPubSubEventType.System, "testevent")]WebPubSubConnectionContext context)
+            [WebPubSubTrigger("%testhub%", WebPubSubEventType.System, "testevent")] WebPubSubConnectionContext context)
         {
         }
     }

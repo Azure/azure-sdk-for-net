@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,248 +15,407 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct TextTranslationSkillLanguage : IEquatable<TextTranslationSkillLanguage>
     {
         private readonly string _value;
+        /// <summary> Afrikaans. </summary>
+        private const string AfValue = "af";
+        /// <summary> Arabic. </summary>
+        private const string ArValue = "ar";
+        /// <summary> Bangla. </summary>
+        private const string BnValue = "bn";
+        /// <summary> Bosnian (Latin). </summary>
+        private const string BsValue = "bs";
+        /// <summary> Bulgarian. </summary>
+        private const string BgValue = "bg";
+        /// <summary> Cantonese (Traditional). </summary>
+        private const string YueValue = "yue";
+        /// <summary> Catalan. </summary>
+        private const string CaValue = "ca";
+        /// <summary> Chinese Simplified. </summary>
+        private const string ZhHansValue = "zh-Hans";
+        /// <summary> Chinese Traditional. </summary>
+        private const string ZhHantValue = "zh-Hant";
+        /// <summary> Croatian. </summary>
+        private const string HrValue = "hr";
+        /// <summary> Czech. </summary>
+        private const string CsValue = "cs";
+        /// <summary> Danish. </summary>
+        private const string DaValue = "da";
+        /// <summary> Dutch. </summary>
+        private const string NlValue = "nl";
+        /// <summary> English. </summary>
+        private const string EnValue = "en";
+        /// <summary> Estonian. </summary>
+        private const string EtValue = "et";
+        /// <summary> Fijian. </summary>
+        private const string FjValue = "fj";
+        /// <summary> Filipino. </summary>
+        private const string FilValue = "fil";
+        /// <summary> Finnish. </summary>
+        private const string FiValue = "fi";
+        /// <summary> French. </summary>
+        private const string FrValue = "fr";
+        /// <summary> German. </summary>
+        private const string DeValue = "de";
+        /// <summary> Greek. </summary>
+        private const string ElValue = "el";
+        /// <summary> Haitian Creole. </summary>
+        private const string HtValue = "ht";
+        /// <summary> Hebrew. </summary>
+        private const string HeValue = "he";
+        /// <summary> Hindi. </summary>
+        private const string HiValue = "hi";
+        /// <summary> Hmong Daw. </summary>
+        private const string MwwValue = "mww";
+        /// <summary> Hungarian. </summary>
+        private const string HuValue = "hu";
+        /// <summary> Icelandic. </summary>
+        private const string IsValue = "is";
+        /// <summary> Indonesian. </summary>
+        private const string IdValue = "id";
+        /// <summary> Italian. </summary>
+        private const string ItValue = "it";
+        /// <summary> Japanese. </summary>
+        private const string JaValue = "ja";
+        /// <summary> Kiswahili. </summary>
+        private const string SwValue = "sw";
+        /// <summary> Klingon. </summary>
+        private const string TlhValue = "tlh";
+        /// <summary> Klingon (Latin script). </summary>
+        private const string TlhLatnValue = "tlh-Latn";
+        /// <summary> Klingon (Klingon script). </summary>
+        private const string TlhPiqdValue = "tlh-Piqd";
+        /// <summary> Korean. </summary>
+        private const string KoValue = "ko";
+        /// <summary> Latvian. </summary>
+        private const string LvValue = "lv";
+        /// <summary> Lithuanian. </summary>
+        private const string LtValue = "lt";
+        /// <summary> Malagasy. </summary>
+        private const string MgValue = "mg";
+        /// <summary> Malay. </summary>
+        private const string MsValue = "ms";
+        /// <summary> Maltese. </summary>
+        private const string MtValue = "mt";
+        /// <summary> Norwegian. </summary>
+        private const string NbValue = "nb";
+        /// <summary> Persian. </summary>
+        private const string FaValue = "fa";
+        /// <summary> Polish. </summary>
+        private const string PlValue = "pl";
+        /// <summary> Portuguese. </summary>
+        private const string PtValue = "pt";
+        /// <summary> Portuguese (Brazil). </summary>
+        private const string PtBrValue = "pt-br";
+        /// <summary> Portuguese (Portugal). </summary>
+        private const string PtPTValue = "pt-PT";
+        /// <summary> Queretaro Otomi. </summary>
+        private const string OtqValue = "otq";
+        /// <summary> Romanian. </summary>
+        private const string RoValue = "ro";
+        /// <summary> Russian. </summary>
+        private const string RuValue = "ru";
+        /// <summary> Samoan. </summary>
+        private const string SmValue = "sm";
+        /// <summary> Serbian (Cyrillic). </summary>
+        private const string SrCyrlValue = "sr-Cyrl";
+        /// <summary> Serbian (Latin). </summary>
+        private const string SrLatnValue = "sr-Latn";
+        /// <summary> Slovak. </summary>
+        private const string SkValue = "sk";
+        /// <summary> Slovenian. </summary>
+        private const string SlValue = "sl";
+        /// <summary> Spanish. </summary>
+        private const string EsValue = "es";
+        /// <summary> Swedish. </summary>
+        private const string SvValue = "sv";
+        /// <summary> Tahitian. </summary>
+        private const string TyValue = "ty";
+        /// <summary> Tamil. </summary>
+        private const string TaValue = "ta";
+        /// <summary> Telugu. </summary>
+        private const string TeValue = "te";
+        /// <summary> Thai. </summary>
+        private const string ThValue = "th";
+        /// <summary> Tongan. </summary>
+        private const string ToValue = "to";
+        /// <summary> Turkish. </summary>
+        private const string TrValue = "tr";
+        /// <summary> Ukrainian. </summary>
+        private const string UkValue = "uk";
+        /// <summary> Urdu. </summary>
+        private const string UrValue = "ur";
+        /// <summary> Vietnamese. </summary>
+        private const string ViValue = "vi";
+        /// <summary> Welsh. </summary>
+        private const string CyValue = "cy";
+        /// <summary> Yucatec Maya. </summary>
+        private const string YuaValue = "yua";
+        /// <summary> Irish. </summary>
+        private const string GaValue = "ga";
+        /// <summary> Kannada. </summary>
+        private const string KnValue = "kn";
+        /// <summary> Maori. </summary>
+        private const string MiValue = "mi";
+        /// <summary> Malayalam. </summary>
+        private const string MlValue = "ml";
+        /// <summary> Punjabi. </summary>
+        private const string PaValue = "pa";
 
         /// <summary> Initializes a new instance of <see cref="TextTranslationSkillLanguage"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TextTranslationSkillLanguage(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AfValue = "af";
-        private const string ArValue = "ar";
-        private const string BnValue = "bn";
-        private const string BsValue = "bs";
-        private const string BgValue = "bg";
-        private const string YueValue = "yue";
-        private const string CaValue = "ca";
-        private const string ZhHansValue = "zh-Hans";
-        private const string ZhHantValue = "zh-Hant";
-        private const string HrValue = "hr";
-        private const string CsValue = "cs";
-        private const string DaValue = "da";
-        private const string NlValue = "nl";
-        private const string EnValue = "en";
-        private const string EtValue = "et";
-        private const string FjValue = "fj";
-        private const string FilValue = "fil";
-        private const string FiValue = "fi";
-        private const string FrValue = "fr";
-        private const string DeValue = "de";
-        private const string ElValue = "el";
-        private const string HtValue = "ht";
-        private const string HeValue = "he";
-        private const string HiValue = "hi";
-        private const string MwwValue = "mww";
-        private const string HuValue = "hu";
-        private const string IsValue = "is";
-        private const string IdValue = "id";
-        private const string ItValue = "it";
-        private const string JaValue = "ja";
-        private const string SwValue = "sw";
-        private const string TlhValue = "tlh";
-        private const string TlhLatnValue = "tlh-Latn";
-        private const string TlhPiqdValue = "tlh-Piqd";
-        private const string KoValue = "ko";
-        private const string LvValue = "lv";
-        private const string LtValue = "lt";
-        private const string MgValue = "mg";
-        private const string MsValue = "ms";
-        private const string MtValue = "mt";
-        private const string NbValue = "nb";
-        private const string FaValue = "fa";
-        private const string PlValue = "pl";
-        private const string PtValue = "pt";
-        private const string PtBrValue = "pt-br";
-        private const string PtPTValue = "pt-PT";
-        private const string OtqValue = "otq";
-        private const string RoValue = "ro";
-        private const string RuValue = "ru";
-        private const string SmValue = "sm";
-        private const string SrCyrlValue = "sr-Cyrl";
-        private const string SrLatnValue = "sr-Latn";
-        private const string SkValue = "sk";
-        private const string SlValue = "sl";
-        private const string EsValue = "es";
-        private const string SvValue = "sv";
-        private const string TyValue = "ty";
-        private const string TaValue = "ta";
-        private const string TeValue = "te";
-        private const string ThValue = "th";
-        private const string ToValue = "to";
-        private const string TrValue = "tr";
-        private const string UkValue = "uk";
-        private const string UrValue = "ur";
-        private const string ViValue = "vi";
-        private const string CyValue = "cy";
-        private const string YuaValue = "yua";
-        private const string GaValue = "ga";
-        private const string KnValue = "kn";
-        private const string MiValue = "mi";
-        private const string MlValue = "ml";
-        private const string PaValue = "pa";
+            _value = value;
+        }
 
         /// <summary> Afrikaans. </summary>
         public static TextTranslationSkillLanguage Af { get; } = new TextTranslationSkillLanguage(AfValue);
+
         /// <summary> Arabic. </summary>
         public static TextTranslationSkillLanguage Ar { get; } = new TextTranslationSkillLanguage(ArValue);
+
         /// <summary> Bangla. </summary>
         public static TextTranslationSkillLanguage Bn { get; } = new TextTranslationSkillLanguage(BnValue);
+
         /// <summary> Bosnian (Latin). </summary>
         public static TextTranslationSkillLanguage Bs { get; } = new TextTranslationSkillLanguage(BsValue);
+
         /// <summary> Bulgarian. </summary>
         public static TextTranslationSkillLanguage Bg { get; } = new TextTranslationSkillLanguage(BgValue);
+
         /// <summary> Cantonese (Traditional). </summary>
         public static TextTranslationSkillLanguage Yue { get; } = new TextTranslationSkillLanguage(YueValue);
+
         /// <summary> Catalan. </summary>
         public static TextTranslationSkillLanguage Ca { get; } = new TextTranslationSkillLanguage(CaValue);
+
         /// <summary> Chinese Simplified. </summary>
         public static TextTranslationSkillLanguage ZhHans { get; } = new TextTranslationSkillLanguage(ZhHansValue);
+
         /// <summary> Chinese Traditional. </summary>
         public static TextTranslationSkillLanguage ZhHant { get; } = new TextTranslationSkillLanguage(ZhHantValue);
+
         /// <summary> Croatian. </summary>
         public static TextTranslationSkillLanguage Hr { get; } = new TextTranslationSkillLanguage(HrValue);
+
         /// <summary> Czech. </summary>
         public static TextTranslationSkillLanguage Cs { get; } = new TextTranslationSkillLanguage(CsValue);
+
         /// <summary> Danish. </summary>
         public static TextTranslationSkillLanguage Da { get; } = new TextTranslationSkillLanguage(DaValue);
+
         /// <summary> Dutch. </summary>
         public static TextTranslationSkillLanguage Nl { get; } = new TextTranslationSkillLanguage(NlValue);
+
         /// <summary> English. </summary>
         public static TextTranslationSkillLanguage En { get; } = new TextTranslationSkillLanguage(EnValue);
+
         /// <summary> Estonian. </summary>
         public static TextTranslationSkillLanguage Et { get; } = new TextTranslationSkillLanguage(EtValue);
+
         /// <summary> Fijian. </summary>
         public static TextTranslationSkillLanguage Fj { get; } = new TextTranslationSkillLanguage(FjValue);
+
         /// <summary> Filipino. </summary>
         public static TextTranslationSkillLanguage Fil { get; } = new TextTranslationSkillLanguage(FilValue);
+
         /// <summary> Finnish. </summary>
         public static TextTranslationSkillLanguage Fi { get; } = new TextTranslationSkillLanguage(FiValue);
+
         /// <summary> French. </summary>
         public static TextTranslationSkillLanguage Fr { get; } = new TextTranslationSkillLanguage(FrValue);
+
         /// <summary> German. </summary>
         public static TextTranslationSkillLanguage De { get; } = new TextTranslationSkillLanguage(DeValue);
+
         /// <summary> Greek. </summary>
         public static TextTranslationSkillLanguage El { get; } = new TextTranslationSkillLanguage(ElValue);
+
         /// <summary> Haitian Creole. </summary>
         public static TextTranslationSkillLanguage Ht { get; } = new TextTranslationSkillLanguage(HtValue);
+
         /// <summary> Hebrew. </summary>
         public static TextTranslationSkillLanguage He { get; } = new TextTranslationSkillLanguage(HeValue);
+
         /// <summary> Hindi. </summary>
         public static TextTranslationSkillLanguage Hi { get; } = new TextTranslationSkillLanguage(HiValue);
+
         /// <summary> Hmong Daw. </summary>
         public static TextTranslationSkillLanguage Mww { get; } = new TextTranslationSkillLanguage(MwwValue);
+
         /// <summary> Hungarian. </summary>
         public static TextTranslationSkillLanguage Hu { get; } = new TextTranslationSkillLanguage(HuValue);
+
         /// <summary> Icelandic. </summary>
         public static TextTranslationSkillLanguage Is { get; } = new TextTranslationSkillLanguage(IsValue);
+
         /// <summary> Indonesian. </summary>
         public static TextTranslationSkillLanguage Id { get; } = new TextTranslationSkillLanguage(IdValue);
+
         /// <summary> Italian. </summary>
         public static TextTranslationSkillLanguage It { get; } = new TextTranslationSkillLanguage(ItValue);
+
         /// <summary> Japanese. </summary>
         public static TextTranslationSkillLanguage Ja { get; } = new TextTranslationSkillLanguage(JaValue);
+
         /// <summary> Kiswahili. </summary>
         public static TextTranslationSkillLanguage Sw { get; } = new TextTranslationSkillLanguage(SwValue);
+
         /// <summary> Klingon. </summary>
         public static TextTranslationSkillLanguage Tlh { get; } = new TextTranslationSkillLanguage(TlhValue);
+
         /// <summary> Klingon (Latin script). </summary>
         public static TextTranslationSkillLanguage TlhLatn { get; } = new TextTranslationSkillLanguage(TlhLatnValue);
+
         /// <summary> Klingon (Klingon script). </summary>
         public static TextTranslationSkillLanguage TlhPiqd { get; } = new TextTranslationSkillLanguage(TlhPiqdValue);
+
         /// <summary> Korean. </summary>
         public static TextTranslationSkillLanguage Ko { get; } = new TextTranslationSkillLanguage(KoValue);
+
         /// <summary> Latvian. </summary>
         public static TextTranslationSkillLanguage Lv { get; } = new TextTranslationSkillLanguage(LvValue);
+
         /// <summary> Lithuanian. </summary>
         public static TextTranslationSkillLanguage Lt { get; } = new TextTranslationSkillLanguage(LtValue);
+
         /// <summary> Malagasy. </summary>
         public static TextTranslationSkillLanguage Mg { get; } = new TextTranslationSkillLanguage(MgValue);
+
         /// <summary> Malay. </summary>
         public static TextTranslationSkillLanguage Ms { get; } = new TextTranslationSkillLanguage(MsValue);
+
         /// <summary> Maltese. </summary>
         public static TextTranslationSkillLanguage Mt { get; } = new TextTranslationSkillLanguage(MtValue);
+
         /// <summary> Norwegian. </summary>
         public static TextTranslationSkillLanguage Nb { get; } = new TextTranslationSkillLanguage(NbValue);
+
         /// <summary> Persian. </summary>
         public static TextTranslationSkillLanguage Fa { get; } = new TextTranslationSkillLanguage(FaValue);
+
         /// <summary> Polish. </summary>
         public static TextTranslationSkillLanguage Pl { get; } = new TextTranslationSkillLanguage(PlValue);
+
         /// <summary> Portuguese. </summary>
         public static TextTranslationSkillLanguage Pt { get; } = new TextTranslationSkillLanguage(PtValue);
+
         /// <summary> Portuguese (Brazil). </summary>
         public static TextTranslationSkillLanguage PtBr { get; } = new TextTranslationSkillLanguage(PtBrValue);
+
         /// <summary> Portuguese (Portugal). </summary>
         public static TextTranslationSkillLanguage PtPT { get; } = new TextTranslationSkillLanguage(PtPTValue);
+
         /// <summary> Queretaro Otomi. </summary>
         public static TextTranslationSkillLanguage Otq { get; } = new TextTranslationSkillLanguage(OtqValue);
+
         /// <summary> Romanian. </summary>
         public static TextTranslationSkillLanguage Ro { get; } = new TextTranslationSkillLanguage(RoValue);
+
         /// <summary> Russian. </summary>
         public static TextTranslationSkillLanguage Ru { get; } = new TextTranslationSkillLanguage(RuValue);
+
         /// <summary> Samoan. </summary>
         public static TextTranslationSkillLanguage Sm { get; } = new TextTranslationSkillLanguage(SmValue);
+
         /// <summary> Serbian (Cyrillic). </summary>
         public static TextTranslationSkillLanguage SrCyrl { get; } = new TextTranslationSkillLanguage(SrCyrlValue);
+
         /// <summary> Serbian (Latin). </summary>
         public static TextTranslationSkillLanguage SrLatn { get; } = new TextTranslationSkillLanguage(SrLatnValue);
+
         /// <summary> Slovak. </summary>
         public static TextTranslationSkillLanguage Sk { get; } = new TextTranslationSkillLanguage(SkValue);
+
         /// <summary> Slovenian. </summary>
         public static TextTranslationSkillLanguage Sl { get; } = new TextTranslationSkillLanguage(SlValue);
+
         /// <summary> Spanish. </summary>
         public static TextTranslationSkillLanguage Es { get; } = new TextTranslationSkillLanguage(EsValue);
+
         /// <summary> Swedish. </summary>
         public static TextTranslationSkillLanguage Sv { get; } = new TextTranslationSkillLanguage(SvValue);
+
         /// <summary> Tahitian. </summary>
         public static TextTranslationSkillLanguage Ty { get; } = new TextTranslationSkillLanguage(TyValue);
+
         /// <summary> Tamil. </summary>
         public static TextTranslationSkillLanguage Ta { get; } = new TextTranslationSkillLanguage(TaValue);
+
         /// <summary> Telugu. </summary>
         public static TextTranslationSkillLanguage Te { get; } = new TextTranslationSkillLanguage(TeValue);
+
         /// <summary> Thai. </summary>
         public static TextTranslationSkillLanguage Th { get; } = new TextTranslationSkillLanguage(ThValue);
+
         /// <summary> Tongan. </summary>
         public static TextTranslationSkillLanguage To { get; } = new TextTranslationSkillLanguage(ToValue);
+
         /// <summary> Turkish. </summary>
         public static TextTranslationSkillLanguage Tr { get; } = new TextTranslationSkillLanguage(TrValue);
+
         /// <summary> Ukrainian. </summary>
         public static TextTranslationSkillLanguage Uk { get; } = new TextTranslationSkillLanguage(UkValue);
+
         /// <summary> Urdu. </summary>
         public static TextTranslationSkillLanguage Ur { get; } = new TextTranslationSkillLanguage(UrValue);
+
         /// <summary> Vietnamese. </summary>
         public static TextTranslationSkillLanguage Vi { get; } = new TextTranslationSkillLanguage(ViValue);
+
         /// <summary> Welsh. </summary>
         public static TextTranslationSkillLanguage Cy { get; } = new TextTranslationSkillLanguage(CyValue);
+
         /// <summary> Yucatec Maya. </summary>
         public static TextTranslationSkillLanguage Yua { get; } = new TextTranslationSkillLanguage(YuaValue);
+
         /// <summary> Irish. </summary>
         public static TextTranslationSkillLanguage Ga { get; } = new TextTranslationSkillLanguage(GaValue);
+
         /// <summary> Kannada. </summary>
         public static TextTranslationSkillLanguage Kn { get; } = new TextTranslationSkillLanguage(KnValue);
+
         /// <summary> Maori. </summary>
         public static TextTranslationSkillLanguage Mi { get; } = new TextTranslationSkillLanguage(MiValue);
+
         /// <summary> Malayalam. </summary>
         public static TextTranslationSkillLanguage Ml { get; } = new TextTranslationSkillLanguage(MlValue);
+
         /// <summary> Punjabi. </summary>
         public static TextTranslationSkillLanguage Pa { get; } = new TextTranslationSkillLanguage(PaValue);
+
         /// <summary> Determines if two <see cref="TextTranslationSkillLanguage"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TextTranslationSkillLanguage left, TextTranslationSkillLanguage right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TextTranslationSkillLanguage"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TextTranslationSkillLanguage left, TextTranslationSkillLanguage right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TextTranslationSkillLanguage"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TextTranslationSkillLanguage"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TextTranslationSkillLanguage(string value) => new TextTranslationSkillLanguage(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TextTranslationSkillLanguage"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TextTranslationSkillLanguage?(string value) => value == null ? null : new TextTranslationSkillLanguage(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TextTranslationSkillLanguage other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TextTranslationSkillLanguage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

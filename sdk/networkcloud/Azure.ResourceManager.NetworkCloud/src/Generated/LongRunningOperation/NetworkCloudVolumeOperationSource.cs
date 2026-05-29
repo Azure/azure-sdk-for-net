@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    internal class NetworkCloudVolumeOperationSource : IOperationSource<NetworkCloudVolumeResource>
+    /// <summary></summary>
+    internal partial class NetworkCloudVolumeOperationSource : IOperationSource<NetworkCloudVolumeResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal NetworkCloudVolumeOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         NetworkCloudVolumeResource IOperationSource<NetworkCloudVolumeResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkCloudVolumeData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NetworkCloudVolumeData data = NetworkCloudVolumeData.DeserializeNetworkCloudVolumeData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NetworkCloudVolumeResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NetworkCloudVolumeResource> IOperationSource<NetworkCloudVolumeResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkCloudVolumeData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
-            return await Task.FromResult(new NetworkCloudVolumeResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NetworkCloudVolumeData data = NetworkCloudVolumeData.DeserializeNetworkCloudVolumeData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkCloudVolumeResource(_client, data);
         }
     }
 }

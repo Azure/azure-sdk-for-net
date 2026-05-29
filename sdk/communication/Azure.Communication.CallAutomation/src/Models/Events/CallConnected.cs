@@ -10,7 +10,7 @@ namespace Azure.Communication.CallAutomation
     /// The call connected event.
     /// </summary>
     [CodeGenModel("CallConnected", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    public partial class CallConnected: CallAutomationEventBase
+    public partial class CallConnected : CallAutomationEventBase
     {
         /// <summary>
         /// Deserialize <see cref="CallConnected"/> event.

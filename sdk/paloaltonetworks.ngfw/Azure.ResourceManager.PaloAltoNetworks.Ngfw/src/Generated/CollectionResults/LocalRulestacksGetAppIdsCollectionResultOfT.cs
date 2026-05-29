@@ -23,8 +23,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         private readonly string _appIdVersion;
         private readonly string _appPrefix;
         private readonly string _skip;
-        private readonly int? _top;
+        private readonly int? _maxCount;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of LocalRulestacksGetAppIdsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The LocalRulestacks client used to send requests. </param>
@@ -34,16 +35,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="appIdVersion"></param>
         /// <param name="appPrefix"></param>
         /// <param name="skip"></param>
-        /// <param name="top"></param>
+        /// <param name="maxCount"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="localRulestackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="localRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public LocalRulestacksGetAppIdsCollectionResultOfT(LocalRulestacks client, string subscriptionId, string resourceGroupName, string localRulestackName, string appIdVersion, string appPrefix, string skip, int? top, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public LocalRulestacksGetAppIdsCollectionResultOfT(LocalRulestacks client, string subscriptionId, string resourceGroupName, string localRulestackName, string appIdVersion, string appPrefix, string skip, int? maxCount, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
-
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
@@ -51,8 +47,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             _appIdVersion = appIdVersion;
             _appPrefix = appPrefix;
             _skip = skip;
-            _top = top;
+            _maxCount = maxCount;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of LocalRulestacksGetAppIdsCollectionResultOfT as an enumerable collection. </summary>
@@ -70,13 +67,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     yield break;
                 }
                 RulestackAppIdListResult result = RulestackAppIdListResult.FromResponse(response);
-                yield return Page<string>.FromValues((IReadOnlyList<string>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<string>.FromValues((IReadOnlyList<string>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
-                if (nextPageString == null)
+                if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString);
+                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 
@@ -85,8 +82,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAppIdsRequest(nextLink, _subscriptionId, _resourceGroupName, _localRulestackName, _appIdVersion, _appPrefix, _skip, _top, _context) : _client.CreateGetAppIdsRequest(_subscriptionId, _resourceGroupName, _localRulestackName, _appIdVersion, _appPrefix, _skip, _top, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("LocalRulestackResource.GetAppIds");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAppIdsRequest(nextLink, _subscriptionId, _resourceGroupName, _localRulestackName, _appIdVersion, _appPrefix, _skip, _maxCount, _context) : _client.CreateGetAppIdsRequest(_subscriptionId, _resourceGroupName, _localRulestackName, _appIdVersion, _appPrefix, _skip, _maxCount, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

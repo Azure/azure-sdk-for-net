@@ -19,7 +19,7 @@ using Azure.ResourceManager.Resources;
 // temporary: moving the whole class here because we want to rename the GetAll and GetAllAsync which is returning resource data to GetAllData and GetAllDataAsync, but we cannot do that using configuration
 // also we want this class no longer implements IEnumerable or IAsyncEnumerable, therefore we made this customization.
 // we could remove all the things here once the polymorphic resource change is merged, and hide the GetAllData and GetAllDataAsync methods.
-[assembly:CodeGenSuppressType("MarketplaceAgreementCollection")]
+[assembly: CodeGenSuppressType("MarketplaceAgreementCollection")]
 namespace Azure.ResourceManager.MarketplaceOrdering
 {
     /// <summary>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             _marketplaceAgreementsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MarketplaceOrdering", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _marketplaceAgreementsRestClient = new MarketplaceAgreementsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

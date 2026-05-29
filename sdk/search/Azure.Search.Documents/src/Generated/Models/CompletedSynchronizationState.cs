@@ -8,42 +8,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Indexes.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Represents the completed state of the last synchronization. </summary>
     public partial class CompletedSynchronizationState
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CompletedSynchronizationState"/>. </summary>
         /// <param name="startTime"> The start time of the last completed synchronization. </param>
@@ -51,7 +22,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="itemsUpdatesProcessed"> The number of item updates successfully processed in the last synchronization. </param>
         /// <param name="itemsUpdatesFailed"> The number of item updates that failed in the last synchronization. </param>
         /// <param name="itemsSkipped"> The number of items skipped in the last synchronization. </param>
-        internal CompletedSynchronizationState(DateTimeOffset startTime, DateTimeOffset endTime, int itemsUpdatesProcessed, int itemsUpdatesFailed, int itemsSkipped)
+        public CompletedSynchronizationState(DateTimeOffset startTime, DateTimeOffset endTime, int itemsUpdatesProcessed, int itemsUpdatesFailed, int itemsSkipped)
         {
             StartTime = startTime;
             EndTime = endTime;
@@ -66,31 +37,30 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="itemsUpdatesProcessed"> The number of item updates successfully processed in the last synchronization. </param>
         /// <param name="itemsUpdatesFailed"> The number of item updates that failed in the last synchronization. </param>
         /// <param name="itemsSkipped"> The number of items skipped in the last synchronization. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CompletedSynchronizationState(DateTimeOffset startTime, DateTimeOffset endTime, int itemsUpdatesProcessed, int itemsUpdatesFailed, int itemsSkipped, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CompletedSynchronizationState(DateTimeOffset startTime, DateTimeOffset endTime, int itemsUpdatesProcessed, int itemsUpdatesFailed, int itemsSkipped, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartTime = startTime;
             EndTime = endTime;
             ItemsUpdatesProcessed = itemsUpdatesProcessed;
             ItemsUpdatesFailed = itemsUpdatesFailed;
             ItemsSkipped = itemsSkipped;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CompletedSynchronizationState"/> for deserialization. </summary>
-        internal CompletedSynchronizationState()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The start time of the last completed synchronization. </summary>
-        public DateTimeOffset StartTime { get; }
+        public DateTimeOffset StartTime { get; set; }
+
         /// <summary> The end time of the last completed synchronization. </summary>
-        public DateTimeOffset EndTime { get; }
+        public DateTimeOffset EndTime { get; set; }
+
         /// <summary> The number of item updates successfully processed in the last synchronization. </summary>
-        public int ItemsUpdatesProcessed { get; }
+        public int ItemsUpdatesProcessed { get; set; }
+
         /// <summary> The number of item updates that failed in the last synchronization. </summary>
-        public int ItemsUpdatesFailed { get; }
+        public int ItemsUpdatesFailed { get; set; }
+
         /// <summary> The number of items skipped in the last synchronization. </summary>
-        public int ItemsSkipped { get; }
+        public int ItemsSkipped { get; set; }
     }
 }

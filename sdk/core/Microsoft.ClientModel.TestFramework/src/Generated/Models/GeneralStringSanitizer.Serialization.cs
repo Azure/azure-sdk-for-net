@@ -14,7 +14,7 @@ using Microsoft.ClientModel.TestFramework;
 namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 {
     /// <summary> The GeneralStringSanitizer. </summary>
-    public partial class GeneralStringSanitizer : IJsonModel<GeneralStringSanitizer>
+    public partial class GeneralStringSanitizer : SanitizerAddition, IJsonModel<GeneralStringSanitizer>
     {
         /// <summary> Initializes a new instance of <see cref="GeneralStringSanitizer"/> for deserialization. </summary>
         internal GeneralStringSanitizer()
@@ -120,7 +120,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeGeneralStringSanitizer(document.RootElement, options);
                     }

@@ -11,11 +11,13 @@
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <IncludeAutorestDependency>false</IncludeAutorestDependency>
     <AotCompatOptOut>true</AotCompatOptOut>
+    <NoWarn>$(NoWarn);CS1574</NoWarn>
   </PropertyGroup>
 
     <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
   <ItemGroup>

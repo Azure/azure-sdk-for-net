@@ -35,6 +35,7 @@ import "./sharedparamrepro.tsp";
 import "./discriminatedextensionresource.tsp";
 import "./inherited-flatten-grandparent.tsp";
 import "./basetype-cycle-proxy-resource.tsp";
+import "./routedoperations.tsp";
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 using Azure.ResourceManager;
@@ -92,6 +93,15 @@ namespace MgmtTypeSpec {
   // ManagedServiceIdentityType in Legacy conflicts with CommonTypes.ManagedServiceIdentityType.
   @@clientName(Azure.ResourceManager.Legacy.ExtendedLocationOptional, "ExtendedLocationOptionalModel", "csharp");
   @@clientName(Azure.ResourceManager.Legacy.ManagedServiceIdentityType, "ManagedServiceIdentityTypeV4", "csharp");
+
+  // Verify that resource update model auto-rename respects user-provided @@clientName.
+  // Without this decorator, JobResourceUpdateParameter would be auto-renamed to JobResourcePatch.
+  @@clientName(JobResourceUpdateParameter, "JobResourceCustomUpdate", "csharp");
+
+  // Verify that subscription-extension list method auto-rename respects user-provided @@clientName.
+  // Without this decorator, Zoos.listBySubscription would be auto-renamed to GetZoosAsync/GetZoos
+  // on MockableSubscriptionResource (via GetExtensionOperationMethodName).
+  @@clientName(Zoos.listBySubscription, "GetZoosCustom", "csharp");
 }
 
 // We define this model here to test if the generated code would be replaced by Azure.ResourceManager.Models.SubResource and WritableSubResource via alternateType

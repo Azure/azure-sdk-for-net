@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.ContainerOrchestratorRuntime;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 {
     /// <summary> Details of the LoadBalancer. </summary>
     public partial class ConnectedClusterLoadBalancerProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConnectedClusterLoadBalancerProperties"/>. </summary>
         /// <param name="addresses"> IP Range. </param>
@@ -66,30 +38,29 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// <param name="advertiseMode"> Advertise Mode. </param>
         /// <param name="bgpPeers"> The list of BGP peers it should advertise to. Null or empty means to advertise to all peers. </param>
         /// <param name="provisioningState"> Resource provision state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedClusterLoadBalancerProperties(IList<string> addresses, IDictionary<string, string> serviceSelector, AdvertiseMode advertiseMode, IList<string> bgpPeers, ContainerOrchestratorProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectedClusterLoadBalancerProperties(IList<string> addresses, IDictionary<string, string> serviceSelector, AdvertiseMode advertiseMode, IList<string> bgpPeers, ContainerOrchestratorProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Addresses = addresses;
             ServiceSelector = serviceSelector;
             AdvertiseMode = advertiseMode;
             BgpPeers = bgpPeers;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ConnectedClusterLoadBalancerProperties"/> for deserialization. </summary>
-        internal ConnectedClusterLoadBalancerProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> IP Range. </summary>
         public IList<string> Addresses { get; }
+
         /// <summary> A dynamic label mapping to select related services. For instance, if you want to create a load balancer only for services with label "a=b", then please specify {"a": "b"} in the field. </summary>
         public IDictionary<string, string> ServiceSelector { get; }
+
         /// <summary> Advertise Mode. </summary>
         public AdvertiseMode AdvertiseMode { get; set; }
+
         /// <summary> The list of BGP peers it should advertise to. Null or empty means to advertise to all peers. </summary>
         public IList<string> BgpPeers { get; }
+
         /// <summary> Resource provision state. </summary>
         public ContainerOrchestratorProvisioningState? ProvisioningState { get; }
     }

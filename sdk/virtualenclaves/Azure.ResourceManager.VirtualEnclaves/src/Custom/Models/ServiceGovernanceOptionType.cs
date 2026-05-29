@@ -3,14 +3,12 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
     /// <summary>
-    /// Renamed to ServiceGovernanceOptionType.
+    /// ServiceGovernanceOptionType.
     /// </summary>
-    [CodeGenModel("GovernedServiceItemOption")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("GovernedServiceItemOption")]
     public readonly partial struct ServiceGovernanceOptionType
     {
     }

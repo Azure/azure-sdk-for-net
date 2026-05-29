@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -14,22 +16,20 @@ namespace Azure.ResourceManager.DataBox.Models
     public partial class DataBoxJobSecrets : JobSecrets
     {
         /// <summary> Initializes a new instance of <see cref="DataBoxJobSecrets"/>. </summary>
-        internal DataBoxJobSecrets()
+        internal DataBoxJobSecrets() : base(DataBoxOrderType.DataBox)
         {
             PodSecrets = new ChangeTrackingList<DataBoxSecret>();
-            JobSecretsType = DataBoxOrderType.DataBox;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxJobSecrets"/>. </summary>
         /// <param name="jobSecretsType"> Used to indicate what type of job secrets object. </param>
         /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="podSecrets"> Contains the list of secret objects for a job. </param>
-        internal DataBoxJobSecrets(DataBoxOrderType jobSecretsType, DataCenterAccessSecurityCode dataCenterAccessSecurityCode, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<DataBoxSecret> podSecrets) : base(jobSecretsType, dataCenterAccessSecurityCode, error, serializedAdditionalRawData)
+        internal DataBoxJobSecrets(DataBoxOrderType jobSecretsType, DataCenterAccessSecurityCode dataCenterAccessSecurityCode, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<DataBoxSecret> podSecrets) : base(jobSecretsType, dataCenterAccessSecurityCode, error, additionalBinaryDataProperties)
         {
             PodSecrets = podSecrets;
-            JobSecretsType = jobSecretsType;
         }
 
         /// <summary> Contains the list of secret objects for a job. </summary>

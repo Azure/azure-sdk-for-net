@@ -83,7 +83,7 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
                 // check if this is a contextual parameter
                 if (mapping.ContextualParameter is not null)
                 {
-                    arguments.Add(Convert(mapping.ContextualParameter.BuildValueExpression(idProperty), typeof(string), parameter.Type));
+                    arguments.Add(Convert(mapping.ContextualParameter.BuildValueExpression(idProperty), mapping.ContextualParameter.ValueType, parameter.Type));
                 }
                 else
                 {
@@ -104,6 +104,33 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
                         var createContent = Static(typeof(RequestContent)).Invoke(
                             nameof(RequestContent.Create),
                             [bodyParameter]);
+                        if (bodyParameter.Type.IsNullable)
+                        {
+                            arguments.Add(new TernaryConditionalExpression(bodyParameter.NotEqual(Null), createContent, Null));
+                        }
+                        else
+                        {
+                            arguments.Add(createContent);
+                        }
+                    }
+                    else if (bodyParameter.Type.IsEnum)
+                    {
+                        // Enum/union body parameters do not have a generated ToRequestContent helper
+                        // (that helper is only synthesized on MRW model types by SerializationVisitor).
+                        // Serialize the enum value to its string form and route through RequestContent.Create.
+                        ValueExpression bodyExpr = bodyParameter;
+                        ValueExpression stringForm = bodyParameter.Type.IsStruct
+                            // Extensible enum (readonly struct): use ToString().
+                            ? (bodyParameter.Type.IsNullable
+                                ? bodyExpr.NullConditional().InvokeToString()
+                                : bodyExpr.InvokeToString())
+                            // Fixed enum: use generated ToSerialString() extension.
+                            : (bodyParameter.Type.IsNullable
+                                ? bodyExpr.NullConditional().Invoke("ToSerialString")
+                                : bodyExpr.Invoke("ToSerialString"));
+                        var createContent = Static(typeof(RequestContent)).Invoke(
+                            nameof(RequestContent.Create),
+                            [stringForm]);
                         if (bodyParameter.Type.IsNullable)
                         {
                             arguments.Add(new TernaryConditionalExpression(bodyParameter.NotEqual(Null), createContent, Null));

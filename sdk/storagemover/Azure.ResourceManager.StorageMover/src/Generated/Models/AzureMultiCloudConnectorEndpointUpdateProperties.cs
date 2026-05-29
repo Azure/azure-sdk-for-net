@@ -14,18 +14,16 @@ namespace Azure.ResourceManager.StorageMover.Models
     public partial class AzureMultiCloudConnectorEndpointUpdateProperties : EndpointBaseUpdateProperties
     {
         /// <summary> Initializes a new instance of <see cref="AzureMultiCloudConnectorEndpointUpdateProperties"/>. </summary>
-        public AzureMultiCloudConnectorEndpointUpdateProperties()
+        public AzureMultiCloudConnectorEndpointUpdateProperties() : base(EndpointType.AzureMultiCloudConnector)
         {
-            EndpointType = EndpointType.AzureMultiCloudConnector;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureMultiCloudConnectorEndpointUpdateProperties"/>. </summary>
         /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureMultiCloudConnectorEndpointUpdateProperties(EndpointType endpointType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(endpointType, description, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AzureMultiCloudConnectorEndpointUpdateProperties(EndpointType endpointType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(endpointType, description, additionalBinaryDataProperties)
         {
-            EndpointType = endpointType;
         }
     }
 }

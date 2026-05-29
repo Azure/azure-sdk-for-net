@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         {
             if (id.ResourceType != DatabaseWatcherResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DatabaseWatcherResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DatabaseWatcherResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabaseWatcherSharedPrivateLinkResourceData, DatabaseWatcherSharedPrivateLinkResource>(new SharedPrivateLinkResourcesGetByWatcherAsyncCollectionResultOfT(_sharedPrivateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DatabaseWatcherSharedPrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<DatabaseWatcherSharedPrivateLinkResourceData, DatabaseWatcherSharedPrivateLinkResource>(new SharedPrivateLinkResourcesGetByWatcherAsyncCollectionResultOfT(
+                _sharedPrivateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DatabaseWatcherSharedPrivateLinkResourceCollection.GetAll"), data => new DatabaseWatcherSharedPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -321,11 +327,17 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabaseWatcherSharedPrivateLinkResourceData, DatabaseWatcherSharedPrivateLinkResource>(new SharedPrivateLinkResourcesGetByWatcherCollectionResultOfT(_sharedPrivateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DatabaseWatcherSharedPrivateLinkResource(Client, data));
+            return new PageableWrapper<DatabaseWatcherSharedPrivateLinkResourceData, DatabaseWatcherSharedPrivateLinkResource>(new SharedPrivateLinkResourcesGetByWatcherCollectionResultOfT(
+                _sharedPrivateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DatabaseWatcherSharedPrivateLinkResourceCollection.GetAll"), data => new DatabaseWatcherSharedPrivateLinkResource(Client, data));
         }
 
         /// <summary>
-        /// Get a SharedPrivateLinkResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -382,7 +394,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         }
 
         /// <summary>
-        /// Get a SharedPrivateLinkResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -439,7 +451,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         }
 
         /// <summary>
-        /// Get a SharedPrivateLinkResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -500,7 +512,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         }
 
         /// <summary>
-        /// Get a SharedPrivateLinkResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

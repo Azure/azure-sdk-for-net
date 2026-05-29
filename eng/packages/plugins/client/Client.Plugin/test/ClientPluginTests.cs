@@ -18,11 +18,14 @@ namespace Client.Plugin.Tests
             mockGenerator.Setup(g => g.AddVisitor(It.IsAny<NamespaceVisitor>())).Verifiable();
             mockGenerator.Setup(g => g.AddVisitor(It.IsAny<ModelFactoryRenamerVisitor>())).Verifiable();
             mockGenerator.Setup(g => g.AddVisitor(It.IsAny<ClientRequestIdHeaderVisitor>())).Verifiable();
+            mockGenerator.Setup(g => g.AddVisitor(It.IsAny<MultiPartFormDataVisitor>())).Verifiable();
+
             plugin.Apply(mockGenerator.Object);
 
             mockGenerator.Verify(g => g.AddVisitor(It.IsAny<NamespaceVisitor>()), Times.Once);
             mockGenerator.Verify(g => g.AddVisitor(It.IsAny<ModelFactoryRenamerVisitor>()), Times.Once);
             mockGenerator.Verify(g => g.AddVisitor(It.IsAny<ClientRequestIdHeaderVisitor>()), Times.Once);
+            mockGenerator.Verify(g => g.AddVisitor(It.IsAny<MultiPartFormDataVisitor>()), Times.Once);
         }
     }
 }

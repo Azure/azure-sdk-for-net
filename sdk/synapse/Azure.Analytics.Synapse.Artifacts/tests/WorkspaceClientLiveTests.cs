@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Analytics.Synapse.Artifacts;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Analytics.Synapse.Tests;
@@ -39,8 +39,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         {
             WorkspaceClient client = CreateClient();
             Workspace space = await client.GetAsync();
-            Assert.NotNull(space.Name);
-            Assert.NotNull(space.WorkspaceUID);
+            Assert.That(space.Name, Is.Not.Null);
+            Assert.That(space.WorkspaceUID, Is.Not.Null);
         }
     }
 }

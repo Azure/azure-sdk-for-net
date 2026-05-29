@@ -160,9 +160,7 @@ namespace Azure.AI.DocumentIntelligence
         public static Azure.AI.DocumentIntelligence.AnalyzeOutputOption Figures { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.AnalyzeOutputOption Pdf { get { throw null; } }
         public bool Equals(Azure.AI.DocumentIntelligence.AnalyzeOutputOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.DocumentIntelligence.AnalyzeOutputOption left, Azure.AI.DocumentIntelligence.AnalyzeOutputOption right) { throw null; }
         public static implicit operator Azure.AI.DocumentIntelligence.AnalyzeOutputOption (string value) { throw null; }
@@ -417,9 +415,7 @@ namespace Azure.AI.DocumentIntelligence
         public static Azure.AI.DocumentIntelligence.ContentSourceKind Bytes { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.ContentSourceKind Uri { get { throw null; } }
         public bool Equals(Azure.AI.DocumentIntelligence.ContentSourceKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.DocumentIntelligence.ContentSourceKind left, Azure.AI.DocumentIntelligence.ContentSourceKind right) { throw null; }
         public static implicit operator Azure.AI.DocumentIntelligence.ContentSourceKind (string value) { throw null; }
@@ -472,9 +468,7 @@ namespace Azure.AI.DocumentIntelligence
         public static Azure.AI.DocumentIntelligence.DocumentAnalysisFeature OcrHighResolution { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.DocumentAnalysisFeature QueryFields { get { throw null; } }
         public bool Equals(Azure.AI.DocumentIntelligence.DocumentAnalysisFeature other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.DocumentIntelligence.DocumentAnalysisFeature left, Azure.AI.DocumentIntelligence.DocumentAnalysisFeature right) { throw null; }
         public static implicit operator Azure.AI.DocumentIntelligence.DocumentAnalysisFeature (string value) { throw null; }
@@ -524,9 +518,7 @@ namespace Azure.AI.DocumentIntelligence
         public static Azure.AI.DocumentIntelligence.DocumentBarcodeKind Upca { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.DocumentBarcodeKind Upce { get { throw null; } }
         public bool Equals(Azure.AI.DocumentIntelligence.DocumentBarcodeKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.DocumentIntelligence.DocumentBarcodeKind left, Azure.AI.DocumentIntelligence.DocumentBarcodeKind right) { throw null; }
         public static implicit operator Azure.AI.DocumentIntelligence.DocumentBarcodeKind (string value) { throw null; }
@@ -543,9 +535,7 @@ namespace Azure.AI.DocumentIntelligence
         public static Azure.AI.DocumentIntelligence.DocumentBuildMode Neural { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.DocumentBuildMode Template { get { throw null; } }
         public bool Equals(Azure.AI.DocumentIntelligence.DocumentBuildMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.DocumentIntelligence.DocumentBuildMode left, Azure.AI.DocumentIntelligence.DocumentBuildMode right) { throw null; }
         public static implicit operator Azure.AI.DocumentIntelligence.DocumentBuildMode (string value) { throw null; }
@@ -630,9 +620,7 @@ namespace Azure.AI.DocumentIntelligence
         public static Azure.AI.DocumentIntelligence.DocumentContentFormat Markdown { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.DocumentContentFormat Text { get { throw null; } }
         public bool Equals(Azure.AI.DocumentIntelligence.DocumentContentFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.DocumentIntelligence.DocumentContentFormat left, Azure.AI.DocumentIntelligence.DocumentContentFormat right) { throw null; }
         public static implicit operator Azure.AI.DocumentIntelligence.DocumentContentFormat (string value) { throw null; }
@@ -725,9 +713,7 @@ namespace Azure.AI.DocumentIntelligence
         public static Azure.AI.DocumentIntelligence.DocumentFieldType String { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.DocumentFieldType Time { get { throw null; } }
         public bool Equals(Azure.AI.DocumentIntelligence.DocumentFieldType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.DocumentIntelligence.DocumentFieldType left, Azure.AI.DocumentIntelligence.DocumentFieldType right) { throw null; }
         public static implicit operator Azure.AI.DocumentIntelligence.DocumentFieldType (string value) { throw null; }
@@ -763,9 +749,7 @@ namespace Azure.AI.DocumentIntelligence
         public static Azure.AI.DocumentIntelligence.DocumentFontStyle Italic { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.DocumentFontStyle Normal { get { throw null; } }
         public bool Equals(Azure.AI.DocumentIntelligence.DocumentFontStyle other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.DocumentIntelligence.DocumentFontStyle left, Azure.AI.DocumentIntelligence.DocumentFontStyle right) { throw null; }
         public static implicit operator Azure.AI.DocumentIntelligence.DocumentFontStyle (string value) { throw null; }
@@ -782,9 +766,7 @@ namespace Azure.AI.DocumentIntelligence
         public static Azure.AI.DocumentIntelligence.DocumentFontWeight Bold { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.DocumentFontWeight Normal { get { throw null; } }
         public bool Equals(Azure.AI.DocumentIntelligence.DocumentFontWeight other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.DocumentIntelligence.DocumentFontWeight left, Azure.AI.DocumentIntelligence.DocumentFontWeight right) { throw null; }
         public static implicit operator Azure.AI.DocumentIntelligence.DocumentFontWeight (string value) { throw null; }
@@ -836,9 +818,7 @@ namespace Azure.AI.DocumentIntelligence
         public static Azure.AI.DocumentIntelligence.DocumentFormulaKind Display { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.DocumentFormulaKind Inline { get { throw null; } }
         public bool Equals(Azure.AI.DocumentIntelligence.DocumentFormulaKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.DocumentIntelligence.DocumentFormulaKind left, Azure.AI.DocumentIntelligence.DocumentFormulaKind right) { throw null; }
         public static implicit operator Azure.AI.DocumentIntelligence.DocumentFormulaKind (string value) { throw null; }
@@ -849,6 +829,7 @@ namespace Azure.AI.DocumentIntelligence
     public partial class DocumentIntelligenceAdministrationClient
     {
         protected DocumentIntelligenceAdministrationClient() { }
+        public DocumentIntelligenceAdministrationClient(Azure.AI.DocumentIntelligence.DocumentIntelligenceAdministrationClientSettings settings) { }
         public DocumentIntelligenceAdministrationClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public DocumentIntelligenceAdministrationClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.DocumentIntelligence.DocumentIntelligenceClientOptions options) { }
         public DocumentIntelligenceAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -919,9 +900,24 @@ namespace Azure.AI.DocumentIntelligence
         public virtual System.Threading.Tasks.Task<Azure.Response> GetResourceDetailsAsync(Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.DocumentIntelligence.DocumentIntelligenceResourceDetails>> GetResourceDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public static partial class DocumentIntelligenceAdministrationClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddDocumentIntelligenceAdministrationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddDocumentIntelligenceAdministrationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.DocumentIntelligence.DocumentIntelligenceAdministrationClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDocumentIntelligenceAdministrationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDocumentIntelligenceAdministrationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.AI.DocumentIntelligence.DocumentIntelligenceAdministrationClientSettings> configureSettings) { throw null; }
+    }
+    public partial class DocumentIntelligenceAdministrationClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public DocumentIntelligenceAdministrationClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.DocumentIntelligence.DocumentIntelligenceClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+    }
     public partial class DocumentIntelligenceClient
     {
         protected DocumentIntelligenceClient() { }
+        public DocumentIntelligenceClient(Azure.AI.DocumentIntelligence.DocumentIntelligenceClientSettings settings) { }
         public DocumentIntelligenceClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public DocumentIntelligenceClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.DocumentIntelligence.DocumentIntelligenceClientOptions options) { }
         public DocumentIntelligenceClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -964,6 +960,13 @@ namespace Azure.AI.DocumentIntelligence
         public virtual System.Threading.Tasks.Task<Azure.Response> GetAnalyzeResultPdfAsync(string modelId, string resultId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GetAnalyzeResultPdfAsync(string modelId, string resultId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public static partial class DocumentIntelligenceClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddDocumentIntelligenceClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddDocumentIntelligenceClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.DocumentIntelligence.DocumentIntelligenceClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDocumentIntelligenceClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDocumentIntelligenceClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.AI.DocumentIntelligence.DocumentIntelligenceClientSettings> configureSettings) { throw null; }
+    }
     public partial class DocumentIntelligenceClientOptions : Azure.Core.ClientOptions
     {
         public DocumentIntelligenceClientOptions(Azure.AI.DocumentIntelligence.DocumentIntelligenceClientOptions.ServiceVersion version = Azure.AI.DocumentIntelligence.DocumentIntelligenceClientOptions.ServiceVersion.V2024_11_30) { }
@@ -971,6 +974,13 @@ namespace Azure.AI.DocumentIntelligence
         {
             V2024_11_30 = 1,
         }
+    }
+    public partial class DocumentIntelligenceClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public DocumentIntelligenceClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.DocumentIntelligence.DocumentIntelligenceClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class DocumentIntelligenceError : System.ClientModel.Primitives.IJsonModel<Azure.AI.DocumentIntelligence.DocumentIntelligenceError>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.DocumentIntelligenceError>
     {
@@ -1100,9 +1110,7 @@ namespace Azure.AI.DocumentIntelligence
         public static Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationStatus Skipped { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationStatus left, Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationStatus right) { throw null; }
         public static implicit operator Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationStatus (string value) { throw null; }
@@ -1358,9 +1366,7 @@ namespace Azure.AI.DocumentIntelligence
         public static Azure.AI.DocumentIntelligence.DocumentSelectionMarkState Selected { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.DocumentSelectionMarkState Unselected { get { throw null; } }
         public bool Equals(Azure.AI.DocumentIntelligence.DocumentSelectionMarkState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.DocumentIntelligence.DocumentSelectionMarkState left, Azure.AI.DocumentIntelligence.DocumentSelectionMarkState right) { throw null; }
         public static implicit operator Azure.AI.DocumentIntelligence.DocumentSelectionMarkState (string value) { throw null; }
@@ -1377,9 +1383,7 @@ namespace Azure.AI.DocumentIntelligence
         public static Azure.AI.DocumentIntelligence.DocumentSignatureType Signed { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.DocumentSignatureType Unsigned { get { throw null; } }
         public bool Equals(Azure.AI.DocumentIntelligence.DocumentSignatureType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.DocumentIntelligence.DocumentSignatureType left, Azure.AI.DocumentIntelligence.DocumentSignatureType right) { throw null; }
         public static implicit operator Azure.AI.DocumentIntelligence.DocumentSignatureType (string value) { throw null; }
@@ -1481,9 +1485,7 @@ namespace Azure.AI.DocumentIntelligence
         public static Azure.AI.DocumentIntelligence.DocumentTableCellKind RowHeader { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.DocumentTableCellKind StubHead { get { throw null; } }
         public bool Equals(Azure.AI.DocumentIntelligence.DocumentTableCellKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.DocumentIntelligence.DocumentTableCellKind left, Azure.AI.DocumentIntelligence.DocumentTableCellKind right) { throw null; }
         public static implicit operator Azure.AI.DocumentIntelligence.DocumentTableCellKind (string value) { throw null; }
@@ -1539,9 +1541,7 @@ namespace Azure.AI.DocumentIntelligence
         public static Azure.AI.DocumentIntelligence.LengthUnit Inch { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.LengthUnit Pixel { get { throw null; } }
         public bool Equals(Azure.AI.DocumentIntelligence.LengthUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.DocumentIntelligence.LengthUnit left, Azure.AI.DocumentIntelligence.LengthUnit right) { throw null; }
         public static implicit operator Azure.AI.DocumentIntelligence.LengthUnit (string value) { throw null; }
@@ -1584,9 +1584,7 @@ namespace Azure.AI.DocumentIntelligence
         public static Azure.AI.DocumentIntelligence.ParagraphRole SectionHeading { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.ParagraphRole Title { get { throw null; } }
         public bool Equals(Azure.AI.DocumentIntelligence.ParagraphRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.DocumentIntelligence.ParagraphRole left, Azure.AI.DocumentIntelligence.ParagraphRole right) { throw null; }
         public static implicit operator Azure.AI.DocumentIntelligence.ParagraphRole (string value) { throw null; }
@@ -1604,9 +1602,7 @@ namespace Azure.AI.DocumentIntelligence
         public static Azure.AI.DocumentIntelligence.SplitMode None { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.SplitMode PerPage { get { throw null; } }
         public bool Equals(Azure.AI.DocumentIntelligence.SplitMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.DocumentIntelligence.SplitMode left, Azure.AI.DocumentIntelligence.SplitMode right) { throw null; }
         public static implicit operator Azure.AI.DocumentIntelligence.SplitMode (string value) { throw null; }

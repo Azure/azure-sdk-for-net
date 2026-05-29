@@ -437,9 +437,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public static Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType Thresholds { get { throw null; } }
         public static Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType WorstOf { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType left, Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType (string value) { throw null; }
@@ -472,9 +470,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public static Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRecommendedSignalsBehavior Disabled { get { throw null; } }
         public static Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRecommendedSignalsBehavior Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRecommendedSignalsBehavior other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRecommendedSignalsBehavior left, Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRecommendedSignalsBehavior right) { throw null; }
         public static implicit operator Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRecommendedSignalsBehavior (string value) { throw null; }
@@ -491,9 +487,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public static Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRelationshipDiscoveryBehavior Disabled { get { throw null; } }
         public static Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRelationshipDiscoveryBehavior Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRelationshipDiscoveryBehavior other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRelationshipDiscoveryBehavior left, Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRelationshipDiscoveryBehavior right) { throw null; }
         public static implicit operator Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleRelationshipDiscoveryBehavior (string value) { throw null; }
@@ -528,9 +522,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public static Azure.ResourceManager.CloudHealth.Models.DynamicThresholdDirection GreaterThan { get { throw null; } }
         public static Azure.ResourceManager.CloudHealth.Models.DynamicThresholdDirection LowerThan { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CloudHealth.Models.DynamicThresholdDirection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.DynamicThresholdDirection left, Azure.ResourceManager.CloudHealth.Models.DynamicThresholdDirection right) { throw null; }
         public static implicit operator Azure.ResourceManager.CloudHealth.Models.DynamicThresholdDirection (string value) { throw null; }
@@ -546,9 +538,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public DynamicThresholdModel(string value) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.DynamicThresholdModel AnomalyDetection { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CloudHealth.Models.DynamicThresholdModel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.DynamicThresholdModel left, Azure.ResourceManager.CloudHealth.Models.DynamicThresholdModel right) { throw null; }
         public static implicit operator Azure.ResourceManager.CloudHealth.Models.DynamicThresholdModel (string value) { throw null; }
@@ -599,9 +589,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public static Azure.ResourceManager.CloudHealth.Models.EntityAlertSeverity Sev3 { get { throw null; } }
         public static Azure.ResourceManager.CloudHealth.Models.EntityAlertSeverity Sev4 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CloudHealth.Models.EntityAlertSeverity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.EntityAlertSeverity left, Azure.ResourceManager.CloudHealth.Models.EntityAlertSeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.CloudHealth.Models.EntityAlertSeverity (string value) { throw null; }
@@ -636,9 +624,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public static Azure.ResourceManager.CloudHealth.Models.EntityHealthState Healthy { get { throw null; } }
         public static Azure.ResourceManager.CloudHealth.Models.EntityHealthState Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CloudHealth.Models.EntityHealthState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.EntityHealthState left, Azure.ResourceManager.CloudHealth.Models.EntityHealthState right) { throw null; }
         public static implicit operator Azure.ResourceManager.CloudHealth.Models.EntityHealthState (string value) { throw null; }
@@ -671,9 +657,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public static Azure.ResourceManager.CloudHealth.Models.EntityImpact Standard { get { throw null; } }
         public static Azure.ResourceManager.CloudHealth.Models.EntityImpact Suppressed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CloudHealth.Models.EntityImpact other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.EntityImpact left, Azure.ResourceManager.CloudHealth.Models.EntityImpact right) { throw null; }
         public static implicit operator Azure.ResourceManager.CloudHealth.Models.EntityImpact (string value) { throw null; }
@@ -740,9 +724,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public static Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator LowerOrEquals { get { throw null; } }
         public static Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator LowerThan { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator left, Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator right) { throw null; }
         public static implicit operator Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator (string value) { throw null; }
@@ -763,9 +745,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public static Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval PT30M { get { throw null; } }
         public static Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval PT5M { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval left, Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval right) { throw null; }
         public static implicit operator Azure.ResourceManager.CloudHealth.Models.EntitySignalRefreshInterval (string value) { throw null; }
@@ -896,9 +876,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public static Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState left, Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState (string value) { throw null; }
@@ -1005,9 +983,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public static Azure.ResourceManager.CloudHealth.Models.MetricAggregationType None { get { throw null; } }
         public static Azure.ResourceManager.CloudHealth.Models.MetricAggregationType Total { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CloudHealth.Models.MetricAggregationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.MetricAggregationType left, Azure.ResourceManager.CloudHealth.Models.MetricAggregationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.CloudHealth.Models.MetricAggregationType (string value) { throw null; }

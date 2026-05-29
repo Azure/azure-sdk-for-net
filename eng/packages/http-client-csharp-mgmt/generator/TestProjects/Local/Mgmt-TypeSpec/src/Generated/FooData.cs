@@ -123,7 +123,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     Properties = new FooProperties();
                 }
-                Properties.BoolValue = value.Value;
+                Properties.BoolValue = value;
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     Properties = new FooProperties();
                 }
-                Properties.FloatValue = value.Value;
+                Properties.FloatValue = value;
             }
         }
 
@@ -159,7 +159,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     Properties = new FooProperties();
                 }
-                Properties.DoubleValue = value.Value;
+                Properties.DoubleValue = value;
             }
         }
 
@@ -205,7 +205,25 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     Properties = new FooProperties();
                 }
-                Properties.ETag = value.Value;
+                Properties.ETag = value;
+            }
+        }
+
+        /// <summary> WritableSubResource property for testing WritableSubResource type replacement. </summary>
+        [WirePath("properties.writableSubResourceProp")]
+        public WritableSubResource WritableSubResourceProp
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WritableSubResourceProp;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.WritableSubResourceProp = value;
             }
         }
 

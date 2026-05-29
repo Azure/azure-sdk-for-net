@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ImpactReporting;
 
 namespace Azure.ResourceManager.ImpactReporting.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ImpactReporting.Models
     public readonly partial struct ImpactConfidenceLevel : IEquatable<ImpactConfidenceLevel>
     {
         private readonly string _value;
+        /// <summary> Low confidence on azure being the source of impact. </summary>
+        private const string LowValue = "Low";
+        /// <summary> Medium confidence on azure being the source of impact. </summary>
+        private const string MediumValue = "Medium";
+        /// <summary> High confidence on azure being the source of impact. </summary>
+        private const string HighValue = "High";
 
         /// <summary> Initializes a new instance of <see cref="ImpactConfidenceLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ImpactConfidenceLevel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LowValue = "Low";
-        private const string MediumValue = "Medium";
-        private const string HighValue = "High";
+            _value = value;
+        }
 
         /// <summary> Low confidence on azure being the source of impact. </summary>
         public static ImpactConfidenceLevel Low { get; } = new ImpactConfidenceLevel(LowValue);
+
         /// <summary> Medium confidence on azure being the source of impact. </summary>
         public static ImpactConfidenceLevel Medium { get; } = new ImpactConfidenceLevel(MediumValue);
+
         /// <summary> High confidence on azure being the source of impact. </summary>
         public static ImpactConfidenceLevel High { get; } = new ImpactConfidenceLevel(HighValue);
+
         /// <summary> Determines if two <see cref="ImpactConfidenceLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ImpactConfidenceLevel left, ImpactConfidenceLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ImpactConfidenceLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ImpactConfidenceLevel left, ImpactConfidenceLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ImpactConfidenceLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ImpactConfidenceLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ImpactConfidenceLevel(string value) => new ImpactConfidenceLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ImpactConfidenceLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ImpactConfidenceLevel?(string value) => value == null ? null : new ImpactConfidenceLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ImpactConfidenceLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ImpactConfidenceLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

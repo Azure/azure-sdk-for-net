@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct ProviderEndpointTypeResourceType : IEquatable<ProviderEndpointTypeResourceType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ProviderEndpointTypeResourceType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProviderEndpointTypeResourceType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotSpecifiedValue = "NotSpecified";
         private const string CanaryValue = "Canary";
         private const string ProductionValue = "Production";
         private const string TestInProductionValue = "TestInProduction";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderEndpointTypeResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ProviderEndpointTypeResourceType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotSpecified. </summary>
         public static ProviderEndpointTypeResourceType NotSpecified { get; } = new ProviderEndpointTypeResourceType(NotSpecifiedValue);
-        /// <summary> Canary. </summary>
+
+        /// <summary> Gets the Canary. </summary>
         public static ProviderEndpointTypeResourceType Canary { get; } = new ProviderEndpointTypeResourceType(CanaryValue);
-        /// <summary> Production. </summary>
+
+        /// <summary> Gets the Production. </summary>
         public static ProviderEndpointTypeResourceType Production { get; } = new ProviderEndpointTypeResourceType(ProductionValue);
-        /// <summary> TestInProduction. </summary>
+
+        /// <summary> Gets the TestInProduction. </summary>
         public static ProviderEndpointTypeResourceType TestInProduction { get; } = new ProviderEndpointTypeResourceType(TestInProductionValue);
+
         /// <summary> Determines if two <see cref="ProviderEndpointTypeResourceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProviderEndpointTypeResourceType left, ProviderEndpointTypeResourceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ProviderEndpointTypeResourceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProviderEndpointTypeResourceType left, ProviderEndpointTypeResourceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ProviderEndpointTypeResourceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ProviderEndpointTypeResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ProviderEndpointTypeResourceType(string value) => new ProviderEndpointTypeResourceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ProviderEndpointTypeResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProviderEndpointTypeResourceType?(string value) => value == null ? null : new ProviderEndpointTypeResourceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProviderEndpointTypeResourceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ProviderEndpointTypeResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

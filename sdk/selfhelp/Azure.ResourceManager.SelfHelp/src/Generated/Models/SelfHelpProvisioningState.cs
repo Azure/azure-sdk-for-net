@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.SelfHelp.Models
     public readonly partial struct SelfHelpProvisioningState : IEquatable<SelfHelpProvisioningState>
     {
         private readonly string _value;
+        /// <summary> All Diagnostics in the Batch succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Some Diagnostics are still running or failed. </summary>
+        private const string PartialCompleteValue = "PartialComplete";
+        /// <summary> All Diagnostics failed to run. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> All Diagnostics are still running. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> When Diagnostic request gets canceled. </summary>
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="SelfHelpProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SelfHelpProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string PartialCompleteValue = "PartialComplete";
-        private const string FailedValue = "Failed";
-        private const string RunningValue = "Running";
-        private const string CanceledValue = "Canceled";
+            _value = value;
+        }
 
         /// <summary> All Diagnostics in the Batch succeeded. </summary>
         public static SelfHelpProvisioningState Succeeded { get; } = new SelfHelpProvisioningState(SucceededValue);
+
         /// <summary> Some Diagnostics are still running or failed. </summary>
         public static SelfHelpProvisioningState PartialComplete { get; } = new SelfHelpProvisioningState(PartialCompleteValue);
+
         /// <summary> All Diagnostics failed to run. </summary>
         public static SelfHelpProvisioningState Failed { get; } = new SelfHelpProvisioningState(FailedValue);
+
         /// <summary> All Diagnostics are still running. </summary>
         public static SelfHelpProvisioningState Running { get; } = new SelfHelpProvisioningState(RunningValue);
+
         /// <summary> When Diagnostic request gets canceled. </summary>
         public static SelfHelpProvisioningState Canceled { get; } = new SelfHelpProvisioningState(CanceledValue);
+
         /// <summary> Determines if two <see cref="SelfHelpProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SelfHelpProvisioningState left, SelfHelpProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SelfHelpProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SelfHelpProvisioningState left, SelfHelpProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SelfHelpProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SelfHelpProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SelfHelpProvisioningState(string value) => new SelfHelpProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SelfHelpProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SelfHelpProvisioningState?(string value) => value == null ? null : new SelfHelpProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SelfHelpProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SelfHelpProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

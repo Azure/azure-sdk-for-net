@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             if (id.ResourceType != LocalRulestackResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, LocalRulestackResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, LocalRulestackResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LocalRulestackPrefixData, LocalRulestackPrefixResource>(new PrefixListLocalRulestackGetByLocalRulestacksAsyncCollectionResultOfT(_prefixListLocalRulestackRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new LocalRulestackPrefixResource(Client, data));
+            return new AsyncPageableWrapper<LocalRulestackPrefixData, LocalRulestackPrefixResource>(new PrefixListLocalRulestackGetByLocalRulestacksAsyncCollectionResultOfT(
+                _prefixListLocalRulestackRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "LocalRulestackPrefixCollection.GetAll"), data => new LocalRulestackPrefixResource(Client, data));
         }
 
         /// <summary>
@@ -321,11 +327,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LocalRulestackPrefixData, LocalRulestackPrefixResource>(new PrefixListLocalRulestackGetByLocalRulestacksCollectionResultOfT(_prefixListLocalRulestackRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new LocalRulestackPrefixResource(Client, data));
+            return new PageableWrapper<LocalRulestackPrefixData, LocalRulestackPrefixResource>(new PrefixListLocalRulestackGetByLocalRulestacksCollectionResultOfT(
+                _prefixListLocalRulestackRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "LocalRulestackPrefixCollection.GetAll"), data => new LocalRulestackPrefixResource(Client, data));
         }
 
         /// <summary>
-        /// Get a PrefixListResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -382,7 +394,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Get a PrefixListResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -439,7 +451,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Get a PrefixListResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -500,7 +512,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Get a PrefixListResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

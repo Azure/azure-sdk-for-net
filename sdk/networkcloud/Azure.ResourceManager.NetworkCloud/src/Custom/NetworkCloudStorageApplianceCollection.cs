@@ -9,16 +9,12 @@ using System.ComponentModel;
 using System.Threading;
 using Azure.ResourceManager.Resources;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.NetworkCloud
 {
-    /// <summary>
-    /// A class representing a collection of <see cref="NetworkCloudStorageApplianceResource"/> and their operations.
-    /// Each <see cref="NetworkCloudStorageApplianceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="NetworkCloudStorageApplianceCollection"/> instance call the GetNetworkCloudStorageAppliances method from an instance of <see cref="ResourceGroupResource"/>.
-    /// </summary>
     public partial class NetworkCloudStorageApplianceCollection : ArmCollection, IEnumerable<NetworkCloudStorageApplianceResource>, IAsyncEnumerable<NetworkCloudStorageApplianceResource>
     {
-		/// <summary>
+        /// <summary>
         /// Get a list of storage appliances in the provided resource group.
         /// <list type="bullet">
         /// <item>
@@ -30,10 +26,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>StorageAppliances_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudStorageApplianceResource"/></description>
         /// </item>
@@ -43,7 +35,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudStorageApplianceResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<NetworkCloudStorageApplianceResource> GetAllAsync(CancellationToken cancellationToken)
-			=> GetAllAsync(null, null, cancellationToken);
+            => GetAllAsync(null, null, cancellationToken);
 
         /// <summary>
         /// Get a list of storage appliances in the provided resource group.
@@ -57,10 +49,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>StorageAppliances_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudStorageApplianceResource"/></description>
         /// </item>
@@ -70,6 +58,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudStorageApplianceResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<NetworkCloudStorageApplianceResource> GetAll(CancellationToken cancellationToken)
-			=> GetAll(null, null, cancellationToken);
+            => GetAll(null, null, cancellationToken);
     }
 }

@@ -32,6 +32,15 @@ public partial struct JsonPatch
 
         if (_propagatorGetter is not null && _propagatorGetter(jsonPath, out value))
         {
+            // If there are also appends at this path, merge them with the propagator result.
+            // This handles V2-style propagators that return CLR-serialized arrays
+            // while the patch also has ArrayItemAppend entries at the same path.
+            if (_properties is not null && _properties.TryGetValue(jsonPath, out var appendValue)
+                && appendValue.Kind.HasFlag(ValueKind.ArrayItemAppend))
+            {
+                value = new(value.Kind, GetCombinedArray(jsonPath, value.Value, appendValue));
+            }
+
             return true;
         }
 
@@ -72,6 +81,11 @@ public partial struct JsonPatch
 
         if (TryGetParentMatch(jsonPath, true, out var parentPath, out encodedValue))
         {
+            if (parentPath.IsArrayIndex() && encodedValue.Kind == ValueKind.Removed)
+            {
+                return false;
+            }
+
             // normalize jsonPath once to avoid multiple Normalize calls in GetMaxSibling
             Span<byte> normalizedJsonPathBuffer = stackalloc byte[jsonPath.Length];
             JsonPathComparer.Default.Normalize(jsonPath, normalizedJsonPathBuffer, out var bytesWritten);
@@ -81,17 +95,6 @@ public partial struct JsonPatch
             JsonPathReader reader = new(normalizedJsonPath);
             reader.Advance(parentPath);
             ReadOnlySpan<byte> normalizedArrayPath = reader.GetNextArray();
-            if (normalizedArrayPath.IsEmpty)
-            {
-                // no array in sub path
-                GetSubPath(parentPath, normalizedJsonPath, ref childPath);
-                if (!encodedValue.Value.TryGetJson(childPath, out var childJson))
-                {
-                    return false;
-                }
-                value = new(encodedValue.Kind, childJson);
-                return true;
-            }
 
             // see if the requested index exist in root first
             // collect and adjust indexes in a new path as I go
@@ -111,6 +114,12 @@ public partial struct JsonPatch
                     }
                     value = new(ValueKind.Json, GetCombinedArray(jsonPath, childJson, EncodedValue.Empty));
                     return true;
+                }
+
+                if (parentPath.IsRoot() && (!_properties.TryGetValue(normalizedArrayPath.GetParent(), out parentValue) || !parentValue.Kind.HasFlag(ValueKind.ArrayItemAppend)))
+                {
+                    // if ancestor array doesn't exist in properties or is not an append we should stop adjusting index path
+                    break;
                 }
 
                 AdjustJsonPath(

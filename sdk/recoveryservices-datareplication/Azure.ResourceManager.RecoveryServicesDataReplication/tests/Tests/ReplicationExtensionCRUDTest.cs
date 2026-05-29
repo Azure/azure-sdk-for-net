@@ -6,11 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Helpers;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
-using Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Helpers;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Tests
 {

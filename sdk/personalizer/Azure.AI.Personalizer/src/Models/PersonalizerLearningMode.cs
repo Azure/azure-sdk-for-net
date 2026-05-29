@@ -7,5 +7,5 @@ namespace Azure.AI.Personalizer
 {
     /// <summary> Learning Modes for Personalizer. </summary>
     [CodeGenModel("LearningMode")]
-    public readonly partial struct PersonalizerLearningMode {}
+    public readonly partial struct PersonalizerLearningMode { }
 }

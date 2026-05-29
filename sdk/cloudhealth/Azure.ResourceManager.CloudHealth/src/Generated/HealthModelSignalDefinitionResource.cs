@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CloudHealth
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary>
-        /// Create a SignalDefinition
+        /// Update a HealthModelSignalDefinition.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary>
-        /// Create a SignalDefinition
+        /// Update a HealthModelSignalDefinition.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

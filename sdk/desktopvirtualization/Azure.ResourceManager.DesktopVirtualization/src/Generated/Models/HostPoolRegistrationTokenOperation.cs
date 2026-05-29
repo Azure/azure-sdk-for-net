@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public readonly partial struct HostPoolRegistrationTokenOperation : IEquatable<HostPoolRegistrationTokenOperation>
     {
         private readonly string _value;
+        /// <summary> Delete operation. </summary>
+        private const string DeleteValue = "Delete";
+        /// <summary> No Operation. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Update Operation. </summary>
+        private const string UpdateValue = "Update";
 
         /// <summary> Initializes a new instance of <see cref="HostPoolRegistrationTokenOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HostPoolRegistrationTokenOperation(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string DeleteValue = "Delete";
-        private const string NoneValue = "None";
-        private const string UpdateValue = "Update";
-
-        /// <summary> Delete. </summary>
+        /// <summary> Delete operation. </summary>
         public static HostPoolRegistrationTokenOperation Delete { get; } = new HostPoolRegistrationTokenOperation(DeleteValue);
-        /// <summary> None. </summary>
+
+        /// <summary> No Operation. </summary>
         public static HostPoolRegistrationTokenOperation None { get; } = new HostPoolRegistrationTokenOperation(NoneValue);
-        /// <summary> Update. </summary>
+
+        /// <summary> Update Operation. </summary>
         public static HostPoolRegistrationTokenOperation Update { get; } = new HostPoolRegistrationTokenOperation(UpdateValue);
+
         /// <summary> Determines if two <see cref="HostPoolRegistrationTokenOperation"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HostPoolRegistrationTokenOperation left, HostPoolRegistrationTokenOperation right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HostPoolRegistrationTokenOperation"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HostPoolRegistrationTokenOperation left, HostPoolRegistrationTokenOperation right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HostPoolRegistrationTokenOperation"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HostPoolRegistrationTokenOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HostPoolRegistrationTokenOperation(string value) => new HostPoolRegistrationTokenOperation(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HostPoolRegistrationTokenOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HostPoolRegistrationTokenOperation?(string value) => value == null ? null : new HostPoolRegistrationTokenOperation(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HostPoolRegistrationTokenOperation other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HostPoolRegistrationTokenOperation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

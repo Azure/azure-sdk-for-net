@@ -82,7 +82,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventCatcher
             }
 
             InitializeDirectory(sessionFilePath);
-            using var fileStream =  File.Create(sessionFilePath);
+            using var fileStream = File.Create(sessionFilePath);
             fileStream.Dispose();
         }
 
@@ -112,7 +112,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventCatcher
                         entry.Body = SanitizeRecordedEvent(entry.Body);
                         scrubbedRecording.Add(entry);
                     });
-                await JsonSerializer.SerializeAsync(recorderFileStream, new PersistedEventRecording(){ Entries = scrubbedRecording }, JsonSerializerOptions);
+                await JsonSerializer.SerializeAsync(recorderFileStream, new PersistedEventRecording() { Entries = scrubbedRecording }, JsonSerializerOptions);
                 recorderFileStream.Dispose();
                 _semaphore?.Dispose();
             }

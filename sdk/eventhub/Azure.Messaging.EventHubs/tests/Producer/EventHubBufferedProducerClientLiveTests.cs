@@ -86,7 +86,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
             catch (OperationCanceledException)
             {
-                Assert.Fail($"The handler did not receive all events.  { handlerEvents.Count } of { events.Count } were captured.");
+                Assert.Fail($"The handler did not receive all events.  {handlerEvents.Count} of {events.Count} were captured.");
             }
 
             // Ensure that publishing completed with the expected state.
@@ -125,8 +125,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
-                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{ index }].");
-                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{ index }].");
+                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{index}].");
+                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{index}].");
             }
         }
 
@@ -193,7 +193,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
             catch (OperationCanceledException)
             {
-                Assert.Fail($"The handler did not receive all events.  { handlerEvents.Count } of { events.Count } were captured.");
+                Assert.Fail($"The handler did not receive all events.  {handlerEvents.Count} of {events.Count} were captured.");
             }
 
             // Ensure that publishing completed with the expected state.
@@ -231,10 +231,10 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
-                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{ index }].");
-                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{ index }].");
-                Assert.That(readEvents[index].Event.PartitionKey, Is.Not.Null.And.Not.Empty, $"The event read at index: [{ index }] should have a partition key set.");
-                Assert.That(keyHash.Contains(readEvents[index].Event.PartitionKey), Is.True, $"The event read at index: [{ index }] should have a known partition key.");
+                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{index}].");
+                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{index}].");
+                Assert.That(readEvents[index].Event.PartitionKey, Is.Not.Null.And.Not.Empty, $"The event read at index: [{index}] should have a partition key set.");
+                Assert.That(keyHash.Contains(readEvents[index].Event.PartitionKey), Is.True, $"The event read at index: [{index}] should have a known partition key.");
             }
         }
 
@@ -301,7 +301,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
             catch (OperationCanceledException)
             {
-                Assert.Fail($"The handler did not receive all events.  { handlerEvents.Count } of { events.Count } were captured.");
+                Assert.Fail($"The handler did not receive all events.  {handlerEvents.Count} of {events.Count} were captured.");
             }
 
             // Ensure that publishing completed with the expected state.
@@ -339,8 +339,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
-                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{ index }].");
-                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{ index }].");
+                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{index}].");
+                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{index}].");
             }
         }
 
@@ -414,7 +414,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
             catch (OperationCanceledException)
             {
-                Assert.Fail($"The handler did not receive all events.  { handlerEvents.Count } of { events.Count } were captured.");
+                Assert.Fail($"The handler did not receive all events.  {handlerEvents.Count} of {events.Count} were captured.");
             }
 
             // Ensure that publishing completed with the expected state.
@@ -452,8 +452,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
-                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{ index }].");
-                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{ index }].");
+                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{index}].");
+                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{index}].");
             }
         }
 
@@ -529,7 +529,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
             catch (OperationCanceledException)
             {
-                Assert.Fail($"The handler did not receive all events.  { handlerEvents.Count } of { events.Count } were captured.");
+                Assert.Fail($"The handler did not receive all events.  {handlerEvents.Count} of {events.Count} were captured.");
             }
 
             // Ensure that publishing completed with the expected state.
@@ -567,8 +567,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
-                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{ index }].");
-                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{ index }].");
+                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{index}].");
+                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{index}].");
             }
         }
 
@@ -630,7 +630,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
             catch (OperationCanceledException)
             {
-                Assert.Fail($"The handler did not receive all events.  { handlerEvents.Count } of { events.Count } were captured.");
+                Assert.Fail($"The handler did not receive all events.  {handlerEvents.Count} of {events.Count} were captured.");
             }
 
             // Ensure that publishing completed with the expected state.
@@ -669,8 +669,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
-                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{ index }].");
-                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{ index }].");
+                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{index}].");
+                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{index}].");
             }
         }
 
@@ -893,7 +893,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
-                Assert.That(readEvents[index].IsEquivalentTo(sortedHandlerEvents[index]), Is.True, $"The event for the read and sent events should match at index: [{ index }].");
+                Assert.That(readEvents[index].IsEquivalentTo(sortedHandlerEvents[index]), Is.True, $"The event for the read and sent events should match at index: [{index}].");
             }
         }
 
@@ -990,8 +990,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
-                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{ index }].");
-                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{ index }].");
+                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{index}].");
+                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{index}].");
             }
         }
 
@@ -1094,8 +1094,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
-                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{ index }].");
-                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{ index }].");
+                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{index}].");
+                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{index}].");
             }
         }
 
@@ -1187,8 +1187,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
-                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{ index }].");
-                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{ index }].");
+                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{index}].");
+                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{index}].");
             }
         }
 
@@ -1286,8 +1286,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
-                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{ index }].");
-                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{ index }].");
+                Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{index}].");
+                Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{index}].");
             }
         }
 

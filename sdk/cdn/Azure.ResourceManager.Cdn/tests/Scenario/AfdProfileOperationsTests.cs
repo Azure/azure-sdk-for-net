@@ -1,13 +1,13 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.ResourceManager.Resources;
+using Azure.Core.TestFramework;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Cdn.Tests.Helper;
-using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Cdn.Tests
@@ -186,7 +186,8 @@ namespace Azure.ResourceManager.Cdn.Tests
             {
                 State = ProfileScrubbingState.Enabled,
             };
-            var item = new ProfileScrubbingRules() {
+            var item = new ProfileScrubbingRules()
+            {
                 MatchVariable = ScrubbingRuleEntryMatchVariable.RequestIPAddress,
                 SelectorMatchOperator = ScrubbingRuleEntryMatchOperator.EqualsAny,
                 State = ScrubbingRuleEntryState.Enabled,

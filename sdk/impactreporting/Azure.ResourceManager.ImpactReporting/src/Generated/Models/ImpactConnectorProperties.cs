@@ -13,49 +13,14 @@ namespace Azure.ResourceManager.ImpactReporting.Models
     /// <summary> Details of the Connector. </summary>
     public partial class ImpactConnectorProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ImpactConnectorProperties"/>. </summary>
-        /// <param name="connectorId"> unique id of the connector. </param>
-        /// <param name="tenantId"> tenant id of this connector. </param>
         /// <param name="connectorType"> connector type. </param>
-        /// <param name="lastRanOn"> last run time stamp of this connector in UTC time zone. </param>
-        public ImpactConnectorProperties(string connectorId, string tenantId, ImpactConnectorType connectorType, DateTimeOffset lastRanOn)
+        public ImpactConnectorProperties(ImpactConnectorType connectorType)
         {
-            ConnectorId = connectorId;
-            TenantId = tenantId;
             ConnectorType = connectorType;
-            LastRanOn = lastRanOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="ImpactConnectorProperties"/>. </summary>
@@ -64,30 +29,29 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <param name="tenantId"> tenant id of this connector. </param>
         /// <param name="connectorType"> connector type. </param>
         /// <param name="lastRanOn"> last run time stamp of this connector in UTC time zone. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImpactConnectorProperties(ImpactReportingProvisioningState? provisioningState, string connectorId, string tenantId, ImpactConnectorType connectorType, DateTimeOffset lastRanOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ImpactConnectorProperties(ImpactReportingProvisioningState? provisioningState, string connectorId, string tenantId, ImpactConnectorType connectorType, DateTimeOffset lastRanOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ConnectorId = connectorId;
             TenantId = tenantId;
             ConnectorType = connectorType;
             LastRanOn = lastRanOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ImpactConnectorProperties"/> for deserialization. </summary>
-        internal ImpactConnectorProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource provisioning state. </summary>
         public ImpactReportingProvisioningState? ProvisioningState { get; }
+
         /// <summary> unique id of the connector. </summary>
         public string ConnectorId { get; }
+
         /// <summary> tenant id of this connector. </summary>
         public string TenantId { get; }
+
         /// <summary> connector type. </summary>
         public ImpactConnectorType ConnectorType { get; set; }
+
         /// <summary> last run time stamp of this connector in UTC time zone. </summary>
         public DateTimeOffset LastRanOn { get; }
     }

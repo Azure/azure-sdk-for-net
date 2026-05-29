@@ -37,7 +37,13 @@ namespace Azure.ResourceManager.DependencyMap
             return subscriptionResource.GetCachedClient(client => new MockableDependencyMapSubscriptionResource(client, subscriptionResource.Id));
         }
 
-        /// <summary> Gets an object representing a <see cref="DependencyMapResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DependencyMapResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDependencyMapArmClient.GetDependencyMapResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -49,7 +55,13 @@ namespace Azure.ResourceManager.DependencyMap
             return GetMockableDependencyMapArmClient(client).GetDependencyMapResource(id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DependencyMapDiscoverySourceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DependencyMapDiscoverySourceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDependencyMapArmClient.GetDependencyMapDiscoverySourceResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -61,7 +73,13 @@ namespace Azure.ResourceManager.DependencyMap
             return GetMockableDependencyMapArmClient(client).GetDependencyMapDiscoverySourceResource(id);
         }
 
-        /// <summary> Gets a collection of DependencyMaps in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <summary>
+        /// Gets a collection of DependencyMaps in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDependencyMapResourceGroupResource.GetDependencyMaps()"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of DependencyMaps and their operations over a DependencyMapResource. </returns>
@@ -72,7 +90,13 @@ namespace Azure.ResourceManager.DependencyMap
             return GetMockableDependencyMapResourceGroupResource(resourceGroupResource).GetDependencyMaps();
         }
 
-        /// <summary> Get a MapsResource. </summary>
+        /// <summary>
+        /// Get a MapsResource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDependencyMapResourceGroupResource.GetDependencyMapAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="mapName"> Maps resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -85,7 +109,13 @@ namespace Azure.ResourceManager.DependencyMap
             return await GetMockableDependencyMapResourceGroupResource(resourceGroupResource).GetDependencyMapAsync(mapName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a MapsResource. </summary>
+        /// <summary>
+        /// Get a MapsResource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDependencyMapResourceGroupResource.GetDependencyMap(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="mapName"> Maps resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -98,7 +128,13 @@ namespace Azure.ResourceManager.DependencyMap
             return GetMockableDependencyMapResourceGroupResource(resourceGroupResource).GetDependencyMap(mapName, cancellationToken);
         }
 
-        /// <summary> List MapsResource resources by subscription ID. </summary>
+        /// <summary>
+        /// List MapsResource resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDependencyMapSubscriptionResource.GetDependencyMapsAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
@@ -110,7 +146,13 @@ namespace Azure.ResourceManager.DependencyMap
             return GetMockableDependencyMapSubscriptionResource(subscriptionResource).GetDependencyMapsAsync(cancellationToken);
         }
 
-        /// <summary> List MapsResource resources by subscription ID. </summary>
+        /// <summary>
+        /// List MapsResource resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDependencyMapSubscriptionResource.GetDependencyMaps(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>

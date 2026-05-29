@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Cloud endpoint change enumeration activity object. </summary>
     public partial class CloudEndpointChangeEnumerationActivity
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CloudEndpointChangeEnumerationActivity"/>. </summary>
         internal CloudEndpointChangeEnumerationActivity()
@@ -64,8 +35,8 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="minutesRemaining"> Estimate of time remaining for the enumeration run. </param>
         /// <param name="totalCountsState"> Change enumeration total counts state. </param>
         /// <param name="deletesProgressPercent"> Progress percentage for processing deletes. This is done separately from the rest of the enumeration run. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudEndpointChangeEnumerationActivity(DateTimeOffset? lastUpdatedOn, CloudEndpointChangeEnumerationActivityState? operationState, int? statusCode, DateTimeOffset? startedOn, long? processedFilesCount, long? processedDirectoriesCount, long? totalFilesCount, long? totalDirectoriesCount, long? totalSizeInBytes, int? progressPercent, int? minutesRemaining, CloudEndpointChangeEnumerationTotalCountsState? totalCountsState, int? deletesProgressPercent, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CloudEndpointChangeEnumerationActivity(DateTimeOffset? lastUpdatedOn, CloudEndpointChangeEnumerationActivityState? operationState, int? statusCode, DateTimeOffset? startedOn, long? processedFilesCount, long? processedDirectoriesCount, long? totalFilesCount, long? totalDirectoriesCount, long? totalSizeInBytes, int? progressPercent, int? minutesRemaining, CloudEndpointChangeEnumerationTotalCountsState? totalCountsState, int? deletesProgressPercent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LastUpdatedOn = lastUpdatedOn;
             OperationState = operationState;
@@ -80,33 +51,45 @@ namespace Azure.ResourceManager.StorageSync.Models
             MinutesRemaining = minutesRemaining;
             TotalCountsState = totalCountsState;
             DeletesProgressPercent = deletesProgressPercent;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Last updated timestamp. </summary>
         public DateTimeOffset? LastUpdatedOn { get; }
+
         /// <summary> Change enumeration operation state. </summary>
         public CloudEndpointChangeEnumerationActivityState? OperationState { get; }
+
         /// <summary> When non-zero, indicates an issue that is delaying change enumeration. </summary>
         public int? StatusCode { get; }
+
         /// <summary> Timestamp when change enumeration started. </summary>
         public DateTimeOffset? StartedOn { get; }
+
         /// <summary> Count of files processed. </summary>
         public long? ProcessedFilesCount { get; }
+
         /// <summary> Count of directories processed. </summary>
         public long? ProcessedDirectoriesCount { get; }
+
         /// <summary> Total count of files enumerated. </summary>
         public long? TotalFilesCount { get; }
+
         /// <summary> Total count of directories enumerated. </summary>
         public long? TotalDirectoriesCount { get; }
+
         /// <summary> Total enumerated size in bytes. </summary>
         public long? TotalSizeInBytes { get; }
+
         /// <summary> Progress percentage for change enumeration run, excluding processing of deletes. </summary>
         public int? ProgressPercent { get; }
+
         /// <summary> Estimate of time remaining for the enumeration run. </summary>
         public int? MinutesRemaining { get; }
+
         /// <summary> Change enumeration total counts state. </summary>
         public CloudEndpointChangeEnumerationTotalCountsState? TotalCountsState { get; }
+
         /// <summary> Progress percentage for processing deletes. This is done separately from the rest of the enumeration run. </summary>
         public int? DeletesProgressPercent { get; }
     }

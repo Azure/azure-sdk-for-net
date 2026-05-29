@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System;
+using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StorageSync.Models;
 using NUnit.Framework;
-using System.Threading.Tasks;
-using Azure.ResourceManager.Resources;
-using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.StorageSync.Tests
 {
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
         private string _serverEndpointName;
 
-        public ServerEndpointTests(bool async) : base(async, ModeFromSourceCode )
+        public ServerEndpointTests(bool async) : base(async, ModeFromSourceCode)
         {
         }
 

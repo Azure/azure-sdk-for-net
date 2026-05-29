@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     internal static partial class DataAccountTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DataAccountType value) => value switch
         {
             DataAccountType.StorageAccount => "StorageAccount",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.DataBox.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataAccountType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static DataAccountType ToDataAccountType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "StorageAccount")) return DataAccountType.StorageAccount;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ManagedDisk")) return DataAccountType.ManagedDisk;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "StorageAccount"))
+            {
+                return DataAccountType.StorageAccount;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ManagedDisk"))
+            {
+                return DataAccountType.ManagedDisk;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataAccountType value.");
         }
     }

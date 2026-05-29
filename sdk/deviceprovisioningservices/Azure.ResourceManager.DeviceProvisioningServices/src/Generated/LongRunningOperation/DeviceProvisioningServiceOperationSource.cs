@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
-    internal class DeviceProvisioningServiceOperationSource : IOperationSource<DeviceProvisioningServiceResource>
+    /// <summary></summary>
+    internal partial class DeviceProvisioningServiceOperationSource : IOperationSource<DeviceProvisioningServiceResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DeviceProvisioningServiceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DeviceProvisioningServiceResource IOperationSource<DeviceProvisioningServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DeviceProvisioningServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDeviceProvisioningServicesContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DeviceProvisioningServiceData data = DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DeviceProvisioningServiceResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DeviceProvisioningServiceResource> IOperationSource<DeviceProvisioningServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DeviceProvisioningServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDeviceProvisioningServicesContext.Default);
-            return await Task.FromResult(new DeviceProvisioningServiceResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DeviceProvisioningServiceData data = DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DeviceProvisioningServiceResource(_client, data);
         }
     }
 }

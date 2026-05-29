@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Dell.Storage
         {
             TryGetApiVersion(ResourceType, out string dellFileSystemApiVersion);
             _fileSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dell.Storage", ResourceType.Namespace, Diagnostics);
-            _fileSystemsRestClient = new FileSystems(_fileSystemsClientDiagnostics, Pipeline, Endpoint, dellFileSystemApiVersion ?? "2025-03-21-preview");
+            _fileSystemsRestClient = new FileSystems(_fileSystemsClientDiagnostics, Pipeline, Endpoint, dellFileSystemApiVersion ?? "2025-03-21");
             ValidateResourceId(id);
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Dell.Storage
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Dell.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-21-preview. </description>
+        /// <description> 2025-03-21. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Dell.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-21-preview. </description>
+        /// <description> 2025-03-21. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Dell.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-21-preview. </description>
+        /// <description> 2025-03-21. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Dell.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-21-preview. </description>
+        /// <description> 2025-03-21. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Dell.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-21-preview. </description>
+        /// <description> 2025-03-21. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Dell.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-21-preview. </description>
+        /// <description> 2025-03-21. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Dell.Storage
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<DellFileSystemResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<DellFileSystemResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Dell.Storage
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<DellFileSystemResource> result = Update(patch, cancellationToken);
+                    Response<DellFileSystemResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.Dell.Storage
                     DellFileSystemData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     DellFileSystemPatch patch = new DellFileSystemPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<DellFileSystemResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<DellFileSystemResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.Dell.Storage
                     DellFileSystemData current = Get(cancellationToken: cancellationToken).Value.Data;
                     DellFileSystemPatch patch = new DellFileSystemPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<DellFileSystemResource> result = Update(patch, cancellationToken);
+                    Response<DellFileSystemResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.Dell.Storage
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<DellFileSystemResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<DellFileSystemResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.Dell.Storage
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<DellFileSystemResource> result = Update(patch, cancellationToken);
+                    Response<DellFileSystemResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

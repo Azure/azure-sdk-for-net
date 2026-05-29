@@ -10,7 +10,15 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Possible Intrusion Detection profile values. </summary>
+    /// <summary>
+    /// Specifies the Intrusion Detection signature profile to apply.
+    ///
+    /// Values:
+    /// - Off: IDPS profiles disabled; uses the same signature set that existed before profiles.
+    /// - Emerging: Signatures of the newest, most recent threats.
+    /// - Core: Complete, modern, standard set of signatures.
+    /// - Extended: Core signatures plus older legacy signatures for maximum coverage.
+    /// </summary>
     public readonly partial struct FirewallPolicyIntrusionDetectionProfileType : IEquatable<FirewallPolicyIntrusionDetectionProfileType>
     {
         private readonly string _value;
@@ -22,17 +30,17 @@ namespace Azure.ResourceManager.Network.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string BasicValue = "Basic";
-        private const string StandardValue = "Standard";
-        private const string AdvancedValue = "Advanced";
+        private const string OffValue = "Off";
+        private const string EmergingValue = "Emerging";
+        private const string CoreValue = "Core";
         private const string ExtendedValue = "Extended";
 
-        /// <summary> Basic. </summary>
-        public static FirewallPolicyIntrusionDetectionProfileType Basic { get; } = new FirewallPolicyIntrusionDetectionProfileType(BasicValue);
-        /// <summary> Standard. </summary>
-        public static FirewallPolicyIntrusionDetectionProfileType Standard { get; } = new FirewallPolicyIntrusionDetectionProfileType(StandardValue);
-        /// <summary> Advanced. </summary>
-        public static FirewallPolicyIntrusionDetectionProfileType Advanced { get; } = new FirewallPolicyIntrusionDetectionProfileType(AdvancedValue);
+        /// <summary> Off. </summary>
+        public static FirewallPolicyIntrusionDetectionProfileType Off { get; } = new FirewallPolicyIntrusionDetectionProfileType(OffValue);
+        /// <summary> Emerging. </summary>
+        public static FirewallPolicyIntrusionDetectionProfileType Emerging { get; } = new FirewallPolicyIntrusionDetectionProfileType(EmergingValue);
+        /// <summary> Core. </summary>
+        public static FirewallPolicyIntrusionDetectionProfileType Core { get; } = new FirewallPolicyIntrusionDetectionProfileType(CoreValue);
         /// <summary> Extended. </summary>
         public static FirewallPolicyIntrusionDetectionProfileType Extended { get; } = new FirewallPolicyIntrusionDetectionProfileType(ExtendedValue);
         /// <summary> Determines if two <see cref="FirewallPolicyIntrusionDetectionProfileType"/> values are the same. </summary>

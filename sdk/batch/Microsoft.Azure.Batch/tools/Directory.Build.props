@@ -1,0 +1,16 @@
+<Project>
+  <Import Project="..\..\..\..\eng\Directory.Build.Common.props" />
+
+  <PropertyGroup>
+    <BatchToolsTargetFrameworks>$(AllActiveCurrentTargetFrameworks);$(NetFxTargetFramework)</BatchToolsTargetFrameworks>
+    <BatchToolsRunnableFramework>$(NetFxTargetFramework)</BatchToolsRunnableFramework>
+
+    <!-- Tools are internal build-time utilities, not shipping libraries -->
+    <SignAssembly>false</SignAssembly>
+    <PublicSign>false</PublicSign>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <IsPackable>false</IsPackable>
+    <AotCompatOptOut>true</AotCompatOptOut>
+  </PropertyGroup>
+</Project>

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CloudHealth
         {
             if (id.ResourceType != HealthModelResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HealthModelResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HealthModelResource.ResourceType), nameof(id));
             }
         }
 
@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.CloudHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthModelAuthenticationSettingData, HealthModelAuthenticationSettingResource>(new AuthenticationSettingsGetByHealthModelAsyncCollectionResultOfT(_authenticationSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HealthModelAuthenticationSettingResource(Client, data));
+            return new AsyncPageableWrapper<HealthModelAuthenticationSettingData, HealthModelAuthenticationSettingResource>(new AuthenticationSettingsGetByHealthModelAsyncCollectionResultOfT(
+                _authenticationSettingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HealthModelAuthenticationSettingCollection.GetAll"), data => new HealthModelAuthenticationSettingResource(Client, data));
         }
 
         /// <summary>
@@ -315,11 +321,17 @@ namespace Azure.ResourceManager.CloudHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthModelAuthenticationSettingData, HealthModelAuthenticationSettingResource>(new AuthenticationSettingsGetByHealthModelCollectionResultOfT(_authenticationSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HealthModelAuthenticationSettingResource(Client, data));
+            return new PageableWrapper<HealthModelAuthenticationSettingData, HealthModelAuthenticationSettingResource>(new AuthenticationSettingsGetByHealthModelCollectionResultOfT(
+                _authenticationSettingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HealthModelAuthenticationSettingCollection.GetAll"), data => new HealthModelAuthenticationSettingResource(Client, data));
         }
 
         /// <summary>
-        /// Get a AuthenticationSetting
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -376,7 +388,7 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary>
-        /// Get a AuthenticationSetting
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -433,7 +445,7 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary>
-        /// Get a AuthenticationSetting
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -494,7 +506,7 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary>
-        /// Get a AuthenticationSetting
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

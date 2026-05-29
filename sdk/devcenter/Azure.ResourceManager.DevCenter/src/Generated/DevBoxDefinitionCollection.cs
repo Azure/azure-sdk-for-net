@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevCenter
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.DevCenter
     /// </summary>
     public partial class DevBoxDefinitionCollection : ArmCollection, IEnumerable<DevBoxDefinitionResource>, IAsyncEnumerable<DevBoxDefinitionResource>
     {
-        private readonly ClientDiagnostics _devBoxDefinitionClientDiagnostics;
-        private readonly DevBoxDefinitionsRestOperations _devBoxDefinitionRestClient;
+        private readonly ClientDiagnostics _devBoxDefinitionsClientDiagnostics;
+        private readonly DevBoxDefinitions _devBoxDefinitionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DevBoxDefinitionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DevBoxDefinitionCollection for mocking. </summary>
         protected DevBoxDefinitionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DevBoxDefinitionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevBoxDefinitionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DevBoxDefinitionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _devBoxDefinitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevBoxDefinitionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DevBoxDefinitionResource.ResourceType, out string devBoxDefinitionApiVersion);
-            _devBoxDefinitionRestClient = new DevBoxDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devBoxDefinitionApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _devBoxDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevBoxDefinitionResource.ResourceType.Namespace, Diagnostics);
+            _devBoxDefinitionsRestClient = new DevBoxDefinitions(_devBoxDefinitionsClientDiagnostics, Pipeline, Endpoint, devBoxDefinitionApiVersion ?? "2026-01-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != DevCenterResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DevCenterResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevCenterResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates a Dev Box definition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/devboxdefinitions/{devBoxDefinitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/devboxdefinitions/{devBoxDefinitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DevBoxDefinitions_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DevBoxDefinitions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevBoxDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
         /// <param name="data"> Represents a Dev Box definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<DevBoxDefinitionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string devBoxDefinitionName, DevBoxDefinitionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(devBoxDefinitionName, nameof(devBoxDefinitionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _devBoxDefinitionClientDiagnostics.CreateScope("DevBoxDefinitionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _devBoxDefinitionsClientDiagnostics.CreateScope("DevBoxDefinitionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _devBoxDefinitionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devBoxDefinitionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation<DevBoxDefinitionResource>(new DevBoxDefinitionOperationSource(Client), _devBoxDefinitionClientDiagnostics, Pipeline, _devBoxDefinitionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devBoxDefinitionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devBoxDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, devBoxDefinitionName, DevBoxDefinitionData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DevCenterArmOperation<DevBoxDefinitionResource> operation = new DevCenterArmOperation<DevBoxDefinitionResource>(
+                    new DevBoxDefinitionOperationSource(Client),
+                    _devBoxDefinitionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.DevCenter
         /// Creates or updates a Dev Box definition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/devboxdefinitions/{devBoxDefinitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/devboxdefinitions/{devBoxDefinitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DevBoxDefinitions_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DevBoxDefinitions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevBoxDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
         /// <param name="data"> Represents a Dev Box definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<DevBoxDefinitionResource> CreateOrUpdate(WaitUntil waitUntil, string devBoxDefinitionName, DevBoxDefinitionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(devBoxDefinitionName, nameof(devBoxDefinitionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _devBoxDefinitionClientDiagnostics.CreateScope("DevBoxDefinitionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _devBoxDefinitionsClientDiagnostics.CreateScope("DevBoxDefinitionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _devBoxDefinitionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devBoxDefinitionName, data, cancellationToken);
-                var operation = new DevCenterArmOperation<DevBoxDefinitionResource>(new DevBoxDefinitionOperationSource(Client), _devBoxDefinitionClientDiagnostics, Pipeline, _devBoxDefinitionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devBoxDefinitionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devBoxDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, devBoxDefinitionName, DevBoxDefinitionData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DevCenterArmOperation<DevBoxDefinitionResource> operation = new DevCenterArmOperation<DevBoxDefinitionResource>(
+                    new DevBoxDefinitionOperationSource(Client),
+                    _devBoxDefinitionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -150,41 +171,45 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Gets a Dev Box definition
+        /// Gets a Dev Box definition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/devboxdefinitions/{devBoxDefinitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/devboxdefinitions/{devBoxDefinitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DevBoxDefinitions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DevBoxDefinitions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevBoxDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DevBoxDefinitionResource>> GetAsync(string devBoxDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(devBoxDefinitionName, nameof(devBoxDefinitionName));
 
-            using var scope = _devBoxDefinitionClientDiagnostics.CreateScope("DevBoxDefinitionCollection.Get");
+            using DiagnosticScope scope = _devBoxDefinitionsClientDiagnostics.CreateScope("DevBoxDefinitionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _devBoxDefinitionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devBoxDefinitionName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devBoxDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, devBoxDefinitionName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DevBoxDefinitionData> response = Response.FromValue(DevBoxDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DevBoxDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -195,41 +220,45 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Gets a Dev Box definition
+        /// Gets a Dev Box definition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/devboxdefinitions/{devBoxDefinitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/devboxdefinitions/{devBoxDefinitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DevBoxDefinitions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DevBoxDefinitions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevBoxDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DevBoxDefinitionResource> Get(string devBoxDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(devBoxDefinitionName, nameof(devBoxDefinitionName));
 
-            using var scope = _devBoxDefinitionClientDiagnostics.CreateScope("DevBoxDefinitionCollection.Get");
+            using DiagnosticScope scope = _devBoxDefinitionsClientDiagnostics.CreateScope("DevBoxDefinitionCollection.Get");
             scope.Start();
             try
             {
-                var response = _devBoxDefinitionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devBoxDefinitionName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devBoxDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, devBoxDefinitionName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DevBoxDefinitionData> response = Response.FromValue(DevBoxDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DevBoxDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,98 +272,122 @@ namespace Azure.ResourceManager.DevCenter
         /// List Dev Box definitions for a devcenter.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/devboxdefinitions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/devboxdefinitions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DevBoxDefinitions_ListByDevCenter</description>
+        /// <term> Operation Id. </term>
+        /// <description> DevBoxDefinitions_ListByDevCenter. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevBoxDefinitionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevBoxDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevBoxDefinitionResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _devBoxDefinitionRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devBoxDefinitionRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevBoxDefinitionResource(Client, DevBoxDefinitionData.DeserializeDevBoxDefinitionData(e)), _devBoxDefinitionClientDiagnostics, Pipeline, "DevBoxDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List Dev Box definitions for a devcenter.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/devboxdefinitions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DevBoxDefinitions_ListByDevCenter</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevBoxDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevBoxDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevBoxDefinitionResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DevBoxDefinitionResource> GetAllAsync(int? top = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _devBoxDefinitionRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devBoxDefinitionRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevBoxDefinitionResource(Client, DevBoxDefinitionData.DeserializeDevBoxDefinitionData(e)), _devBoxDefinitionClientDiagnostics, Pipeline, "DevBoxDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DevBoxDefinitionData, DevBoxDefinitionResource>(new DevBoxDefinitionsGetByDevCenterAsyncCollectionResultOfT(
+                _devBoxDefinitionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                top,
+                context,
+                "DevBoxDefinitionCollection.GetAll"), data => new DevBoxDefinitionResource(Client, data));
+        }
+
+        /// <summary>
+        /// List Dev Box definitions for a devcenter.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/devboxdefinitions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DevBoxDefinitions_ListByDevCenter. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DevBoxDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevBoxDefinitionResource> GetAll(int? top = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DevBoxDefinitionData, DevBoxDefinitionResource>(new DevBoxDefinitionsGetByDevCenterCollectionResultOfT(
+                _devBoxDefinitionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                top,
+                context,
+                "DevBoxDefinitionCollection.GetAll"), data => new DevBoxDefinitionResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/devboxdefinitions/{devBoxDefinitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/devboxdefinitions/{devBoxDefinitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DevBoxDefinitions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DevBoxDefinitions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevBoxDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string devBoxDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(devBoxDefinitionName, nameof(devBoxDefinitionName));
 
-            using var scope = _devBoxDefinitionClientDiagnostics.CreateScope("DevBoxDefinitionCollection.Exists");
+            using DiagnosticScope scope = _devBoxDefinitionsClientDiagnostics.CreateScope("DevBoxDefinitionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _devBoxDefinitionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devBoxDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devBoxDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, devBoxDefinitionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DevBoxDefinitionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DevBoxDefinitionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DevBoxDefinitionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -348,36 +401,50 @@ namespace Azure.ResourceManager.DevCenter
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/devboxdefinitions/{devBoxDefinitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/devboxdefinitions/{devBoxDefinitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DevBoxDefinitions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DevBoxDefinitions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevBoxDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string devBoxDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(devBoxDefinitionName, nameof(devBoxDefinitionName));
 
-            using var scope = _devBoxDefinitionClientDiagnostics.CreateScope("DevBoxDefinitionCollection.Exists");
+            using DiagnosticScope scope = _devBoxDefinitionsClientDiagnostics.CreateScope("DevBoxDefinitionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _devBoxDefinitionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devBoxDefinitionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devBoxDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, devBoxDefinitionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DevBoxDefinitionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DevBoxDefinitionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DevBoxDefinitionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -391,38 +458,54 @@ namespace Azure.ResourceManager.DevCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/devboxdefinitions/{devBoxDefinitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/devboxdefinitions/{devBoxDefinitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DevBoxDefinitions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DevBoxDefinitions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevBoxDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<DevBoxDefinitionResource>> GetIfExistsAsync(string devBoxDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(devBoxDefinitionName, nameof(devBoxDefinitionName));
 
-            using var scope = _devBoxDefinitionClientDiagnostics.CreateScope("DevBoxDefinitionCollection.GetIfExists");
+            using DiagnosticScope scope = _devBoxDefinitionsClientDiagnostics.CreateScope("DevBoxDefinitionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _devBoxDefinitionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devBoxDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devBoxDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, devBoxDefinitionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DevBoxDefinitionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DevBoxDefinitionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DevBoxDefinitionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DevBoxDefinitionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DevBoxDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -436,38 +519,54 @@ namespace Azure.ResourceManager.DevCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/devboxdefinitions/{devBoxDefinitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/devboxdefinitions/{devBoxDefinitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DevBoxDefinitions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DevBoxDefinitions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevBoxDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<DevBoxDefinitionResource> GetIfExists(string devBoxDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(devBoxDefinitionName, nameof(devBoxDefinitionName));
 
-            using var scope = _devBoxDefinitionClientDiagnostics.CreateScope("DevBoxDefinitionCollection.GetIfExists");
+            using DiagnosticScope scope = _devBoxDefinitionsClientDiagnostics.CreateScope("DevBoxDefinitionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _devBoxDefinitionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devBoxDefinitionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _devBoxDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, devBoxDefinitionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DevBoxDefinitionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DevBoxDefinitionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DevBoxDefinitionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DevBoxDefinitionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DevBoxDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -487,6 +586,7 @@ namespace Azure.ResourceManager.DevCenter
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DevBoxDefinitionResource> IAsyncEnumerable<DevBoxDefinitionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

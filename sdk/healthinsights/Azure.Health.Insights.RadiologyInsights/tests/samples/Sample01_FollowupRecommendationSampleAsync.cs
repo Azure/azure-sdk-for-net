@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Health.Insights.RadiologyInsights.Tests.Infrastructure;
-using NUnit.Framework;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.Health.Insights.RadiologyInsights.Tests
 {

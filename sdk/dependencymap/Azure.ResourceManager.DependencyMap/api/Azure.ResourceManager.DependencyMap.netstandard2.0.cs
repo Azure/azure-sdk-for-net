@@ -265,9 +265,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
         public static Azure.ResourceManager.DependencyMap.Models.DependencyMapProcessNameFilterOperator Contains { get { throw null; } }
         public static Azure.ResourceManager.DependencyMap.Models.DependencyMapProcessNameFilterOperator NotContains { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DependencyMap.Models.DependencyMapProcessNameFilterOperator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DependencyMap.Models.DependencyMapProcessNameFilterOperator left, Azure.ResourceManager.DependencyMap.Models.DependencyMapProcessNameFilterOperator right) { throw null; }
         public static implicit operator Azure.ResourceManager.DependencyMap.Models.DependencyMapProcessNameFilterOperator (string value) { throw null; }
@@ -289,9 +287,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
         public static Azure.ResourceManager.DependencyMap.Models.DependencyMapProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.DependencyMap.Models.DependencyMapProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DependencyMap.Models.DependencyMapProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DependencyMap.Models.DependencyMapProvisioningState left, Azure.ResourceManager.DependencyMap.Models.DependencyMapProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DependencyMap.Models.DependencyMapProvisioningState (string value) { throw null; }
@@ -376,9 +372,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
         public static Azure.ResourceManager.DependencyMap.Models.ExportDependenciesStatusCode NoMatch { get { throw null; } }
         public static Azure.ResourceManager.DependencyMap.Models.ExportDependenciesStatusCode PartialMatch { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DependencyMap.Models.ExportDependenciesStatusCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DependencyMap.Models.ExportDependenciesStatusCode left, Azure.ResourceManager.DependencyMap.Models.ExportDependenciesStatusCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.DependencyMap.Models.ExportDependenciesStatusCode (string value) { throw null; }

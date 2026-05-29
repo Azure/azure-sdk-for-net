@@ -19,7 +19,7 @@ public class BurstBufferedProducerTest : TestScenario
 
     /// <summary> The set of <see cref="Role"/>s needed to run this test scenario.</summary>
 
-    public override Role[] Roles { get; } = {Role.BufferedPublisher};
+    public override Role[] Roles { get; } = { Role.BufferedPublisher };
 
     /// <summary>
     ///  Initializes a new <see cref="BurstBufferedProducerTest"/> instance.

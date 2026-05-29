@@ -44,7 +44,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         {
             get
             {
-                return Properties.Something;
+                return Properties is null ? default : Properties.Something;
             }
         }
     }

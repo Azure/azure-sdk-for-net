@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute
             TryGetApiVersion(ResourceType, out string communityGalleryApiVersion);
             _communityGalleryRestClient = new CommunityGalleriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, communityGalleryApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

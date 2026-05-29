@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Elastic;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.Elastic.Models
     public readonly partial struct ResourcePatchOperation : IEquatable<ResourcePatchOperation>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ResourcePatchOperation"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ResourcePatchOperation(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AddBeginValue = "AddBegin";
         private const string AddCompleteValue = "AddComplete";
         private const string DeleteBeginValue = "DeleteBegin";
         private const string DeleteCompleteValue = "DeleteComplete";
         private const string ActiveValue = "Active";
 
-        /// <summary> AddBegin. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourcePatchOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ResourcePatchOperation(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the AddBegin. </summary>
         public static ResourcePatchOperation AddBegin { get; } = new ResourcePatchOperation(AddBeginValue);
-        /// <summary> AddComplete. </summary>
+
+        /// <summary> Gets the AddComplete. </summary>
         public static ResourcePatchOperation AddComplete { get; } = new ResourcePatchOperation(AddCompleteValue);
-        /// <summary> DeleteBegin. </summary>
+
+        /// <summary> Gets the DeleteBegin. </summary>
         public static ResourcePatchOperation DeleteBegin { get; } = new ResourcePatchOperation(DeleteBeginValue);
-        /// <summary> DeleteComplete. </summary>
+
+        /// <summary> Gets the DeleteComplete. </summary>
         public static ResourcePatchOperation DeleteComplete { get; } = new ResourcePatchOperation(DeleteCompleteValue);
-        /// <summary> Active. </summary>
+
+        /// <summary> Gets the Active. </summary>
         public static ResourcePatchOperation Active { get; } = new ResourcePatchOperation(ActiveValue);
+
         /// <summary> Determines if two <see cref="ResourcePatchOperation"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourcePatchOperation left, ResourcePatchOperation right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResourcePatchOperation"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourcePatchOperation left, ResourcePatchOperation right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourcePatchOperation"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResourcePatchOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResourcePatchOperation(string value) => new ResourcePatchOperation(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResourcePatchOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourcePatchOperation?(string value) => value == null ? null : new ResourcePatchOperation(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourcePatchOperation other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResourcePatchOperation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

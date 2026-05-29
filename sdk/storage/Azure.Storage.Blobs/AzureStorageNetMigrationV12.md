@@ -406,7 +406,7 @@ The result we declared an `IAsyncEnumerable<T>` in the previous example was actu
 // set this to already existing continuation token to pick up where you previously left off
 string initialContinuationToken = null;
 AsyncPageable<BlobItem> results = containerClient.GetBlobsAsync();
-IAsyncEnumerable<Page<BlobItem>> pages =  results.AsPages(initialContinuationToken);
+IAsyncEnumerable<Page<BlobItem>> pages = results.AsPages(initialContinuationToken);
 
 // the foreach loop requests the next page of results every loop
 // you do not need to explicitly access the continuation token just to get the next page

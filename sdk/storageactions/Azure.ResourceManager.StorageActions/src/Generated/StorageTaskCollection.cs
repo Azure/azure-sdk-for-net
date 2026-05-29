@@ -28,10 +28,6 @@ namespace Azure.ResourceManager.StorageActions
     {
         private readonly ClientDiagnostics _storageTasksClientDiagnostics;
         private readonly StorageTasks _storageTasksRestClient;
-        private readonly ClientDiagnostics _storageTasksReportClientDiagnostics;
-        private readonly StorageTasksReport _storageTasksReportRestClient;
-        private readonly ClientDiagnostics _storageTaskAssignmentClientDiagnostics;
-        private readonly StorageTaskAssignment _storageTaskAssignmentRestClient;
 
         /// <summary> Initializes a new instance of StorageTaskCollection for mocking. </summary>
         protected StorageTaskCollection()
@@ -46,10 +42,6 @@ namespace Azure.ResourceManager.StorageActions
             TryGetApiVersion(StorageTaskResource.ResourceType, out string storageTaskApiVersion);
             _storageTasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageActions", StorageTaskResource.ResourceType.Namespace, Diagnostics);
             _storageTasksRestClient = new StorageTasks(_storageTasksClientDiagnostics, Pipeline, Endpoint, storageTaskApiVersion ?? "2023-01-01");
-            _storageTasksReportClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageActions", StorageTaskResource.ResourceType.Namespace, Diagnostics);
-            _storageTasksReportRestClient = new StorageTasksReport(_storageTasksReportClientDiagnostics, Pipeline, Endpoint, storageTaskApiVersion ?? "2023-01-01");
-            _storageTaskAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageActions", StorageTaskResource.ResourceType.Namespace, Diagnostics);
-            _storageTaskAssignmentRestClient = new StorageTaskAssignment(_storageTaskAssignmentClientDiagnostics, Pipeline, Endpoint, storageTaskApiVersion ?? "2023-01-01");
             ValidateResourceId(id);
         }
 
@@ -59,7 +51,7 @@ namespace Azure.ResourceManager.StorageActions
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -302,7 +294,7 @@ namespace Azure.ResourceManager.StorageActions
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageTaskData, StorageTaskResource>(new StorageTasksGetByResourceGroupAsyncCollectionResultOfT(_storageTasksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new StorageTaskResource(Client, data));
+            return new AsyncPageableWrapper<StorageTaskData, StorageTaskResource>(new StorageTasksGetByResourceGroupAsyncCollectionResultOfT(_storageTasksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StorageTaskCollection.GetAll"), data => new StorageTaskResource(Client, data));
         }
 
         /// <summary>
@@ -330,11 +322,11 @@ namespace Azure.ResourceManager.StorageActions
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageTaskData, StorageTaskResource>(new StorageTasksGetByResourceGroupCollectionResultOfT(_storageTasksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new StorageTaskResource(Client, data));
+            return new PageableWrapper<StorageTaskData, StorageTaskResource>(new StorageTasksGetByResourceGroupCollectionResultOfT(_storageTasksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StorageTaskCollection.GetAll"), data => new StorageTaskResource(Client, data));
         }
 
         /// <summary>
-        /// Get the storage task properties
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -391,7 +383,7 @@ namespace Azure.ResourceManager.StorageActions
         }
 
         /// <summary>
-        /// Get the storage task properties
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -448,7 +440,7 @@ namespace Azure.ResourceManager.StorageActions
         }
 
         /// <summary>
-        /// Get the storage task properties
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -509,7 +501,7 @@ namespace Azure.ResourceManager.StorageActions
         }
 
         /// <summary>
-        /// Get the storage task properties
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

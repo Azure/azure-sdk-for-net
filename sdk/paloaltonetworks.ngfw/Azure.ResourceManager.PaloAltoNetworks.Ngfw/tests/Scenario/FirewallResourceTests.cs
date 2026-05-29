@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         {
             PaloAltoNetworksFirewallPatch firewallResourcePatch = new PaloAltoNetworksFirewallPatch();
             firewallResourcePatch.Tags.Add("Counter", "1");
-            PaloAltoNetworksFirewallResource updatedResource =  await DefaultResource1.UpdateAsync(firewallResourcePatch);
+            PaloAltoNetworksFirewallResource updatedResource = await DefaultResource1.UpdateAsync(firewallResourcePatch);
 
             Assert.AreEqual(updatedResource.Data.Tags["Counter"], "1");
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await DefaultResource1.UpdateAsync( null)).Value);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await DefaultResource1.UpdateAsync(null)).Value);
         }
 
         [TestCase]
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
         public async Task SetTag()
         {
             PaloAltoNetworksFirewallResource updatedResource = await DefaultResource1.AddTagAsync("Counter1", "3");
-            IDictionary<string, string> tags = new Dictionary<string, string>() { { "Counter2", "4" }, { "Counter3", "5"} };
+            IDictionary<string, string> tags = new Dictionary<string, string>() { { "Counter2", "4" }, { "Counter3", "5" } };
             PaloAltoNetworksFirewallResource updatedResource2 = await updatedResource.SetTagsAsync(tags);
             Assert.AreEqual(tags.Count, 2);
             Assert.AreEqual(updatedResource2.Data.Tags, tags);

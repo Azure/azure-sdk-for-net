@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
@@ -13,9 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(A2AAddDisksContent))]
+    [ModelReaderWriterBuildable(typeof(A2AAgentReinstallBlockingErrorDetails))]
     [ModelReaderWriterBuildable(typeof(A2AApplyClusterRecoveryPointContent))]
     [ModelReaderWriterBuildable(typeof(A2AApplyRecoveryPointContent))]
     [ModelReaderWriterBuildable(typeof(A2AClusterRecoveryPointDetails))]
@@ -182,6 +184,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     [ModelReaderWriterBuildable(typeof(InMagePolicyDetails))]
     [ModelReaderWriterBuildable(typeof(InMageProtectedDiskDetails))]
     [ModelReaderWriterBuildable(typeof(InMageRcmAddDisksContent))]
+    [ModelReaderWriterBuildable(typeof(InMageRcmAgentReinstallBlockingErrorDetails))]
     [ModelReaderWriterBuildable(typeof(InMageRcmAgentUpgradeBlockingErrorDetails))]
     [ModelReaderWriterBuildable(typeof(InMageRcmApplianceDetails))]
     [ModelReaderWriterBuildable(typeof(InMageRcmApplianceSpecificDetails))]
@@ -298,13 +301,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     [ModelReaderWriterBuildable(typeof(RecoveryServicesSiteRecoverySecurityProfileProperties))]
     [ModelReaderWriterBuildable(typeof(RecoveryVirtualNetworkCustomDetails))]
     [ModelReaderWriterBuildable(typeof(RegisteredClusterNodes))]
+    [ModelReaderWriterBuildable(typeof(ReinstallMobilityServiceContent))]
+    [ModelReaderWriterBuildable(typeof(ReinstallMobilityServiceRequestProperties))]
     [ModelReaderWriterBuildable(typeof(RemoveDisksContent))]
-    [ModelReaderWriterBuildable(typeof(RemoveDisksContentProperties))]
+    [ModelReaderWriterBuildable(typeof(RemoveDisksInputProperties))]
     [ModelReaderWriterBuildable(typeof(RemoveDisksProviderSpecificContent))]
     [ModelReaderWriterBuildable(typeof(RemoveProtectionContainerMappingContent))]
-    [ModelReaderWriterBuildable(typeof(RemoveProtectionContainerMappingProperties))]
+    [ModelReaderWriterBuildable(typeof(RemoveProtectionContainerMappingContentProperties))]
     [ModelReaderWriterBuildable(typeof(RenewCertificateContent))]
-    [ModelReaderWriterBuildable(typeof(RenewCertificateContentProperties))]
+    [ModelReaderWriterBuildable(typeof(RenewCertificateInputProperties))]
     [ModelReaderWriterBuildable(typeof(ReplicationAgentDetails))]
     [ModelReaderWriterBuildable(typeof(ReplicationClusterProviderSpecificSettings))]
     [ModelReaderWriterBuildable(typeof(ReplicationEligibilityResultData))]
@@ -326,7 +331,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     [ModelReaderWriterBuildable(typeof(ReplicationProtectionIntentProperties))]
     [ModelReaderWriterBuildable(typeof(ReplicationProtectionIntentProviderSpecificSettings))]
     [ModelReaderWriterBuildable(typeof(ReplicationProtectionIntentResource))]
-    [ModelReaderWriterBuildable(typeof(ReplicationProviderContainerUnmappingContent))]
+    [ModelReaderWriterBuildable(typeof(ReplicationProviderContainerUnmappingInput))]
     [ModelReaderWriterBuildable(typeof(ReplicationProviderSpecificContainerCreationContent))]
     [ModelReaderWriterBuildable(typeof(ReplicationProviderSpecificContainerMappingContent))]
     [ModelReaderWriterBuildable(typeof(ReplicationProviderSpecificSettings))]
@@ -335,8 +340,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     [ModelReaderWriterBuildable(typeof(ReplicationResumeJobProperties))]
     [ModelReaderWriterBuildable(typeof(ReprotectAgentDetails))]
     [ModelReaderWriterBuildable(typeof(ResolveHealthContent))]
-    [ModelReaderWriterBuildable(typeof(ResolveHealthContentProperties))]
     [ModelReaderWriterBuildable(typeof(ResolveHealthError))]
+    [ModelReaderWriterBuildable(typeof(ResolveHealthInputProperties))]
     [ModelReaderWriterBuildable(typeof(ResourceHealthSummary))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ResumeReplicationContent))]
@@ -366,9 +371,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     [ModelReaderWriterBuildable(typeof(SiteRecoveryApplyRecoveryPointContent))]
     [ModelReaderWriterBuildable(typeof(SiteRecoveryApplyRecoveryPointProperties))]
     [ModelReaderWriterBuildable(typeof(SiteRecoveryApplyRecoveryPointProviderSpecificContent))]
-    [ModelReaderWriterBuildable(typeof(SiteRecoveryClusterRecoveryPointData))]
+    [ModelReaderWriterBuildable(typeof(SiteRecoveryClusterRecoveryPoint))]
     [ModelReaderWriterBuildable(typeof(SiteRecoveryClusterRecoveryPointProperties))]
-    [ModelReaderWriterBuildable(typeof(SiteRecoveryClusterRecoveryPointResource))]
     [ModelReaderWriterBuildable(typeof(SiteRecoveryComputeSizeErrorDetails))]
     [ModelReaderWriterBuildable(typeof(SiteRecoveryConfigureAlertProperties))]
     [ModelReaderWriterBuildable(typeof(SiteRecoveryCreatePolicyProperties))]
@@ -558,6 +562,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     [ModelReaderWriterBuildable(typeof(UnknownFabricSpecificDetails))]
     [ModelReaderWriterBuildable(typeof(UnknownFabricSpecificUpdateNetworkMappingContent))]
     [ModelReaderWriterBuildable(typeof(UnknownGroupTaskDetails))]
+    [ModelReaderWriterBuildable(typeof(UnknownHyperVReplicaPolicyContent))]
+    [ModelReaderWriterBuildable(typeof(UnknownHyperVVmDetails))]
     [ModelReaderWriterBuildable(typeof(UnknownJobDetails))]
     [ModelReaderWriterBuildable(typeof(UnknownMigrateProviderSpecificContent))]
     [ModelReaderWriterBuildable(typeof(UnknownMigrationProviderSpecificSettings))]
@@ -570,6 +576,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     [ModelReaderWriterBuildable(typeof(UnknownProviderSpecificRecoveryPointDetails))]
     [ModelReaderWriterBuildable(typeof(UnknownRecoveryAvailabilitySetCustomDetails))]
     [ModelReaderWriterBuildable(typeof(UnknownRecoveryPlanActionDetails))]
+    [ModelReaderWriterBuildable(typeof(UnknownRecoveryPlanGroupTaskDetails))]
     [ModelReaderWriterBuildable(typeof(UnknownRecoveryPlanProviderSpecificContent))]
     [ModelReaderWriterBuildable(typeof(UnknownRecoveryPlanProviderSpecificDetails))]
     [ModelReaderWriterBuildable(typeof(UnknownRecoveryPlanProviderSpecificFailoverContent))]
@@ -587,6 +594,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     [ModelReaderWriterBuildable(typeof(UnknownResyncProviderSpecificContent))]
     [ModelReaderWriterBuildable(typeof(UnknownReverseReplicationProviderSpecificContent))]
     [ModelReaderWriterBuildable(typeof(UnknownSharedDiskReplicationProviderSpecificSettings))]
+    [ModelReaderWriterBuildable(typeof(UnknownSiteRecoveryJobTaskDetails))]
     [ModelReaderWriterBuildable(typeof(UnknownStorageAccountCustomDetails))]
     [ModelReaderWriterBuildable(typeof(UnknownSwitchClusterProtectionProviderSpecificContent))]
     [ModelReaderWriterBuildable(typeof(UnknownSwitchProtectionProviderSpecificContent))]
@@ -610,9 +618,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     [ModelReaderWriterBuildable(typeof(UpdateMobilityServiceContent))]
     [ModelReaderWriterBuildable(typeof(UpdateMobilityServiceRequestProperties))]
     [ModelReaderWriterBuildable(typeof(UpdateNetworkMappingProperties))]
-    [ModelReaderWriterBuildable(typeof(UpdatePolicyContentProperties))]
+    [ModelReaderWriterBuildable(typeof(UpdatePolicyInputProperties))]
     [ModelReaderWriterBuildable(typeof(UpdateProtectionContainerMappingContentProperties))]
-    [ModelReaderWriterBuildable(typeof(UpdateRecoveryPlanContentProperties))]
+    [ModelReaderWriterBuildable(typeof(UpdateRecoveryPlanInputProperties))]
     [ModelReaderWriterBuildable(typeof(UpdateReplicationProtectedItemProperties))]
     [ModelReaderWriterBuildable(typeof(UpdateReplicationProtectedItemProviderContent))]
     [ModelReaderWriterBuildable(typeof(UserCreatedResourceTag))]

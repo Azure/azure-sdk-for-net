@@ -1,14 +1,18 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.5.0-beta.1 (2026-05-27)
 
 ### Features Added
 
-### Breaking Changes
+- Upgraded api-version from '2024-11-30' to '2025-05-31-preview'.
+- Exposed User-Assigned Identity `AssignmentRestrictions` property.
 
-### Bugs Fixed
+## 1.4.1 (2026-04-27)
 
 ### Other Changes
+
+- Upgraded dependent `Azure.Core` to 1.54.0.
+- Upgraded dependent `Azure.ResourceManager` to 1.14.0.
 
 ## 1.4.0 (2025-07-11)
 

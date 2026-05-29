@@ -44,7 +44,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     continue;
                 }
 
-                yield return new object[] { Type.GetType($"System.{ name }", true, true) };
+                yield return new object[] { Type.GetType($"System.{name}", true, true) };
             }
         }
 

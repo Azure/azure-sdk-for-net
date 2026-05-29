@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTheLongTermRetentionBackup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/ResourceGroupBasedLongTermRetentionBackupGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/SQL/stable/2025-01-01/examples/ResourceGroupBasedLongTermRetentionBackupGet.json
             // this example is just showing the usage of "LongTermRetentionBackups_GetByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteTheLongTermRetentionBackup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/ResourceGroupBasedLongTermRetentionBackupDelete.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/SQL/stable/2025-01-01/examples/ResourceGroupBasedLongTermRetentionBackupDelete.json
             // this example is just showing the usage of "LongTermRetentionBackups_DeleteByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ChangeAccessTierByResourceGroup_ChangeTheLongTermRetentionBackupStorageAccessTierForAResourceGroup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/ResourceGroupBasedChangeLongTermRetentionBackupAccessTier.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/SQL/stable/2025-01-01/examples/ResourceGroupBasedChangeLongTermRetentionBackupAccessTier.json
             // this example is just showing the usage of "LongTermRetentionBackups_ChangeAccessTierByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CopyByResourceGroup_CopyTheLongTermRetentionBackup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/ResourceGroupBasedLongTermRetentionBackupCopy.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/SQL/stable/2025-01-01/examples/ResourceGroupBasedLongTermRetentionBackupCopy.json
             // this example is just showing the usage of "LongTermRetentionBackups_CopyByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task LockTimeBasedImmutabilityByResourceGroup_LockTimeBasedImmutabilityOfTheLongTermRetentionBackup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/ResourceGroupBasedLockTimeBasedImmutabilityLongTermRetentionBackup.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/SQL/stable/2025-01-01/examples/ResourceGroupBasedLockTimeBasedImmutabilityLongTermRetentionBackup.json
             // this example is just showing the usage of "LongTermRetentionBackups_LockTimeBasedImmutabilityByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task RemoveLegalHoldImmutabilityByResourceGroup_RemoveLegalHoldImmutabilityOfTheLongTermRetentionBackup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/ResourceGroupBasedRemoveLegalHoldImmutabilityLongTermRetentionBackup.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/SQL/stable/2025-01-01/examples/ResourceGroupBasedRemoveLegalHoldImmutabilityLongTermRetentionBackup.json
             // this example is just showing the usage of "LongTermRetentionBackups_RemoveLegalHoldImmutabilityByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task RemoveTimeBasedImmutabilityByResourceGroup_RemoveTimeBasedImmutabilityOfTheLongTermRetentionBackup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/ResourceGroupBasedRemoveTimeBasedImmutabilityLongTermRetentionBackup.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/SQL/stable/2025-01-01/examples/ResourceGroupBasedRemoveTimeBasedImmutabilityLongTermRetentionBackup.json
             // this example is just showing the usage of "LongTermRetentionBackups_RemoveTimeBasedImmutabilityByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task SetLegalHoldImmutabilityByResourceGroup_SetLegalHoldImmutabilityOfTheLongTermRetentionBackup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/ResourceGroupBasedSetLegalHoldImmutabilityLongTermRetentionBackup.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/SQL/stable/2025-01-01/examples/ResourceGroupBasedSetLegalHoldImmutabilityLongTermRetentionBackup.json
             // this example is just showing the usage of "LongTermRetentionBackups_SetLegalHoldImmutabilityByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task UpdateByResourceGroup_UpdateTheLongTermRetentionBackup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/ResourceGroupBasedLongTermRetentionBackupUpdate.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/SQL/stable/2025-01-01/examples/ResourceGroupBasedLongTermRetentionBackupUpdate.json
             // this example is just showing the usage of "LongTermRetentionBackups_UpdateByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

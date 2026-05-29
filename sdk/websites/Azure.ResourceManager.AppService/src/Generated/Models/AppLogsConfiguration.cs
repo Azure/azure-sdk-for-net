@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The AppLogsConfiguration. </summary>
+    /// <summary>
+    /// The AppLogsConfiguration.
+    /// Serialized Name: AppLogsConfiguration
+    /// </summary>
     public partial class AppLogsConfiguration
     {
         /// <summary>
@@ -51,8 +54,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppLogsConfiguration"/>. </summary>
-        /// <param name="destination"></param>
-        /// <param name="logAnalyticsConfiguration"></param>
+        /// <param name="destination"> Serialized Name: AppLogsConfiguration.destination. </param>
+        /// <param name="logAnalyticsConfiguration"> Serialized Name: AppLogsConfiguration.logAnalyticsConfiguration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppLogsConfiguration(string destination, LogAnalyticsConfiguration logAnalyticsConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +64,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the destination. </summary>
+        /// <summary> Serialized Name: AppLogsConfiguration.destination. </summary>
         [WirePath("destination")]
         public string Destination { get; set; }
-        /// <summary> Gets or sets the log analytics configuration. </summary>
+        /// <summary> Serialized Name: AppLogsConfiguration.logAnalyticsConfiguration. </summary>
         [WirePath("logAnalyticsConfiguration")]
         public LogAnalyticsConfiguration LogAnalyticsConfiguration { get; set; }
     }

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The entity associated with this intent. </summary>
     public partial class ConversationalAIEntity
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConversationalAIEntity"/>. </summary>
         /// <param name="name"> The entity name or category. </param>
@@ -52,13 +24,8 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="offset"> The starting index of the entity in the query. </param>
         /// <param name="length"> The length of the detected entity text. </param>
         /// <param name="conversationItemId"> The ID of the conversation item where the entity appears. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="text"/> or <paramref name="conversationItemId"/> is null. </exception>
         internal ConversationalAIEntity(string name, string text, float confidenceScore, int offset, int length, string conversationItemId)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(text, nameof(text));
-            Argument.AssertNotNull(conversationItemId, nameof(conversationItemId));
-
             Name = name;
             Text = text;
             ConfidenceScore = confidenceScore;
@@ -77,18 +44,10 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="length"> The length of the detected entity text. </param>
         /// <param name="conversationItemId"> The ID of the conversation item where the entity appears. </param>
         /// <param name="conversationItemIndex"> The index of the conversation item where the entity appears. </param>
-        /// <param name="resolutions">
-        /// Entity resolution details, if available.
-        /// Please note <see cref="ResolutionBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AgeResolution"/>, <see cref="AreaResolution"/>, <see cref="BooleanResolution"/>, <see cref="CurrencyResolution"/>, <see cref="DateTimeResolution"/>, <see cref="InformationResolution"/>, <see cref="LengthResolution"/>, <see cref="NumberResolution"/>, <see cref="NumericRangeResolution"/>, <see cref="OrdinalResolution"/>, <see cref="SpeedResolution"/>, <see cref="TemperatureResolution"/>, <see cref="TemporalSpanResolution"/>, <see cref="VolumeResolution"/> and <see cref="WeightResolution"/>.
-        /// </param>
-        /// <param name="extraInformation">
-        /// Additional entity metadata.
-        /// Please note <see cref="ConversationEntityExtraInformation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="EntitySubtype"/>, <see cref="ListKey"/> and <see cref="RegexKey"/>.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationalAIEntity(string name, string text, float confidenceScore, int offset, int length, string conversationItemId, int? conversationItemIndex, IReadOnlyList<ResolutionBase> resolutions, IReadOnlyList<ConversationEntityExtraInformation> extraInformation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="resolutions"> Entity resolution details, if available. </param>
+        /// <param name="extraInformation"> Additional entity metadata. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConversationalAIEntity(string name, string text, float confidenceScore, int offset, int length, string conversationItemId, int? conversationItemIndex, IList<ResolutionBase> resolutions, IList<ConversationEntityExtraInformation> extraInformation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Text = text;
@@ -99,39 +58,34 @@ namespace Azure.AI.Language.Conversations.Models
             ConversationItemIndex = conversationItemIndex;
             Resolutions = resolutions;
             ExtraInformation = extraInformation;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ConversationalAIEntity"/> for deserialization. </summary>
-        internal ConversationalAIEntity()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The entity name or category. </summary>
         public string Name { get; }
+
         /// <summary> The detected text of the entity. </summary>
         public string Text { get; }
+
         /// <summary> The confidence score of the entity detection (0.0 to 1.0). </summary>
         public float ConfidenceScore { get; }
+
         /// <summary> The starting index of the entity in the query. </summary>
         public int Offset { get; }
+
         /// <summary> The length of the detected entity text. </summary>
         public int Length { get; }
+
         /// <summary> The ID of the conversation item where the entity appears. </summary>
         public string ConversationItemId { get; }
+
         /// <summary> The index of the conversation item where the entity appears. </summary>
         public int? ConversationItemIndex { get; }
-        /// <summary>
-        /// Entity resolution details, if available.
-        /// Please note <see cref="ResolutionBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AgeResolution"/>, <see cref="AreaResolution"/>, <see cref="BooleanResolution"/>, <see cref="CurrencyResolution"/>, <see cref="DateTimeResolution"/>, <see cref="InformationResolution"/>, <see cref="LengthResolution"/>, <see cref="NumberResolution"/>, <see cref="NumericRangeResolution"/>, <see cref="OrdinalResolution"/>, <see cref="SpeedResolution"/>, <see cref="TemperatureResolution"/>, <see cref="TemporalSpanResolution"/>, <see cref="VolumeResolution"/> and <see cref="WeightResolution"/>.
-        /// </summary>
-        public IReadOnlyList<ResolutionBase> Resolutions { get; }
-        /// <summary>
-        /// Additional entity metadata.
-        /// Please note <see cref="ConversationEntityExtraInformation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="EntitySubtype"/>, <see cref="ListKey"/> and <see cref="RegexKey"/>.
-        /// </summary>
-        public IReadOnlyList<ConversationEntityExtraInformation> ExtraInformation { get; }
+
+        /// <summary> Entity resolution details, if available. </summary>
+        public IList<ResolutionBase> Resolutions { get; }
+
+        /// <summary> Additional entity metadata. </summary>
+        public IList<ConversationEntityExtraInformation> ExtraInformation { get; }
     }
 }

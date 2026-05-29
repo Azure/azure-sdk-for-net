@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         {
             TryGetApiVersion(ResourceType, out string planetaryComputerGeoCatalogApiVersion);
             _geoCatalogsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PlanetaryComputer", ResourceType.Namespace, Diagnostics);
-            _geoCatalogsRestClient = new GeoCatalogs(_geoCatalogsClientDiagnostics, Pipeline, Endpoint, planetaryComputerGeoCatalogApiVersion ?? "2025-02-11-preview");
+            _geoCatalogsRestClient = new GeoCatalogs(_geoCatalogsClientDiagnostics, Pipeline, Endpoint, planetaryComputerGeoCatalogApiVersion ?? "2026-04-15");
             ValidateResourceId(id);
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-11-preview. </description>
+        /// <description> 2026-04-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-11-preview. </description>
+        /// <description> 2026-04-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-11-preview. </description>
+        /// <description> 2026-04-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-11-preview. </description>
+        /// <description> 2026-04-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-11-preview. </description>
+        /// <description> 2026-04-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-11-preview. </description>
+        /// <description> 2026-04-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<PlanetaryComputerGeoCatalogResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<PlanetaryComputerGeoCatalogResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<PlanetaryComputerGeoCatalogResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<PlanetaryComputerGeoCatalogResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
                     PlanetaryComputerGeoCatalogData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     PlanetaryComputerGeoCatalogPatch patch = new PlanetaryComputerGeoCatalogPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<PlanetaryComputerGeoCatalogResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<PlanetaryComputerGeoCatalogResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
                     PlanetaryComputerGeoCatalogData current = Get(cancellationToken: cancellationToken).Value.Data;
                     PlanetaryComputerGeoCatalogPatch patch = new PlanetaryComputerGeoCatalogPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<PlanetaryComputerGeoCatalogResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<PlanetaryComputerGeoCatalogResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<PlanetaryComputerGeoCatalogResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<PlanetaryComputerGeoCatalogResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<PlanetaryComputerGeoCatalogResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<PlanetaryComputerGeoCatalogResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

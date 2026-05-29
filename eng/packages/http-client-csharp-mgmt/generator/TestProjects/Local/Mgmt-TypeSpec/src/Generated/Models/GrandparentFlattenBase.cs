@@ -47,7 +47,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         {
             get
             {
-                return Identifier.UniqueId;
+                return Identifier is null ? default : Identifier.UniqueId;
             }
         }
     }

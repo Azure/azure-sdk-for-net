@@ -52,9 +52,9 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 EventHubProperties properties = await producer.GetEventHubPropertiesAsync();
 
                 Debug.WriteLine("The Event Hub has the following properties:");
-                Debug.WriteLine($"\tThe path to the Event Hub from the namespace is: { properties.Name }");
-                Debug.WriteLine($"\tThe Event Hub was created at: { properties.CreatedOn }, in UTC.");
-                Debug.WriteLine($"\tThe following partitions are available: [{ string.Join(", ", properties.PartitionIds) }]");
+                Debug.WriteLine($"\tThe path to the Event Hub from the namespace is: {properties.Name}");
+                Debug.WriteLine($"\tThe Event Hub was created at: {properties.CreatedOn}, in UTC.");
+                Debug.WriteLine($"\tThe following partitions are available: [{string.Join(", ", properties.PartitionIds)}]");
             }
             finally
             {
@@ -93,7 +93,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             try
             {
                 string[] partitions = await producer.GetPartitionIdsAsync();
-                Debug.WriteLine($"The following partitions are available: [{ string.Join(", ", partitions) }]");
+                Debug.WriteLine($"The following partitions are available: [{string.Join(", ", partitions)}]");
             }
             finally
             {
@@ -138,12 +138,12 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
                 PartitionProperties partitionProperties = await consumer.GetPartitionPropertiesAsync(firstPartition);
 
-                Debug.WriteLine($"Partition: { partitionProperties.Id }");
-                Debug.WriteLine($"\tThe partition contains no events: { partitionProperties.IsEmpty }");
-                Debug.WriteLine($"\tThe first sequence number is: { partitionProperties.BeginningSequenceNumber }");
-                Debug.WriteLine($"\tThe last sequence number is: { partitionProperties.LastEnqueuedSequenceNumber }");
-                Debug.WriteLine($"\tThe last offset is: { partitionProperties.LastEnqueuedOffsetString }");
-                Debug.WriteLine($"\tThe last enqueued time is: { partitionProperties.LastEnqueuedTime }, in UTC.");
+                Debug.WriteLine($"Partition: {partitionProperties.Id}");
+                Debug.WriteLine($"\tThe partition contains no events: {partitionProperties.IsEmpty}");
+                Debug.WriteLine($"\tThe first sequence number is: {partitionProperties.BeginningSequenceNumber}");
+                Debug.WriteLine($"\tThe last sequence number is: {partitionProperties.LastEnqueuedSequenceNumber}");
+                Debug.WriteLine($"\tThe last offset is: {partitionProperties.LastEnqueuedOffsetString}");
+                Debug.WriteLine($"\tThe last enqueued time is: {partitionProperties.LastEnqueuedTime}, in UTC.");
             }
             finally
             {

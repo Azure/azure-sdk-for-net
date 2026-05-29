@@ -131,14 +131,16 @@ namespace Azure.Core.TestFramework.Tests
             string exceptionPrefix = IsAsync ? "async" : "sync";
 
             // Static schema
-            try { await client.GetFailureAsync<string>(); }
+            try
+            { await client.GetFailureAsync<string>(); }
             catch (InvalidOperationException ex)
             {
                 Assert.AreEqual($"{exceptionPrefix} - static", ex.Message);
             }
 
             // Dynamic schema
-            try { await client.GetFailureAsync(); }
+            try
+            { await client.GetFailureAsync(); }
             catch (InvalidOperationException ex)
             {
                 Assert.AreEqual($"{exceptionPrefix} - dynamic", ex.Message);

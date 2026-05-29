@@ -1,16 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Pipeline;
-using Azure.Core;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Threading;
-using System.Linq;
-using System.Text.Json;
-using System.Security.Principal;
 using System.ComponentModel;
+using System.Linq;
+using System.Security.Principal;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.AI.Translation.Text
 {
@@ -93,7 +93,7 @@ namespace Azure.AI.Translation.Text
         [Obsolete("This method is obsolete and will be removed in a future release.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<IReadOnlyList<TranslatedTextItem>>> TranslateAsync(TextTranslationTranslateOptions options, CancellationToken cancellationToken = default)
-       {
+        {
             throw new NotSupportedException("This method is no longer supported.");
         }
 
@@ -183,7 +183,7 @@ namespace Azure.AI.Translation.Text
         [Obsolete("This method is obsolete and will be removed in a future release.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<IReadOnlyList<TransliteratedText>>> TransliterateAsync(TextTranslationTransliterateOptions options, CancellationToken cancellationToken = default)
-       {
+        {
             throw new NotSupportedException("This method is no longer supported.");
         }
 

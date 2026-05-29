@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Elastic
 {
+    /// <summary></summary>
     public partial class ElasticTagRuleResource : IJsonModel<ElasticTagRuleData>
     {
-        private static ElasticTagRuleData s_dataDeserializationInstance;
-        private static ElasticTagRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ElasticTagRuleData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ElasticTagRuleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ElasticTagRuleData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ElasticTagRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ElasticTagRuleData>)Data).Write(writer, options);
 
-        ElasticTagRuleData IJsonModel<ElasticTagRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ElasticTagRuleData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ElasticTagRuleData IJsonModel<ElasticTagRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ElasticTagRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ElasticTagRuleData>(Data, options, AzureResourceManagerElasticContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ElasticTagRuleData IPersistableModel<ElasticTagRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ElasticTagRuleData>(data, options, AzureResourceManagerElasticContext.Default);
 
-        string IPersistableModel<ElasticTagRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ElasticTagRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ElasticTagRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

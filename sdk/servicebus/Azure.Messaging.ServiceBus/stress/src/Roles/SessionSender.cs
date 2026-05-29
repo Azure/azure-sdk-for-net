@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
@@ -30,7 +30,7 @@ internal class SessionSender : Sender
     ///
     public SessionSender(TestParameters testParameters,
                              SenderConfiguration senderConfiguration,
-                             Metrics metrics) : base(testParameters, senderConfiguration, metrics){}
+                             Metrics metrics) : base(testParameters, senderConfiguration, metrics) { }
 
     /// <summary>
     ///   Generates messages using the <see cref= "SenderConfiguration" /> instance associated with this role instance.

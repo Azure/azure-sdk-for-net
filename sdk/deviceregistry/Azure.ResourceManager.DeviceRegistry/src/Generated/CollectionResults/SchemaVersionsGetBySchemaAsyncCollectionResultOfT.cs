@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         private readonly string _schemaRegistryName;
         private readonly string _schemaName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of SchemaVersionsGetBySchemaAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The SchemaVersions client used to send requests. </param>
@@ -31,20 +32,16 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="schemaRegistryName"> Schema registry name parameter. </param>
         /// <param name="schemaName"> Schema name parameter. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="schemaRegistryName"/> or <paramref name="schemaName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="schemaRegistryName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public SchemaVersionsGetBySchemaAsyncCollectionResultOfT(SchemaVersions client, Guid subscriptionId, string resourceGroupName, string schemaRegistryName, string schemaName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public SchemaVersionsGetBySchemaAsyncCollectionResultOfT(SchemaVersions client, Guid subscriptionId, string resourceGroupName, string schemaRegistryName, string schemaName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(schemaRegistryName, nameof(schemaRegistryName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _schemaRegistryName = schemaRegistryName;
             _schemaName = schemaName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of SchemaVersionsGetBySchemaAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -62,7 +59,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                     yield break;
                 }
                 SchemaVersionListResult result = SchemaVersionListResult.FromResponse(response);
-                yield return Page<DeviceRegistrySchemaVersionData>.FromValues((IReadOnlyList<DeviceRegistrySchemaVersionData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DeviceRegistrySchemaVersionData>.FromValues((IReadOnlyList<DeviceRegistrySchemaVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -77,7 +74,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySchemaRequest(nextLink, _subscriptionId, _resourceGroupName, _schemaRegistryName, _schemaName, _context) : _client.CreateGetBySchemaRequest(_subscriptionId, _resourceGroupName, _schemaRegistryName, _schemaName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DeviceRegistrySchemaVersionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

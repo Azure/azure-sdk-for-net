@@ -37,7 +37,13 @@ namespace Azure.ResourceManager.DurableTask
             return subscriptionResource.GetCachedClient(client => new MockableDurableTaskSubscriptionResource(client, subscriptionResource.Id));
         }
 
-        /// <summary> Gets an object representing a <see cref="DurableTaskSchedulerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DurableTaskSchedulerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDurableTaskArmClient.GetDurableTaskSchedulerResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -49,7 +55,49 @@ namespace Azure.ResourceManager.DurableTask
             return GetMockableDurableTaskArmClient(client).GetDurableTaskSchedulerResource(id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DurableTaskHubResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DurableTaskSchedulerPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDurableTaskArmClient.GetDurableTaskSchedulerPrivateLinkResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DurableTaskSchedulerPrivateLinkResource"/> object. </returns>
+        public static DurableTaskSchedulerPrivateLinkResource GetDurableTaskSchedulerPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableDurableTaskArmClient(client).GetDurableTaskSchedulerPrivateLinkResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DurableTaskPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDurableTaskArmClient.GetDurableTaskPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DurableTaskPrivateEndpointConnectionResource"/> object. </returns>
+        public static DurableTaskPrivateEndpointConnectionResource GetDurableTaskPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableDurableTaskArmClient(client).GetDurableTaskPrivateEndpointConnectionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DurableTaskHubResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDurableTaskArmClient.GetDurableTaskHubResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -61,7 +109,13 @@ namespace Azure.ResourceManager.DurableTask
             return GetMockableDurableTaskArmClient(client).GetDurableTaskHubResource(id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DurableTaskRetentionPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DurableTaskRetentionPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDurableTaskArmClient.GetDurableTaskRetentionPolicyResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -73,7 +127,13 @@ namespace Azure.ResourceManager.DurableTask
             return GetMockableDurableTaskArmClient(client).GetDurableTaskRetentionPolicyResource(id);
         }
 
-        /// <summary> Gets a collection of DurableTaskSchedulers in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <summary>
+        /// Gets a collection of DurableTaskSchedulers in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDurableTaskResourceGroupResource.GetDurableTaskSchedulers()"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of DurableTaskSchedulers and their operations over a DurableTaskSchedulerResource. </returns>
@@ -84,7 +144,13 @@ namespace Azure.ResourceManager.DurableTask
             return GetMockableDurableTaskResourceGroupResource(resourceGroupResource).GetDurableTaskSchedulers();
         }
 
-        /// <summary> Get a Scheduler. </summary>
+        /// <summary>
+        /// Get a Scheduler
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDurableTaskResourceGroupResource.GetDurableTaskSchedulerAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="schedulerName"> The name of the Scheduler. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -97,7 +163,13 @@ namespace Azure.ResourceManager.DurableTask
             return await GetMockableDurableTaskResourceGroupResource(resourceGroupResource).GetDurableTaskSchedulerAsync(schedulerName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a Scheduler. </summary>
+        /// <summary>
+        /// Get a Scheduler
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDurableTaskResourceGroupResource.GetDurableTaskScheduler(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="schedulerName"> The name of the Scheduler. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -110,7 +182,13 @@ namespace Azure.ResourceManager.DurableTask
             return GetMockableDurableTaskResourceGroupResource(resourceGroupResource).GetDurableTaskScheduler(schedulerName, cancellationToken);
         }
 
-        /// <summary> List Schedulers by subscription. </summary>
+        /// <summary>
+        /// List Schedulers by subscription
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDurableTaskSubscriptionResource.GetDurableTaskSchedulersAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
@@ -122,7 +200,13 @@ namespace Azure.ResourceManager.DurableTask
             return GetMockableDurableTaskSubscriptionResource(subscriptionResource).GetDurableTaskSchedulersAsync(cancellationToken);
         }
 
-        /// <summary> List Schedulers by subscription. </summary>
+        /// <summary>
+        /// List Schedulers by subscription
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDurableTaskSubscriptionResource.GetDurableTaskSchedulers(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>

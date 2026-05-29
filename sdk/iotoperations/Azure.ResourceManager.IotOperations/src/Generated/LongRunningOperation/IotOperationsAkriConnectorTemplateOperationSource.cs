@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.IotOperations
 {
-    internal class IotOperationsAkriConnectorTemplateOperationSource : IOperationSource<IotOperationsAkriConnectorTemplateResource>
+    /// <summary></summary>
+    internal partial class IotOperationsAkriConnectorTemplateOperationSource : IOperationSource<IotOperationsAkriConnectorTemplateResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal IotOperationsAkriConnectorTemplateOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         IotOperationsAkriConnectorTemplateResource IOperationSource<IotOperationsAkriConnectorTemplateResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IotOperationsAkriConnectorTemplateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerIotOperationsContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            IotOperationsAkriConnectorTemplateData data = IotOperationsAkriConnectorTemplateData.DeserializeIotOperationsAkriConnectorTemplateData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new IotOperationsAkriConnectorTemplateResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<IotOperationsAkriConnectorTemplateResource> IOperationSource<IotOperationsAkriConnectorTemplateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IotOperationsAkriConnectorTemplateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerIotOperationsContext.Default);
-            return await Task.FromResult(new IotOperationsAkriConnectorTemplateResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            IotOperationsAkriConnectorTemplateData data = IotOperationsAkriConnectorTemplateData.DeserializeIotOperationsAkriConnectorTemplateData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new IotOperationsAkriConnectorTemplateResource(_client, data);
         }
     }
 }

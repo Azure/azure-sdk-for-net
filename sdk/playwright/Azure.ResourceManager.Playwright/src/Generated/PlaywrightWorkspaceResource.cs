@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Playwright
         {
             TryGetApiVersion(ResourceType, out string playwrightWorkspaceApiVersion);
             _playwrightWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Playwright", ResourceType.Namespace, Diagnostics);
-            _playwrightWorkspacesRestClient = new PlaywrightWorkspaces(_playwrightWorkspacesClientDiagnostics, Pipeline, Endpoint, playwrightWorkspaceApiVersion ?? "2025-09-01");
+            _playwrightWorkspacesRestClient = new PlaywrightWorkspaces(_playwrightWorkspacesClientDiagnostics, Pipeline, Endpoint, playwrightWorkspaceApiVersion ?? "2026-02-01-preview");
             ValidateResourceId(id);
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Playwright
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Playwright
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<PlaywrightWorkspaceResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<PlaywrightWorkspaceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Playwright
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<PlaywrightWorkspaceResource> result = Update(patch, cancellationToken);
+                    Response<PlaywrightWorkspaceResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.Playwright
                     PlaywrightWorkspaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     PlaywrightWorkspacePatch patch = new PlaywrightWorkspacePatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<PlaywrightWorkspaceResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<PlaywrightWorkspaceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.Playwright
                     PlaywrightWorkspaceData current = Get(cancellationToken: cancellationToken).Value.Data;
                     PlaywrightWorkspacePatch patch = new PlaywrightWorkspacePatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<PlaywrightWorkspaceResource> result = Update(patch, cancellationToken);
+                    Response<PlaywrightWorkspaceResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.Playwright
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<PlaywrightWorkspaceResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<PlaywrightWorkspaceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.Playwright
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<PlaywrightWorkspaceResource> result = Update(patch, cancellationToken);
+                    Response<PlaywrightWorkspaceResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -665,8 +665,8 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary> Gets a collection of PlaywrightWorkspaceQuotas in the <see cref="PlaywrightWorkspaceResource"/>. </summary>
-        /// <returns> An object representing collection of PlaywrightWorkspaceQuotas and their operations over a PlaywrightWorkspaceQuotaResource. </returns>
+        /// <summary> Gets a collection of PlaywrightWorkspaceQuota in the <see cref="PlaywrightWorkspaceResource"/>. </summary>
+        /// <returns> An object representing collection of PlaywrightWorkspaceQuota and their operations over a PlaywrightWorkspaceQuotaResource. </returns>
         public virtual PlaywrightWorkspaceQuotaCollection GetAllPlaywrightWorkspaceQuota()
         {
             return GetCachedClient(client => new PlaywrightWorkspaceQuotaCollection(client, Id));

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ImpactReporting
 {
-    internal class ImpactConnectorOperationSource : IOperationSource<ImpactConnectorResource>
+    /// <summary></summary>
+    internal partial class ImpactConnectorOperationSource : IOperationSource<ImpactConnectorResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ImpactConnectorOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ImpactConnectorResource IOperationSource<ImpactConnectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ImpactConnectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerImpactReportingContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ImpactConnectorData data = ImpactConnectorData.DeserializeImpactConnectorData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ImpactConnectorResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ImpactConnectorResource> IOperationSource<ImpactConnectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ImpactConnectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerImpactReportingContext.Default);
-            return await Task.FromResult(new ImpactConnectorResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ImpactConnectorData data = ImpactConnectorData.DeserializeImpactConnectorData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ImpactConnectorResource(_client, data);
         }
     }
 }

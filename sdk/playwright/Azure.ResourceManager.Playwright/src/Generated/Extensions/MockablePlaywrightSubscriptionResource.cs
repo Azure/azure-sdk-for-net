@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.Playwright.Mocking
 
         private ClientDiagnostics PlaywrightWorkspacesClientDiagnostics => _playwrightWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Playwright.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PlaywrightWorkspaces PlaywrightWorkspacesRestClient => _playwrightWorkspacesRestClient ??= new PlaywrightWorkspaces(PlaywrightWorkspacesClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private PlaywrightWorkspaces PlaywrightWorkspacesRestClient => _playwrightWorkspacesRestClient ??= new PlaywrightWorkspaces(PlaywrightWorkspacesClientDiagnostics, Pipeline, Endpoint, "2026-02-01-preview");
 
-        /// <summary> Gets a collection of PlaywrightQuotas in the <see cref="SubscriptionResource"/>. </summary>
+        /// <summary> Gets a collection of PlaywrightQuota in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
-        /// <returns> An object representing collection of PlaywrightQuotas and their operations over a PlaywrightQuotaResource. </returns>
+        /// <returns> An object representing collection of PlaywrightQuota and their operations over a PlaywrightQuotaResource. </returns>
         public virtual PlaywrightQuotaCollection GetAllPlaywrightQuota(AzureLocation location)
         {
             return GetCachedClient(client => new PlaywrightQuotaCollection(client, Id, location));
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Playwright.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Playwright.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Playwright.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Playwright.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspacesGetBySubscriptionAsyncCollectionResultOfT(PlaywrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PlaywrightWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspacesGetBySubscriptionAsyncCollectionResultOfT(PlaywrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockablePlaywrightSubscriptionResource.GetPlaywrightWorkspaces"), data => new PlaywrightWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Playwright.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -153,10 +153,26 @@ namespace Azure.ResourceManager.Playwright.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspacesGetBySubscriptionCollectionResultOfT(PlaywrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PlaywrightWorkspaceResource(Client, data));
+            return new PageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspacesGetBySubscriptionCollectionResultOfT(PlaywrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockablePlaywrightSubscriptionResource.GetPlaywrightWorkspaces"), data => new PlaywrightWorkspaceResource(Client, data));
         }
 
-        /// <summary> Checks if a Playwright workspace name is available globally. </summary>
+        /// <summary>
+        /// Checks if a Playwright workspace name is available globally.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/checkNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightWorkspaces_CheckNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -188,7 +204,23 @@ namespace Azure.ResourceManager.Playwright.Mocking
             }
         }
 
-        /// <summary> Checks if a Playwright workspace name is available globally. </summary>
+        /// <summary>
+        /// Checks if a Playwright workspace name is available globally.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/checkNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightWorkspaces_CheckNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>

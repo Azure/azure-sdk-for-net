@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -393,102 +393,6 @@ namespace Azure.ResourceManager.ConnectedCache
         }
 
         /// <summary>
-        /// This api gets secrets of the ispCacheNode resource install details
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers/{customerResourceName}/enterpriseMccCacheNodes/{cacheNodeResourceName}/getCacheNodeInstallDetails. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EnterpriseMccCacheNodesOperations_GetCacheNodeInstallDetails. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="EnterpriseMccCacheNodeResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MccCacheNodeInstallDetails>> GetCacheNodeInstallDetailsAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _enterpriseMccCacheNodesOperationsClientDiagnostics.CreateScope("EnterpriseMccCacheNodeResource.GetCacheNodeInstallDetails");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _enterpriseMccCacheNodesOperationsRestClient.CreateGetCacheNodeInstallDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MccCacheNodeInstallDetails> response = Response.FromValue(MccCacheNodeInstallDetails.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// This api gets secrets of the ispCacheNode resource install details
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers/{customerResourceName}/enterpriseMccCacheNodes/{cacheNodeResourceName}/getCacheNodeInstallDetails. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EnterpriseMccCacheNodesOperations_GetCacheNodeInstallDetails. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="EnterpriseMccCacheNodeResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MccCacheNodeInstallDetails> GetCacheNodeInstallDetails(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _enterpriseMccCacheNodesOperationsClientDiagnostics.CreateScope("EnterpriseMccCacheNodeResource.GetCacheNodeInstallDetails");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _enterpriseMccCacheNodesOperationsRestClient.CreateGetCacheNodeInstallDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<MccCacheNodeInstallDetails> response = Response.FromValue(MccCacheNodeInstallDetails.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// This api gets ispCacheNode resource auto update histrory information
         /// <list type="bullet">
         /// <item>
@@ -571,6 +475,102 @@ namespace Azure.ResourceManager.ConnectedCache
                 HttpMessage message = _enterpriseMccCacheNodesOperationsRestClient.CreateGetCacheNodeAutoUpdateHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MccCacheNodeAutoUpdateHistoryData> response = Response.FromValue(MccCacheNodeAutoUpdateHistoryData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This api gets secrets of the ispCacheNode resource install details
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers/{customerResourceName}/enterpriseMccCacheNodes/{cacheNodeResourceName}/getCacheNodeInstallDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EnterpriseMccCacheNodesOperations_GetCacheNodeInstallDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EnterpriseMccCacheNodeResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<MccCacheNodeInstallDetails>> GetCacheNodeInstallDetailsAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _enterpriseMccCacheNodesOperationsClientDiagnostics.CreateScope("EnterpriseMccCacheNodeResource.GetCacheNodeInstallDetails");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _enterpriseMccCacheNodesOperationsRestClient.CreateGetCacheNodeInstallDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MccCacheNodeInstallDetails> response = Response.FromValue(MccCacheNodeInstallDetails.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This api gets secrets of the ispCacheNode resource install details
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers/{customerResourceName}/enterpriseMccCacheNodes/{cacheNodeResourceName}/getCacheNodeInstallDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EnterpriseMccCacheNodesOperations_GetCacheNodeInstallDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-11-30-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EnterpriseMccCacheNodeResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<MccCacheNodeInstallDetails> GetCacheNodeInstallDetails(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _enterpriseMccCacheNodesOperationsClientDiagnostics.CreateScope("EnterpriseMccCacheNodeResource.GetCacheNodeInstallDetails");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _enterpriseMccCacheNodesOperationsRestClient.CreateGetCacheNodeInstallDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MccCacheNodeInstallDetails> response = Response.FromValue(MccCacheNodeInstallDetails.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -813,7 +813,7 @@ namespace Azure.ResourceManager.ConnectedCache
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<EnterpriseMccCacheNodeResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<EnterpriseMccCacheNodeResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -861,7 +861,7 @@ namespace Azure.ResourceManager.ConnectedCache
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<EnterpriseMccCacheNodeResource> result = Update(patch, cancellationToken);
+                    Response<EnterpriseMccCacheNodeResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -904,7 +904,7 @@ namespace Azure.ResourceManager.ConnectedCache
                     EnterpriseMccCacheNodeData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ConnectedCachePatchContent patch = new ConnectedCachePatchContent();
                     patch.Tags.ReplaceWith(tags);
-                    Response<EnterpriseMccCacheNodeResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<EnterpriseMccCacheNodeResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -947,7 +947,7 @@ namespace Azure.ResourceManager.ConnectedCache
                     EnterpriseMccCacheNodeData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ConnectedCachePatchContent patch = new ConnectedCachePatchContent();
                     patch.Tags.ReplaceWith(tags);
-                    Response<EnterpriseMccCacheNodeResource> result = Update(patch, cancellationToken);
+                    Response<EnterpriseMccCacheNodeResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -993,7 +993,7 @@ namespace Azure.ResourceManager.ConnectedCache
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<EnterpriseMccCacheNodeResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<EnterpriseMccCacheNodeResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1039,7 +1039,7 @@ namespace Azure.ResourceManager.ConnectedCache
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<EnterpriseMccCacheNodeResource> result = Update(patch, cancellationToken);
+                    Response<EnterpriseMccCacheNodeResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

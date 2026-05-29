@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabaseWatcherData, DatabaseWatcherResource>(new WatchersGetByResourceGroupAsyncCollectionResultOfT(_watchersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DatabaseWatcherResource(Client, data));
+            return new AsyncPageableWrapper<DatabaseWatcherData, DatabaseWatcherResource>(new WatchersGetByResourceGroupAsyncCollectionResultOfT(_watchersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DatabaseWatcherCollection.GetAll"), data => new DatabaseWatcherResource(Client, data));
         }
 
         /// <summary>
@@ -322,11 +322,11 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabaseWatcherData, DatabaseWatcherResource>(new WatchersGetByResourceGroupCollectionResultOfT(_watchersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DatabaseWatcherResource(Client, data));
+            return new PageableWrapper<DatabaseWatcherData, DatabaseWatcherResource>(new WatchersGetByResourceGroupCollectionResultOfT(_watchersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DatabaseWatcherCollection.GetAll"), data => new DatabaseWatcherResource(Client, data));
         }
 
         /// <summary>
-        /// Get a Watcher
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         }
 
         /// <summary>
-        /// Get a Watcher
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         }
 
         /// <summary>
-        /// Get a Watcher
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         }
 
         /// <summary>
-        /// Get a Watcher
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

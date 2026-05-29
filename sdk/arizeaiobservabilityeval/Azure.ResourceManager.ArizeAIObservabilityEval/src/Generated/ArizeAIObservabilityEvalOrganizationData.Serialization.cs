@@ -25,6 +25,63 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ArizeAIObservabilityEvalOrganizationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeArizeAIObservabilityEvalOrganizationData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ArizeAIObservabilityEvalOrganizationData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ArizeAIObservabilityEvalOrganizationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerArizeAIObservabilityEvalContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ArizeAIObservabilityEvalOrganizationData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ArizeAIObservabilityEvalOrganizationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ArizeAIObservabilityEvalOrganizationData IPersistableModel<ArizeAIObservabilityEvalOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ArizeAIObservabilityEvalOrganizationData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ArizeAIObservabilityEvalOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="arizeAIObservabilityEvalOrganizationData"> The <see cref="ArizeAIObservabilityEvalOrganizationData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ArizeAIObservabilityEvalOrganizationData arizeAIObservabilityEvalOrganizationData)
+        {
+            if (arizeAIObservabilityEvalOrganizationData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(arizeAIObservabilityEvalOrganizationData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ArizeAIObservabilityEvalOrganizationData"/> from. </param>
+        internal static ArizeAIObservabilityEvalOrganizationData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeArizeAIObservabilityEvalOrganizationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ArizeAIObservabilityEvalOrganizationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -52,7 +109,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
         }
 
@@ -165,7 +222,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerArizeAIObservabilityEvalContext.Default);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerArizeAIObservabilityEvalContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -183,65 +240,6 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
                 location,
                 properties,
                 identity);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ArizeAIObservabilityEvalOrganizationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ArizeAIObservabilityEvalOrganizationData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerArizeAIObservabilityEvalContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ArizeAIObservabilityEvalOrganizationData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ArizeAIObservabilityEvalOrganizationData IPersistableModel<ArizeAIObservabilityEvalOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ArizeAIObservabilityEvalOrganizationData)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ArizeAIObservabilityEvalOrganizationData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeArizeAIObservabilityEvalOrganizationData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ArizeAIObservabilityEvalOrganizationData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ArizeAIObservabilityEvalOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="arizeAIObservabilityEvalOrganizationData"> The <see cref="ArizeAIObservabilityEvalOrganizationData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ArizeAIObservabilityEvalOrganizationData arizeAIObservabilityEvalOrganizationData)
-        {
-            if (arizeAIObservabilityEvalOrganizationData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(arizeAIObservabilityEvalOrganizationData, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ArizeAIObservabilityEvalOrganizationData"/> from. </param>
-        internal static ArizeAIObservabilityEvalOrganizationData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeArizeAIObservabilityEvalOrganizationData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

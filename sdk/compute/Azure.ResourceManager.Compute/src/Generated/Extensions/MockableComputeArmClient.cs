@@ -239,6 +239,18 @@ namespace Azure.ResourceManager.Compute.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="VmScaleSetLifecycleHookEventResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VmScaleSetLifecycleHookEventResource.CreateResourceIdentifier" /> to create a <see cref="VmScaleSetLifecycleHookEventResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VmScaleSetLifecycleHookEventResource"/> object. </returns>
+        public virtual VmScaleSetLifecycleHookEventResource GetVmScaleSetLifecycleHookEventResource(ResourceIdentifier id)
+        {
+            VmScaleSetLifecycleHookEventResource.ValidateResourceId(id);
+            return new VmScaleSetLifecycleHookEventResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="VirtualMachineScaleSetVmResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VirtualMachineScaleSetVmResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetVmResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -428,6 +440,30 @@ namespace Azure.ResourceManager.Compute.Mocking
         {
             GalleryInVmAccessControlProfileVersionResource.ValidateResourceId(id);
             return new GalleryInVmAccessControlProfileVersionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="GalleryScriptResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GalleryScriptResource.CreateResourceIdentifier" /> to create a <see cref="GalleryScriptResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GalleryScriptResource"/> object. </returns>
+        public virtual GalleryScriptResource GetGalleryScriptResource(ResourceIdentifier id)
+        {
+            GalleryScriptResource.ValidateResourceId(id);
+            return new GalleryScriptResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="GalleryScriptVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GalleryScriptVersionResource.CreateResourceIdentifier" /> to create a <see cref="GalleryScriptVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GalleryScriptVersionResource"/> object. </returns>
+        public virtual GalleryScriptVersionResource GetGalleryScriptVersionResource(ResourceIdentifier id)
+        {
+            GalleryScriptVersionResource.ValidateResourceId(id);
+            return new GalleryScriptVersionResource(Client, id);
         }
 
         /// <summary>

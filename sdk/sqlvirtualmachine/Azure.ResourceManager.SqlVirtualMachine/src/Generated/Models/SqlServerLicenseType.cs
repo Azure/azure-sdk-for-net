@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     public readonly partial struct SqlServerLicenseType : IEquatable<SqlServerLicenseType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SqlServerLicenseType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SqlServerLicenseType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PaygValue = "PAYG";
         private const string AhubValue = "AHUB";
         private const string DRValue = "DR";
 
-        /// <summary> PAYG. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerLicenseType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SqlServerLicenseType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Payg. </summary>
         public static SqlServerLicenseType Payg { get; } = new SqlServerLicenseType(PaygValue);
-        /// <summary> AHUB. </summary>
+
+        /// <summary> Gets the Ahub. </summary>
         public static SqlServerLicenseType Ahub { get; } = new SqlServerLicenseType(AhubValue);
-        /// <summary> DR. </summary>
+
+        /// <summary> Gets the DR. </summary>
         public static SqlServerLicenseType DR { get; } = new SqlServerLicenseType(DRValue);
+
         /// <summary> Determines if two <see cref="SqlServerLicenseType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SqlServerLicenseType left, SqlServerLicenseType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SqlServerLicenseType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SqlServerLicenseType left, SqlServerLicenseType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlServerLicenseType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SqlServerLicenseType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SqlServerLicenseType(string value) => new SqlServerLicenseType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SqlServerLicenseType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SqlServerLicenseType?(string value) => value == null ? null : new SqlServerLicenseType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SqlServerLicenseType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SqlServerLicenseType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

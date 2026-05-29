@@ -13,8 +13,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
     public class StorageAppliancesTests : NetworkCloudManagementTestBase
     {
-        public StorageAppliancesTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
-        public StorageAppliancesTests(bool isAsync) : base(isAsync) {}
+        public StorageAppliancesTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
+        public StorageAppliancesTests(bool isAsync) : base(isAsync) { }
 
         [Test]
         [RecordedTest]
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             NetworkCloudStorageApplianceResource storageAppliance = Client.GetNetworkCloudStorageApplianceResource(new ResourceIdentifier(firstStorageAppliance.Id));
             getResult = await storageAppliance.GetAsync();
             var originalTags = getResult.Value.Data.Tags;
-            NetworkCloudStorageAppliancePatch patch = new NetworkCloudStorageAppliancePatch(){};
+            NetworkCloudStorageAppliancePatch patch = new NetworkCloudStorageAppliancePatch() { };
             var testKey = "test-key";
             var testValue = "test-value";
             patch.Tags.Add(testKey, testValue);
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 patch.Tags.Add(key, originalTags[key]);
             }
-            ArmOperation<NetworkCloudStorageApplianceResource> updateResult = await storageAppliance.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudStorageApplianceResource> updateResult = await storageAppliance.UpdateAsync(WaitUntil.Completed, patch, matchConditions: null);
             Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
 
             patch.Tags.Remove(testKey);
-            updateResult = await storageAppliance.UpdateAsync(WaitUntil.Completed, patch);
+            updateResult = await storageAppliance.UpdateAsync(WaitUntil.Completed, patch, matchConditions: null);
             Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags, "tag reversion failed");
 
             // List by Subscription

@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         private readonly string _resourceGroupName;
         private readonly string _localRulestackName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of PrefixListLocalRulestackGetByLocalRulestacksCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The PrefixListLocalRulestack client used to send requests. </param>
@@ -28,19 +29,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="localRulestackName"> LocalRulestack resource name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="localRulestackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="localRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public PrefixListLocalRulestackGetByLocalRulestacksCollectionResultOfT(PrefixListLocalRulestack client, string subscriptionId, string resourceGroupName, string localRulestackName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public PrefixListLocalRulestackGetByLocalRulestacksCollectionResultOfT(PrefixListLocalRulestack client, string subscriptionId, string resourceGroupName, string localRulestackName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
-
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _localRulestackName = localRulestackName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of PrefixListLocalRulestackGetByLocalRulestacksCollectionResultOfT as an enumerable collection. </summary>
@@ -58,7 +55,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     yield break;
                 }
                 PrefixListResourceListResult result = PrefixListResourceListResult.FromResponse(response);
-                yield return Page<LocalRulestackPrefixData>.FromValues((IReadOnlyList<LocalRulestackPrefixData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<LocalRulestackPrefixData>.FromValues((IReadOnlyList<LocalRulestackPrefixData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -73,7 +70,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByLocalRulestacksRequest(nextLink, _subscriptionId, _resourceGroupName, _localRulestackName, _context) : _client.CreateGetByLocalRulestacksRequest(_subscriptionId, _resourceGroupName, _localRulestackName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("LocalRulestackPrefixCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

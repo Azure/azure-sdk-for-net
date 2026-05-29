@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MySql
             TryGetApiVersion(MySqlRecommendationActionResource.ResourceType, out string mySqlRecommendationActionRecommendedActionsApiVersion);
             _mySqlRecommendationActionRecommendedActionsRestClient = new RecommendedActionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlRecommendationActionRecommendedActionsApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

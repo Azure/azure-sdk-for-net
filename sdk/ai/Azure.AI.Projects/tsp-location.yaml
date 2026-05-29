@@ -1,4 +1,5 @@
-directory: specification/ai/Azure.AI.Projects
-commit: 8abd9b9b0bcc8bb093c4559b8b348ec51cf2392d
+directory: specification/ai-foundry/data-plane/Foundry
+commit: c463ca5e632d46ecb13c84e20763fb259c41ce8a
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/http-client-csharp-emitter-package.json
+entrypointFile: client.csharp.tsp

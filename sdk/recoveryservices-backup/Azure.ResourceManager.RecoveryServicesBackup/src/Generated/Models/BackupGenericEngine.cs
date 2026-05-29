@@ -12,46 +12,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// The base backup engine class. All workload specific backup engines derive from this class.
-    /// Please note <see cref="BackupGenericEngine"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="BackupServerEngine"/> and <see cref="DpmBackupEngine"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BackupServerEngine"/> and <see cref="DpmBackupEngine"/>.
     /// </summary>
     public abstract partial class BackupGenericEngine
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BackupGenericEngine"/>. </summary>
-        protected BackupGenericEngine()
+        /// <param name="backupEngineType"> Type of the backup engine. </param>
+        private protected BackupGenericEngine(BackupEngineType backupEngineType)
         {
+            BackupEngineType = backupEngineType;
         }
 
         /// <summary> Initializes a new instance of <see cref="BackupGenericEngine"/>. </summary>
@@ -68,8 +40,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isAzureBackupAgentUpgradeAvailable"> To check if backup agent upgrade available. </param>
         /// <param name="isDpmUpgradeAvailable"> To check if backup engine upgrade available. </param>
         /// <param name="extendedInfo"> Extended info of the backupengine. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackupGenericEngine(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string backupEngineState, string healthStatus, BackupEngineType backupEngineType, bool? canReRegister, string backupEngineId, string dpmVersion, string azureBackupAgentVersion, bool? isAzureBackupAgentUpgradeAvailable, bool? isDpmUpgradeAvailable, BackupEngineExtendedInfo extendedInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BackupGenericEngine(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string backupEngineState, string healthStatus, BackupEngineType backupEngineType, bool? canReRegister, string backupEngineId, string dpmVersion, string azureBackupAgentVersion, bool? isAzureBackupAgentUpgradeAvailable, bool? isDpmUpgradeAvailable, BackupEngineExtendedInfo extendedInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FriendlyName = friendlyName;
             BackupManagementType = backupManagementType;
@@ -84,33 +56,45 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             IsAzureBackupAgentUpgradeAvailable = isAzureBackupAgentUpgradeAvailable;
             IsDpmUpgradeAvailable = isDpmUpgradeAvailable;
             ExtendedInfo = extendedInfo;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Friendly name of the backup engine. </summary>
         public string FriendlyName { get; set; }
+
         /// <summary> Type of backup management for the backup engine. </summary>
         public BackupManagementType? BackupManagementType { get; set; }
+
         /// <summary> Registration status of the backup engine with the Recovery Services Vault. </summary>
         public string RegistrationStatus { get; set; }
+
         /// <summary> Status of the backup engine with the Recovery Services Vault. = {Active/Deleting/DeleteFailed}. </summary>
         public string BackupEngineState { get; set; }
+
         /// <summary> Backup status of the backup engine. </summary>
         public string HealthStatus { get; set; }
+
         /// <summary> Type of the backup engine. </summary>
         internal BackupEngineType BackupEngineType { get; set; }
+
         /// <summary> Flag indicating if the backup engine be registered, once already registered. </summary>
         public bool? CanReRegister { get; set; }
+
         /// <summary> ID of the backup engine. </summary>
         public string BackupEngineId { get; set; }
+
         /// <summary> Backup engine version. </summary>
         public string DpmVersion { get; set; }
+
         /// <summary> Backup agent version. </summary>
         public string AzureBackupAgentVersion { get; set; }
+
         /// <summary> To check if backup agent upgrade available. </summary>
         public bool? IsAzureBackupAgentUpgradeAvailable { get; set; }
+
         /// <summary> To check if backup engine upgrade available. </summary>
         public bool? IsDpmUpgradeAvailable { get; set; }
+
         /// <summary> Extended info of the backupengine. </summary>
         public BackupEngineExtendedInfo ExtendedInfo { get; set; }
     }

@@ -45,10 +45,11 @@ parameters:
 
 jobs:
   - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+    # Build matrix - larger LOC batches (1.2M) for fewer jobs and lower per-job overhead.
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
       parameters:
         GenerateJobName: generate_build_matrix
-        JobTemplatePath: /eng/pipelines/templates/jobs/batched-build-analyze.yml
+        JobTemplatePath: /eng/pipelines/templates/jobs/batched-build.yml
         Pools: # eng/pipelines/templates/stages/build-matrix.json only contains windows OS currently so only pass the Windows pool to avoid the other OS's being marked skipped in DevOps
           - name: Windows
             filter: .*Windows.*Pool$
@@ -63,7 +64,7 @@ jobs:
           - "!SessionRecords"
         EnablePRGeneration: true
         PRMatrixSetting: ProjectNames
-        PRJobBatchSize: 5
+        PRJobBatchSize: 1
         AdditionalParameters:
           Artifacts: ${{ parameters.Artifacts }}
           TestPipeline: ${{ parameters.TestPipeline }}
@@ -77,6 +78,46 @@ jobs:
               PublishingArtifactName: BuildPackagesArtifact
               ForceDirect: true
               ExcludePaths: ${{ parameters.ExcludePaths }}
+              EnableLocWeighting: true
+              LocTarget: 1200000
+              PublishArtifact: true
+
+    # Analyze matrix - smaller LOC batches (300k) for more parallelism so analyze wall-clock matches build.
+    - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
+      parameters:
+        GenerateJobName: generate_analyze_matrix
+        JobTemplatePath: /eng/pipelines/templates/jobs/batched-analyze.yml
+        Pools: # build-matrix.json only contains Windows entries; batched-analyze.yml overrides pool to Linux internally.
+          - name: Windows
+            filter: .*Windows.*Pool$
+            os: windows
+        MatrixConfigs:
+        - Name: NET_ci_analyze_base
+          Path: eng/pipelines/templates/stages/build-matrix.json
+          Selection: sparse
+          GenerateVMJobs: true
+        SparseCheckoutPaths:
+          - "/*"
+          - "!SessionRecords"
+        EnablePRGeneration: true
+        PRMatrixSetting: ProjectNames
+        PRJobBatchSize: 1
+        AdditionalParameters:
+          Artifacts: ${{ parameters.Artifacts }}
+          ServiceDirectory: ${{ parameters.ServiceDirectory }}
+          SDKType: ${{ parameters.SDKType }}
+          BuildSnippets: ${{ parameters.BuildSnippets }}
+          ArtifactName: AnalyzePackageInfoArtifact
+        PreGenerationSteps:
+          - template: /eng/pipelines/templates/steps/pr-matrix-presteps.yml
+            parameters:
+              ServiceDirectory: ${{ parameters.ServiceDirectory }}
+              PublishingArtifactName: AnalyzePackageInfoArtifact
+              ForceDirect: true
+              ExcludePaths: ${{ parameters.ExcludePaths }}
+              EnableLocWeighting: true
+              LocTarget: 300000
+              PublishArtifact: true
 
   - ${{ else }}:
     - job: Build
@@ -112,12 +153,6 @@ jobs:
     - job: "Analyze"
       timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
       condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
-      templateContext:
-        outputs:
-          - output: pipelineArtifact
-            targetPath: '$(Build.ArtifactStagingDirectory)'
-            artifactName: 'verify'
-
       pool:
         name: $(LINUXPOOL)
         image: $(LINUXVMIMAGE)
@@ -174,6 +209,9 @@ jobs:
               - 'Client Libraries'
 
         - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
+
+        - pwsh: ./eng/scripts/Test-NoWarnValidation.ps1
+          displayName: Validate NoWarn enforcement targets
 
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
       parameters:

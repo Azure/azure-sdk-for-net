@@ -20,20 +20,19 @@ namespace Azure.AI.DocumentIntelligence
         private readonly DocumentIntelligenceClient _client;
         private readonly string _modelId;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DocumentIntelligenceClientGetAnalyzeBatchResultsAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DocumentIntelligenceClient client used to send requests. </param>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        public DocumentIntelligenceClientGetAnalyzeBatchResultsAsyncCollectionResult(DocumentIntelligenceClient client, string modelId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DocumentIntelligenceClientGetAnalyzeBatchResultsAsyncCollectionResult(DocumentIntelligenceClient client, string modelId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-
             _client = client;
             _modelId = modelId;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DocumentIntelligenceClientGetAnalyzeBatchResultsAsyncCollectionResult as an enumerable collection. </summary>
@@ -56,7 +55,7 @@ namespace Azure.AI.DocumentIntelligence
                 {
                     items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureAIDocumentIntelligenceContext.Default));
                 }
-                yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
+                yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -71,7 +70,7 @@ namespace Azure.AI.DocumentIntelligence
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAnalyzeBatchResultsRequest(nextLink, _modelId, _context) : _client.CreateGetAnalyzeBatchResultsRequest(_modelId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DocumentIntelligenceClient.GetAnalyzeBatchResults");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

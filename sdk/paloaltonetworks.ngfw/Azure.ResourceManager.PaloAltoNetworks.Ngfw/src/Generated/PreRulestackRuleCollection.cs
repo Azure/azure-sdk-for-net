@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             if (id.ResourceType != GlobalRulestackResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GlobalRulestackResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GlobalRulestackResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PreRulestackRuleData, PreRulestackRuleResource>(new PreRulesGetAllAsyncCollectionResultOfT(_preRulesRestClient, Id.Name, context), data => new PreRulestackRuleResource(Client, data));
+            return new AsyncPageableWrapper<PreRulestackRuleData, PreRulestackRuleResource>(new PreRulesGetAllAsyncCollectionResultOfT(_preRulesRestClient, Id.Name, context, "PreRulestackRuleCollection.GetAll"), data => new PreRulestackRuleResource(Client, data));
         }
 
         /// <summary>
@@ -321,11 +321,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PreRulestackRuleData, PreRulestackRuleResource>(new PreRulesGetAllCollectionResultOfT(_preRulesRestClient, Id.Name, context), data => new PreRulestackRuleResource(Client, data));
+            return new PageableWrapper<PreRulestackRuleData, PreRulestackRuleResource>(new PreRulesGetAllCollectionResultOfT(_preRulesRestClient, Id.Name, context, "PreRulestackRuleCollection.GetAll"), data => new PreRulestackRuleResource(Client, data));
         }
 
         /// <summary>
-        /// Get a PreRulesResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Get a PreRulesResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Get a PreRulesResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Get a PreRulesResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

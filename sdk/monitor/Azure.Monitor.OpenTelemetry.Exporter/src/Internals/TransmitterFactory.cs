@@ -26,7 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         /// <remarks>
         /// This method should not be called directly in product code.
-        /// This method is primarially intended for unit testing scenarios where providing a mock platform is necessary.
+        /// This method is primarily intended for unit testing scenarios where providing a mock platform is necessary.
         /// </remarks>
         internal ITransmitter Get(AzureMonitorExporterOptions azureMonitorExporterOptions, IPlatform platform)
         {

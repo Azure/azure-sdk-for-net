@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<WeightsAndBiasesInstanceResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<WeightsAndBiasesInstanceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<WeightsAndBiasesInstanceResource> result = Update(patch, cancellationToken);
+                    Response<WeightsAndBiasesInstanceResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
                     WeightsAndBiasesInstanceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     WeightsAndBiasesInstancePatch patch = new WeightsAndBiasesInstancePatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<WeightsAndBiasesInstanceResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<WeightsAndBiasesInstanceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
                     WeightsAndBiasesInstanceData current = Get(cancellationToken: cancellationToken).Value.Data;
                     WeightsAndBiasesInstancePatch patch = new WeightsAndBiasesInstancePatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<WeightsAndBiasesInstanceResource> result = Update(patch, cancellationToken);
+                    Response<WeightsAndBiasesInstanceResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<WeightsAndBiasesInstanceResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<WeightsAndBiasesInstanceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<WeightsAndBiasesInstanceResource> result = Update(patch, cancellationToken);
+                    Response<WeightsAndBiasesInstanceResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             if (id.ResourceType != GlobalRulestackResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GlobalRulestackResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GlobalRulestackResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GlobalRulestackFqdnData, GlobalRulestackFqdnResource>(new FqdnListGlobalRulestackGetAllAsyncCollectionResultOfT(_fqdnListGlobalRulestackRestClient, Id.Name, context), data => new GlobalRulestackFqdnResource(Client, data));
+            return new AsyncPageableWrapper<GlobalRulestackFqdnData, GlobalRulestackFqdnResource>(new FqdnListGlobalRulestackGetAllAsyncCollectionResultOfT(_fqdnListGlobalRulestackRestClient, Id.Name, context, "GlobalRulestackFqdnCollection.GetAll"), data => new GlobalRulestackFqdnResource(Client, data));
         }
 
         /// <summary>
@@ -321,11 +321,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GlobalRulestackFqdnData, GlobalRulestackFqdnResource>(new FqdnListGlobalRulestackGetAllCollectionResultOfT(_fqdnListGlobalRulestackRestClient, Id.Name, context), data => new GlobalRulestackFqdnResource(Client, data));
+            return new PageableWrapper<GlobalRulestackFqdnData, GlobalRulestackFqdnResource>(new FqdnListGlobalRulestackGetAllCollectionResultOfT(_fqdnListGlobalRulestackRestClient, Id.Name, context, "GlobalRulestackFqdnCollection.GetAll"), data => new GlobalRulestackFqdnResource(Client, data));
         }
 
         /// <summary>
-        /// Get a FqdnListGlobalRulestackResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Get a FqdnListGlobalRulestackResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Get a FqdnListGlobalRulestackResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Get a FqdnListGlobalRulestackResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
