@@ -1,0 +1,68 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+    AnalyzerAllowList.targets — Reads per-package analyzer allow-list files.
+
+    Each shipping client library may have a file at:
+      eng/analyzerallowlist/$(MSBuildProjectName).txt
+
+    The file contains "nowarn:CODE" lines (one per line) that define which
+    NoWarn codes are approved for that project. These are read into the
+    _ProjectAllowedNoWarn property, which is consumed by the ValidateNoWarn
+    target in NoWarnValidation.targets.
+
+    Future: The same files will also contain "CODE:SYMBOL" entries for inline
+    suppression approvals, consumed by a Roslyn analyzer via AdditionalFiles.
+
+    See eng/analyzerallowlist/README.md for full documentation.
+  -->
+
+  <PropertyGroup>
+    <_AnalyzerAllowListDir Condition="'$(_AnalyzerAllowListDir)' == ''">$(RepoEngPath)\analyzerallowlist\</_AnalyzerAllowListDir>
+    <_AnalyzerAllowListFile>$(_AnalyzerAllowListDir)$(MSBuildProjectName).txt</_AnalyzerAllowListFile>
+  </PropertyGroup>
+
+  <!--
+    Read the allow-list file and extract nowarn: entries into _ProjectAllowedNoWarn.
+
+    Parsing rules (intentionally lenient so a human-written file isn't silently misread):
+      * Each line is Trim'd before any classification.
+      * Blank lines and lines whose first non-whitespace char is `#` are ignored.
+      * The `nowarn:` prefix is matched case-insensitively. Any whitespace between
+        the colon and the code is tolerated and discarded.
+      * The remaining text after the prefix is Trim'd and used as the code.
+  -->
+  <Target
+    Name="ReadAnalyzerAllowList"
+    Condition="Exists('$(_AnalyzerAllowListFile)')">
+
+    <ReadLinesFromFile File="$(_AnalyzerAllowListFile)">
+      <Output TaskParameter="Lines" ItemName="_AllowListRaw" />
+    </ReadLinesFromFile>
+
+    <!-- Compute Trimmed text for every line as metadata -->
+    <ItemGroup>
+      <_AllowListRaw>
+        <Trimmed>$([System.String]::Copy('%(Identity)').Trim())</Trimmed>
+      </_AllowListRaw>
+    </ItemGroup>
+
+    <!-- Keep only nowarn: lines (case-insensitive); ignore blanks and # comments -->
+    <ItemGroup>
+      <_AllowListNoWarn Include="%(_AllowListRaw.Trimmed)"
+                        Condition=" '%(_AllowListRaw.Trimmed)' != '' and
+                                    !$([System.String]::Copy('%(_AllowListRaw.Trimmed)').StartsWith('#')) and
+                                    $([System.String]::Copy('%(_AllowListRaw.Trimmed)').StartsWith('nowarn:', System.StringComparison.OrdinalIgnoreCase)) " />
+    </ItemGroup>
+
+    <!-- Strip the 7-char prefix and trim what remains (tolerates `nowarn: CODE`) -->
+    <ItemGroup>
+      <_AllowListNoWarn>
+        <Code>$([System.String]::Copy('%(Identity)').Substring(7).Trim())</Code>
+      </_AllowListNoWarn>
+    </ItemGroup>
+
+    <PropertyGroup>
+      <_ProjectAllowedNoWarn>@(_AllowListNoWarn -> '%(Code)', ';')</_ProjectAllowedNoWarn>
+    </PropertyGroup>
+  </Target>
+</Project>

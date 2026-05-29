@@ -57,10 +57,10 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The unique ID of the computer call. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
 
         /// <summary> An identifier used when responding to the tool call with output. </summary>
-        public string CallId { get; }
+        public string CallId { get; set; }
 
         /// <summary> Gets or sets the Action. </summary>
         public InternalComputerAction Action { get; set; }
@@ -75,6 +75,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </summary>
-        public InputItemComputerToolCallStatus Status { get; }
+        public InputItemComputerToolCallStatus Status { get; set; }
     }
 }

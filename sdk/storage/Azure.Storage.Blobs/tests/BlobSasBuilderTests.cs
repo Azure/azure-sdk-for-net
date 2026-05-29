@@ -188,7 +188,7 @@ namespace Azure.Storage.Blobs.Test
                 blobName,
                 constants,
                 isDirectory: true);
-            var signature = BuildIdentitySignature(includeBlob: true, includeSnapshot: false, containerName, blobName, constants, includeDirectory:true);
+            var signature = BuildIdentitySignature(includeBlob: true, includeSnapshot: false, containerName, blobName, constants, includeDirectory: true);
 
             // Act
             BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(GetUserDelegationKey(constants), constants.Sas.Account);
