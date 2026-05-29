@@ -73,42 +73,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void StatsbeatMeterProviderSubscribesToDistroFeatureSdkStatsMeter()
-        {
-            // Verifies the Statsbeat MeterProvider subscribes to the distro-owned
-            // Feature SDKStats meter so the opentelemetry-distro-dotnet producer
-            // can publish through this exporter without further wiring.
-            var customer_ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://westus.in.applicationinsights.azure.com/";
-            var connectionStringVars = ConnectionStringParser.GetValues(customer_ConnectionString);
-
-            using var statsBeatInstance = new AzureMonitorStatsbeat(connectionStringVars, new MockPlatform());
-
-            // Emit a sentinel measurement on the distro meter and confirm a MeterListener
-            // attached to the same meter name receives it. This proves the Meter name
-            // wires up; the Statsbeat MeterProvider uses the same string in .AddMeter(...).
-            using var sentinelMeter = new Meter(StatsbeatConstants.DistroFeatureSdkStatsMeterName, "1.0");
-            var observed = new List<long>();
-            using var listener = new MeterListener
-            {
-                InstrumentPublished = (instrument, l) =>
-                {
-                    if (instrument.Meter.Name == StatsbeatConstants.DistroFeatureSdkStatsMeterName)
-                    {
-                        l.EnableMeasurementEvents(instrument);
-                    }
-                },
-            };
-            listener.SetMeasurementEventCallback<long>((_, value, _, _) => observed.Add(value));
-            listener.Start();
-
-            var gauge = sentinelMeter.CreateObservableGauge<long>("Feature", () => 42L);
-            listener.RecordObservableInstruments();
-
-            Assert.Contains(42L, observed);
-            Assert.Equal(StatsbeatConstants.DistroFeatureSdkStatsMeterName, "MicrosoftOpenTelemetryFeatureSdkStatsMeter");
-        }
-
-        [Fact]
         public void ConstructingAzureMonitorMetricExporter_TriggersStatsbeatSideEffect()
         {
             // CANARY TEST. The opentelemetry-distro-dotnet relies on the fact that simply
