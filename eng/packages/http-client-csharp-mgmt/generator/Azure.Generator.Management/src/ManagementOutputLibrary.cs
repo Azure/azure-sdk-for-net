@@ -427,55 +427,28 @@ namespace Azure.Generator.Management
                 _ => null
             };
 
-            if (lroMetadata != null)
+            var returnType = lroMetadata?.ReturnType;
+            if (returnType == null)
             {
-                var returnType = lroMetadata.ReturnType;
-                if (returnType is InputModelType inputModelType)
-                {
-                    var returnCSharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(inputModelType);
-                    if (returnCSharpType == null)
-                    {
-                        return;
-                    }
-
-                    // Find all resource providers that use this data type
-                    var resourceProviders = ResourceProviders.Where(r => r.ResourceData.Type.Equals(returnCSharpType)).ToList();
-
-                    if (resourceProviders.Count > 0)
-                    {
-                        // For each resource provider, create an OperationSource keyed by the resource type
-                        foreach (var resourceProvider in resourceProviders)
-                        {
-                            operationSources.TryAdd(resourceProvider.Type, new OperationSourceProvider(resourceProvider));
-                        }
-
-                        // Mirror TryGetResourceClientProvider: when multiple resources share the same data type
-                        // the reader treats the response as a non-resource (raw data type) because wrapping
-                        // would pick an arbitrary resource. Register a matching key so the reader's lookup
-                        // in BuildLroHandling succeeds.
-                        if (resourceProviders.Count > 1)
-                        {
-                            operationSources.TryAdd(returnCSharpType, new OperationSourceProvider(returnCSharpType));
-                        }
-                    }
-                    else
-                    {
-                        // This is a non-resource model - use the data type as the key
-                        operationSources.TryAdd(returnCSharpType, new OperationSourceProvider(returnCSharpType));
-                    }
-                }
-                else if (returnType is not null)
-                {
-                    // Non-model LRO return types (e.g. an array/list response without @list) are surfaced as
-                    // ArmOperation<IReadOnlyList<T>>. Register a non-resource OperationSource keyed by the list type
-                    // so the reader lookup in BuildLroHandling succeeds.
-                    var returnCSharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(returnType);
-                    if (returnCSharpType != null && returnCSharpType.IsList)
-                    {
-                        operationSources.TryAdd(returnCSharpType, new OperationSourceProvider(returnCSharpType));
-                    }
-                }
+                return;
             }
+
+            var returnCSharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(returnType);
+            if (returnCSharpType == null)
+            {
+                return;
+            }
+
+            // Find all resource providers that use this data type.
+            var resourceProviders = ResourceProviders.Where(r => r.ResourceData.Type.Equals(returnCSharpType)).ToList();
+            foreach (var resourceProvider in resourceProviders)
+            {
+                operationSources.TryAdd(resourceProvider.Type, new OperationSourceProvider(resourceProvider));
+            }
+
+            // Always register the concrete return type for non-resource, list, and other return shapes,
+            // and for resource-data return types that resolve through the non-resource branch.
+            operationSources.TryAdd(returnCSharpType, new OperationSourceProvider(returnCSharpType));
         }
 
         internal bool IsResourceModelType(CSharpType type) => GetResourceDataTypes().ContainsKey(type);

@@ -13,6 +13,7 @@ using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.ClientModel.Primitives;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -52,18 +53,15 @@ namespace Azure.Generator.Management.Providers
             {
                 return $"{_resource.ResourceName}OperationSource";
             }
-            else if (_resultType.IsList)
-            {
-                // For list/array result types, base the name on the element type to keep the name
-                // readable and avoid collisions between lists of different element types.
-                return $"{_resultType.Arguments[0].Name}ListOperationSource";
-            }
-            else
-            {
-                // For non-resource types, use the type name
-                var typeName = _resultType.Name;
-                return $"{typeName}OperationSource";
-            }
+
+            var typeName = BuildTypeName(_resultType);
+            return $"{typeName}OperationSource";
+        }
+
+        private static string BuildTypeName(CSharpType type)
+        {
+            var argumentNames = string.Join("", type.Arguments.Select(BuildTypeName));
+            return $"{type.Name}{(argumentNames.Length > 0 ? "Of" : string.Empty)}{argumentNames}";
         }
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", "LongRunningOperation", $"{Name}.cs");
