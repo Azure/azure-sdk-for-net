@@ -190,6 +190,7 @@ namespace Azure.ResourceManager.TrafficManager
         public static Azure.ResourceManager.TrafficManager.TrafficManagerProfileCollection GetTrafficManagerProfiles(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource> GetTrafficManagerProfiles(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource> GetTrafficManagerProfilesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricsResource GetTrafficManagerUserMetric(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
         public static Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricsResource GetTrafficManagerUserMetrics(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
         public static Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricsResource GetTrafficManagerUserMetricsResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
@@ -407,6 +408,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrafficManager.Models.TrafficManagerNameAvailabilityResult>> CheckTrafficManagerNameAvailabilityV2Async(Azure.ResourceManager.TrafficManager.Models.TrafficManagerRelativeDnsNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource> GetTrafficManagerProfiles(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource> GetTrafficManagerProfilesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricsResource GetTrafficManagerUserMetric() { throw null; }
         public virtual Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricsResource GetTrafficManagerUserMetrics() { throw null; }
     }
     public partial class MockableTrafficManagerTenantResource : Azure.ResourceManager.ArmResource
@@ -440,7 +442,6 @@ namespace Azure.ResourceManager.TrafficManager.Models
     }
     public static partial class ArmTrafficManagerModelFactory
     {
-        public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerDeleteOperationResult TrafficManagerDeleteOperationResult(bool? operationResult = default(bool?)) { throw null; }
         public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerDnsConfig TrafficManagerDnsConfig(string relativeName = null, string fqdn = null, long? ttl = default(long?)) { throw null; }
         public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapTrafficFlow TrafficManagerHeatMapTrafficFlow(System.Net.IPAddress sourceIP = null, double? latitude = default(double?), double? longitude = default(double?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapQueryExperience> queryExperiences = null) { throw null; }
         public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfig TrafficManagerMonitorConfig(Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileMonitorStatus? profileMonitorStatus = default(Azure.ResourceManager.TrafficManager.Models.TrafficManagerProfileMonitorStatus?), Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorProtocol? protocol = default(Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorProtocol?), long? port = default(long?), string path = null, long? intervalInSeconds = default(long?), long? timeoutInSeconds = default(long?), long? toleratedNumberOfFailures = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfigCustomHeaderInfo> customHeaders = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.TrafficManager.Models.ExpectedStatusCodeRangeInfo> expectedStatusCodeRanges = null) { throw null; }
@@ -467,7 +468,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
     public partial class TrafficManagerDeleteOperationResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerDeleteOperationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrafficManager.Models.TrafficManagerDeleteOperationResult>
     {
         internal TrafficManagerDeleteOperationResult() { }
-        public bool? OperationResult { get { throw null; } }
+        public bool? IsSuccessful { get { throw null; } }
         protected virtual Azure.ResourceManager.TrafficManager.Models.TrafficManagerDeleteOperationResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.TrafficManager.Models.TrafficManagerDeleteOperationResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
