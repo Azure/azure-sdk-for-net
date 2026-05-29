@@ -145,38 +145,45 @@ namespace Azure.Security.ConfidentialLedger
                 return OperationState.Failure(statusResponse, new RequestFailedException(exceptionMessage, ex));
             }
 
-            JsonElement root = JsonDocument.Parse(statusResponse.Content).RootElement;
-            string status = root.TryGetProperty("status", out JsonElement statusProp) ? statusProp.GetString() : null;
+            string status;
+            string transactionId = null;
+            string code = null;
+            string detail = null;
+            using (JsonDocument doc = JsonDocument.Parse(statusResponse.Content))
+            {
+                JsonElement root = doc.RootElement;
+                status = root.TryGetProperty("status", out JsonElement statusProp) ? statusProp.GetString() : null;
+
+                if (root.TryGetProperty("transactionId", out JsonElement txIdProp))
+                {
+                    transactionId = txIdProp.GetString();
+                }
+
+                if (root.TryGetProperty("error", out JsonElement errProp) && errProp.ValueKind == JsonValueKind.Object)
+                {
+                    if (errProp.TryGetProperty("code", out JsonElement codeProp))
+                    {
+                        code = codeProp.GetString();
+                    }
+                    if (errProp.TryGetProperty("message", out JsonElement msgProp))
+                    {
+                        detail = msgProp.GetString();
+                    }
+                }
+            }
 
             switch (status)
             {
                 case "committed":
-                    if (root.TryGetProperty("transactionId", out JsonElement txIdProp))
+                    if (!string.IsNullOrEmpty(transactionId))
                     {
-                        string txId = txIdProp.GetString();
-                        if (!string.IsNullOrEmpty(txId))
-                        {
-                            // Swap the public Id from the gateway operation id to the CCF transaction id
-                            // so downstream code can use it with GetReceipt / GetLedgerEntry / etc.
-                            _id = txId;
-                        }
+                        // Swap the public Id from the gateway operation id to the CCF transaction id
+                        // so downstream code can use it with GetReceipt / GetLedgerEntry / etc.
+                        _id = transactionId;
                     }
                     return OperationState.Success(statusResponse);
 
                 case "failed":
-                    string code = null;
-                    string detail = null;
-                    if (root.TryGetProperty("error", out JsonElement errProp) && errProp.ValueKind == JsonValueKind.Object)
-                    {
-                        if (errProp.TryGetProperty("code", out JsonElement codeProp))
-                        {
-                            code = codeProp.GetString();
-                        }
-                        if (errProp.TryGetProperty("message", out JsonElement msgProp))
-                        {
-                            detail = msgProp.GetString();
-                        }
-                    }
                     var failureMessage = $"Web Frontend Gateway operation '{Id}' failed."
                         + (code != null ? $" Code: {code}." : string.Empty)
                         + (detail != null ? $" Detail: {detail}" : string.Empty);

@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
+using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
@@ -337,7 +338,10 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             // operation Id. Rehydration performs no I/O until you start polling.
             Operation resumed = ledgerClient.RehydratePostLedgerEntryOperation(operationId);
 
-            Response completed = resumed.WaitForCompletionResponse();
+            // The Web Frontend write queue can stay pending for up to 24 hours during an outage.
+            // Always bound the wait with a CancellationToken so the call cannot hang indefinitely.
+            using var cts = new CancellationTokenSource(TimeSpan.FromMinutes(5));
+            Response completed = resumed.WaitForCompletionResponse(cts.Token);
 
             // Once committed, Operation.Id flips to the CCF transaction Id.
             string transactionId = resumed.Id;

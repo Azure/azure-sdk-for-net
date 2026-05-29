@@ -180,6 +180,7 @@ namespace Azure.Security.ConfidentialLedger
             uri.Reset(_ledgerEndpoint);
             uri.AppendPath("/app/operations/", false);
             uri.AppendPath(operationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -193,6 +194,7 @@ namespace Azure.Security.ConfidentialLedger
             var uri = new RawRequestUriBuilder();
             uri.Reset(_ledgerEndpoint);
             uri.AppendPath("/app/queue/status", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
