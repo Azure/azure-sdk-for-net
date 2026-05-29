@@ -10,6 +10,7 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -342,6 +343,16 @@ namespace Azure.Generator.Management.Tests.Providers
                 Assert.That(body, Does.Not.Contain("DeserializeOperationStatusResult"),
                     $"{(isAsync ? "CreateResultAsync" : "CreateResult")} must not call the inaccessible internal Deserialize factory.");
             }
+        }
+
+        [TestCase]
+        public void Verify_ListResultType_UsesElementListOperationSourceName()
+        {
+            _ = ManagementMockHelpers.LoadMockPlugin();
+
+            var provider = new OperationSourceProvider(new CSharpType(typeof(IList<>), typeof(string)));
+
+            Assert.That(provider.Name, Is.EqualTo("StringListOperationSource"));
         }
 
         private static (MethodProvider CreateResult, MethodProvider CreateResultAsync) GetNonResourceFrameworkOperationSourceMethods()

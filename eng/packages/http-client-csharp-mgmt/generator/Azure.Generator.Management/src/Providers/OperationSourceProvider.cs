@@ -11,6 +11,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
+using System.Collections.Generic;
 using System.ClientModel.Primitives;
 using System.IO;
 using System.Linq;
@@ -68,6 +69,14 @@ namespace Azure.Generator.Management.Providers
 
         private static string BuildTypeName(CSharpType type)
         {
+            if (type.IsFrameworkType &&
+                type.FrameworkType is { IsGenericType: true } frameworkType &&
+                frameworkType.GetGenericTypeDefinition() == typeof(IList<>) &&
+                type.Arguments.Count == 1)
+            {
+                return $"{BuildTypeName(type.Arguments[0])}List";
+            }
+
             var argumentNames = string.Join("", type.Arguments.Select(BuildTypeName));
             return $"{type.Name}{(argumentNames.Length > 0 ? "Of" : string.Empty)}{argumentNames}";
         }
