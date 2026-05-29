@@ -7,7 +7,6 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("CreateResourceIdentifier", typeof(string), typeof(string), typeof(string), typeof(string))]
     public partial class ExpansionJobResource : ArmResource
     {
         /// <summary> Generate the resource identifier for this resource. </summary>

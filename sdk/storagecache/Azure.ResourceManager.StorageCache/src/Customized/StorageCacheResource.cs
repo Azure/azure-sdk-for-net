@@ -19,8 +19,6 @@ using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("UpdateSpaceAllocationAsync", typeof(WaitUntil), typeof(IEnumerable<StorageTargetSpaceAllocation>), typeof(CancellationToken))]
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("UpdateSpaceAllocation", typeof(WaitUntil), typeof(IEnumerable<StorageTargetSpaceAllocation>), typeof(CancellationToken))]
     public partial class StorageCacheResource : ArmResource
     {
         /// <summary>
