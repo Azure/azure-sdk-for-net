@@ -12,15 +12,15 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> The StaticRoutePatchProperties. </summary>
+    /// <summary> Route Properties. </summary>
     public partial class StaticRoutePatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StaticRoutePatchProperties"/>. </summary>
-        /// <param name="prefix"></param>
-        /// <param name="nextHop"></param>
+        /// <param name="prefix"> Prefix of the route. </param>
+        /// <param name="nextHop"> List of next hop addresses. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="prefix"/> or <paramref name="nextHop"/> is null. </exception>
         public StaticRoutePatchProperties(string prefix, IEnumerable<string> nextHop)
         {
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticRoutePatchProperties"/>. </summary>
-        /// <param name="prefix"></param>
-        /// <param name="nextHop"></param>
+        /// <param name="prefix"> Prefix of the route. </param>
+        /// <param name="nextHop"> List of next hop addresses. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal StaticRoutePatchProperties(string prefix, IList<string> nextHop, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the Prefix. </summary>
-        public string Prefix { get; set; }
+        /// <summary> Prefix of the route. </summary>
+        public string Prefix { get; }
 
-        /// <summary> Gets the NextHop. </summary>
+        /// <summary> List of next hop addresses. </summary>
         public IList<string> NextHop { get; }
     }
 }

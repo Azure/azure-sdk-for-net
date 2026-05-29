@@ -1389,9 +1389,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ExternalNetworkStaticRoutePatchConfiguration(bfdConfiguration, iPv4Routes.ToList(), iPv6Routes.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The StaticRoutePatchProperties. </summary>
-        /// <param name="prefix"></param>
-        /// <param name="nextHop"></param>
+        /// <summary> Route Properties. </summary>
+        /// <param name="prefix"> Prefix of the route. </param>
+        /// <param name="nextHop"> List of next hop addresses. </param>
         /// <returns> A new <see cref="Models.StaticRoutePatchProperties"/> instance for mocking. </returns>
         public static StaticRoutePatchProperties StaticRoutePatchProperties(string prefix = default, IEnumerable<string> nextHop = default)
         {

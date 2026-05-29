@@ -13,7 +13,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> The StaticRoutePatchProperties. </summary>
+    /// <summary> Route Properties. </summary>
     public partial class StaticRoutePatchProperties : IJsonModel<StaticRoutePatchProperties>
     {
         /// <summary> Initializes a new instance of <see cref="StaticRoutePatchProperties"/> for deserialization. </summary>

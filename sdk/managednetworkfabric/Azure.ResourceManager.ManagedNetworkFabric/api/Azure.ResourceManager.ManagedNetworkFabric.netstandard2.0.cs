@@ -7649,7 +7649,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     {
         public StaticRoutePatchProperties(string prefix, System.Collections.Generic.IEnumerable<string> nextHop) { }
         public System.Collections.Generic.IList<string> NextHop { get { throw null; } }
-        public string Prefix { get { throw null; } set { } }
+        public string Prefix { get { throw null; } }
         protected virtual Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRoutePatchProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRoutePatchProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
