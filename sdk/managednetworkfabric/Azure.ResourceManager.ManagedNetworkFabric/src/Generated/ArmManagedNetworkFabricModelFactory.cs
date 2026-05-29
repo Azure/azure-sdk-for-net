@@ -1125,6 +1125,103 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new StaticRouteProperties(prefix, nextHop.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> BGP configuration properties. </summary>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="bfdConfiguration"> BFD configuration properties. </param>
+        /// <param name="defaultRouteOriginate"> Originate a defaultRoute. Ex: "True" | "False". </param>
+        /// <param name="allowAS"> Allows for routes to be received and processed even if the router detects its own ASN in the AS-Path. 0 is disable, Possible values are 1-10, default is 2. </param>
+        /// <param name="allowASOverride"> Enable Or Disable state. </param>
+        /// <param name="fabricAsn"> ASN of Network Fabric. Example: 65048. </param>
+        /// <param name="peerAsn"> Peer ASN. Example: 65047. </param>
+        /// <param name="ipv4ListenRangePrefixes"> List of BGP IPv4 Listen Range prefixes. </param>
+        /// <param name="ipv6ListenRangePrefixes"> List of BGP IPv6 Listen Ranges prefixes. </param>
+        /// <param name="ipv4NeighborAddress"> List with stringified IPv4 Neighbor Addresses. </param>
+        /// <param name="ipv6NeighborAddress"> List with stringified IPv6 Neighbor Address. </param>
+        /// <param name="bmpConfiguration"> InternalNetwork BMP Configuration. </param>
+        /// <param name="v4OverV6BgpSession"> V4 over V6 bgp session. </param>
+        /// <param name="v6OverV4BgpSession"> v6 over v4 bgp session. </param>
+        /// <returns> A new <see cref="Models.BgpPatchConfiguration"/> instance for mocking. </returns>
+        public static BgpPatchConfiguration BgpPatchConfiguration(string annotation = default, BfdPatchConfiguration bfdConfiguration = default, NetworkFabricBooleanValue? defaultRouteOriginate = default, int? allowAS = default, AllowASOverride? allowASOverride = default, long? fabricAsn = default, long? peerAsn = default, IEnumerable<string> ipv4ListenRangePrefixes = default, IEnumerable<string> ipv6ListenRangePrefixes = default, IEnumerable<NeighborAddressPatch> ipv4NeighborAddress = default, IEnumerable<NeighborAddressPatch> ipv6NeighborAddress = default, InternalNetworkBmpPatchProperties bmpConfiguration = default, NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession = default, NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession = default)
+        {
+            ipv4ListenRangePrefixes ??= new ChangeTrackingList<string>();
+            ipv6ListenRangePrefixes ??= new ChangeTrackingList<string>();
+            ipv4NeighborAddress ??= new ChangeTrackingList<NeighborAddressPatch>();
+            ipv6NeighborAddress ??= new ChangeTrackingList<NeighborAddressPatch>();
+
+            return new BgpPatchConfiguration(
+                annotation,
+                additionalBinaryDataProperties: null,
+                bfdConfiguration,
+                defaultRouteOriginate,
+                allowAS,
+                allowASOverride,
+                fabricAsn,
+                peerAsn,
+                ipv4ListenRangePrefixes.ToList(),
+                ipv6ListenRangePrefixes.ToList(),
+                ipv4NeighborAddress.ToList(),
+                ipv6NeighborAddress.ToList(),
+                bmpConfiguration,
+                v4OverV6BgpSession,
+                v6OverV4BgpSession);
+        }
+
+        /// <summary> BFD configuration properties. </summary>
+        /// <param name="administrativeState"> Administrative state of the BfdConfiguration. Example: Enabled | Disabled. </param>
+        /// <param name="intervalInMilliSeconds"> Interval in milliseconds. Example: 300. </param>
+        /// <param name="multiplier"> Multiplier for the Bfd Configuration. Example: 5. </param>
+        /// <returns> A new <see cref="Models.BfdPatchConfiguration"/> instance for mocking. </returns>
+        public static BfdPatchConfiguration BfdPatchConfiguration(BfdAdministrativeState? administrativeState = default, int? intervalInMilliSeconds = default, int? multiplier = default)
+        {
+            return new BfdPatchConfiguration(administrativeState, intervalInMilliSeconds, multiplier, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Neighbor Address properties. </summary>
+        /// <param name="address"> IP Address. </param>
+        /// <param name="bfdAdministrativeState"> BFD Administrative State for each Neighbor Address. Example: Enabled | Disabled. </param>
+        /// <param name="bgpAdministrativeState"> BGP Administrative State for each Neighbor Address. Example: Enabled | Disabled. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <returns> A new <see cref="Models.NeighborAddressPatch"/> instance for mocking. </returns>
+        public static NeighborAddressPatch NeighborAddressPatch(string address = default, BfdAdministrativeState? bfdAdministrativeState = default, BgpAdministrativeState? bgpAdministrativeState = default, NetworkFabricConfigurationState? configurationState = default)
+        {
+            return new NeighborAddressPatch(address, bfdAdministrativeState, bgpAdministrativeState, configurationState, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Internal Network BMP Configuration. </summary>
+        /// <param name="neighborIPExclusions"> Neighbor IP Address exclusions for BMP. </param>
+        /// <param name="bmpConfigurationState"> BMP Monitoring configuration state. </param>
+        /// <returns> A new <see cref="Models.InternalNetworkBmpPatchProperties"/> instance for mocking. </returns>
+        public static InternalNetworkBmpPatchProperties InternalNetworkBmpPatchProperties(IEnumerable<string> neighborIPExclusions = default, BmpConfigurationState? bmpConfigurationState = default)
+        {
+            neighborIPExclusions ??= new ChangeTrackingList<string>();
+
+            return new InternalNetworkBmpPatchProperties(neighborIPExclusions.ToList(), bmpConfigurationState, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Static Route Configuration properties. </summary>
+        /// <param name="bfdConfiguration"> BFD configuration properties. </param>
+        /// <param name="iPv4Routes"> List of IPv4 Routes. </param>
+        /// <param name="iPv6Routes"> List of IPv6 Routes. </param>
+        /// <returns> A new <see cref="Models.StaticRoutePatchConfiguration"/> instance for mocking. </returns>
+        public static StaticRoutePatchConfiguration StaticRoutePatchConfiguration(BfdPatchConfiguration bfdConfiguration = default, IEnumerable<StaticRoutePatchProperties> iPv4Routes = default, IEnumerable<StaticRoutePatchProperties> iPv6Routes = default)
+        {
+            iPv4Routes ??= new ChangeTrackingList<StaticRoutePatchProperties>();
+            iPv6Routes ??= new ChangeTrackingList<StaticRoutePatchProperties>();
+
+            return new StaticRoutePatchConfiguration(bfdConfiguration, iPv4Routes.ToList(), iPv6Routes.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Route Properties. </summary>
+        /// <param name="prefix"> Prefix of the route. </param>
+        /// <param name="nextHop"> List of next hop addresses. </param>
+        /// <returns> A new <see cref="Models.StaticRoutePatchProperties"/> instance for mocking. </returns>
+        public static StaticRoutePatchProperties StaticRoutePatchProperties(string prefix = default, IEnumerable<string> nextHop = default)
+        {
+            nextHop ??= new ChangeTrackingList<string>();
+
+            return new StaticRoutePatchProperties(prefix, nextHop.ToList(), additionalBinaryDataProperties: null);
+        }
+
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -1366,16 +1463,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 nativeIPv6PrefixLimits is null ? default : new NativeIpv6PrefixLimitPatchProperties((nativeIPv6PrefixLimits ?? new ChangeTrackingList<PrefixLimitPatchProperties>()).ToList(), null));
         }
 
-        /// <summary> BFD configuration properties. </summary>
-        /// <param name="administrativeState"> Administrative state of the BfdConfiguration. Example: Enabled | Disabled. </param>
-        /// <param name="intervalInMilliSeconds"> Interval in milliseconds. Example: 300. </param>
-        /// <param name="multiplier"> Multiplier for the Bfd Configuration. Example: 5. </param>
-        /// <returns> A new <see cref="Models.BfdPatchConfiguration"/> instance for mocking. </returns>
-        public static BfdPatchConfiguration BfdPatchConfiguration(BfdAdministrativeState? administrativeState = default, int? intervalInMilliSeconds = default, int? multiplier = default)
-        {
-            return new BfdPatchConfiguration(administrativeState, intervalInMilliSeconds, multiplier, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Static Route Configuration properties for External Network. </summary>
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
         /// <param name="iPv4Routes"> List of IPv4 Routes. </param>
@@ -1387,17 +1474,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             iPv6Routes ??= new ChangeTrackingList<StaticRoutePatchProperties>();
 
             return new ExternalNetworkStaticRoutePatchConfiguration(bfdConfiguration, iPv4Routes.ToList(), iPv6Routes.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Route Properties. </summary>
-        /// <param name="prefix"> Prefix of the route. </param>
-        /// <param name="nextHop"> List of next hop addresses. </param>
-        /// <returns> A new <see cref="Models.StaticRoutePatchProperties"/> instance for mocking. </returns>
-        public static StaticRoutePatchProperties StaticRoutePatchProperties(string prefix = default, IEnumerable<string> nextHop = default)
-        {
-            nextHop ??= new ChangeTrackingList<string>();
-
-            return new StaticRoutePatchProperties(prefix, nextHop.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> External Network Update Administrative State response. </summary>

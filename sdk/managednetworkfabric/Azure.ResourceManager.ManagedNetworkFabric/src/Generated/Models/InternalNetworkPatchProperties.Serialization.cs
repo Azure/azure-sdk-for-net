@@ -130,15 +130,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("isMonitoringEnabled"u8);
                 writer.WriteStringValue(IsMonitoringEnabled.Value.ToString());
             }
-            if (Optional.IsDefined(BgpConfiguration))
+            if (Optional.IsDefined(BgpSettings))
             {
                 writer.WritePropertyName("bgpConfiguration"u8);
-                writer.WriteObjectValue(BgpConfiguration, options);
+                writer.WriteObjectValue(BgpSettings, options);
             }
-            if (Optional.IsDefined(StaticRouteConfiguration))
+            if (Optional.IsDefined(StaticRouteSettings))
             {
                 writer.WritePropertyName("staticRouteConfiguration"u8);
-                writer.WriteObjectValue(StaticRouteConfiguration, options);
+                writer.WriteObjectValue(StaticRouteSettings, options);
             }
             if (Optional.IsDefined(NativeIPv4PrefixLimit))
             {
@@ -201,8 +201,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ResourceIdentifier ingressAclId = default;
             ResourceIdentifier egressAclId = default;
             IsMonitoringEnabled? isMonitoringEnabled = default;
-            BgpConfiguration bgpConfiguration = default;
-            StaticRouteConfiguration staticRouteConfiguration = default;
+            BgpPatchConfiguration bgpSettings = default;
+            StaticRoutePatchConfiguration staticRouteSettings = default;
             NativeIpv4PrefixLimitPatchProperties nativeIPv4PrefixLimit = default;
             NativeIpv6PrefixLimitPatchProperties nativeIPv6PrefixLimit = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    bgpConfiguration = BgpConfiguration.DeserializeBgpConfiguration(prop.Value, options);
+                    bgpSettings = BgpPatchConfiguration.DeserializeBgpPatchConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("staticRouteConfiguration"u8))
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    staticRouteConfiguration = StaticRouteConfiguration.DeserializeStaticRouteConfiguration(prop.Value, options);
+                    staticRouteSettings = StaticRoutePatchConfiguration.DeserializeStaticRoutePatchConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("nativeIpv4PrefixLimit"u8))
@@ -346,8 +346,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 ingressAclId,
                 egressAclId,
                 isMonitoringEnabled,
-                bgpConfiguration,
-                staticRouteConfiguration,
+                bgpSettings,
+                staticRouteSettings,
                 nativeIPv4PrefixLimit,
                 nativeIPv6PrefixLimit,
                 additionalBinaryDataProperties);

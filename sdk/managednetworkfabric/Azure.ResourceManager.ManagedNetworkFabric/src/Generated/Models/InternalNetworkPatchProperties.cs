@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
         /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
         /// <param name="isMonitoringEnabled"> To check whether monitoring of internal network is enabled or not. </param>
-        /// <param name="bgpConfiguration"> BGP configuration properties. </param>
-        /// <param name="staticRouteConfiguration"> Static Route Configuration properties. </param>
+        /// <param name="bgpSettings"> BGP configuration properties. </param>
+        /// <param name="staticRouteSettings"> Static Route Configuration properties. </param>
         /// <param name="nativeIPv4PrefixLimit"> Native IPv4 Prefix Limit Configuration properties. </param>
         /// <param name="nativeIPv6PrefixLimit"> Native IPv6 Prefix Limit Configuration properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalNetworkPatchProperties(string annotation, int? mtu, IList<ConnectedSubnet> connectedIPv4Subnets, IList<ConnectedSubnet> connectedIPv6Subnets, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, BgpConfiguration bgpConfiguration, StaticRouteConfiguration staticRouteConfiguration, NativeIpv4PrefixLimitPatchProperties nativeIPv4PrefixLimit, NativeIpv6PrefixLimitPatchProperties nativeIPv6PrefixLimit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalNetworkPatchProperties(string annotation, int? mtu, IList<ConnectedSubnet> connectedIPv4Subnets, IList<ConnectedSubnet> connectedIPv6Subnets, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, BgpPatchConfiguration bgpSettings, StaticRoutePatchConfiguration staticRouteSettings, NativeIpv4PrefixLimitPatchProperties nativeIPv4PrefixLimit, NativeIpv6PrefixLimitPatchProperties nativeIPv6PrefixLimit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             Mtu = mtu;
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IngressAclId = ingressAclId;
             EgressAclId = egressAclId;
             IsMonitoringEnabled = isMonitoringEnabled;
-            BgpConfiguration = bgpConfiguration;
-            StaticRouteConfiguration = staticRouteConfiguration;
+            BgpSettings = bgpSettings;
+            StaticRouteSettings = staticRouteSettings;
             NativeIPv4PrefixLimit = nativeIPv4PrefixLimit;
             NativeIPv6PrefixLimit = nativeIPv6PrefixLimit;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public IsMonitoringEnabled? IsMonitoringEnabled { get; set; }
 
         /// <summary> BGP configuration properties. </summary>
-        public BgpConfiguration BgpConfiguration { get; set; }
+        public BgpPatchConfiguration BgpSettings { get; set; }
 
         /// <summary> Static Route Configuration properties. </summary>
-        public StaticRouteConfiguration StaticRouteConfiguration { get; set; }
+        public StaticRoutePatchConfiguration StaticRouteSettings { get; set; }
 
         /// <summary> Native IPv4 Prefix Limit Configuration properties. </summary>
         internal NativeIpv4PrefixLimitPatchProperties NativeIPv4PrefixLimit { get; set; }

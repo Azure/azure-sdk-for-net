@@ -180,11 +180,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> BGP configuration properties. </summary>
-        public BgpConfiguration BgpConfiguration
+        public BgpPatchConfiguration BgpSettings
         {
             get
             {
-                return Properties is null ? default : Properties.BgpConfiguration;
+                return Properties is null ? default : Properties.BgpSettings;
             }
             set
             {
@@ -192,16 +192,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new InternalNetworkPatchProperties();
                 }
-                Properties.BgpConfiguration = value;
+                Properties.BgpSettings = value;
             }
         }
 
         /// <summary> Static Route Configuration properties. </summary>
-        public StaticRouteConfiguration StaticRouteConfiguration
+        public StaticRoutePatchConfiguration StaticRouteSettings
         {
             get
             {
-                return Properties is null ? default : Properties.StaticRouteConfiguration;
+                return Properties is null ? default : Properties.StaticRouteSettings;
             }
             set
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new InternalNetworkPatchProperties();
                 }
-                Properties.StaticRouteConfiguration = value;
+                Properties.StaticRouteSettings = value;
             }
         }
 
