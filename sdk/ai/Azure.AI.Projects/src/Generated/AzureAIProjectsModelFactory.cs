@@ -456,6 +456,17 @@ namespace Azure.AI.Projects
             return new FoundryModelWarning(code, message, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Request body for updating a model version. Only description and tags can be modified. </summary>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <returns> A new <see cref="Projects.UpdateModelVersionOptions"/> instance for mocking. </returns>
+        public static UpdateModelVersionOptions UpdateModelVersionOptions(string description = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new UpdateModelVersionOptions(description, tags, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The CreateAsyncResponse. </summary>
         /// <param name="location"> URL to poll for operation status. </param>
         /// <param name="operationResult"> URL to the operation result, or null if the operation is still in progress. </param>
@@ -552,7 +563,7 @@ namespace Azure.AI.Projects
         /// <param name="displayName"> Name of the red-team run. </param>
         /// <param name="turnCount"> Number of simulation rounds. </param>
         /// <param name="attackStrategies"> List of attack strategies or nested lists of attack strategies. </param>
-        /// <param name="isSimulationOnly"> Simulation-only or Simulation + Evaluation. Default false, if true the scan outputs conversation not evaluation result. </param>
+        /// <param name="isSimulationOnly"> Simulation-only or Simulation + Evaluation. If `true` the scan outputs conversation not evaluation result. The service defaults to `false` if a value is not specified by the caller. </param>
         /// <param name="riskCategories"> List of risk categories to generate attack objectives for. </param>
         /// <param name="applicationScenario"> Application scenario for the red team operation, to generate scenario specific attacks. </param>
         /// <param name="tags"> Red team's tags. Unlike properties, tags are fully mutable. </param>
@@ -928,7 +939,7 @@ namespace Azure.AI.Projects
         /// <param name="id"> Stable identifier for this dimension (snake_case, e.g., `correct_resolution`). Required. Provided by the user when manually creating a rubric evaluator or during human-in-the-loop review of a generated set; the generation pipeline produces an initial value the user can edit. Editable when saving new versions. </param>
         /// <param name="description"> What this dimension measures (e.g., 'Correctly identifies the user's reservation intent and pursues the appropriate workflow'). </param>
         /// <param name="weight"> Relative weight of this dimension (1-10). The generation pipeline assigns exactly one dimension weight 8-10; all others use 1-6. User edits are not constrained by this heuristic. </param>
-        /// <param name="alwaysApplicable"> When true, the LLM judge always scores this dimension regardless of relevance (skips applicability assessment). The service-generated general quality/policy dimension has this set to true and is non-editable. Users may set this on their own custom dimensions. Defaults to `false`. </param>
+        /// <param name="alwaysApplicable"> When true, the LLM judge always scores this dimension regardless of relevance (skips applicability assessment). The service-generated general quality/policy dimension has this set to true and is non-editable. Users may set this on their own custom dimensions. The service defaults to `false` if a value is not specified by the caller. </param>
         /// <returns> A new <see cref="Evaluation.EvaluationsDimension"/> instance for mocking. </returns>
         public static EvaluationsDimension EvaluationsDimension(string id = default, string description = default, int weight = default, bool? alwaysApplicable = default)
         {
@@ -1421,7 +1432,7 @@ namespace Azure.AI.Projects
         /// <param name="isUserProfileEnabled"> Whether to enable user profile extraction and storage. Default is true. </param>
         /// <param name="userProfileDetails"> Specific categories or types of user profile information to extract and store. </param>
         /// <param name="isChatSummaryEnabled"> Whether to enable chat summary extraction and storage. Defaults to `true`. </param>
-        /// <param name="proceduralMemoryEnabled"> Whether to enable procedural memory extraction and storage. Defaults to `true`. </param>
+        /// <param name="proceduralMemoryEnabled"> Whether to enable procedural memory extraction and storage. The service defaults to `true` if a value is not specified by the caller. </param>
         /// <param name="defaultTtlSeconds"> The default time-to-live for memories in seconds. A value of `0` indicates that memories do not expire. Defaults to `0`. </param>
         /// <returns> A new <see cref="Memory.MemoryStoreDefaultOptions"/> instance for mocking. </returns>
         public static MemoryStoreDefaultOptions MemoryStoreDefaultOptions(bool isUserProfileEnabled = default, string userProfileDetails = default, bool isChatSummaryEnabled = default, bool? proceduralMemoryEnabled = default, TimeSpan? defaultTtlSeconds = default)

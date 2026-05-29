@@ -34,6 +34,7 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
   - [Files operations](#files-operations)
   - [Fine-Tuning operations](#fine-tuning-operations)
   - [Memory store operations](#memory-store-operations)
+  - [Model weights](#model-weights)
   - [Evaluations](#evalustions)
     - [Agent evaluation](#agent-evaluation)
     - [Model evaluation](#model-evaluation)
@@ -629,6 +630,37 @@ Console.WriteLine($"Memory Item with ID {response.MemoryId} was{(response.Delete
 
 
 For more information about memory stores please refer [this article](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/agent-memory)
+
+### Model weights
+
+Microsoft Foundry is capable to register and store the custom model weights. First the model weights need to be uploaded to BLOB store.
+The store URI must be used to register the model.
+
+Create a new model:
+
+```C# Snippet:Sample_CreateModel_Models_Async
+```
+
+Update models:
+
+```C# Snippet:Sample_UpdateModel_Models_Async
+```
+
+List model versions:
+
+```C# C# Snippet:Sample_ListModelVersions_Models_Async
+```
+
+List latest versions of all models:
+
+```C# C# Snippet:Sample_ListLatestVersions_Models_Async
+```
+
+Delete a version of a model weights:
+
+```C# Snippet:Sample_Cleanup_Models_Sync
+```
+
 
 ### Evaluations
 

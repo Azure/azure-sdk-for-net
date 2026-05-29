@@ -377,13 +377,13 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult CreateModelVersionAsync(string name, string version, BinaryContent content, RequestOptions options = null)
+        public virtual ClientResult CreateModelVersionRequest(string name, string version, BinaryContent content, RequestOptions options = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateModelVersionAsyncRequest(name, version, content, options);
+            using PipelineMessage message = CreateCreateModelVersionRequestRequest(name, version, content, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -403,13 +403,13 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> CreateModelVersionAsyncAsync(string name, string version, BinaryContent content, RequestOptions options = null)
+        public virtual async Task<ClientResult> CreateModelVersionRequestAsync(string name, string version, BinaryContent content, RequestOptions options = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateModelVersionAsyncRequest(name, version, content, options);
+            using PipelineMessage message = CreateCreateModelVersionRequestRequest(name, version, content, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
@@ -421,13 +421,13 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="modelVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<CreateAsyncResponse> CreateModelVersionAsync(string name, string version, ModelVersion modelVersion, CancellationToken cancellationToken = default)
+        public virtual ClientResult<CreateAsyncResponse> CreateModelVersionRequest(string name, string version, ModelVersion modelVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(modelVersion, nameof(modelVersion));
 
-            ClientResult result = CreateModelVersionAsync(name, version, modelVersion, cancellationToken.ToRequestOptions());
+            ClientResult result = CreateModelVersionRequest(name, version, modelVersion, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((CreateAsyncResponse)result, result.GetRawResponse());
         }
 
@@ -439,13 +439,13 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="modelVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<CreateAsyncResponse>> CreateModelVersionAsyncAsync(string name, string version, ModelVersion modelVersion, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<CreateAsyncResponse>> CreateModelVersionRequestAsync(string name, string version, ModelVersion modelVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(modelVersion, nameof(modelVersion));
 
-            ClientResult result = await CreateModelVersionAsyncAsync(name, version, modelVersion, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await CreateModelVersionRequestAsync(name, version, modelVersion, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((CreateAsyncResponse)result, result.GetRawResponse());
         }
 
