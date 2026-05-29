@@ -53,10 +53,16 @@ namespace Azure.Generator.Management
                 // Model factory back-compat overloads can be synthesized from LastContractView
                 // after normal visitors run. Repair them here so the final methods being written
                 // preserve arguments that were moved into flattened model properties.
-                ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+                using (ProfilingTimer.Measure("FixModelFactoryBackwardCompatOverloads", $"{modelFactory.Name}; methods={modelFactory.Methods.Count}"))
+                {
+                    ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+                }
             }
 
-            return base.GetWriter(provider);
+            using (ProfilingTimer.Measure("GetWriter", provider.Name))
+            {
+                return base.GetWriter(provider);
+            }
         }
 
         /// <summary>
@@ -64,23 +70,26 @@ namespace Azure.Generator.Management
         /// </summary>
         protected override void Configure()
         {
-            base.Configure();
-            // Include Azure.ResourceManager
-            AddMetadataReference(MetadataReference.CreateFromFile(typeof(ArmClient).Assembly.Location));
-            // renaming should come first
-            AddVisitor(new NameVisitor());
-            AddVisitor(new SerializationVisitor());
-            AddVisitor(new RestClientVisitor());
-            AddVisitor(new ResourceVisitor());
-            AddVisitor(new InheritableSystemObjectModelVisitor());
-            AddVisitor(new FlattenPropertyVisitor());
-            AddVisitor(new TypeFilterVisitor());
-            AddVisitor(new PaginationVisitor());
-            AddVisitor(new ModelFactoryVisitor());
-            AddVisitor(new ManagedIdentityV3Visitor());
-            if (IsWirePathEnabled())
+            using (ProfilingTimer.Measure(nameof(Configure)))
             {
-                AddVisitor(new WirePathVisitor());
+                base.Configure();
+                // Include Azure.ResourceManager
+                AddMetadataReference(MetadataReference.CreateFromFile(typeof(ArmClient).Assembly.Location));
+                // renaming should come first
+                AddVisitor(new NameVisitor());
+                AddVisitor(new SerializationVisitor());
+                AddVisitor(new RestClientVisitor());
+                AddVisitor(new ResourceVisitor());
+                AddVisitor(new InheritableSystemObjectModelVisitor());
+                AddVisitor(new FlattenPropertyVisitor());
+                AddVisitor(new TypeFilterVisitor());
+                AddVisitor(new PaginationVisitor());
+                AddVisitor(new ModelFactoryVisitor());
+                AddVisitor(new ManagedIdentityV3Visitor());
+                if (IsWirePathEnabled())
+                {
+                    AddVisitor(new WirePathVisitor());
+                }
             }
         }
 

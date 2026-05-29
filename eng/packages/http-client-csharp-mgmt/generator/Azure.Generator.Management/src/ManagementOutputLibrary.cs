@@ -129,65 +129,83 @@ namespace Azure.Generator.Management
                 return; // already initialized
             }
 
-            var resourceMetadatas = ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas;
-            var resourceMethodCategories = new Dictionary<ArmResourceMetadata, ResourceMethodCategory>(resourceMetadatas.Count);
-
-            // build resource methods per resource metadata
-            var resourceDict = new Dictionary<ArmResourceMetadata, ResourceClientProvider>(resourceMetadatas.Count);
-            var collections = new List<ResourceCollectionClientProvider>(resourceMetadatas.Count);
-            foreach (var resourceMetadata in resourceMetadatas)
+            using (ProfilingTimer.Measure(nameof(InitializeResourceClients)))
             {
-                // categorize the resource methods
-                var categorizedMethods = resourceMetadata.CategorizeMethods();
-                // stores it because later in extensions we need it again
-                resourceMethodCategories.Add(resourceMetadata, categorizedMethods);
-                var resource = ResourceClientProvider.Create(resourceMetadata, categorizedMethods.MethodsInResource, categorizedMethods.MethodsInCollection);
-                resourceDict.Add(resourceMetadata, resource);
-                if (resource.ResourceCollection is not null)
+                var resourceMetadatas = ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas;
+                ProfilingTimer.Log($"Resource metadata count: {resourceMetadatas.Count}; non-resource method count: {ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods.Count}");
+                var resourceMethodCategories = new Dictionary<ArmResourceMetadata, ResourceMethodCategory>(resourceMetadatas.Count);
+
+                // build resource methods per resource metadata
+                var resourceDict = new Dictionary<ArmResourceMetadata, ResourceClientProvider>(resourceMetadatas.Count);
+                var collections = new List<ResourceCollectionClientProvider>(resourceMetadatas.Count);
+                using (ProfilingTimer.Measure("CreateResourceProviders", $"count={resourceMetadatas.Count}"))
                 {
-                    collections.Add(resource.ResourceCollection);
-                }
-            }
-
-            // resources and collections are now initialized
-            _resourcesByIdDict = resourceDict.ToDictionary(kv => kv.Key.ResourceIdPattern, kv => kv.Value);
-            _resources = [.. resourceDict.Values];
-            _resourceCollections = collections;
-
-            // build mockable resources
-            var resourcesAndMethodsPerScope = BuildResourcesAndNonResourceMethods(
-                resourceDict,
-                resourceMethodCategories,
-                ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods);
-
-            // Extract extension non-resource methods for MockableArmClientProvider
-            var extensionNonResourceMethods = resourcesAndMethodsPerScope.TryGetValue(ResourceScope.Extension, out var extensionScope)
-                ? extensionScope.NonResourceMethods
-                : [];
-
-            var mockableArmClientResource = MockableArmClientProvider.TryCreate(_resources, extensionNonResourceMethods);
-            var mockableResources = new Dictionary<ResourceScope, MockableResourceProvider>(resourcesAndMethodsPerScope.Count);
-            foreach (var (scope, (resourcesInScope, resourceMethods, nonResourceMethods)) in resourcesAndMethodsPerScope)
-            {
-                if (scope != ResourceScope.Extension)
-                {
-                    var mockableExtension = MockableResourceProvider.TryCreate(scope, resourcesInScope, resourceMethods, nonResourceMethods);
-                    if (mockableExtension != null)
+                    foreach (var resourceMetadata in resourceMetadatas)
                     {
-                        mockableResources.Add(scope, mockableExtension);
+                        // categorize the resource methods
+                        var categorizedMethods = resourceMetadata.CategorizeMethods();
+                        // stores it because later in extensions we need it again
+                        resourceMethodCategories.Add(resourceMetadata, categorizedMethods);
+                        var resource = ResourceClientProvider.Create(resourceMetadata, categorizedMethods.MethodsInResource, categorizedMethods.MethodsInCollection);
+                        resourceDict.Add(resourceMetadata, resource);
+                        if (resource.ResourceCollection is not null)
+                        {
+                            collections.Add(resource.ResourceCollection);
+                        }
                     }
                 }
-            }
 
-            _mockableResourcesByScopeDict = mockableResources;
-            var allMockableResources = new List<MockableResourceProvider>();
-            if (mockableArmClientResource != null)
-            {
-                allMockableResources.Add(mockableArmClientResource);
+                // resources and collections are now initialized
+                _resourcesByIdDict = resourceDict.ToDictionary(kv => kv.Key.ResourceIdPattern, kv => kv.Value);
+                _resources = [.. resourceDict.Values];
+                _resourceCollections = collections;
+
+                Dictionary<ResourceScope, ResourcesAndNonResourceMethodsInScope> resourcesAndMethodsPerScope;
+                using (ProfilingTimer.Measure(nameof(BuildResourcesAndNonResourceMethods)))
+                {
+                    // build mockable resources
+                    resourcesAndMethodsPerScope = BuildResourcesAndNonResourceMethods(
+                        resourceDict,
+                        resourceMethodCategories,
+                        ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods);
+                }
+
+                // Extract extension non-resource methods for MockableArmClientProvider
+                var extensionNonResourceMethods = resourcesAndMethodsPerScope.TryGetValue(ResourceScope.Extension, out var extensionScope)
+                    ? extensionScope.NonResourceMethods
+                    : [];
+
+                MockableArmClientProvider? mockableArmClientResource;
+                var mockableResources = new Dictionary<ResourceScope, MockableResourceProvider>(resourcesAndMethodsPerScope.Count);
+                using (ProfilingTimer.Measure("CreateMockableProviders", $"scopes={resourcesAndMethodsPerScope.Count}"))
+                {
+                    mockableArmClientResource = MockableArmClientProvider.TryCreate(_resources, extensionNonResourceMethods);
+                    foreach (var (scope, (resourcesInScope, resourceMethods, nonResourceMethods)) in resourcesAndMethodsPerScope)
+                    {
+                        if (scope != ResourceScope.Extension)
+                        {
+                            var mockableExtension = MockableResourceProvider.TryCreate(scope, resourcesInScope, resourceMethods, nonResourceMethods);
+                            if (mockableExtension != null)
+                            {
+                                mockableResources.Add(scope, mockableExtension);
+                            }
+                        }
+                    }
+                }
+
+                _mockableResourcesByScopeDict = mockableResources;
+                var allMockableResources = new List<MockableResourceProvider>();
+                if (mockableArmClientResource != null)
+                {
+                    allMockableResources.Add(mockableArmClientResource);
+                }
+                allMockableResources.AddRange(mockableResources.Values);
+                _mockableResources = allMockableResources;
+                using (ProfilingTimer.Measure("CreateExtensionProvider", $"mockableResources={_mockableResources.Count}"))
+                {
+                    _extensionProvider = new ExtensionProvider(_mockableResources);
+                }
             }
-            allMockableResources.AddRange(mockableResources.Values);
-            _mockableResources = allMockableResources;
-            _extensionProvider = new ExtensionProvider(_mockableResources);
 
             static Dictionary<ResourceScope, ResourcesAndNonResourceMethodsInScope> BuildResourcesAndNonResourceMethods(
                 IReadOnlyDictionary<ArmResourceMetadata, ResourceClientProvider> resourceDict,
@@ -264,25 +282,28 @@ namespace Azure.Generator.Management
                 return; // already built
             }
 
-            var allModelTypes = new HashSet<CSharpType>();
-            var modelFactoryModels = new HashSet<CSharpType>();
-
-            foreach (var inputModel in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
+            using (ProfilingTimer.Measure(nameof(BuildModelTypes)))
             {
-                var model = ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
-                if (model is not null)
+                var allModelTypes = new HashSet<CSharpType>();
+                var modelFactoryModels = new HashSet<CSharpType>();
+
+                foreach (var inputModel in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
                 {
-                    var eraseNullableType = model.Type.WithNullable(false);
-                    allModelTypes.Add(eraseNullableType);
-                    if (IsModelFactoryModel(model))
+                    var model = ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
+                    if (model is not null)
                     {
-                        modelFactoryModels.Add(eraseNullableType);
+                        var eraseNullableType = model.Type.WithNullable(false);
+                        allModelTypes.Add(eraseNullableType);
+                        if (IsModelFactoryModel(model))
+                        {
+                            modelFactoryModels.Add(eraseNullableType);
+                        }
                     }
                 }
-            }
 
-            _allModelTypes = allModelTypes;
-            _modelFactoryModels = modelFactoryModels;
+                _allModelTypes = allModelTypes;
+                _modelFactoryModels = modelFactoryModels;
+            }
         }
 
         private static bool IsModelFactoryModel(ModelProvider model)
@@ -322,41 +343,69 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         protected override TypeProvider[] BuildTypeProviders()
         {
-            // we need to add the clients (including resources, collections, mockable resources and extension static class)
-            // to the types to keep
-            // otherwise, they will be trimmed off or internalized by the post processor
-            foreach (var resource in ResourceProviders)
+            using (ProfilingTimer.Measure(nameof(BuildTypeProviders)))
             {
-                ManagementClientGenerator.Instance.AddTypeToKeep(resource.Name);
-            }
-            foreach (var collection in ResourceCollectionProviders)
-            {
-                ManagementClientGenerator.Instance.AddTypeToKeep(collection.Name);
-            }
-            foreach (var mockableResource in MockableResourceProviders)
-            {
-                ManagementClientGenerator.Instance.AddTypeToKeep(mockableResource.Name);
-            }
-            ManagementClientGenerator.Instance.AddTypeToKeep(ExtensionProvider.Name);
+                // we need to add the clients (including resources, collections, mockable resources and extension static class)
+                // to the types to keep
+                // otherwise, they will be trimmed off or internalized by the post processor
+                using (ProfilingTimer.Measure("AddTypesToKeep"))
+                {
+                    foreach (var resource in ResourceProviders)
+                    {
+                        ManagementClientGenerator.Instance.AddTypeToKeep(resource.Name);
+                    }
+                    foreach (var collection in ResourceCollectionProviders)
+                    {
+                        ManagementClientGenerator.Instance.AddTypeToKeep(collection.Name);
+                    }
+                    foreach (var mockableResource in MockableResourceProviders)
+                    {
+                        ManagementClientGenerator.Instance.AddTypeToKeep(mockableResource.Name);
+                    }
+                    ManagementClientGenerator.Instance.AddTypeToKeep(ExtensionProvider.Name);
+                }
 
-            // Extract array response collection results from all methods
-            var arrayResponseCollectionResults = ExtractArrayResponseCollectionResults();
+                // Extract array response collection results from all methods
+                List<ArrayResponseCollectionResultDefinition> arrayResponseCollectionResults;
+                using (ProfilingTimer.Measure(nameof(ExtractArrayResponseCollectionResults)))
+                {
+                    arrayResponseCollectionResults = ExtractArrayResponseCollectionResults();
+                }
 
-            return [
-                .. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider { IsSystemBase: true }),
-                WirePathAttributeDefinition,
-                ArmOperation,
-                ArmOperationOfT,
-                .. OperationSourceDict.Values,
-                ProviderConstants,
-                .. ResourceProviders,
-                .. ResourceCollectionProviders,
-                .. MockableResourceProviders,
-                ExtensionProvider,
-                PageableWrapper,
-                AsyncPageableWrapper,
-                .. arrayResponseCollectionResults,
-                .. ResourceProviders.SelectMany(r => r.SerializationProviders)];
+                TypeProvider[] baseProviders;
+                using (ProfilingTimer.Measure("base.BuildTypeProviders"))
+                {
+                    baseProviders = [.. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider { IsSystemBase: true })];
+                }
+
+                TypeProvider[] operationSourceProviders;
+                using (ProfilingTimer.Measure(nameof(OperationSourceDict)))
+                {
+                    operationSourceProviders = [.. OperationSourceDict.Values];
+                }
+
+                TypeProvider[] serializationProviders;
+                using (ProfilingTimer.Measure("ResourceSerializationProviders"))
+                {
+                    serializationProviders = [.. ResourceProviders.SelectMany(r => r.SerializationProviders)];
+                }
+
+                return [
+                    .. baseProviders,
+                    WirePathAttributeDefinition,
+                    ArmOperation,
+                    ArmOperationOfT,
+                    .. operationSourceProviders,
+                    ProviderConstants,
+                    .. ResourceProviders,
+                    .. ResourceCollectionProviders,
+                    .. MockableResourceProviders,
+                    ExtensionProvider,
+                    PageableWrapper,
+                    AsyncPageableWrapper,
+                    .. arrayResponseCollectionResults,
+                    .. serializationProviders];
+            }
         }
 
         private List<ArrayResponseCollectionResultDefinition> ExtractArrayResponseCollectionResults()
@@ -398,24 +447,27 @@ namespace Azure.Generator.Management
 
         private Dictionary<CSharpType, OperationSourceProvider> BuildOperationSources()
         {
-            var operationSources = new Dictionary<CSharpType, OperationSourceProvider>();
-
-            // Process resource methods
-            foreach (var metadata in ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas)
+            using (ProfilingTimer.Measure(nameof(BuildOperationSources)))
             {
-                foreach (var resourceMethod in metadata.Methods)
+                var operationSources = new Dictionary<CSharpType, OperationSourceProvider>();
+
+                // Process resource methods
+                foreach (var metadata in ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas)
                 {
-                    ProcessLroMethod(resourceMethod.InputMethod, operationSources);
+                    foreach (var resourceMethod in metadata.Methods)
+                    {
+                        ProcessLroMethod(resourceMethod.InputMethod, operationSources);
+                    }
                 }
-            }
 
-            // Process non-resource methods
-            foreach (var nonResourceMethod in ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods)
-            {
-                ProcessLroMethod(nonResourceMethod.InputMethod, operationSources);
-            }
+                // Process non-resource methods
+                foreach (var nonResourceMethod in ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods)
+                {
+                    ProcessLroMethod(nonResourceMethod.InputMethod, operationSources);
+                }
 
-            return operationSources;
+                return operationSources;
+            }
         }
 
         private void ProcessLroMethod(InputServiceMethod inputMethod, Dictionary<CSharpType, OperationSourceProvider> operationSources)
