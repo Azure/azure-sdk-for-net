@@ -26,6 +26,13 @@
 .PARAMETER ExcludeRules
     Array of rule IDs to skip (e.g., 'SUFFIX001', 'BOOL001').
 
+.PARAMETER ListNewTypes
+    When set, the script does not run rule checks. Instead it emits a deterministic
+    inventory of every public class/struct/enum declaration, tagging each NEW or
+    EXISTING relative to -BaselineApiFilePath (or all NEW when no baseline is given).
+    Use this as the bounded worklist for the reviewer's exhaustive contextual-naming
+    pass so no new public type is missed across review rounds.
+
 .EXAMPLE
     .\Check-MgmtNamingRules.ps1 -PackagePath sdk/compute/Azure.ResourceManager.Compute
     .\Check-MgmtNamingRules.ps1 -ApiFilePath sdk/compute/Azure.ResourceManager.Compute/api/Azure.ResourceManager.Compute.net10.0.cs
@@ -43,7 +50,10 @@ param(
     [string]$BaselineApiFilePath,
 
     [Parameter(Mandatory = $false)]
-    [string[]]$ExcludeRules = @()
+    [string[]]$ExcludeRules = @(),
+
+    [Parameter(Mandatory = $false)]
+    [switch]$ListNewTypes
 )
 
 Set-StrictMode -Version Latest
@@ -193,6 +203,52 @@ function Get-PascalCaseTokens([string]$name) {
     }
 
     return @([regex]::Matches($name, '[A-Z]+(?![a-z])|[A-Z]?[a-z]+|\d+') | ForEach-Object { $_.Value })
+}
+
+#endregion
+
+#region --- Inventory mode (-ListNewTypes) ---
+
+# Emits a deterministic, complete worklist of public class/struct/enum declarations.
+# When a baseline is provided, each entry is tagged NEW (declaration line absent from
+# the baseline) or EXISTING. This gives the reviewer a bounded list to apply the
+# contextual-naming judgment to exhaustively, so no new public type is missed across
+# review rounds. Interfaces are excluded (not part of the model naming surface).
+if ($ListNewTypes) {
+    $inventory = foreach ($name in $typeInfos.Keys) {
+        $info = $typeInfos[$name]
+        if ($info.Kind -eq 'interface') { continue }
+        $declLine = $lines[$info.Line - 1].Trim()
+        $isNew = $true
+        if ($BaselineApiFilePath -and $baselineLines.Count -gt 0) {
+            $isNew = -not $baselineLines.ContainsKey($declLine)
+        }
+        [pscustomobject]@{
+            Line   = $info.Line
+            Kind   = $info.Kind
+            Name   = $name
+            Status = if ($isNew) { 'NEW' } else { 'EXISTING' }
+        }
+    }
+
+    $inventory = @($inventory | Sort-Object Line)
+    $newCount = @($inventory | Where-Object { $_.Status -eq 'NEW' }).Count
+
+    Write-Host "`n=== New public type inventory (contextual-naming worklist) ===" -ForegroundColor Cyan
+    Write-Host "File: $(Split-Path $ApiFilePath -Leaf)"
+    if ($BaselineApiFilePath) {
+        Write-Host "Baseline: $(Split-Path $BaselineApiFilePath -Leaf) (NEW = absent from baseline)"
+    } else {
+        Write-Host "Baseline: <none> (all public types are in scope)"
+    }
+    Write-Host "Total public types: $($inventory.Count); NEW (in scope): $newCount" -ForegroundColor Yellow
+    Write-Host "-----------------------------------------------------------"
+    foreach ($entry in $inventory) {
+        Write-Host ("{0,-9} Line {1,-6} {2,-8} {3}" -f $entry.Status, $entry.Line, $entry.Kind, $entry.Name)
+    }
+    Write-Host "-----------------------------------------------------------"
+    Write-Host "Evaluate every NEW entry above against the contextual-naming rule and record a verdict for each." -ForegroundColor Cyan
+    return
 }
 
 #endregion
