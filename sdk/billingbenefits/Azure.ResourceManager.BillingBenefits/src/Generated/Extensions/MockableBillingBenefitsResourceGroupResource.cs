@@ -31,71 +31,6 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         {
         }
 
-        /// <summary> Gets a collection of Discounts in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Discounts and their operations over a DiscountResource. </returns>
-        public virtual DiscountCollection GetDiscounts()
-        {
-            return GetCachedClient(client => new DiscountCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get discount at resource group level
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BillingBenefits/discounts/{discountName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Discounts_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="discountName"> Name of the discount. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="discountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="discountName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DiscountResource>> GetDiscountAsync(string discountName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(discountName, nameof(discountName));
-
-            return await GetDiscounts().GetAsync(discountName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get discount at resource group level
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BillingBenefits/discounts/{discountName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Discounts_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="discountName"> Name of the discount. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="discountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="discountName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DiscountResource> GetDiscount(string discountName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(discountName, nameof(discountName));
-
-            return GetDiscounts().Get(discountName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of Credits in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of Credits and their operations over a CreditResource. </returns>
         public virtual CreditCollection GetCredits()
@@ -289,6 +224,71 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             Argument.AssertNotNullOrEmpty(maccName, nameof(maccName));
 
             return GetMaccs().Get(maccName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of Discounts in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of Discounts and their operations over a DiscountResource. </returns>
+        public virtual DiscountCollection GetDiscounts()
+        {
+            return GetCachedClient(client => new DiscountCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get discount at resource group level
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BillingBenefits/discounts/{discountName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Discounts_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="discountName"> Name of the discount. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="discountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="discountName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DiscountResource>> GetDiscountAsync(string discountName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(discountName, nameof(discountName));
+
+            return await GetDiscounts().GetAsync(discountName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get discount at resource group level
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BillingBenefits/discounts/{discountName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Discounts_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="discountName"> Name of the discount. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="discountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="discountName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DiscountResource> GetDiscount(string discountName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(discountName, nameof(discountName));
+
+            return GetDiscounts().Get(discountName, cancellationToken);
         }
 
         /// <summary> Gets a collection of FreeServices in the <see cref="ResourceGroupResource"/>. </summary>

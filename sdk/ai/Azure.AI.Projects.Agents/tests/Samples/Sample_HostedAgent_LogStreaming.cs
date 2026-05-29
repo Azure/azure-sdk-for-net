@@ -21,7 +21,7 @@ public class Sample_HostedAgentLogStreaming : SamplesBase
             memory: "1Gi"
         )
         {
-            Image = dockerImage,
+            ContainerConfiguration = new(dockerImage)
         };
         return agentDefinition;
     }

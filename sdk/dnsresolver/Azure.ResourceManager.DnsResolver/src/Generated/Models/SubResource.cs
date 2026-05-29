@@ -8,9 +8,11 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DnsResolver;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
+    /// <summary> Reference to another ARM resource. </summary>
     internal partial class SubResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -18,8 +20,11 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         /// <summary> Initializes a new instance of <see cref="SubResource"/>. </summary>
         /// <param name="id"> Resource ID. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public SubResource(ResourceIdentifier id)
         {
+            Argument.AssertNotNull(id, nameof(id));
+
             Id = id;
         }
 

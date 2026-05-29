@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 {
     internal static partial class ResultFormatExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ResultFormat value) => value switch
         {
             ResultFormat.Table => "table",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResultFormat value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ResultFormat ToResultFormat(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "table")) return ResultFormat.Table;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "objectArray")) return ResultFormat.ObjectArray;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "table"))
+            {
+                return ResultFormat.Table;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "objectArray"))
+            {
+                return ResultFormat.ObjectArray;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResultFormat value.");
         }
     }
