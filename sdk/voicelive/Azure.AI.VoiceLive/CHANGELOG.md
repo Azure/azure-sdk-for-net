@@ -7,11 +7,15 @@
 - Added support for built-in tool calling scenarios, including file search and web search.
 - Added lifecycle status tracking for tool calls, including `Searching`, `InProgress`, and `Completed` states.
 - Added streaming server events for tool execution, transcript annotations, and video output updates.
-- Added avatar voice synchronization support via `AzureAvatarVoiceSyncVoice` with configurable voice parameters.
+- Added avatar voice synchronization support via `AzureAvatarSyncVoice` with configurable voice parameters.
 - Added phrase-level transcription support, including word-level timing, confidence, and phrase grouping.
 - Added support for including additional response data via session include options (e.g., file search results and transcription metadata).
 - Added support for new transcription models, including diarization scenarios.
 - Added expanded token usage reporting with reasoning token support.
+- Added `AzureRealtimeNativeVoice` and `AzureRealtimeNativeVoiceName` with built-in voice presets (`Aarti`, `Andrew`, `Ava`, `Denise`, `Diya`, `Elsa`, `Florian`, `Francisca`, `Meera`, `Xiaoxiao`, `Ximena`, `Yunxi`).
+- Added new personal voice models: `PersonalVoiceModels.MaiVoice1` and `PersonalVoiceModels.DragonHDOmniLatestNeural`.
+- Added `EchoCancellationReferenceSource` (`Client`, `Server`) on `AudioEchoCancellation.ReferenceSource` for selecting the echo cancellation reference.
+- Added `SmartEndOfTurnDetection` as a new turn-detection option.
  
 ### Breaking Changes
  
@@ -19,6 +23,22 @@
 - Updated transcription completion APIs to include additional metadata (logprobs and phrases).
 - Updated `OutputTokenDetails` constructors to support reasoning tokens.
 - Updated `VoiceLiveSessionOptions` to include new properties such as `Include` and `Metadata`.
+- Renamed `MCPApprovalType` to `McpApprovalKind`.
+- Renamed `AvatarConfiguration.Type` to `AvatarConfiguration.AvatarKind`.
+- Renamed `CustomLexiconUrl` to `CustomLexiconUri` and `CustomTextNormalizationUrl` to `CustomTextNormalizationUri` on `AzureAvatarSyncVoice`, `AzurePersonalVoice`, `AzureCustomVoice`, and `AzureStandardVoice`. The property type changed from `string` to `System.Uri`.
+- Renamed `RequestImageContentPart.Url` to `RequestImageContentPart.Uri` (typed as `System.Uri`).
+- Renamed `PhotoAvatarBaseModes` to `PhotoAvatarBaseMode` (singular). `AvatarConfiguration.Model` was renamed to `AvatarConfiguration.BaseMode` and now uses the new type.
+- Renamed `AvatarConfiguration.OutputAuditAudio` to `AvatarConfiguration.AuditOutputAudio`.
+- Renamed `ReasoningEffort.Xhigh` to `ReasoningEffort.ExtraHigh`.
+
+### Other Changes
+
+- Sample location moved from `sdk/voicelive/Azure.AI.VoiceLive/samples/` to top-level `samples/voicelive/`. Existing sample folders were renamed to kebab-case (`BasicVoiceAssistant` → `basic-voice-assistant`, `CustomerServiceBot` → `customer-service-bot`), and each sample's entry point was renamed from `SampleProgram.cs` to `Program.cs`.
+- Added new samples:
+  - `samples/voicelive/agent-voice-assistant` — Foundry agent integration sample.
+  - `samples/voicelive/mcp-voice-assistant` — MCP server integration sample.
+  - `samples/voicelive/telemetry-tracing` — end-to-end OpenTelemetry tracing and metrics walkthrough for the SDK telemetry shipped in `1.1.0-beta.4`.
+- Added `--show-traces` flag and console-tracing wiring to `basic-voice-assistant`, `mcp-voice-assistant`, `agent-voice-assistant`, and `customer-service-bot`.
 
 ## 1.1.0-beta.4 (2026-05-13)
 
