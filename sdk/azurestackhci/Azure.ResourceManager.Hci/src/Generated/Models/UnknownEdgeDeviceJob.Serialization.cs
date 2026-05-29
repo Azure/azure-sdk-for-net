@@ -58,10 +58,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EdgeDeviceJobData IPersistableModel<EdgeDeviceJobData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return (EdgeDeviceJobData)PersistableModelCreateCore(data, options);
-        }
+        EdgeDeviceJobData IPersistableModel<EdgeDeviceJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => (EdgeDeviceJobData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EdgeDeviceJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -89,10 +86,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EdgeDeviceJobData IJsonModel<EdgeDeviceJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return (EdgeDeviceJobData)JsonModelCreateCore(ref reader, options);
-        }
+        EdgeDeviceJobData IJsonModel<EdgeDeviceJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (EdgeDeviceJobData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -119,8 +113,8 @@ namespace Azure.ResourceManager.Hci.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            EdgeDeviceKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            EdgeDeviceKind kind = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -170,8 +164,8 @@ namespace Azure.ResourceManager.Hci.Models
                 name,
                 resourceType,
                 systemData,
-                kind,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties,
+                kind);
         }
     }
 }

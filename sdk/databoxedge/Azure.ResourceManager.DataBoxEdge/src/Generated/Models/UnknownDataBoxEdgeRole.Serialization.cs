@@ -58,10 +58,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataBoxEdgeRoleData IPersistableModel<DataBoxEdgeRoleData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return (DataBoxEdgeRoleData)PersistableModelCreateCore(data, options);
-        }
+        DataBoxEdgeRoleData IPersistableModel<DataBoxEdgeRoleData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataBoxEdgeRoleData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataBoxEdgeRoleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -89,10 +86,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataBoxEdgeRoleData IJsonModel<DataBoxEdgeRoleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return (DataBoxEdgeRoleData)JsonModelCreateCore(ref reader, options);
-        }
+        DataBoxEdgeRoleData IJsonModel<DataBoxEdgeRoleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataBoxEdgeRoleData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -119,8 +113,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            DataBoxEdgeRoleType kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            DataBoxEdgeRoleType kind = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -170,8 +164,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                kind,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties,
+                kind);
         }
     }
 }

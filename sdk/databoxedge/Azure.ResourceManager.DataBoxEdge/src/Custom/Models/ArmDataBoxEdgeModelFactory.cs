@@ -54,24 +54,24 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static BandwidthScheduleData BandwidthScheduleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TimeSpan? startOn = default, TimeSpan? stopOn = default, int? rateInMbps = default, IEnumerable<DataBoxEdgeDayOfWeek> days = default)
         {
             return new BandwidthScheduleData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                properties: startOn is null && stopOn is null && rateInMbps is null && days is null ? default : new BandwidthScheduleProperties(startOn.Value, stopOn.Value, rateInMbps.Value, (days ?? new ChangeTrackingList<DataBoxEdgeDayOfWeek>()).ToList(), null),
-                additionalBinaryDataProperties: null
-            );
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                startOn is null && stopOn is null && rateInMbps is null && days is null ? default : new BandwidthScheduleProperties(startOn.Value, stopOn.Value, rateInMbps.Value, (days ?? new ChangeTrackingList<DataBoxEdgeDayOfWeek>()).ToList(), null));
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdge.DataBoxEdgeShareData"/>. </summary>
         public static DataBoxEdgeShareData DataBoxEdgeShareData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, ShareStatus? shareStatus = default, DataBoxEdgeShareMonitoringStatus? monitoringStatus = default, DataBoxEdgeStorageContainerInfo azureContainerInfo = default, ShareAccessProtocol? accessProtocol = default, IEnumerable<UserAccessRight> userAccessRights = default, IEnumerable<ClientAccessRight> clientAccessRights = default, DataBoxEdgeRefreshDetails refreshDetails = default, IEnumerable<DataBoxEdgeMountPointMap> shareMappings = default, DataBoxEdgeDataPolicy? dataPolicy = default)
         {
             return new DataBoxEdgeShareData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                properties: description is null && shareStatus is null && monitoringStatus is null && azureContainerInfo is null && accessProtocol is null && userAccessRights is null && clientAccessRights is null && refreshDetails is null && shareMappings is null && dataPolicy is null ? default : new ShareProperties(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                description is null && shareStatus is null && monitoringStatus is null && azureContainerInfo is null && accessProtocol is null && userAccessRights is null && clientAccessRights is null && refreshDetails is null && shareMappings is null && dataPolicy is null ? default : new ShareProperties(
                     description,
                     shareStatus.Value,
                     monitoringStatus.Value,
@@ -82,20 +82,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     refreshDetails,
                     (shareMappings ?? new ChangeTrackingList<DataBoxEdgeMountPointMap>()).ToList(),
                     dataPolicy,
-                    null),
-                additionalBinaryDataProperties: null
-            );
+                    null));
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdge.DataBoxEdgeStorageAccountCredentialData"/>. </summary>
         public static DataBoxEdgeStorageAccountCredentialData DataBoxEdgeStorageAccountCredentialData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string @alias = default, string userName = default, AsymmetricEncryptedSecret accountKey = default, string connectionString = default, DataBoxEdgeStorageAccountSslStatus? sslStatus = default, string blobDomainName = default, DataBoxEdgeStorageAccountType? accountType = default, ResourceIdentifier storageAccountId = default)
         {
             return new DataBoxEdgeStorageAccountCredentialData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                properties: @alias is null && userName is null && accountKey is null && connectionString is null && sslStatus is null && blobDomainName is null && accountType is null && storageAccountId is null ? default : new StorageAccountCredentialProperties(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                @alias is null && userName is null && accountKey is null && connectionString is null && sslStatus is null && blobDomainName is null && accountType is null && storageAccountId is null ? default : new StorageAccountCredentialProperties(
                     @alias,
                     userName,
                     accountKey,
@@ -104,81 +103,75 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     blobDomainName,
                     accountType.Value,
                     storageAccountId,
-                    null),
-                additionalBinaryDataProperties: null
-            );
+                    null));
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdge.DataBoxEdgeStorageAccountData"/>. </summary>
         public static DataBoxEdgeStorageAccountData DataBoxEdgeStorageAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, DataBoxEdgeStorageAccountStatus? storageAccountStatus = default, DataBoxEdgeDataPolicy? dataPolicy = default, ResourceIdentifier storageAccountCredentialId = default, string blobEndpoint = default, int? containerCount = default)
         {
             return new DataBoxEdgeStorageAccountData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                properties: description is null && storageAccountStatus is null && dataPolicy is null && storageAccountCredentialId is null && blobEndpoint is null && containerCount is null ? default : new StorageAccountProperties(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                description is null && storageAccountStatus is null && dataPolicy is null && storageAccountCredentialId is null && blobEndpoint is null && containerCount is null ? default : new StorageAccountProperties(
                     description,
                     storageAccountStatus,
                     dataPolicy.Value,
                     storageAccountCredentialId,
                     blobEndpoint,
                     containerCount,
-                    null),
-                additionalBinaryDataProperties: null
-            );
+                    null));
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdge.DataBoxEdgeStorageContainerData"/>. </summary>
         public static DataBoxEdgeStorageContainerData DataBoxEdgeStorageContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataBoxEdgeStorageContainerStatus? containerStatus = default, DataBoxEdgeStorageContainerDataFormat? dataFormat = default, DataBoxEdgeRefreshDetails refreshDetails = default, DateTimeOffset? createdOn = default)
         {
             return new DataBoxEdgeStorageContainerData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                properties: containerStatus is null && dataFormat is null && refreshDetails is null && createdOn is null ? default : new ContainerProperties(containerStatus, dataFormat.Value, refreshDetails, createdOn, null),
-                additionalBinaryDataProperties: null
-            );
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                containerStatus is null && dataFormat is null && refreshDetails is null && createdOn is null ? default : new ContainerProperties(containerStatus, dataFormat.Value, refreshDetails, createdOn, null));
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdge.DataBoxEdgeUserData"/>. </summary>
         public static DataBoxEdgeUserData DataBoxEdgeUserData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AsymmetricEncryptedSecret encryptedPassword = default, IEnumerable<ShareAccessRight> shareAccessRights = default, DataBoxEdgeUserType? userType = default)
         {
             return new DataBoxEdgeUserData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                properties: encryptedPassword is null && shareAccessRights is null && userType is null ? default : new UserProperties(encryptedPassword, (shareAccessRights ?? new ChangeTrackingList<ShareAccessRight>()).ToList(), userType.Value, null),
-                additionalBinaryDataProperties: null
-            );
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                encryptedPassword is null && shareAccessRights is null && userType is null ? default : new UserProperties(encryptedPassword, (shareAccessRights ?? new ChangeTrackingList<ShareAccessRight>()).ToList(), userType.Value, null));
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdge.DiagnosticProactiveLogCollectionSettingData"/>. </summary>
         public static DiagnosticProactiveLogCollectionSettingData DiagnosticProactiveLogCollectionSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ProactiveDiagnosticsConsent? userConsent = default)
         {
             return new DiagnosticProactiveLogCollectionSettingData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                properties: userConsent is null ? default : new ProactiveLogCollectionSettingsProperties(userConsent.Value, null),
-                additionalBinaryDataProperties: null
-            );
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                userConsent is null ? default : new ProactiveLogCollectionSettingsProperties(userConsent.Value, null));
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EdgeArcAddon"/>. </summary>
         public static EdgeArcAddon EdgeArcAddon(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string subscriptionId = default, string resourceGroupName = default, string resourceName = default, AzureLocation? resourceLocation = default, string version = default, DataBoxEdgeOSPlatformType? hostPlatform = default, HostPlatformType? hostPlatformType = default, DataBoxEdgeRoleAddonProvisioningState? provisioningState = default)
         {
             return new EdgeArcAddon(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                kind: AddonType.ArcForKubernetes,
+                id,
+                name,
+                resourceType,
+                systemData,
                 additionalBinaryDataProperties: null,
-                properties: subscriptionId is null && resourceGroupName is null && resourceName is null && resourceLocation is null && version is null && hostPlatform is null && hostPlatformType is null && provisioningState is null ? default : new ArcAddonProperties(
+                AddonType.ArcForKubernetes,
+                subscriptionId is null && resourceGroupName is null && resourceName is null && resourceLocation is null && version is null && hostPlatform is null && hostPlatformType is null && provisioningState is null ? default : new ArcAddonProperties(
                     subscriptionId,
                     resourceGroupName,
                     resourceName,

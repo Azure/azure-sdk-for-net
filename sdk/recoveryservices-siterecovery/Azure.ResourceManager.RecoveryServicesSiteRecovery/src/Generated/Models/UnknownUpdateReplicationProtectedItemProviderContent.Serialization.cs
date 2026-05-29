@@ -55,10 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UpdateReplicationProtectedItemProviderContent IPersistableModel<UpdateReplicationProtectedItemProviderContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return PersistableModelCreateCore(data, options);
-        }
+        UpdateReplicationProtectedItemProviderContent IPersistableModel<UpdateReplicationProtectedItemProviderContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<UpdateReplicationProtectedItemProviderContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -86,10 +83,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UpdateReplicationProtectedItemProviderContent IJsonModel<UpdateReplicationProtectedItemProviderContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return JsonModelCreateCore(ref reader, options);
-        }
+        UpdateReplicationProtectedItemProviderContent IJsonModel<UpdateReplicationProtectedItemProviderContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

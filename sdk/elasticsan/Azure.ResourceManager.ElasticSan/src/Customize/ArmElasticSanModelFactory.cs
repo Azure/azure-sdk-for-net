@@ -69,13 +69,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ElasticSanData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                tags: tags,
-                location: location,
-                properties: new ElasticSanProperties(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                new ElasticSanProperties(
                     sku,
                     (availabilityZones ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
@@ -89,9 +90,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     (privateEndpointConnections ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>()).ToList(),
                     publicNetworkAccess,
                     new AutoScaleProperties(scaleUpProperties, null),
-                    null),
-                additionalBinaryDataProperties: null
-            );
+                    null));
         }
     }
 }

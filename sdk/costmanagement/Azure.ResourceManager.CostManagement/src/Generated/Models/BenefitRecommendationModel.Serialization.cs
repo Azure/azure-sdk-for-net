@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            BillingAccountBenefitKind? kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            BillingAccountBenefitKind? kind = default;
             BenefitRecommendationProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -179,8 +179,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                kind,
                 additionalBinaryDataProperties,
+                kind,
                 properties);
         }
     }

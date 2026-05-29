@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     public static partial class ArmResourceGraphModelFactory
     {
 
+        /// <summary> Error details. </summary>
         /// <param name="code"> Error code identifying the specific error. </param>
         /// <param name="message"> A human readable error message. </param>
         /// <param name="additionalProperties"></param>
@@ -27,9 +29,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new FacetErrorDetails(code, message, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+            return new FacetErrorDetails(code, message, additionalProperties);
         }
 
+        /// <summary> The parameters for a specific changes request. </summary>
         /// <param name="resourceIds"> Specifies the list of resources for a changes request. </param>
         /// <param name="subscriptionId"> The subscription id of resources to query the changes from. </param>
         /// <param name="interval"> Specifies the date and time interval for a changes request. </param>
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             resourceIds ??= new ChangeTrackingList<string>();
 
             return new ResourceChangesRequestParameters(
-                (resourceIds ?? new ChangeTrackingList<string>()).ToList(),
+                resourceIds.ToList(),
                 subscriptionId,
                 interval,
                 skipToken,
@@ -52,25 +55,28 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 table,
                 fetchPropertyChanges,
                 fetchSnapshots,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Specifies the date and time interval for a changes request. </summary>
         /// <param name="startOn"> A datetime indicating the inclusive/closed start of the time interval, i.e. `[`<b>`start`</b>`, end)`. Specifying a `start` that occurs chronologically after `end` will result in an error. </param>
         /// <param name="endOn"> A datetime indicating the exclusive/open end of the time interval, i.e. `[start, `<b>`end`</b>`)`. Specifying an `end` that occurs chronologically before `start` will result in an error. </param>
         /// <returns> A new <see cref="Models.ResourceChangesRequestParametersInterval"/> instance for mocking. </returns>
         public static ResourceChangesRequestParametersInterval ResourceChangesRequestParametersInterval(DateTimeOffset startOn = default, DateTimeOffset endOn = default)
         {
-            return new ResourceChangesRequestParametersInterval(startOn, endOn, default);
+            return new ResourceChangesRequestParametersInterval(startOn, endOn, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> An interval in time specifying the date and time for the inclusive start and exclusive end, i.e. `[start, end)`. </summary>
         /// <param name="startOn"> A datetime indicating the inclusive/closed start of the time interval, i.e. `[`<b>`start`</b>`, end)`. Specifying a `start` that occurs chronologically after `end` will result in an error. </param>
         /// <param name="endOn"> A datetime indicating the exclusive/open end of the time interval, i.e. `[start, `<b>`end`</b>`)`. Specifying an `end` that occurs chronologically before `start` will result in an error. </param>
         /// <returns> A new <see cref="Models.DateTimeInterval"/> instance for mocking. </returns>
         public static DateTimeInterval DateTimeInterval(DateTimeOffset startOn = default, DateTimeOffset endOn = default)
         {
-            return new DateTimeInterval(startOn, endOn, default);
+            return new DateTimeInterval(startOn, endOn, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A list of changes associated with a resource over a specific time interval. </summary>
         /// <param name="changes">
         /// The pageable value returned by the operation, i.e. a list of changes to the resource.
         /// <list type="bullet"><item><description>The list is ordered from the most recent changes to the least recent changes.</description></item><item><description>This list will be empty if there were no changes during the requested interval.</description></item><item><description>The `Before` snapshot timestamp value of the oldest change can be outside of the specified time interval.</description></item></list>
@@ -81,9 +87,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         {
             changes ??= new ChangeTrackingList<ResourceChangeData>();
 
-            return new ResourceChangeList((changes ?? new ChangeTrackingList<ResourceChangeData>()).ToList(), skipToken, default);
+            return new ResourceChangeList(changes.ToList(), skipToken, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Data on a specific change, represented by a pair of before and after resource snapshots. </summary>
         /// <param name="resourceId"> The resource for a change. </param>
         /// <param name="changeId"> The change ID. Valid and unique within the specified resource only. </param>
         /// <param name="beforeSnapshot"> The snapshot before the change. </param>
@@ -101,10 +108,11 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 beforeSnapshot,
                 afterSnapshot,
                 changeType,
-                (propertyChanges ?? new ChangeTrackingList<ResourcePropertyChange>()).ToList(),
-                default);
+                propertyChanges.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The snapshot before the change. </summary>
         /// <param name="snapshotId"> The ID of the snapshot. </param>
         /// <param name="timestamp">
         /// The time when the snapshot was created.
@@ -114,9 +122,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <returns> A new <see cref="Models.ResourceChangeDataBeforeSnapshot"/> instance for mocking. </returns>
         public static ResourceChangeDataBeforeSnapshot ResourceChangeDataBeforeSnapshot(string snapshotId = default, DateTimeOffset timestamp = default, BinaryData content = default)
         {
-            return new ResourceChangeDataBeforeSnapshot(snapshotId, timestamp, content, default);
+            return new ResourceChangeDataBeforeSnapshot(snapshotId, timestamp, content, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Data on a specific resource snapshot. </summary>
         /// <param name="snapshotId"> The ID of the snapshot. </param>
         /// <param name="timestamp">
         /// The time when the snapshot was created.
@@ -126,9 +135,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <returns> A new <see cref="Models.ResourceSnapshotData"/> instance for mocking. </returns>
         public static ResourceSnapshotData ResourceSnapshotData(string snapshotId = default, DateTimeOffset timestamp = default, BinaryData content = default)
         {
-            return new ResourceSnapshotData(snapshotId, timestamp, content, default);
+            return new ResourceSnapshotData(snapshotId, timestamp, content, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The snapshot after the change. </summary>
         /// <param name="snapshotId"> The ID of the snapshot. </param>
         /// <param name="timestamp">
         /// The time when the snapshot was created.
@@ -138,9 +148,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <returns> A new <see cref="Models.ResourceChangeDataAfterSnapshot"/> instance for mocking. </returns>
         public static ResourceChangeDataAfterSnapshot ResourceChangeDataAfterSnapshot(string snapshotId = default, DateTimeOffset timestamp = default, BinaryData content = default)
         {
-            return new ResourceChangeDataAfterSnapshot(snapshotId, timestamp, content, default);
+            return new ResourceChangeDataAfterSnapshot(snapshotId, timestamp, content, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The resource property change. </summary>
         /// <param name="propertyName"> The property name. </param>
         /// <param name="beforeValue"> The property value in before snapshot. </param>
         /// <param name="afterValue"> The property value in after snapshot. </param>
@@ -155,9 +166,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 afterValue,
                 changeCategory,
                 propertyChangeType,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The parameters for a specific change details request. </summary>
         /// <param name="resourceIds"> Specifies the list of resources for a change details request. </param>
         /// <param name="changeIds"> Specifies the list of change IDs for a change details request. </param>
         /// <returns> A new <see cref="Models.ResourceChangeDetailsRequestParameters"/> instance for mocking. </returns>
@@ -166,9 +178,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             resourceIds ??= new ChangeTrackingList<string>();
             changeIds ??= new ChangeTrackingList<string>();
 
-            return new ResourceChangeDetailsRequestParameters((resourceIds ?? new ChangeTrackingList<string>()).ToList(), (changeIds ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new ResourceChangeDetailsRequestParameters(resourceIds.ToList(), changeIds.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Describes a query to be executed. </summary>
         /// <param name="subscriptions"> Azure subscriptions against which to execute the query. </param>
         /// <param name="managementGroups"> Azure management groups against which to execute the query. Example: [ 'mg1', 'mg2' ]. </param>
         /// <param name="query"> The resources query. </param>
@@ -182,51 +195,24 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             facets ??= new ChangeTrackingList<FacetRequest>();
 
             return new ResourceQueryContent(
-                (subscriptions ?? new ChangeTrackingList<string>()).ToList(),
-                (managementGroups ?? new ChangeTrackingList<string>()).ToList(),
+                subscriptions.ToList(),
+                managementGroups.ToList(),
                 query,
                 options,
-                (facets ?? new ChangeTrackingList<FacetRequest>()).ToList(),
-                default);
+                facets.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <param name="skipToken"> Continuation token for pagination, capturing the next page size and offset, as well as the context of the query. </param>
-        /// <param name="top"> The maximum number of rows that the query should return. Overrides the page size when ```$skipToken``` property is present. </param>
-        /// <param name="skip"> The number of rows to skip from the beginning of the results. Overrides the next page offset when ```$skipToken``` property is present. </param>
-        /// <param name="resultFormat"> Defines in which format query result returned. </param>
-        /// <param name="allowPartialScopes"> Only applicable for tenant and management group level queries to decide whether to allow partial scopes for result in case the number of subscriptions exceed allowed limits. </param>
-        /// <param name="authorizationScopeFilter"> Defines what level of authorization resources should be returned based on the which subscriptions and management groups are passed as scopes. </param>
-        /// <returns> A new <see cref="Models.ResourceQueryRequestOptions"/> instance for mocking. </returns>
-        public static ResourceQueryRequestOptions ResourceQueryRequestOptions(string skipToken = default, int? top = default, int? skip = default, ResultFormat? resultFormat = default, bool? allowPartialScopes = default, AuthorizationScopeFilter? authorizationScopeFilter = default)
-        {
-            return new ResourceQueryRequestOptions(
-                skipToken,
-                top,
-                skip,
-                resultFormat,
-                allowPartialScopes,
-                authorizationScopeFilter,
-                default);
-        }
-
+        /// <summary> A request to compute additional statistics (facets) over the query results. </summary>
         /// <param name="expression"> The column or list of columns to summarize by. </param>
         /// <param name="options"> The options for facet evaluation. </param>
         /// <returns> A new <see cref="Models.FacetRequest"/> instance for mocking. </returns>
         public static FacetRequest FacetRequest(string expression = default, FacetRequestOptions options = default)
         {
-            return new FacetRequest(expression, options, default);
+            return new FacetRequest(expression, options, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="sortBy"> The column name or query expression to sort on. Defaults to count if not present. </param>
-        /// <param name="sortOrder"> The sorting order by the selected column (count by default). </param>
-        /// <param name="filter"> Specifies the filter condition for the 'where' clause which will be run on main query's result, just before the actual faceting. </param>
-        /// <param name="top"> The maximum number of facet rows that should be returned. </param>
-        /// <returns> A new <see cref="Models.FacetRequestOptions"/> instance for mocking. </returns>
-        public static FacetRequestOptions FacetRequestOptions(string sortBy = default, FacetSortOrder? sortOrder = default, string filter = default, int? top = default)
-        {
-            return new FacetRequestOptions(sortBy, sortOrder, filter, top, default);
-        }
-
+        /// <summary> Query result. </summary>
         /// <param name="totalRecords"> Number of total records matching the query. </param>
         /// <param name="count"> Number of records returned in the current response. In the case of paging, this is the number of records in the current page. </param>
         /// <param name="resultTruncated"> Indicates whether the query results are truncated. </param>
@@ -244,18 +230,23 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 resultTruncated,
                 skipToken,
                 data,
-                (facets ?? new ChangeTrackingList<Facet>()).ToList(),
-                default);
+                facets.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary>
+        /// A facet containing additional statistics on the response of a query. Can be either FacetResult or FacetError.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FacetResult"/> and <see cref="Models.FacetError"/>.
+        /// </summary>
         /// <param name="expression"> Facet expression, same as in the corresponding facet request. </param>
         /// <param name="resultType"> Result type. </param>
         /// <returns> A new <see cref="Models.Facet"/> instance for mocking. </returns>
         public static Facet Facet(string expression = default, string resultType = default)
         {
-            return new UnknownFacet(expression, resultType, default);
+            return new UnknownFacet(expression, resultType, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Successfully executed facet containing additional statistics on the response of a query. </summary>
         /// <param name="expression"> Facet expression, same as in the corresponding facet request. </param>
         /// <param name="totalRecords"> Number of total records in the facet results. </param>
         /// <param name="count"> Number of records returned in the facet response. </param>
@@ -265,13 +256,14 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         {
             return new FacetResult(
                 expression,
-                default,
-                default,
+                "FacetResult",
+                additionalBinaryDataProperties: null,
                 totalRecords,
                 count,
                 data);
         }
 
+        /// <summary> A facet whose execution resulted in an error. </summary>
         /// <param name="expression"> Facet expression, same as in the corresponding facet request. </param>
         /// <param name="errors"> An array containing detected facet errors with details. </param>
         /// <returns> A new <see cref="Models.FacetError"/> instance for mocking. </returns>
@@ -279,9 +271,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         {
             errors ??= new ChangeTrackingList<FacetErrorDetails>();
 
-            return new FacetError(expression, default, default, (errors ?? new ChangeTrackingList<FacetErrorDetails>()).ToList());
+            return new FacetError(expression, "FacetError", additionalBinaryDataProperties: null, errors.ToList());
         }
 
+        /// <summary> Describes a history request to be executed. </summary>
         /// <param name="subscriptions"> Azure subscriptions against which to execute the query. </param>
         /// <param name="query"> The resources query. </param>
         /// <param name="options"> The history request evaluation options. </param>
@@ -292,24 +285,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             subscriptions ??= new ChangeTrackingList<string>();
             managementGroups ??= new ChangeTrackingList<string>();
 
-            return new ResourcesHistoryRequest((subscriptions ?? new ChangeTrackingList<string>()).ToList(), query, options, (managementGroups ?? new ChangeTrackingList<string>()).ToList(), default);
-        }
-
-        /// <param name="interval"> The time interval used to fetch history. </param>
-        /// <param name="top"> The maximum number of rows that the query should return. Overrides the page size when ```$skipToken``` property is present. </param>
-        /// <param name="skip"> The number of rows to skip from the beginning of the results. Overrides the next page offset when ```$skipToken``` property is present. </param>
-        /// <param name="skipToken"> Continuation token for pagination, capturing the next page size and offset, as well as the context of the query. </param>
-        /// <param name="resultFormat"> Defines in which format query result returned. </param>
-        /// <returns> A new <see cref="Models.ResourcesHistoryRequestOptions"/> instance for mocking. </returns>
-        public static ResourcesHistoryRequestOptions ResourcesHistoryRequestOptions(DateTimeInterval interval = default, int? top = default, int? skip = default, string skipToken = default, ResultFormat? resultFormat = default)
-        {
-            return new ResourcesHistoryRequestOptions(
-                interval,
-                top,
-                skip,
-                skipToken,
-                resultFormat,
-                default);
+            return new ResourcesHistoryRequest(subscriptions.ToList(), query, options, managementGroups.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -333,11 +309,11 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
-                modifiedOn is null && description is null && query is null && resultKind is null ? default : new GraphQueryProperties(modifiedOn, description, query, resultKind, default),
-                etag,
-                default);
+                modifiedOn is null && description is null && query is null && resultKind is null ? default : new GraphQueryProperties(modifiedOn, description, query, resultKind, null),
+                etag);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -349,7 +325,26 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ResourceGraphQueryPatch(tags ?? new ChangeTrackingDictionary<string, string>(), eTag, description is null && query is null ? default : new GraphQueryPropertiesUpdateParameters(description, query, default), default);
+            return new ResourceGraphQueryPatch(tags, eTag, description is null && query is null ? default : new GraphQueryPropertiesUpdateParameters(description, query, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ResourcesHistoryRequestOptions"/>. </summary>
+        /// <param name="interval"> The time interval used to fetch history. </param>
+        /// <param name="top"> The maximum number of rows that the query should return. Overrides the page size when ```$skipToken``` property is present. </param>
+        /// <param name="skip"> The number of rows to skip from the beginning of the results. Overrides the next page offset when ```$skipToken``` property is present. </param>
+        /// <param name="skipToken"> Continuation token for pagination, capturing the next page size and offset, as well as the context of the query. </param>
+        /// <param name="resultFormat"> Defines in which format query result returned. </param>
+        /// <returns> A new <see cref="Models.ResourcesHistoryRequestOptions"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ResourcesHistoryRequestOptions ResourcesHistoryRequestOptions(DateTimeInterval interval, int? top, int? skip, string skipToken, ResultFormat? resultFormat)
+        {
+            return new ResourcesHistoryRequestOptions(
+                interval,
+                top,
+                skip,
+                skipToken,
+                resultFormat,
+                additionalBinaryDataProperties: null);
         }
     }
 }

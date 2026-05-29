@@ -58,10 +58,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataBoxEdgeTriggerData IPersistableModel<DataBoxEdgeTriggerData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return (DataBoxEdgeTriggerData)PersistableModelCreateCore(data, options);
-        }
+        DataBoxEdgeTriggerData IPersistableModel<DataBoxEdgeTriggerData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataBoxEdgeTriggerData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataBoxEdgeTriggerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -89,10 +86,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataBoxEdgeTriggerData IJsonModel<DataBoxEdgeTriggerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return (DataBoxEdgeTriggerData)JsonModelCreateCore(ref reader, options);
-        }
+        DataBoxEdgeTriggerData IJsonModel<DataBoxEdgeTriggerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataBoxEdgeTriggerData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -119,8 +113,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            TriggerEventType kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            TriggerEventType kind = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -170,8 +164,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                kind,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties,
+                kind);
         }
     }
 }

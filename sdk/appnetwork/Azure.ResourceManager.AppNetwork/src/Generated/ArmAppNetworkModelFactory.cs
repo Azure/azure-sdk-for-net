@@ -37,22 +37,24 @@ namespace Azure.ResourceManager.AppNetwork.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
-                appLinkProvisioningState is null ? default : new AppLinkProperties(appLinkProvisioningState, default),
-                identity,
-                default);
+                appLinkProvisioningState is null ? default : new AppLinkProperties(appLinkProvisioningState, null),
+                identity);
         }
 
+        /// <summary> The type used for update operations of the AppLink. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.AppLinkPatch"/> instance for mocking. </returns>
         public static AppLinkPatch AppLinkPatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AppLinkPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new AppLinkPatch(tags, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> AppLink Member resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -70,10 +72,10 @@ namespace Azure.ResourceManager.AppNetwork.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
-                properties,
-                default);
+                properties);
         }
 
         /// <param name="clusterType"> Cluster type. </param>
@@ -82,37 +84,20 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <param name="observabilityMetricsEndpoint"> Metrics endpoint URL. </param>
         /// <param name="connectivityProfile"> Connectivity profile. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metadataResourceId"/> is null. </exception>
         /// <returns> A new <see cref="Models.AppLinkMemberProperties"/> instance for mocking. </returns>
         public static AppLinkMemberProperties AppLinkMemberProperties(AppLinkClusterType? clusterType = default, ResourceIdentifier metadataResourceId = default, AppLinkUpgradeProfile upgradeProfile = default, string observabilityMetricsEndpoint = default, AppLinkConnectivityProfile connectivityProfile = default, AppLinkProvisioningState? provisioningState = default)
         {
             return new AppLinkMemberProperties(
                 clusterType,
-                metadataResourceId is null ? default : new Metadata(metadataResourceId, default),
+                new Metadata(metadataResourceId, null),
                 upgradeProfile,
-                observabilityMetricsEndpoint is null ? default : new ObservabilityProfile(new MetricsProfile(observabilityMetricsEndpoint, default), default),
+                observabilityMetricsEndpoint is null ? default : new ObservabilityProfile(new MetricsProfile(observabilityMetricsEndpoint, null), null),
                 connectivityProfile,
                 provisioningState,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <param name="mode"> Upgrade mode. </param>
-        /// <param name="fullyManagedUpgradeReleaseChannel"> Release channel. </param>
-        /// <param name="selfManagedUpgradeVersion"> Istio version. </param>
-        /// <returns> A new <see cref="Models.AppLinkUpgradeProfile"/> instance for mocking. </returns>
-        public static AppLinkUpgradeProfile AppLinkUpgradeProfile(AppLinkUpgradeMode mode = default, AppLinkUpgradeReleaseChannel? fullyManagedUpgradeReleaseChannel = default, string selfManagedUpgradeVersion = default)
-        {
-            return new AppLinkUpgradeProfile(mode, fullyManagedUpgradeReleaseChannel is null ? default : new FullyManagedUpgradeProfile(fullyManagedUpgradeReleaseChannel.GetValueOrDefault(), default), selfManagedUpgradeVersion is null ? default : new SelfManagedUpgradeProfile(selfManagedUpgradeVersion, default), default);
-        }
-
-        /// <param name="eastWestGatewayVisibility"> East-West gateway visibility. </param>
-        /// <param name="privateConnectSubnetResourceId"> Delegated Subnet to AppLink. </param>
-        /// <returns> A new <see cref="Models.AppLinkConnectivityProfile"/> instance for mocking. </returns>
-        public static AppLinkConnectivityProfile AppLinkConnectivityProfile(AppLinkEastWestGatewayVisibility? eastWestGatewayVisibility = default, ResourceIdentifier privateConnectSubnetResourceId = default)
-        {
-            return new AppLinkConnectivityProfile(eastWestGatewayVisibility is null ? default : new EastWestGatewayProfile(eastWestGatewayVisibility.GetValueOrDefault(), default), privateConnectSubnetResourceId is null ? default : new PrivateConnectProfile(privateConnectSubnetResourceId, default), default);
-        }
-
+        /// <summary> The type used for update operations of the AppLinkMember. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.AppLinkMemberPatch"/> instance for mocking. </returns>
@@ -120,18 +105,10 @@ namespace Azure.ResourceManager.AppNetwork.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AppLinkMemberPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+            return new AppLinkMemberPatch(tags, properties, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="upgradeProfile"> Upgrade profile. </param>
-        /// <param name="observabilityMetricsEndpoint"> Metrics endpoint URL. </param>
-        /// <param name="connectivityProfile"> Connectivity profile. </param>
-        /// <returns> A new <see cref="Models.AppLinkMemberUpdateProperties"/> instance for mocking. </returns>
-        public static AppLinkMemberUpdateProperties AppLinkMemberUpdateProperties(AppLinkUpgradeProfile upgradeProfile = default, string observabilityMetricsEndpoint = default, AppLinkConnectivityProfile connectivityProfile = default)
-        {
-            return new AppLinkMemberUpdateProperties(upgradeProfile, observabilityMetricsEndpoint is null ? default : new ObservabilityProfile(new MetricsProfile(observabilityMetricsEndpoint, default), default), connectivityProfile, default);
-        }
-
+        /// <summary> AppLinkMember upgrade history. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -145,10 +122,11 @@ namespace Azure.ResourceManager.AppNetwork.Models
                 name,
                 resourceType,
                 systemData,
-                properties,
-                default);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
+        /// <summary> AppLinkMember upgrade history properties. </summary>
         /// <param name="startOn"> Start timestamp. </param>
         /// <param name="endOn"> End timestamp. </param>
         /// <param name="initiatedBy"> Upgrade initiator. </param>
@@ -165,9 +143,10 @@ namespace Azure.ResourceManager.AppNetwork.Models
                 fromVersion,
                 toVersion,
                 provisioningState,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> AppLink available version resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -181,29 +160,30 @@ namespace Azure.ResourceManager.AppNetwork.Models
                 name,
                 resourceType,
                 systemData,
-                properties,
-                default);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
         /// <param name="kubernetesVersion"> Kubernetes version. </param>
         /// <param name="fullyManagedVersionsReleaseChannels"> Release channels. </param>
         /// <param name="selfManagedVersionDetailVersions"> Istio versions. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fullyManagedVersionsReleaseChannels"/> or <paramref name="selfManagedVersionDetailVersions"/> is null. </exception>
         /// <returns> A new <see cref="Models.AppLinkAvailableVersionProperties"/> instance for mocking. </returns>
         public static AppLinkAvailableVersionProperties AppLinkAvailableVersionProperties(string kubernetesVersion = default, IEnumerable<AppLinkReleaseChannelInfo> fullyManagedVersionsReleaseChannels = default, IEnumerable<AppLinkVersionInfo> selfManagedVersionDetailVersions = default, AppLinkProvisioningState? provisioningState = default)
         {
-            return new AppLinkAvailableVersionProperties(kubernetesVersion, fullyManagedVersionsReleaseChannels is null ? default : new FullyManagedVersions((fullyManagedVersionsReleaseChannels ?? new ChangeTrackingList<AppLinkReleaseChannelInfo>()).ToList(), default), selfManagedVersionDetailVersions is null ? default : new SelfManagedVersions((selfManagedVersionDetailVersions ?? new ChangeTrackingList<AppLinkVersionInfo>()).ToList(), default), provisioningState, default);
+            return new AppLinkAvailableVersionProperties(kubernetesVersion, new FullyManagedVersions((fullyManagedVersionsReleaseChannels ?? new ChangeTrackingList<AppLinkReleaseChannelInfo>()).ToList(), null), new SelfManagedVersions((selfManagedVersionDetailVersions ?? new ChangeTrackingList<AppLinkVersionInfo>()).ToList(), null), provisioningState, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Release channel information. </summary>
         /// <param name="releaseChannel"> Release channel. </param>
         /// <param name="version"> Istio version behind release channel. </param>
         /// <returns> A new <see cref="Models.AppLinkReleaseChannelInfo"/> instance for mocking. </returns>
         public static AppLinkReleaseChannelInfo AppLinkReleaseChannelInfo(string releaseChannel = default, string version = default)
         {
-            return new AppLinkReleaseChannelInfo(releaseChannel, version, default);
+            return new AppLinkReleaseChannelInfo(releaseChannel, version, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Version information. </summary>
         /// <param name="version"> Istio version. </param>
         /// <param name="upgrades"> Available upgrades. </param>
         /// <returns> A new <see cref="Models.AppLinkVersionInfo"/> instance for mocking. </returns>
@@ -211,7 +191,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         {
             upgrades ??= new ChangeTrackingList<string>();
 
-            return new AppLinkVersionInfo(version, (upgrades ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new AppLinkVersionInfo(version, upgrades.ToList(), additionalBinaryDataProperties: null);
         }
     }
 }

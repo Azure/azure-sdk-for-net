@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
     public static partial class ArmOnlineExperimentationModelFactory
     {
 
+        /// <summary> An online experimentation workspace resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -39,12 +40,12 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
                 properties,
                 identity,
-                sku,
-                default);
+                sku);
         }
 
         /// <param name="workspaceId"> The Id of the workspace. </param>
@@ -70,30 +71,14 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
                 logAnalyticsWorkspaceResourceId,
                 logsExporterStorageAccountResourceId,
                 appConfigurationResourceId,
-                customerManagedKeyEncryption is null ? default : new ResourceEncryptionConfiguration(customerManagedKeyEncryption, default),
+                customerManagedKeyEncryption is null ? default : new ResourceEncryptionConfiguration(customerManagedKeyEncryption, null),
                 endpoint,
                 publicNetworkAccess,
-                (privateEndpointConnections ?? new ChangeTrackingList<OnlineExperimentationPrivateEndpointConnectionData>()).ToList(),
-                default);
+                privateEndpointConnections.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <param name="keyEncryptionKeyIdentity"> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </param>
-        /// <param name="keyEncryptionKeyUri"> key encryption key Url, versioned or non-versioned. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78 or https://contosovault.vault.azure.net/keys/contosokek. </param>
-        /// <returns> A new <see cref="Models.CustomerManagedKeyEncryption"/> instance for mocking. </returns>
-        public static CustomerManagedKeyEncryption CustomerManagedKeyEncryption(KeyEncryptionKeyIdentity keyEncryptionKeyIdentity = default, Uri keyEncryptionKeyUri = default)
-        {
-            return new CustomerManagedKeyEncryption(keyEncryptionKeyIdentity, keyEncryptionKeyUri, default);
-        }
-
-        /// <param name="identityType"> The type of identity to use. Values can be systemAssignedIdentity, userAssignedIdentity, or delegatedResourceIdentity. </param>
-        /// <param name="userAssignedIdentityResourceId"> User assigned identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity. </param>
-        /// <param name="federatedClientId"> application client identity to use for accessing key encryption key Url in a different tenant. Ex: f83c6b1b-4d34-47e4-bb34-9d83df58b540. </param>
-        /// <returns> A new <see cref="Models.KeyEncryptionKeyIdentity"/> instance for mocking. </returns>
-        public static KeyEncryptionKeyIdentity KeyEncryptionKeyIdentity(KeyEncryptionKeyIdentityType? identityType = default, ResourceIdentifier userAssignedIdentityResourceId = default, Guid? federatedClientId = default)
-        {
-            return new KeyEncryptionKeyIdentity(identityType, userAssignedIdentityResourceId, federatedClientId, default);
-        }
-
+        /// <summary> Private endpoint connection resource for an online experimentation workspace resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -107,10 +92,11 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
                 name,
                 resourceType,
                 systemData,
-                properties,
-                default);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
+        /// <summary> Properties of the private endpoint connection. </summary>
         /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
         /// <param name="privateEndpoint"> The private endpoint resource. </param>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
@@ -120,26 +106,19 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
         {
             groupIds ??= new ChangeTrackingList<string>();
 
-            return new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpoint, privateLinkServiceConnectionState, provisioningState, default);
+            return new PrivateEndpointConnectionProperties(groupIds.ToList(), privateEndpoint, privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.OnlineExperimentationPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static OnlineExperimentationPrivateLinkServiceConnectionState OnlineExperimentationPrivateLinkServiceConnectionState(OnlineExperimentationPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
-        {
-            return new OnlineExperimentationPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
-        }
-
+        /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>
         /// <param name="name"> The name of the SKU. Ex - F0, P0. It is typically a letter+number code. </param>
         /// <param name="tier"> The name of the SKU tier. </param>
         /// <returns> A new <see cref="Models.OnlineExperimentationWorkspaceSku"/> instance for mocking. </returns>
         public static OnlineExperimentationWorkspaceSku OnlineExperimentationWorkspaceSku(OnlineExperimentationWorkspaceSkuName name = default, OnlineExperimentationWorkspaceSkuTier? tier = default)
         {
-            return new OnlineExperimentationWorkspaceSku(name, tier, default);
+            return new OnlineExperimentationWorkspaceSku(name, tier, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Partial update of an online experimentation workspace resource. </summary>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
@@ -149,22 +128,10 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new OnlineExperimentationWorkspacePatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), sku, properties, default);
+            return new OnlineExperimentationWorkspacePatch(identity, tags, sku, properties, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="logAnalyticsWorkspaceResourceId"> The resource identifier of the Log Analytics workspace which online experimentation workspace uses for generating experiment analysis results. </param>
-        /// <param name="logsExporterStorageAccountResourceId"> The resource identifier of storage account where logs are exported from Log Analytics workspace. online experimentation workspace uses it generating experiment analysis results. </param>
-        /// <param name="customerManagedKeyEncryption"> All Customer-managed key encryption properties for the resource. </param>
-        /// <param name="publicNetworkAccess">
-        /// Public Network Access Control for the online experimentation resource. Defaults to Enabled if set to null.
-        /// <list type="bullet"><item><description>Enabled: The resource can be accessed from the public internet.</description></item><item><description>Disabled: The resource can only be accessed from a private endpoint.</description></item></list>
-        /// </param>
-        /// <returns> A new <see cref="Models.OnlineExperimentationWorkspacePatchProperties"/> instance for mocking. </returns>
-        public static OnlineExperimentationWorkspacePatchProperties OnlineExperimentationWorkspacePatchProperties(ResourceIdentifier logAnalyticsWorkspaceResourceId = default, ResourceIdentifier logsExporterStorageAccountResourceId = default, CustomerManagedKeyEncryption customerManagedKeyEncryption = default, PublicNetworkAccessType? publicNetworkAccess = default)
-        {
-            return new OnlineExperimentationWorkspacePatchProperties(logAnalyticsWorkspaceResourceId, logsExporterStorageAccountResourceId, customerManagedKeyEncryption is null ? default : new ResourceEncryptionConfiguration(customerManagedKeyEncryption, default), publicNetworkAccess, default);
-        }
-
+        /// <summary> A private link resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -178,10 +145,11 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
                 name,
                 resourceType,
                 systemData,
-                properties,
-                default);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
+        /// <summary> Properties of a private link resource. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
@@ -191,7 +159,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             requiredMembers ??= new ChangeTrackingList<string>();
             requiredZoneNames ??= new ChangeTrackingList<string>();
 
-            return new OnlineExperimentationPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new OnlineExperimentationPrivateLinkResourceProperties(groupId, requiredMembers.ToList(), requiredZoneNames.ToList(), additionalBinaryDataProperties: null);
         }
     }
 }

@@ -127,21 +127,6 @@ namespace Azure.ResourceManager.KeyVault
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -173,11 +158,11 @@ namespace Azure.ResourceManager.KeyVault
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             PrivateEndpointConnectionProperties properties = default;
             AzureLocation? location = default;
             IReadOnlyDictionary<string, string> tags = default;
             ETag? eTag = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -270,11 +255,11 @@ namespace Azure.ResourceManager.KeyVault
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 properties,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                eTag,
-                additionalBinaryDataProperties);
+                eTag);
         }
     }
 }

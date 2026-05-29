@@ -55,10 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SecurityPolicyProperties IPersistableModel<SecurityPolicyProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return PersistableModelCreateCore(data, options);
-        }
+        SecurityPolicyProperties IPersistableModel<SecurityPolicyProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SecurityPolicyProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -86,10 +83,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SecurityPolicyProperties IJsonModel<SecurityPolicyProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return JsonModelCreateCore(ref reader, options);
-        }
+        SecurityPolicyProperties IJsonModel<SecurityPolicyProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

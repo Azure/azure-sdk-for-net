@@ -55,10 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FrontDoorSecretProperties IPersistableModel<FrontDoorSecretProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return PersistableModelCreateCore(data, options);
-        }
+        FrontDoorSecretProperties IPersistableModel<FrontDoorSecretProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FrontDoorSecretProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -86,10 +83,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FrontDoorSecretProperties IJsonModel<FrontDoorSecretProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return JsonModelCreateCore(ref reader, options);
-        }
+        FrontDoorSecretProperties IJsonModel<FrontDoorSecretProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

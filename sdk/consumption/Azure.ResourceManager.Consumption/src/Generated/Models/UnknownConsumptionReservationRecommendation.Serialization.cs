@@ -59,10 +59,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConsumptionReservationRecommendation IPersistableModel<ConsumptionReservationRecommendation>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return (ConsumptionReservationRecommendation)PersistableModelCreateCore(data, options);
-        }
+        ConsumptionReservationRecommendation IPersistableModel<ConsumptionReservationRecommendation>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConsumptionReservationRecommendation)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ConsumptionReservationRecommendation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -90,10 +87,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConsumptionReservationRecommendation IJsonModel<ConsumptionReservationRecommendation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return (ConsumptionReservationRecommendation)JsonModelCreateCore(ref reader, options);
-        }
+        ConsumptionReservationRecommendation IJsonModel<ConsumptionReservationRecommendation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConsumptionReservationRecommendation)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -120,12 +114,12 @@ namespace Azure.ResourceManager.Consumption.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             AzureLocation? location = default;
             string sku = default;
             ETag? eTag = default;
             IReadOnlyDictionary<string, string> tags = default;
             ReservationRecommendationKind kind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -219,12 +213,12 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 location,
                 sku,
                 eTag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                kind,
-                additionalBinaryDataProperties);
+                kind);
         }
     }
 }

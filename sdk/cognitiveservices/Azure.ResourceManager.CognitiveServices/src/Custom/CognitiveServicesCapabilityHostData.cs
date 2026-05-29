@@ -17,13 +17,12 @@ namespace Azure.ResourceManager.CognitiveServices
                 return null;
 
             return new CognitiveServicesProjectScopedCapabilityHostData(
-                id: capabilityHostData.Id,
-                name: capabilityHostData.Name,
-                resourceType: capabilityHostData.ResourceType,
-                systemData: capabilityHostData.SystemData,
-                properties: CognitiveServicesCapabilityHostProperties.ToProjectCapabilityHostProperties(capabilityHostData.Properties),
-                additionalBinaryDataProperties: capabilityHostData._additionalBinaryDataProperties
-            );
+                capabilityHostData.Id,
+                capabilityHostData.Name,
+                capabilityHostData.ResourceType,
+                capabilityHostData.SystemData,
+                capabilityHostData._additionalBinaryDataProperties,
+                CognitiveServicesCapabilityHostProperties.ToProjectCapabilityHostProperties(capabilityHostData.Properties));
         }
     }
 }

@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
     public static partial class ArmSecretsStoreExtensionModelFactory
     {
 
+        /// <summary> The AzureKeyVaultSecretProviderClass resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -38,13 +39,14 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
                 properties,
-                extendedLocation,
-                default);
+                extendedLocation);
         }
 
+        /// <summary> The properties of the AzureKeyVaultSecretProviderClass. </summary>
         /// <param name="keyvaultName"> The name of the Azure Key Vault to sync secrets from. </param>
         /// <param name="clientId"> The user assigned managed identity client ID that should be used to access the Azure Key Vault. </param>
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the Azure Key Vault. </param>
@@ -59,9 +61,10 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                 tenantId,
                 objects,
                 provisioningState,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The type used for update operations of the AzureKeyVaultSecretProviderClass. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.KeyVaultSecretProviderClassPatch"/> instance for mocking. </returns>
@@ -69,19 +72,10 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new KeyVaultSecretProviderClassPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+            return new KeyVaultSecretProviderClassPatch(tags, properties, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="keyvaultName"> The name of the Azure Key Vault to sync secrets from. </param>
-        /// <param name="clientId"> The user assigned managed identity client ID that should be used to access the Azure Key Vault. </param>
-        /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the Azure Key Vault. </param>
-        /// <param name="objects"> Objects defines the desired state of synced K8s secret objects. </param>
-        /// <returns> A new <see cref="Models.AzureKeyVaultSecretProviderClassUpdateProperties"/> instance for mocking. </returns>
-        public static AzureKeyVaultSecretProviderClassUpdateProperties AzureKeyVaultSecretProviderClassUpdateProperties(string keyvaultName = default, Guid? clientId = default, Guid? tenantId = default, string objects = default)
-        {
-            return new AzureKeyVaultSecretProviderClassUpdateProperties(keyvaultName, clientId, tenantId, objects, default);
-        }
-
+        /// <summary> The SecretSync resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -100,13 +94,14 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
                 properties,
-                extendedLocation,
-                default);
+                extendedLocation);
         }
 
+        /// <summary> The properties of the SecretSync instance. </summary>
         /// <param name="secretProviderClassName"> SecretProviderClassName specifies the name of the SecretProviderClass resource, which contains the information needed to access the cloud provider secret store. </param>
         /// <param name="serviceAccountName"> ServiceAccountName specifies the name of the service account used to access the cloud provider secret store. The audience field in the service account token must be passed as parameter in the controller configuration. The audience is used when requesting a token from the API server for the service account; the supported audiences are defined by each provider. </param>
         /// <param name="kubernetesSecretType"> Type specifies the type of the Kubernetes secret object, e.g. "Opaque" or"kubernetes.io/tls". The controller must have permission to create secrets of the specified type. </param>
@@ -124,20 +119,13 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                 serviceAccountName,
                 kubernetesSecretType,
                 forceSynchronization,
-                (objectSecretMapping ?? new ChangeTrackingList<KubernetesSecretObjectMapping>()).ToList(),
+                objectSecretMapping.ToList(),
                 status,
                 provisioningState,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <param name="sourcePath"> SourcePath is the identifier for the secret data as defined by the external secret provider. This is the key or path to the secret in the provider's system, which gets mounted to a specific path in the pod. The value should match the name of the secret as specified in the SecretProviderClass's objects array. </param>
-        /// <param name="targetKey"> TargetKey is the key in the Kubernetes secret's data field where the secret value will be stored. This key is used to reference the secret data within Kubernetes, and it should be unique within the secret. </param>
-        /// <returns> A new <see cref="Models.KubernetesSecretObjectMapping"/> instance for mocking. </returns>
-        public static KubernetesSecretObjectMapping KubernetesSecretObjectMapping(string sourcePath = default, string targetKey = default)
-        {
-            return new KubernetesSecretObjectMapping(sourcePath, targetKey, default);
-        }
-
+        /// <summary> SecretSyncStatus defines the observed state of the secret synchronization process. </summary>
         /// <param name="lastSuccessfulSyncOn"> LastSuccessfulSyncTime represents the last time the secret was retrieved from the Provider and updated. </param>
         /// <param name="conditions"> Conditions represent the status of the secret create and update processes. The status can be True, False, or Unknown with various reasons and messages explaining the state. Examples of reasons include CreateSucceeded, ProviderError, InvalidClusterSecretLabelError, InvalidClusterSecretAnnotationError, UnknownError, ValidatingAdmissionPolicyCheckFailed, UserInputValidationFailed, ControllerSpcError, ControllerInternalError, NoValueChange, and ValueChangeOrForceUpdateDetected. </param>
         /// <returns> A new <see cref="Models.SecretSyncStatus"/> instance for mocking. </returns>
@@ -145,9 +133,10 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         {
             conditions ??= new ChangeTrackingList<SecretSyncCondition>();
 
-            return new SecretSyncStatus(lastSuccessfulSyncOn, (conditions ?? new ChangeTrackingList<SecretSyncCondition>()).ToList(), default);
+            return new SecretSyncStatus(lastSuccessfulSyncOn, conditions.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A condition represents the status of the secret create and update processes. </summary>
         /// <param name="lastTransitionOn"> LastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed. If that is not known, then using the time when the API field changed is acceptable. </param>
         /// <param name="message"> Message is a human readable message indicating details about the transition. This may be an empty string. </param>
         /// <param name="observedGeneration"> ObservedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance. </param>
@@ -164,9 +153,10 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                 reason,
                 status,
                 @type,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The type used for update operations of the SecretSync. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.SecretSyncPatch"/> instance for mocking. </returns>
@@ -174,9 +164,10 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SecretSyncPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+            return new SecretSyncPatch(tags, properties, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The updatable properties of the SecretSync. </summary>
         /// <param name="secretProviderClassName"> SecretProviderClassName specifies the name of the SecretProviderClass resource, which contains the information needed to access the cloud provider secret store. </param>
         /// <param name="serviceAccountName"> ServiceAccountName specifies the name of the service account used to access the cloud provider secret store. The audience field in the service account token must be passed as parameter in the controller configuration. The audience is used when requesting a token from the API server for the service account; the supported audiences are defined by each provider. </param>
         /// <param name="forceSynchronization"> ForceSynchronization can be used to force the secret synchronization. The secret synchronization is triggered by changing the value in this field. This field is not used to resolve synchronization conflicts. </param>
@@ -186,7 +177,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         {
             objectSecretMapping ??= new ChangeTrackingList<KubernetesSecretObjectMapping>();
 
-            return new SecretSyncUpdateProperties(secretProviderClassName, serviceAccountName, forceSynchronization, (objectSecretMapping ?? new ChangeTrackingList<KubernetesSecretObjectMapping>()).ToList(), default);
+            return new SecretSyncUpdateProperties(secretProviderClassName, serviceAccountName, forceSynchronization, objectSecretMapping.ToList(), additionalBinaryDataProperties: null);
         }
     }
 }

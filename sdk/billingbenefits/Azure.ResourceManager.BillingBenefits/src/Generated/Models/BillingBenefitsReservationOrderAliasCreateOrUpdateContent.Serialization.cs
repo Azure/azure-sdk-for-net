@@ -100,21 +100,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -146,10 +131,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceSku sku = default;
             AzureLocation? location = default;
             ReservationOrderAliasRequestProperties properties = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -217,10 +202,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 sku,
                 location,
-                properties,
-                additionalBinaryDataProperties);
+                properties);
         }
     }
 }

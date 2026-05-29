@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Storage
         // The generated factory passes string id and ResourceType? but the constructor expects
         // ResourceIdentifier id and ResourceType.
         internal StorageAccountMigrationData(string id, string name, ResourceType? resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, StorageAccountMigrationProperties storageAccountMigrationDetails, string name0)
-            : this(id != null ? new ResourceIdentifier(id) : null, name, resourceType ?? default, systemData, storageAccountMigrationDetails, name0, additionalBinaryDataProperties)
+            : this(id != null ? new ResourceIdentifier(id) : null, name, resourceType ?? default, systemData, additionalBinaryDataProperties, storageAccountMigrationDetails, name0)
         {
         }
 

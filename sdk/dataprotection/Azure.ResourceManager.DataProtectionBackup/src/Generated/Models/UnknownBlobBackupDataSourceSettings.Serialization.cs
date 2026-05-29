@@ -55,10 +55,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BlobBackupDataSourceSettings IPersistableModel<BlobBackupDataSourceSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return (BlobBackupDataSourceSettings)PersistableModelCreateCore(data, options);
-        }
+        BlobBackupDataSourceSettings IPersistableModel<BlobBackupDataSourceSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownBlobBackupDataSourceSettings)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BlobBackupDataSourceSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -86,10 +83,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BlobBackupDataSourceSettings IJsonModel<BlobBackupDataSourceSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return (BlobBackupDataSourceSettings)JsonModelCreateCore(ref reader, options);
-        }
+        BlobBackupDataSourceSettings IJsonModel<BlobBackupDataSourceSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownBlobBackupDataSourceSettings)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

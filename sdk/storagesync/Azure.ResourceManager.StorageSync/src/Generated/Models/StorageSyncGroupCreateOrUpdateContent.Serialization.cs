@@ -100,21 +100,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
 #endif
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -146,8 +131,8 @@ namespace Azure.ResourceManager.StorageSync.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            BinaryData properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            BinaryData properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -201,8 +186,8 @@ namespace Azure.ResourceManager.StorageSync.Models
                 name,
                 resourceType,
                 systemData,
-                properties,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties,
+                properties);
         }
     }
 }

@@ -55,19 +55,20 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 extensionType is null && isAutoUpgradeMinorVersionEnabled is null && releaseTrain is null && version is null && scope is null && configurationSettings is null && configurationProtectedSettings is null && currentVersion is null && provisioningState is null && statuses is null && errorInfo is null && customLocationSettings is null && packageUri is null && aksAssignedIdentity is null && isSystemExtension is null && autoUpgradeMode is null && managementDetails is null && additionalDetails is null && extensionState is null ? default : new KubernetesClusterExtensionProperties(
                     extensionType,
                     isAutoUpgradeMinorVersionEnabled,
                     releaseTrain,
                     version,
                     scope,
-                    configurationSettings ?? new ChangeTrackingDictionary<string, string>(),
-                    configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
+                    configurationSettings,
+                    configurationProtectedSettings,
                     currentVersion,
                     provisioningState,
                     (statuses ?? new ChangeTrackingList<KubernetesClusterExtensionStatus>()).ToList(),
                     errorInfo,
-                    customLocationSettings ?? new ChangeTrackingDictionary<string, string>(),
+                    customLocationSettings,
                     packageUri,
                     aksAssignedIdentity,
                     isSystemExtension,
@@ -75,38 +76,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
                     managementDetails,
                     additionalDetails,
                     extensionState,
-                    default),
+                    null),
                 identity,
                 managedBy,
-                plan,
-                default);
+                plan);
         }
 
-        /// <param name="clusterReleaseNamespace"> Namespace where the extension Release must be placed, for a Cluster scoped extension.  If this namespace does not exist, it will be created. </param>
-        /// <param name="targetNamespace"> Namespace where the extension will be created for an Namespace scoped extension.  If this namespace does not exist, it will be created. </param>
-        /// <returns> A new <see cref="Models.KubernetesClusterExtensionScope"/> instance for mocking. </returns>
-        public static KubernetesClusterExtensionScope KubernetesClusterExtensionScope(string clusterReleaseNamespace = default, string targetNamespace = default)
-        {
-            return new KubernetesClusterExtensionScope(clusterReleaseNamespace is null ? default : new KubernetesClusterExtensionScopeCluster(clusterReleaseNamespace, default), targetNamespace is null ? default : new KubernetesClusterExtensionScopeNamespace(targetNamespace, default), default);
-        }
-
-        /// <param name="code"> Status code provided by the Extension. </param>
-        /// <param name="displayStatus"> Short description of status of the extension. </param>
-        /// <param name="level"> Level of the status. </param>
-        /// <param name="message"> Detailed message of the status from the Extension. </param>
-        /// <param name="time"> DateLiteral (per ISO8601) noting the time of installation status. </param>
-        /// <returns> A new <see cref="Models.KubernetesClusterExtensionStatus"/> instance for mocking. </returns>
-        public static KubernetesClusterExtensionStatus KubernetesClusterExtensionStatus(string code = default, string displayStatus = default, KubernetesClusterExtensionStatusLevel? level = default, string message = default, string time = default)
-        {
-            return new KubernetesClusterExtensionStatus(
-                code,
-                displayStatus,
-                level,
-                message,
-                time,
-                default);
-        }
-
+        /// <summary> Metadata about the managing entity of the extension and the permitted operations. </summary>
         /// <param name="category"> The category of the managing entity. </param>
         /// <param name="accessDetails"> The list of access details of the managing entity. </param>
         /// <returns> A new <see cref="Models.KubernetesClusterManagementDetails"/> instance for mocking. </returns>
@@ -114,9 +90,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
         {
             accessDetails ??= new ChangeTrackingList<KubernetesClusterAccessDetail>();
 
-            return new KubernetesClusterManagementDetails(category, (accessDetails ?? new ChangeTrackingList<KubernetesClusterAccessDetail>()).ToList(), default);
+            return new KubernetesClusterManagementDetails(category, accessDetails.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Metadata about the access details of the managing entity of the extension. </summary>
         /// <param name="entity"> The entity to which the access details apply. </param>
         /// <param name="allowedActions"> The list of allowed actions for the entity. </param>
         /// <param name="description"> The description of the entity. </param>
@@ -125,38 +102,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
         {
             allowedActions ??= new ChangeTrackingList<string>();
 
-            return new KubernetesClusterAccessDetail(entity, (allowedActions ?? new ChangeTrackingList<string>()).ToList(), description, default);
-        }
-
-        /// <param name="docs"> Documentation for the extension. </param>
-        /// <param name="releaseNotes"> Release Notes of the extension. </param>
-        /// <param name="troubleshootingGuide"> Troubleshooting guide for the extension. </param>
-        /// <returns> A new <see cref="Models.KubernetesClusterAdditionalDetails"/> instance for mocking. </returns>
-        public static KubernetesClusterAdditionalDetails KubernetesClusterAdditionalDetails(string docs = default, string releaseNotes = default, string troubleshootingGuide = default)
-        {
-            return new KubernetesClusterAdditionalDetails(docs, releaseNotes, troubleshootingGuide, default);
-        }
-
-        /// <param name="isAutoUpgradeMinorVersionEnabled"> Flag to note if this extension participates in auto upgrade of minor version, or not. </param>
-        /// <param name="autoUpgradeMode">
-        /// The upgrade mode for auto upgrade.
-        /// The default is "compatible".
-        /// </param>
-        /// <param name="releaseTrain"> ReleaseTrain this extension participates in for auto-upgrade (e.g. Stable, Preview, etc.) - only if autoUpgradeMinorVersion is 'true'. </param>
-        /// <param name="version"> Version of the extension for this extension, if it is 'pinned' to a specific version. autoUpgradeMinorVersion must be 'false'. </param>
-        /// <param name="configurationSettings"> Configuration settings, as name-value pairs for configuring this extension. </param>
-        /// <param name="configurationProtectedSettings"> Configuration settings that are sensitive, as name-value pairs for configuring this extension. </param>
-        /// <returns> A new <see cref="Models.KubernetesClusterExtensionPatch"/> instance for mocking. </returns>
-        public static KubernetesClusterExtensionPatch KubernetesClusterExtensionPatch(bool? isAutoUpgradeMinorVersionEnabled = default, KubernetesClusterAutoUpgradeMode? autoUpgradeMode = default, string releaseTrain = default, string version = default, IDictionary<string, string> configurationSettings = default, IDictionary<string, string> configurationProtectedSettings = default)
-        {
-            return new KubernetesClusterExtensionPatch(isAutoUpgradeMinorVersionEnabled is null && autoUpgradeMode is null && releaseTrain is null && version is null && configurationSettings is null && configurationProtectedSettings is null ? default : new KubernetesClusterExtensionPatchProperties(
-                isAutoUpgradeMinorVersionEnabled,
-                autoUpgradeMode,
-                releaseTrain,
-                version,
-                configurationSettings ?? new ChangeTrackingDictionary<string, string>(),
-                configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
-                default), default);
+            return new KubernetesClusterAccessDetail(entity, allowedActions.ToList(), description, additionalBinaryDataProperties: null);
         }
     }
 }

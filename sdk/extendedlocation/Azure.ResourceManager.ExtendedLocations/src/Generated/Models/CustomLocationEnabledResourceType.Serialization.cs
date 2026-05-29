@@ -83,21 +83,6 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -128,9 +113,9 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType resourceType = default;
-            SystemData systemData = default;
-            EnabledResourceTypeProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            EnabledResourceTypeProperties properties = default;
+            SystemData systemData = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -156,15 +141,6 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                     resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("systemData"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerExtendedLocationsContext.Default);
-                    continue;
-                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -172,6 +148,15 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                         continue;
                     }
                     properties = EnabledResourceTypeProperties.DeserializeEnabledResourceTypeProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerExtendedLocationsContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -183,9 +168,9 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 id,
                 name,
                 resourceType,
-                systemData,
+                additionalBinaryDataProperties,
                 properties,
-                additionalBinaryDataProperties);
+                systemData);
         }
     }
 }

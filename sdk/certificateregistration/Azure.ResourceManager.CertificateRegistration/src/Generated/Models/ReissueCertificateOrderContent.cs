@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> ReissueCertificateOrderRequest resource specific properties. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReissueCertificateOrderContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReissueCertificateOrderRequestProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal ReissueCertificateOrderContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ReissueCertificateOrderRequestProperties properties, string kind) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Kind = kind;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> ReissueCertificateOrderRequest resource specific properties. </summary>

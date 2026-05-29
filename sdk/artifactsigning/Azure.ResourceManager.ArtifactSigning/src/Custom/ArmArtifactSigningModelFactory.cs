@@ -34,11 +34,12 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
         public static ArtifactSigningCertificateProfileData ArtifactSigningCertificateProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CertificateProfileType? profileType = default, bool? includeStreetAddress = default, bool? includeCity = default, bool? includeState = default, bool? includeCountry = default, bool? includePostalCode = default, string identityValidationId = default, ArtifactSigningProvisioningState? provisioningState = default, CertificateProfileStatus? status = default, IEnumerable<ArtifactSigningCertificate> certificates = default)
         {
             return new ArtifactSigningCertificateProfileData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                properties: profileType is null && includeStreetAddress is null && includeCity is null && includeState is null && includeCountry is null && includePostalCode is null && identityValidationId is null && provisioningState is null && status is null && certificates is null ? default : new CertificateProfileProperties(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                profileType is null && includeStreetAddress is null && includeCity is null && includeState is null && includeCountry is null && includePostalCode is null && identityValidationId is null && provisioningState is null && status is null && certificates is null ? default : new CertificateProfileProperties(
                     profileType.GetValueOrDefault(),
                     includeStreetAddress,
                     includeCity,
@@ -49,9 +50,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
                     provisioningState,
                     status,
                     (certificates ?? new ChangeTrackingList<ArtifactSigningCertificate>()).ToList(),
-                    null),
-                additionalBinaryDataProperties: null
-            );
+                    null));
         }
     }
 }

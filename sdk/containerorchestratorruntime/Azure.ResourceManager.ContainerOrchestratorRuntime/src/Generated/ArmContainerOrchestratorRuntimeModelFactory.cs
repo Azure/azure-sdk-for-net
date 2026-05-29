@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmContainerOrchestratorRuntimeModelFactory
     {
+        /// <summary> A StorageClass resource for an Arc connected cluster (Microsoft.Kubernetes/connectedClusters). </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -31,10 +32,11 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 name,
                 resourceType,
                 systemData,
-                properties,
-                default);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
+        /// <summary> Details of the StorageClass StorageClass. </summary>
         /// <param name="allowVolumeExpansion"> Volume can be expanded or not. </param>
         /// <param name="mountOptions"> Additional mount options. </param>
         /// <param name="provisioner"> Provisioner name. </param>
@@ -56,91 +58,21 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 
             return new ConnectedClusterStorageClassProperties(
                 allowVolumeExpansion,
-                (mountOptions ?? new ChangeTrackingList<string>()).ToList(),
+                mountOptions.ToList(),
                 provisioner,
                 volumeBindingMode,
-                (accessModes ?? new ChangeTrackingList<StorageClassAccessMode>()).ToList(),
+                accessModes.ToList(),
                 dataResilience,
                 failoverSpeed,
-                (limitations ?? new ChangeTrackingList<string>()).ToList(),
+                limitations.ToList(),
                 performance,
                 priority,
                 typeProperties,
                 provisioningState,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <param name="type"> Type of the storage class. </param>
-        /// <returns> A new <see cref="Models.StorageClassTypeProperties"/> instance for mocking. </returns>
-        public static StorageClassTypeProperties StorageClassTypeProperties(string @type = default)
-        {
-            return new UnknownStorageClassTypeProperties(default, default);
-        }
-
-        /// <returns> A new <see cref="Models.NativeStorageClassTypeProperties"/> instance for mocking. </returns>
-        public static NativeStorageClassTypeProperties NativeStorageClassTypeProperties()
-        {
-            return new NativeStorageClassTypeProperties(default, default);
-        }
-
-        /// <param name="backingStorageClassName"> The backing storageclass used to create new storageclass. </param>
-        /// <returns> A new <see cref="Models.RwxStorageClassTypeProperties"/> instance for mocking. </returns>
-        public static RwxStorageClassTypeProperties RwxStorageClassTypeProperties(string backingStorageClassName = default)
-        {
-            return new RwxStorageClassTypeProperties(default, default, backingStorageClassName);
-        }
-
-        /// <param name="azureStorageAccountName"> Azure Storage Account Name. </param>
-        /// <param name="azureStorageAccountKey"> Azure Storage Account Key. </param>
-        /// <returns> A new <see cref="Models.BlobStorageClassTypeProperties"/> instance for mocking. </returns>
-        public static BlobStorageClassTypeProperties BlobStorageClassTypeProperties(string azureStorageAccountName = default, string azureStorageAccountKey = default)
-        {
-            return new BlobStorageClassTypeProperties(default, default, azureStorageAccountName, azureStorageAccountKey);
-        }
-
-        /// <param name="server"> NFS Server. </param>
-        /// <param name="share"> NFS share. </param>
-        /// <param name="subDir"> Sub directory under share. If the sub directory doesn't exist, driver will create it. </param>
-        /// <param name="mountPermissions"> Mounted folder permissions. Default is 0. If set as non-zero, driver will perform `chmod` after mount. </param>
-        /// <param name="onDelete"> The action to take when a NFS volume is deleted. Default is Delete. </param>
-        /// <returns> A new <see cref="Models.NfsStorageClassTypeProperties"/> instance for mocking. </returns>
-        public static NfsStorageClassTypeProperties NfsStorageClassTypeProperties(string server = default, string share = default, string subDir = default, string mountPermissions = default, NfsDirectoryActionOnVolumeDeletion? onDelete = default)
-        {
-            return new NfsStorageClassTypeProperties(
-                default,
-                default,
-                server,
-                share,
-                subDir,
-                mountPermissions,
-                onDelete);
-        }
-
-        /// <param name="source"> SMB Source. </param>
-        /// <param name="subDir"> Sub directory under share. If the sub directory doesn't exist, driver will create it. </param>
-        /// <param name="username"> Server username. </param>
-        /// <param name="password"> Server password. </param>
-        /// <param name="domain"> Server domain. </param>
-        /// <returns> A new <see cref="Models.SmbStorageClassTypeProperties"/> instance for mocking. </returns>
-        public static SmbStorageClassTypeProperties SmbStorageClassTypeProperties(string source = default, string subDir = default, string username = default, string password = default, string domain = default)
-        {
-            return new SmbStorageClassTypeProperties(
-                default,
-                default,
-                source,
-                subDir,
-                username,
-                password,
-                domain);
-        }
-
-        /// <param name="properties"> The properties of StorageClass. </param>
-        /// <returns> A new <see cref="Models.ConnectedClusterStorageClassPatch"/> instance for mocking. </returns>
-        public static ConnectedClusterStorageClassPatch ConnectedClusterStorageClassPatch(StorageClassPropertiesUpdate properties = default)
-        {
-            return new ConnectedClusterStorageClassPatch(properties, default);
-        }
-
+        /// <summary> The model for updating storageClass properties. </summary>
         /// <param name="allowVolumeExpansion"> Volume can be expanded or not. </param>
         /// <param name="mountOptions"> Additional mount options. </param>
         /// <param name="accessModes"> The access mode: [ReadWriteOnce, ReadWriteMany] or [ReadWriteOnce]. </param>
@@ -159,48 +91,18 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 
             return new StorageClassPropertiesUpdate(
                 allowVolumeExpansion,
-                (mountOptions ?? new ChangeTrackingList<string>()).ToList(),
-                (accessModes ?? new ChangeTrackingList<StorageClassAccessMode>()).ToList(),
+                mountOptions.ToList(),
+                accessModes.ToList(),
                 dataResilience,
                 failoverSpeed,
-                (limitations ?? new ChangeTrackingList<string>()).ToList(),
+                limitations.ToList(),
                 performance,
                 priority,
                 typeProperties,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <param name="backingStorageClassName"> The backing storageclass used to create new storageclass. </param>
-        /// <param name="azureStorageAccountName"> Azure Storage Account Name. </param>
-        /// <param name="azureStorageAccountKey"> Azure Storage Account Key. </param>
-        /// <param name="server"> NFS Server. </param>
-        /// <param name="share"> NFS share. </param>
-        /// <param name="subDir"> Sub directory under share. If the sub directory doesn't exist, driver will create it. </param>
-        /// <param name="mountPermissions"> Mounted folder permissions. Default is 0. If set as non-zero, driver will perform `chmod` after mount. </param>
-        /// <param name="onDelete"> The action to take when a NFS volume is deleted. Default is Delete. </param>
-        /// <param name="source"> SMB Source. </param>
-        /// <param name="username"> Server username. </param>
-        /// <param name="password"> Server password. </param>
-        /// <param name="domain"> Server domain. </param>
-        /// <returns> A new <see cref="Models.StorageClassTypePropertiesUpdate"/> instance for mocking. </returns>
-        public static StorageClassTypePropertiesUpdate StorageClassTypePropertiesUpdate(string backingStorageClassName = default, string azureStorageAccountName = default, string azureStorageAccountKey = default, string server = default, string share = default, string subDir = default, string mountPermissions = default, NfsDirectoryActionOnVolumeDeletion? onDelete = default, string source = default, string username = default, string password = default, string domain = default)
-        {
-            return new StorageClassTypePropertiesUpdate(
-                backingStorageClassName,
-                azureStorageAccountName,
-                azureStorageAccountKey,
-                server,
-                share,
-                subDir,
-                mountPermissions,
-                onDelete,
-                source,
-                username,
-                password,
-                domain,
-                default);
-        }
-
+        /// <summary> A LoadBalancer resource for an Arc connected cluster (Microsoft.Kubernetes/connectedClusters). </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -214,10 +116,11 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 name,
                 resourceType,
                 systemData,
-                properties,
-                default);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
+        /// <summary> Details of the LoadBalancer. </summary>
         /// <param name="addresses"> IP Range. </param>
         /// <param name="serviceSelector"> A dynamic label mapping to select related services. For instance, if you want to create a load balancer only for services with label "a=b", then please specify {"a": "b"} in the field. </param>
         /// <param name="advertiseMode"> Advertise Mode. </param>
@@ -231,14 +134,15 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             bgpPeers ??= new ChangeTrackingList<string>();
 
             return new ConnectedClusterLoadBalancerProperties(
-                (addresses ?? new ChangeTrackingList<string>()).ToList(),
-                serviceSelector ?? new ChangeTrackingDictionary<string, string>(),
+                addresses.ToList(),
+                serviceSelector,
                 advertiseMode,
-                (bgpPeers ?? new ChangeTrackingList<string>()).ToList(),
+                bgpPeers.ToList(),
                 provisioningState,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A BgpPeer resource for an Arc connected cluster (Microsoft.Kubernetes/connectedClusters). </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -252,10 +156,11 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 name,
                 resourceType,
                 systemData,
-                properties,
-                default);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
+        /// <summary> Details of the BgpPeer. </summary>
         /// <param name="myAsn"> My ASN. </param>
         /// <param name="peerAsn"> Peer ASN. </param>
         /// <param name="peerAddress"> Peer Address. </param>
@@ -263,9 +168,10 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// <returns> A new <see cref="Models.ConnectedClusterBgpPeerProperties"/> instance for mocking. </returns>
         public static ConnectedClusterBgpPeerProperties ConnectedClusterBgpPeerProperties(int myAsn = default, int peerAsn = default, string peerAddress = default, ContainerOrchestratorProvisioningState? provisioningState = default)
         {
-            return new ConnectedClusterBgpPeerProperties(myAsn, peerAsn, peerAddress, provisioningState, default);
+            return new ConnectedClusterBgpPeerProperties(myAsn, peerAsn, peerAddress, provisioningState, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A Service resource for an Arc connected cluster (Microsoft.Kubernetes/connectedClusters). </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -279,16 +185,17 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 name,
                 resourceType,
                 systemData,
-                properties,
-                default);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
+        /// <summary> Properties for the service resource. </summary>
         /// <param name="rpObjectId"> The object id of the service principal of the RP provisioned in the tenant. </param>
         /// <param name="provisioningState"> Resource provision state. </param>
         /// <returns> A new <see cref="Models.ConnectedClusterServiceProperties"/> instance for mocking. </returns>
         public static ConnectedClusterServiceProperties ConnectedClusterServiceProperties(Guid? rpObjectId = default, ContainerOrchestratorProvisioningState? provisioningState = default)
         {
-            return new ConnectedClusterServiceProperties(rpObjectId, provisioningState, default);
+            return new ConnectedClusterServiceProperties(rpObjectId, provisioningState, additionalBinaryDataProperties: null);
         }
     }
 }

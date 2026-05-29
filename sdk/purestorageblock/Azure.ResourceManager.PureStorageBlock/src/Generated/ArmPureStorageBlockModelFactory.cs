@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
     public static partial class ArmPureStorageBlockModelFactory
     {
 
+        /// <summary> Pure Storage cloud service resource type, also called reservation. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -36,12 +37,13 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
-                properties,
-                default);
+                properties);
         }
 
+        /// <summary> Properties of a Reservation resource. </summary>
         /// <param name="reservationInternalId"> Pure Storage's internal ID for the reservation. </param>
         /// <param name="marketplace"> Marketplace details. </param>
         /// <param name="user"> User details. </param>
@@ -49,81 +51,17 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <returns> A new <see cref="Models.PureStorageReservationProperties"/> instance for mocking. </returns>
         public static PureStorageReservationProperties PureStorageReservationProperties(string reservationInternalId = default, PureStorageMarketplaceDetails marketplace = default, PureStorageUserDetails user = default, PureStorageProvisioningState? provisioningState = default)
         {
-            return new PureStorageReservationProperties(reservationInternalId, marketplace, user, provisioningState, default);
+            return new PureStorageReservationProperties(reservationInternalId, marketplace, user, provisioningState, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Marketplace details. </summary>
         /// <param name="subscriptionId"> Marketplace subscription ID. </param>
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="offerDetails"> Offer details of the marketplace subscription. </param>
         /// <returns> A new <see cref="Models.PureStorageMarketplaceDetails"/> instance for mocking. </returns>
         public static PureStorageMarketplaceDetails PureStorageMarketplaceDetails(string subscriptionId = default, PureStorageMarketplaceSubscriptionStatus? subscriptionStatus = default, PureStorageOfferDetails offerDetails = default)
         {
-            return new PureStorageMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, default);
-        }
-
-        /// <param name="publisherId"> Publisher ID for the marketplace offer. </param>
-        /// <param name="offerId"> Offer ID for the marketplace offer. </param>
-        /// <param name="planId"> Plan ID for the marketplace offer. </param>
-        /// <param name="planName"> Plan Name for the marketplace offer. </param>
-        /// <param name="termUnit"> Term Unit for the marketplace offer. </param>
-        /// <param name="termId"> Term ID for the marketplace offer. </param>
-        /// <returns> A new <see cref="Models.PureStorageOfferDetails"/> instance for mocking. </returns>
-        public static PureStorageOfferDetails PureStorageOfferDetails(string publisherId = default, string offerId = default, string planId = default, string planName = default, string termUnit = default, string termId = default)
-        {
-            return new PureStorageOfferDetails(
-                publisherId,
-                offerId,
-                planId,
-                planName,
-                termUnit,
-                termId,
-                default);
-        }
-
-        /// <param name="firstName"> First name. </param>
-        /// <param name="lastName"> Last name. </param>
-        /// <param name="emailAddress"> Email address. </param>
-        /// <param name="upn"> Principal name. </param>
-        /// <param name="phoneNumber"> Phone number. </param>
-        /// <param name="companyDetails"> Company details. </param>
-        /// <returns> A new <see cref="Models.PureStorageUserDetails"/> instance for mocking. </returns>
-        public static PureStorageUserDetails PureStorageUserDetails(string firstName = default, string lastName = default, string emailAddress = default, string upn = default, string phoneNumber = default, PureStorageCompanyDetails companyDetails = default)
-        {
-            return new PureStorageUserDetails(
-                firstName,
-                lastName,
-                emailAddress,
-                upn,
-                phoneNumber,
-                companyDetails,
-                default);
-        }
-
-        /// <param name="companyName"> Company name. </param>
-        /// <param name="address"> Company address. </param>
-        /// <returns> A new <see cref="Models.PureStorageCompanyDetails"/> instance for mocking. </returns>
-        public static PureStorageCompanyDetails PureStorageCompanyDetails(string companyName = default, PureStorageAddressDetails address = default)
-        {
-            return new PureStorageCompanyDetails(companyName, address, default);
-        }
-
-        /// <param name="addressLine1"> Address line 1. </param>
-        /// <param name="addressLine2"> Address line 2. </param>
-        /// <param name="city"> Name of the city. </param>
-        /// <param name="state"> State (if any). </param>
-        /// <param name="country"> Name of the country. </param>
-        /// <param name="postalCode"> Postal code. </param>
-        /// <returns> A new <see cref="Models.PureStorageAddressDetails"/> instance for mocking. </returns>
-        public static PureStorageAddressDetails PureStorageAddressDetails(string addressLine1 = default, string addressLine2 = default, string city = default, string state = default, string country = default, string postalCode = default)
-        {
-            return new PureStorageAddressDetails(
-                addressLine1,
-                addressLine2,
-                city,
-                state,
-                country,
-                postalCode,
-                default);
+            return new PureStorageMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, additionalBinaryDataProperties: null);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -133,20 +71,20 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new PureStorageReservationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), reservationUpdateUser is null ? default : new ReservationUpdateProperties(reservationUpdateUser, default), default);
+            return new PureStorageReservationPatch(tags, reservationUpdateUser is null ? default : new ReservationUpdateProperties(reservationUpdateUser, null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="storagePool"> Limits used for storage pool resources. </param>
         /// <param name="volumeProvisionedSize"> Provisioned size limits for a volume, in bytes. </param>
         /// <param name="protectionPolicy"> internal. </param>
         /// <param name="performancePolicy"> internal. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeProvisionedSize"/> is null. </exception>
         /// <returns> A new <see cref="Models.PureStorageResourceLimitDetails"/> instance for mocking. </returns>
         public static PureStorageResourceLimitDetails PureStorageResourceLimitDetails(StoragePoolLimits storagePool = default, PropertyValueRangeLimits volumeProvisionedSize = default, ProtectionPolicyLimits protectionPolicy = default, PerformancePolicyLimits performancePolicy = default)
         {
-            return new PureStorageResourceLimitDetails(storagePool, volumeProvisionedSize is null ? default : new VolumeLimits(volumeProvisionedSize, default), protectionPolicy, performancePolicy, default);
+            return new PureStorageResourceLimitDetails(storagePool, new VolumeLimits(volumeProvisionedSize, null), protectionPolicy, performancePolicy, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Limits used for storage pool creation. </summary>
         /// <param name="provisionedBandwidthMbPerSec"> Allowed provisioned bandwidth range for a storage pool, in MB/s. </param>
         /// <param name="provisionedIops"> Allowed provisioned IOPS range for a storage pool, as a number of operations. </param>
         /// <param name="physicalAvailabilityZones"> List of physical availability zones in the region in which storage pools can be deployed; some Azure regions do not support the necessary resources in all availability zones. </param>
@@ -155,33 +93,37 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         {
             physicalAvailabilityZones ??= new ChangeTrackingList<string>();
 
-            return new StoragePoolLimits(provisionedBandwidthMbPerSec, provisionedIops, (physicalAvailabilityZones ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new StoragePoolLimits(provisionedBandwidthMbPerSec, provisionedIops, physicalAvailabilityZones.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Minimum and maximum values for a property. </summary>
         /// <param name="min"> Minimum value of the property. </param>
         /// <param name="max"> Maximum value of the property. </param>
         /// <returns> A new <see cref="Models.PropertyValueRangeLimits"/> instance for mocking. </returns>
         public static PropertyValueRangeLimits PropertyValueRangeLimits(long min = default, long max = default)
         {
-            return new PropertyValueRangeLimits(min, max, default);
+            return new PropertyValueRangeLimits(min, max, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> internal. </summary>
         /// <param name="frequency"> internal. </param>
         /// <param name="retention"> internal. </param>
         /// <returns> A new <see cref="Models.ProtectionPolicyLimits"/> instance for mocking. </returns>
         public static ProtectionPolicyLimits ProtectionPolicyLimits(PropertyValueRangeLimits frequency = default, PropertyValueRangeLimits retention = default)
         {
-            return new ProtectionPolicyLimits(frequency, retention, default);
+            return new ProtectionPolicyLimits(frequency, retention, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> internal. </summary>
         /// <param name="iopsLimit"> internal. </param>
         /// <param name="bandwidthLimit"> internal. </param>
         /// <returns> A new <see cref="Models.PerformancePolicyLimits"/> instance for mocking. </returns>
         public static PerformancePolicyLimits PerformancePolicyLimits(PropertyValueRangeLimits iopsLimit = default, PropertyValueRangeLimits bandwidthLimit = default)
         {
-            return new PerformancePolicyLimits(iopsLimit, bandwidthLimit, default);
+            return new PerformancePolicyLimits(iopsLimit, bandwidthLimit, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Latest billing status for this reservation. </summary>
         /// <param name="timestamp"> Timestamp for the latest update of this billing status, in RFC 3339 format. </param>
         /// <param name="totalUsedCapacityReported"> Total used capacity as reported by associated storage pools. In bytes. </param>
         /// <param name="lowDrrPoolCount"> How many associated storage pools reported low data reduction ratio (DRR). </param>
@@ -214,9 +156,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 totalPerformanceReported,
                 totalPerformanceIncludedPlan,
                 totalPerformanceOverage,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Represents a billing usage report, including overall status and detailed properties. </summary>
         /// <param name="timestamp"> Latest formatted billing report for this reservation. </param>
         /// <param name="billingUsageProperties"> A list of detailed billing usage properties. </param>
         /// <param name="overallStatusMessage"> Overall status message of the billing usage report. </param>
@@ -225,9 +168,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         {
             billingUsageProperties ??= new ChangeTrackingList<PureStorageBillingUsageProperty>();
 
-            return new ReservationBillingUsageReport(timestamp, (billingUsageProperties ?? new ChangeTrackingList<PureStorageBillingUsageProperty>()).ToList(), overallStatusMessage, default);
+            return new ReservationBillingUsageReport(timestamp, billingUsageProperties.ToList(), overallStatusMessage, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Represents an individual billing usage property. </summary>
         /// <param name="propertyId"> Unique identifier for the billing usage property. </param>
         /// <param name="propertyName"> Name of the billing usage property. </param>
         /// <param name="currentValue"> Current value of the billing usage property. </param>
@@ -247,10 +191,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 previousValue,
                 severity,
                 statusMessage,
-                (subProperties ?? new ChangeTrackingList<PureStorageBillingUsageProperty>()).ToList(),
-                default);
+                subProperties.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Storage pool resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -269,13 +214,14 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
                 properties,
-                identity,
-                default);
+                identity);
         }
 
+        /// <summary> Properties of a storage pool. </summary>
         /// <param name="storagePoolInternalId"> Pure Storage's internal ID of the storage pool. </param>
         /// <param name="availabilityZone"> Azure Availability Zone the Pool is located in. </param>
         /// <param name="vnetInjection"> Network properties of the storage pool. </param>
@@ -298,23 +244,16 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 avs,
                 provisioningState,
                 reservationResourceId,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <param name="subnetId"> Azure resource ID of the Virtual Network subnet where the storage pool will be connected. </param>
-        /// <param name="vnetId"> Azure resource ID of the Virtual Network in which the subnet is located. </param>
-        /// <returns> A new <see cref="Models.PureStoragePoolVnetInjection"/> instance for mocking. </returns>
-        public static PureStoragePoolVnetInjection PureStoragePoolVnetInjection(ResourceIdentifier subnetId = default, ResourceIdentifier vnetId = default)
-        {
-            return new PureStoragePoolVnetInjection(subnetId, vnetId, default);
-        }
-
+        /// <summary> Connected AVS status. </summary>
         /// <param name="isAvsEnabled"> If true, an AVS SDDC is successfully connected to the storage pool. </param>
         /// <param name="clusterResourceId"> Azure resource ID of the AVS SDDC the storage pool is connected to. </param>
         /// <returns> A new <see cref="Models.PureStorageAvs"/> instance for mocking. </returns>
         public static PureStorageAvs PureStorageAvs(bool isAvsEnabled = default, ResourceIdentifier clusterResourceId = default)
         {
-            return new PureStorageAvs(isAvsEnabled, clusterResourceId, default);
+            return new PureStorageAvs(isAvsEnabled, clusterResourceId, additionalBinaryDataProperties: null);
         }
 
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
@@ -325,9 +264,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new PureStoragePoolPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), storagePoolUpdateProvisionedBandwidthMbPerSec is null ? default : new StoragePoolUpdateProperties(storagePoolUpdateProvisionedBandwidthMbPerSec, default), default);
+            return new PureStoragePoolPatch(identity, tags, storagePoolUpdateProvisionedBandwidthMbPerSec is null ? default : new StoragePoolUpdateProperties(storagePoolUpdateProvisionedBandwidthMbPerSec, null), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Health information for a storage pool. </summary>
         /// <param name="health"> Health metrics. </param>
         /// <param name="alerts"> List of health alerts. </param>
         /// <returns> A new <see cref="Models.StoragePoolHealthInfo"/> instance for mocking. </returns>
@@ -335,9 +275,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         {
             alerts ??= new ChangeTrackingList<PureStorageHealthAlert>();
 
-            return new StoragePoolHealthInfo(health, (alerts ?? new ChangeTrackingList<PureStorageHealthAlert>()).ToList(), default);
+            return new StoragePoolHealthInfo(health, alerts.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Health metrics for a storage pool. </summary>
         /// <param name="usedCapacityPercentage"> How full the pool is right now, in %, compared to the maximum size it can grow to; estimated based on current usage and data reduction ratio. </param>
         /// <param name="bandwidthUsage"> Bandwidth usage metrics. </param>
         /// <param name="iopsUsage"> IOPS usage metrics. </param>
@@ -354,27 +295,30 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 space,
                 dataReductionRatio,
                 estimatedMaxCapacity,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Bandwidth usage metrics. </summary>
         /// <param name="current"> Number of bytes written and read per second (maximum value over the last 10 minutes). </param>
         /// <param name="provisioned"> Bandwidth value currently provisioned for the storage pool, in MB/s. </param>
         /// <param name="max"> Maximum bandwidth value that can be provisioned for the storage pool. </param>
         /// <returns> A new <see cref="Models.PureStorageBandwidthUsage"/> instance for mocking. </returns>
         public static PureStorageBandwidthUsage PureStorageBandwidthUsage(long current = default, long provisioned = default, long max = default)
         {
-            return new PureStorageBandwidthUsage(current, provisioned, max, default);
+            return new PureStorageBandwidthUsage(current, provisioned, max, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> IOPS usage metrics. </summary>
         /// <param name="current"> Current number of IOPS (maximum value over the last 10 minutes). </param>
         /// <param name="provisioned"> IOPS value currently provisioned for the storage pool. </param>
         /// <param name="max"> Maximum IOPS value that can be provisioned for the storage pool. </param>
         /// <returns> A new <see cref="Models.PureStorageIopsUsage"/> instance for mocking. </returns>
         public static PureStorageIopsUsage PureStorageIopsUsage(long current = default, long provisioned = default, long max = default)
         {
-            return new PureStorageIopsUsage(current, provisioned, max, default);
+            return new PureStorageIopsUsage(current, provisioned, max, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Storage space usage. </summary>
         /// <param name="totalUsed"> Total space occupied by customer data (i.e., being billed for), in bytes. </param>
         /// <param name="unique"> Unique space occupied by customer data, in bytes; for a volume, this is the amount of storage that would be freed by deleting the volume, since snapshot and shared data would be kept. </param>
         /// <param name="snapshots"> Space occupied by data unique to one or more snapshots, in bytes. </param>
@@ -382,68 +326,56 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <returns> A new <see cref="Models.PureStorageSpaceUsage"/> instance for mocking. </returns>
         public static PureStorageSpaceUsage PureStorageSpaceUsage(long totalUsed = default, long unique = default, long snapshots = default, long shared = default)
         {
-            return new PureStorageSpaceUsage(totalUsed, unique, snapshots, shared, default);
+            return new PureStorageSpaceUsage(totalUsed, unique, snapshots, shared, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Health alerts. </summary>
         /// <param name="level"> Severity level. </param>
         /// <param name="message"> A short description of the alert. </param>
         /// <returns> A new <see cref="Models.PureStorageHealthAlert"/> instance for mocking. </returns>
         public static PureStorageHealthAlert PureStorageHealthAlert(PureStorageHealthAlertLevel level = default, string message = default)
         {
-            return new PureStorageHealthAlert(level, message, default);
+            return new PureStorageHealthAlert(level, message, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Transient information about an on-going connection to an AVS instance. </summary>
         /// <param name="isServiceInitializationCompleted"> Indicates whether service initialization is complete. </param>
         /// <param name="serviceInitializationHandleEnc"> Encoded service account credentials alongside connection information. </param>
         /// <param name="serviceInitializationHandle"> Explicit service account credentials. </param>
         /// <returns> A new <see cref="Models.PureStorageAvsConnection"/> instance for mocking. </returns>
         public static PureStorageAvsConnection PureStorageAvsConnection(bool isServiceInitializationCompleted = default, string serviceInitializationHandleEnc = default, ServiceInitializationHandle serviceInitializationHandle = default)
         {
-            return new PureStorageAvsConnection(isServiceInitializationCompleted, serviceInitializationHandleEnc, serviceInitializationHandle, default);
+            return new PureStorageAvsConnection(isServiceInitializationCompleted, serviceInitializationHandleEnc, serviceInitializationHandle, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Initialization handle used to configure the AVS SDDC to communicate with the storage pool. </summary>
         /// <param name="clusterResourceId"> Azure resource ID of the AVS SDDC the pool is connecting to. </param>
         /// <param name="serviceAccountUsername"> Requested service account username. </param>
         /// <returns> A new <see cref="Models.ServiceInitializationHandle"/> instance for mocking. </returns>
         public static ServiceInitializationHandle ServiceInitializationHandle(ResourceIdentifier clusterResourceId = default, string serviceAccountUsername = default)
         {
-            return new ServiceInitializationHandle(clusterResourceId, serviceAccountUsername, default);
+            return new ServiceInitializationHandle(clusterResourceId, serviceAccountUsername, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Status of storage pool / AVS connection. </summary>
         /// <param name="isAvsEnabled"> If true, an AVS connection has been successfully completed. </param>
         /// <param name="currentConnectionStatus"> Human-readable current AVS connection status. </param>
         /// <param name="clusterResourceId"> Azure resource ID of the AVS SDDC the pool is connected to. </param>
         /// <returns> A new <see cref="Models.PureStorageAvsStatus"/> instance for mocking. </returns>
         public static PureStorageAvsStatus PureStorageAvsStatus(bool isAvsEnabled = default, string currentConnectionStatus = default, ResourceIdentifier clusterResourceId = default)
         {
-            return new PureStorageAvsStatus(isAvsEnabled, currentConnectionStatus, clusterResourceId, default);
+            return new PureStorageAvsStatus(isAvsEnabled, currentConnectionStatus, clusterResourceId, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> EnableAvsConnection payload information. </summary>
         /// <param name="clusterResourceId"> Azure resource ID of the AVS SDDC to connect to. </param>
         /// <returns> A new <see cref="Models.StoragePoolEnableAvsConnectionContent"/> instance for mocking. </returns>
         public static StoragePoolEnableAvsConnectionContent StoragePoolEnableAvsConnectionContent(ResourceIdentifier clusterResourceId = default)
         {
-            return new StoragePoolEnableAvsConnectionContent(clusterResourceId, default);
+            return new StoragePoolEnableAvsConnectionContent(clusterResourceId, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="serviceInitializationDataEnc"> Encoded AVS connection information. </param>
-        /// <param name="serviceInitializationData"> Explicit AVS connection information. </param>
-        /// <returns> A new <see cref="Models.StoragePoolFinalizeAvsConnectionContent"/> instance for mocking. </returns>
-        public static StoragePoolFinalizeAvsConnectionContent StoragePoolFinalizeAvsConnectionContent(string serviceInitializationDataEnc = default, ServiceInitializationInfo serviceInitializationData = default)
-        {
-            return new StoragePoolFinalizeAvsConnectionContent(serviceInitializationDataEnc, serviceInitializationData, default);
-        }
-
-        /// <param name="serviceAccountUsername"> Service account username. </param>
-        /// <param name="serviceAccountPassword"> Service account password. </param>
-        /// <param name="vSphereIP"> AVS instance's vSphere IP address. </param>
-        /// <param name="vSphereCertificate"> AVS instance's vSphere certificate. </param>
-        /// <returns> A new <see cref="Models.ServiceInitializationInfo"/> instance for mocking. </returns>
-        public static ServiceInitializationInfo ServiceInitializationInfo(string serviceAccountUsername = default, string serviceAccountPassword = default, string vSphereIP = default, string vSphereCertificate = default)
-        {
-            return new ServiceInitializationInfo(serviceAccountUsername, serviceAccountPassword, vSphereIP, vSphereCertificate, default);
-        }
-
+        /// <summary> AVS storage container resource type, representing a VMware storage container in a storage pool, which can be associated to and mounted as a datastore. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -457,10 +389,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 name,
                 resourceType,
                 systemData,
-                properties,
-                default);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
+        /// <summary> AVS storage container properties. </summary>
         /// <param name="space"> Storage space usage. </param>
         /// <param name="resourceName"> Name of the storage container. </param>
         /// <param name="provisionedLimit"> Maximum amount of bytes that can be provisioned in this storage container; it must be a multiple of 512; each time a volume is provisioned in this container, its provisionedSize will be counted against the provisionLimit and the provisioning will fail if it goes over (minimum: 1048576 (1MiB), maximum: 4503599627370496 (4PiB)); by default it is unrestricted. </param>
@@ -475,24 +408,19 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 provisionedLimit,
                 datastore,
                 mounted,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <param name="avsStorageContainerVolumeUpdateSoftDeletion"> Volume's soft-deletion state. </param>
-        /// <returns> A new <see cref="Models.PureStorageAvsStorageContainerVolumePatch"/> instance for mocking. </returns>
-        public static PureStorageAvsStorageContainerVolumePatch PureStorageAvsStorageContainerVolumePatch(PureStorageSoftDeletionState avsStorageContainerVolumeUpdateSoftDeletion = default)
-        {
-            return new PureStorageAvsStorageContainerVolumePatch(avsStorageContainerVolumeUpdateSoftDeletion is null ? default : new AvsStorageContainerVolumeUpdateProperties(avsStorageContainerVolumeUpdateSoftDeletion, default), default);
-        }
-
+        /// <summary> Soft-deletion state. </summary>
         /// <param name="isDestroyed"> If false, the resource is active; if true, the resource has been destroyed; resources can be soft-deleted by setting destroyed to true, and recovered by setting it to false. </param>
         /// <param name="eradicatedOn"> Date at which the resource will be eradicated and impossible to recover, as an RFC 3339 timestamp; invalid if destroyed is false;. </param>
         /// <returns> A new <see cref="Models.PureStorageSoftDeletionState"/> instance for mocking. </returns>
         public static PureStorageSoftDeletionState PureStorageSoftDeletionState(bool isDestroyed = default, DateTimeOffset? eradicatedOn = default)
         {
-            return new PureStorageSoftDeletionState(isDestroyed, eradicatedOn, default);
+            return new PureStorageSoftDeletionState(isDestroyed, eradicatedOn, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A volume contained in an AVS storage container. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -506,10 +434,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 name,
                 resourceType,
                 systemData,
-                properties,
-                default);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
+        /// <summary> Volume properties. </summary>
         /// <param name="storagePoolInternalId"> Pure Storage's internal ID for the storage pool containing the volume. </param>
         /// <param name="storagePoolResourceId"> Azure Resource ID of the storage pool containing this volume. </param>
         /// <param name="volumeInternalId"> Pure Storage's internal ID for the volume. </param>
@@ -536,9 +465,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 volumeType,
                 avs,
                 provisioningState,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> AVS disk/volume information. </summary>
         /// <param name="diskId"> VMware ID of the disk/volume. </param>
         /// <param name="diskName"> VMware name of the disk/volume. </param>
         /// <param name="folder"> Name of the top-level folder in the datastore that contains the disk/volume. </param>
@@ -557,16 +487,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 avsVmResourceId,
                 avsVmName,
                 avsStorageContainerResourceId,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <param name="avsVmUpdateSoftDeletion"> AVS VM's soft-deletion state. </param>
-        /// <returns> A new <see cref="Models.PureStorageAvsVmPatch"/> instance for mocking. </returns>
-        public static PureStorageAvsVmPatch PureStorageAvsVmPatch(PureStorageSoftDeletionState avsVmUpdateSoftDeletion = default)
-        {
-            return new PureStorageAvsVmPatch(avsVmUpdateSoftDeletion is null ? default : new AvsVmUpdateProperties(avsVmUpdateSoftDeletion, default), default);
-        }
-
+        /// <summary> AVS VM resource type, representing all the volumes associated to an AVS VM as defined by VMware. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -580,10 +504,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 name,
                 resourceType,
                 systemData,
-                properties,
-                default);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
+        /// <summary> AVS VM properties. </summary>
         /// <param name="storagePoolInternalId"> Pure Storage's internal ID for the storage pool. </param>
         /// <param name="storagePoolResourceId"> Azure resource ID of the storage pool. </param>
         /// <param name="displayName"> Human-readable name of the AVS VM. </param>
@@ -606,9 +531,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 avs,
                 space,
                 provisioningState,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> AVS VM details. </summary>
         /// <param name="vmId"> ID of the AVS VM using this set of volumes. </param>
         /// <param name="vmName"> Name of the VMware VM using this set of volumes. </param>
         /// <param name="vmType"> Type of the VMware VM using this set of volumes. </param>
@@ -616,16 +542,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <returns> A new <see cref="Models.PureStorageAvsVmDetails"/> instance for mocking. </returns>
         public static PureStorageAvsVmDetails PureStorageAvsVmDetails(string vmId = default, string vmName = default, PureStorageAvsVmType vmType = default, string avsVmInternalId = default)
         {
-            return new PureStorageAvsVmDetails(vmId, vmName, vmType, avsVmInternalId, default);
+            return new PureStorageAvsVmDetails(vmId, vmName, vmType, avsVmInternalId, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="avsVmVolumeUpdateSoftDeletion"> Volume's soft-deletion state. </param>
-        /// <returns> A new <see cref="Models.PureStorageAvsVmVolumePatch"/> instance for mocking. </returns>
-        public static PureStorageAvsVmVolumePatch PureStorageAvsVmVolumePatch(PureStorageSoftDeletionState avsVmVolumeUpdateSoftDeletion = default)
-        {
-            return new PureStorageAvsVmVolumePatch(avsVmVolumeUpdateSoftDeletion is null ? default : new AvsVmVolumeUpdateProperties(avsVmVolumeUpdateSoftDeletion, default), default);
-        }
-
+        /// <summary> Any volume associated to a particular AVS VM. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -639,8 +559,8 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 name,
                 resourceType,
                 systemData,
-                properties,
-                default);
+                additionalBinaryDataProperties: null,
+                properties);
         }
     }
 }

@@ -37,33 +37,36 @@ namespace Azure.ResourceManager.Sphere.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
-                tenantId is null && provisioningState is null ? default : new CatalogProperties(tenantId, provisioningState, default),
-                default);
+                tenantId is null && provisioningState is null ? default : new CatalogProperties(tenantId, provisioningState, null));
         }
 
+        /// <summary> The type used for update operations of the Catalog. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.SphereCatalogPatch"/> instance for mocking. </returns>
         public static SphereCatalogPatch SphereCatalogPatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SphereCatalogPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new SphereCatalogPatch(tags, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Response to the action call for count devices in a catalog. </summary>
         /// <param name="value"> Number of children resources in parent resource. </param>
         /// <returns> A new <see cref="Models.CountDevicesResult"/> instance for mocking. </returns>
         public static CountDevicesResult CountDevicesResult(int value = default)
         {
-            return new CountDevicesResult(value, default);
+            return new CountDevicesResult(value, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Response of the count for elements. </summary>
         /// <param name="value"> Number of children resources in parent resource. </param>
         /// <returns> A new <see cref="Models.CountElementsResult"/> instance for mocking. </returns>
         public static CountElementsResult CountElementsResult(int value = default)
         {
-            return new CountElementsResult(value, default);
+            return new CountElementsResult(value, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -82,8 +85,8 @@ namespace Azure.ResourceManager.Sphere.Models
                 name,
                 resourceType,
                 systemData,
-                deploymentId is null && deployedImages is null && deploymentDateUtc is null && provisioningState is null ? default : new DeploymentProperties(deploymentId, (deployedImages ?? new ChangeTrackingList<SphereImageData>()).ToList(), deploymentDateUtc, provisioningState, default),
-                default);
+                additionalBinaryDataProperties: null,
+                deploymentId is null && deployedImages is null && deploymentDateUtc is null && provisioningState is null ? default : new DeploymentProperties(deploymentId, (deployedImages ?? new ChangeTrackingList<SphereImageData>()).ToList(), deploymentDateUtc, provisioningState, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -107,6 +110,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 image is null && imageId is null && imageName is null && regionalDataBoundary is null && uri is null && description is null && componentId is null && imageType is null && provisioningState is null ? default : new ImageProperties(
                     image,
                     imageId,
@@ -117,15 +121,7 @@ namespace Azure.ResourceManager.Sphere.Models
                     componentId,
                     imageType,
                     provisioningState,
-                    default),
-                default);
-        }
-
-        /// <param name="deviceGroupName"> Device Group name. </param>
-        /// <returns> A new <see cref="Models.ListSphereDeviceGroupsContent"/> instance for mocking. </returns>
-        public static ListSphereDeviceGroupsContent ListSphereDeviceGroupsContent(string deviceGroupName = default)
-        {
-            return new ListSphereDeviceGroupsContent(deviceGroupName, default);
+                    null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -147,6 +143,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 description is null && osFeedType is null && updatePolicy is null && allowCrashDumpsCollection is null && regionalDataBoundary is null && hasDeployment is null && provisioningState is null ? default : new DeviceGroupProperties(
                     description,
                     osFeedType,
@@ -155,10 +152,10 @@ namespace Azure.ResourceManager.Sphere.Models
                     regionalDataBoundary,
                     hasDeployment,
                     provisioningState,
-                    default),
-                default);
+                    null));
         }
 
+        /// <summary> Device insight report. </summary>
         /// <param name="deviceId"> Device ID. </param>
         /// <param name="description"> Event description. </param>
         /// <param name="startTimestampUtc"> Event start timestamp. </param>
@@ -179,7 +176,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 eventClass,
                 eventType,
                 eventCount,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -201,6 +198,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 deviceId is null && chipSku is null && lastAvailableOSVersion is null && lastInstalledOSVersion is null && lastOSUpdateUtc is null && lastUpdateRequestUtc is null && provisioningState is null ? default : new DeviceProperties(
                     deviceId,
                     chipSku,
@@ -209,8 +207,7 @@ namespace Azure.ResourceManager.Sphere.Models
                     lastOSUpdateUtc,
                     lastUpdateRequestUtc,
                     provisioningState,
-                    default),
-                default);
+                    null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -232,6 +229,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 certificate is null && status is null && subject is null && thumbprint is null && expiryUtc is null && notBeforeUtc is null && provisioningState is null ? default : new SphereCertificateProperties(
                     certificate,
                     status,
@@ -240,10 +238,10 @@ namespace Azure.ResourceManager.Sphere.Models
                     expiryUtc,
                     notBeforeUtc,
                     provisioningState,
-                    default),
-                default);
+                    null));
         }
 
+        /// <summary> The properties of certificate. </summary>
         /// <param name="certificate"> The certificate as a UTF-8 encoded base 64 string. </param>
         /// <param name="status"> The certificate status. </param>
         /// <param name="subject"> The certificate subject. </param>
@@ -262,23 +260,26 @@ namespace Azure.ResourceManager.Sphere.Models
                 expiryUtc,
                 notBeforeUtc,
                 provisioningState,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The certificate chain response. </summary>
         /// <param name="certificateChain"> The certificate chain. </param>
         /// <returns> A new <see cref="Models.SphereCertificateChainResult"/> instance for mocking. </returns>
         public static SphereCertificateChainResult SphereCertificateChainResult(string certificateChain = default)
         {
-            return new SphereCertificateChainResult(certificateChain, default);
+            return new SphereCertificateChainResult(certificateChain, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Request for the proof of possession nonce. </summary>
         /// <param name="proofOfPossessionNonce"> The proof of possession nonce. </param>
         /// <returns> A new <see cref="Models.ProofOfPossessionNonceContent"/> instance for mocking. </returns>
         public static ProofOfPossessionNonceContent ProofOfPossessionNonceContent(string proofOfPossessionNonce = default)
         {
-            return new ProofOfPossessionNonceContent(proofOfPossessionNonce, default);
+            return new ProofOfPossessionNonceContent(proofOfPossessionNonce, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Result of the action to generate a proof of possession nonce. </summary>
         /// <param name="certificate"> The certificate as a UTF-8 encoded base 64 string. </param>
         /// <param name="status"> The certificate status. </param>
         /// <param name="subject"> The certificate subject. </param>
@@ -297,7 +298,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 expiryUtc,
                 notBeforeUtc,
                 provisioningState,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -314,64 +315,36 @@ namespace Azure.ResourceManager.Sphere.Models
                 name,
                 resourceType,
                 systemData,
-                description is null && provisioningState is null ? default : new ProductProperties(description, provisioningState, default),
-                default);
+                additionalBinaryDataProperties: null,
+                description is null && provisioningState is null ? default : new ProductProperties(description, provisioningState, null));
         }
 
-        /// <param name="description"> Description of the product. </param>
-        /// <returns> A new <see cref="Models.SphereProductPatch"/> instance for mocking. </returns>
-        public static SphereProductPatch SphereProductPatch(string description = default)
-        {
-            return new SphereProductPatch(description is null ? default : new ProductUpdateProperties(description, default), default);
-        }
-
-        /// <param name="description"> Description of the device group. </param>
-        /// <param name="osFeedType"> Operating system feed type of the device group. </param>
-        /// <param name="updatePolicy"> Update policy of the device group. </param>
-        /// <param name="allowCrashDumpsCollection"> Flag to define if the user allows for crash dump collection. </param>
-        /// <param name="regionalDataBoundary"> Regional data boundary for the device group. </param>
-        /// <returns> A new <see cref="Models.SphereDeviceGroupPatch"/> instance for mocking. </returns>
-        public static SphereDeviceGroupPatch SphereDeviceGroupPatch(string description = default, SphereOSFeedType? osFeedType = default, SphereUpdatePolicy? updatePolicy = default, SphereAllowCrashDumpCollectionStatus? allowCrashDumpsCollection = default, RegionalDataBoundary? regionalDataBoundary = default)
-        {
-            return new SphereDeviceGroupPatch(description is null && osFeedType is null && updatePolicy is null && allowCrashDumpsCollection is null && regionalDataBoundary is null ? default : new DeviceGroupUpdateProperties(
-                description,
-                osFeedType,
-                updatePolicy,
-                allowCrashDumpsCollection,
-                regionalDataBoundary,
-                default), default);
-        }
-
+        /// <summary> Request to the action call to bulk claim devices. </summary>
         /// <param name="deviceIdentifiers"> Device identifiers of the devices to be claimed. </param>
         /// <returns> A new <see cref="Models.ClaimSphereDevicesContent"/> instance for mocking. </returns>
         public static ClaimSphereDevicesContent ClaimSphereDevicesContent(IEnumerable<string> deviceIdentifiers = default)
         {
             deviceIdentifiers ??= new ChangeTrackingList<string>();
 
-            return new ClaimSphereDevicesContent((deviceIdentifiers ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new ClaimSphereDevicesContent(deviceIdentifiers.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <param name="deviceGroupId"> Device group id. </param>
-        /// <returns> A new <see cref="Models.SphereDevicePatch"/> instance for mocking. </returns>
-        public static SphereDevicePatch SphereDevicePatch(string deviceGroupId = default)
-        {
-            return new SphereDevicePatch(deviceGroupId is null ? default : new DeviceUpdateProperties(deviceGroupId, default), default);
-        }
-
+        /// <summary> Request of the action to create a signed device capability image. </summary>
         /// <param name="capabilities"> List of capabilities to create. </param>
         /// <returns> A new <see cref="Models.GenerateCapabilityImageContent"/> instance for mocking. </returns>
         public static GenerateCapabilityImageContent GenerateCapabilityImageContent(IEnumerable<SphereCapabilityType> capabilities = default)
         {
             capabilities ??= new ChangeTrackingList<SphereCapabilityType>();
 
-            return new GenerateCapabilityImageContent((capabilities ?? new ChangeTrackingList<SphereCapabilityType>()).ToList(), default);
+            return new GenerateCapabilityImageContent(capabilities.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Signed device capability image response. </summary>
         /// <param name="image"> The signed device capability image as a UTF-8 encoded base 64 string. </param>
         /// <returns> A new <see cref="Models.SignedCapabilityImageResponse"/> instance for mocking. </returns>
         public static SignedCapabilityImageResponse SignedCapabilityImageResponse(string image = default)
         {
-            return new SignedCapabilityImageResponse(image, default);
+            return new SignedCapabilityImageResponse(image, additionalBinaryDataProperties: null);
         }
     }
 }

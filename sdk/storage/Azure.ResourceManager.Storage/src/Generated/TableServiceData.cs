@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Storage
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tableServiceProperties"> The properties of a storage account’s Table service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TableServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TableServicePropertiesProperties tableServiceProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        /// <param name="tableServiceProperties"> The properties of a storage account’s Table service. </param>
+        internal TableServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, TableServicePropertiesProperties tableServiceProperties) : base(id, name, resourceType, systemData)
         {
-            TableServiceProperties = tableServiceProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            TableServiceProperties = tableServiceProperties;
         }
 
         /// <summary> The properties of a storage account’s Table service. </summary>

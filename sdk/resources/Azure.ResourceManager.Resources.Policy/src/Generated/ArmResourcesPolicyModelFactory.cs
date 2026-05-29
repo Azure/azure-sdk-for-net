@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 displayName is null && policyDefinitionId is null && definitionVersion is null && latestDefinitionVersion is null && effectiveDefinitionVersion is null && scope is null && notScopes is null && parameters is null && description is null && metadata is null && enforcementMode is null && nonComplianceMessages is null && resourceSelectors is null && overrides is null && assignmentType is null && instanceId is null && selfServeExemptionSettings is null ? default : new PolicyAssignmentProperties(
                     displayName,
                     policyDefinitionId,
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     effectiveDefinitionVersion,
                     scope,
                     (notScopes ?? new ChangeTrackingList<string>()).ToList(),
-                    parameters ?? new ChangeTrackingDictionary<string, PolicyParameterValue>(),
+                    parameters,
                     description,
                     metadata,
                     enforcementMode,
@@ -67,27 +68,12 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     assignmentType,
                     instanceId,
                     selfServeExemptionSettings,
-                    default),
+                    null),
                 location,
-                identity,
-                default);
+                identity);
         }
 
-        /// <param name="value"> The value of the parameter. </param>
-        /// <returns> A new <see cref="Models.PolicyParameterValue"/> instance for mocking. </returns>
-        public static PolicyParameterValue PolicyParameterValue(BinaryData value = default)
-        {
-            return new PolicyParameterValue(value, default);
-        }
-
-        /// <param name="message"> A message that describes why a resource is non-compliant with the policy. This is shown in 'deny' error messages and on resource's non-compliant compliance results. </param>
-        /// <param name="policyDefinitionReferenceId"> The policy definition reference ID within a policy set definition the message is intended for. This is only applicable if the policy assignment assigns a policy set definition. If this is not provided the message applies to all policies assigned by this policy assignment. </param>
-        /// <returns> A new <see cref="Models.PolicyNonComplianceMessage"/> instance for mocking. </returns>
-        public static PolicyNonComplianceMessage PolicyNonComplianceMessage(string message = default, string policyDefinitionReferenceId = default)
-        {
-            return new PolicyNonComplianceMessage(message, policyDefinitionReferenceId, default);
-        }
-
+        /// <summary> The resource selector to filter policies by resource properties. </summary>
         /// <param name="name"> The name of the resource selector. </param>
         /// <param name="selectors"> The list of the selector expressions. </param>
         /// <returns> A new <see cref="Models.PolicyResourceSelector"/> instance for mocking. </returns>
@@ -95,9 +81,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         {
             selectors ??= new ChangeTrackingList<PolicySelector>();
 
-            return new PolicyResourceSelector(name, (selectors ?? new ChangeTrackingList<PolicySelector>()).ToList(), default);
+            return new PolicyResourceSelector(name, selectors.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The selector expression. </summary>
         /// <param name="kind"> The selector kind. </param>
         /// <param name="in"> The list of values to filter in. </param>
         /// <param name="notIn"> The list of values to filter out. </param>
@@ -107,9 +94,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             @in ??= new ChangeTrackingList<string>();
             notIn ??= new ChangeTrackingList<string>();
 
-            return new PolicySelector(kind, (@in ?? new ChangeTrackingList<string>()).ToList(), (notIn ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new PolicySelector(kind, @in.ToList(), notIn.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The policy property value override. </summary>
         /// <param name="kind"> The override kind. </param>
         /// <param name="value"> The value to override the policy property. </param>
         /// <param name="selectors"> The list of the selector expressions. </param>
@@ -118,9 +106,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         {
             selectors ??= new ChangeTrackingList<PolicySelector>();
 
-            return new PolicyOverride(kind, value, (selectors ?? new ChangeTrackingList<PolicySelector>()).ToList(), default);
+            return new PolicyOverride(kind, value, selectors.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The self-serve exemption settings for a policy assignment. </summary>
         /// <param name="isEnabled"> Indicates whether self-serve exemption is enabled. </param>
         /// <param name="policyDefinitionReferenceIds"> The policy definition reference IDs for self-serve exemption. </param>
         /// <returns> A new <see cref="Models.PolicySelfServeExemptionSettings"/> instance for mocking. </returns>
@@ -128,9 +117,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         {
             policyDefinitionReferenceIds ??= new ChangeTrackingList<string>();
 
-            return new PolicySelfServeExemptionSettings(isEnabled, (policyDefinitionReferenceIds ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new PolicySelfServeExemptionSettings(isEnabled, policyDefinitionReferenceIds.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Identity for the resource.  Policy assignments support a maximum of one identity.  That is either a system assigned identity or a single user assigned identity. </summary>
         /// <param name="principalId"> The principal ID of the resource identity.  This property will only be provided for a system assigned identity. </param>
         /// <param name="tenantId"> The tenant ID of the resource identity.  This property will only be provided for a system assigned identity. </param>
         /// <param name="type"> The identity type. This is the only required field when adding a system or user assigned identity to a resource. </param>
@@ -140,26 +130,16 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         {
             userAssignedIdentities ??= new ChangeTrackingDictionary<string, PolicyUserAssignedIdentity>();
 
-            return new PolicyAssignmentIdentity(principalId, tenantId, @type, userAssignedIdentities ?? new ChangeTrackingDictionary<string, PolicyUserAssignedIdentity>(), default);
+            return new PolicyAssignmentIdentity(principalId, tenantId, @type, userAssignedIdentities, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The PolicyUserAssignedIdentity. </summary>
         /// <param name="principalId"> The principal id of user assigned identity. </param>
         /// <param name="clientId"> The client id of user assigned identity. </param>
         /// <returns> A new <see cref="Models.PolicyUserAssignedIdentity"/> instance for mocking. </returns>
         public static PolicyUserAssignedIdentity PolicyUserAssignedIdentity(Guid? principalId = default, Guid? clientId = default)
         {
-            return new PolicyUserAssignedIdentity(principalId, clientId, default);
-        }
-
-        /// <param name="resourceSelectors"> The resource selector list to filter policies by resource properties. </param>
-        /// <param name="overrides"> The policy property value override. </param>
-        /// <param name="selfServeExemptionSettings"> The self-serve exemption settings for the policy assignment. </param>
-        /// <param name="location"> The location of the policy assignment. Only required when utilizing managed identity. </param>
-        /// <param name="identity"> The managed identity associated with the policy assignment. </param>
-        /// <returns> A new <see cref="Models.PolicyAssignmentPatch"/> instance for mocking. </returns>
-        public static PolicyAssignmentPatch PolicyAssignmentPatch(IEnumerable<PolicyResourceSelector> resourceSelectors = default, IEnumerable<PolicyOverride> overrides = default, PolicySelfServeExemptionSettings selfServeExemptionSettings = default, AzureLocation? location = default, PolicyAssignmentIdentity identity = default)
-        {
-            return new PolicyAssignmentPatch(resourceSelectors is null && overrides is null && selfServeExemptionSettings is null ? default : new PolicyAssignmentUpdateProperties((resourceSelectors ?? new ChangeTrackingList<PolicyResourceSelector>()).ToList(), (overrides ?? new ChangeTrackingList<PolicyOverride>()).ToList(), selfServeExemptionSettings, default), location, identity, default);
+            return new PolicyUserAssignedIdentity(principalId, clientId, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -182,6 +162,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 namespaces is null && policyMode is null && isBuiltInOnly is null && resourceTypeAliases is null && effects is null && fieldValues is null && standard is null && custom is null ? default : new DataPolicyManifestProperties(
                     (namespaces ?? new ChangeTrackingList<string>()).ToList(),
                     policyMode,
@@ -189,11 +170,11 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     (resourceTypeAliases ?? new ChangeTrackingList<PolicyResourceTypeAliases>()).ToList(),
                     (effects ?? new ChangeTrackingList<PolicyDataEffect>()).ToList(),
                     (fieldValues ?? new ChangeTrackingList<string>()).ToList(),
-                    new DataManifestResourceFunctionsDefinition((standard ?? new ChangeTrackingList<string>()).ToList(), (custom ?? new ChangeTrackingList<PolicyDataManifestCustomResourceFunctionDetail>()).ToList(), default),
-                    default),
-                default);
+                    new DataManifestResourceFunctionsDefinition((standard ?? new ChangeTrackingList<string>()).ToList(), (custom ?? new ChangeTrackingList<PolicyDataManifestCustomResourceFunctionDetail>()).ToList(), null),
+                    null));
         }
 
+        /// <summary> The resource type aliases definition. </summary>
         /// <param name="resourceType"> The resource type name. </param>
         /// <param name="aliases"> The aliases for property names. </param>
         /// <returns> A new <see cref="Models.PolicyResourceTypeAliases"/> instance for mocking. </returns>
@@ -201,9 +182,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         {
             aliases ??= new ChangeTrackingList<PolicyAlias>();
 
-            return new PolicyResourceTypeAliases(resourceType, (aliases ?? new ChangeTrackingList<PolicyAlias>()).ToList(), default);
+            return new PolicyResourceTypeAliases(resourceType, aliases.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The alias type. </summary>
         /// <param name="name"> The alias name. </param>
         /// <param name="paths"> The paths for an alias. </param>
         /// <param name="type"> The type of the alias. </param>
@@ -217,14 +199,15 @@ namespace Azure.ResourceManager.Resources.Policy.Models
 
             return new PolicyAlias(
                 name,
-                (paths ?? new ChangeTrackingList<PolicyAliasPath>()).ToList(),
+                paths.ToList(),
                 @type,
                 defaultPath,
                 defaultPattern,
                 defaultMetadata,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The type of the paths for alias. </summary>
         /// <param name="path"> The path of an alias. </param>
         /// <param name="apiVersions"> The API versions. </param>
         /// <param name="pattern"> The pattern for an alias path. </param>
@@ -234,34 +217,38 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         {
             apiVersions ??= new ChangeTrackingList<string>();
 
-            return new PolicyAliasPath(path, (apiVersions ?? new ChangeTrackingList<string>()).ToList(), pattern, metadata, default);
+            return new PolicyAliasPath(path, apiVersions.ToList(), pattern, metadata, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The type of the pattern for an alias path. </summary>
         /// <param name="phrase"> The alias pattern phrase. </param>
         /// <param name="variable"> The alias pattern variable. </param>
         /// <param name="type"> The pattern for an alias path. </param>
         /// <returns> A new <see cref="Models.PolicyAliasPattern"/> instance for mocking. </returns>
         public static PolicyAliasPattern PolicyAliasPattern(string phrase = default, string variable = default, PolicyAliasPatternType? @type = default)
         {
-            return new PolicyAliasPattern(phrase, variable, @type, default);
+            return new PolicyAliasPattern(phrase, variable, @type, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The alias path metadata. </summary>
         /// <param name="type"> The type of the token that the alias path is referring to. </param>
         /// <param name="attributes"> The attributes of the token that the alias path is referring to. </param>
         /// <returns> A new <see cref="Models.PolicyAliasPathMetadata"/> instance for mocking. </returns>
         public static PolicyAliasPathMetadata PolicyAliasPathMetadata(PolicyAliasPathTokenType? @type = default, PolicyAliasPathAttributes? attributes = default)
         {
-            return new PolicyAliasPathMetadata(@type, attributes, default);
+            return new PolicyAliasPathMetadata(@type, attributes, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The data effect definition. </summary>
         /// <param name="name"> The data effect name. </param>
         /// <param name="detailsSchema"> The data effect details schema. </param>
         /// <returns> A new <see cref="Models.PolicyDataEffect"/> instance for mocking. </returns>
         public static PolicyDataEffect PolicyDataEffect(string name = default, BinaryData detailsSchema = default)
         {
-            return new PolicyDataEffect(name, detailsSchema, default);
+            return new PolicyDataEffect(name, detailsSchema, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The custom resource function definition. </summary>
         /// <param name="name"> The function name as it will appear in the policy rule. eg - 'vault'. </param>
         /// <param name="fullyQualifiedResourceType"> The fully qualified control plane resource type that this function represents. eg - 'Microsoft.KeyVault/vaults'. </param>
         /// <param name="defaultProperties"> The top-level properties that can be selected on the function's output. eg - [ \"name\", \"location\" ] if vault().name and vault().location are supported. </param>
@@ -271,7 +258,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         {
             defaultProperties ??= new ChangeTrackingList<string>();
 
-            return new PolicyDataManifestCustomResourceFunctionDetail(name, fullyQualifiedResourceType, (defaultProperties ?? new ChangeTrackingList<string>()).ToList(), isCustomPropertiesAllowed, default);
+            return new PolicyDataManifestCustomResourceFunctionDetail(name, fullyQualifiedResourceType, defaultProperties.ToList(), isCustomPropertiesAllowed, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -296,6 +283,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 policyType is null && mode is null && displayName is null && description is null && policyRule is null && metadata is null && parameters is null && version is null && versions is null && externalEvaluationEnforcementSettings is null ? default : new PolicyDefinitionProperties(
                     policyType,
                     mode,
@@ -303,14 +291,14 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     description,
                     policyRule,
                     metadata,
-                    parameters ?? new ChangeTrackingDictionary<string, PolicyParameterMetadata>(),
+                    parameters,
                     version,
                     (versions ?? new ChangeTrackingList<string>()).ToList(),
                     externalEvaluationEnforcementSettings,
-                    default),
-                default);
+                    null));
         }
 
+        /// <summary> The definition of a parameter that can be provided to the policy. </summary>
         /// <param name="type"> The data type of the parameter. </param>
         /// <param name="allowedValues"> The allowed values for the parameter. </param>
         /// <param name="defaultValue"> The default value for the parameter if no value is provided. </param>
@@ -323,13 +311,14 @@ namespace Azure.ResourceManager.Resources.Policy.Models
 
             return new PolicyParameterMetadata(
                 @type,
-                (allowedValues ?? new ChangeTrackingList<BinaryData>()).ToList(),
+                allowedValues.ToList(),
                 defaultValue,
                 schema,
                 metadata,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> General metadata for the parameter. </summary>
         /// <param name="displayName"> The display name for the parameter. </param>
         /// <param name="description"> The description of the parameter. </param>
         /// <param name="strongType"> Used when assigning the policy definition through the portal. Provides a context aware list of values for the user to choose from. </param>
@@ -340,9 +329,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new PolicyParameterMetadataProperties(displayName, description, strongType, shouldAssignPermissions, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+            return new PolicyParameterMetadataProperties(displayName, description, strongType, shouldAssignPermissions, additionalProperties);
         }
 
+        /// <summary> The details of the source of external evaluation results required by the policy during enforcement evaluation. </summary>
         /// <param name="missingTokenAction"> What to do when evaluating an enforcement policy that requires an external evaluation and the token is missing. Possible values are Audit and Deny and language expressions are supported. </param>
         /// <param name="resultLifespan"> The lifespan of the endpoint invocation result after which it's no longer valid. Value is expected to follow the ISO 8601 duration format and language expressions are supported. </param>
         /// <param name="endpointSettings"> The settings of an external endpoint providing evaluation results. </param>
@@ -352,15 +342,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         {
             roleDefinitionIds ??= new ChangeTrackingList<string>();
 
-            return new PolicyExternalEvaluationEnforcementSettings(missingTokenAction, resultLifespan, endpointSettings, (roleDefinitionIds ?? new ChangeTrackingList<string>()).ToList(), default);
-        }
-
-        /// <param name="kind"> The kind of the endpoint. </param>
-        /// <param name="details"> The details of the endpoint. </param>
-        /// <returns> A new <see cref="Models.PolicyExternalEvaluationEndpointSettings"/> instance for mocking. </returns>
-        public static PolicyExternalEvaluationEndpointSettings PolicyExternalEvaluationEndpointSettings(string kind = default, BinaryData details = default)
-        {
-            return new PolicyExternalEvaluationEndpointSettings(kind, details, default);
+            return new PolicyExternalEvaluationEnforcementSettings(missingTokenAction, resultLifespan, endpointSettings, roleDefinitionIds.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -384,6 +366,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 policyType is null && mode is null && displayName is null && description is null && policyRule is null && metadata is null && parameters is null && version is null && externalEvaluationEnforcementSettings is null ? default : new PolicyDefinitionVersionProperties(
                     policyType,
                     mode,
@@ -391,11 +374,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     description,
                     policyRule,
                     metadata,
-                    parameters ?? new ChangeTrackingDictionary<string, PolicyParameterMetadata>(),
+                    parameters,
                     version,
                     externalEvaluationEnforcementSettings,
-                    default),
-                default);
+                    null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -419,6 +401,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 policyAssignmentId is null && policyDefinitionReferenceIds is null && exemptionCategory is null && expiresOn is null && displayName is null && description is null && metadata is null && resourceSelectors is null && assignmentScopeValidation is null ? default : new PolicyExemptionProperties(
                     policyAssignmentId,
                     (policyDefinitionReferenceIds ?? new ChangeTrackingList<string>()).ToList(),
@@ -429,16 +412,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     metadata,
                     (resourceSelectors ?? new ChangeTrackingList<PolicyResourceSelector>()).ToList(),
                     assignmentScopeValidation,
-                    default),
-                default);
-        }
-
-        /// <param name="resourceSelectors"> The resource selector list to filter policies by resource properties. </param>
-        /// <param name="assignmentScopeValidation"> The option whether validate the exemption is at or under the assignment scope. </param>
-        /// <returns> A new <see cref="Models.PolicyExemptionPatch"/> instance for mocking. </returns>
-        public static PolicyExemptionPatch PolicyExemptionPatch(IEnumerable<PolicyResourceSelector> resourceSelectors = default, PolicyAssignmentScopeValidation? assignmentScopeValidation = default)
-        {
-            return new PolicyExemptionPatch(resourceSelectors is null && assignmentScopeValidation is null ? default : new PolicyExemptionUpdateProperties((resourceSelectors ?? new ChangeTrackingList<PolicyResourceSelector>()).ToList(), assignmentScopeValidation, default), default);
+                    null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -462,20 +436,21 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 policyType is null && displayName is null && description is null && metadata is null && parameters is null && policyDefinitions is null && policyDefinitionGroups is null && version is null && versions is null ? default : new PolicySetDefinitionProperties(
                     policyType,
                     displayName,
                     description,
                     metadata,
-                    parameters ?? new ChangeTrackingDictionary<string, PolicyParameterMetadata>(),
+                    parameters,
                     (policyDefinitions ?? new ChangeTrackingList<PolicyDefinitionReference>()).ToList(),
                     (policyDefinitionGroups ?? new ChangeTrackingList<PolicyDefinitionGroup>()).ToList(),
                     version,
                     (versions ?? new ChangeTrackingList<string>()).ToList(),
-                    default),
-                default);
+                    null));
         }
 
+        /// <summary> The policy definition reference. </summary>
         /// <param name="policyDefinitionId"> The ID of the policy definition or policy set definition. </param>
         /// <param name="definitionVersion"> The version of the policy definition to use. </param>
         /// <param name="latestDefinitionVersion"> The latest version of the policy definition available. This is only present if requested via the $expand query parameter. </param>
@@ -494,27 +469,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 definitionVersion,
                 latestDefinitionVersion,
                 effectiveDefinitionVersion,
-                parameters ?? new ChangeTrackingDictionary<string, PolicyParameterValue>(),
+                parameters,
                 policyDefinitionReferenceId,
-                (groupNames ?? new ChangeTrackingList<string>()).ToList(),
-                default);
-        }
-
-        /// <param name="name"> The name of the group. </param>
-        /// <param name="displayName"> The group's display name. </param>
-        /// <param name="category"> The group's category. </param>
-        /// <param name="description"> The group's description. </param>
-        /// <param name="additionalMetadataId"> A resource ID of a resource that contains additional metadata about the group. </param>
-        /// <returns> A new <see cref="Models.PolicyDefinitionGroup"/> instance for mocking. </returns>
-        public static PolicyDefinitionGroup PolicyDefinitionGroup(string name = default, string displayName = default, string category = default, string description = default, string additionalMetadataId = default)
-        {
-            return new PolicyDefinitionGroup(
-                name,
-                displayName,
-                category,
-                description,
-                additionalMetadataId,
-                default);
+                groupNames.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -537,17 +495,17 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 policyType is null && displayName is null && description is null && metadata is null && parameters is null && policyDefinitions is null && policyDefinitionGroups is null && version is null ? default : new PolicySetDefinitionVersionProperties(
                     policyType,
                     displayName,
                     description,
                     metadata,
-                    parameters ?? new ChangeTrackingDictionary<string, PolicyParameterMetadata>(),
+                    parameters,
                     (policyDefinitions ?? new ChangeTrackingList<PolicyDefinitionReference>()).ToList(),
                     (policyDefinitionGroups ?? new ChangeTrackingList<PolicyDefinitionGroup>()).ToList(),
                     version,
-                    default),
-                default);
+                    null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -563,15 +521,8 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 name,
                 resourceType,
                 systemData,
-                columns is null ? default : new PolicyVariableProperties((columns ?? new ChangeTrackingList<PolicyVariableColumn>()).ToList(), default),
-                default);
-        }
-
-        /// <param name="columnName"> The name of this policy variable column. </param>
-        /// <returns> A new <see cref="Models.PolicyVariableColumn"/> instance for mocking. </returns>
-        public static PolicyVariableColumn PolicyVariableColumn(string columnName = default)
-        {
-            return new PolicyVariableColumn(columnName, default);
+                additionalBinaryDataProperties: null,
+                columns is null ? default : new PolicyVariableProperties((columns ?? new ChangeTrackingList<PolicyVariableColumn>()).ToList(), null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -587,35 +538,30 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 name,
                 resourceType,
                 systemData,
-                values is null ? default : new PolicyVariableValueProperties((values ?? new ChangeTrackingList<PolicyVariableValueColumnValue>()).ToList(), default),
-                default);
+                additionalBinaryDataProperties: null,
+                values is null ? default : new PolicyVariableValueProperties((values ?? new ChangeTrackingList<PolicyVariableValueColumnValue>()).ToList(), null));
         }
 
-        /// <param name="columnName"> Column name for the variable value. </param>
-        /// <param name="columnValue"> Column value for the variable value; this can be an integer, double, boolean, null or a string. </param>
-        /// <returns> A new <see cref="Models.PolicyVariableValueColumnValue"/> instance for mocking. </returns>
-        public static PolicyVariableValueColumnValue PolicyVariableValueColumnValue(string columnName = default, BinaryData columnValue = default)
-        {
-            return new PolicyVariableValueColumnValue(columnName, columnValue, default);
-        }
-
+        /// <summary> The policy token request properties. </summary>
         /// <param name="operation"> The resource operation to acquire a token for. </param>
         /// <param name="changeReference"> The change reference. </param>
         /// <returns> A new <see cref="Models.PolicyTokenRequestContent"/> instance for mocking. </returns>
         public static PolicyTokenRequestContent PolicyTokenRequestContent(PolicyTokenOperationInfo operation = default, string changeReference = default)
         {
-            return new PolicyTokenRequestContent(operation, changeReference, default);
+            return new PolicyTokenRequestContent(operation, changeReference, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The resource operation to acquire a token for. </summary>
         /// <param name="uri"> The request URI of the resource operation. </param>
         /// <param name="httpMethod"> The http method of the resource operation. </param>
         /// <param name="content"> The payload of the resource operation. </param>
         /// <returns> A new <see cref="Models.PolicyTokenOperationInfo"/> instance for mocking. </returns>
         public static PolicyTokenOperationInfo PolicyTokenOperationInfo(string uri = default, string httpMethod = default, BinaryData content = default)
         {
-            return new PolicyTokenOperationInfo(uri, httpMethod, content, default);
+            return new PolicyTokenOperationInfo(uri, httpMethod, content, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The policy token response properties. </summary>
         /// <param name="result"> The result of the completed token acquisition operation. Possible values are Succeeded and Failed. </param>
         /// <param name="requestDetails"> The external evaluation request details. </param>
         /// <param name="message"> Status message with additional details about the token acquisition operation result. </param>
@@ -635,14 +581,15 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 requestDetails,
                 message,
                 retryAfter,
-                (results ?? new ChangeTrackingList<PolicyExternalEvaluationEndpointInvocationResult>()).ToList(),
+                results.ToList(),
                 changeReference,
                 token,
                 tokenId,
                 expiresOn,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The policy token evaluated request details. </summary>
         /// <param name="uri"> The request URI of the resource operation that is targeted by the issued token. </param>
         /// <param name="resourceId"> The resource Id of the resource operation that is targeted by the issued token. </param>
         /// <param name="apiVersion"> The api-version of the resource operation that is targeted by the issued token. </param>
@@ -659,9 +606,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 authorizationAction,
                 httpMethod,
                 contentHash,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The external evaluation endpoint invocation results. </summary>
         /// <param name="policyInfo"> The details of the policy requiring the external endpoint invocation. </param>
         /// <param name="result"> The result of the external endpoint. Possible values are Succeeded and Failed. </param>
         /// <param name="endpointKind"> The external evaluation endpoint kind. </param>
@@ -686,9 +634,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 policyEvaluationDetails,
                 additionalInfo,
                 expiresOn,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The policy log info. </summary>
         /// <param name="policyDefinitionId"> The policy definition Id. </param>
         /// <param name="policySetDefinitionId"> The policy set definition Id. </param>
         /// <param name="policyDefinitionReferenceId"> The policy definition instance Id inside a policy set. </param>
@@ -728,7 +677,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 policyDefinitionDisplayName,
                 policyDefinitionVersion,
                 policyDefinitionEffect,
-                (policyDefinitionGroupNames ?? new ChangeTrackingList<string>()).ToList(),
+                policyDefinitionGroupNames.ToList(),
                 policyAssignmentId,
                 policyAssignmentName,
                 policyAssignmentDisplayName,
@@ -737,8 +686,8 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 resourceLocation,
                 ancestors,
                 complianceReasonCode,
-                (policyExemptionIds ?? new ChangeTrackingList<string>()).ToList(),
-                default);
+                policyExemptionIds.ToList(),
+                additionalBinaryDataProperties: null);
         }
     }
 }

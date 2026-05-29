@@ -56,7 +56,8 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
                 contactAdmin is null && contactBilling is null && contactRegistrant is null && contactTech is null && registrationStatus is null && provisioningState is null && nameServers is null && isDomainPrivacyEnabled is null && createdOn is null && expireOn is null && lastRenewedOn is null && isAutoRenew is null && isDnsRecordManagementReady is null && managedHostNames is null && consent is null && domainNotRenewableReasons is null && dnsType is null && dnsZoneId is null && targetDnsType is null && authCode is null ? default : new DomainProperties(
                     contactAdmin,
@@ -79,55 +80,11 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                     dnsZoneId,
                     targetDnsType,
                     authCode,
-                    default),
-                kind,
-                default);
+                    null),
+                kind);
         }
 
-        /// <param name="addressMailing"> Mailing address. </param>
-        /// <param name="email"> Email address. </param>
-        /// <param name="fax"> Fax number. </param>
-        /// <param name="jobTitle"> Job title. </param>
-        /// <param name="nameFirst"> First name. </param>
-        /// <param name="nameLast"> Last name. </param>
-        /// <param name="nameMiddle"> Middle name. </param>
-        /// <param name="organization"> Organization contact belongs to. </param>
-        /// <param name="phone"> Phone number. </param>
-        /// <returns> A new <see cref="Models.RegistrationContactInfo"/> instance for mocking. </returns>
-        public static RegistrationContactInfo RegistrationContactInfo(RegistrationAddressInfo addressMailing = default, string email = default, string fax = default, string jobTitle = default, string nameFirst = default, string nameLast = default, string nameMiddle = default, string organization = default, string phone = default)
-        {
-            return new RegistrationContactInfo(
-                addressMailing,
-                email,
-                fax,
-                jobTitle,
-                nameFirst,
-                nameLast,
-                nameMiddle,
-                organization,
-                phone,
-                default);
-        }
-
-        /// <param name="address1"> First line of an Address. </param>
-        /// <param name="address2"> The second line of the Address. Optional. </param>
-        /// <param name="city"> The city for the address. </param>
-        /// <param name="country"> The country for the address. </param>
-        /// <param name="postalCode"> The postal code for the address. </param>
-        /// <param name="state"> The state or province for the address. </param>
-        /// <returns> A new <see cref="Models.RegistrationAddressInfo"/> instance for mocking. </returns>
-        public static RegistrationAddressInfo RegistrationAddressInfo(string address1 = default, string address2 = default, string city = default, string country = default, string postalCode = default, string state = default)
-        {
-            return new RegistrationAddressInfo(
-                address1,
-                address2,
-                city,
-                country,
-                postalCode,
-                state,
-                default);
-        }
-
+        /// <summary> Details of a hostname derived from a domain. </summary>
         /// <param name="name"> Name of the hostname. </param>
         /// <param name="siteNames"> List of apps the hostname is assigned to. This list will have more than one app only if the hostname is pointing to a Traffic Manager. </param>
         /// <param name="azureResourceName"> Name of the Azure resource the hostname is assigned to. If it is assigned to a Traffic Manager then it will be the Traffic Manager name otherwise it will be the app name. </param>
@@ -141,14 +98,15 @@ namespace Azure.ResourceManager.DomainRegistration.Models
 
             return new AppServiceHostName(
                 name,
-                (siteNames ?? new ChangeTrackingList<string>()).ToList(),
+                siteNames.ToList(),
                 azureResourceName,
                 azureResourceType,
                 customHostNameDnsRecordType,
                 hostNameType,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Domain purchase consent object, representing acceptance of applicable legal agreements. </summary>
         /// <param name="agreementKeys"> List of applicable legal agreement keys. This list can be retrieved using ListLegalAgreements API under &lt;code&gt;TopLevelDomain&lt;/code&gt; resource. </param>
         /// <param name="agreedBy"> Client IP address. </param>
         /// <param name="agreedOn"> Timestamp when the agreements were accepted. </param>
@@ -157,7 +115,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
         {
             agreementKeys ??= new ChangeTrackingList<string>();
 
-            return new DomainPurchaseConsent((agreementKeys ?? new ChangeTrackingList<string>()).ToList(), agreedBy, agreedOn, default);
+            return new DomainPurchaseConsent(agreementKeys.ToList(), agreedBy, agreedOn, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -196,6 +154,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 contactAdmin is null && contactBilling is null && contactRegistrant is null && contactTech is null && registrationStatus is null && provisioningState is null && nameServers is null && isDomainPrivacyEnabled is null && createdOn is null && expireOn is null && lastRenewedOn is null && isAutoRenew is null && isDnsRecordManagementReady is null && managedHostNames is null && consent is null && domainNotRenewableReasons is null && dnsType is null && dnsZoneId is null && targetDnsType is null && authCode is null ? default : new DomainPatchResourceProperties(
                     contactAdmin,
                     contactBilling,
@@ -217,10 +176,9 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                     dnsZoneId,
                     targetDnsType,
                     authCode,
-                    default),
+                    null),
                 kind,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default);
+                tags);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -237,9 +195,9 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 name,
                 resourceType,
                 systemData,
-                ownershipId is null ? default : new DomainOwnershipIdentifierProperties(ownershipId, default),
-                kind,
-                default);
+                additionalBinaryDataProperties: null,
+                ownershipId is null ? default : new DomainOwnershipIdentifierProperties(ownershipId, null),
+                kind);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -256,19 +214,12 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 name,
                 resourceType,
                 systemData,
-                isDomainPrivacySupported is null ? default : new TopLevelDomainProperties(isDomainPrivacySupported, default),
-                kind,
-                default);
+                additionalBinaryDataProperties: null,
+                isDomainPrivacySupported is null ? default : new TopLevelDomainProperties(isDomainPrivacySupported, null),
+                kind);
         }
 
-        /// <param name="isPrivacyIncluded"> If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include agreements for domain privacy as well; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="isForTransfer"> If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include agreements for domain transfer as well; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <returns> A new <see cref="Models.TopLevelDomainAgreementContent"/> instance for mocking. </returns>
-        public static TopLevelDomainAgreementContent TopLevelDomainAgreementContent(bool? isPrivacyIncluded = default, bool? isForTransfer = default)
-        {
-            return new TopLevelDomainAgreementContent(isPrivacyIncluded, isForTransfer, default);
-        }
-
+        /// <summary> Legal agreement for a top level domain. </summary>
         /// <param name="agreementKey"> Unique identifier for the agreement. </param>
         /// <param name="title"> Agreement title. </param>
         /// <param name="content"> Agreement details. </param>
@@ -276,40 +227,27 @@ namespace Azure.ResourceManager.DomainRegistration.Models
         /// <returns> A new <see cref="Models.TopLevelDomainLegalAgreement"/> instance for mocking. </returns>
         public static TopLevelDomainLegalAgreement TopLevelDomainLegalAgreement(string agreementKey = default, string title = default, string content = default, Uri uri = default)
         {
-            return new TopLevelDomainLegalAgreement(agreementKey, title, content, uri, default);
+            return new TopLevelDomainLegalAgreement(agreementKey, title, content, uri, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="name"> Name of the object. </param>
-        /// <returns> A new <see cref="Models.AppServiceDomainNameIdentifier"/> instance for mocking. </returns>
-        public static AppServiceDomainNameIdentifier AppServiceDomainNameIdentifier(string name = default)
-        {
-            return new AppServiceDomainNameIdentifier(name, default);
-        }
-
+        /// <summary> Domain availability check result. </summary>
         /// <param name="name"> Name of the domain. </param>
         /// <param name="isAvailable"> &lt;code&gt;true&lt;/code&gt; if domain can be purchased using CreateDomain API; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="domainType"> Valid values are Regular domain: Azure will charge the full price of domain registration, SoftDeleted: Purchasing this domain will simply restore it and this operation will not cost anything. </param>
         /// <returns> A new <see cref="Models.DomainAvailabilityCheckResult"/> instance for mocking. </returns>
         public static DomainAvailabilityCheckResult DomainAvailabilityCheckResult(string name = default, bool? isAvailable = default, AppServiceDomainType? domainType = default)
         {
-            return new DomainAvailabilityCheckResult(name, isAvailable, domainType, default);
+            return new DomainAvailabilityCheckResult(name, isAvailable, domainType, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Single sign-on request information for domain management. </summary>
         /// <param name="uri"> URL where the single sign-on request is to be made. </param>
         /// <param name="postParameterKey"> Post parameter key. </param>
         /// <param name="postParameterValue"> Post parameter value. Client should use 'application/x-www-form-urlencoded' encoding for this value. </param>
         /// <returns> A new <see cref="Models.DomainControlCenterSsoRequestInfo"/> instance for mocking. </returns>
         public static DomainControlCenterSsoRequestInfo DomainControlCenterSsoRequestInfo(string uri = default, string postParameterKey = default, string postParameterValue = default)
         {
-            return new DomainControlCenterSsoRequestInfo(uri, postParameterKey, postParameterValue, default);
-        }
-
-        /// <param name="keywords"> Keywords to be used for generating domain recommendations. </param>
-        /// <param name="maxDomainRecommendations"> Maximum number of recommendations. </param>
-        /// <returns> A new <see cref="Models.DomainRecommendationSearchContent"/> instance for mocking. </returns>
-        public static DomainRecommendationSearchContent DomainRecommendationSearchContent(string keywords = default, int? maxDomainRecommendations = default)
-        {
-            return new DomainRecommendationSearchContent(keywords, maxDomainRecommendations, default);
+            return new DomainControlCenterSsoRequestInfo(uri, postParameterKey, postParameterValue, additionalBinaryDataProperties: null);
         }
     }
 }

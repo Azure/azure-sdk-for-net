@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new TrafficControllerAssociationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), associationType is null && subnetId is null ? default : new AssociationUpdateProperties(associationType, new AssociationSubnetUpdate(subnetId, default), default), default);
+            return new TrafficControllerAssociationPatch(tags, associationType is null && subnetId is null ? default : new AssociationUpdateProperties(associationType, new AssociationSubnetUpdate(subnetId, null), null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -50,18 +50,10 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
-                fqdn is null && securityPolicyConfigurations is null && provisioningState is null ? default : new FrontendProperties(fqdn, securityPolicyConfigurations, provisioningState, default),
-                default);
-        }
-
-        /// <param name="wafSecurityPolicyId"> Resource ID of the Waf Security Policy. </param>
-        /// <param name="ipAccessRulesSecurityPolicyId"> Resource ID of the Ip Access Rules Security Policy. </param>
-        /// <returns> A new <see cref="Models.SecurityPolicyConfigurations"/> instance for mocking. </returns>
-        public static SecurityPolicyConfigurations SecurityPolicyConfigurations(ResourceIdentifier wafSecurityPolicyId = default, ResourceIdentifier ipAccessRulesSecurityPolicyId = default)
-        {
-            return new SecurityPolicyConfigurations(wafSecurityPolicyId is null ? default : new WafSecurityPolicy(wafSecurityPolicyId, default), ipAccessRulesSecurityPolicyId is null ? default : new ServiceNetworkingIPAccessRulesSecurityPolicy(ipAccessRulesSecurityPolicyId, default), default);
+                fqdn is null && securityPolicyConfigurations is null && provisioningState is null ? default : new FrontendProperties(fqdn, securityPolicyConfigurations, provisioningState, null));
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -71,7 +63,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new TrafficControllerFrontendPatch(tags ?? new ChangeTrackingDictionary<string, string>(), frontendUpdateSecurityPolicyConfigurations is null ? default : new FrontendUpdateProperties(frontendUpdateSecurityPolicyConfigurations, default), default);
+            return new TrafficControllerFrontendPatch(tags, frontendUpdateSecurityPolicyConfigurations is null ? default : new FrontendUpdateProperties(frontendUpdateSecurityPolicyConfigurations, null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -94,12 +86,13 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
-                policyType is null && wafPolicyId is null && rules is null && provisioningState is null ? default : new SecurityPolicyProperties(policyType, new WafPolicy(wafPolicyId, default), new ServiceNetworkingIPAccessRulesPolicy((rules ?? new ChangeTrackingList<ServiceNetworkingIPAccessRule>()).ToList(), default), provisioningState, default),
-                default);
+                policyType is null && provisioningState is null && wafPolicyId is null && rules is null ? default : new SecurityPolicyProperties(policyType, new WafPolicy(wafPolicyId, null), new ServiceNetworkingIPAccessRulesPolicy((rules ?? new ChangeTrackingList<ServiceNetworkingIPAccessRule>()).ToList(), null), provisioningState, null));
         }
 
+        /// <summary> Ip Access Policy Rules. </summary>
         /// <param name="name"> Name of the Ip Access Rule. </param>
         /// <param name="priority"> The priority of the rule. The value can be between 1 and 500. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </param>
         /// <param name="sourceAddressPrefixes"> Source Address Prefixed Applied by the Rule. Asterisk '*' can also be used to match all source IPs. </param>
@@ -109,9 +102,10 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         {
             sourceAddressPrefixes ??= new ChangeTrackingList<string>();
 
-            return new ServiceNetworkingIPAccessRule(name, priority, (sourceAddressPrefixes ?? new ChangeTrackingList<string>()).ToList(), action, default);
+            return new ServiceNetworkingIPAccessRule(name, priority, sourceAddressPrefixes.ToList(), action, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The type used for update operations of the SecurityPolicy. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.ApplicationGatewayForContainersSecurityPolicyPatch"/> instance for mocking. </returns>
@@ -119,15 +113,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ApplicationGatewayForContainersSecurityPolicyPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
-        }
-
-        /// <param name="wafPolicyId"> Resource ID of the WAF. </param>
-        /// <param name="rules"> Ip Access Policy Rules List. </param>
-        /// <returns> A new <see cref="Models.SecurityPolicyUpdateProperties"/> instance for mocking. </returns>
-        public static SecurityPolicyUpdateProperties SecurityPolicyUpdateProperties(ResourceIdentifier wafPolicyId = default, IEnumerable<ServiceNetworkingIPAccessRule> rules = default)
-        {
-            return new SecurityPolicyUpdateProperties(wafPolicyId is null ? default : new WafPolicy(wafPolicyId, default), rules is null ? default : new ServiceNetworkingIPAccessRulesPolicy((rules ?? new ChangeTrackingList<ServiceNetworkingIPAccessRule>()).ToList(), default), default);
+            return new ApplicationGatewayForContainersSecurityPolicyPatch(tags, properties, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -152,7 +138,8 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
                 configurationEndpoints is null && frontends is null && associations is null && securityPolicies is null && securityPolicyConfigurations is null && trafficControllerProvisioningState is null ? default : new TrafficControllerProperties(
                     (configurationEndpoints ?? new ChangeTrackingList<string>()).ToList(),
@@ -161,8 +148,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     (securityPolicies ?? new ChangeTrackingList<SubResource>()).ToList(),
                     securityPolicyConfigurations,
                     trafficControllerProvisioningState,
-                    default),
-                default);
+                    null));
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -172,7 +158,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new TrafficControllerPatch(tags ?? new ChangeTrackingDictionary<string, string>(), trafficControllerUpdateSecurityPolicyConfigurations is null ? default : new TrafficControllerUpdateProperties(trafficControllerUpdateSecurityPolicyConfigurations, default), default);
+            return new TrafficControllerPatch(tags, trafficControllerUpdateSecurityPolicyConfigurations is null ? default : new TrafficControllerUpdateProperties(trafficControllerUpdateSecurityPolicyConfigurations, null), additionalBinaryDataProperties: null);
         }
     }
 }

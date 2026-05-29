@@ -56,10 +56,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CarbonEmissionQueryFilter IPersistableModel<CarbonEmissionQueryFilter>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return PersistableModelCreateCore(data, options);
-        }
+        CarbonEmissionQueryFilter IPersistableModel<CarbonEmissionQueryFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CarbonEmissionQueryFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -87,10 +84,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CarbonEmissionQueryFilter IJsonModel<CarbonEmissionQueryFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return JsonModelCreateCore(ref reader, options);
-        }
+        CarbonEmissionQueryFilter IJsonModel<CarbonEmissionQueryFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

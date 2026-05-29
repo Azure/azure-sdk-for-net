@@ -56,10 +56,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RedisEnterpriseMigrationProperties IPersistableModel<RedisEnterpriseMigrationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return PersistableModelCreateCore(data, options);
-        }
+        RedisEnterpriseMigrationProperties IPersistableModel<RedisEnterpriseMigrationProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RedisEnterpriseMigrationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -87,10 +84,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RedisEnterpriseMigrationProperties IJsonModel<RedisEnterpriseMigrationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return JsonModelCreateCore(ref reader, options);
-        }
+        RedisEnterpriseMigrationProperties IJsonModel<RedisEnterpriseMigrationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

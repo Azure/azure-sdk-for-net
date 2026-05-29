@@ -52,51 +52,26 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
-                environmentId is null && containerType is null && poolManagementType is null && nodeCount is null && scaleConfiguration is null && secrets is null && dynamicPoolLifecycleConfiguration is null && customContainerTemplate is null && sessionNetworkStatus is null && templateUpdateStatus is null && poolManagementEndpoint is null && provisioningState is null && managedIdentitySettings is null && mcpServerSettings is null ? default : new SessionPoolProperties(
+                environmentId is null && containerType is null && poolManagementType is null && nodeCount is null && scaleConfiguration is null && secrets is null && customContainerTemplate is null && templateUpdateStatus is null && poolManagementEndpoint is null && provisioningState is null && managedIdentitySettings is null && mcpServerSettings is null && dynamicPoolLifecycleConfiguration is null && sessionNetworkStatus is null ? default : new SessionPoolProperties(
                     environmentId,
                     containerType,
                     poolManagementType,
                     nodeCount,
                     scaleConfiguration,
                     (secrets ?? new ChangeTrackingList<SessionPoolSecret>()).ToList(),
-                    new DynamicPoolConfiguration(dynamicPoolLifecycleConfiguration, default),
+                    new DynamicPoolConfiguration(dynamicPoolLifecycleConfiguration, null),
                     customContainerTemplate,
-                    new SessionNetworkConfiguration(sessionNetworkStatus, default),
+                    new SessionNetworkConfiguration(sessionNetworkStatus, null),
                     templateUpdateStatus,
                     poolManagementEndpoint,
                     provisioningState,
                     (managedIdentitySettings ?? new ChangeTrackingList<SessionPoolManagedIdentitySetting>()).ToList(),
                     mcpServerSettings,
-                    default),
-                identity,
-                default);
-        }
-
-        /// <param name="maxConcurrentSessions"> The maximum count of sessions at the same time. </param>
-        /// <param name="readySessionInstances"> The minimum count of ready session instances. </param>
-        /// <returns> A new <see cref="Models.SessionPoolScaleConfiguration"/> instance for mocking. </returns>
-        public static SessionPoolScaleConfiguration SessionPoolScaleConfiguration(int? maxConcurrentSessions = default, int? readySessionInstances = default)
-        {
-            return new SessionPoolScaleConfiguration(maxConcurrentSessions, readySessionInstances, default);
-        }
-
-        /// <param name="name"> Secret Name. </param>
-        /// <param name="value"> Secret Value. </param>
-        /// <returns> A new <see cref="Models.SessionPoolSecret"/> instance for mocking. </returns>
-        public static SessionPoolSecret SessionPoolSecret(string name = default, string value = default)
-        {
-            return new SessionPoolSecret(name, value, default);
-        }
-
-        /// <param name="lifecycleType"> The lifecycle type of the session pool. </param>
-        /// <param name="cooldownPeriodInSeconds"> The cooldown period of a session in seconds when the lifecycle type is 'Timed'. </param>
-        /// <param name="maxAlivePeriodInSeconds"> The maximum alive period of a session in seconds when the lifecycle type is 'OnContainerExit'. </param>
-        /// <returns> A new <see cref="Models.SessionPoolLifecycleConfiguration"/> instance for mocking. </returns>
-        public static SessionPoolLifecycleConfiguration SessionPoolLifecycleConfiguration(SessionPoolLifecycleType? lifecycleType = default, int? cooldownPeriodInSeconds = default, int? maxAlivePeriodInSeconds = default)
-        {
-            return new SessionPoolLifecycleConfiguration(lifecycleType, cooldownPeriodInSeconds, maxAlivePeriodInSeconds, default);
+                    null),
+                identity);
         }
 
         /// <param name="registryCredentials"> Private container registry credentials for containers used by the sessions of the session pool. </param>
@@ -107,19 +82,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             containers ??= new ChangeTrackingList<SessionContainer>();
 
-            return new CustomContainerTemplate(registryCredentials, (containers ?? new ChangeTrackingList<SessionContainer>()).ToList(), ingressTargetPort is null ? default : new SessionIngress(ingressTargetPort, default), default);
+            return new CustomContainerTemplate(registryCredentials, containers.ToList(), ingressTargetPort is null ? default : new SessionIngress(ingressTargetPort, null), additionalBinaryDataProperties: null);
         }
 
-        /// <param name="server"> Container registry server. </param>
-        /// <param name="username"> Container registry username. </param>
-        /// <param name="passwordSecretRef"> The name of the secret that contains the registry login password. </param>
-        /// <param name="identity"> A Managed Identity to use to authenticate with Azure Container Registry. For user-assigned identities, use the full user-assigned identity Resource ID. For system-assigned identities, use 'system'. </param>
-        /// <returns> A new <see cref="Models.SessionRegistryCredentials"/> instance for mocking. </returns>
-        public static SessionRegistryCredentials SessionRegistryCredentials(string server = default, string username = default, string passwordSecretRef = default, string identity = default)
-        {
-            return new SessionRegistryCredentials(server, username, passwordSecretRef, identity, default);
-        }
-
+        /// <summary> Container definitions for the sessions of the session pool. </summary>
         /// <param name="image"> Container image tag. </param>
         /// <param name="name"> Custom container name. </param>
         /// <param name="command"> Container start command. </param>
@@ -138,56 +104,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new SessionContainer(
                 image,
                 name,
-                (command ?? new ChangeTrackingList<string>()).ToList(),
-                (args ?? new ChangeTrackingList<string>()).ToList(),
-                (env ?? new ChangeTrackingList<ContainerAppEnvironmentVariable>()).ToList(),
+                command.ToList(),
+                args.ToList(),
+                env.ToList(),
                 resources,
-                (probes ?? new ChangeTrackingList<SessionProbe>()).ToList(),
-                default);
+                probes.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <param name="name"> Environment variable name. </param>
-        /// <param name="value"> Non-secret environment variable value. </param>
-        /// <param name="secretRef"> Name of the Container App secret from which to pull the environment variable value. </param>
-        /// <returns> A new <see cref="Models.ContainerAppEnvironmentVariable"/> instance for mocking. </returns>
-        public static ContainerAppEnvironmentVariable ContainerAppEnvironmentVariable(string name = default, string value = default, string secretRef = default)
-        {
-            return new ContainerAppEnvironmentVariable(name, value, secretRef, default);
-        }
-
-        /// <param name="cpu"> Required CPU in cores, e.g. 0.5. </param>
-        /// <param name="memory"> Required memory, e.g. "250Mb". </param>
-        /// <returns> A new <see cref="Models.SessionContainerResources"/> instance for mocking. </returns>
-        public static SessionContainerResources SessionContainerResources(double? cpu = default, string memory = default)
-        {
-            return new SessionContainerResources(cpu, memory, default);
-        }
-
-        /// <param name="type"> Denotes the type of probe. Can be Liveness or Startup, Readiness probe is not supported in sessions. Type must be unique for each probe within the context of a list of probes (SessionProbes). </param>
-        /// <param name="httpGet"> HTTPGet specifies the http request to perform. </param>
-        /// <param name="tcpSocket"> TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported. </param>
-        /// <param name="failureThreshold"> Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1. Maximum value is 10. </param>
-        /// <param name="initialDelaySeconds"> Number of seconds after the container has started before liveness probes are initiated. Minimum value is 1. Maximum value is 60. </param>
-        /// <param name="periodSeconds"> How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1. Maximum value is 240. </param>
-        /// <param name="successThreshold"> Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1. Maximum value is 10. </param>
-        /// <param name="terminationGracePeriodSeconds"> Optional duration in seconds the pod needs to terminate gracefully upon probe failure. The grace period is the duration in seconds after the processes running in the pod are sent a termination signal and the time when the processes are forcibly halted with a kill signal. Set this value longer than the expected cleanup time for your process. If this value is nil, the pod's terminationGracePeriodSeconds will be used. Otherwise, this value overrides the value provided by the pod spec. Value must be non-negative integer. The value zero indicates stop immediately via the kill signal (no opportunity to shut down). This is an alpha field and requires enabling ProbeTerminationGracePeriod feature gate. Maximum value is 3600 seconds (1 hour). </param>
-        /// <param name="timeoutSeconds"> Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. Maximum value is 240. </param>
-        /// <returns> A new <see cref="Models.SessionProbe"/> instance for mocking. </returns>
-        public static SessionProbe SessionProbe(SessionProbeType? @type = default, SessionProbeHttpGet httpGet = default, SessionProbeTcpSocket tcpSocket = default, int? failureThreshold = default, int? initialDelaySeconds = default, int? periodSeconds = default, int? successThreshold = default, long? terminationGracePeriodSeconds = default, int? timeoutSeconds = default)
-        {
-            return new SessionProbe(
-                @type,
-                httpGet,
-                tcpSocket,
-                failureThreshold,
-                initialDelaySeconds,
-                periodSeconds,
-                successThreshold,
-                terminationGracePeriodSeconds,
-                timeoutSeconds,
-                default);
-        }
-
+        /// <summary> HTTPGet specifies the http request to perform. </summary>
         /// <param name="host"> Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead. </param>
         /// <param name="httpHeaders"> Custom headers to set in the request. HTTP allows repeated headers. </param>
         /// <param name="path"> Path to access on the HTTP server. </param>
@@ -200,35 +125,20 @@ namespace Azure.ResourceManager.AppContainers.Models
 
             return new SessionProbeHttpGet(
                 host,
-                (httpHeaders ?? new ChangeTrackingList<SessionProbeHttpGetHttpHeadersItem>()).ToList(),
+                httpHeaders.ToList(),
                 path,
                 port,
                 scheme,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <param name="name"> The header field name. </param>
-        /// <param name="value"> The header field value. </param>
-        /// <returns> A new <see cref="Models.SessionProbeHttpGetHttpHeadersItem"/> instance for mocking. </returns>
-        public static SessionProbeHttpGetHttpHeadersItem SessionProbeHttpGetHttpHeadersItem(string name = default, string value = default)
-        {
-            return new SessionProbeHttpGetHttpHeadersItem(name, value, default);
-        }
-
-        /// <param name="host"> Optional: Host name to connect to, defaults to the pod IP. </param>
-        /// <param name="port"> Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. </param>
-        /// <returns> A new <see cref="Models.SessionProbeTcpSocket"/> instance for mocking. </returns>
-        public static SessionProbeTcpSocket SessionProbeTcpSocket(string host = default, int port = default)
-        {
-            return new SessionProbeTcpSocket(host, port, default);
-        }
-
+        /// <summary> Session pool template update status. </summary>
         /// <param name="activeTemplate"> The status of the current active template. </param>
         /// <param name="desiredTemplate"> The status of the desired template during session pool update. </param>
         /// <returns> A new <see cref="Models.TemplateUpdateStatus"/> instance for mocking. </returns>
         public static TemplateUpdateStatus TemplateUpdateStatus(TemplateStatus activeTemplate = default, TemplateStatus desiredTemplate = default)
         {
-            return new TemplateUpdateStatus(activeTemplate, desiredTemplate, default);
+            return new TemplateUpdateStatus(activeTemplate, desiredTemplate, additionalBinaryDataProperties: null);
         }
 
         /// <param name="details"> The detailed status of this template. </param>
@@ -245,11 +155,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                 details,
                 createdOn,
                 status,
-                (containers ?? new ChangeTrackingList<SessionContainer>()).ToList(),
-                ingressTargetPort is null ? default : new SessionIngress(ingressTargetPort, default),
-                default);
+                containers.ToList(),
+                ingressTargetPort is null ? default : new SessionIngress(ingressTargetPort, null),
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The status of pods in the pool of this template. </summary>
         /// <param name="expectedCount"> The expected count of pods in this pool. </param>
         /// <param name="readyCount"> The ready count of pods in this pool. </param>
         /// <param name="pendingCount"> The pending count of pods in this pool. </param>
@@ -266,24 +177,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                 imagePullFailCount,
                 crashCount,
                 allocatedCount,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <param name="identity"> The resource ID of a user-assigned managed identity that is assigned to the Session Pool, or 'system' for system-assigned identity. </param>
-        /// <param name="lifecycle"> Use to select the lifecycle stages of a Session Pool during which the Managed Identity should be available. </param>
-        /// <returns> A new <see cref="Models.SessionPoolManagedIdentitySetting"/> instance for mocking. </returns>
-        public static SessionPoolManagedIdentitySetting SessionPoolManagedIdentitySetting(string identity = default, ContainerAppIdentitySettingsLifeCycle? lifecycle = default)
-        {
-            return new SessionPoolManagedIdentitySetting(identity, lifecycle, default);
-        }
-
+        /// <summary> The settings of the MCP (Model Context Protocol) server for this session pool. </summary>
         /// <param name="isMcpServerEnabled"> Indicates whether the MCP server is enabled. </param>
         /// <param name="isMcpServerApiKeyDisabled"> Indicates whether the MCP server API key is disabled. </param>
         /// <param name="mcpServerEndpoint"> The endpoint of the MCP server. </param>
         /// <returns> A new <see cref="Models.McpServerSettings"/> instance for mocking. </returns>
         public static McpServerSettings McpServerSettings(bool? isMcpServerEnabled = default, bool? isMcpServerApiKeyDisabled = default, Uri mcpServerEndpoint = default)
         {
-            return new McpServerSettings(isMcpServerEnabled, isMcpServerApiKeyDisabled, mcpServerEndpoint, default);
+            return new McpServerSettings(isMcpServerEnabled, isMcpServerApiKeyDisabled, mcpServerEndpoint, additionalBinaryDataProperties: null);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -298,20 +202,21 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SessionPoolPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, scaleConfiguration is null && secrets is null && dynamicPoolLifecycleConfiguration is null && customContainerTemplate is null && sessionNetworkStatus is null ? default : new SessionPoolUpdatablePropertiesProperties(
+            return new SessionPoolPatch(tags, identity, scaleConfiguration is null && secrets is null && customContainerTemplate is null && dynamicPoolLifecycleConfiguration is null && sessionNetworkStatus is null ? default : new SessionPoolUpdatablePropertiesProperties(
                 scaleConfiguration,
                 (secrets ?? new ChangeTrackingList<SessionPoolSecret>()).ToList(),
-                new DynamicPoolConfiguration(dynamicPoolLifecycleConfiguration, default),
+                new DynamicPoolConfiguration(dynamicPoolLifecycleConfiguration, null),
                 customContainerTemplate,
-                new SessionNetworkConfiguration(sessionNetworkStatus, default),
-                default), default);
+                new SessionNetworkConfiguration(sessionNetworkStatus, null),
+                null), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The credentials used for the MCP server endpoint authentication. </summary>
         /// <param name="apiKey"> The API key for the MCP server. </param>
         /// <returns> A new <see cref="Models.McpServerCredential"/> instance for mocking. </returns>
         public static McpServerCredential McpServerCredential(string apiKey = default)
         {
-            return new McpServerCredential(apiKey, default);
+            return new McpServerCredential(apiKey, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -334,10 +239,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
-                operationState is null && repoUri is null && branch is null && gitHubActionConfiguration is null ? default : new SourceControlProperties(operationState, repoUri, branch, gitHubActionConfiguration, default),
-                default);
+                additionalBinaryDataProperties: null,
+                operationState is null && repoUri is null && branch is null && gitHubActionConfiguration is null ? default : new SourceControlProperties(operationState, repoUri, branch, gitHubActionConfiguration, null));
         }
 
+        /// <summary> Configuration properties that define the mutable settings of a Container App SourceControl. </summary>
         /// <param name="registryInfo"> Registry configurations. </param>
         /// <param name="azureCredentials"> AzureCredentials configurations. </param>
         /// <param name="contextPath"> Context path. </param>
@@ -365,42 +271,8 @@ namespace Azure.ResourceManager.AppContainers.Models
                 os,
                 runtimeStack,
                 runtimeVersion,
-                (buildEnvironmentVariables ?? new ChangeTrackingList<EnvironmentVariable>()).ToList(),
-                default);
-        }
-
-        /// <param name="registryServer"> registry server Url. </param>
-        /// <param name="registryUserName"> registry username. </param>
-        /// <param name="registryPassword"> registry secret. </param>
-        /// <returns> A new <see cref="Models.ContainerAppRegistryInfo"/> instance for mocking. </returns>
-        public static ContainerAppRegistryInfo ContainerAppRegistryInfo(string registryServer = default, string registryUserName = default, string registryPassword = default)
-        {
-            return new ContainerAppRegistryInfo(registryServer, registryUserName, registryPassword, default);
-        }
-
-        /// <param name="clientId"> Client Id. </param>
-        /// <param name="clientSecret"> Client Secret. </param>
-        /// <param name="tenantId"> Tenant Id. </param>
-        /// <param name="kind"> Kind of auth github does for deploying the template. </param>
-        /// <param name="subscriptionId"> Subscription Id. </param>
-        /// <returns> A new <see cref="Models.ContainerAppCredentials"/> instance for mocking. </returns>
-        public static ContainerAppCredentials ContainerAppCredentials(string clientId = default, string clientSecret = default, Guid? tenantId = default, string kind = default, string subscriptionId = default)
-        {
-            return new ContainerAppCredentials(
-                clientId,
-                clientSecret,
-                tenantId,
-                kind,
-                subscriptionId,
-                default);
-        }
-
-        /// <param name="name"> Environment variable name. </param>
-        /// <param name="value"> Environment variable value. </param>
-        /// <returns> A new <see cref="Models.EnvironmentVariable"/> instance for mocking. </returns>
-        public static EnvironmentVariable EnvironmentVariable(string name = default, string value = default)
-        {
-            return new EnvironmentVariable(name, value, default);
+                buildEnvironmentVariables.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -438,16 +310,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
-                provisioningState is null && runningStatus is null && deploymentErrors is null && managedEnvironmentId is null && environmentId is null && workloadProfileName is null && patchingMode is null && latestRevisionName is null && latestReadyRevisionName is null && latestRevisionFqdn is null && customDomainVerificationId is null && configuration is null && template is null && outboundIPAddressList is null && eventStreamEndpoint is null ? default : new ContainerAppProperties(
+                provisioningState is null && runningStatus is null && deploymentErrors is null && managedEnvironmentId is null && environmentId is null && workloadProfileName is null && latestRevisionName is null && latestReadyRevisionName is null && latestRevisionFqdn is null && customDomainVerificationId is null && configuration is null && template is null && outboundIPAddressList is null && eventStreamEndpoint is null && patchingMode is null ? default : new ContainerAppProperties(
                     provisioningState,
                     runningStatus,
                     deploymentErrors,
                     managedEnvironmentId,
                     environmentId,
                     workloadProfileName,
-                    new ContainerAppPropertiesPatchingConfiguration(patchingMode, default),
+                    new ContainerAppPropertiesPatchingConfiguration(patchingMode, null),
                     latestRevisionName,
                     latestReadyRevisionName,
                     latestRevisionFqdn,
@@ -456,22 +329,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                     template,
                     (outboundIPAddressList ?? new ChangeTrackingList<IPAddress>()).ToList(),
                     eventStreamEndpoint,
-                    default),
+                    null),
                 extendedLocation,
                 identity,
                 managedBy,
-                kind,
-                default);
-        }
-
-        /// <param name="name"> Secret Name. </param>
-        /// <param name="value"> Secret Value. </param>
-        /// <param name="identity"> Resource ID of a managed identity to authenticate with Azure Key Vault, or System to use a system-assigned identity. </param>
-        /// <param name="keyVaultUri"> Azure Key Vault URL pointing to the secret referenced by the container app. </param>
-        /// <returns> A new <see cref="Models.ContainerAppWritableSecret"/> instance for mocking. </returns>
-        public static ContainerAppWritableSecret ContainerAppWritableSecret(string name = default, string value = default, string identity = default, Uri keyVaultUri = default)
-        {
-            return new ContainerAppWritableSecret(name, value, identity, keyVaultUri, default);
+                kind);
         }
 
         /// <param name="fqdn"> Hostname. </param>
@@ -502,47 +364,19 @@ namespace Azure.ResourceManager.AppContainers.Models
                 targetPort,
                 exposedPort,
                 transport,
-                (traffic ?? new ChangeTrackingList<ContainerAppRevisionTrafficWeight>()).ToList(),
-                (customDomains ?? new ChangeTrackingList<ContainerAppCustomDomain>()).ToList(),
+                traffic.ToList(),
+                customDomains.ToList(),
                 allowInsecure,
-                (ipSecurityRestrictions ?? new ChangeTrackingList<ContainerAppIPSecurityRestrictionRule>()).ToList(),
-                stickySessionsAffinity is null ? default : new IngressStickySessions(stickySessionsAffinity, default),
+                ipSecurityRestrictions.ToList(),
+                stickySessionsAffinity is null ? default : new IngressStickySessions(stickySessionsAffinity, null),
                 clientCertificateMode,
                 corsPolicy,
-                (additionalPortMappings ?? new ChangeTrackingList<IngressPortMapping>()).ToList(),
+                additionalPortMappings.ToList(),
                 targetPortHttpScheme,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <param name="revisionName"> Name of a revision. </param>
-        /// <param name="weight"> Traffic weight assigned to a revision. </param>
-        /// <param name="isLatestRevision"> Indicates that the traffic weight belongs to a latest stable revision. </param>
-        /// <param name="label"> Associates a traffic label with a revision. </param>
-        /// <returns> A new <see cref="Models.ContainerAppRevisionTrafficWeight"/> instance for mocking. </returns>
-        public static ContainerAppRevisionTrafficWeight ContainerAppRevisionTrafficWeight(string revisionName = default, int? weight = default, bool? isLatestRevision = default, string label = default)
-        {
-            return new ContainerAppRevisionTrafficWeight(revisionName, weight, isLatestRevision, label, default);
-        }
-
-        /// <param name="name"> Hostname. </param>
-        /// <param name="bindingType"> Custom Domain binding type. </param>
-        /// <param name="certificateId"> Resource Id of the Certificate to be bound to this hostname. Must exist in the Managed Environment. </param>
-        /// <returns> A new <see cref="Models.ContainerAppCustomDomain"/> instance for mocking. </returns>
-        public static ContainerAppCustomDomain ContainerAppCustomDomain(string name = default, ContainerAppCustomDomainBindingType? bindingType = default, ResourceIdentifier certificateId = default)
-        {
-            return new ContainerAppCustomDomain(name, bindingType, certificateId, default);
-        }
-
-        /// <param name="name"> Name for the IP restriction rule. </param>
-        /// <param name="description"> Describe the IP restriction rule that is being sent to the container-app. This is an optional field. </param>
-        /// <param name="ipAddressRange"> CIDR notation to match incoming IP address. </param>
-        /// <param name="action"> Allow or Deny rules to determine for incoming IP. Note: Rules can only consist of ALL Allow or ALL Deny. </param>
-        /// <returns> A new <see cref="Models.ContainerAppIPSecurityRestrictionRule"/> instance for mocking. </returns>
-        public static ContainerAppIPSecurityRestrictionRule ContainerAppIPSecurityRestrictionRule(string name = default, string description = default, string ipAddressRange = default, ContainerAppIPRuleAction action = default)
-        {
-            return new ContainerAppIPSecurityRestrictionRule(name, description, ipAddressRange, action, default);
-        }
-
+        /// <summary> Cross-Origin-Resource-Sharing policy. </summary>
         /// <param name="allowedOrigins"> Specifies the content for the access-control-allow-origins header. </param>
         /// <param name="allowedMethods"> Specifies the content for the access-control-allow-methods header. </param>
         /// <param name="allowedHeaders"> Specifies the content for the access-control-allow-headers header. </param>
@@ -558,102 +392,20 @@ namespace Azure.ResourceManager.AppContainers.Models
             exposeHeaders ??= new ChangeTrackingList<string>();
 
             return new ContainerAppCorsPolicy(
-                (allowedOrigins ?? new ChangeTrackingList<string>()).ToList(),
-                (allowedMethods ?? new ChangeTrackingList<string>()).ToList(),
-                (allowedHeaders ?? new ChangeTrackingList<string>()).ToList(),
-                (exposeHeaders ?? new ChangeTrackingList<string>()).ToList(),
+                allowedOrigins.ToList(),
+                allowedMethods.ToList(),
+                allowedHeaders.ToList(),
+                exposeHeaders.ToList(),
                 maxAge,
                 allowCredentials,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <param name="external"> Specifies whether the app port is accessible outside of the environment. </param>
-        /// <param name="targetPort"> Specifies the port user's container listens on. </param>
-        /// <param name="exposedPort"> Specifies the exposed port for the target port. If not specified, it defaults to target port. </param>
-        /// <returns> A new <see cref="Models.IngressPortMapping"/> instance for mocking. </returns>
-        public static IngressPortMapping IngressPortMapping(bool external = default, int targetPort = default, int? exposedPort = default)
-        {
-            return new IngressPortMapping(external, targetPort, exposedPort, default);
-        }
-
-        /// <param name="server"> Container Registry Server. </param>
-        /// <param name="username"> Container Registry Username. </param>
-        /// <param name="passwordSecretRef"> The name of the Secret that contains the registry login password. </param>
-        /// <param name="identity"> A Managed Identity to use to authenticate with Azure Container Registry. For user-assigned identities, use the full user-assigned identity Resource ID. For system-assigned identities, use 'system'. </param>
-        /// <returns> A new <see cref="Models.ContainerAppRegistryCredentials"/> instance for mocking. </returns>
-        public static ContainerAppRegistryCredentials ContainerAppRegistryCredentials(string server = default, string username = default, string passwordSecretRef = default, string identity = default)
-        {
-            return new ContainerAppRegistryCredentials(server, username, passwordSecretRef, identity, default);
-        }
-
-        /// <param name="isEnabled"> Boolean indicating if the Dapr side car is enabled. </param>
-        /// <param name="appId"> Dapr application identifier. </param>
-        /// <param name="appProtocol"> Tells Dapr which protocol your application is using. Valid options are http and grpc. Default is http. </param>
-        /// <param name="appPort"> Tells Dapr which port your application is listening on. </param>
-        /// <param name="httpReadBufferSize"> Dapr max size of http header read buffer in KB to handle when sending multi-KB headers. Default is 65KB. </param>
-        /// <param name="httpMaxRequestSize"> Increasing max size of request body http and grpc servers parameter in MB to handle uploading of big files. Default is 4 MB. </param>
-        /// <param name="logLevel"> Sets the log level for the Dapr sidecar. Allowed values are debug, info, warn, error. Default is info. </param>
-        /// <param name="isApiLoggingEnabled"> Enables API logging for the Dapr sidecar. </param>
-        /// <param name="appHealth"> Dapr application health check configuration. </param>
-        /// <param name="maxConcurrency"> Maximum number of concurrent requests, events handled by the Dapr sidecar. </param>
-        /// <returns> A new <see cref="Models.ContainerAppDaprConfiguration"/> instance for mocking. </returns>
-        public static ContainerAppDaprConfiguration ContainerAppDaprConfiguration(bool? isEnabled = default, string appId = default, ContainerAppProtocol? appProtocol = default, int? appPort = default, int? httpReadBufferSize = default, int? httpMaxRequestSize = default, ContainerAppDaprLogLevel? logLevel = default, bool? isApiLoggingEnabled = default, DaprAppHealth appHealth = default, int? maxConcurrency = default)
-        {
-            return new ContainerAppDaprConfiguration(
-                isEnabled,
-                appId,
-                appProtocol,
-                appPort,
-                httpReadBufferSize,
-                httpMaxRequestSize,
-                logLevel,
-                isApiLoggingEnabled,
-                appHealth,
-                maxConcurrency,
-                default);
-        }
-
-        /// <param name="isEnabled"> Boolean indicating if the health probe is enabled. </param>
-        /// <param name="path"> Path for the health probe. </param>
-        /// <param name="probeIntervalSeconds"> Interval for the health probe in seconds. </param>
-        /// <param name="probeTimeoutMilliseconds"> Timeout for the health probe in milliseconds. </param>
-        /// <param name="threshold"> Threshold for the health probe. </param>
-        /// <returns> A new <see cref="Models.DaprAppHealth"/> instance for mocking. </returns>
-        public static DaprAppHealth DaprAppHealth(bool? isEnabled = default, string path = default, int? probeIntervalSeconds = default, int? probeTimeoutMilliseconds = default, int? threshold = default)
-        {
-            return new DaprAppHealth(
-                isEnabled,
-                path,
-                probeIntervalSeconds,
-                probeTimeoutMilliseconds,
-                threshold,
-                default);
-        }
-
-        /// <param name="enabled"> Enable java agent injection for the java app. </param>
-        /// <param name="loggingLoggerSettings"> Settings of the logger for the java app. </param>
-        /// <returns> A new <see cref="Models.ContainerAppRuntimeJavaAgent"/> instance for mocking. </returns>
-        public static ContainerAppRuntimeJavaAgent ContainerAppRuntimeJavaAgent(bool? enabled = default, IEnumerable<ContainerAppJavaLoggerSetting> loggingLoggerSettings = default)
-        {
-            return new ContainerAppRuntimeJavaAgent(enabled, loggingLoggerSettings is null ? default : new RuntimeJavaJavaAgentLogging((loggingLoggerSettings ?? new ChangeTrackingList<ContainerAppJavaLoggerSetting>()).ToList(), default), default);
-        }
-
-        /// <param name="logger"> Logger name. </param>
-        /// <param name="level"> The specified logger's log level. </param>
-        /// <returns> A new <see cref="Models.ContainerAppJavaLoggerSetting"/> instance for mocking. </returns>
-        public static ContainerAppJavaLoggerSetting ContainerAppJavaLoggerSetting(string logger = default, ContainerAppJavaLoggerLevel level = default)
-        {
-            return new ContainerAppJavaLoggerSetting(logger, level, default);
-        }
-
-        /// <param name="identity"> The resource ID of a user-assigned managed identity that is assigned to the Container App, or 'system' for system-assigned identity. </param>
-        /// <param name="lifecycle"> Use to select the lifecycle stages of a Container App during which the Managed Identity should be available. </param>
-        /// <returns> A new <see cref="Models.ContainerAppIdentitySettings"/> instance for mocking. </returns>
-        public static ContainerAppIdentitySettings ContainerAppIdentitySettings(string identity = default, ContainerAppIdentitySettingsLifeCycle? lifecycle = default)
-        {
-            return new ContainerAppIdentitySettings(identity, lifecycle, default);
-        }
-
+        /// <summary>
+        /// Container App versioned application definition.
+        /// Defines the desired state of an immutable revision.
+        /// Any changes to this section Will result in a new revision being created
+        /// </summary>
         /// <param name="revisionSuffix"> User friendly suffix that is appended to the revision name. </param>
         /// <param name="terminationGracePeriodSeconds"> Optional duration in seconds the Container App Instance needs to terminate gracefully. Value must be non-negative integer. The value zero indicates stop immediately via the kill signal (no opportunity to shut down). If this value is nil, the default grace period will be used instead. Set this value longer than the expected cleanup time for your process. Defaults to 30 seconds. </param>
         /// <param name="initContainers"> List of specialized containers that run before app containers. </param>
@@ -672,14 +424,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppTemplate(
                 revisionSuffix,
                 terminationGracePeriodSeconds,
-                (initContainers ?? new ChangeTrackingList<ContainerAppInitContainer>()).ToList(),
-                (containers ?? new ChangeTrackingList<ContainerAppContainer>()).ToList(),
+                initContainers.ToList(),
+                containers.ToList(),
                 scale,
-                (volumes ?? new ChangeTrackingList<ContainerAppVolume>()).ToList(),
-                (serviceBinds ?? new ChangeTrackingList<ContainerAppServiceBind>()).ToList(),
-                default);
+                volumes.ToList(),
+                serviceBinds.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Container App init container definition. </summary>
         /// <param name="image"> Container image tag. </param>
         /// <param name="imageType"> The type of the image. Set to CloudBuild to let the system manages the image, where user will not be able to update image through image field. Set to ContainerImage for user provided image. </param>
         /// <param name="name"> Custom container name. </param>
@@ -700,14 +453,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 image,
                 imageType,
                 name,
-                (command ?? new ChangeTrackingList<string>()).ToList(),
-                (args ?? new ChangeTrackingList<string>()).ToList(),
-                (env ?? new ChangeTrackingList<ContainerAppEnvironmentVariable>()).ToList(),
+                command.ToList(),
+                args.ToList(),
+                env.ToList(),
                 resources,
-                (volumeMounts ?? new ChangeTrackingList<ContainerAppVolumeMount>()).ToList(),
-                default);
+                volumeMounts.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Container App base container definition. </summary>
         /// <param name="image"> Container image tag. </param>
         /// <param name="imageType"> The type of the image. Set to CloudBuild to let the system manages the image, where user will not be able to update image through image field. Set to ContainerImage for user provided image. </param>
         /// <param name="name"> Custom container name. </param>
@@ -728,14 +482,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 image,
                 imageType,
                 name,
-                (command ?? new ChangeTrackingList<string>()).ToList(),
-                (args ?? new ChangeTrackingList<string>()).ToList(),
-                (env ?? new ChangeTrackingList<ContainerAppEnvironmentVariable>()).ToList(),
+                command.ToList(),
+                args.ToList(),
+                env.ToList(),
                 resources,
-                (volumeMounts ?? new ChangeTrackingList<ContainerAppVolumeMount>()).ToList(),
-                default);
+                volumeMounts.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Container App container resource requirements. </summary>
         /// <param name="cpu"> Required CPU in cores, e.g. 0.5. </param>
         /// <param name="memory"> Required memory, e.g. "250Mb". </param>
         /// <param name="ephemeralStorage"> Ephemeral Storage, e.g. "1Gi". </param>
@@ -743,18 +498,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <returns> A new <see cref="Models.AppContainerResources"/> instance for mocking. </returns>
         public static AppContainerResources AppContainerResources(double? cpu = default, string memory = default, string ephemeralStorage = default, double? gpu = default)
         {
-            return new AppContainerResources(cpu, memory, ephemeralStorage, gpu, default);
+            return new AppContainerResources(cpu, memory, ephemeralStorage, gpu, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="volumeName"> This must match the Name of a Volume. </param>
-        /// <param name="mountPath"> Path within the container at which the volume should be mounted.Must not contain ':'. </param>
-        /// <param name="subPath"> Path within the volume from which the container's volume should be mounted. Defaults to "" (volume's root). </param>
-        /// <returns> A new <see cref="Models.ContainerAppVolumeMount"/> instance for mocking. </returns>
-        public static ContainerAppVolumeMount ContainerAppVolumeMount(string volumeName = default, string mountPath = default, string subPath = default)
-        {
-            return new ContainerAppVolumeMount(volumeName, mountPath, subPath, default);
-        }
-
+        /// <summary> Container App container definition. </summary>
         /// <param name="image"> Container image tag. </param>
         /// <param name="imageType"> The type of the image. Set to CloudBuild to let the system manages the image, where user will not be able to update image through image field. Set to ContainerImage for user provided image. </param>
         /// <param name="name"> Custom container name. </param>
@@ -777,40 +524,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                 image,
                 imageType,
                 name,
-                (command ?? new ChangeTrackingList<string>()).ToList(),
-                (args ?? new ChangeTrackingList<string>()).ToList(),
-                (env ?? new ChangeTrackingList<ContainerAppEnvironmentVariable>()).ToList(),
+                command.ToList(),
+                args.ToList(),
+                env.ToList(),
                 resources,
-                (volumeMounts ?? new ChangeTrackingList<ContainerAppVolumeMount>()).ToList(),
-                default,
-                (probes ?? new ChangeTrackingList<ContainerAppProbe>()).ToList());
+                volumeMounts.ToList(),
+                additionalBinaryDataProperties: null,
+                probes.ToList());
         }
 
-        /// <param name="failureThreshold"> Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1. Maximum value is 10. </param>
-        /// <param name="httpGet"> HTTPGet specifies the http request to perform. </param>
-        /// <param name="initialDelaySeconds"> Number of seconds after the container has started before liveness probes are initiated. Minimum value is 1. Maximum value is 60. </param>
-        /// <param name="periodSeconds"> How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1. Maximum value is 240. </param>
-        /// <param name="successThreshold"> Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1. Maximum value is 10. </param>
-        /// <param name="tcpSocket"> TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported. </param>
-        /// <param name="terminationGracePeriodSeconds"> Optional duration in seconds the pod needs to terminate gracefully upon probe failure. The grace period is the duration in seconds after the processes running in the pod are sent a termination signal and the time when the processes are forcibly halted with a kill signal. Set this value longer than the expected cleanup time for your process. If this value is nil, the pod's terminationGracePeriodSeconds will be used. Otherwise, this value overrides the value provided by the pod spec. Value must be non-negative integer. The value zero indicates stop immediately via the kill signal (no opportunity to shut down). This is an alpha field and requires enabling ProbeTerminationGracePeriod feature gate. Maximum value is 3600 seconds (1 hour). </param>
-        /// <param name="timeoutSeconds"> Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. Maximum value is 240. </param>
-        /// <param name="probeType"> The type of probe. </param>
-        /// <returns> A new <see cref="Models.ContainerAppProbe"/> instance for mocking. </returns>
-        public static ContainerAppProbe ContainerAppProbe(int? failureThreshold = default, ContainerAppHttpRequestInfo httpGet = default, int? initialDelaySeconds = default, int? periodSeconds = default, int? successThreshold = default, ContainerAppTcpSocketRequestInfo tcpSocket = default, long? terminationGracePeriodSeconds = default, int? timeoutSeconds = default, ContainerAppProbeType? probeType = default)
-        {
-            return new ContainerAppProbe(
-                failureThreshold,
-                httpGet,
-                initialDelaySeconds,
-                periodSeconds,
-                successThreshold,
-                tcpSocket,
-                terminationGracePeriodSeconds,
-                timeoutSeconds,
-                probeType,
-                default);
-        }
-
+        /// <summary> HTTPGet specifies the http request to perform. </summary>
         /// <param name="host"> Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead. </param>
         /// <param name="httpHeaders"> Custom headers to set in the request. HTTP allows repeated headers. </param>
         /// <param name="path"> Path to access on the HTTP server. </param>
@@ -823,29 +546,14 @@ namespace Azure.ResourceManager.AppContainers.Models
 
             return new ContainerAppHttpRequestInfo(
                 host,
-                (httpHeaders ?? new ChangeTrackingList<ContainerAppHttpHeaderInfo>()).ToList(),
+                httpHeaders.ToList(),
                 path,
                 port,
                 scheme,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <param name="name"> The header field name. </param>
-        /// <param name="value"> The header field value. </param>
-        /// <returns> A new <see cref="Models.ContainerAppHttpHeaderInfo"/> instance for mocking. </returns>
-        public static ContainerAppHttpHeaderInfo ContainerAppHttpHeaderInfo(string name = default, string value = default)
-        {
-            return new ContainerAppHttpHeaderInfo(name, value, default);
-        }
-
-        /// <param name="host"> Optional: Host name to connect to, defaults to the pod IP. </param>
-        /// <param name="port"> Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. </param>
-        /// <returns> A new <see cref="Models.ContainerAppTcpSocketRequestInfo"/> instance for mocking. </returns>
-        public static ContainerAppTcpSocketRequestInfo ContainerAppTcpSocketRequestInfo(string host = default, int port = default)
-        {
-            return new ContainerAppTcpSocketRequestInfo(host, port, default);
-        }
-
+        /// <summary> Container App scaling configurations. </summary>
         /// <param name="minReplicas"> Optional. Minimum number of container replicas. </param>
         /// <param name="maxReplicas"> Optional. Maximum number of container replicas. Defaults to 10 if not set. </param>
         /// <param name="cooldownPeriod"> Optional. KEDA Cooldown Period. Defaults to 300 seconds if not set. </param>
@@ -861,27 +569,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 maxReplicas,
                 cooldownPeriod,
                 pollingInterval,
-                (rules ?? new ChangeTrackingList<ContainerAppScaleRule>()).ToList(),
-                default);
+                rules.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <param name="name"> Scale Rule Name. </param>
-        /// <param name="azureQueue"> Azure Queue based scaling. </param>
-        /// <param name="custom"> Custom scale rule. </param>
-        /// <param name="http"> HTTP requests based scaling. </param>
-        /// <param name="tcp"> Tcp requests based scaling. </param>
-        /// <returns> A new <see cref="Models.ContainerAppScaleRule"/> instance for mocking. </returns>
-        public static ContainerAppScaleRule ContainerAppScaleRule(string name = default, ContainerAppQueueScaleRule azureQueue = default, ContainerAppCustomScaleRule custom = default, ContainerAppHttpScaleRule http = default, ContainerAppTcpScaleRule tcp = default)
-        {
-            return new ContainerAppScaleRule(
-                name,
-                azureQueue,
-                custom,
-                http,
-                tcp,
-                default);
-        }
-
+        /// <summary> Container App container Azure Queue based scaling rule. </summary>
         /// <param name="accountName"> Storage account name. required if using managed identity to authenticate. </param>
         /// <param name="queueName"> Queue name. </param>
         /// <param name="queueLength"> Queue length. </param>
@@ -896,19 +588,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                 accountName,
                 queueName,
                 queueLength,
-                (auth ?? new ChangeTrackingList<ContainerAppScaleRuleAuth>()).ToList(),
+                auth.ToList(),
                 identity,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <param name="secretRef"> Name of the secret from which to pull the auth params. </param>
-        /// <param name="triggerParameter"> Trigger Parameter that uses the secret. </param>
-        /// <returns> A new <see cref="Models.ContainerAppScaleRuleAuth"/> instance for mocking. </returns>
-        public static ContainerAppScaleRuleAuth ContainerAppScaleRuleAuth(string secretRef = default, string triggerParameter = default)
-        {
-            return new ContainerAppScaleRuleAuth(secretRef, triggerParameter, default);
-        }
-
+        /// <summary> Container App container Custom scaling rule. </summary>
         /// <param name="customScaleRuleType">
         /// Type of the custom scale rule
         /// eg: azure-servicebus, redis etc.
@@ -922,9 +607,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             metadata ??= new ChangeTrackingDictionary<string, string>();
             auth ??= new ChangeTrackingList<ContainerAppScaleRuleAuth>();
 
-            return new ContainerAppCustomScaleRule(customScaleRuleType, metadata ?? new ChangeTrackingDictionary<string, string>(), (auth ?? new ChangeTrackingList<ContainerAppScaleRuleAuth>()).ToList(), identity, default);
+            return new ContainerAppCustomScaleRule(customScaleRuleType, metadata, auth.ToList(), identity, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Container App container Http scaling rule. </summary>
         /// <param name="metadata"> Metadata properties to describe http scale rule. </param>
         /// <param name="auth"> Authentication secrets for the custom scale rule. </param>
         /// <param name="identity"> The resource ID of a user-assigned managed identity that is assigned to the Container App, or 'system' for system-assigned identity. </param>
@@ -934,9 +620,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             metadata ??= new ChangeTrackingDictionary<string, string>();
             auth ??= new ChangeTrackingList<ContainerAppScaleRuleAuth>();
 
-            return new ContainerAppHttpScaleRule(metadata ?? new ChangeTrackingDictionary<string, string>(), (auth ?? new ChangeTrackingList<ContainerAppScaleRuleAuth>()).ToList(), identity, default);
+            return new ContainerAppHttpScaleRule(metadata, auth.ToList(), identity, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Container App container Tcp scaling rule. </summary>
         /// <param name="metadata"> Metadata properties to describe tcp scale rule. </param>
         /// <param name="auth"> Authentication secrets for the tcp scale rule. </param>
         /// <param name="identity"> The resource ID of a user-assigned managed identity that is assigned to the Container App, or 'system' for system-assigned identity. </param>
@@ -946,9 +633,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             metadata ??= new ChangeTrackingDictionary<string, string>();
             auth ??= new ChangeTrackingList<ContainerAppScaleRuleAuth>();
 
-            return new ContainerAppTcpScaleRule(metadata ?? new ChangeTrackingDictionary<string, string>(), (auth ?? new ChangeTrackingList<ContainerAppScaleRuleAuth>()).ToList(), identity, default);
+            return new ContainerAppTcpScaleRule(metadata, auth.ToList(), identity, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Volume definitions for the Container App. </summary>
         /// <param name="name"> Volume name. </param>
         /// <param name="storageType"> Storage type for the volume. If not provided, use EmptyDir. </param>
         /// <param name="storageName"> Name of storage resource. No need to provide for EmptyDir and Secret. </param>
@@ -963,19 +651,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 storageType,
                 storageName,
-                (secrets ?? new ChangeTrackingList<SecretVolumeItem>()).ToList(),
+                secrets.ToList(),
                 mountOptions,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <param name="secretRef"> Name of the Container App secret from which to pull the secret value. </param>
-        /// <param name="path"> Path to project secret to. If no path is provided, path defaults to name of secret listed in secretRef. </param>
-        /// <returns> A new <see cref="Models.SecretVolumeItem"/> instance for mocking. </returns>
-        public static SecretVolumeItem SecretVolumeItem(string secretRef = default, string path = default)
-        {
-            return new SecretVolumeItem(secretRef, path, default);
-        }
-
+        /// <summary> Configuration to bind a ContainerApp to a dev ContainerApp Service. </summary>
         /// <param name="serviceId"> Resource id of the target service. </param>
         /// <param name="name"> Name of the service bind. </param>
         /// <param name="clientType"> Type of the client to be used to connect to the service. </param>
@@ -985,17 +666,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             customizedKeys ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ContainerAppServiceBind(serviceId, name, clientType, customizedKeys ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new ContainerAppServiceBind(serviceId, name, clientType, customizedKeys, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="name"> The name of the extended location. </param>
-        /// <param name="extendedLocationType"> The type of the extended location. </param>
-        /// <returns> A new <see cref="Models.ContainerAppExtendedLocation"/> instance for mocking. </returns>
-        public static ContainerAppExtendedLocation ContainerAppExtendedLocation(string name = default, ContainerAppExtendedLocationType? extendedLocationType = default)
-        {
-            return new ContainerAppExtendedLocation(name, extendedLocationType, default);
-        }
-
+        /// <summary> Custom domain analysis. </summary>
         /// <param name="hostName"> Host name that was analyzed. </param>
         /// <param name="isHostnameAlreadyVerified"> &lt;code&gt;true&lt;/code&gt; if hostname is already verified; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="customDomainVerificationTest"> DNS verification test result. </param>
@@ -1025,14 +699,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 hasConflictOnManagedEnvironment,
                 conflictWithEnvironmentCustomDomain,
                 conflictingContainerAppResourceId,
-                (cNameRecords ?? new ChangeTrackingList<string>()).ToList(),
-                (txtRecords ?? new ChangeTrackingList<string>()).ToList(),
-                (aRecords ?? new ChangeTrackingList<string>()).ToList(),
-                (alternateCNameRecords ?? new ChangeTrackingList<string>()).ToList(),
-                (alternateTxtRecords ?? new ChangeTrackingList<string>()).ToList(),
-                default);
+                cNameRecords.ToList(),
+                txtRecords.ToList(),
+                aRecords.ToList(),
+                alternateCNameRecords.ToList(),
+                alternateTxtRecords.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Raw failure information if DNS verification fails. </summary>
         /// <param name="code"> Standardized string to programmatically identify the error. </param>
         /// <param name="message"> Detailed error description and debugging information. </param>
         /// <param name="target"> Detailed error description and debugging information. </param>
@@ -1042,18 +717,20 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             details ??= new ChangeTrackingList<ContainerAppCustomDomainVerificationFailureInfoDetailsItem>();
 
-            return new ContainerAppCustomDomainVerificationFailureInfo(code, message, target, (details ?? new ChangeTrackingList<ContainerAppCustomDomainVerificationFailureInfoDetailsItem>()).ToList(), default);
+            return new ContainerAppCustomDomainVerificationFailureInfo(code, message, target, details.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Detailed errors. </summary>
         /// <param name="code"> Standardized string to programmatically identify the error. </param>
         /// <param name="message"> Detailed error description and debugging information. </param>
         /// <param name="target"> Detailed error description and debugging information. </param>
         /// <returns> A new <see cref="Models.ContainerAppCustomDomainVerificationFailureInfoDetailsItem"/> instance for mocking. </returns>
         public static ContainerAppCustomDomainVerificationFailureInfoDetailsItem ContainerAppCustomDomainVerificationFailureInfoDetailsItem(string code = default, string message = default, string target = default)
         {
-            return new ContainerAppCustomDomainVerificationFailureInfoDetailsItem(code, message, target, default);
+            return new ContainerAppCustomDomainVerificationFailureInfoDetailsItem(code, message, target, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Container App Secret. </summary>
         /// <param name="name"> Secret Name. </param>
         /// <param name="value"> Secret Value. </param>
         /// <param name="identity"> Resource ID of a managed identity to authenticate with Azure Key Vault, or System to use a system-assigned identity. </param>
@@ -1061,7 +738,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <returns> A new <see cref="Models.ContainerAppSecret"/> instance for mocking. </returns>
         public static ContainerAppSecret ContainerAppSecret(string name = default, string value = default, string identity = default, Uri keyVaultUri = default)
         {
-            return new ContainerAppSecret(name, value, identity, keyVaultUri, default);
+            return new ContainerAppSecret(name, value, identity, keyVaultUri, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1082,10 +759,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
-                token is null && expireOn is null ? default : new ContainerAppAuthTokenProperties(token, expireOn, default),
-                default);
+                token is null && expireOn is null ? default : new ContainerAppAuthTokenProperties(token, expireOn, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1105,24 +782,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 provisioningState is null && buildStatus is null && destinationContainerRegistry is null && configuration is null && logStreamEndpoint is null ? default : new ContainerAppsBuildProperties(
                     provisioningState,
                     buildStatus,
                     destinationContainerRegistry,
                     configuration,
                     logStreamEndpoint,
-                    default),
-                default);
+                    null));
         }
 
-        /// <param name="server"> Login server of the container registry that the final image should be uploaded to. Builder resource needs to have this container registry defined along with an identity to use to access it. </param>
-        /// <param name="image"> Full name that the final image should be uploaded as, including both image name and tag. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistryWithCustomImage"/> instance for mocking. </returns>
-        public static ContainerRegistryWithCustomImage ContainerRegistryWithCustomImage(string server = default, string image = default)
-        {
-            return new ContainerRegistryWithCustomImage(server, image, default);
-        }
-
+        /// <summary> Configuration of the build. </summary>
         /// <param name="baseOs"> Base OS used to build and run the app. </param>
         /// <param name="platform"> Platform to be used to build and run the app. </param>
         /// <param name="platformVersion"> Platform version to be used to build and run the app. </param>
@@ -1138,11 +808,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                 baseOs,
                 platform,
                 platformVersion,
-                (environmentVariables ?? new ChangeTrackingList<EnvironmentVariable>()).ToList(),
-                (preBuildSteps ?? new ChangeTrackingList<PreBuildStep>()).ToList(),
-                default);
+                environmentVariables.ToList(),
+                preBuildSteps.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Model representing a pre-build step. </summary>
         /// <param name="description"> Description of the pre-build step. </param>
         /// <param name="scripts"> List of custom commands to run. </param>
         /// <param name="httpGet"> Http get request to send before the build. </param>
@@ -1151,9 +822,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             scripts ??= new ChangeTrackingList<string>();
 
-            return new PreBuildStep(description, (scripts ?? new ChangeTrackingList<string>()).ToList(), httpGet, default);
+            return new PreBuildStep(description, scripts.ToList(), httpGet, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Model representing a http get request. </summary>
         /// <param name="uri"> URL to make HTTP GET request against. </param>
         /// <param name="fileName"> Name of the file that the request should be saved to. </param>
         /// <param name="headers"> List of headers to send with the request. </param>
@@ -1162,7 +834,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             headers ??= new ChangeTrackingList<string>();
 
-            return new HttpGet(uri, fileName, (headers ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new HttpGet(uri, fileName, headers.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1181,8 +853,8 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
-                invokeUrlTemplate is null && triggerType is null && language is null && isDisabled is null ? default : new ContainerAppsFunctionProperties(invokeUrlTemplate, triggerType, language, isDisabled, default),
-                default);
+                additionalBinaryDataProperties: null,
+                invokeUrlTemplate is null && triggerType is null && language is null && isDisabled is null ? default : new ContainerAppsFunctionProperties(invokeUrlTemplate, triggerType, language, isDisabled, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1216,6 +888,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 createdOn is null && lastActiveOn is null && fqdn is null && template is null && isActive is null && replicas is null && trafficWeight is null && labels is null && provisioningError is null && healthState is null && provisioningState is null && runningState is null ? default : new RevisionProperties(
                     createdOn,
                     lastActiveOn,
@@ -1229,8 +902,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     healthState,
                     provisioningState,
                     runningState,
-                    default),
-                default);
+                    null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1246,10 +918,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
-                labelHistoryRecords is null ? default : new LabelHistoryProperties((labelHistoryRecords ?? new ChangeTrackingList<LabelHistoryRecordItem>()).ToList(), default),
-                default);
+                additionalBinaryDataProperties: null,
+                labelHistoryRecords is null ? default : new LabelHistoryProperties((labelHistoryRecords ?? new ChangeTrackingList<LabelHistoryRecordItem>()).ToList(), null));
         }
 
+        /// <summary> Container App Label History Item resource specific properties. </summary>
         /// <param name="revision"> Container App revision name that label was applied to. </param>
         /// <param name="startedOn"> Timestamp describing when the label was applied to the revision. </param>
         /// <param name="stoppedOn"> Timestamp describing when the label was removed from the revision. Only meaningful when the label is currently applied to the revision. </param>
@@ -1257,9 +930,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <returns> A new <see cref="Models.LabelHistoryRecordItem"/> instance for mocking. </returns>
         public static LabelHistoryRecordItem LabelHistoryRecordItem(string revision = default, DateTimeOffset? startedOn = default, DateTimeOffset? stoppedOn = default, Status? status = default)
         {
-            return new LabelHistoryRecordItem(revision, startedOn, stoppedOn, status, default);
+            return new LabelHistoryRecordItem(revision, startedOn, stoppedOn, status, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Container App Patch. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1273,10 +947,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
-                properties,
-                default);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
+        /// <summary> Top level properties that describes current states of the patch resource. </summary>
         /// <param name="targetEnvironmentId"> The Azure resource id of the target environment for the patch. </param>
         /// <param name="targetContainerAppId"> The Azure resource id of the target container app for the patch. </param>
         /// <param name="targetRevisionId"> The Azure resource id of the target revision for the patch. </param>
@@ -1296,10 +971,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 patchApplyStatus,
                 createdOn,
                 lastModifiedOn,
-                (patchDetails ?? new ChangeTrackingList<PatchDetails>()).ToList(),
-                default);
+                patchDetails.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The detailed info of patch operation performing when applying a patch. </summary>
         /// <param name="targetContainerName"> The name of the target container for the patch. </param>
         /// <param name="targetImage"> The name of the target image for the patch. </param>
         /// <param name="lastDetectionOn"> The UTC timestamp that describes the latest detection was done. </param>
@@ -1320,32 +996,27 @@ namespace Azure.ResourceManager.AppContainers.Models
                 newLayer,
                 oldLayer,
                 patchType,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> New layer update details in the target image. </summary>
         /// <param name="name"> The details of the new layer for the target image. </param>
         /// <param name="frameworkAndVersion"> The framework and its version in the new run image for the target image. </param>
         /// <param name="osAndVersion"> The OS name and its version in the new run image for the target image. </param>
         /// <returns> A new <see cref="Models.PatchDetailsNewLayer"/> instance for mocking. </returns>
         public static PatchDetailsNewLayer PatchDetailsNewLayer(string name = default, string frameworkAndVersion = default, string osAndVersion = default)
         {
-            return new PatchDetailsNewLayer(name, frameworkAndVersion, osAndVersion, default);
+            return new PatchDetailsNewLayer(name, frameworkAndVersion, osAndVersion, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The old layer details in the target image. </summary>
         /// <param name="name"> The details of the old layer for the target image. </param>
         /// <param name="frameworkAndVersion"> The framework and its version in the old run image for the target image. </param>
         /// <param name="osAndVersion"> The OS name and its version in the old run image for the target image. </param>
         /// <returns> A new <see cref="Models.PatchDetailsOldLayer"/> instance for mocking. </returns>
         public static PatchDetailsOldLayer PatchDetailsOldLayer(string name = default, string frameworkAndVersion = default, string osAndVersion = default)
         {
-            return new PatchDetailsOldLayer(name, frameworkAndVersion, osAndVersion, default);
-        }
-
-        /// <param name="shouldSkip"> The flag to indicate whether to skip the patch or not. </param>
-        /// <returns> A new <see cref="Models.PatchSkipConfig"/> instance for mocking. </returns>
-        public static PatchSkipConfig PatchSkipConfig(bool? shouldSkip = default)
-        {
-            return new PatchSkipConfig(shouldSkip, default);
+            return new PatchDetailsOldLayer(name, frameworkAndVersion, osAndVersion, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1365,16 +1036,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 createdOn is null && runningState is null && runningStateDetails is null && containers is null && initContainers is null ? default : new ReplicaProperties(
                     createdOn,
                     runningState,
                     runningStateDetails,
                     (containers ?? new ChangeTrackingList<ContainerAppReplicaContainer>()).ToList(),
                     (initContainers ?? new ChangeTrackingList<ContainerAppReplicaContainer>()).ToList(),
-                    default),
-                default);
+                    null));
         }
 
+        /// <summary> Container object under Container App Revision Replica. </summary>
         /// <param name="name"> The Name of the Container. </param>
         /// <param name="containerId"> The Id of the Container. </param>
         /// <param name="isReady"> The container ready status. </param>
@@ -1399,7 +1071,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 logStreamEndpoint,
                 execEndpoint,
                 debugEndpoint,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1418,26 +1090,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
-                componentType is null && provisioningState is null && configurations is null && serviceBinds is null ? default : new DotNetComponentProperties(componentType, provisioningState, (configurations ?? new ChangeTrackingList<DotNetComponentConfigurationProperty>()).ToList(), (serviceBinds ?? new ChangeTrackingList<DotNetComponentServiceBind>()).ToList(), default),
-                default);
+                additionalBinaryDataProperties: null,
+                componentType is null && provisioningState is null && configurations is null && serviceBinds is null ? default : new DotNetComponentProperties(componentType, provisioningState, (configurations ?? new ChangeTrackingList<DotNetComponentConfigurationProperty>()).ToList(), (serviceBinds ?? new ChangeTrackingList<DotNetComponentServiceBind>()).ToList(), null));
         }
 
-        /// <param name="propertyName"> The name of the property. </param>
-        /// <param name="value"> The value of the property. </param>
-        /// <returns> A new <see cref="Models.DotNetComponentConfigurationProperty"/> instance for mocking. </returns>
-        public static DotNetComponentConfigurationProperty DotNetComponentConfigurationProperty(string propertyName = default, string value = default)
-        {
-            return new DotNetComponentConfigurationProperty(propertyName, value, default);
-        }
-
-        /// <param name="name"> Name of the service bind. </param>
-        /// <param name="serviceId"> Resource id of the target service. </param>
-        /// <returns> A new <see cref="Models.DotNetComponentServiceBind"/> instance for mocking. </returns>
-        public static DotNetComponentServiceBind DotNetComponentServiceBind(string name = default, ResourceIdentifier serviceId = default)
-        {
-            return new DotNetComponentServiceBind(name, serviceId, default);
-        }
-
+        /// <summary> Java Component. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1451,10 +1108,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
-                properties,
-                default);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
+        /// <summary>
+        /// Java Component common properties.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SpringCloudGatewayComponent"/>, <see cref="Models.SpringBootAdminComponent"/>, <see cref="Models.NacosComponent"/>, <see cref="Models.SpringCloudEurekaComponent"/>, and <see cref="Models.SpringCloudConfigComponent"/>.
+        /// </summary>
         /// <param name="componentType"> Type of the Java Component. </param>
         /// <param name="provisioningState"> Provisioning state of the Java Component. </param>
         /// <param name="configurations"> List of Java Components configuration properties. </param>
@@ -1467,36 +1128,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             serviceBinds ??= new ChangeTrackingList<JavaComponentServiceBind>();
 
             return new UnknownJavaComponentProperties(
-                default,
+                new JavaComponentType(componentType),
                 provisioningState,
-                (configurations ?? new ChangeTrackingList<JavaComponentConfigurationProperty>()).ToList(),
+                configurations.ToList(),
                 scale,
-                (serviceBinds ?? new ChangeTrackingList<JavaComponentServiceBind>()).ToList(),
-                default);
-        }
-
-        /// <param name="propertyName"> The name of the property. </param>
-        /// <param name="value"> The value of the property. </param>
-        /// <returns> A new <see cref="Models.JavaComponentConfigurationProperty"/> instance for mocking. </returns>
-        public static JavaComponentConfigurationProperty JavaComponentConfigurationProperty(string propertyName = default, string value = default)
-        {
-            return new JavaComponentConfigurationProperty(propertyName, value, default);
-        }
-
-        /// <param name="minReplicas"> Optional. Minimum number of Java component replicas. Defaults to 1 if not set. </param>
-        /// <param name="maxReplicas"> Optional. Maximum number of Java component replicas. </param>
-        /// <returns> A new <see cref="Models.JavaComponentPropertiesScale"/> instance for mocking. </returns>
-        public static JavaComponentPropertiesScale JavaComponentPropertiesScale(int? minReplicas = default, int? maxReplicas = default)
-        {
-            return new JavaComponentPropertiesScale(minReplicas, maxReplicas, default);
-        }
-
-        /// <param name="name"> Name of the service bind. </param>
-        /// <param name="serviceId"> Resource id of the target service. </param>
-        /// <returns> A new <see cref="Models.JavaComponentServiceBind"/> instance for mocking. </returns>
-        public static JavaComponentServiceBind JavaComponentServiceBind(string name = default, ResourceIdentifier serviceId = default)
-        {
-            return new JavaComponentServiceBind(name, serviceId, default);
+                serviceBinds.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="provisioningState"> Provisioning state of the Java Component. </param>
@@ -1513,16 +1150,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             springCloudGatewayRoutes ??= new ChangeTrackingList<ScgRoute>();
 
             return new SpringCloudGatewayComponent(
-                default,
+                JavaComponentType.SpringCloudGateway,
                 provisioningState,
-                (configurations ?? new ChangeTrackingList<JavaComponentConfigurationProperty>()).ToList(),
+                configurations.ToList(),
                 scale,
-                (serviceBinds ?? new ChangeTrackingList<JavaComponentServiceBind>()).ToList(),
-                default,
-                ingressFqdn is null ? default : new JavaComponentIngress(ingressFqdn, default),
-                (springCloudGatewayRoutes ?? new ChangeTrackingList<ScgRoute>()).ToList());
+                serviceBinds.ToList(),
+                additionalBinaryDataProperties: null,
+                ingressFqdn is null ? default : new JavaComponentIngress(ingressFqdn, null),
+                springCloudGatewayRoutes.ToList());
         }
 
+        /// <summary> Spring Cloud Gateway route definition. </summary>
         /// <param name="id"> Id of the route. </param>
         /// <param name="uri"> Uri of the route. </param>
         /// <param name="predicates"> Predicates of the route. </param>
@@ -1537,10 +1175,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ScgRoute(
                 id,
                 uri,
-                (predicates ?? new ChangeTrackingList<string>()).ToList(),
-                (filters ?? new ChangeTrackingList<string>()).ToList(),
+                predicates.ToList(),
+                filters.ToList(),
                 order,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="provisioningState"> Provisioning state of the Java Component. </param>
@@ -1555,13 +1193,13 @@ namespace Azure.ResourceManager.AppContainers.Models
             serviceBinds ??= new ChangeTrackingList<JavaComponentServiceBind>();
 
             return new SpringBootAdminComponent(
-                default,
+                JavaComponentType.SpringBootAdmin,
                 provisioningState,
-                (configurations ?? new ChangeTrackingList<JavaComponentConfigurationProperty>()).ToList(),
+                configurations.ToList(),
                 scale,
-                (serviceBinds ?? new ChangeTrackingList<JavaComponentServiceBind>()).ToList(),
-                default,
-                ingressFqdn is null ? default : new JavaComponentIngress(ingressFqdn, default));
+                serviceBinds.ToList(),
+                additionalBinaryDataProperties: null,
+                ingressFqdn is null ? default : new JavaComponentIngress(ingressFqdn, null));
         }
 
         /// <param name="provisioningState"> Provisioning state of the Java Component. </param>
@@ -1576,13 +1214,13 @@ namespace Azure.ResourceManager.AppContainers.Models
             serviceBinds ??= new ChangeTrackingList<JavaComponentServiceBind>();
 
             return new NacosComponent(
-                default,
+                JavaComponentType.Nacos,
                 provisioningState,
-                (configurations ?? new ChangeTrackingList<JavaComponentConfigurationProperty>()).ToList(),
+                configurations.ToList(),
                 scale,
-                (serviceBinds ?? new ChangeTrackingList<JavaComponentServiceBind>()).ToList(),
-                default,
-                ingressFqdn is null ? default : new JavaComponentIngress(ingressFqdn, default));
+                serviceBinds.ToList(),
+                additionalBinaryDataProperties: null,
+                ingressFqdn is null ? default : new JavaComponentIngress(ingressFqdn, null));
         }
 
         /// <param name="provisioningState"> Provisioning state of the Java Component. </param>
@@ -1597,15 +1235,16 @@ namespace Azure.ResourceManager.AppContainers.Models
             serviceBinds ??= new ChangeTrackingList<JavaComponentServiceBind>();
 
             return new SpringCloudEurekaComponent(
-                default,
+                JavaComponentType.SpringCloudEureka,
                 provisioningState,
-                (configurations ?? new ChangeTrackingList<JavaComponentConfigurationProperty>()).ToList(),
+                configurations.ToList(),
                 scale,
-                (serviceBinds ?? new ChangeTrackingList<JavaComponentServiceBind>()).ToList(),
-                default,
-                ingressFqdn is null ? default : new JavaComponentIngress(ingressFqdn, default));
+                serviceBinds.ToList(),
+                additionalBinaryDataProperties: null,
+                ingressFqdn is null ? default : new JavaComponentIngress(ingressFqdn, null));
         }
 
+        /// <summary> Spring Cloud Config properties. </summary>
         /// <param name="provisioningState"> Provisioning state of the Java Component. </param>
         /// <param name="configurations"> List of Java Components configuration properties. </param>
         /// <param name="scale"> Java component scaling configurations. </param>
@@ -1617,14 +1256,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             serviceBinds ??= new ChangeTrackingList<JavaComponentServiceBind>();
 
             return new SpringCloudConfigComponent(
-                default,
+                JavaComponentType.SpringCloudConfig,
                 provisioningState,
-                (configurations ?? new ChangeTrackingList<JavaComponentConfigurationProperty>()).ToList(),
+                configurations.ToList(),
                 scale,
-                (serviceBinds ?? new ChangeTrackingList<JavaComponentServiceBind>()).ToList(),
-                default);
+                serviceBinds.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The workflow filter. </summary>
         /// <param name="appSettings"> Application settings of the workflow. </param>
         /// <param name="files"> Files of the app. </param>
         /// <param name="filesToDelete"> Files of the app to delete. </param>
@@ -1633,45 +1273,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             filesToDelete ??= new ChangeTrackingList<string>();
 
-            return new WorkflowArtifacts(appSettings, files, (filesToDelete ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new WorkflowArtifacts(appSettings, files, filesToDelete.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Additional workflow properties. </param>
-        /// <param name="kind"> Gets the logic app hybrid workflow kind. </param>
-        /// <returns> A new <see cref="AppContainers.LogicAppWorkflowEnvelopeData"/> instance for mocking. </returns>
-        public static LogicAppWorkflowEnvelopeData LogicAppWorkflowEnvelopeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, LogicAppWorkflowEnvelopeProperties properties = default, LogicAppWorkflowKind? kind = default)
-        {
-            return new LogicAppWorkflowEnvelopeData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                kind,
-                default);
-        }
-
-        /// <param name="files"> Gets or sets the files. </param>
-        /// <param name="flowState"> Gets or sets the state of the workflow. </param>
-        /// <param name="health"> Gets or sets workflow health. </param>
-        /// <returns> A new <see cref="Models.LogicAppWorkflowEnvelopeProperties"/> instance for mocking. </returns>
-        public static LogicAppWorkflowEnvelopeProperties LogicAppWorkflowEnvelopeProperties(BinaryData files = default, LogicAppWorkflowState? flowState = default, LogicAppWorkflowHealth health = default)
-        {
-            return new LogicAppWorkflowEnvelopeProperties(files, flowState, health, default);
-        }
-
-        /// <param name="state"> Gets or sets the workflow health state. </param>
-        /// <param name="error"> Gets or sets the workflow error. </param>
-        /// <returns> A new <see cref="Models.LogicAppWorkflowHealth"/> instance for mocking. </returns>
-        public static LogicAppWorkflowHealth LogicAppWorkflowHealth(LogicAppWorkflowHealthState state = default, WorkflowErrorEntity error = default)
-        {
-            return new LogicAppWorkflowHealth(state, error, default);
-        }
-
+        /// <summary> Body of the error response returned from the API. </summary>
         /// <param name="extendedCode"> Type of error. </param>
         /// <param name="messageTemplate"> Message template. </param>
         /// <param name="parameters"> Parameters for the template. </param>
@@ -1690,22 +1295,23 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new WorkflowErrorEntity(
                 extendedCode,
                 messageTemplate,
-                (parameters ?? new ChangeTrackingList<string>()).ToList(),
-                (innerErrors ?? new ChangeTrackingList<WorkflowErrorEntity>()).ToList(),
-                (details ?? new ChangeTrackingList<WorkflowErrorEntity>()).ToList(),
+                parameters.ToList(),
+                innerErrors.ToList(),
+                details.ToList(),
                 target,
                 code,
                 message,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Logic App call response object. </summary>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.Object"/> instance for mocking. </returns>
         public static Object Object(IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new Object(additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+            return new Object(additionalProperties);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1726,6 +1332,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 platform is null && globalValidation is null && identityProviders is null && login is null && httpSettings is null && encryptionSettings is null ? default : new AuthConfigProperties(
                     platform,
                     globalValidation,
@@ -1733,21 +1340,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                     login,
                     httpSettings,
                     encryptionSettings,
-                    default),
-                default);
+                    null));
         }
 
-        /// <param name="isEnabled"> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="runtimeVersion">
-        /// The RuntimeVersion of the Authentication / Authorization feature in use for the current app.
-        /// The setting in this value can control the behavior of certain features in the Authentication / Authorization module.
-        /// </param>
-        /// <returns> A new <see cref="Models.ContainerAppAuthPlatform"/> instance for mocking. </returns>
-        public static ContainerAppAuthPlatform ContainerAppAuthPlatform(bool? isEnabled = default, string runtimeVersion = default)
-        {
-            return new ContainerAppAuthPlatform(isEnabled, runtimeVersion, default);
-        }
-
+        /// <summary> The configuration settings that determines the validation flow of users using ContainerApp Service Authentication/Authorization. </summary>
         /// <param name="unauthenticatedClientAction"> The action to take when an unauthenticated client attempts to access the app. </param>
         /// <param name="redirectToProvider">
         /// The default authentication provider to use when multiple providers are configured.
@@ -1760,9 +1356,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             excludedPaths ??= new ChangeTrackingList<string>();
 
-            return new ContainerAppGlobalValidation(unauthenticatedClientAction, redirectToProvider, (excludedPaths ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new ContainerAppGlobalValidation(unauthenticatedClientAction, redirectToProvider, excludedPaths.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The configuration settings of each of the identity providers used to configure ContainerApp Service Authentication/Authorization. </summary>
         /// <param name="azureActiveDirectory"> The configuration settings of the Azure Active directory provider. </param>
         /// <param name="facebook"> The configuration settings of the Facebook provider. </param>
         /// <param name="gitHub"> The configuration settings of the GitHub provider. </param>
@@ -1787,69 +1384,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 twitter,
                 apple,
                 azureStaticWebApps,
-                customOpenIdConnectProviders ?? new ChangeTrackingDictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration>(),
-                default);
+                customOpenIdConnectProviders,
+                additionalBinaryDataProperties: null);
         }
 
-        /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the Azure Active Directory provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
-        /// <param name="registration"> The configuration settings of the Azure Active Directory app registration. </param>
-        /// <param name="login"> The configuration settings of the Azure Active Directory login flow. </param>
-        /// <param name="validation"> The configuration settings of the Azure Active Directory token validation flow. </param>
-        /// <param name="isAutoProvisioned">
-        /// Gets a value indicating whether the Azure AD configuration was auto-provisioned using 1st party tooling.
-        /// This is an internal flag primarily intended to support the Azure Management Portal. Users should not
-        /// read or write to this property.
-        /// </param>
-        /// <returns> A new <see cref="Models.ContainerAppAzureActiveDirectoryConfiguration"/> instance for mocking. </returns>
-        public static ContainerAppAzureActiveDirectoryConfiguration ContainerAppAzureActiveDirectoryConfiguration(bool? isEnabled = default, ContainerAppAzureActiveDirectoryRegistrationConfiguration registration = default, ContainerAppAzureActiveDirectoryLoginConfiguration login = default, ContainerAppAzureActiveDirectoryValidationConfiguration validation = default, bool? isAutoProvisioned = default)
-        {
-            return new ContainerAppAzureActiveDirectoryConfiguration(
-                isEnabled,
-                registration,
-                login,
-                validation,
-                isAutoProvisioned,
-                default);
-        }
-
-        /// <param name="openIdIssuer">
-        /// The OpenID Connect Issuer URI that represents the entity which issues access tokens for this application.
-        /// When using Azure Active Directory, this value is the URI of the directory tenant, e.g. https://login.microsoftonline.com/v2.0/{tenant-guid}/.
-        /// This URI is a case-sensitive identifier for the token issuer.
-        /// More information on OpenID Connect Discovery: http://openid.net/specs/openid-connect-discovery-1_0.html
-        /// </param>
-        /// <param name="clientId">
-        /// The Client ID of this relying party application, known as the client_id.
-        /// This setting is required for enabling OpenID Connection authentication with Azure Active Directory or
-        /// other 3rd party OpenID Connect providers.
-        /// More information on OpenID Connect: http://openid.net/specs/openid-connect-core-1_0.html
-        /// </param>
-        /// <param name="clientSecretSettingName"> The app setting name that contains the client secret of the relying party application. </param>
-        /// <param name="clientSecretCertificateThumbprint">
-        /// An alternative to the client secret, that is the thumbprint of a certificate used for signing purposes. This property acts as
-        /// a replacement for the Client Secret. It is also optional.
-        /// </param>
-        /// <param name="clientSecretCertificateSubjectAlternativeName">
-        /// An alternative to the client secret thumbprint, that is the subject alternative name of a certificate used for signing purposes. This property acts as
-        /// a replacement for the Client Secret Certificate Thumbprint. It is also optional.
-        /// </param>
-        /// <param name="clientSecretCertificateIssuer">
-        /// An alternative to the client secret thumbprint, that is the issuer of a certificate used for signing purposes. This property acts as
-        /// a replacement for the Client Secret Certificate Thumbprint. It is also optional.
-        /// </param>
-        /// <returns> A new <see cref="Models.ContainerAppAzureActiveDirectoryRegistrationConfiguration"/> instance for mocking. </returns>
-        public static ContainerAppAzureActiveDirectoryRegistrationConfiguration ContainerAppAzureActiveDirectoryRegistrationConfiguration(string openIdIssuer = default, string clientId = default, string clientSecretSettingName = default, string clientSecretCertificateThumbprint = default, string clientSecretCertificateSubjectAlternativeName = default, string clientSecretCertificateIssuer = default)
-        {
-            return new ContainerAppAzureActiveDirectoryRegistrationConfiguration(
-                openIdIssuer,
-                clientId,
-                clientSecretSettingName,
-                clientSecretCertificateThumbprint,
-                clientSecretCertificateSubjectAlternativeName,
-                clientSecretCertificateIssuer,
-                default);
-        }
-
+        /// <summary> The configuration settings of the Azure Active Directory login flow. </summary>
         /// <param name="loginParameters">
         /// Login parameters to send to the OpenID Connect authorization endpoint when
         /// a user logs in. Each parameter must be in the form "key=value".
@@ -1860,9 +1399,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             loginParameters ??= new ChangeTrackingList<string>();
 
-            return new ContainerAppAzureActiveDirectoryLoginConfiguration((loginParameters ?? new ChangeTrackingList<string>()).ToList(), isWwwAuthenticationDisabled, default);
+            return new ContainerAppAzureActiveDirectoryLoginConfiguration(loginParameters.ToList(), isWwwAuthenticationDisabled, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The configuration settings of the Azure Active Directory token validation flow. </summary>
         /// <param name="jwtClaimChecks"> The configuration settings of the checks that should be made while validating the JWT Claims. </param>
         /// <param name="allowedAudiences"> The list of audiences that can make successful authentication/authorization requests. </param>
         /// <param name="defaultAuthorizationPolicy"> The configuration settings of the default authorization policy. </param>
@@ -1871,9 +1411,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             allowedAudiences ??= new ChangeTrackingList<string>();
 
-            return new ContainerAppAzureActiveDirectoryValidationConfiguration(jwtClaimChecks, (allowedAudiences ?? new ChangeTrackingList<string>()).ToList(), defaultAuthorizationPolicy, default);
+            return new ContainerAppAzureActiveDirectoryValidationConfiguration(jwtClaimChecks, allowedAudiences.ToList(), defaultAuthorizationPolicy, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The configuration settings of the checks that should be made while validating the JWT Claims. </summary>
         /// <param name="allowedGroups"> The list of the allowed groups. </param>
         /// <param name="allowedClientApplications"> The list of the allowed client applications. </param>
         /// <returns> A new <see cref="Models.ContainerAppJwtClaimChecks"/> instance for mocking. </returns>
@@ -1882,9 +1423,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             allowedGroups ??= new ChangeTrackingList<string>();
             allowedClientApplications ??= new ChangeTrackingList<string>();
 
-            return new ContainerAppJwtClaimChecks((allowedGroups ?? new ChangeTrackingList<string>()).ToList(), (allowedClientApplications ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new ContainerAppJwtClaimChecks(allowedGroups.ToList(), allowedClientApplications.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The configuration settings of the Azure Active Directory default authorization policy. </summary>
         /// <param name="allowedPrincipals"> The configuration settings of the Azure Active Directory allowed principals. </param>
         /// <param name="allowedApplications"> The configuration settings of the Azure Active Directory allowed applications. </param>
         /// <returns> A new <see cref="Models.ContainerAppDefaultAuthorizationPolicy"/> instance for mocking. </returns>
@@ -1892,9 +1434,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             allowedApplications ??= new ChangeTrackingList<string>();
 
-            return new ContainerAppDefaultAuthorizationPolicy(allowedPrincipals, (allowedApplications ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new ContainerAppDefaultAuthorizationPolicy(allowedPrincipals, allowedApplications.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The configuration settings of the Azure Active Directory allowed principals. </summary>
         /// <param name="groups"> The list of the allowed groups. </param>
         /// <param name="identities"> The list of the allowed identities. </param>
         /// <returns> A new <see cref="Models.ContainerAppAllowedPrincipals"/> instance for mocking. </returns>
@@ -1903,145 +1446,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             groups ??= new ChangeTrackingList<string>();
             identities ??= new ChangeTrackingList<string>();
 
-            return new ContainerAppAllowedPrincipals((groups ?? new ChangeTrackingList<string>()).ToList(), (identities ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new ContainerAppAllowedPrincipals(groups.ToList(), identities.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the Facebook provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
-        /// <param name="registration"> The configuration settings of the app registration for the Facebook provider. </param>
-        /// <param name="graphApiVersion"> The version of the Facebook api to be used while logging in. </param>
-        /// <param name="loginScopes"> A list of the scopes that should be requested while authenticating. </param>
-        /// <returns> A new <see cref="Models.ContainerAppFacebookConfiguration"/> instance for mocking. </returns>
-        public static ContainerAppFacebookConfiguration ContainerAppFacebookConfiguration(bool? isEnabled = default, ContainerAppRegistration registration = default, string graphApiVersion = default, IEnumerable<string> loginScopes = default)
-        {
-            return new ContainerAppFacebookConfiguration(isEnabled, registration, graphApiVersion, loginScopes is null ? default : new LoginScopes((loginScopes ?? new ChangeTrackingList<string>()).ToList(), default), default);
-        }
-
-        /// <param name="appId"> The App ID of the app used for login. </param>
-        /// <param name="appSecretSettingName"> The app setting name that contains the app secret. </param>
-        /// <returns> A new <see cref="Models.ContainerAppRegistration"/> instance for mocking. </returns>
-        public static ContainerAppRegistration ContainerAppRegistration(string appId = default, string appSecretSettingName = default)
-        {
-            return new ContainerAppRegistration(appId, appSecretSettingName, default);
-        }
-
-        /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the GitHub provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
-        /// <param name="registration"> The configuration settings of the app registration for the GitHub provider. </param>
-        /// <param name="loginScopes"> A list of the scopes that should be requested while authenticating. </param>
-        /// <returns> A new <see cref="Models.ContainerAppGitHubConfiguration"/> instance for mocking. </returns>
-        public static ContainerAppGitHubConfiguration ContainerAppGitHubConfiguration(bool? isEnabled = default, ContainerAppClientRegistration registration = default, IEnumerable<string> loginScopes = default)
-        {
-            return new ContainerAppGitHubConfiguration(isEnabled, registration, loginScopes is null ? default : new LoginScopes((loginScopes ?? new ChangeTrackingList<string>()).ToList(), default), default);
-        }
-
-        /// <param name="clientId"> The Client ID of the app used for login. </param>
-        /// <param name="clientSecretSettingName"> The app setting name that contains the client secret. </param>
-        /// <returns> A new <see cref="Models.ContainerAppClientRegistration"/> instance for mocking. </returns>
-        public static ContainerAppClientRegistration ContainerAppClientRegistration(string clientId = default, string clientSecretSettingName = default)
-        {
-            return new ContainerAppClientRegistration(clientId, clientSecretSettingName, default);
-        }
-
-        /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the Google provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
-        /// <param name="registration"> The configuration settings of the app registration for the Google provider. </param>
-        /// <param name="loginScopes"> A list of the scopes that should be requested while authenticating. </param>
-        /// <param name="validationAllowedAudiences"> The configuration settings of the allowed list of audiences from which to validate the JWT token. </param>
-        /// <returns> A new <see cref="Models.ContainerAppGoogleConfiguration"/> instance for mocking. </returns>
-        public static ContainerAppGoogleConfiguration ContainerAppGoogleConfiguration(bool? isEnabled = default, ContainerAppClientRegistration registration = default, IEnumerable<string> loginScopes = default, IEnumerable<string> validationAllowedAudiences = default)
-        {
-            return new ContainerAppGoogleConfiguration(isEnabled, registration, loginScopes is null ? default : new LoginScopes((loginScopes ?? new ChangeTrackingList<string>()).ToList(), default), validationAllowedAudiences is null ? default : new AllowedAudiencesValidation((validationAllowedAudiences ?? new ChangeTrackingList<string>()).ToList(), default), default);
-        }
-
-        /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the Twitter provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
-        /// <param name="registration"> The configuration settings of the app registration for the Twitter provider. </param>
-        /// <returns> A new <see cref="Models.ContainerAppTwitterConfiguration"/> instance for mocking. </returns>
-        public static ContainerAppTwitterConfiguration ContainerAppTwitterConfiguration(bool? isEnabled = default, ContainerAppTwitterRegistration registration = default)
-        {
-            return new ContainerAppTwitterConfiguration(isEnabled, registration, default);
-        }
-
-        /// <param name="consumerKey">
-        /// The OAuth 1.0a consumer key of the Twitter application used for sign-in.
-        /// This setting is required for enabling Twitter Sign-In.
-        /// Twitter Sign-In documentation: https://dev.twitter.com/web/sign-in
-        /// </param>
-        /// <param name="consumerSecretSettingName">
-        /// The app setting name that contains the OAuth 1.0a consumer secret of the Twitter
-        /// application used for sign-in.
-        /// </param>
-        /// <returns> A new <see cref="Models.ContainerAppTwitterRegistration"/> instance for mocking. </returns>
-        public static ContainerAppTwitterRegistration ContainerAppTwitterRegistration(string consumerKey = default, string consumerSecretSettingName = default)
-        {
-            return new ContainerAppTwitterRegistration(consumerKey, consumerSecretSettingName, default);
-        }
-
-        /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the Apple provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
-        /// <param name="registration"> The configuration settings of the Apple registration. </param>
-        /// <param name="loginScopes"> A list of the scopes that should be requested while authenticating. </param>
-        /// <returns> A new <see cref="Models.ContainerAppAppleConfiguration"/> instance for mocking. </returns>
-        public static ContainerAppAppleConfiguration ContainerAppAppleConfiguration(bool? isEnabled = default, ContainerAppAppleRegistrationConfiguration registration = default, IEnumerable<string> loginScopes = default)
-        {
-            return new ContainerAppAppleConfiguration(isEnabled, registration, loginScopes is null ? default : new LoginScopes((loginScopes ?? new ChangeTrackingList<string>()).ToList(), default), default);
-        }
-
-        /// <param name="clientId"> The Client ID of the app used for login. </param>
-        /// <param name="clientSecretSettingName"> The app setting name that contains the client secret. </param>
-        /// <returns> A new <see cref="Models.ContainerAppAppleRegistrationConfiguration"/> instance for mocking. </returns>
-        public static ContainerAppAppleRegistrationConfiguration ContainerAppAppleRegistrationConfiguration(string clientId = default, string clientSecretSettingName = default)
-        {
-            return new ContainerAppAppleRegistrationConfiguration(clientId, clientSecretSettingName, default);
-        }
-
-        /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the Azure Static Web Apps provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
-        /// <param name="registrationClientId"> The Client ID of the app used for login. </param>
-        /// <returns> A new <see cref="Models.ContainerAppAzureStaticWebAppsConfiguration"/> instance for mocking. </returns>
-        public static ContainerAppAzureStaticWebAppsConfiguration ContainerAppAzureStaticWebAppsConfiguration(bool? isEnabled = default, string registrationClientId = default)
-        {
-            return new ContainerAppAzureStaticWebAppsConfiguration(isEnabled, registrationClientId is null ? default : new AzureStaticWebAppsRegistration(registrationClientId, default), default);
-        }
-
-        /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the custom Open ID provider provider should not be enabled; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
-        /// <param name="registration"> The configuration settings of the app registration for the custom Open ID Connect provider. </param>
-        /// <param name="login"> The configuration settings of the login flow of the custom Open ID Connect provider. </param>
-        /// <returns> A new <see cref="Models.ContainerAppCustomOpenIdConnectProviderConfiguration"/> instance for mocking. </returns>
-        public static ContainerAppCustomOpenIdConnectProviderConfiguration ContainerAppCustomOpenIdConnectProviderConfiguration(bool? isEnabled = default, ContainerAppOpenIdConnectRegistration registration = default, ContainerAppOpenIdConnectLogin login = default)
-        {
-            return new ContainerAppCustomOpenIdConnectProviderConfiguration(isEnabled, registration, login, default);
-        }
-
-        /// <param name="clientId"> The client id of the custom Open ID Connect provider. </param>
-        /// <param name="clientCredential"> The authentication credentials of the custom Open ID Connect provider. </param>
-        /// <param name="openIdConnectConfiguration"> The configuration settings of the endpoints used for the custom Open ID Connect provider. </param>
-        /// <returns> A new <see cref="Models.ContainerAppOpenIdConnectRegistration"/> instance for mocking. </returns>
-        public static ContainerAppOpenIdConnectRegistration ContainerAppOpenIdConnectRegistration(string clientId = default, ContainerAppOpenIdConnectClientCredential clientCredential = default, ContainerAppOpenIdConnectConfig openIdConnectConfiguration = default)
-        {
-            return new ContainerAppOpenIdConnectRegistration(clientId, clientCredential, openIdConnectConfiguration, default);
-        }
-
-        /// <param name="method"> The method that should be used to authenticate the user. </param>
-        /// <param name="clientSecretSettingName"> The app setting that contains the client secret for the custom Open ID Connect provider. </param>
-        /// <returns> A new <see cref="Models.ContainerAppOpenIdConnectClientCredential"/> instance for mocking. </returns>
-        public static ContainerAppOpenIdConnectClientCredential ContainerAppOpenIdConnectClientCredential(ContainerAppOpenIdConnectClientCredentialMethod? @method = default, string clientSecretSettingName = default)
-        {
-            return new ContainerAppOpenIdConnectClientCredential(@method, clientSecretSettingName, default);
-        }
-
-        /// <param name="authorizationEndpoint"> The endpoint to be used to make an authorization request. </param>
-        /// <param name="tokenEndpoint"> The endpoint to be used to request a token. </param>
-        /// <param name="issuer"> The endpoint that issues the token. </param>
-        /// <param name="certificationUri"> The endpoint that provides the keys necessary to validate the token. </param>
-        /// <param name="wellKnownOpenIdConfiguration"> The endpoint that contains all the configuration endpoints for the provider. </param>
-        /// <returns> A new <see cref="Models.ContainerAppOpenIdConnectConfig"/> instance for mocking. </returns>
-        public static ContainerAppOpenIdConnectConfig ContainerAppOpenIdConnectConfig(string authorizationEndpoint = default, string tokenEndpoint = default, string issuer = default, Uri certificationUri = default, string wellKnownOpenIdConfiguration = default)
-        {
-            return new ContainerAppOpenIdConnectConfig(
-                authorizationEndpoint,
-                tokenEndpoint,
-                issuer,
-                certificationUri,
-                wellKnownOpenIdConfiguration,
-                default);
-        }
-
+        /// <summary> The configuration settings of the login flow of the custom Open ID Connect provider. </summary>
         /// <param name="nameClaimType"> The name of the claim that contains the users name. </param>
         /// <param name="scopes"> A list of the scopes that should be requested while authenticating. </param>
         /// <returns> A new <see cref="Models.ContainerAppOpenIdConnectLogin"/> instance for mocking. </returns>
@@ -2049,7 +1457,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             scopes ??= new ChangeTrackingList<string>();
 
-            return new ContainerAppOpenIdConnectLogin(nameClaimType, (scopes ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new ContainerAppOpenIdConnectLogin(nameClaimType, scopes.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <param name="routesLogoutEndpoint"> The endpoint at which a logout request should be made. </param>
@@ -2068,73 +1476,13 @@ namespace Azure.ResourceManager.AppContainers.Models
             allowedExternalRedirectUrls ??= new ChangeTrackingList<string>();
 
             return new ContainerAppLogin(
-                routesLogoutEndpoint is null ? default : new LoginRoutes(routesLogoutEndpoint, default),
+                routesLogoutEndpoint is null ? default : new LoginRoutes(routesLogoutEndpoint, null),
                 tokenStore,
                 preserveUrlFragmentsForLogins,
-                (allowedExternalRedirectUrls ?? new ChangeTrackingList<string>()).ToList(),
+                allowedExternalRedirectUrls.ToList(),
                 cookieExpiration,
                 nonce,
-                default);
-        }
-
-        /// <param name="isEnabled">
-        /// &lt;code&gt;true&lt;/code&gt; to durably store platform-specific security tokens that are obtained during login flows; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// The default is &lt;code&gt;false&lt;/code&gt;.
-        /// </param>
-        /// <param name="tokenRefreshExtensionHours">
-        /// The number of hours after session token expiration that a session token can be used to
-        /// call the token refresh API. The default is 72 hours.
-        /// </param>
-        /// <param name="azureBlobStorageSasUrlSettingName"> The name of the app secrets containing the SAS URL of the blob storage containing the tokens. Should not be used along with blobContainerUri. </param>
-        /// <param name="blobContainerUri"> The URI of the blob storage containing the tokens. Should not be used along with sasUrlSettingName. </param>
-        /// <param name="clientId"> The Client ID of a User-Assigned Managed Identity. Should not be used along with managedIdentityResourceId. </param>
-        /// <param name="managedIdentityResourceId"> The Resource ID of a User-Assigned Managed Identity. Should not be used along with clientId. </param>
-        /// <returns> A new <see cref="Models.ContainerAppTokenStore"/> instance for mocking. </returns>
-        public static ContainerAppTokenStore ContainerAppTokenStore(bool? isEnabled = default, double? tokenRefreshExtensionHours = default, string azureBlobStorageSasUrlSettingName = default, string blobContainerUri = default, string clientId = default, string managedIdentityResourceId = default)
-        {
-            return new ContainerAppTokenStore(isEnabled, tokenRefreshExtensionHours, azureBlobStorageSasUrlSettingName is null && blobContainerUri is null && clientId is null && managedIdentityResourceId is null ? default : new BlobStorageTokenStore(azureBlobStorageSasUrlSettingName, blobContainerUri, clientId, managedIdentityResourceId, default), default);
-        }
-
-        /// <param name="convention"> The convention used when determining the session cookie's expiration. </param>
-        /// <param name="timeToExpiration"> The time after the request is made when the session cookie should expire. </param>
-        /// <returns> A new <see cref="Models.ContainerAppCookieExpiration"/> instance for mocking. </returns>
-        public static ContainerAppCookieExpiration ContainerAppCookieExpiration(ContainerAppCookieExpirationConvention? convention = default, string timeToExpiration = default)
-        {
-            return new ContainerAppCookieExpiration(convention, timeToExpiration, default);
-        }
-
-        /// <param name="validateNonce"> &lt;code&gt;false&lt;/code&gt; if the nonce should not be validated while completing the login flow; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
-        /// <param name="nonceExpirationInterval"> The time after the request is made when the nonce should expire. </param>
-        /// <returns> A new <see cref="Models.ContainerAppLoginNonce"/> instance for mocking. </returns>
-        public static ContainerAppLoginNonce ContainerAppLoginNonce(bool? validateNonce = default, string nonceExpirationInterval = default)
-        {
-            return new ContainerAppLoginNonce(validateNonce, nonceExpirationInterval, default);
-        }
-
-        /// <param name="requireHttps"> &lt;code&gt;false&lt;/code&gt; if the authentication/authorization responses not having the HTTPS scheme are permissible; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
-        /// <param name="routesApiPrefix"> The prefix that should precede all the authentication/authorization paths. </param>
-        /// <param name="forwardProxy"> The configuration settings of a forward proxy used to make the requests. </param>
-        /// <returns> A new <see cref="Models.ContainerAppHttpSettings"/> instance for mocking. </returns>
-        public static ContainerAppHttpSettings ContainerAppHttpSettings(bool? requireHttps = default, string routesApiPrefix = default, ContainerAppForwardProxy forwardProxy = default)
-        {
-            return new ContainerAppHttpSettings(requireHttps, routesApiPrefix is null ? default : new HttpSettingsRoutes(routesApiPrefix, default), forwardProxy, default);
-        }
-
-        /// <param name="convention"> The convention used to determine the url of the request made. </param>
-        /// <param name="customHostHeaderName"> The name of the header containing the host of the request. </param>
-        /// <param name="customProtoHeaderName"> The name of the header containing the scheme of the request. </param>
-        /// <returns> A new <see cref="Models.ContainerAppForwardProxy"/> instance for mocking. </returns>
-        public static ContainerAppForwardProxy ContainerAppForwardProxy(ContainerAppForwardProxyConvention? convention = default, string customHostHeaderName = default, string customProtoHeaderName = default)
-        {
-            return new ContainerAppForwardProxy(convention, customHostHeaderName, customProtoHeaderName, default);
-        }
-
-        /// <param name="containerAppAuthEncryptionSecretName"> The secret name which is referenced for EncryptionKey. </param>
-        /// <param name="containerAppAuthSigningSecretName"> The secret name which is referenced for SigningKey. </param>
-        /// <returns> A new <see cref="Models.EncryptionSettings"/> instance for mocking. </returns>
-        public static EncryptionSettings EncryptionSettings(string containerAppAuthEncryptionSecretName = default, string containerAppAuthSigningSecretName = default)
-        {
-            return new EncryptionSettings(containerAppAuthEncryptionSecretName, containerAppAuthSigningSecretName, default);
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2157,19 +1505,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
-                provisioningState is null && environmentId is null && containerRegistries is null ? default : new BuilderProperties(provisioningState, environmentId, (containerRegistries ?? new ChangeTrackingList<ContainerRegistry>()).ToList(), default),
-                identity,
-                default);
-        }
-
-        /// <param name="containerRegistryServer"> Login server of the container registry. </param>
-        /// <param name="identityResourceId"> Resource ID of the managed identity. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistry"/> instance for mocking. </returns>
-        public static ContainerRegistry ContainerRegistry(string containerRegistryServer = default, ResourceIdentifier identityResourceId = default)
-        {
-            return new ContainerRegistry(containerRegistryServer, identityResourceId, default);
+                provisioningState is null && environmentId is null && containerRegistries is null ? default : new BuilderProperties(provisioningState, environmentId, (containerRegistries ?? new ChangeTrackingList<ContainerRegistry>()).ToList(), null),
+                identity);
         }
 
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
@@ -2180,7 +1520,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new BuilderPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), environmentId is null ? default : new BuilderResourceUpdateProperties(environmentId, default), default);
+            return new BuilderPatch(identity, tags, environmentId is null ? default : new BuilderResourceUpdateProperties(environmentId, null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2202,6 +1542,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 provisioningState is null && buildStatus is null && destinationContainerRegistry is null && configuration is null && uploadEndpoint is null && logStreamEndpoint is null && tokenEndpoint is null ? default : new BuildProperties(
                     provisioningState,
                     buildStatus,
@@ -2210,10 +1551,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                     uploadEndpoint,
                     logStreamEndpoint,
                     tokenEndpoint,
-                    default),
-                default);
+                    null));
         }
 
+        /// <summary> Configuration of the build. </summary>
         /// <param name="baseOs"> Base OS used to build and run the app. </param>
         /// <param name="platform"> Platform to be used to build and run the app. </param>
         /// <param name="platformVersion"> Platform version to be used to build and run the app. </param>
@@ -2229,48 +1570,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                 baseOs,
                 platform,
                 platformVersion,
-                (environmentVariables ?? new ChangeTrackingList<EnvironmentVariable>()).ToList(),
-                (preBuildSteps ?? new ChangeTrackingList<PreBuildStep>()).ToList(),
-                default);
+                environmentVariables.ToList(),
+                preBuildSteps.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> Provisioning state of the Kubernetes Environment. </param>
-        /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
-        /// <param name="defaultDomain"> Default Domain Name for the cluster. </param>
-        /// <param name="staticIP"> Static IP of the connectedEnvironment. </param>
-        /// <param name="daprAIConnectionString"> Application Insights connection string used by Dapr to export Service to Service communication telemetry. </param>
-        /// <param name="customDomainConfiguration"> Custom domain configuration for the environment. </param>
-        /// <param name="extendedLocation"> The complex type of the extended location. </param>
-        /// <returns> A new <see cref="AppContainers.ContainerAppConnectedEnvironmentData"/> instance for mocking. </returns>
-        public static ContainerAppConnectedEnvironmentData ContainerAppConnectedEnvironmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ContainerAppConnectedEnvironmentProvisioningState? provisioningState = default, string deploymentErrors = default, string defaultDomain = default, IPAddress staticIP = default, string daprAIConnectionString = default, ContainerAppCustomDomainConfiguration customDomainConfiguration = default, ContainerAppExtendedLocation extendedLocation = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ContainerAppConnectedEnvironmentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && deploymentErrors is null && defaultDomain is null && staticIP is null && daprAIConnectionString is null && customDomainConfiguration is null ? default : new ConnectedEnvironmentProperties(
-                    provisioningState,
-                    deploymentErrors,
-                    defaultDomain,
-                    staticIP,
-                    daprAIConnectionString,
-                    customDomainConfiguration,
-                    default),
-                extendedLocation,
-                default);
-        }
-
+        /// <summary> Configuration properties for apps environment custom domain. </summary>
         /// <param name="customDomainVerificationId"> Id used to verify domain name ownership. </param>
         /// <param name="dnsSuffix"> Dns suffix for the environment domain. </param>
         /// <param name="certificateKeyVaultProperties"> Certificate stored in Azure Key Vault. </param>
@@ -2291,52 +1596,40 @@ namespace Azure.ResourceManager.AppContainers.Models
                 expireOn,
                 thumbprint,
                 subjectName,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <param name="identity"> Resource ID of a managed identity to authenticate with Azure Key Vault, or System to use a system-assigned identity. </param>
-        /// <param name="keyVaultUri"> URL pointing to the Azure Key Vault secret that holds the certificate. </param>
-        /// <returns> A new <see cref="Models.ContainerAppCertificateKeyVaultProperties"/> instance for mocking. </returns>
-        public static ContainerAppCertificateKeyVaultProperties ContainerAppCertificateKeyVaultProperties(string identity = default, Uri keyVaultUri = default)
-        {
-            return new ContainerAppCertificateKeyVaultProperties(identity, keyVaultUri, default);
-        }
-
+        /// <summary> Connected environment patch properties. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ContainerAppConnectedEnvironmentPatch"/> instance for mocking. </returns>
         public static ContainerAppConnectedEnvironmentPatch ContainerAppConnectedEnvironmentPatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ContainerAppConnectedEnvironmentPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new ContainerAppConnectedEnvironmentPatch(tags, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> List of key value pairs that describe the resource. This will overwrite the existing tags. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ContainerAppResourceTags"/> instance for mocking. </returns>
         public static ContainerAppResourceTags ContainerAppResourceTags(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ContainerAppResourceTags(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new ContainerAppResourceTags(tags, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
-        /// <param name="resourceType"> The resource type. </param>
-        /// <returns> A new <see cref="Models.ContainerAppNameAvailabilityContent"/> instance for mocking. </returns>
-        public static ContainerAppNameAvailabilityContent ContainerAppNameAvailabilityContent(string name = default, ResourceType? resourceType = default)
-        {
-            return new ContainerAppNameAvailabilityContent(name, resourceType, default);
-        }
-
+        /// <summary> The check availability result. </summary>
         /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
         /// <returns> A new <see cref="Models.ContainerAppNameAvailabilityResult"/> instance for mocking. </returns>
         public static ContainerAppNameAvailabilityResult ContainerAppNameAvailabilityResult(bool? isNameAvailable = default, ContainerAppNameUnavailableReason? reason = default, string message = default)
         {
-            return new ContainerAppNameAvailabilityResult(isNameAvailable, reason, message, default);
+            return new ContainerAppNameAvailabilityResult(isNameAvailable, reason, message, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Certificate used for Custom Domain bindings of Container Apps in a Managed Environment. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -2354,12 +1647,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
-                properties,
-                default);
+                properties);
         }
 
+        /// <summary> Certificate resource specific properties. </summary>
         /// <param name="provisioningState"> Provisioning state of the certificate. </param>
         /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
         /// <param name="certificateKeyVaultProperties"> Properties for a certificate stored in a Key Vault. </param>
@@ -2385,7 +1679,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 certificateKeyVaultProperties,
                 password,
                 subjectName,
-                (subjectAlternativeNames ?? new ChangeTrackingList<string>()).ToList(),
+                subjectAlternativeNames.ToList(),
                 value,
                 issuer,
                 issueOn,
@@ -2394,16 +1688,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                 isValid,
                 publicKeyHash,
                 certificateType,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A certificate to update. </summary>
         /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
         /// <returns> A new <see cref="Models.ContainerAppCertificatePatch"/> instance for mocking. </returns>
         public static ContainerAppCertificatePatch ContainerAppCertificatePatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ContainerAppCertificatePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new ContainerAppCertificatePatch(tags, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2449,9 +1744,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
-                provisioningState is null && daprAIInstrumentationKey is null && daprAIConnectionString is null && vnetConfiguration is null && deploymentErrors is null && defaultDomain is null && privateLinkDefaultDomain is null && staticIP is null && appLogsConfiguration is null && appInsightsConnectionString is null && openTelemetryConfiguration is null && isZoneRedundant is null && availabilityZones is null && customDomainConfiguration is null && eventStreamEndpoint is null && workloadProfiles is null && kedaVersion is null && daprVersion is null && infrastructureResourceGroup is null && isMtlsEnabled is null && isEnabled is null && ingressConfiguration is null && privateEndpointConnections is null && publicNetworkAccess is null && diskEncryptionKeyVaultConfiguration is null ? default : new ManagedEnvironmentProperties(
+                provisioningState is null && daprAIInstrumentationKey is null && daprAIConnectionString is null && vnetConfiguration is null && deploymentErrors is null && defaultDomain is null && privateLinkDefaultDomain is null && staticIP is null && appLogsConfiguration is null && openTelemetryConfiguration is null && isZoneRedundant is null && availabilityZones is null && customDomainConfiguration is null && eventStreamEndpoint is null && workloadProfiles is null && infrastructureResourceGroup is null && ingressConfiguration is null && privateEndpointConnections is null && publicNetworkAccess is null && appInsightsConnectionString is null && kedaVersion is null && daprVersion is null && isMtlsEnabled is null && isEnabled is null && diskEncryptionKeyVaultConfiguration is null ? default : new ManagedEnvironmentProperties(
                     provisioningState,
                     daprAIInstrumentationKey,
                     daprAIConnectionString,
@@ -2461,72 +1757,28 @@ namespace Azure.ResourceManager.AppContainers.Models
                     privateLinkDefaultDomain,
                     staticIP,
                     appLogsConfiguration,
-                    new AppInsightsConfiguration(appInsightsConnectionString, default),
+                    new AppInsightsConfiguration(appInsightsConnectionString, null),
                     openTelemetryConfiguration,
                     isZoneRedundant,
                     (availabilityZones ?? new ChangeTrackingList<string>()).ToList(),
                     customDomainConfiguration,
                     eventStreamEndpoint,
                     (workloadProfiles ?? new ChangeTrackingList<ContainerAppWorkloadProfile>()).ToList(),
-                    new KedaConfiguration(kedaVersion, default),
-                    new DaprConfiguration(daprVersion, default),
+                    new KedaConfiguration(kedaVersion, null),
+                    new DaprConfiguration(daprVersion, null),
                     infrastructureResourceGroup,
-                    new ManagedEnvironmentPropertiesPeerAuthentication(new Mtls(isMtlsEnabled, default), default),
-                    new ManagedEnvironmentPropertiesPeerTrafficConfiguration(new ManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption(isEnabled, default), default),
+                    new ManagedEnvironmentPropertiesPeerAuthentication(new Mtls(isMtlsEnabled, null), null),
+                    new ManagedEnvironmentPropertiesPeerTrafficConfiguration(new ManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption(isEnabled, null), null),
                     ingressConfiguration,
                     (privateEndpointConnections ?? new ChangeTrackingList<ContainerAppPrivateEndpointConnectionData>()).ToList(),
                     publicNetworkAccess,
-                    new DiskEncryptionConfiguration(diskEncryptionKeyVaultConfiguration, default),
-                    default),
+                    new DiskEncryptionConfiguration(diskEncryptionKeyVaultConfiguration, null),
+                    null),
                 kind,
-                identity,
-                default);
+                identity);
         }
 
-        /// <param name="isInternal"> Boolean indicating the environment only has an internal load balancer. These environments do not have a public static IP resource. They must provide infrastructureSubnetId if enabling this property. </param>
-        /// <param name="infrastructureSubnetId"> Resource ID of a subnet for infrastructure components. Must not overlap with any other provided IP ranges. </param>
-        /// <param name="dockerBridgeCidr"> CIDR notation IP range assigned to the Docker bridge, network. Must not overlap with any other provided IP ranges. </param>
-        /// <param name="platformReservedCidr"> IP range in CIDR notation that can be reserved for environment infrastructure IP addresses. Must not overlap with any other provided IP ranges. </param>
-        /// <param name="platformReservedDnsIP"> An IP address from the IP range defined by platformReservedCidr that will be reserved for the internal DNS server. </param>
-        /// <returns> A new <see cref="Models.ContainerAppVnetConfiguration"/> instance for mocking. </returns>
-        public static ContainerAppVnetConfiguration ContainerAppVnetConfiguration(bool? isInternal = default, ResourceIdentifier infrastructureSubnetId = default, string dockerBridgeCidr = default, string platformReservedCidr = default, string platformReservedDnsIP = default)
-        {
-            return new ContainerAppVnetConfiguration(
-                isInternal,
-                infrastructureSubnetId,
-                dockerBridgeCidr,
-                platformReservedCidr,
-                platformReservedDnsIP,
-                default);
-        }
-
-        /// <param name="destination"> Logs destination, can be 'log-analytics', 'azure-monitor' or 'none'. </param>
-        /// <param name="logAnalyticsConfiguration"> Log Analytics configuration, must only be provided when destination is configured as 'log-analytics'. </param>
-        /// <returns> A new <see cref="Models.ContainerAppLogsConfiguration"/> instance for mocking. </returns>
-        public static ContainerAppLogsConfiguration ContainerAppLogsConfiguration(string destination = default, ContainerAppLogAnalyticsConfiguration logAnalyticsConfiguration = default)
-        {
-            return new ContainerAppLogsConfiguration(destination, logAnalyticsConfiguration, default);
-        }
-
-        /// <param name="customerId"> Log analytics customer id. </param>
-        /// <param name="sharedKey"> Log analytics customer key. </param>
-        /// <param name="useDynamicJsonColumns"> Boolean indicating whether to parse json string log into dynamic json columns. </param>
-        /// <returns> A new <see cref="Models.ContainerAppLogAnalyticsConfiguration"/> instance for mocking. </returns>
-        public static ContainerAppLogAnalyticsConfiguration ContainerAppLogAnalyticsConfiguration(string customerId = default, string sharedKey = default, bool? useDynamicJsonColumns = default)
-        {
-            return new ContainerAppLogAnalyticsConfiguration(customerId, sharedKey, useDynamicJsonColumns, default);
-        }
-
-        /// <param name="destinationsConfiguration"> Open telemetry destinations configuration. </param>
-        /// <param name="tracesConfiguration"> Open telemetry trace configuration. </param>
-        /// <param name="logsDestinations"> Open telemetry logs destinations. </param>
-        /// <param name="metricsConfiguration"> Open telemetry metrics configuration. </param>
-        /// <returns> A new <see cref="Models.OpenTelemetryConfiguration"/> instance for mocking. </returns>
-        public static OpenTelemetryConfiguration OpenTelemetryConfiguration(DestinationsConfiguration destinationsConfiguration = default, TracesConfiguration tracesConfiguration = default, IEnumerable<string> logsDestinations = default, MetricsConfiguration metricsConfiguration = default)
-        {
-            return new OpenTelemetryConfiguration(destinationsConfiguration, tracesConfiguration, logsDestinations is null ? default : new LogsConfiguration((logsDestinations ?? new ChangeTrackingList<string>()).ToList(), default), metricsConfiguration, default);
-        }
-
+        /// <summary> Configuration of Open Telemetry destinations. </summary>
         /// <param name="dataDogConfiguration"> Open telemetry datadog destination configuration. </param>
         /// <param name="otlpConfigurations"> Open telemetry otlp configurations. </param>
         /// <returns> A new <see cref="Models.DestinationsConfiguration"/> instance for mocking. </returns>
@@ -2534,17 +1786,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             otlpConfigurations ??= new ChangeTrackingList<OtlpConfiguration>();
 
-            return new DestinationsConfiguration(dataDogConfiguration, (otlpConfigurations ?? new ChangeTrackingList<OtlpConfiguration>()).ToList(), default);
+            return new DestinationsConfiguration(dataDogConfiguration, otlpConfigurations.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <param name="site"> The data dog site. </param>
-        /// <param name="key"> The data dog api key. </param>
-        /// <returns> A new <see cref="Models.DataDogConfiguration"/> instance for mocking. </returns>
-        public static DataDogConfiguration DataDogConfiguration(string site = default, string key = default)
-        {
-            return new DataDogConfiguration(site, key, default);
-        }
-
+        /// <summary> Configuration of otlp. </summary>
         /// <param name="name"> The name of otlp configuration. </param>
         /// <param name="endpoint"> The endpoint of otlp configuration. </param>
         /// <param name="isInsecure"> Boolean indicating if otlp configuration is insecure. </param>
@@ -2554,17 +1799,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             headers ??= new ChangeTrackingList<Header>();
 
-            return new OtlpConfiguration(name, endpoint, isInsecure, (headers ?? new ChangeTrackingList<Header>()).ToList(), default);
+            return new OtlpConfiguration(name, endpoint, isInsecure, headers.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <param name="key"> The key of otlp configuration header. </param>
-        /// <param name="value"> The value of otlp configuration header. </param>
-        /// <returns> A new <see cref="Models.Header"/> instance for mocking. </returns>
-        public static Header Header(string key = default, string value = default)
-        {
-            return new Header(key, value, default);
-        }
-
+        /// <summary> Configuration of Open Telemetry traces. </summary>
         /// <param name="isDaprIncluded"> Boolean indicating if including dapr traces. </param>
         /// <param name="destinations"> Open telemetry traces destinations. </param>
         /// <returns> A new <see cref="Models.TracesConfiguration"/> instance for mocking. </returns>
@@ -2572,9 +1810,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             destinations ??= new ChangeTrackingList<string>();
 
-            return new TracesConfiguration(isDaprIncluded, (destinations ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new TracesConfiguration(isDaprIncluded, destinations.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Configuration of Open Telemetry metrics. </summary>
         /// <param name="isKedaIncluded"> Boolean indicating if including keda metrics. </param>
         /// <param name="destinations"> Open telemetry metrics destinations. </param>
         /// <returns> A new <see cref="Models.MetricsConfiguration"/> instance for mocking. </returns>
@@ -2582,71 +1821,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             destinations ??= new ChangeTrackingList<string>();
 
-            return new MetricsConfiguration(isKedaIncluded, (destinations ?? new ChangeTrackingList<string>()).ToList(), default);
-        }
-
-        /// <param name="name"> Workload profile type for the workloads to run on. </param>
-        /// <param name="enableFips"> Whether to use a FIPS-enabled OS. Supported only for dedicated workload profiles. </param>
-        /// <param name="workloadProfileType"> Workload profile type for the workloads to run on. </param>
-        /// <param name="minimumNodeCount"> The minimum capacity. </param>
-        /// <param name="maximumNodeCount"> The maximum capacity. </param>
-        /// <returns> A new <see cref="Models.ContainerAppWorkloadProfile"/> instance for mocking. </returns>
-        public static ContainerAppWorkloadProfile ContainerAppWorkloadProfile(string name = default, bool? enableFips = default, string workloadProfileType = default, int? minimumNodeCount = default, int? maximumNodeCount = default)
-        {
-            return new ContainerAppWorkloadProfile(
-                name,
-                enableFips,
-                workloadProfileType,
-                minimumNodeCount,
-                maximumNodeCount,
-                default);
-        }
-
-        /// <param name="workloadProfileName"> Name of the workload profile used by the ingress component. Required. </param>
-        /// <param name="terminationGracePeriodSeconds"> Time (in seconds) to allow active connections to complete on termination. Must be between 0 and 3600. Defaults to 480 seconds. </param>
-        /// <param name="headerCountLimit"> Maximum number of headers per request allowed by the ingress. Must be at least 1. Defaults to 100. </param>
-        /// <param name="requestIdleTimeout"> Duration (in minutes) before idle requests are timed out. Must be between 4 and 30 inclusive. Defaults to 4 minutes. </param>
-        /// <returns> A new <see cref="Models.ManagedEnvironmentIngressConfiguration"/> instance for mocking. </returns>
-        public static ManagedEnvironmentIngressConfiguration ManagedEnvironmentIngressConfiguration(string workloadProfileName = default, int? terminationGracePeriodSeconds = default, int? headerCountLimit = default, int? requestIdleTimeout = default)
-        {
-            return new ManagedEnvironmentIngressConfiguration(workloadProfileName, terminationGracePeriodSeconds, headerCountLimit, requestIdleTimeout, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        /// <param name="privateEndpointId"> The ARM identifier for Private Endpoint. </param>
-        /// <returns> A new <see cref="AppContainers.ContainerAppPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static ContainerAppPrivateEndpointConnectionData ContainerAppPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> groupIds = default, ContainerAppPrivateLinkServiceConnectionState connectionState = default, ContainerAppPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
-        {
-            return new ContainerAppPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
-                default);
-        }
-
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.ContainerAppPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static ContainerAppPrivateLinkServiceConnectionState ContainerAppPrivateLinkServiceConnectionState(ContainerAppPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
-        {
-            return new ContainerAppPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
-        }
-
-        /// <param name="keyUri"> Key URL pointing to a key in KeyVault. Version segment of the Url is required. </param>
-        /// <param name="authIdentity"> Resource ID of a user-assigned managed identity to authenticate to the Key Vault. The identity must be assigned to the managed environment, in the same tenant as the Key Vault, and it must have the following key permissions on the Key Vault: wrapkey, unwrapkey, get. </param>
-        /// <returns> A new <see cref="Models.DiskEncryptionConfigurationKeyVaultConfiguration"/> instance for mocking. </returns>
-        public static DiskEncryptionConfigurationKeyVaultConfiguration DiskEncryptionConfigurationKeyVaultConfiguration(Uri keyUri = default, ResourceIdentifier authIdentity = default)
-        {
-            return new DiskEncryptionConfigurationKeyVaultConfiguration(keyUri, authIdentity is null ? default : new DiskEncryptionConfigurationKeyVaultConfigurationAuth(authIdentity, default), default);
+            return new MetricsConfiguration(isKedaIncluded, destinations.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2667,12 +1842,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
-                token is null && expireOn is null ? default : new EnvironmentAuthTokenProperties(token, expireOn, default),
-                default);
+                token is null && expireOn is null ? default : new EnvironmentAuthTokenProperties(token, expireOn, null));
         }
 
+        /// <summary> Collection of all the workload Profile States for a Managed Environment.. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -2686,17 +1862,8 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
-                properties,
-                default);
-        }
-
-        /// <param name="minimumCount"> Minimum count of instances. </param>
-        /// <param name="maximumCount"> Maximum count of nodes. </param>
-        /// <param name="currentCount"> Current count of nodes. </param>
-        /// <returns> A new <see cref="Models.ContainerAppWorkloadProfileStateProperties"/> instance for mocking. </returns>
-        public static ContainerAppWorkloadProfileStateProperties ContainerAppWorkloadProfileStateProperties(int? minimumCount = default, int? maximumCount = default, int? currentCount = default)
-        {
-            return new ContainerAppWorkloadProfileStateProperties(minimumCount, maximumCount, currentCount, default);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2722,6 +1889,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 componentType is null && version is null && ignoreErrors is null && initTimeout is null && secrets is null && secretStoreComponent is null && metadata is null && scopes is null && serviceComponentBind is null && provisioningState is null && deploymentErrors is null ? default : new DaprComponentProperties(
                     componentType,
                     version,
@@ -2734,44 +1902,19 @@ namespace Azure.ResourceManager.AppContainers.Models
                     (serviceComponentBind ?? new ChangeTrackingList<DaprComponentServiceBinding>()).ToList(),
                     provisioningState,
                     deploymentErrors,
-                    default),
-                default);
+                    null));
         }
 
-        /// <param name="name"> Metadata property name. </param>
-        /// <param name="value"> Metadata property value. </param>
-        /// <param name="secretRef"> Name of the Dapr Component secret from which to pull the metadata property value. </param>
-        /// <returns> A new <see cref="Models.ContainerAppDaprMetadata"/> instance for mocking. </returns>
-        public static ContainerAppDaprMetadata ContainerAppDaprMetadata(string name = default, string value = default, string secretRef = default)
-        {
-            return new ContainerAppDaprMetadata(name, value, secretRef, default);
-        }
-
-        /// <param name="name"> Name of the service bind. </param>
-        /// <param name="serviceId"> Resource id of the target service. </param>
-        /// <param name="metadata"> Service bind metadata. </param>
-        /// <returns> A new <see cref="Models.DaprComponentServiceBinding"/> instance for mocking. </returns>
-        public static DaprComponentServiceBinding DaprComponentServiceBinding(string name = default, string serviceId = default, DaprServiceBindMetadata metadata = default)
-        {
-            return new DaprComponentServiceBinding(name, serviceId, metadata, default);
-        }
-
-        /// <param name="name"> Service bind metadata property name. </param>
-        /// <param name="value"> Service bind metadata property value. </param>
-        /// <returns> A new <see cref="Models.DaprServiceBindMetadata"/> instance for mocking. </returns>
-        public static DaprServiceBindMetadata DaprServiceBindMetadata(string name = default, string value = default)
-        {
-            return new DaprServiceBindMetadata(name, value, default);
-        }
-
+        /// <summary> Dapr component Secret for ListSecrets Action. </summary>
         /// <param name="name"> Secret Name. </param>
         /// <param name="value"> Secret Value. </param>
         /// <returns> A new <see cref="Models.ContainerAppDaprSecret"/> instance for mocking. </returns>
         public static ContainerAppDaprSecret ContainerAppDaprSecret(string name = default, string value = default)
         {
-            return new ContainerAppDaprSecret(name, value, default);
+            return new ContainerAppDaprSecret(name, value, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Storage resource for connectedEnvironment. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -2785,10 +1928,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
-                properties,
-                default);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
+        /// <summary> Storage properties. </summary>
         /// <param name="provisioningState"> Provisioning state of the storage. </param>
         /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
         /// <param name="azureFile"> Azure file properties. </param>
@@ -2796,53 +1940,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <returns> A new <see cref="Models.ConnectedEnvironmentStorageProperties"/> instance for mocking. </returns>
         public static ConnectedEnvironmentStorageProperties ConnectedEnvironmentStorageProperties(ConnectedEnvironmentStorageProvisioningState? provisioningState = default, string deploymentErrors = default, ContainerAppAzureFileProperties azureFile = default, SmbStorage smb = default)
         {
-            return new ConnectedEnvironmentStorageProperties(provisioningState, deploymentErrors, azureFile, smb, default);
+            return new ConnectedEnvironmentStorageProperties(provisioningState, deploymentErrors, azureFile, smb, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="accountName"> Storage account name for azure file. </param>
-        /// <param name="accountKey"> Storage account key for azure file. </param>
-        /// <param name="accountKeyVaultProperties"> Storage account key stored as an Azure Key Vault secret. </param>
-        /// <param name="accessMode"> Access mode for storage. </param>
-        /// <param name="shareName"> Azure file share name. </param>
-        /// <returns> A new <see cref="Models.ContainerAppAzureFileProperties"/> instance for mocking. </returns>
-        public static ContainerAppAzureFileProperties ContainerAppAzureFileProperties(string accountName = default, string accountKey = default, ContainerAppSecretKeyVaultProperties accountKeyVaultProperties = default, ContainerAppAccessMode? accessMode = default, string shareName = default)
-        {
-            return new ContainerAppAzureFileProperties(
-                accountName,
-                accountKey,
-                accountKeyVaultProperties,
-                accessMode,
-                shareName,
-                default);
-        }
-
-        /// <param name="identity"> Resource ID of a managed identity to authenticate with Azure Key Vault, or System to use a system-assigned identity. </param>
-        /// <param name="keyVaultUri"> URL pointing to the Azure Key Vault secret. </param>
-        /// <returns> A new <see cref="Models.ContainerAppSecretKeyVaultProperties"/> instance for mocking. </returns>
-        public static ContainerAppSecretKeyVaultProperties ContainerAppSecretKeyVaultProperties(string identity = default, Uri keyVaultUri = default)
-        {
-            return new ContainerAppSecretKeyVaultProperties(identity, keyVaultUri, default);
-        }
-
-        /// <param name="host"> The host name or IP address of the SMB server. </param>
-        /// <param name="shareName"> The path to the SMB shared folder. </param>
-        /// <param name="username"> The user to log on to the SMB server. </param>
-        /// <param name="domain"> The domain name for the user. </param>
-        /// <param name="password"> The password for the user. </param>
-        /// <param name="accessMode"> Access mode for storage. </param>
-        /// <returns> A new <see cref="Models.SmbStorage"/> instance for mocking. </returns>
-        public static SmbStorage SmbStorage(string host = default, string shareName = default, string username = default, string domain = default, string password = default, ContainerAppAccessMode? accessMode = default)
-        {
-            return new SmbStorage(
-                host,
-                shareName,
-                username,
-                domain,
-                password,
-                accessMode,
-                default);
-        }
-
+        /// <summary> Managed certificates used for Custom Domain bindings of Container Apps in a Managed Environment. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -2860,12 +1961,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
-                properties,
-                default);
+                properties);
         }
 
+        /// <summary> Certificate resource specific properties. </summary>
         /// <param name="provisioningState"> Provisioning state of the certificate. </param>
         /// <param name="subjectName"> Subject name of the certificate. </param>
         /// <param name="error"> Any error occurred during the certificate provision. </param>
@@ -2880,16 +1982,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                 error,
                 domainControlValidation,
                 validationToken,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A managed certificate to update. </summary>
         /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
         /// <returns> A new <see cref="Models.ContainerAppManagedCertificatePatch"/> instance for mocking. </returns>
         public static ContainerAppManagedCertificatePatch ContainerAppManagedCertificatePatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ContainerAppManagedCertificatePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new ContainerAppManagedCertificatePatch(tags, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2906,42 +2009,8 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
-                inboundPolicy is null && outboundPolicy is null ? default : new DaprComponentResiliencyPolicyProperties(inboundPolicy, outboundPolicy, default),
-                default);
-        }
-
-        /// <param name="httpRetryPolicy"> The optional HTTP retry policy configuration. </param>
-        /// <param name="responseTimeoutInSeconds"> The optional response timeout in seconds. </param>
-        /// <param name="circuitBreakerPolicy"> The optional circuit breaker policy configuration. </param>
-        /// <returns> A new <see cref="Models.DaprComponentResiliencyPolicyConfiguration"/> instance for mocking. </returns>
-        public static DaprComponentResiliencyPolicyConfiguration DaprComponentResiliencyPolicyConfiguration(DaprComponentResiliencyPolicyHttpRetryPolicyConfiguration httpRetryPolicy = default, int? responseTimeoutInSeconds = default, DaprComponentResiliencyPolicyCircuitBreakerPolicyConfiguration circuitBreakerPolicy = default)
-        {
-            return new DaprComponentResiliencyPolicyConfiguration(httpRetryPolicy, responseTimeoutInSeconds is null ? default : new DaprComponentResiliencyPolicyTimeoutPolicyConfiguration(responseTimeoutInSeconds, default), circuitBreakerPolicy, default);
-        }
-
-        /// <param name="maxRetries"> The optional maximum number of retries. </param>
-        /// <param name="retryBackOff"> The optional retry backoff configuration. </param>
-        /// <returns> A new <see cref="Models.DaprComponentResiliencyPolicyHttpRetryPolicyConfiguration"/> instance for mocking. </returns>
-        public static DaprComponentResiliencyPolicyHttpRetryPolicyConfiguration DaprComponentResiliencyPolicyHttpRetryPolicyConfiguration(int? maxRetries = default, DaprComponentResiliencyPolicyHttpRetryBackOffConfiguration retryBackOff = default)
-        {
-            return new DaprComponentResiliencyPolicyHttpRetryPolicyConfiguration(maxRetries, retryBackOff, default);
-        }
-
-        /// <param name="initialDelayInMilliseconds"> The optional initial delay in milliseconds before an operation is retried. </param>
-        /// <param name="maxIntervalInMilliseconds"> The optional maximum time interval in milliseconds between retry attempts. </param>
-        /// <returns> A new <see cref="Models.DaprComponentResiliencyPolicyHttpRetryBackOffConfiguration"/> instance for mocking. </returns>
-        public static DaprComponentResiliencyPolicyHttpRetryBackOffConfiguration DaprComponentResiliencyPolicyHttpRetryBackOffConfiguration(int? initialDelayInMilliseconds = default, int? maxIntervalInMilliseconds = default)
-        {
-            return new DaprComponentResiliencyPolicyHttpRetryBackOffConfiguration(initialDelayInMilliseconds, maxIntervalInMilliseconds, default);
-        }
-
-        /// <param name="consecutiveErrors"> The number of consecutive errors before the circuit is opened. </param>
-        /// <param name="timeoutInSeconds"> The interval in seconds until a retry attempt is made after the circuit is opened. </param>
-        /// <param name="intervalInSeconds"> The optional interval in seconds after which the error count resets to 0. An interval of 0 will never reset. If not specified, the timeoutInSeconds value will be used. </param>
-        /// <returns> A new <see cref="Models.DaprComponentResiliencyPolicyCircuitBreakerPolicyConfiguration"/> instance for mocking. </returns>
-        public static DaprComponentResiliencyPolicyCircuitBreakerPolicyConfiguration DaprComponentResiliencyPolicyCircuitBreakerPolicyConfiguration(int? consecutiveErrors = default, int? timeoutInSeconds = default, int? intervalInSeconds = default)
-        {
-            return new DaprComponentResiliencyPolicyCircuitBreakerPolicyConfiguration(consecutiveErrors, timeoutInSeconds, intervalInSeconds, default);
+                additionalBinaryDataProperties: null,
+                inboundPolicy is null && outboundPolicy is null ? default : new DaprComponentResiliencyPolicyProperties(inboundPolicy, outboundPolicy, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2963,18 +2032,19 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 pubsubName is null && topic is null && deadLetterTopic is null && routes is null && scopes is null && metadata is null && bulkSubscribe is null ? default : new DaprSubscriptionProperties(
                     pubsubName,
                     topic,
                     deadLetterTopic,
                     routes,
                     (scopes ?? new ChangeTrackingList<string>()).ToList(),
-                    metadata ?? new ChangeTrackingDictionary<string, string>(),
+                    metadata,
                     bulkSubscribe,
-                    default),
-                default);
+                    null));
         }
 
+        /// <summary> Dapr PubSub Event Subscription Routes configuration. </summary>
         /// <param name="rules"> The list of Dapr PubSub Event Subscription Route Rules. </param>
         /// <param name="default"> The default path to deliver events that do not match any of the rules. </param>
         /// <returns> A new <see cref="Models.DaprSubscriptionRoutes"/> instance for mocking. </returns>
@@ -2982,24 +2052,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             rules ??= new ChangeTrackingList<DaprSubscriptionRouteRule>();
 
-            return new DaprSubscriptionRoutes((rules ?? new ChangeTrackingList<DaprSubscriptionRouteRule>()).ToList(), @default, default);
-        }
-
-        /// <param name="match"> The optional CEL expression used to match the event. If the match is not specified, then the route is considered the default. The rules are tested in the order specified, so they should be define from most-to-least specific. The default route should appear last in the list. </param>
-        /// <param name="path"> The path for events that match this rule. </param>
-        /// <returns> A new <see cref="Models.DaprSubscriptionRouteRule"/> instance for mocking. </returns>
-        public static DaprSubscriptionRouteRule DaprSubscriptionRouteRule(string match = default, string path = default)
-        {
-            return new DaprSubscriptionRouteRule(match, path, default);
-        }
-
-        /// <param name="enabled"> Enable bulk subscription. </param>
-        /// <param name="maxMessagesCount"> Maximum number of messages to deliver in a bulk message. </param>
-        /// <param name="maxAwaitDurationMs"> Maximum duration in milliseconds to wait before a bulk message is sent to the app. </param>
-        /// <returns> A new <see cref="Models.DaprSubscriptionBulkSubscribeConfig"/> instance for mocking. </returns>
-        public static DaprSubscriptionBulkSubscribeConfig DaprSubscriptionBulkSubscribeConfig(bool? enabled = default, int? maxMessagesCount = default, int? maxAwaitDurationMs = default)
-        {
-            return new DaprSubscriptionBulkSubscribeConfig(enabled, maxMessagesCount, maxAwaitDurationMs, default);
+            return new DaprSubscriptionRoutes(rules.ToList(), @default, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3015,19 +2068,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
-                scheduledEntries is null ? default : new ContainerAppMaintenanceScheduledEntries((scheduledEntries ?? new ChangeTrackingList<ManagedEnvironmentScheduledEntry>()).ToList(), default),
-                default);
+                additionalBinaryDataProperties: null,
+                scheduledEntries is null ? default : new ContainerAppMaintenanceScheduledEntries((scheduledEntries ?? new ChangeTrackingList<ManagedEnvironmentScheduledEntry>()).ToList(), null));
         }
 
-        /// <param name="weekDay"> Day of the week when a managed environment can be patched. </param>
-        /// <param name="startHourUtc"> Start hour after which managed environment maintenance can start from 0 to 23 hour. </param>
-        /// <param name="durationHours"> Length of maintenance window range from 8 to 24 hours. </param>
-        /// <returns> A new <see cref="Models.ManagedEnvironmentScheduledEntry"/> instance for mocking. </returns>
-        public static ManagedEnvironmentScheduledEntry ManagedEnvironmentScheduledEntry(ManagedEnvironmentWeekDay weekDay = default, int startHourUtc = default, int durationHours = default)
-        {
-            return new ManagedEnvironmentScheduledEntry(weekDay, startHourUtc, durationHours, default);
-        }
-
+        /// <summary> Storage resource for managedEnvironment. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -3041,25 +2086,8 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
-                properties,
-                default);
-        }
-
-        /// <param name="azureFile"> Azure file properties. </param>
-        /// <param name="nfsAzureFile"> NFS Azure file properties. </param>
-        /// <returns> A new <see cref="Models.ManagedEnvironmentStorageProperties"/> instance for mocking. </returns>
-        public static ManagedEnvironmentStorageProperties ManagedEnvironmentStorageProperties(ContainerAppAzureFileProperties azureFile = default, ContainerAppNfsAzureFileProperties nfsAzureFile = default)
-        {
-            return new ManagedEnvironmentStorageProperties(azureFile, nfsAzureFile, default);
-        }
-
-        /// <param name="server"> Server for NFS azure file. </param>
-        /// <param name="accessMode"> Access mode for storage. </param>
-        /// <param name="shareName"> NFS Azure file share name. </param>
-        /// <returns> A new <see cref="Models.ContainerAppNfsAzureFileProperties"/> instance for mocking. </returns>
-        public static ContainerAppNfsAzureFileProperties ContainerAppNfsAzureFileProperties(string server = default, ContainerAppAccessMode? accessMode = default, string shareName = default)
-        {
-            return new ContainerAppNfsAzureFileProperties(server, accessMode, shareName, default);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3088,7 +2116,8 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
                 provisioningState is null && runningState is null && environmentId is null && workloadProfileName is null && configuration is null && template is null && outboundIPAddresses is null && eventStreamEndpoint is null ? default : new JobProperties(
                     provisioningState,
@@ -3099,12 +2128,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                     template,
                     (outboundIPAddresses ?? new ChangeTrackingList<string>()).ToList(),
                     eventStreamEndpoint,
-                    default),
+                    null),
                 extendedLocation,
-                identity,
-                default);
+                identity);
         }
 
+        /// <summary> Non versioned Container Apps Job configuration properties. </summary>
         /// <param name="secrets"> Collection of secrets used by a Container Apps Job. </param>
         /// <param name="triggerType"> Trigger type of the job. </param>
         /// <param name="replicaTimeout"> Maximum number of seconds a replica is allowed to run. </param>
@@ -3122,44 +2151,19 @@ namespace Azure.ResourceManager.AppContainers.Models
             identitySettings ??= new ChangeTrackingList<ContainerAppIdentitySettings>();
 
             return new ContainerAppJobConfiguration(
-                (secrets ?? new ChangeTrackingList<ContainerAppWritableSecret>()).ToList(),
+                secrets.ToList(),
                 triggerType,
                 replicaTimeout,
                 replicaRetryLimit,
                 manualTriggerConfig,
                 scheduleTriggerConfig,
                 eventTriggerConfig,
-                (registries ?? new ChangeTrackingList<ContainerAppRegistryCredentials>()).ToList(),
-                (identitySettings ?? new ChangeTrackingList<ContainerAppIdentitySettings>()).ToList(),
-                default);
+                registries.ToList(),
+                identitySettings.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <param name="replicaCompletionCount"> Minimum number of successful replica completions before overall job completion. </param>
-        /// <param name="parallelism"> Number of parallel replicas of a job that can run at a given time. </param>
-        /// <returns> A new <see cref="Models.JobConfigurationManualTriggerConfig"/> instance for mocking. </returns>
-        public static JobConfigurationManualTriggerConfig JobConfigurationManualTriggerConfig(int? replicaCompletionCount = default, int? parallelism = default)
-        {
-            return new JobConfigurationManualTriggerConfig(replicaCompletionCount, parallelism, default);
-        }
-
-        /// <param name="replicaCompletionCount"> Minimum number of successful replica completions before overall job completion. </param>
-        /// <param name="cronExpression"> Cron formatted repeating schedule ("<i> </i> <i> </i> *") of a Cron Job. </param>
-        /// <param name="parallelism"> Number of parallel replicas of a job that can run at a given time. </param>
-        /// <returns> A new <see cref="Models.JobConfigurationScheduleTriggerConfig"/> instance for mocking. </returns>
-        public static JobConfigurationScheduleTriggerConfig JobConfigurationScheduleTriggerConfig(int? replicaCompletionCount = default, string cronExpression = default, int? parallelism = default)
-        {
-            return new JobConfigurationScheduleTriggerConfig(replicaCompletionCount, cronExpression, parallelism, default);
-        }
-
-        /// <param name="replicaCompletionCount"> Minimum number of successful replica completions before overall job completion. </param>
-        /// <param name="parallelism"> Number of parallel replicas of a job that can run at a given time. </param>
-        /// <param name="scale"> Scaling configurations for event driven jobs. </param>
-        /// <returns> A new <see cref="Models.EventTriggerConfiguration"/> instance for mocking. </returns>
-        public static EventTriggerConfiguration EventTriggerConfiguration(int? replicaCompletionCount = default, int? parallelism = default, ContainerAppJobScale scale = default)
-        {
-            return new EventTriggerConfiguration(replicaCompletionCount, parallelism, scale, default);
-        }
-
+        /// <summary> Scaling configurations for event driven jobs. </summary>
         /// <param name="pollingIntervalInSeconds"> Interval to check each event source in seconds. Defaults to 30s. </param>
         /// <param name="minExecutions"> Minimum number of job executions that are created for a trigger, default 0. </param>
         /// <param name="maxExecutions"> Maximum number of job executions that are created for a trigger, default 100. </param>
@@ -3169,9 +2173,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             rules ??= new ChangeTrackingList<ContainerAppJobScaleRule>();
 
-            return new ContainerAppJobScale(pollingIntervalInSeconds, minExecutions, maxExecutions, (rules ?? new ChangeTrackingList<ContainerAppJobScaleRule>()).ToList(), default);
+            return new ContainerAppJobScale(pollingIntervalInSeconds, minExecutions, maxExecutions, rules.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Scaling rule. </summary>
         /// <param name="name"> Scale Rule Name. </param>
         /// <param name="jobScaleRuleType">
         /// Type of the scale rule
@@ -3189,11 +2194,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 jobScaleRuleType,
                 metadata,
-                (auth ?? new ChangeTrackingList<ContainerAppScaleRuleAuth>()).ToList(),
+                auth.ToList(),
                 identity,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Container Apps Job versioned application definition. Defines the desired state of an immutable revision. Any changes to this section Will result in a new revision being created. </summary>
         /// <param name="initContainers"> List of specialized containers that run before app containers. </param>
         /// <param name="containers"> List of container definitions for the Container App. </param>
         /// <param name="volumes"> List of volume definitions for the Container App. </param>
@@ -3204,9 +2210,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             containers ??= new ChangeTrackingList<ContainerAppContainer>();
             volumes ??= new ChangeTrackingList<ContainerAppVolume>();
 
-            return new ContainerAppJobTemplate((initContainers ?? new ChangeTrackingList<ContainerAppInitContainer>()).ToList(), (containers ?? new ChangeTrackingList<ContainerAppContainer>()).ToList(), (volumes ?? new ChangeTrackingList<ContainerAppVolume>()).ToList(), default);
+            return new ContainerAppJobTemplate(initContainers.ToList(), containers.ToList(), volumes.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Container Apps Job resource specific properties. </summary>
         /// <param name="extendedLocation"> The complex type of the extended location. </param>
         /// <param name="identity"> Managed identities needed by a container app job to interact with other Azure services to not maintain any secrets or credentials in code. </param>
         /// <param name="tags"> Resource tags. </param>
@@ -3216,9 +2223,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ContainerAppJobPatch(extendedLocation, identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+            return new ContainerAppJobPatch(extendedLocation, identity, tags, properties, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Container Apps Job patch properties. </summary>
         /// <param name="environmentId"> Resource ID of environment. </param>
         /// <param name="configuration"> Container Apps Job configuration properties. </param>
         /// <param name="template"> Container Apps job definition. </param>
@@ -3233,11 +2241,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                 environmentId,
                 configuration,
                 template,
-                (outboundIPAddresses ?? new ChangeTrackingList<string>()).ToList(),
+                outboundIPAddresses.ToList(),
                 eventStreamEndpoint,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Job's execution template, containing container configuration for a job's execution. </summary>
         /// <param name="containers"> List of container definitions for the Container Apps Job. </param>
         /// <param name="initContainers"> List of specialized containers that run before job containers. </param>
         /// <returns> A new <see cref="Models.ContainerAppJobExecutionTemplate"/> instance for mocking. </returns>
@@ -3246,9 +2255,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             containers ??= new ChangeTrackingList<JobExecutionContainer>();
             initContainers ??= new ChangeTrackingList<JobExecutionContainer>();
 
-            return new ContainerAppJobExecutionTemplate((containers ?? new ChangeTrackingList<JobExecutionContainer>()).ToList(), (initContainers ?? new ChangeTrackingList<JobExecutionContainer>()).ToList(), default);
+            return new ContainerAppJobExecutionTemplate(containers.ToList(), initContainers.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Container Apps Jobs execution container definition. </summary>
         /// <param name="image"> Container image tag. </param>
         /// <param name="name"> Custom container name. </param>
         /// <param name="command"> Container start command. </param>
@@ -3265,21 +2275,23 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new JobExecutionContainer(
                 image,
                 name,
-                (command ?? new ChangeTrackingList<string>()).ToList(),
-                (args ?? new ChangeTrackingList<string>()).ToList(),
-                (env ?? new ChangeTrackingList<ContainerAppEnvironmentVariable>()).ToList(),
+                command.ToList(),
+                args.ToList(),
+                env.ToList(),
                 resources,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Container App's Job execution name. </summary>
         /// <param name="name"> Job execution name. </param>
         /// <param name="id"> Job execution Id. </param>
         /// <returns> A new <see cref="Models.ContainerAppJobExecutionBase"/> instance for mocking. </returns>
         public static ContainerAppJobExecutionBase ContainerAppJobExecutionBase(string name = default, string id = default)
         {
-            return new ContainerAppJobExecutionBase(name, id, default);
+            return new ContainerAppJobExecutionBase(name, id, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Container App executions collection ARM resource. </summary>
         /// <param name="value"> The JobExecution items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <returns> A new <see cref="Models.ContainerAppJobExecutions"/> instance for mocking. </returns>
@@ -3287,7 +2299,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             value ??= new ChangeTrackingList<ContainerAppJobExecutionData>();
 
-            return new ContainerAppJobExecutions((value ?? new ChangeTrackingList<ContainerAppJobExecutionData>()).ToList(), nextLink, default);
+            return new ContainerAppJobExecutions(value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3309,18 +2321,19 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
-                status is null && startOn is null && endOn is null && template is null && detailedStatusReplicas is null && reason is null && message is null ? default : new JobExecutionProperties(
+                additionalBinaryDataProperties: null,
+                status is null && startOn is null && endOn is null && template is null && reason is null && message is null && detailedStatusReplicas is null ? default : new JobExecutionProperties(
                     status,
                     startOn,
                     endOn,
                     template,
-                    new ExecutionStatus((detailedStatusReplicas ?? new ChangeTrackingList<ReplicaExecutionStatus>()).ToList(), default),
+                    new ExecutionStatus((detailedStatusReplicas ?? new ChangeTrackingList<ReplicaExecutionStatus>()).ToList(), null),
                     reason,
                     message,
-                    default),
-                default);
+                    null));
         }
 
+        /// <summary> Container Apps Job execution replica status. </summary>
         /// <param name="name"> Replica Name. </param>
         /// <param name="containers"> Containers in the execution replica. </param>
         /// <returns> A new <see cref="Models.ReplicaExecutionStatus"/> instance for mocking. </returns>
@@ -3328,9 +2341,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             containers ??= new ChangeTrackingList<ContainerExecutionStatus>();
 
-            return new ReplicaExecutionStatus(name, (containers ?? new ChangeTrackingList<ContainerExecutionStatus>()).ToList(), default);
+            return new ReplicaExecutionStatus(name, containers.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Container Apps Job execution container status. Contains status code and reason. </summary>
         /// <param name="name"> Container Name. </param>
         /// <param name="code"> Exit code. </param>
         /// <param name="additionalInformation"> Additional information for the container status. </param>
@@ -3338,9 +2352,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <returns> A new <see cref="Models.ContainerExecutionStatus"/> instance for mocking. </returns>
         public static ContainerExecutionStatus ContainerExecutionStatus(string name = default, int? code = default, string additionalInformation = default, string status = default)
         {
-            return new ContainerExecutionStatus(name, code, additionalInformation, status, default);
+            return new ContainerExecutionStatus(name, code, additionalInformation, status, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Diagnostics data for a resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -3354,10 +2369,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
-                properties,
-                default);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
+        /// <summary> Diagnostics resource specific properties. </summary>
         /// <param name="metadata"> Metadata of the diagnostics response. </param>
         /// <param name="dataset"> Set of data collections associated with the response. </param>
         /// <param name="status"> Status of the diagnostics response. </param>
@@ -3367,9 +2383,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             dataset ??= new ChangeTrackingList<ContainerAppDiagnosticsDataApiResult>();
 
-            return new ContainerAppDiagnosticsProperties(metadata, (dataset ?? new ChangeTrackingList<ContainerAppDiagnosticsDataApiResult>()).ToList(), status, dataProviderMetadata, default);
+            return new ContainerAppDiagnosticsProperties(metadata, dataset.ToList(), status, dataProviderMetadata, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> C# compatibility replacement for diagnostics metadata. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -3391,31 +2408,25 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 description,
                 author,
                 category,
-                (supportTopicList ?? new ChangeTrackingList<ContainerAppDiagnosticSupportTopic>()).ToList(),
-                (analysisTypes ?? new ChangeTrackingList<string>()).ToList(),
-                score,
-                default);
+                supportTopicList.ToList(),
+                analysisTypes.ToList(),
+                score);
         }
 
+        /// <summary> Support topic information. </summary>
         /// <param name="id"> Unique topic identifier. </param>
         /// <param name="pesId"> PES identifier. </param>
         /// <returns> A new <see cref="Models.ContainerAppDiagnosticSupportTopic"/> instance for mocking. </returns>
         public static ContainerAppDiagnosticSupportTopic ContainerAppDiagnosticSupportTopic(string id = default, string pesId = default)
         {
-            return new ContainerAppDiagnosticSupportTopic(id, pesId, default);
+            return new ContainerAppDiagnosticSupportTopic(id, pesId, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="table"> Table response. </param>
-        /// <param name="renderingProperties"> Details of the table response. </param>
-        /// <returns> A new <see cref="Models.ContainerAppDiagnosticsDataApiResult"/> instance for mocking. </returns>
-        public static ContainerAppDiagnosticsDataApiResult ContainerAppDiagnosticsDataApiResult(ContainerAppDiagnosticDataTableResult table = default, ContainerAppDiagnosticRendering renderingProperties = default)
-        {
-            return new ContainerAppDiagnosticsDataApiResult(table, renderingProperties, default);
-        }
-
+        /// <summary> Diagnostics data table. </summary>
         /// <param name="tableName"> Table name. </param>
         /// <param name="columns"> Columns in the table. </param>
         /// <param name="rows"> Rows in the table. </param>
@@ -3425,36 +2436,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             columns ??= new ChangeTrackingList<ContainerAppDiagnosticDataColumn>();
             rows ??= new ChangeTrackingList<BinaryData>();
 
-            return new ContainerAppDiagnosticDataTableResult(tableName, (columns ?? new ChangeTrackingList<ContainerAppDiagnosticDataColumn>()).ToList(), (rows ?? new ChangeTrackingList<BinaryData>()).ToList(), default);
+            return new ContainerAppDiagnosticDataTableResult(tableName, columns.ToList(), rows.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <param name="columnName"> Column name. </param>
-        /// <param name="dataType"> Data type of the column. </param>
-        /// <param name="columnType"> Column type. </param>
-        /// <returns> A new <see cref="Models.ContainerAppDiagnosticDataColumn"/> instance for mocking. </returns>
-        public static ContainerAppDiagnosticDataColumn ContainerAppDiagnosticDataColumn(string columnName = default, string dataType = default, string columnType = default)
-        {
-            return new ContainerAppDiagnosticDataColumn(columnName, dataType, columnType, default);
-        }
-
-        /// <param name="diagnosticRenderingType"> Rendering type. </param>
-        /// <param name="title"> Title of the table. </param>
-        /// <param name="description"> Description of the table. </param>
-        /// <param name="isVisible"> Flag if the table should be rendered. </param>
-        /// <returns> A new <see cref="Models.ContainerAppDiagnosticRendering"/> instance for mocking. </returns>
-        public static ContainerAppDiagnosticRendering ContainerAppDiagnosticRendering(int? diagnosticRenderingType = default, string title = default, string description = default, bool? isVisible = default)
-        {
-            return new ContainerAppDiagnosticRendering(diagnosticRenderingType, title, description, isVisible, default);
-        }
-
-        /// <param name="message"> Diagnostic message. </param>
-        /// <param name="statusId"> Status. </param>
-        /// <returns> A new <see cref="Models.ContainerAppDiagnosticsStatus"/> instance for mocking. </returns>
-        public static ContainerAppDiagnosticsStatus ContainerAppDiagnosticsStatus(string message = default, int? statusId = default)
-        {
-            return new ContainerAppDiagnosticsStatus(message, statusId, default);
-        }
-
+        /// <summary> Details of a diagnostics data provider. </summary>
         /// <param name="providerName"> Name of data provider. </param>
         /// <param name="propertyBag"> Collection of properties. </param>
         /// <returns> A new <see cref="Models.ContainerAppDiagnosticDataProviderMetadata"/> instance for mocking. </returns>
@@ -3462,15 +2447,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             propertyBag ??= new ChangeTrackingList<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem>();
 
-            return new ContainerAppDiagnosticDataProviderMetadata(providerName, (propertyBag ?? new ChangeTrackingList<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem>()).ToList(), default);
-        }
-
-        /// <param name="name"> Property name. </param>
-        /// <param name="value"> Property value. </param>
-        /// <returns> A new <see cref="Models.ContainerAppDiagnosticDataProviderMetadataPropertyBagItem"/> instance for mocking. </returns>
-        public static ContainerAppDiagnosticDataProviderMetadataPropertyBagItem ContainerAppDiagnosticDataProviderMetadataPropertyBagItem(string name = default, string value = default)
-        {
-            return new ContainerAppDiagnosticDataProviderMetadataPropertyBagItem(name, value, default);
+            return new ContainerAppDiagnosticDataProviderMetadata(providerName, propertyBag.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3491,71 +2468,24 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
-                timeoutPolicy is null && httpRetryPolicy is null && tcpRetryMaxConnectAttempts is null && circuitBreakerPolicy is null && httpConnectionPool is null && tcpConnectionPoolMaxConnections is null ? default : new AppResiliencyProperties(
+                additionalBinaryDataProperties: null,
+                timeoutPolicy is null && httpRetryPolicy is null && circuitBreakerPolicy is null && httpConnectionPool is null && tcpRetryMaxConnectAttempts is null && tcpConnectionPoolMaxConnections is null ? default : new AppResiliencyProperties(
                     timeoutPolicy,
                     httpRetryPolicy,
-                    new TcpRetryPolicy(tcpRetryMaxConnectAttempts, default),
+                    new TcpRetryPolicy(tcpRetryMaxConnectAttempts, null),
                     circuitBreakerPolicy,
                     httpConnectionPool,
-                    new TcpConnectionPool(tcpConnectionPoolMaxConnections, default),
-                    default),
-                default);
+                    new TcpConnectionPool(tcpConnectionPoolMaxConnections, null),
+                    null));
         }
 
-        /// <param name="responseTimeoutInSeconds"> Timeout, in seconds, for a request to respond. </param>
-        /// <param name="connectionTimeoutInSeconds"> Timeout, in seconds, for a request to initiate a connection. </param>
-        /// <returns> A new <see cref="Models.TimeoutPolicy"/> instance for mocking. </returns>
-        public static TimeoutPolicy TimeoutPolicy(int? responseTimeoutInSeconds = default, int? connectionTimeoutInSeconds = default)
-        {
-            return new TimeoutPolicy(responseTimeoutInSeconds, connectionTimeoutInSeconds, default);
-        }
-
-        /// <param name="maxRetries"> Maximum number of times a request will retry. </param>
-        /// <param name="initialDelayInMilliseconds"> Initial delay, in milliseconds, before retrying a request. </param>
-        /// <param name="maxIntervalInMilliseconds"> Maximum interval, in milliseconds, between retries. </param>
-        /// <param name="headers"> Headers that must be present for a request to be retried. </param>
-        /// <param name="httpStatusCodes"> Additional http status codes that can trigger a retry. </param>
-        /// <param name="errors"> Errors that can trigger a retry. </param>
-        /// <returns> A new <see cref="Models.HttpRetryPolicy"/> instance for mocking. </returns>
-        public static HttpRetryPolicy HttpRetryPolicy(int? maxRetries = default, long? initialDelayInMilliseconds = default, long? maxIntervalInMilliseconds = default, IEnumerable<HeaderMatch> headers = default, IEnumerable<int> httpStatusCodes = default, IEnumerable<string> errors = default)
-        {
-            return new HttpRetryPolicy(maxRetries, initialDelayInMilliseconds is null && maxIntervalInMilliseconds is null ? default : new HttpRetryPolicyRetryBackOff(initialDelayInMilliseconds, maxIntervalInMilliseconds, default), headers is null && httpStatusCodes is null && errors is null ? default : new HttpRetryPolicyMatches((headers ?? new ChangeTrackingList<HeaderMatch>()).ToList(), (httpStatusCodes ?? new ChangeTrackingList<int>()).ToList(), (errors ?? new ChangeTrackingList<string>()).ToList(), default), default);
-        }
-
-        /// <param name="header"> Name of the header. </param>
-        /// <param name="exactMatch"> Exact value of the header. </param>
-        /// <param name="prefixMatch"> Prefix value of the header. </param>
-        /// <param name="suffixMatch"> Suffix value of the header. </param>
-        /// <param name="regexMatch"> Regex value of the header. </param>
-        /// <returns> A new <see cref="Models.HeaderMatch"/> instance for mocking. </returns>
-        public static HeaderMatch HeaderMatch(string header = default, string exactMatch = default, string prefixMatch = default, string suffixMatch = default, string regexMatch = default)
-        {
-            return new HeaderMatch(header, exactMatch is null && prefixMatch is null && suffixMatch is null && regexMatch is null ? default : new HeaderMatchMatch(exactMatch, prefixMatch, suffixMatch, regexMatch, default), default);
-        }
-
-        /// <param name="consecutiveErrors"> Number of consecutive errors before the circuit breaker opens. </param>
-        /// <param name="intervalInSeconds"> The time interval, in seconds, between endpoint checks. This can result in opening the circuit breaker if the check fails as well as closing the circuit breaker if the check succeeds. Defaults to 10s. </param>
-        /// <param name="maxEjectionPercent"> Maximum percentage of hosts that will be ejected after failure threshold has been met. </param>
-        /// <returns> A new <see cref="Models.CircuitBreakerPolicy"/> instance for mocking. </returns>
-        public static CircuitBreakerPolicy CircuitBreakerPolicy(int? consecutiveErrors = default, int? intervalInSeconds = default, int? maxEjectionPercent = default)
-        {
-            return new CircuitBreakerPolicy(consecutiveErrors, intervalInSeconds, maxEjectionPercent, default);
-        }
-
-        /// <param name="http1MaxPendingRequests"> Maximum number of pending http1 requests allowed. </param>
-        /// <param name="http2MaxRequests"> Maximum number of http2 requests allowed. </param>
-        /// <returns> A new <see cref="Models.HttpConnectionPool"/> instance for mocking. </returns>
-        public static HttpConnectionPool HttpConnectionPool(int? http1MaxPendingRequests = default, int? http2MaxRequests = default)
-        {
-            return new HttpConnectionPool(http1MaxPendingRequests, http2MaxRequests, default);
-        }
-
+        /// <summary> Build Auth Token. </summary>
         /// <param name="token"> Authentication token. </param>
         /// <param name="expiresOn"> Token expiration date. </param>
         /// <returns> A new <see cref="Models.BuildToken"/> instance for mocking. </returns>
         public static BuildToken BuildToken(string token = default, DateTimeOffset? expiresOn = default)
         {
-            return new BuildToken(token, expiresOn, default);
+            return new BuildToken(token, expiresOn, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3573,10 +2503,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
-                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new AppContainersPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default),
-                default);
+                additionalBinaryDataProperties: null,
+                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new AppContainersPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), null));
         }
 
+        /// <summary> Advanced Ingress routing for path/header based routing for a Container App Environment. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -3590,10 +2521,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
-                properties,
-                default);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
+        /// <summary> Http Route Config properties. </summary>
         /// <param name="provisioningState"> The provisioning state of the Http Route Config in cluster. </param>
         /// <param name="provisioningErrors"> List of errors when trying to reconcile http routes. </param>
         /// <param name="fqdn"> FQDN of the route resource. </param>
@@ -3608,21 +2540,23 @@ namespace Azure.ResourceManager.AppContainers.Models
 
             return new ContainerAppHttpRouteConfigProperties(
                 provisioningState,
-                (provisioningErrors ?? new ChangeTrackingList<ContainerAppHttpRouteProvisioningErrors>()).ToList(),
+                provisioningErrors.ToList(),
                 fqdn,
-                (customDomains ?? new ChangeTrackingList<ContainerAppCustomDomain>()).ToList(),
-                (rules ?? new ChangeTrackingList<ContainerAppHttpRouteRule>()).ToList(),
-                default);
+                customDomains.ToList(),
+                rules.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> List of provisioning errors for a http route config object. </summary>
         /// <param name="errorOccurredOn"> Timestamp error occured at. </param>
         /// <param name="message"> Description or error message. </param>
         /// <returns> A new <see cref="Models.ContainerAppHttpRouteProvisioningErrors"/> instance for mocking. </returns>
         public static ContainerAppHttpRouteProvisioningErrors ContainerAppHttpRouteProvisioningErrors(DateTimeOffset? errorOccurredOn = default, string message = default)
         {
-            return new ContainerAppHttpRouteProvisioningErrors(errorOccurredOn, message, default);
+            return new ContainerAppHttpRouteProvisioningErrors(errorOccurredOn, message, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Http Route rule. </summary>
         /// <param name="targets"> Targets- container apps, revisions, labels. </param>
         /// <param name="routes"> Routing configuration that will allow matches on specific paths/headers. </param>
         /// <param name="description"> Description of rule. Optional. </param>
@@ -3632,37 +2566,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             targets ??= new ChangeTrackingList<ContainerAppHttpRouteTarget>();
             routes ??= new ChangeTrackingList<ContainerAppHttpRoute>();
 
-            return new ContainerAppHttpRouteRule((targets ?? new ChangeTrackingList<ContainerAppHttpRouteTarget>()).ToList(), (routes ?? new ChangeTrackingList<ContainerAppHttpRoute>()).ToList(), description, default);
+            return new ContainerAppHttpRouteRule(targets.ToList(), routes.ToList(), description, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="containerApp"> Container App Name to route requests to. </param>
-        /// <param name="revision"> Revision to route requests to. </param>
-        /// <param name="label"> Label/Revision to route requests to. </param>
-        /// <param name="weight"> Weighted routing. </param>
-        /// <returns> A new <see cref="Models.ContainerAppHttpRouteTarget"/> instance for mocking. </returns>
-        public static ContainerAppHttpRouteTarget ContainerAppHttpRouteTarget(string containerApp = default, string revision = default, string label = default, int? weight = default)
-        {
-            return new ContainerAppHttpRouteTarget(containerApp, revision, label, weight, default);
-        }
-
-        /// <param name="match"> Conditions route will match on. </param>
-        /// <param name="actionPrefixRewrite"> Rewrite prefix, default is no rewrites. </param>
-        /// <returns> A new <see cref="Models.ContainerAppHttpRoute"/> instance for mocking. </returns>
-        public static ContainerAppHttpRoute ContainerAppHttpRoute(ContainerAppHttpRouteMatch match = default, string actionPrefixRewrite = default)
-        {
-            return new ContainerAppHttpRoute(match, actionPrefixRewrite is null ? default : new HttpRouteAction(actionPrefixRewrite, default), default);
-        }
-
-        /// <param name="prefix"> match on all prefix's. Not exact. </param>
-        /// <param name="path"> match on exact path. </param>
-        /// <param name="pathSeparatedPrefix"> match on all prefix's. Not exact. </param>
-        /// <param name="isCaseSensitive"> path case sensitive, default is true. </param>
-        /// <returns> A new <see cref="Models.ContainerAppHttpRouteMatch"/> instance for mocking. </returns>
-        public static ContainerAppHttpRouteMatch ContainerAppHttpRouteMatch(string prefix = default, string path = default, string pathSeparatedPrefix = default, bool? isCaseSensitive = default)
-        {
-            return new ContainerAppHttpRouteMatch(prefix, path, pathSeparatedPrefix, isCaseSensitive, default);
-        }
-
+        /// <summary> A workload profile with specific hardware configure to run container apps. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -3677,30 +2584,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 location,
-                properties,
-                default);
+                properties);
         }
 
-        /// <param name="category"> Used to categorize workload profiles. </param>
-        /// <param name="applicability"> indicates whether the profile is default for the location. </param>
-        /// <param name="cores"> Number of cores in CPU. </param>
-        /// <param name="memoryInGiB"> Memory in GiB. </param>
-        /// <param name="gpus"> Number of GPUs. </param>
-        /// <param name="displayName"> The everyday name of the workload profile. </param>
-        /// <returns> A new <see cref="Models.ContainerAppAvailableWorkloadProfileProperties"/> instance for mocking. </returns>
-        public static ContainerAppAvailableWorkloadProfileProperties ContainerAppAvailableWorkloadProfileProperties(string category = default, ContainerAppAvailableWorkloadProfileApplicability? applicability = default, int? cores = default, int? memoryInGiB = default, int? gpus = default, string displayName = default)
-        {
-            return new ContainerAppAvailableWorkloadProfileProperties(
-                category,
-                applicability,
-                cores,
-                memoryInGiB,
-                gpus,
-                displayName,
-                default);
-        }
-
+        /// <summary> Billing meter. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -3715,20 +2604,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 location,
-                properties,
-                default);
+                properties);
         }
 
-        /// <param name="workloadProfileCategory"> Used to categorize billing meters. </param>
-        /// <param name="meterType"> Billing meter type. </param>
-        /// <param name="displayName"> The everyday name of the billing meter. </param>
-        /// <returns> A new <see cref="Models.ContainerAppBillingMeterProperties"/> instance for mocking. </returns>
-        public static ContainerAppBillingMeterProperties ContainerAppBillingMeterProperties(string workloadProfileCategory = default, string meterType = default, string displayName = default)
-        {
-            return new ContainerAppBillingMeterProperties(workloadProfileCategory, meterType, displayName, default);
-        }
-
+        /// <summary> Describes Compute Resource Usage. </summary>
         /// <param name="unit"> An enum describing the unit of usage measurement. </param>
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
@@ -3736,15 +2617,16 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <returns> A new <see cref="Models.ContainerAppUsage"/> instance for mocking. </returns>
         public static ContainerAppUsage ContainerAppUsage(ContainerAppUsageUnit unit = default, float currentValue = default, float limit = default, ContainerAppUsageName name = default)
         {
-            return new ContainerAppUsage(unit, currentValue, limit, name, default);
+            return new ContainerAppUsage(unit, currentValue, limit, name, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The Usage Names. </summary>
         /// <param name="value"> The name of the resource. </param>
         /// <param name="localizedValue"> The localized name of the resource. </param>
         /// <returns> A new <see cref="Models.ContainerAppUsageName"/> instance for mocking. </returns>
         public static ContainerAppUsageName ContainerAppUsageName(string value = default, string localizedValue = default)
         {
-            return new ContainerAppUsageName(value, localizedValue, default);
+            return new ContainerAppUsageName(value, localizedValue, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppManagedEnvironmentStorageData"/>. </summary>
@@ -3755,15 +2637,15 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="managedEnvironmentStorageAzureFile"> Storage properties. </param>
         /// <returns> A new <see cref="AppContainers.ContainerAppManagedEnvironmentStorageData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerAppManagedEnvironmentStorageData ContainerAppManagedEnvironmentStorageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerAppAzureFileProperties managedEnvironmentStorageAzureFile = default)
+        public static ContainerAppManagedEnvironmentStorageData ContainerAppManagedEnvironmentStorageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerAppAzureFileProperties managedEnvironmentStorageAzureFile)
         {
             return new ContainerAppManagedEnvironmentStorageData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                managedEnvironmentStorageAzureFile is null ? default : new ManagedEnvironmentStorageProperties(managedEnvironmentStorageAzureFile, default, default),
-                default);
+                additionalBinaryDataProperties: null,
+                managedEnvironmentStorageAzureFile is null ? default : new ManagedEnvironmentStorageProperties(managedEnvironmentStorageAzureFile, default, default));
         }
 
         /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppConnectedEnvironmentStorageData"/>. </summary>
@@ -3774,15 +2656,15 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="connectedEnvironmentStorageAzureFile"> Storage properties. </param>
         /// <returns> A new <see cref="AppContainers.ContainerAppConnectedEnvironmentStorageData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerAppConnectedEnvironmentStorageData ContainerAppConnectedEnvironmentStorageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerAppAzureFileProperties connectedEnvironmentStorageAzureFile = default)
+        public static ContainerAppConnectedEnvironmentStorageData ContainerAppConnectedEnvironmentStorageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerAppAzureFileProperties connectedEnvironmentStorageAzureFile)
         {
             return new ContainerAppConnectedEnvironmentStorageData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                connectedEnvironmentStorageAzureFile is null ? default : new ConnectedEnvironmentStorageProperties(default, default, connectedEnvironmentStorageAzureFile, default, default),
-                default);
+                additionalBinaryDataProperties: null,
+                connectedEnvironmentStorageAzureFile is null ? default : new ConnectedEnvironmentStorageProperties(default, default, connectedEnvironmentStorageAzureFile, default, default));
         }
 
         /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppConnectedEnvironmentData"/>. </summary>
@@ -3800,26 +2682,20 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="daprAIConnectionString"> Application Insights connection string used by Dapr to export Service to Service communication telemetry. </param>
         /// <param name="customDomainConfiguration"> Custom domain configuration for the environment. </param>
         /// <returns> A new <see cref="AppContainers.ContainerAppConnectedEnvironmentData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerAppConnectedEnvironmentData ContainerAppConnectedEnvironmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ContainerAppExtendedLocation extendedLocation = default, ContainerAppConnectedEnvironmentProvisioningState? provisioningState = default, string deploymentErrors = default, string defaultDomain = default, IPAddress staticIP = default, string daprAIConnectionString = default, ContainerAppCustomDomainConfiguration customDomainConfiguration = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new ContainerAppConnectedEnvironmentData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
-                provisioningState is null && deploymentErrors is null && defaultDomain is null && staticIP is null && daprAIConnectionString is null && customDomainConfiguration is null ? default : new ConnectedEnvironmentProperties(
-                    provisioningState,
-                    deploymentErrors,
-                    defaultDomain,
-                    staticIP,
-                    daprAIConnectionString,
-                    customDomainConfiguration,
-                    default),
-                extendedLocation,
-                default);
+                default,
+                extendedLocation);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerAppCertificateProperties"/>. </summary>
@@ -3838,24 +2714,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="publicKeyHash"> Public key hash. </param>
         /// <returns> A new <see cref="Models.ContainerAppCertificateProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerAppCertificateProperties ContainerAppCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState = default, string deploymentErrors = default, ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties = default, string password = default, string subjectName = default, IEnumerable<string> subjectAlternativeNames = default, byte[] value = default, string issuer = default, DateTimeOffset? issueOn = default, DateTimeOffset? expireOn = default, string thumbprint = default, bool? isValid = default, string publicKeyHash = default)
+        public static ContainerAppCertificateProperties ContainerAppCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState, string deploymentErrors, ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties, string password, string subjectName, IEnumerable<string> subjectAlternativeNames, byte[] value, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprint, bool? isValid, string publicKeyHash)
         {
-            return new ContainerAppCertificateProperties(
-                provisioningState,
-                deploymentErrors,
-                certificateKeyVaultProperties,
-                password,
-                subjectName,
-                (subjectAlternativeNames ?? new ChangeTrackingList<string>()).ToList(),
-                value,
-                issuer,
-                issueOn,
-                expireOn,
-                thumbprint,
-                isValid,
-                publicKeyHash,
-                default,
-                default);
+            return ContainerAppCertificateProperties(provisioningState: provisioningState, deploymentErrors: deploymentErrors, certificateKeyVaultProperties: certificateKeyVaultProperties, password: password, subjectName: subjectName, subjectAlternativeNames: subjectAlternativeNames, value: value, issuer: issuer, issueOn: issueOn, expireOn: expireOn, thumbprint: thumbprint, isValid: isValid, publicKeyHash: publicKeyHash, certificateType: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppDaprComponentData"/>. </summary>
@@ -3875,27 +2736,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
         /// <returns> A new <see cref="AppContainers.ContainerAppDaprComponentData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerAppDaprComponentData ContainerAppDaprComponentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string componentType = default, string version = default, bool? ignoreErrors = default, string initTimeout = default, IEnumerable<ContainerAppWritableSecret> secrets = default, string secretStoreComponent = default, IEnumerable<ContainerAppDaprMetadata> metadata = default, IEnumerable<string> scopes = default, DaprComponentProvisioningState? provisioningState = default, string deploymentErrors = default)
+        public static ContainerAppDaprComponentData ContainerAppDaprComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string componentType, string version, bool? ignoreErrors, string initTimeout, IEnumerable<ContainerAppWritableSecret> secrets, string secretStoreComponent, IEnumerable<ContainerAppDaprMetadata> metadata, IEnumerable<string> scopes, DaprComponentProvisioningState? provisioningState, string deploymentErrors)
         {
-            return new ContainerAppDaprComponentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                componentType is null && version is null && ignoreErrors is null && initTimeout is null && secrets is null && secretStoreComponent is null && metadata is null && scopes is null && provisioningState is null && deploymentErrors is null ? default : new DaprComponentProperties(
-                    componentType,
-                    version,
-                    ignoreErrors,
-                    initTimeout,
-                    (secrets ?? new ChangeTrackingList<ContainerAppWritableSecret>()).ToList(),
-                    secretStoreComponent,
-                    (metadata ?? new ChangeTrackingList<ContainerAppDaprMetadata>()).ToList(),
-                    (scopes ?? new ChangeTrackingList<string>()).ToList(),
-                    default,
-                    provisioningState,
-                    deploymentErrors,
-                    default),
-                default);
+            return ContainerAppDaprComponentData(id: id, name: name, resourceType: resourceType, systemData: systemData, componentType: componentType, version: version, ignoreErrors: ignoreErrors, initTimeout: initTimeout, secrets: secrets, secretStoreComponent: secretStoreComponent, metadata: metadata, scopes: scopes, serviceComponentBind: default, provisioningState: provisioningState, deploymentErrors: deploymentErrors);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectedEnvironmentStorageProperties"/>. </summary>
@@ -3904,9 +2747,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
         /// <returns> A new <see cref="Models.ConnectedEnvironmentStorageProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ConnectedEnvironmentStorageProperties ConnectedEnvironmentStorageProperties(ContainerAppAzureFileProperties azureFile = default, ConnectedEnvironmentStorageProvisioningState? provisioningState = default, string deploymentErrors = default)
+        public static ConnectedEnvironmentStorageProperties ConnectedEnvironmentStorageProperties(ContainerAppAzureFileProperties azureFile, ConnectedEnvironmentStorageProvisioningState? provisioningState, string deploymentErrors)
         {
-            return new ConnectedEnvironmentStorageProperties(provisioningState, deploymentErrors, azureFile, default, default);
+            return ConnectedEnvironmentStorageProperties(provisioningState: provisioningState, deploymentErrors: deploymentErrors, azureFile: azureFile, smb: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppData"/>. </summary>
@@ -3935,37 +2778,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="eventStreamEndpoint"> The endpoint of the eventstream of the container app. </param>
         /// <returns> A new <see cref="AppContainers.ContainerAppData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerAppData ContainerAppData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ContainerAppExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default, string managedBy = default, ContainerAppKind? kind = default, ContainerAppProvisioningState? provisioningState = default, ContainerAppRunningStatus? runningStatus = default, ResourceIdentifier managedEnvironmentId = default, ResourceIdentifier environmentId = default, string workloadProfileName = default, string latestRevisionName = default, string latestReadyRevisionName = default, string latestRevisionFqdn = default, string customDomainVerificationId = default, ContainerAppConfiguration configuration = default, ContainerAppTemplate template = default, IEnumerable<IPAddress> outboundIPAddressList = default, Uri eventStreamEndpoint = default)
+        public static ContainerAppData ContainerAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerAppExtendedLocation extendedLocation, ManagedServiceIdentity identity, string managedBy, ContainerAppKind? kind, ContainerAppProvisioningState? provisioningState, ContainerAppRunningStatus? runningStatus, ResourceIdentifier managedEnvironmentId, ResourceIdentifier environmentId, string workloadProfileName, string latestRevisionName, string latestReadyRevisionName, string latestRevisionFqdn, string customDomainVerificationId, ContainerAppConfiguration configuration, ContainerAppTemplate template, IEnumerable<IPAddress> outboundIPAddressList, Uri eventStreamEndpoint)
         {
-            return new ContainerAppData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && runningStatus is null && managedEnvironmentId is null && environmentId is null && workloadProfileName is null && latestRevisionName is null && latestReadyRevisionName is null && latestRevisionFqdn is null && customDomainVerificationId is null && configuration is null && template is null && outboundIPAddressList is null && eventStreamEndpoint is null ? default : new ContainerAppProperties(
-                    provisioningState,
-                    runningStatus,
-                    default,
-                    managedEnvironmentId,
-                    environmentId,
-                    workloadProfileName,
-                    default,
-                    latestRevisionName,
-                    latestReadyRevisionName,
-                    latestRevisionFqdn,
-                    customDomainVerificationId,
-                    configuration,
-                    template,
-                    (outboundIPAddressList ?? new ChangeTrackingList<IPAddress>()).ToList(),
-                    eventStreamEndpoint,
-                    default),
-                extendedLocation,
-                identity,
-                managedBy,
-                kind,
-                default);
+            return ContainerAppData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, provisioningState: provisioningState, runningStatus: runningStatus, deploymentErrors: default, managedEnvironmentId: managedEnvironmentId, environmentId: environmentId, workloadProfileName: workloadProfileName, latestRevisionName: latestRevisionName, latestReadyRevisionName: latestReadyRevisionName, latestRevisionFqdn: latestRevisionFqdn, customDomainVerificationId: customDomainVerificationId, configuration: configuration, template: template, outboundIPAddressList: outboundIPAddressList, eventStreamEndpoint: eventStreamEndpoint, patchingMode: default, extendedLocation: extendedLocation, identity: identity, managedBy: managedBy, kind: kind);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerAppIngressConfiguration"/>. </summary>
@@ -3984,24 +2799,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="additionalPortMappings"> Settings to expose additional ports on container app. </param>
         /// <returns> A new <see cref="Models.ContainerAppIngressConfiguration"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerAppIngressConfiguration ContainerAppIngressConfiguration(string fqdn = default, bool? external = default, int? targetPort = default, int? exposedPort = default, ContainerAppIngressTransportMethod? transport = default, IEnumerable<ContainerAppRevisionTrafficWeight> traffic = default, IEnumerable<ContainerAppCustomDomain> customDomains = default, bool? allowInsecure = default, IEnumerable<ContainerAppIPSecurityRestrictionRule> ipSecurityRestrictions = default, Affinity? stickySessionsAffinity = default, ContainerAppIngressClientCertificateMode? clientCertificateMode = default, ContainerAppCorsPolicy corsPolicy = default, IEnumerable<IngressPortMapping> additionalPortMappings = default)
+        public static ContainerAppIngressConfiguration ContainerAppIngressConfiguration(string fqdn, bool? external, int? targetPort, int? exposedPort, ContainerAppIngressTransportMethod? transport, IEnumerable<ContainerAppRevisionTrafficWeight> traffic, IEnumerable<ContainerAppCustomDomain> customDomains, bool? allowInsecure, IEnumerable<ContainerAppIPSecurityRestrictionRule> ipSecurityRestrictions, Affinity? stickySessionsAffinity, ContainerAppIngressClientCertificateMode? clientCertificateMode, ContainerAppCorsPolicy corsPolicy, IEnumerable<IngressPortMapping> additionalPortMappings)
         {
-            return new ContainerAppIngressConfiguration(
-                fqdn,
-                external,
-                targetPort,
-                exposedPort,
-                transport,
-                (traffic ?? new ChangeTrackingList<ContainerAppRevisionTrafficWeight>()).ToList(),
-                (customDomains ?? new ChangeTrackingList<ContainerAppCustomDomain>()).ToList(),
-                allowInsecure,
-                (ipSecurityRestrictions ?? new ChangeTrackingList<ContainerAppIPSecurityRestrictionRule>()).ToList(),
-                stickySessionsAffinity is null ? default : new IngressStickySessions(stickySessionsAffinity, default),
-                clientCertificateMode,
-                corsPolicy,
-                (additionalPortMappings ?? new ChangeTrackingList<IngressPortMapping>()).ToList(),
-                default,
-                default);
+            return ContainerAppIngressConfiguration(fqdn: fqdn, external: external, targetPort: targetPort, exposedPort: exposedPort, transport: transport, traffic: traffic, customDomains: customDomains, allowInsecure: allowInsecure, ipSecurityRestrictions: ipSecurityRestrictions, stickySessionsAffinity: stickySessionsAffinity, clientCertificateMode: clientCertificateMode, corsPolicy: corsPolicy, additionalPortMappings: additionalPortMappings, targetPortHttpScheme: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppContainerResources"/>. </summary>
@@ -4010,9 +2810,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="ephemeralStorage"> Ephemeral Storage, e.g. "1Gi". </param>
         /// <returns> A new <see cref="Models.AppContainerResources"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AppContainerResources AppContainerResources(double? cpu = default, string memory = default, string ephemeralStorage = default)
+        public static AppContainerResources AppContainerResources(double? cpu, string memory, string ephemeralStorage)
         {
-            return new AppContainerResources(cpu, memory, ephemeralStorage, default, default);
+            return AppContainerResources(cpu: cpu, memory: memory, ephemeralStorage: ephemeralStorage, gpu: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppRevisionData"/>. </summary>
@@ -4040,28 +2840,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="runningState"> Current running state of the revision. </param>
         /// <returns> A new <see cref="AppContainers.ContainerAppRevisionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerAppRevisionData ContainerAppRevisionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastActiveOn = default, string fqdn = default, ContainerAppTemplate template = default, bool? isActive = default, int? replicas = default, int? trafficWeight = default, string provisioningError = default, ContainerAppRevisionHealthState? healthState = default, ContainerAppRevisionProvisioningState? provisioningState = default, RevisionRunningState? runningState = default)
+        public static ContainerAppRevisionData ContainerAppRevisionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? lastActiveOn, string fqdn, ContainerAppTemplate template, bool? isActive, int? replicas, int? trafficWeight, string provisioningError, ContainerAppRevisionHealthState? healthState, ContainerAppRevisionProvisioningState? provisioningState, RevisionRunningState? runningState)
         {
-            return new ContainerAppRevisionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                createdOn is null && lastActiveOn is null && fqdn is null && template is null && isActive is null && replicas is null && trafficWeight is null && provisioningError is null && healthState is null && provisioningState is null && runningState is null ? default : new RevisionProperties(
-                    createdOn,
-                    lastActiveOn,
-                    fqdn,
-                    template,
-                    isActive,
-                    replicas,
-                    trafficWeight,
-                    default,
-                    provisioningError,
-                    healthState,
-                    provisioningState,
-                    runningState,
-                    default),
-                default);
+            return ContainerAppRevisionData(id: id, name: name, resourceType: resourceType, systemData: systemData, createdOn: createdOn, lastActiveOn: lastActiveOn, fqdn: fqdn, template: template, isActive: isActive, replicas: replicas, trafficWeight: trafficWeight, labels: default, provisioningError: provisioningError, healthState: healthState, provisioningState: provisioningState, runningState: runningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerAppReplicaContainer"/>. </summary>
@@ -4076,20 +2857,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="execEndpoint"> Container exec endpoint. </param>
         /// <returns> A new <see cref="Models.ContainerAppReplicaContainer"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerAppReplicaContainer ContainerAppReplicaContainer(string name = default, string containerId = default, bool? isReady = default, bool? isStarted = default, int? restartCount = default, ContainerAppContainerRunningState? runningState = default, string runningStateDetails = default, string logStreamEndpoint = default, string execEndpoint = default)
+        public static ContainerAppReplicaContainer ContainerAppReplicaContainer(string name, string containerId, bool? isReady, bool? isStarted, int? restartCount, ContainerAppContainerRunningState? runningState, string runningStateDetails, string logStreamEndpoint, string execEndpoint)
         {
-            return new ContainerAppReplicaContainer(
-                name,
-                containerId,
-                isReady,
-                isStarted,
-                restartCount,
-                runningState,
-                runningStateDetails,
-                logStreamEndpoint,
-                execEndpoint,
-                default,
-                default);
+            return ContainerAppReplicaContainer(name: name, containerId: containerId, isReady: isReady, isStarted: isStarted, restartCount: restartCount, runningState: runningState, runningStateDetails: runningStateDetails, logStreamEndpoint: logStreamEndpoint, execEndpoint: execEndpoint, debugEndpoint: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppManagedEnvironmentData"/>. </summary>
@@ -4123,45 +2893,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled'. </param>
         /// <returns> A new <see cref="AppContainers.ContainerAppManagedEnvironmentData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerAppManagedEnvironmentData ContainerAppManagedEnvironmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string kind = default, ManagedServiceIdentity identity = default, ContainerAppEnvironmentProvisioningState? provisioningState = default, string daprAIInstrumentationKey = default, string daprAIConnectionString = default, ContainerAppVnetConfiguration vnetConfiguration = default, string deploymentErrors = default, string defaultDomain = default, IPAddress staticIP = default, ContainerAppLogsConfiguration appLogsConfiguration = default, bool? isZoneRedundant = default, ContainerAppCustomDomainConfiguration customDomainConfiguration = default, string eventStreamEndpoint = default, IEnumerable<ContainerAppWorkloadProfile> workloadProfiles = default, string kedaVersion = default, string daprVersion = default, string infrastructureResourceGroup = default, bool? isMtlsEnabled = default, bool? isEnabled = default, ManagedEnvironmentIngressConfiguration ingressConfiguration = default, IEnumerable<ContainerAppPrivateEndpointConnectionData> privateEndpointConnections = default, ContainerAppPublicNetworkAccess? publicNetworkAccess = default)
+        public static ContainerAppManagedEnvironmentData ContainerAppManagedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ManagedServiceIdentity identity, ContainerAppEnvironmentProvisioningState? provisioningState, string daprAIInstrumentationKey, string daprAIConnectionString, ContainerAppVnetConfiguration vnetConfiguration, string deploymentErrors, string defaultDomain, IPAddress staticIP, ContainerAppLogsConfiguration appLogsConfiguration, bool? isZoneRedundant, ContainerAppCustomDomainConfiguration customDomainConfiguration, string eventStreamEndpoint, IEnumerable<ContainerAppWorkloadProfile> workloadProfiles, string kedaVersion, string daprVersion, string infrastructureResourceGroup, bool? isMtlsEnabled, bool? isEnabled, ManagedEnvironmentIngressConfiguration ingressConfiguration, IEnumerable<ContainerAppPrivateEndpointConnectionData> privateEndpointConnections, ContainerAppPublicNetworkAccess? publicNetworkAccess)
         {
-            return new ContainerAppManagedEnvironmentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && daprAIInstrumentationKey is null && daprAIConnectionString is null && vnetConfiguration is null && deploymentErrors is null && defaultDomain is null && staticIP is null && appLogsConfiguration is null && isZoneRedundant is null && customDomainConfiguration is null && eventStreamEndpoint is null && workloadProfiles is null && kedaVersion is null && daprVersion is null && infrastructureResourceGroup is null && isMtlsEnabled is null && isEnabled is null && ingressConfiguration is null && privateEndpointConnections is null && publicNetworkAccess is null ? default : new ManagedEnvironmentProperties(
-                    provisioningState,
-                    daprAIInstrumentationKey,
-                    daprAIConnectionString,
-                    vnetConfiguration,
-                    deploymentErrors,
-                    defaultDomain,
-                    default,
-                    staticIP,
-                    appLogsConfiguration,
-                    default,
-                    default,
-                    isZoneRedundant,
-                    default,
-                    customDomainConfiguration,
-                    eventStreamEndpoint,
-                    (workloadProfiles ?? new ChangeTrackingList<ContainerAppWorkloadProfile>()).ToList(),
-                    new KedaConfiguration(kedaVersion, default),
-                    new DaprConfiguration(daprVersion, default),
-                    infrastructureResourceGroup,
-                    new ManagedEnvironmentPropertiesPeerAuthentication(new Mtls(isMtlsEnabled, default), default),
-                    new ManagedEnvironmentPropertiesPeerTrafficConfiguration(new ManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption(isEnabled, default), default),
-                    ingressConfiguration,
-                    (privateEndpointConnections ?? new ChangeTrackingList<ContainerAppPrivateEndpointConnectionData>()).ToList(),
-                    publicNetworkAccess,
-                    default,
-                    default),
-                kind,
-                identity,
-                default);
+            return ContainerAppManagedEnvironmentData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, provisioningState: provisioningState, daprAIInstrumentationKey: daprAIInstrumentationKey, daprAIConnectionString: daprAIConnectionString, vnetConfiguration: vnetConfiguration, deploymentErrors: deploymentErrors, defaultDomain: defaultDomain, privateLinkDefaultDomain: default, staticIP: staticIP, appLogsConfiguration: appLogsConfiguration, openTelemetryConfiguration: default, isZoneRedundant: isZoneRedundant, availabilityZones: default, customDomainConfiguration: customDomainConfiguration, eventStreamEndpoint: eventStreamEndpoint, workloadProfiles: workloadProfiles, infrastructureResourceGroup: infrastructureResourceGroup, ingressConfiguration: ingressConfiguration, privateEndpointConnections: privateEndpointConnections, publicNetworkAccess: publicNetworkAccess, appInsightsConnectionString: default, kedaVersion: kedaVersion, daprVersion: daprVersion, isMtlsEnabled: isMtlsEnabled, isEnabled: isEnabled, diskEncryptionKeyVaultConfiguration: default, kind: kind, identity: identity);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppPrivateEndpointConnectionData"/>. </summary>
@@ -4174,15 +2908,16 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <returns> A new <see cref="AppContainers.ContainerAppPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerAppPrivateEndpointConnectionData ContainerAppPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> groupIds = default, ResourceIdentifier privateEndpointId = default, ContainerAppPrivateLinkServiceConnectionState connectionState = default, ContainerAppPrivateEndpointConnectionProvisioningState? provisioningState = default)
         {
+            groupIds ??= new ChangeTrackingList<string>();
+
             return new ContainerAppPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                additionalBinaryDataProperties: null,
                 default);
         }
 
@@ -4203,28 +2938,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="eventStreamEndpoint"> The endpoint of the eventstream of the container apps job. </param>
         /// <returns> A new <see cref="AppContainers.ContainerAppJobData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerAppJobData ContainerAppJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, ContainerAppJobProvisioningState? provisioningState = default, string environmentId = default, string workloadProfileName = default, ContainerAppJobConfiguration configuration = default, ContainerAppJobTemplate template = default, IEnumerable<string> outboundIPAddresses = default, string eventStreamEndpoint = default)
+        public static ContainerAppJobData ContainerAppJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ContainerAppJobProvisioningState? provisioningState, string environmentId, string workloadProfileName, ContainerAppJobConfiguration configuration, ContainerAppJobTemplate template, IEnumerable<string> outboundIPAddresses, string eventStreamEndpoint)
         {
-            return new ContainerAppJobData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && environmentId is null && workloadProfileName is null && configuration is null && template is null && outboundIPAddresses is null && eventStreamEndpoint is null ? default : new JobProperties(
-                    provisioningState,
-                    default,
-                    environmentId,
-                    workloadProfileName,
-                    configuration,
-                    template,
-                    (outboundIPAddresses ?? new ChangeTrackingList<string>()).ToList(),
-                    eventStreamEndpoint,
-                    default),
-                default,
-                identity,
-                default);
+            return ContainerAppJobData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, provisioningState: provisioningState, runningState: default, environmentId: environmentId, workloadProfileName: workloadProfileName, configuration: configuration, template: template, outboundIPAddresses: outboundIPAddresses, eventStreamEndpoint: eventStreamEndpoint, extendedLocation: default, identity: identity);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppJobExecutionData"/>. </summary>
@@ -4238,23 +2954,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="template"> Job's execution container. </param>
         /// <returns> A new <see cref="AppContainers.ContainerAppJobExecutionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerAppJobExecutionData ContainerAppJobExecutionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, JobExecutionRunningState? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, ContainerAppJobExecutionTemplate template = default)
+        public static ContainerAppJobExecutionData ContainerAppJobExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobExecutionRunningState? status, DateTimeOffset? startOn, DateTimeOffset? endOn, ContainerAppJobExecutionTemplate template)
         {
-            return new ContainerAppJobExecutionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                status is null && startOn is null && endOn is null && template is null ? default : new JobExecutionProperties(
-                    status,
-                    startOn,
-                    endOn,
-                    template,
-                    default,
-                    default,
-                    default,
-                    default),
-                default);
+            return ContainerAppJobExecutionData(id: id, name: name, resourceType: resourceType, systemData: systemData, status: status, startOn: startOn, endOn: endOn, template: template, reason: default, message: default, detailedStatusReplicas: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppContainers.SessionPoolData"/>. </summary>
@@ -4279,33 +2981,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="managedIdentitySettings"> Optional settings for a Managed Identity that is assigned to the Session pool. </param>
         /// <returns> A new <see cref="AppContainers.SessionPoolData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SessionPoolData SessionPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, ResourceIdentifier environmentId = default, ContainerType? containerType = default, PoolManagementType? poolManagementType = default, int? nodeCount = default, SessionPoolScaleConfiguration scaleConfiguration = default, IEnumerable<SessionPoolSecret> secrets = default, SessionPoolLifecycleConfiguration dynamicPoolLifecycleConfiguration = default, CustomContainerTemplate customContainerTemplate = default, SessionNetworkStatus? sessionNetworkStatus = default, Uri poolManagementEndpoint = default, SessionPoolProvisioningState? provisioningState = default, IEnumerable<SessionPoolManagedIdentitySetting> managedIdentitySettings = default)
+        public static SessionPoolData SessionPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ResourceIdentifier environmentId, ContainerType? containerType, PoolManagementType? poolManagementType, int? nodeCount, SessionPoolScaleConfiguration scaleConfiguration, IEnumerable<SessionPoolSecret> secrets, SessionPoolLifecycleConfiguration dynamicPoolLifecycleConfiguration, CustomContainerTemplate customContainerTemplate, SessionNetworkStatus? sessionNetworkStatus, Uri poolManagementEndpoint, SessionPoolProvisioningState? provisioningState, IEnumerable<SessionPoolManagedIdentitySetting> managedIdentitySettings)
         {
-            return new SessionPoolData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                environmentId is null && containerType is null && poolManagementType is null && nodeCount is null && scaleConfiguration is null && secrets is null && dynamicPoolLifecycleConfiguration is null && customContainerTemplate is null && sessionNetworkStatus is null && poolManagementEndpoint is null && provisioningState is null && managedIdentitySettings is null ? default : new SessionPoolProperties(
-                    environmentId,
-                    containerType,
-                    poolManagementType,
-                    nodeCount,
-                    scaleConfiguration,
-                    (secrets ?? new ChangeTrackingList<SessionPoolSecret>()).ToList(),
-                    new DynamicPoolConfiguration(dynamicPoolLifecycleConfiguration, default),
-                    customContainerTemplate,
-                    new SessionNetworkConfiguration(sessionNetworkStatus, default),
-                    default,
-                    poolManagementEndpoint,
-                    provisioningState,
-                    (managedIdentitySettings ?? new ChangeTrackingList<SessionPoolManagedIdentitySetting>()).ToList(),
-                    default,
-                    default),
-                identity,
-                default);
+            return SessionPoolData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, environmentId: environmentId, containerType: containerType, poolManagementType: poolManagementType, nodeCount: nodeCount, scaleConfiguration: scaleConfiguration, secrets: secrets, customContainerTemplate: customContainerTemplate, templateUpdateStatus: default, poolManagementEndpoint: poolManagementEndpoint, provisioningState: provisioningState, managedIdentitySettings: managedIdentitySettings, mcpServerSettings: default, dynamicPoolLifecycleConfiguration: dynamicPoolLifecycleConfiguration, sessionNetworkStatus: sessionNetworkStatus, identity: identity);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppContainers.LogicAppData"/>. </summary>
@@ -4315,14 +2993,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="systemData"> The systemData. </param>
         /// <returns> A new <see cref="AppContainers.LogicAppData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LogicAppData LogicAppData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default)
+        public static LogicAppData LogicAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData)
         {
             return new LogicAppData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                default,
+                additionalBinaryDataProperties: null,
                 default);
         }
 
@@ -4334,7 +3012,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="kind"> Gets the logic app hybrid workflow kind. </param>
         /// <param name="properties"> Additional workflow properties. </param>
         /// <returns> A new <see cref="AppContainers.LogicAppWorkflowEnvelopeData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static LogicAppWorkflowEnvelopeData LogicAppWorkflowEnvelopeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, LogicAppWorkflowKind? kind = default, LogicAppWorkflowEnvelopeProperties properties = default)
         {
             return new LogicAppWorkflowEnvelopeData(
@@ -4342,9 +3019,9 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 properties,
-                kind,
-                default);
+                kind);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerAppCertificateProperties"/>. </summary>
@@ -4364,22 +3041,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerAppCertificateProperties ContainerAppCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState, ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties, string password, string subjectName, IEnumerable<string> subjectAlternativeNames, byte[] value, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprint, bool? isValid, string publicKeyHash)
         {
-            return new ContainerAppCertificateProperties(
-                provisioningState,
-                default,
-                certificateKeyVaultProperties,
-                password,
-                subjectName,
-                (subjectAlternativeNames ?? new ChangeTrackingList<string>()).ToList(),
-                value,
-                issuer,
-                issueOn,
-                expireOn,
-                thumbprint,
-                isValid,
-                publicKeyHash,
-                default,
-                default);
+            return ContainerAppCertificateProperties(provisioningState: provisioningState, deploymentErrors: default, certificateKeyVaultProperties: certificateKeyVaultProperties, password: password, subjectName: subjectName, subjectAlternativeNames: subjectAlternativeNames, value: value, issuer: issuer, issueOn: issueOn, expireOn: expireOn, thumbprint: thumbprint, isValid: isValid, publicKeyHash: publicKeyHash, certificateType: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppDaprComponentData"/>. </summary>
@@ -4399,25 +3061,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerAppDaprComponentData ContainerAppDaprComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string componentType, string version, bool? ignoreErrors, string initTimeout, IEnumerable<ContainerAppWritableSecret> secrets, string secretStoreComponent, IEnumerable<ContainerAppDaprMetadata> metadata, IEnumerable<string> scopes)
         {
-            return new ContainerAppDaprComponentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                componentType is null && version is null && ignoreErrors is null && initTimeout is null && secrets is null && secretStoreComponent is null && metadata is null && scopes is null ? default : new DaprComponentProperties(
-                    componentType,
-                    version,
-                    ignoreErrors,
-                    initTimeout,
-                    (secrets ?? new ChangeTrackingList<ContainerAppWritableSecret>()).ToList(),
-                    secretStoreComponent,
-                    (metadata ?? new ChangeTrackingList<ContainerAppDaprMetadata>()).ToList(),
-                    (scopes ?? new ChangeTrackingList<string>()).ToList(),
-                    default,
-                    default,
-                    default,
-                    default),
-                default);
+            return ContainerAppDaprComponentData(id: id, name: name, resourceType: resourceType, systemData: systemData, componentType: componentType, version: version, ignoreErrors: ignoreErrors, initTimeout: initTimeout, secrets: secrets, secretStoreComponent: secretStoreComponent, metadata: metadata, scopes: scopes, serviceComponentBind: default, provisioningState: default, deploymentErrors: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppData"/>. </summary>
@@ -4447,35 +3091,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerAppData ContainerAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerAppExtendedLocation extendedLocation, ManagedServiceIdentity identity, string managedBy, ContainerAppProvisioningState? provisioningState, ContainerAppRunningStatus? runningStatus, ResourceIdentifier managedEnvironmentId, ResourceIdentifier environmentId, string workloadProfileName, string latestRevisionName, string latestReadyRevisionName, string latestRevisionFqdn, string customDomainVerificationId, ContainerAppConfiguration configuration, ContainerAppTemplate template, IEnumerable<IPAddress> outboundIPAddressList, Uri eventStreamEndpoint)
         {
-            return new ContainerAppData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && runningStatus is null && managedEnvironmentId is null && environmentId is null && workloadProfileName is null && latestRevisionName is null && latestReadyRevisionName is null && latestRevisionFqdn is null && customDomainVerificationId is null && configuration is null && template is null && outboundIPAddressList is null && eventStreamEndpoint is null ? default : new ContainerAppProperties(
-                    provisioningState,
-                    runningStatus,
-                    default,
-                    managedEnvironmentId,
-                    environmentId,
-                    workloadProfileName,
-                    default,
-                    latestRevisionName,
-                    latestReadyRevisionName,
-                    latestRevisionFqdn,
-                    customDomainVerificationId,
-                    configuration,
-                    template,
-                    (outboundIPAddressList ?? new ChangeTrackingList<IPAddress>()).ToList(),
-                    eventStreamEndpoint,
-                    default),
-                extendedLocation,
-                identity,
-                managedBy,
-                default,
-                default);
+            return ContainerAppData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, provisioningState: provisioningState, runningStatus: runningStatus, deploymentErrors: default, managedEnvironmentId: managedEnvironmentId, environmentId: environmentId, workloadProfileName: workloadProfileName, latestRevisionName: latestRevisionName, latestReadyRevisionName: latestReadyRevisionName, latestRevisionFqdn: latestRevisionFqdn, customDomainVerificationId: customDomainVerificationId, configuration: configuration, template: template, outboundIPAddressList: outboundIPAddressList, eventStreamEndpoint: eventStreamEndpoint, patchingMode: default, extendedLocation: extendedLocation, identity: identity, managedBy: managedBy, kind: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppManagedEnvironmentData"/>. </summary>
@@ -4508,43 +3124,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerAppManagedEnvironmentData ContainerAppManagedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ManagedServiceIdentity identity, ContainerAppEnvironmentProvisioningState? provisioningState, string daprAIInstrumentationKey, string daprAIConnectionString, ContainerAppVnetConfiguration vnetConfiguration, string deploymentErrors, string defaultDomain, IPAddress staticIP, ContainerAppLogsConfiguration appLogsConfiguration, bool? isZoneRedundant, ContainerAppCustomDomainConfiguration customDomainConfiguration, string eventStreamEndpoint, IEnumerable<ContainerAppWorkloadProfile> workloadProfiles, string kedaVersion, string daprVersion, string infrastructureResourceGroup, bool? isMtlsEnabled, bool? isEnabled)
         {
-            return new ContainerAppManagedEnvironmentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && daprAIInstrumentationKey is null && daprAIConnectionString is null && vnetConfiguration is null && deploymentErrors is null && defaultDomain is null && staticIP is null && appLogsConfiguration is null && isZoneRedundant is null && customDomainConfiguration is null && eventStreamEndpoint is null && workloadProfiles is null && kedaVersion is null && daprVersion is null && infrastructureResourceGroup is null && isMtlsEnabled is null && isEnabled is null ? default : new ManagedEnvironmentProperties(
-                    provisioningState,
-                    daprAIInstrumentationKey,
-                    daprAIConnectionString,
-                    vnetConfiguration,
-                    deploymentErrors,
-                    defaultDomain,
-                    default,
-                    staticIP,
-                    appLogsConfiguration,
-                    default,
-                    default,
-                    isZoneRedundant,
-                    default,
-                    customDomainConfiguration,
-                    eventStreamEndpoint,
-                    (workloadProfiles ?? new ChangeTrackingList<ContainerAppWorkloadProfile>()).ToList(),
-                    new KedaConfiguration(kedaVersion, default),
-                    new DaprConfiguration(daprVersion, default),
-                    infrastructureResourceGroup,
-                    new ManagedEnvironmentPropertiesPeerAuthentication(new Mtls(isMtlsEnabled, default), default),
-                    new ManagedEnvironmentPropertiesPeerTrafficConfiguration(new ManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption(isEnabled, default), default),
-                    default,
-                    default,
-                    default,
-                    default,
-                    default),
-                kind,
-                identity,
-                default);
+            return ContainerAppManagedEnvironmentData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, provisioningState: provisioningState, daprAIInstrumentationKey: daprAIInstrumentationKey, daprAIConnectionString: daprAIConnectionString, vnetConfiguration: vnetConfiguration, deploymentErrors: deploymentErrors, defaultDomain: defaultDomain, privateLinkDefaultDomain: default, staticIP: staticIP, appLogsConfiguration: appLogsConfiguration, openTelemetryConfiguration: default, isZoneRedundant: isZoneRedundant, availabilityZones: default, customDomainConfiguration: customDomainConfiguration, eventStreamEndpoint: eventStreamEndpoint, workloadProfiles: workloadProfiles, infrastructureResourceGroup: infrastructureResourceGroup, ingressConfiguration: default, privateEndpointConnections: default, publicNetworkAccess: default, appInsightsConnectionString: default, kedaVersion: kedaVersion, daprVersion: daprVersion, isMtlsEnabled: isMtlsEnabled, isEnabled: isEnabled, diskEncryptionKeyVaultConfiguration: default, kind: kind, identity: identity);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerAppCustomDomainConfiguration"/>. </summary>
@@ -4559,16 +3139,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerAppCustomDomainConfiguration ContainerAppCustomDomainConfiguration(string customDomainVerificationId, string dnsSuffix, byte[] certificateValue, string certificatePassword, DateTimeOffset? expireOn, string thumbprint, string subjectName)
         {
-            return new ContainerAppCustomDomainConfiguration(
-                customDomainVerificationId,
-                dnsSuffix,
-                default,
-                certificateValue,
-                certificatePassword,
-                expireOn,
-                thumbprint,
-                subjectName,
-                default);
+            return ContainerAppCustomDomainConfiguration(customDomainVerificationId: customDomainVerificationId, dnsSuffix: dnsSuffix, certificateKeyVaultProperties: default, certificateValue: certificateValue, certificatePassword: certificatePassword, expireOn: expireOn, thumbprint: thumbprint, subjectName: subjectName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerAppCertificateProperties"/>. </summary>
@@ -4587,22 +3158,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerAppCertificateProperties ContainerAppCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState, string password, string subjectName, IEnumerable<string> subjectAlternativeNames, byte[] value, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprint, bool? isValid, string publicKeyHash)
         {
-            return new ContainerAppCertificateProperties(
-                provisioningState,
-                default,
-                default,
-                password,
-                subjectName,
-                (subjectAlternativeNames ?? new ChangeTrackingList<string>()).ToList(),
-                value,
-                issuer,
-                issueOn,
-                expireOn,
-                thumbprint,
-                isValid,
-                publicKeyHash,
-                default,
-                default);
+            return ContainerAppCertificateProperties(provisioningState: provisioningState, deploymentErrors: default, certificateKeyVaultProperties: default, password: password, subjectName: subjectName, subjectAlternativeNames: subjectAlternativeNames, value: value, issuer: issuer, issueOn: issueOn, expireOn: expireOn, thumbprint: thumbprint, isValid: isValid, publicKeyHash: publicKeyHash, certificateType: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppData"/>. </summary>
@@ -4631,35 +3187,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerAppData ContainerAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerAppExtendedLocation extendedLocation, ManagedServiceIdentity identity, string managedBy, ContainerAppProvisioningState? provisioningState, ResourceIdentifier managedEnvironmentId, ResourceIdentifier environmentId, string workloadProfileName, string latestRevisionName, string latestReadyRevisionName, string latestRevisionFqdn, string customDomainVerificationId, ContainerAppConfiguration configuration, ContainerAppTemplate template, IEnumerable<IPAddress> outboundIPAddressList, Uri eventStreamEndpoint)
         {
-            return new ContainerAppData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && managedEnvironmentId is null && environmentId is null && workloadProfileName is null && latestRevisionName is null && latestReadyRevisionName is null && latestRevisionFqdn is null && customDomainVerificationId is null && configuration is null && template is null && outboundIPAddressList is null && eventStreamEndpoint is null ? default : new ContainerAppProperties(
-                    provisioningState,
-                    default,
-                    default,
-                    managedEnvironmentId,
-                    environmentId,
-                    workloadProfileName,
-                    default,
-                    latestRevisionName,
-                    latestReadyRevisionName,
-                    latestRevisionFqdn,
-                    customDomainVerificationId,
-                    configuration,
-                    template,
-                    (outboundIPAddressList ?? new ChangeTrackingList<IPAddress>()).ToList(),
-                    eventStreamEndpoint,
-                    default),
-                extendedLocation,
-                identity,
-                managedBy,
-                default,
-                default);
+            return ContainerAppData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, provisioningState: provisioningState, runningStatus: default, deploymentErrors: default, managedEnvironmentId: managedEnvironmentId, environmentId: environmentId, workloadProfileName: workloadProfileName, latestRevisionName: latestRevisionName, latestReadyRevisionName: latestReadyRevisionName, latestRevisionFqdn: latestRevisionFqdn, customDomainVerificationId: customDomainVerificationId, configuration: configuration, template: template, outboundIPAddressList: outboundIPAddressList, eventStreamEndpoint: eventStreamEndpoint, patchingMode: default, extendedLocation: extendedLocation, identity: identity, managedBy: managedBy, kind: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppContainers.ContainerAppManagedEnvironmentData"/>. </summary>
@@ -4695,43 +3223,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerAppManagedEnvironmentData ContainerAppManagedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ContainerAppEnvironmentProvisioningState? provisioningState, string daprAIInstrumentationKey, string daprAIConnectionString, ContainerAppVnetConfiguration vnetConfiguration, string deploymentErrors, string defaultDomain, IPAddress staticIP, ContainerAppLogsConfiguration appLogsConfiguration, bool? isZoneRedundant, ContainerAppCustomDomainConfiguration customDomainConfiguration, string eventStreamEndpoint, IEnumerable<ContainerAppWorkloadProfile> workloadProfiles, string kedaVersion, string daprVersion, string infrastructureResourceGroup, bool? isMtlsEnabled, bool? isEnabled)
         {
-            return new ContainerAppManagedEnvironmentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && daprAIInstrumentationKey is null && daprAIConnectionString is null && vnetConfiguration is null && deploymentErrors is null && defaultDomain is null && staticIP is null && appLogsConfiguration is null && isZoneRedundant is null && customDomainConfiguration is null && eventStreamEndpoint is null && workloadProfiles is null && kedaVersion is null && daprVersion is null && infrastructureResourceGroup is null && isMtlsEnabled is null && isEnabled is null ? default : new ManagedEnvironmentProperties(
-                    provisioningState,
-                    daprAIInstrumentationKey,
-                    daprAIConnectionString,
-                    vnetConfiguration,
-                    deploymentErrors,
-                    defaultDomain,
-                    default,
-                    staticIP,
-                    appLogsConfiguration,
-                    default,
-                    default,
-                    isZoneRedundant,
-                    default,
-                    customDomainConfiguration,
-                    eventStreamEndpoint,
-                    (workloadProfiles ?? new ChangeTrackingList<ContainerAppWorkloadProfile>()).ToList(),
-                    new KedaConfiguration(kedaVersion, default),
-                    new DaprConfiguration(daprVersion, default),
-                    infrastructureResourceGroup,
-                    new ManagedEnvironmentPropertiesPeerAuthentication(new Mtls(isMtlsEnabled, default), default),
-                    new ManagedEnvironmentPropertiesPeerTrafficConfiguration(new ManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption(isEnabled, default), default),
-                    default,
-                    default,
-                    default,
-                    default,
-                    default),
-                kind,
-                default,
-                default);
+            return ContainerAppManagedEnvironmentData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, provisioningState: provisioningState, daprAIInstrumentationKey: daprAIInstrumentationKey, daprAIConnectionString: daprAIConnectionString, vnetConfiguration: vnetConfiguration, deploymentErrors: deploymentErrors, defaultDomain: defaultDomain, privateLinkDefaultDomain: default, staticIP: staticIP, appLogsConfiguration: appLogsConfiguration, openTelemetryConfiguration: default, isZoneRedundant: isZoneRedundant, availabilityZones: default, customDomainConfiguration: customDomainConfiguration, eventStreamEndpoint: eventStreamEndpoint, workloadProfiles: workloadProfiles, infrastructureResourceGroup: infrastructureResourceGroup, ingressConfiguration: default, privateEndpointConnections: default, publicNetworkAccess: default, appInsightsConnectionString: default, kedaVersion: kedaVersion, daprVersion: daprVersion, isMtlsEnabled: isMtlsEnabled, isEnabled: isEnabled, diskEncryptionKeyVaultConfiguration: default, kind: kind, identity: default);
         }
 
         /// <summary> Initializes a new instance of ContainerAppAuthConfigData. </summary>
@@ -4748,20 +3240,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerAppAuthConfigData ContainerAppAuthConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerAppAuthPlatform platform, ContainerAppGlobalValidation globalValidation, ContainerAppIdentityProvidersConfiguration identityProviders, ContainerAppLogin login, ContainerAppHttpSettings httpSettings)
         {
-            return new ContainerAppAuthConfigData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                platform is null && globalValidation is null && identityProviders is null && login is null && httpSettings is null ? default : new AuthConfigProperties(
-                    platform,
-                    globalValidation,
-                    identityProviders,
-                    login,
-                    httpSettings,
-                    default,
-                    default),
-                default);
+            return ContainerAppAuthConfigData(id: id, name: name, resourceType: resourceType, systemData: systemData, platform: platform, globalValidation: globalValidation, identityProviders: identityProviders, login: login, httpSettings: httpSettings, encryptionSettings: default);
         }
 
         /// <summary> Initializes a new instance of ContainerAppIngressConfiguration. </summary>
@@ -4781,22 +3260,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerAppIngressConfiguration ContainerAppIngressConfiguration(string fqdn, bool? external, int? targetPort, int? exposedPort, ContainerAppIngressTransportMethod? transport, IEnumerable<ContainerAppRevisionTrafficWeight> traffic, IEnumerable<ContainerAppCustomDomain> customDomains, bool? allowInsecure, IEnumerable<ContainerAppIPSecurityRestrictionRule> ipSecurityRestrictions, Affinity? stickySessionsAffinity, ContainerAppIngressClientCertificateMode? clientCertificateMode, ContainerAppCorsPolicy corsPolicy)
         {
-            return new ContainerAppIngressConfiguration(
-                fqdn,
-                external,
-                targetPort,
-                exposedPort,
-                transport,
-                (traffic ?? new ChangeTrackingList<ContainerAppRevisionTrafficWeight>()).ToList(),
-                (customDomains ?? new ChangeTrackingList<ContainerAppCustomDomain>()).ToList(),
-                allowInsecure,
-                (ipSecurityRestrictions ?? new ChangeTrackingList<ContainerAppIPSecurityRestrictionRule>()).ToList(),
-                stickySessionsAffinity is null ? default : new IngressStickySessions(stickySessionsAffinity, default),
-                clientCertificateMode,
-                corsPolicy,
-                default,
-                default,
-                default);
+            return ContainerAppIngressConfiguration(fqdn: fqdn, external: external, targetPort: targetPort, exposedPort: exposedPort, transport: transport, traffic: traffic, customDomains: customDomains, allowInsecure: allowInsecure, ipSecurityRestrictions: ipSecurityRestrictions, stickySessionsAffinity: stickySessionsAffinity, clientCertificateMode: clientCertificateMode, corsPolicy: corsPolicy, additionalPortMappings: default, targetPortHttpScheme: default);
         }
 
         /// <summary> Initializes a new instance of ContainerAppManagedEnvironmentData. </summary>
@@ -4831,43 +3295,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerAppManagedEnvironmentData ContainerAppManagedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ContainerAppEnvironmentProvisioningState? provisioningState, string daprAIInstrumentationKey, string daprAIConnectionString, ContainerAppVnetConfiguration vnetConfiguration, string deploymentErrors, string defaultDomain, IPAddress staticIP, ContainerAppLogsConfiguration appLogsConfiguration, bool? isZoneRedundant, ContainerAppCustomDomainConfiguration customDomainConfiguration, string eventStreamEndpoint, IEnumerable<ContainerAppWorkloadProfile> workloadProfiles, string kedaVersion, string daprVersion, string infrastructureResourceGroup, bool? isMtlsEnabled)
         {
-            return new ContainerAppManagedEnvironmentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && daprAIInstrumentationKey is null && daprAIConnectionString is null && vnetConfiguration is null && deploymentErrors is null && defaultDomain is null && staticIP is null && appLogsConfiguration is null && isZoneRedundant is null && customDomainConfiguration is null && eventStreamEndpoint is null && workloadProfiles is null && kedaVersion is null && daprVersion is null && infrastructureResourceGroup is null && isMtlsEnabled is null ? default : new ManagedEnvironmentProperties(
-                    provisioningState,
-                    daprAIInstrumentationKey,
-                    daprAIConnectionString,
-                    vnetConfiguration,
-                    deploymentErrors,
-                    defaultDomain,
-                    default,
-                    staticIP,
-                    appLogsConfiguration,
-                    default,
-                    default,
-                    isZoneRedundant,
-                    default,
-                    customDomainConfiguration,
-                    eventStreamEndpoint,
-                    (workloadProfiles ?? new ChangeTrackingList<ContainerAppWorkloadProfile>()).ToList(),
-                    new KedaConfiguration(kedaVersion, default),
-                    new DaprConfiguration(daprVersion, default),
-                    infrastructureResourceGroup,
-                    new ManagedEnvironmentPropertiesPeerAuthentication(new Mtls(isMtlsEnabled, default), default),
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default),
-                kind,
-                default,
-                default);
+            return ContainerAppManagedEnvironmentData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, provisioningState: provisioningState, daprAIInstrumentationKey: daprAIInstrumentationKey, daprAIConnectionString: daprAIConnectionString, vnetConfiguration: vnetConfiguration, deploymentErrors: deploymentErrors, defaultDomain: defaultDomain, privateLinkDefaultDomain: default, staticIP: staticIP, appLogsConfiguration: appLogsConfiguration, openTelemetryConfiguration: default, isZoneRedundant: isZoneRedundant, availabilityZones: default, customDomainConfiguration: customDomainConfiguration, eventStreamEndpoint: eventStreamEndpoint, workloadProfiles: workloadProfiles, infrastructureResourceGroup: infrastructureResourceGroup, ingressConfiguration: default, privateEndpointConnections: default, publicNetworkAccess: default, appInsightsConnectionString: default, kedaVersion: kedaVersion, daprVersion: daprVersion, isMtlsEnabled: isMtlsEnabled, isEnabled: default, diskEncryptionKeyVaultConfiguration: default, kind: kind, identity: default);
         }
     }
 }

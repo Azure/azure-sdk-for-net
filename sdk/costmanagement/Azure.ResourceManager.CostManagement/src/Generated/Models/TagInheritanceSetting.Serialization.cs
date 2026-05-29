@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            SettingsKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            SettingsKind kind = default;
             TagInheritanceProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -175,8 +175,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                kind,
                 additionalBinaryDataProperties,
+                kind,
                 properties);
         }
     }

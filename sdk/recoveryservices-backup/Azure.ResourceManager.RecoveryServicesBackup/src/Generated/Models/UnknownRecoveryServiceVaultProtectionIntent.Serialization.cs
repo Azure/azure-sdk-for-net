@@ -56,10 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RecoveryServiceVaultProtectionIntent IPersistableModel<RecoveryServiceVaultProtectionIntent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return (RecoveryServiceVaultProtectionIntent)PersistableModelCreateCore(data, options);
-        }
+        RecoveryServiceVaultProtectionIntent IPersistableModel<RecoveryServiceVaultProtectionIntent>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownRecoveryServiceVaultProtectionIntent)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RecoveryServiceVaultProtectionIntent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -87,10 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RecoveryServiceVaultProtectionIntent IJsonModel<RecoveryServiceVaultProtectionIntent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return (RecoveryServiceVaultProtectionIntent)JsonModelCreateCore(ref reader, options);
-        }
+        RecoveryServiceVaultProtectionIntent IJsonModel<RecoveryServiceVaultProtectionIntent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownRecoveryServiceVaultProtectionIntent)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

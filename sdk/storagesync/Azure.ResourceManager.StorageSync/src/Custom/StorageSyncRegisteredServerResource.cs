@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -48,14 +48,7 @@ namespace Azure.ResourceManager.StorageSync
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method no longer works in all API versions. Please use the different UpdateAsync instead.", false)]
         public virtual async Task<ArmOperation<StorageSyncRegisteredServerResource>> UpdateAsync(WaitUntil waitUntil, StorageSyncRegisteredServerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
-            => await UpdateAsync(waitUntil, new StorageSyncRegisteredServerPatch(
-                id: content.Id,
-                name: content.Name,
-                resourceType: content.ResourceType,
-                systemData: content.SystemData,
-                properties: new RegisteredServerUpdateProperties(content.UseIdentity, content.ApplicationId, null),
-                additionalBinaryDataProperties: null
-            ), cancellationToken).ConfigureAwait(false);
+            => await UpdateAsync(waitUntil, new StorageSyncRegisteredServerPatch(content.Id, content.Name, content.ResourceType, content.SystemData, null, new RegisteredServerUpdateProperties(content.UseIdentity, content.ApplicationId, null)), cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Add a new registered server.
@@ -85,13 +78,6 @@ namespace Azure.ResourceManager.StorageSync
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method no longer works in all API versions. Please use the different Update instead.", false)]
         public virtual ArmOperation<StorageSyncRegisteredServerResource> Update(WaitUntil waitUntil, StorageSyncRegisteredServerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
-            => Update(waitUntil, new StorageSyncRegisteredServerPatch(
-                id: content.Id,
-                name: content.Name,
-                resourceType: content.ResourceType,
-                systemData: content.SystemData,
-                properties: new RegisteredServerUpdateProperties(content.UseIdentity, content.ApplicationId, null),
-                additionalBinaryDataProperties: null
-            ), cancellationToken);
+            => Update(waitUntil, new StorageSyncRegisteredServerPatch(content.Id, content.Name, content.ResourceType, content.SystemData, null, new RegisteredServerUpdateProperties(content.UseIdentity, content.ApplicationId, null)), cancellationToken);
     }
 }

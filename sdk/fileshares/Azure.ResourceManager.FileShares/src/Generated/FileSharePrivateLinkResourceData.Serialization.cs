@@ -91,21 +91,6 @@ namespace Azure.ResourceManager.FileShares
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -137,8 +122,8 @@ namespace Azure.ResourceManager.FileShares
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            FileSharePrivateLinkResourceProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            FileSharePrivateLinkResourceProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -192,8 +177,8 @@ namespace Azure.ResourceManager.FileShares
                 name,
                 resourceType,
                 systemData,
-                properties,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties,
+                properties);
         }
     }
 }

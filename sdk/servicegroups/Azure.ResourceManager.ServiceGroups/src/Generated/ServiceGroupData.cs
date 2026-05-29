@@ -30,16 +30,16 @@ namespace Azure.ResourceManager.ServiceGroups
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> ServiceGroup creation request body parameters. </param>
         /// <param name="kind"> The kind of the serviceGroup. </param>
         /// <param name="tags"> The serviceGroup tags. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServiceGroupProperties properties, string kind, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal ServiceGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServiceGroupProperties properties, string kind, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Kind = kind;
             Tags = tags;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> ServiceGroup creation request body parameters. </summary>

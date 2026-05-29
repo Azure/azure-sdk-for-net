@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Storage
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="queueProperties"> Queue resource properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageQueueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, QueueProperties queueProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        /// <param name="queueProperties"> Queue resource properties. </param>
+        internal StorageQueueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, QueueProperties queueProperties) : base(id, name, resourceType, systemData)
         {
-            QueueProperties = queueProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            QueueProperties = queueProperties;
         }
 
         /// <summary> Queue resource properties. </summary>

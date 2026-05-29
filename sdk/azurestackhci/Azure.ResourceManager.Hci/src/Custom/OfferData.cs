@@ -22,9 +22,8 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> Initializes a new instance of <see cref="OfferData"/>. </summary>
         internal OfferData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string publisherId, string content, string contentVersion, string provisioningState, IList<HciSkuMappings> skuMappings)
-            : base(id, name, resourceType, systemData,
-                  new OfferProperties(provisioningState, publisherId, content, contentVersion, skuMappings, null),
-                  additionalBinaryDataProperties)
+            : base(id, name, resourceType, systemData, additionalBinaryDataProperties,
+                  new OfferProperties(provisioningState, publisherId, content, contentVersion, skuMappings, null))
         {
         }
     }

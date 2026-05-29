@@ -36,45 +36,32 @@ namespace Azure.ResourceManager.DependencyMap.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
-                dependencyMapProvisioningState is null ? default : new DependencyMapProperties(dependencyMapProvisioningState, default),
-                default);
+                dependencyMapProvisioningState is null ? default : new DependencyMapProperties(dependencyMapProvisioningState, null));
         }
 
+        /// <summary> The type used for updating tags in MapsResource resources. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.DependencyMapPatch"/> instance for mocking. </returns>
         public static DependencyMapPatch DependencyMapPatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DependencyMapPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new DependencyMapPatch(tags, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> GetDependencyViewForFocusedMachine request model. </summary>
         /// <param name="focusedMachineId"> Machine arm id. </param>
         /// <param name="filters"> Filters for GetSingleMachineDependencyView. </param>
         /// <returns> A new <see cref="Models.GetDependencyViewForFocusedMachineContent"/> instance for mocking. </returns>
         public static GetDependencyViewForFocusedMachineContent GetDependencyViewForFocusedMachineContent(ResourceIdentifier focusedMachineId = default, DependencyMapVisualizationFilter filters = default)
         {
-            return new GetDependencyViewForFocusedMachineContent(focusedMachineId, filters, default);
+            return new GetDependencyViewForFocusedMachineContent(focusedMachineId, filters, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="dateTime"> DateTime filter. </param>
-        /// <param name="processNameFilter"> Process name filter. </param>
-        /// <returns> A new <see cref="Models.DependencyMapVisualizationFilter"/> instance for mocking. </returns>
-        public static DependencyMapVisualizationFilter DependencyMapVisualizationFilter(DependencyMapDateTimeFilter dateTime = default, DependencyMapProcessNameFilter processNameFilter = default)
-        {
-            return new DependencyMapVisualizationFilter(dateTime, processNameFilter, default);
-        }
-
-        /// <param name="startOn"> Start date time for dependency map visualization query. </param>
-        /// <param name="endOn"> End date time for dependency map visualization query. </param>
-        /// <returns> A new <see cref="Models.DependencyMapDateTimeFilter"/> instance for mocking. </returns>
-        public static DependencyMapDateTimeFilter DependencyMapDateTimeFilter(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default)
-        {
-            return new DependencyMapDateTimeFilter(startOn, endOn, default);
-        }
-
+        /// <summary> Process name filter for dependency map visualization apis. </summary>
         /// <param name="operator"> Operator for process name filter. </param>
         /// <param name="processNames"> List of process names on which the operator should be applied. </param>
         /// <returns> A new <see cref="Models.DependencyMapProcessNameFilter"/> instance for mocking. </returns>
@@ -82,27 +69,30 @@ namespace Azure.ResourceManager.DependencyMap.Models
         {
             processNames ??= new ChangeTrackingList<string>();
 
-            return new DependencyMapProcessNameFilter(@operator, (processNames ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new DependencyMapProcessNameFilter(@operator, processNames.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> GetConnectionsWithConnectedMachineForFocusedMachine request model. </summary>
         /// <param name="focusedMachineId"> Source machine arm id. </param>
         /// <param name="connectedMachineId"> Destination machine arm id. </param>
         /// <param name="filters"> Filters for GetNetworkConnectionsBetweenMachines. </param>
         /// <returns> A new <see cref="Models.GetConnectionsWithConnectedMachineForFocusedMachineContent"/> instance for mocking. </returns>
         public static GetConnectionsWithConnectedMachineForFocusedMachineContent GetConnectionsWithConnectedMachineForFocusedMachineContent(ResourceIdentifier focusedMachineId = default, ResourceIdentifier connectedMachineId = default, DependencyMapVisualizationFilter filters = default)
         {
-            return new GetConnectionsWithConnectedMachineForFocusedMachineContent(focusedMachineId, connectedMachineId, filters, default);
+            return new GetConnectionsWithConnectedMachineForFocusedMachineContent(focusedMachineId, connectedMachineId, filters, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> GetConnectionsForProcessOnFocusedMachine request model. </summary>
         /// <param name="focusedMachineId"> Machine arm id. </param>
         /// <param name="processIdOnFocusedMachine"> Process id. </param>
         /// <param name="filters"> Filters for GetProcessNetworkConnections. </param>
         /// <returns> A new <see cref="Models.GetConnectionsForProcessOnFocusedMachineContent"/> instance for mocking. </returns>
         public static GetConnectionsForProcessOnFocusedMachineContent GetConnectionsForProcessOnFocusedMachineContent(ResourceIdentifier focusedMachineId = default, string processIdOnFocusedMachine = default, DependencyMapVisualizationFilter filters = default)
         {
-            return new GetConnectionsForProcessOnFocusedMachineContent(focusedMachineId, processIdOnFocusedMachine, filters, default);
+            return new GetConnectionsForProcessOnFocusedMachineContent(focusedMachineId, processIdOnFocusedMachine, filters, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> ExportDependencies request model. </summary>
         /// <param name="focusedMachineId"> Machine arm id. </param>
         /// <param name="filters"> Filters for ExportDependencies. </param>
         /// <param name="applianceNameList"> List of Appliance Names. </param>
@@ -111,9 +101,10 @@ namespace Azure.ResourceManager.DependencyMap.Models
         {
             applianceNameList ??= new ChangeTrackingList<string>();
 
-            return new ExportDependenciesContent(focusedMachineId, filters, (applianceNameList ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new ExportDependenciesContent(focusedMachineId, filters, applianceNameList.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Model representing the result of the export dependencies asynchronous operation. </summary>
         /// <param name="id"> The status URL of export dependencies operation. </param>
         /// <param name="name"> The resource name of the operation status. It must match the last segment of 'id' field. </param>
         /// <param name="status"> The overall arm status of the operation. It has one of the terminal states - Succeeded/Failed/Canceled. </param>
@@ -132,7 +123,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
                 startOn,
                 endOn,
                 properties,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="exportedDataSasUri"> The SAS URI of the blob containing the exported dependencies data. </param>
@@ -141,14 +132,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <returns> A new <see cref="Models.ExportDependenciesResultProperties"/> instance for mocking. </returns>
         public static ExportDependenciesResultProperties ExportDependenciesResultProperties(string exportedDataSasUri = default, ExportDependenciesStatusCode? statusCode = default, int? additionalInfoAvailableDaysCount = default)
         {
-            return new ExportDependenciesResultProperties(exportedDataSasUri, statusCode, additionalInfoAvailableDaysCount is null ? default : new ExportDependenciesAdditionalInfo(additionalInfoAvailableDaysCount, default), default);
-        }
-
-        /// <param name="processNameFilter"> Process name filter. </param>
-        /// <returns> A new <see cref="Models.GetDependencyViewForAllMachinesContent"/> instance for mocking. </returns>
-        public static GetDependencyViewForAllMachinesContent GetDependencyViewForAllMachinesContent(DependencyMapProcessNameFilter processNameFilter = default)
-        {
-            return new GetDependencyViewForAllMachinesContent(processNameFilter is null ? default : new DependencyProcessFilter(processNameFilter, default), default);
+            return new ExportDependenciesResultProperties(exportedDataSasUri, statusCode, additionalInfoAvailableDaysCount is null ? default : new ExportDependenciesAdditionalInfo(additionalInfoAvailableDaysCount, null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> The status URL of the asynchronous operation. </param>
@@ -168,10 +152,11 @@ namespace Azure.ResourceManager.DependencyMap.Models
                 error,
                 startOn,
                 endOn,
-                getDependencyViewForAllMachinesResultLayoutFileSasUri is null ? default : new GetDependencyViewForAllMachinesResultProperties(getDependencyViewForAllMachinesResultLayoutFileSasUri, default),
-                default);
+                getDependencyViewForAllMachinesResultLayoutFileSasUri is null ? default : new GetDependencyViewForAllMachinesResultProperties(getDependencyViewForAllMachinesResultLayoutFileSasUri, null),
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A Discovery Source resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -189,36 +174,42 @@ namespace Azure.ResourceManager.DependencyMap.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
-                properties,
-                default);
+                properties);
         }
 
+        /// <summary>
+        /// The properties of Discovery Source resource
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.OffAzureDiscoverySourceProperties"/>.
+        /// </summary>
         /// <param name="provisioningState"> Provisioning state of Discovery Source resource. </param>
         /// <param name="sourceType"> Source type of Discovery Source resource. </param>
         /// <param name="sourceId"> Source ArmId of Discovery Source resource. </param>
         /// <returns> A new <see cref="Models.DependencyMapDiscoverySourceProperties"/> instance for mocking. </returns>
         public static DependencyMapDiscoverySourceProperties DependencyMapDiscoverySourceProperties(DependencyMapProvisioningState? provisioningState = default, string sourceType = default, ResourceIdentifier sourceId = default)
         {
-            return new UnknownDependencyMapDiscoverySourceProperties(provisioningState, default, sourceId, default);
+            return new UnknownDependencyMapDiscoverySourceProperties(provisioningState, new SourceType(sourceType), sourceId, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> OffAzure discovery source resource properties. </summary>
         /// <param name="provisioningState"> Provisioning state of Discovery Source resource. </param>
         /// <param name="sourceId"> Source ArmId of Discovery Source resource. </param>
         /// <returns> A new <see cref="Models.OffAzureDiscoverySourceProperties"/> instance for mocking. </returns>
         public static OffAzureDiscoverySourceProperties OffAzureDiscoverySourceProperties(DependencyMapProvisioningState? provisioningState = default, ResourceIdentifier sourceId = default)
         {
-            return new OffAzureDiscoverySourceProperties(provisioningState, default, sourceId, default);
+            return new OffAzureDiscoverySourceProperties(provisioningState, SourceType.OffAzure, sourceId, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The type used for updating tags in DiscoverySourceResource resources. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.DependencyMapDiscoverySourcePatch"/> instance for mocking. </returns>
         public static DependencyMapDiscoverySourcePatch DependencyMapDiscoverySourcePatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DependencyMapDiscoverySourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new DependencyMapDiscoverySourcePatch(tags, additionalBinaryDataProperties: null);
         }
     }
 }

@@ -101,21 +101,6 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(QueueProperties, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -147,8 +132,8 @@ namespace Azure.ResourceManager.Storage
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            QueueProperties queueProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            QueueProperties queueProperties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -202,8 +187,8 @@ namespace Azure.ResourceManager.Storage
                 name,
                 resourceType,
                 systemData,
-                queueProperties,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties,
+                queueProperties);
         }
     }
 }

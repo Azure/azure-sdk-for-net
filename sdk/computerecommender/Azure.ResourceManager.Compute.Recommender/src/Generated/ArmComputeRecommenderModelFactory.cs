@@ -32,10 +32,11 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                 name,
                 resourceType,
                 systemData,
-                computeRecommenderDiagnosticSupportedResourceTypes is null ? default : new ComputeRecommenderDiagnosticProperties((computeRecommenderDiagnosticSupportedResourceTypes ?? new ChangeTrackingList<string>()).ToList(), default),
-                default);
+                additionalBinaryDataProperties: null,
+                computeRecommenderDiagnosticSupportedResourceTypes is null ? default : new ComputeRecommenderDiagnosticProperties((computeRecommenderDiagnosticSupportedResourceTypes ?? new ChangeTrackingList<string>()).ToList(), null));
         }
 
+        /// <summary> SpotPlacementScores API Input. </summary>
         /// <param name="desiredLocations"> The desired regions. </param>
         /// <param name="desiredSizes"> The desired virtual machine SKU sizes. </param>
         /// <param name="desiredCount"> Desired instance count per region/zone based on the scope. </param>
@@ -46,16 +47,10 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             desiredLocations ??= new ChangeTrackingList<AzureLocation>();
             desiredSizes ??= new ChangeTrackingList<ComputeRecommenderResourceSize>();
 
-            return new ComputeRecommenderGenerateContent((desiredLocations ?? new ChangeTrackingList<AzureLocation>()).ToList(), (desiredSizes ?? new ChangeTrackingList<ComputeRecommenderResourceSize>()).ToList(), desiredCount, availabilityZones, default);
+            return new ComputeRecommenderGenerateContent(desiredLocations.ToList(), desiredSizes.ToList(), desiredCount, availabilityZones, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="sku"> The resource's CRP virtual machine SKU size. </param>
-        /// <returns> A new <see cref="Models.ComputeRecommenderResourceSize"/> instance for mocking. </returns>
-        public static ComputeRecommenderResourceSize ComputeRecommenderResourceSize(string sku = default)
-        {
-            return new ComputeRecommenderResourceSize(sku, default);
-        }
-
+        /// <summary> SpotPlacementScores API response. </summary>
         /// <param name="desiredLocations"> The desired regions. </param>
         /// <param name="desiredSizes"> The desired virtual machine SKU sizes. </param>
         /// <param name="desiredCount"> Desired instance count per region/zone based on the scope. </param>
@@ -69,14 +64,15 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             placementScores ??= new ChangeTrackingList<ComputeRecommenderPlacementScore>();
 
             return new ComputeRecommenderGenerateResult(
-                (desiredLocations ?? new ChangeTrackingList<AzureLocation>()).ToList(),
-                (desiredSizes ?? new ChangeTrackingList<ComputeRecommenderResourceSize>()).ToList(),
+                desiredLocations.ToList(),
+                desiredSizes.ToList(),
                 desiredCount,
                 availabilityZones,
-                (placementScores ?? new ChangeTrackingList<ComputeRecommenderPlacementScore>()).ToList(),
-                default);
+                placementScores.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The spot placement score for sku/region/zone combination. </summary>
         /// <param name="sku"> The resource's CRP virtual machine SKU size. </param>
         /// <param name="region"> The region. </param>
         /// <param name="availabilityZone"> The availability zone. </param>
@@ -91,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                 availabilityZone,
                 score,
                 isQuotaAvailable,
-                default);
+                additionalBinaryDataProperties: null);
         }
     }
 }

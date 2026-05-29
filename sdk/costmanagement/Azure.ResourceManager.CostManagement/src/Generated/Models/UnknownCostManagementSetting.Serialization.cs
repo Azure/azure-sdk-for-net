@@ -58,10 +58,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CostManagementSettingData IPersistableModel<CostManagementSettingData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return (CostManagementSettingData)PersistableModelCreateCore(data, options);
-        }
+        CostManagementSettingData IPersistableModel<CostManagementSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => (CostManagementSettingData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CostManagementSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -89,10 +86,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CostManagementSettingData IJsonModel<CostManagementSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return (CostManagementSettingData)JsonModelCreateCore(ref reader, options);
-        }
+        CostManagementSettingData IJsonModel<CostManagementSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CostManagementSettingData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -119,8 +113,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            SettingsKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            SettingsKind kind = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -170,8 +164,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                kind,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties,
+                kind);
         }
     }
 }

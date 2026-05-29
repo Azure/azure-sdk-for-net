@@ -35,13 +35,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static NewRelicAccountResourceData NewRelicAccountResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string organizationId = null, string accountId = null, string accountName = null, AzureLocation? region = default)
         {
             return new NewRelicAccountResourceData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                properties: new AccountProperties(organizationId, accountId, accountName, region, additionalBinaryDataProperties: null),
-                additionalBinaryDataProperties: null
-            );
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                new AccountProperties(organizationId, accountId, accountName, region, additionalBinaryDataProperties: null));
         }
 
         /// <summary> Initializes a new instance of NewRelicOrganizationResourceData. </summary>
@@ -49,13 +48,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static NewRelicOrganizationResourceData NewRelicOrganizationResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string organizationId = null, string organizationName = null, NewRelicObservabilityBillingSource? billingSource = default)
         {
             return new NewRelicOrganizationResourceData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                properties: new OrganizationProperties(organizationId, organizationName, billingSource, additionalBinaryDataProperties: null),
-                additionalBinaryDataProperties: null
-            );
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                new OrganizationProperties(organizationId, organizationName, billingSource, additionalBinaryDataProperties: null));
         }
 
         /// <summary> Initializes a new instance of NewRelicPlanData. </summary>
@@ -63,13 +61,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static NewRelicPlanData NewRelicPlanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NewRelicPlanDetails planData = null, NewRelicObservabilityOrgCreationSource? orgCreationSource = default, NewRelicObservabilityAccountCreationSource? accountCreationSource = default)
         {
             return new NewRelicPlanData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                properties: new PlanDataProperties(planData, orgCreationSource, accountCreationSource, additionalBinaryDataProperties: null),
-                additionalBinaryDataProperties: null
-            );
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                new PlanDataProperties(planData, orgCreationSource, accountCreationSource, additionalBinaryDataProperties: null));
         }
 
         /// <summary> Initializes a new instance of NewRelicMonitorResourceData (17-param overload). </summary>

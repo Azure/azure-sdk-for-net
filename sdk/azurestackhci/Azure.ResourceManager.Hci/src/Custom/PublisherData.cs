@@ -22,9 +22,8 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> Initializes a new instance of <see cref="PublisherData"/>. </summary>
         internal PublisherData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string provisioningState)
-            : base(id, name, resourceType, systemData,
-                  new PublisherProperties(provisioningState, null),
-                  additionalBinaryDataProperties)
+            : base(id, name, resourceType, systemData, additionalBinaryDataProperties,
+                  new PublisherProperties(provisioningState, null))
         {
         }
     }

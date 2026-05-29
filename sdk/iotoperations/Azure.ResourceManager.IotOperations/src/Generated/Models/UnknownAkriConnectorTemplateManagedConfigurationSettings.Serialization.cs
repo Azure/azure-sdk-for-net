@@ -55,10 +55,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AkriConnectorTemplateManagedConfigurationSettings IPersistableModel<AkriConnectorTemplateManagedConfigurationSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return PersistableModelCreateCore(data, options);
-        }
+        AkriConnectorTemplateManagedConfigurationSettings IPersistableModel<AkriConnectorTemplateManagedConfigurationSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AkriConnectorTemplateManagedConfigurationSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -86,10 +83,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AkriConnectorTemplateManagedConfigurationSettings IJsonModel<AkriConnectorTemplateManagedConfigurationSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return JsonModelCreateCore(ref reader, options);
-        }
+        AkriConnectorTemplateManagedConfigurationSettings IJsonModel<AkriConnectorTemplateManagedConfigurationSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

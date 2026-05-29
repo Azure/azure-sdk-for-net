@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
     public static partial class ArmWeightsAndBiasesModelFactory
     {
 
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -37,13 +38,14 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
                 properties,
-                identity,
-                default);
+                identity);
         }
 
+        /// <summary> Properties specific to Instance. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
@@ -58,62 +60,20 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
                 provisioningState,
                 partnerProperties,
                 singleSignOnProperties,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Marketplace details for an organization. </summary>
         /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
         /// <returns> A new <see cref="Models.WeightsAndBiasesMarketplaceDetails"/> instance for mocking. </returns>
         public static WeightsAndBiasesMarketplaceDetails WeightsAndBiasesMarketplaceDetails(string subscriptionId = default, WeightsAndBiasesMarketplaceSubscriptionStatus? subscriptionStatus = default, WeightsAndBiasesOfferDetails offerDetails = default)
         {
-            return new WeightsAndBiasesMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, default);
+            return new WeightsAndBiasesMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="publisherId"> Publisher Id for the marketplace offer. </param>
-        /// <param name="offerId"> Offer Id for the marketplace offer. </param>
-        /// <param name="planId"> Plan Id for the marketplace offer. </param>
-        /// <param name="planName"> Plan Name for the marketplace offer. </param>
-        /// <param name="termUnit"> Plan Display Name for the marketplace offer. </param>
-        /// <param name="termId"> Plan Display Name for the marketplace offer. </param>
-        /// <returns> A new <see cref="Models.WeightsAndBiasesOfferDetails"/> instance for mocking. </returns>
-        public static WeightsAndBiasesOfferDetails WeightsAndBiasesOfferDetails(string publisherId = default, string offerId = default, string planId = default, string planName = default, string termUnit = default, string termId = default)
-        {
-            return new WeightsAndBiasesOfferDetails(
-                publisherId,
-                offerId,
-                planId,
-                planName,
-                termUnit,
-                termId,
-                default);
-        }
-
-        /// <param name="firstName"> First name of the user. </param>
-        /// <param name="lastName"> Last name of the user. </param>
-        /// <param name="emailAddress"> Email address of the user. </param>
-        /// <param name="upn"> User's principal name. </param>
-        /// <param name="phoneNumber"> User's phone number. </param>
-        /// <returns> A new <see cref="Models.WeightsAndBiasesUserDetails"/> instance for mocking. </returns>
-        public static WeightsAndBiasesUserDetails WeightsAndBiasesUserDetails(string firstName = default, string lastName = default, string emailAddress = default, string upn = default, string phoneNumber = default)
-        {
-            return new WeightsAndBiasesUserDetails(
-                firstName,
-                lastName,
-                emailAddress,
-                upn,
-                phoneNumber,
-                default);
-        }
-
-        /// <param name="region"> The region of the instance. </param>
-        /// <param name="subdomain"> The subdomain of the instance. </param>
-        /// <returns> A new <see cref="Models.WeightsAndBiasesPartnerProperties"/> instance for mocking. </returns>
-        public static WeightsAndBiasesPartnerProperties WeightsAndBiasesPartnerProperties(WeightsAndBiasesRegion region = default, string subdomain = default)
-        {
-            return new WeightsAndBiasesPartnerProperties(region, subdomain, default);
-        }
-
+        /// <summary> Properties specific to Single Sign On Resource. </summary>
         /// <param name="type"> Type of Single Sign-On mechanism being used. </param>
         /// <param name="state"> State of the Single Sign On for the resource. </param>
         /// <param name="enterpriseAppId"> AAD enterprise application Id used to setup SSO. </param>
@@ -129,10 +89,11 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
                 state,
                 enterpriseAppId,
                 uri,
-                (aadDomains ?? new ChangeTrackingList<string>()).ToList(),
-                default);
+                aadDomains.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The type used for update operations of the Instance Resource. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Models.WeightsAndBiasesInstancePatch"/> instance for mocking. </returns>
@@ -140,7 +101,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new WeightsAndBiasesInstancePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
+            return new WeightsAndBiasesInstancePatch(tags, identity, additionalBinaryDataProperties: null);
         }
     }
 }

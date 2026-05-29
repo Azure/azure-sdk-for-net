@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.StorageActions.Models
     public static partial class ArmStorageActionsModelFactory
     {
 
+        /// <summary> Represents Storage Task. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -38,13 +39,14 @@ namespace Azure.ResourceManager.StorageActions.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
                 identity,
-                properties,
-                default);
+                properties);
         }
 
+        /// <summary> Properties of the storage task. </summary>
         /// <param name="taskVersion"> Storage task version. </param>
         /// <param name="isEnabled"> Storage Task is enabled when set to true and disabled when set to false. </param>
         /// <param name="description"> Text that describes the purpose of the storage task. </param>
@@ -61,17 +63,10 @@ namespace Azure.ResourceManager.StorageActions.Models
                 action,
                 provisioningState,
                 creationTimeInUtc,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <param name="if"> The if block of storage task operation. </param>
-        /// <param name="elseOperations"> List of operations to execute in the else block. </param>
-        /// <returns> A new <see cref="Models.StorageTaskAction"/> instance for mocking. </returns>
-        public static StorageTaskAction StorageTaskAction(StorageTaskIfCondition @if = default, IEnumerable<StorageTaskOperationInfo> elseOperations = default)
-        {
-            return new StorageTaskAction(@if, elseOperations is null ? default : new StorageTaskElseCondition((elseOperations ?? new ChangeTrackingList<StorageTaskOperationInfo>()).ToList(), default), default);
-        }
-
+        /// <summary> The if block of storage task operation. </summary>
         /// <param name="condition"> Condition predicate to evaluate each object. See https://aka.ms/storagetaskconditions for valid properties and operators. </param>
         /// <param name="operations"> List of operations to execute when the condition predicate satisfies. </param>
         /// <returns> A new <see cref="Models.StorageTaskIfCondition"/> instance for mocking. </returns>
@@ -79,9 +74,10 @@ namespace Azure.ResourceManager.StorageActions.Models
         {
             operations ??= new ChangeTrackingList<StorageTaskOperationInfo>();
 
-            return new StorageTaskIfCondition(condition, (operations ?? new ChangeTrackingList<StorageTaskOperationInfo>()).ToList(), default);
+            return new StorageTaskIfCondition(condition, operations.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Represents an operation to be performed on the object. </summary>
         /// <param name="name"> The operation to be performed on the object. </param>
         /// <param name="parameters"> Key-value parameters for the operation. </param>
         /// <param name="onSuccess"> Action to be taken when the operation is successful for a object. </param>
@@ -91,9 +87,10 @@ namespace Azure.ResourceManager.StorageActions.Models
         {
             parameters ??= new ChangeTrackingDictionary<string, string>();
 
-            return new StorageTaskOperationInfo(name, parameters ?? new ChangeTrackingDictionary<string, string>(), onSuccess, onFailure, default);
+            return new StorageTaskOperationInfo(name, parameters, onSuccess, onFailure, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Parameters of the storage task update request. </summary>
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="tags"> Gets or sets a list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater in length than 128 characters and a value no greater in length than 256 characters. </param>
         /// <param name="properties"> Properties of the storage task. </param>
@@ -102,9 +99,10 @@ namespace Azure.ResourceManager.StorageActions.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new StorageTaskPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+            return new StorageTaskPatch(identity, tags, properties, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Properties of the storage task. </summary>
         /// <param name="taskVersion"> Storage task version. </param>
         /// <param name="enabled"> Storage Task is enabled when set to true and disabled when set to false. </param>
         /// <param name="description"> Text that describes the purpose of the storage task. </param>
@@ -121,16 +119,10 @@ namespace Azure.ResourceManager.StorageActions.Models
                 action,
                 provisioningState,
                 creationTimeInUtc,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <param name="properties"> Properties of the storage task preview. </param>
-        /// <returns> A new <see cref="Models.StorageTaskPreviewAction"/> instance for mocking. </returns>
-        public static StorageTaskPreviewAction StorageTaskPreviewAction(StorageTaskPreviewActionProperties properties = default)
-        {
-            return new StorageTaskPreviewAction(properties, default);
-        }
-
+        /// <summary> Storage task preview action properties. </summary>
         /// <param name="container"> Properties of a sample container to test for a match with the preview action. </param>
         /// <param name="blobs"> Properties of some sample blobs in the container to test for matches with the preview action. </param>
         /// <param name="action"> Preview action to test. </param>
@@ -139,9 +131,10 @@ namespace Azure.ResourceManager.StorageActions.Models
         {
             blobs ??= new ChangeTrackingList<StorageTaskPreviewBlobProperties>();
 
-            return new StorageTaskPreviewActionProperties(container, (blobs ?? new ChangeTrackingList<StorageTaskPreviewBlobProperties>()).ToList(), action, default);
+            return new StorageTaskPreviewActionProperties(container, blobs.ToList(), action, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Storage task preview container properties. </summary>
         /// <param name="name"> Name of test container. </param>
         /// <param name="metadata"> metadata key value pairs to be tested for a match against the provided condition. </param>
         /// <returns> A new <see cref="Models.StorageTaskPreviewContainerProperties"/> instance for mocking. </returns>
@@ -149,17 +142,10 @@ namespace Azure.ResourceManager.StorageActions.Models
         {
             metadata ??= new ChangeTrackingList<StorageTaskPreviewKeyValueProperties>();
 
-            return new StorageTaskPreviewContainerProperties(name, (metadata ?? new ChangeTrackingList<StorageTaskPreviewKeyValueProperties>()).ToList(), default);
+            return new StorageTaskPreviewContainerProperties(name, metadata.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <param name="key"> Represents the key property of the pair. </param>
-        /// <param name="value"> Represents the value property of the pair. </param>
-        /// <returns> A new <see cref="Models.StorageTaskPreviewKeyValueProperties"/> instance for mocking. </returns>
-        public static StorageTaskPreviewKeyValueProperties StorageTaskPreviewKeyValueProperties(string key = default, string value = default)
-        {
-            return new StorageTaskPreviewKeyValueProperties(key, value, default);
-        }
-
+        /// <summary> Storage task preview container properties. </summary>
         /// <param name="name"> Name of test blob. </param>
         /// <param name="properties"> properties key value pairs to be tested for a match against the provided condition. </param>
         /// <param name="metadata"> metadata key value pairs to be tested for a match against the provided condition. </param>
@@ -174,28 +160,14 @@ namespace Azure.ResourceManager.StorageActions.Models
 
             return new StorageTaskPreviewBlobProperties(
                 name,
-                (properties ?? new ChangeTrackingList<StorageTaskPreviewKeyValueProperties>()).ToList(),
-                (metadata ?? new ChangeTrackingList<StorageTaskPreviewKeyValueProperties>()).ToList(),
-                (tags ?? new ChangeTrackingList<StorageTaskPreviewKeyValueProperties>()).ToList(),
+                properties.ToList(),
+                metadata.ToList(),
+                tags.ToList(),
                 matchedBlock,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <param name="ifCondition"> Storage task condition to bes tested for a match. </param>
-        /// <param name="elseBlockExists"> Specify whether the else block is present in the condition. </param>
-        /// <returns> A new <see cref="Models.StorageTaskPreviewActionCondition"/> instance for mocking. </returns>
-        public static StorageTaskPreviewActionCondition StorageTaskPreviewActionCondition(string ifCondition = default, bool elseBlockExists = default)
-        {
-            return new StorageTaskPreviewActionCondition(ifCondition is null ? default : new StorageTaskPreviewActionIfCondition(ifCondition, default), elseBlockExists, default);
-        }
-
-        /// <param name="condition"> Storage task condition to bes tested for a match. </param>
-        /// <returns> A new <see cref="Models.StorageTaskPreviewActionIfCondition"/> instance for mocking. </returns>
-        public static StorageTaskPreviewActionIfCondition StorageTaskPreviewActionIfCondition(string condition = default)
-        {
-            return new StorageTaskPreviewActionIfCondition(condition, default);
-        }
-
+        /// <summary> Storage Tasks run report instance. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -209,10 +181,11 @@ namespace Azure.ResourceManager.StorageActions.Models
                 name,
                 resourceType,
                 systemData,
-                properties,
-                default);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
+        /// <summary> Storage task execution report for a run instance. </summary>
         /// <param name="taskAssignmentId"> Resource ID of the Storage Task Assignment associated with this reported run. </param>
         /// <param name="storageAccountId"> Resource ID of the Storage Account where this reported run executed. </param>
         /// <param name="startTime"> Start time of the run instance. Filter options such as startTime gt '2023-06-26T20:51:24.4494016Z' and other comparison operators can be used as described for DateTime properties in https://learn.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </param>
@@ -245,7 +218,7 @@ namespace Azure.ResourceManager.StorageActions.Models
                 taskId,
                 taskVersion,
                 runResult,
-                default);
+                additionalBinaryDataProperties: null);
         }
     }
 }

@@ -49,19 +49,18 @@ namespace Azure.ResourceManager.Purview.Models
         public static PurviewPrivateEndpointConnectionData PurviewPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier privateEndpointId = default, PurviewPrivateLinkServiceConnectionState connectionState = default, string provisioningState = default)
         {
             return new PurviewPrivateEndpointConnectionData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                properties: privateEndpointId is null && connectionState is null && provisioningState is null
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                privateEndpointId is null && connectionState is null && provisioningState is null
                     ? default
                     : new PrivateEndpointConnectionProperties(
                         privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, null),
                         connectionState,
                         provisioningState,
-                        null),
-                additionalBinaryDataProperties: null
-            );
+                        null));
         }
     }
 }

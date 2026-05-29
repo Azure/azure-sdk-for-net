@@ -55,10 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HyperVVmDetails IPersistableModel<HyperVVmDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return (HyperVVmDetails)PersistableModelCreateCore(data, options);
-        }
+        HyperVVmDetails IPersistableModel<HyperVVmDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownHyperVVmDetails)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HyperVVmDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -86,10 +83,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HyperVVmDetails IJsonModel<HyperVVmDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return (HyperVVmDetails)JsonModelCreateCore(ref reader, options);
-        }
+        HyperVVmDetails IJsonModel<HyperVVmDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownHyperVVmDetails)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

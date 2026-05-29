@@ -32,16 +32,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties associated with the task run, i.e., request and result of the run. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="location"> The location of the resource. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TaskRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TaskRunProperties properties, ContainerRegistryTaskIdentityProperties identity, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal TaskRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, TaskRunProperties properties, ContainerRegistryTaskIdentityProperties identity, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Identity = identity;
             Location = location;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties associated with the task run, i.e., request and result of the run. </summary>

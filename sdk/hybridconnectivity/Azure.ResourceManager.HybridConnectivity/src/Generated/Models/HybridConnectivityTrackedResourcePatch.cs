@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HybridConnectivityTrackedResourcePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        /// <param name="tags"> Resource tags. </param>
+        internal HybridConnectivityTrackedResourcePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
-            Tags = tags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Tags = tags;
         }
 
         /// <summary> Resource tags. </summary>

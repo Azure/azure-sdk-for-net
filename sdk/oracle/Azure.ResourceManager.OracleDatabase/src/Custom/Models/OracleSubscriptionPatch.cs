@@ -12,7 +12,6 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> The type used for update operations of the OracleSubscription. </summary>
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(Plan), SerializationValueHook = nameof(SerializePlan), DeserializationValueHook = nameof(DeserializePlan))]
     public partial class OracleSubscriptionPatch
     {

@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="kind"> Reservation or SavingsPlan. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="kind"> Reservation or SavingsPlan. </param>
         /// <param name="properties"> The properties of the benefit recommendations. </param>
-        internal BenefitRecommendationModel(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingAccountBenefitKind? kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, BenefitRecommendationProperties properties) : base(id, name, resourceType, systemData, kind, additionalBinaryDataProperties)
+        internal BenefitRecommendationModel(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BillingAccountBenefitKind? kind, BenefitRecommendationProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind)
         {
             Properties = properties;
         }

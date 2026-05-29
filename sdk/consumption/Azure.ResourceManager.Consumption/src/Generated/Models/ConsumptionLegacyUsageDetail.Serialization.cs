@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.Consumption.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             UsageDetailsKind kind = default;
             ETag? eTag = default;
             IReadOnlyDictionary<string, string> tags = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             LegacyUsageDetailProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -206,10 +206,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 kind,
                 eTag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                additionalBinaryDataProperties,
                 properties);
         }
     }

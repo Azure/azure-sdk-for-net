@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmAlertProcessingRulesModelFactory
     {
+        /// <summary> Alert processing rule object containing target scopes, conditions and scheduling logic. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -34,12 +35,13 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
-                properties,
-                default);
+                properties);
         }
 
+        /// <summary> Alert processing rule properties defining scopes, conditions and scheduling logic for alert processing rule. </summary>
         /// <param name="scopes"> Scopes on which alert processing rule will apply. </param>
         /// <param name="conditions"> Conditions on which alerts will be filtered. </param>
         /// <param name="schedule"> Scheduling for alert processing rule. </param>
@@ -54,15 +56,16 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
             actions ??= new ChangeTrackingList<AlertProcessingRuleAction>();
 
             return new AlertProcessingRuleProperties(
-                (scopes ?? new ChangeTrackingList<string>()).ToList(),
-                (conditions ?? new ChangeTrackingList<AlertProcessingRuleCondition>()).ToList(),
+                scopes.ToList(),
+                conditions.ToList(),
                 schedule,
-                (actions ?? new ChangeTrackingList<AlertProcessingRuleAction>()).ToList(),
+                actions.ToList(),
                 description,
                 isEnabled,
-                default);
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Condition to trigger an alert processing rule. </summary>
         /// <param name="field"> Field for a given condition. </param>
         /// <param name="operator"> Operator for a given condition. </param>
         /// <param name="values"> List of values to match for a given condition. </param>
@@ -71,9 +74,10 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         {
             values ??= new ChangeTrackingList<string>();
 
-            return new AlertProcessingRuleCondition(@field, @operator, (values ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new AlertProcessingRuleCondition(@field, @operator, values.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Scheduling configuration for a given alert processing rule. </summary>
         /// <param name="effectiveFrom"> Scheduling effective from time. Date-Time in ISO-8601 format without timezone suffix. </param>
         /// <param name="effectiveUntil"> Scheduling effective until time. Date-Time in ISO-8601 format without timezone suffix. </param>
         /// <param name="timeZone"> Scheduling time zone. </param>
@@ -83,26 +87,10 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         {
             recurrences ??= new ChangeTrackingList<AlertProcessingRuleRecurrence>();
 
-            return new AlertProcessingRuleSchedule(effectiveFrom, effectiveUntil, timeZone, (recurrences ?? new ChangeTrackingList<AlertProcessingRuleRecurrence>()).ToList(), default);
+            return new AlertProcessingRuleSchedule(effectiveFrom, effectiveUntil, timeZone, recurrences.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <param name="recurrenceType"> Specifies when the recurrence should be applied. </param>
-        /// <param name="startOn"> Start time for recurrence. </param>
-        /// <param name="endOn"> End time for recurrence. </param>
-        /// <returns> A new <see cref="Models.AlertProcessingRuleRecurrence"/> instance for mocking. </returns>
-        public static AlertProcessingRuleRecurrence AlertProcessingRuleRecurrence(string recurrenceType = default, TimeSpan? startOn = default, TimeSpan? endOn = default)
-        {
-            return new UnknownAlertProcessingRuleRecurrence(default, startOn, endOn, default);
-        }
-
-        /// <param name="startOn"> Start time for recurrence. </param>
-        /// <param name="endOn"> End time for recurrence. </param>
-        /// <returns> A new <see cref="Models.DailyRecurrence"/> instance for mocking. </returns>
-        public static DailyRecurrence DailyRecurrence(TimeSpan? startOn = default, TimeSpan? endOn = default)
-        {
-            return new DailyRecurrence(default, startOn, endOn, default);
-        }
-
+        /// <summary> Weekly recurrence object. </summary>
         /// <param name="startOn"> Start time for recurrence. </param>
         /// <param name="endOn"> End time for recurrence. </param>
         /// <param name="daysOfWeek"> Specifies the values for weekly recurrence pattern. </param>
@@ -111,9 +99,10 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         {
             daysOfWeek ??= new ChangeTrackingList<AlertsManagementDayOfWeek>();
 
-            return new AlertProcessingRuleWeeklyRecurrence(default, startOn, endOn, default, (daysOfWeek ?? new ChangeTrackingList<AlertsManagementDayOfWeek>()).ToList());
+            return new AlertProcessingRuleWeeklyRecurrence(RecurrenceType.Weekly, startOn, endOn, additionalBinaryDataProperties: null, daysOfWeek.ToList());
         }
 
+        /// <summary> Monthly recurrence object. </summary>
         /// <param name="startOn"> Start time for recurrence. </param>
         /// <param name="endOn"> End time for recurrence. </param>
         /// <param name="daysOfMonth"> Specifies the values for monthly recurrence pattern. </param>
@@ -122,29 +111,17 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         {
             daysOfMonth ??= new ChangeTrackingList<int>();
 
-            return new AlertProcessingRuleMonthlyRecurrence(default, startOn, endOn, default, (daysOfMonth ?? new ChangeTrackingList<int>()).ToList());
+            return new AlertProcessingRuleMonthlyRecurrence(RecurrenceType.Monthly, startOn, endOn, additionalBinaryDataProperties: null, daysOfMonth.ToList());
         }
 
-        /// <param name="actionType"> Action that should be applied. </param>
-        /// <returns> A new <see cref="Models.AlertProcessingRuleAction"/> instance for mocking. </returns>
-        public static AlertProcessingRuleAction AlertProcessingRuleAction(string actionType = default)
-        {
-            return new UnknownAlertProcessingRuleAction(default, default);
-        }
-
+        /// <summary> Add action groups to alert processing rule. </summary>
         /// <param name="actionGroupIds"> List of action group Ids to add to alert processing rule. </param>
         /// <returns> A new <see cref="Models.AlertProcessingRuleAddGroupsAction"/> instance for mocking. </returns>
         public static AlertProcessingRuleAddGroupsAction AlertProcessingRuleAddGroupsAction(IEnumerable<ResourceIdentifier> actionGroupIds = default)
         {
             actionGroupIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new AlertProcessingRuleAddGroupsAction(default, default, (actionGroupIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList());
-        }
-
-        /// <returns> A new <see cref="Models.AlertProcessingRuleRemoveAllGroupsAction"/> instance for mocking. </returns>
-        public static AlertProcessingRuleRemoveAllGroupsAction AlertProcessingRuleRemoveAllGroupsAction()
-        {
-            return new AlertProcessingRuleRemoveAllGroupsAction(default, default);
+            return new AlertProcessingRuleAddGroupsAction(ActionType.AddActionGroups, additionalBinaryDataProperties: null, actionGroupIds.ToList());
         }
 
         /// <param name="isEnabled"> Indicates if the given alert processing rule is enabled or disabled. </param>
@@ -154,7 +131,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AlertProcessingRulePatch(isEnabled is null ? default : new PatchProperties(isEnabled, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new AlertProcessingRulePatch(isEnabled is null ? default : new PatchProperties(isEnabled, null), tags, additionalBinaryDataProperties: null);
         }
     }
 }

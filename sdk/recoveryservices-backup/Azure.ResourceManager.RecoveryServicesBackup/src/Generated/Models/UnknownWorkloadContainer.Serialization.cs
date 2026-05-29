@@ -56,10 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WorkloadContainer IPersistableModel<WorkloadContainer>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return (WorkloadContainer)PersistableModelCreateCore(data, options);
-        }
+        WorkloadContainer IPersistableModel<WorkloadContainer>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownWorkloadContainer)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<WorkloadContainer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -87,10 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WorkloadContainer IJsonModel<WorkloadContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return (WorkloadContainer)JsonModelCreateCore(ref reader, options);
-        }
+        WorkloadContainer IJsonModel<WorkloadContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownWorkloadContainer)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

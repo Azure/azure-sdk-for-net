@@ -55,10 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HyperVReplicaPolicyContent IPersistableModel<HyperVReplicaPolicyContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return (HyperVReplicaPolicyContent)PersistableModelCreateCore(data, options);
-        }
+        HyperVReplicaPolicyContent IPersistableModel<HyperVReplicaPolicyContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownHyperVReplicaPolicyContent)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HyperVReplicaPolicyContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -86,10 +83,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HyperVReplicaPolicyContent IJsonModel<HyperVReplicaPolicyContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return (HyperVReplicaPolicyContent)JsonModelCreateCore(ref reader, options);
-        }
+        HyperVReplicaPolicyContent IJsonModel<HyperVReplicaPolicyContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownHyperVReplicaPolicyContent)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

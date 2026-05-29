@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
     public static partial class ArmHealthDataAIServicesModelFactory
     {
 
+        /// <summary> A HealthDataAIServicesProviderHub resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -37,13 +38,14 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties: null,
+                tags,
                 location,
                 properties,
-                identity,
-                default);
+                identity);
         }
 
+        /// <summary> Details of the HealthDataAIServices DeidService. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serviceUri"> Deid service url. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
@@ -53,9 +55,10 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         {
             privateEndpointConnections ??= new ChangeTrackingList<HealthDataAIServicesPrivateEndpointConnection>();
 
-            return new DeidServiceProperties(provisioningState, serviceUri, (privateEndpointConnections ?? new ChangeTrackingList<HealthDataAIServicesPrivateEndpointConnection>()).ToList(), publicNetworkAccess, default);
+            return new DeidServiceProperties(provisioningState, serviceUri, privateEndpointConnections.ToList(), publicNetworkAccess, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The private endpoint connection resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -69,8 +72,8 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                 name,
                 resourceType,
                 systemData,
-                properties,
-                default);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
         /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
@@ -82,16 +85,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         {
             groupIds ??= new ChangeTrackingList<string>();
 
-            return new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default);
-        }
-
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.HealthDataAIServicesPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static HealthDataAIServicesPrivateLinkServiceConnectionState HealthDataAIServicesPrivateLinkServiceConnectionState(HealthDataAIServicesPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
-        {
-            return new HealthDataAIServicesPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
+            return new PrivateEndpointConnectionProperties(groupIds.ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties: null);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -102,9 +96,10 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DeidServicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, deidPropertiesUpdatePublicNetworkAccess is null ? default : new DeidPropertiesUpdate(deidPropertiesUpdatePublicNetworkAccess, default), default);
+            return new DeidServicePatch(tags, identity, deidPropertiesUpdatePublicNetworkAccess is null ? default : new DeidPropertiesUpdate(deidPropertiesUpdatePublicNetworkAccess, null), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Holder for private endpoint connections. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -118,10 +113,11 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                 name,
                 resourceType,
                 systemData,
-                properties,
-                default);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
+        /// <summary> Private Links for DeidService resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -135,10 +131,11 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                 name,
                 resourceType,
                 systemData,
-                properties,
-                default);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
+        /// <summary> Properties of a private link resource. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
@@ -148,7 +145,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             requiredMembers ??= new ChangeTrackingList<string>();
             requiredZoneNames ??= new ChangeTrackingList<string>();
 
-            return new HealthDataAIServicesPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new HealthDataAIServicesPrivateLinkResourceProperties(groupId, requiredMembers.ToList(), requiredZoneNames.ToList(), additionalBinaryDataProperties: null);
         }
     }
 }
