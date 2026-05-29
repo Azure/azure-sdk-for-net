@@ -34,7 +34,7 @@ network:
 safe-outputs:
   report-failure-as-issue: false
   create-pull-request-review-comment:
-    max: 40
+    max: 100
     target: "${{ github.event.pull_request.number || github.event.check_run.pull_requests[0].number || github.event.inputs.pr_number }}"
   submit-pull-request-review:
     max: 1
@@ -135,7 +135,7 @@ Create inline review comments for findings using `create_pull_request_review_com
 - Explain the problem and the required fix.
 - Target the current changed file and line in the PR diff. Prefer the current `*.net10.0.cs` API file for API-surface comments.
 
-Inline comments are capped at 40 per review. If an exhaustive pass produces more findings than that, prioritize blocking findings and group several closely-related naming findings (e.g., multiple generically-named types) into a single comment rather than dropping any. Always report the full evaluated/flagged counts in the review summary so the author knows the pass was complete even when comments were grouped.
+Post one inline comment per distinct finding so large refresh PRs (which can touch a huge number of files and generate many findings) are reviewed completely without dropping any. You may still merge several closely-related naming findings (e.g., multiple generically-named types fixed the same way) into one comment for readability, but do not omit findings to keep the count down. Always report the full evaluated/flagged counts in the review summary.
 
 Then submit exactly one review using `submit_pull_request_review`:
 
