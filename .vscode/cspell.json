@@ -294,6 +294,13 @@
       ]
     },
     {
+      "filename": "**/sdk/azureresiliencemanagement/**/*.cs",
+      "words": [
+        "mobo",
+        "reprotect"
+      ]
+    },
+    {
       "filename": "**/sdk/computefleet/**/*.cs",
       "words": [
         "rdma"
