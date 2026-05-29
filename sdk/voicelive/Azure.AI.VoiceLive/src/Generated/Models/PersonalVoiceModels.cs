@@ -23,7 +23,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Use the latest Dragon HD Omni model. </summary>
         private const string DragonHDOmniLatestNeuralValue = "DragonHDOmniLatestNeural";
         /// <summary> Use the MAI-Voice-1 model. </summary>
-        private const string MAIVoice1Value = "MAI-Voice-1";
+        private const string MaiVoice1Value = "MAI-Voice-1";
 
         /// <summary> Initializes a new instance of <see cref="PersonalVoiceModels"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -48,7 +48,7 @@ namespace Azure.AI.VoiceLive
         public static PersonalVoiceModels DragonHDOmniLatestNeural { get; } = new PersonalVoiceModels(DragonHDOmniLatestNeuralValue);
 
         /// <summary> Use the MAI-Voice-1 model. </summary>
-        public static PersonalVoiceModels MAIVoice1 { get; } = new PersonalVoiceModels(MAIVoice1Value);
+        public static PersonalVoiceModels MaiVoice1 { get; } = new PersonalVoiceModels(MaiVoice1Value);
 
         /// <summary> Determines if two <see cref="PersonalVoiceModels"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -967,7 +967,7 @@ namespace Azure.AI.VoiceLive
         public PersonalVoiceModels(string value) { throw null; }
         public static Azure.AI.VoiceLive.PersonalVoiceModels DragonHDOmniLatestNeural { get { throw null; } }
         public static Azure.AI.VoiceLive.PersonalVoiceModels DragonLatestNeural { get { throw null; } }
-        public static Azure.AI.VoiceLive.PersonalVoiceModels MAIVoice1 { get { throw null; } }
+        public static Azure.AI.VoiceLive.PersonalVoiceModels MaiVoice1 { get { throw null; } }
         public static Azure.AI.VoiceLive.PersonalVoiceModels PhoenixLatestNeural { get { throw null; } }
         public static Azure.AI.VoiceLive.PersonalVoiceModels PhoenixV2Neural { get { throw null; } }
         public bool Equals(Azure.AI.VoiceLive.PersonalVoiceModels other) { throw null; }
