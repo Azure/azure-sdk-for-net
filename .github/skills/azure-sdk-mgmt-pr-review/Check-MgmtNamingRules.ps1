@@ -26,6 +26,13 @@
 .PARAMETER ExcludeRules
     Array of rule IDs to skip (e.g., 'SUFFIX001', 'BOOL001').
 
+.PARAMETER ListNewTypes
+    When set, the script does not run rule checks. Instead it emits a deterministic
+    inventory of every public class/struct/enum declaration, tagging each NEW or
+    EXISTING relative to -BaselineApiFilePath (or all NEW when no baseline is given).
+    Use this as the bounded worklist for the reviewer's exhaustive contextual-naming
+    pass so no new public type is missed across review rounds.
+
 .EXAMPLE
     .\Check-MgmtNamingRules.ps1 -PackagePath sdk/compute/Azure.ResourceManager.Compute
     .\Check-MgmtNamingRules.ps1 -ApiFilePath sdk/compute/Azure.ResourceManager.Compute/api/Azure.ResourceManager.Compute.net10.0.cs
@@ -43,7 +50,10 @@ param(
     [string]$BaselineApiFilePath,
 
     [Parameter(Mandatory = $false)]
-    [string[]]$ExcludeRules = @()
+    [string[]]$ExcludeRules = @(),
+
+    [Parameter(Mandatory = $false)]
+    [switch]$ListNewTypes
 )
 
 Set-StrictMode -Version Latest
@@ -117,6 +127,7 @@ $totalLines = $lines.Count
 
 # Load baseline API file for filtering (if provided)
 $baselineLines = @{}
+$baselineTypeKeys = @{}
 if ($BaselineApiFilePath) {
     if (-not (Test-Path $BaselineApiFilePath)) {
         throw "Baseline API file not found: $BaselineApiFilePath"
@@ -148,26 +159,47 @@ $typeStartDepth = 0
 # Collected type info for cross-referencing
 $typeInfos = @{}  # short name -> @{ Kind; Bases; Namespace; Line }
 
-# First pass: collect all type declarations and their base types.
-for ($i = 0; $i -lt $totalLines; $i++) {
-    $line = $lines[$i]
+function Get-TypeKey([string]$namespace, [string]$kind, [string]$name) {
+    return "$namespace|$kind|$name"
+}
 
-    if ($line -match '^\s*namespace\s+([\w.]+)') {
-        $currentNamespace = $Matches[1]
-        continue
+function Get-TypeInfosFromApiLines([string[]]$apiLines) {
+    $infos = @{}
+    $namespace = ''
+
+    for ($lineIndex = 0; $lineIndex -lt $apiLines.Count; $lineIndex++) {
+        $line = $apiLines[$lineIndex]
+
+        if ($line -match '^\s*namespace\s+([\w.]+)') {
+            $namespace = $Matches[1]
+            continue
+        }
+
+        # Match type declarations: public partial class Foo : Bar, IBaz
+        if ($line -match '^\s*public\s+(?:(?:partial|abstract|static|sealed|readonly)\s+)*(?<kind>class|struct|enum|interface)\s+(?<name>\w+)(?:<[^>]+>)?\s*(?::\s*(?<bases>.+?))?\s*$') {
+            $shortName = $Matches['name']
+            $kind = $Matches['kind']
+            $bases = if ($Matches['bases']) { $Matches['bases'].Trim() } else { '' }
+            $infos[$shortName] = @{
+                Kind      = $kind
+                Bases     = $bases
+                Namespace = $namespace
+                Line      = $lineIndex + 1
+                Key       = Get-TypeKey $namespace $kind $shortName
+            }
+        }
     }
 
-    # Match type declarations: public partial class Foo : Bar, IBaz
-    if ($line -match '^\s*public\s+(?:partial\s+|abstract\s+|static\s+|sealed\s+)*(?<kind>class|struct|enum|interface)\s+(?<name>\w+)(?:<[^>]+>)?\s*(?::\s*(?<bases>.+?))?\s*$') {
-        $shortName = $Matches['name']
-        $kind = $Matches['kind']
-        $bases = if ($Matches['bases']) { $Matches['bases'].Trim() } else { '' }
-        $typeInfos[$shortName] = @{
-            Kind      = $kind
-            Bases     = $bases
-            Namespace = $currentNamespace
-            Line      = $i + 1
-        }
+    return $infos
+}
+
+# First pass: collect all type declarations and their base types.
+$typeInfos = Get-TypeInfosFromApiLines $lines
+
+if ($BaselineApiFilePath) {
+    $baselineTypeInfos = Get-TypeInfosFromApiLines (Get-Content $BaselineApiFilePath)
+    foreach ($baselineTypeInfo in $baselineTypeInfos.Values) {
+        $baselineTypeKeys[$baselineTypeInfo.Key] = $true
     }
 }
 
@@ -193,6 +225,51 @@ function Get-PascalCaseTokens([string]$name) {
     }
 
     return @([regex]::Matches($name, '[A-Z]+(?![a-z])|[A-Z]?[a-z]+|\d+') | ForEach-Object { $_.Value })
+}
+
+#endregion
+
+#region --- Inventory mode (-ListNewTypes) ---
+
+# Emits a deterministic, complete worklist of public class/struct/enum declarations.
+# When a baseline is provided, each entry is tagged NEW (type name/kind absent from
+# the baseline) or EXISTING. This gives the reviewer a bounded list to apply the
+# contextual-naming judgment to exhaustively, so no new public type is missed across
+# review rounds. Interfaces are excluded (not part of the model naming surface).
+if ($ListNewTypes) {
+    $inventory = foreach ($name in $typeInfos.Keys) {
+        $info = $typeInfos[$name]
+        if ($info.Kind -eq 'interface') { continue }
+        $isNew = $true
+        if ($BaselineApiFilePath) {
+            $isNew = -not $baselineTypeKeys.ContainsKey($info.Key)
+        }
+        [pscustomobject]@{
+            Line   = $info.Line
+            Kind   = $info.Kind
+            Name   = $name
+            Status = if ($isNew) { 'NEW' } else { 'EXISTING' }
+        }
+    }
+
+    $inventory = @($inventory | Sort-Object Line)
+    $newCount = @($inventory | Where-Object { $_.Status -eq 'NEW' }).Count
+
+    Write-Host "`n=== New public type inventory (contextual-naming worklist) ===" -ForegroundColor Cyan
+    Write-Host "File: $(Split-Path $ApiFilePath -Leaf)"
+    if ($BaselineApiFilePath) {
+        Write-Host "Baseline: $(Split-Path $BaselineApiFilePath -Leaf) (NEW = type name/kind absent from baseline)"
+    } else {
+        Write-Host "Baseline: <none> (all public types are in scope)"
+    }
+    Write-Host "Total public types: $($inventory.Count); NEW (in scope): $newCount" -ForegroundColor Yellow
+    Write-Host "-----------------------------------------------------------"
+    foreach ($entry in $inventory) {
+        Write-Host ("{0,-9} Line {1,-6} {2,-8} {3}" -f $entry.Status, $entry.Line, $entry.Kind, $entry.Name)
+    }
+    Write-Host "-----------------------------------------------------------"
+    Write-Host "Evaluate every NEW entry above against the contextual-naming rule and record a verdict for each." -ForegroundColor Cyan
+    return
 }
 
 #endregion
