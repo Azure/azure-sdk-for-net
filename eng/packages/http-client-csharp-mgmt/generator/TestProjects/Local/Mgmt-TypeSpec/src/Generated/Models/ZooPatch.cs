@@ -12,22 +12,22 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The type used for update operations of the Zoo. </summary>
-    public partial class ZooUpdate
+    public partial class ZooPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ZooUpdate"/>. </summary>
-        public ZooUpdate()
+        /// <summary> Initializes a new instance of <see cref="ZooPatch"/>. </summary>
+        public ZooPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ZooUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ZooPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ZooUpdate(IDictionary<string, string> tags, ZooUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ZooPatch(IDictionary<string, string> tags, ZooUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;

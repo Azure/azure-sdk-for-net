@@ -213,13 +213,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="properties"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the job on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual async Task<ArmOperation<JobResource>> UpdateAsync(WaitUntil waitUntil, JobResourceCustomUpdate properties, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<JobResource>> UpdateAsync(WaitUntil waitUntil, JobResourcePatch patch, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _jobResourcesClientDiagnostics.CreateScope("JobResource.Update");
             scope.Start();
@@ -229,7 +229,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, JobResourceCustomUpdate.ToRequestContent(properties), ifMatch, context);
+                HttpMessage message = _jobResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, JobResourcePatch.ToRequestContent(patch), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<JobResource> operation = new TestsArmOperation<JobResource>(
                     new JobResourceOperationSource(Client),
@@ -274,13 +274,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="properties"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the job on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual ArmOperation<JobResource> Update(WaitUntil waitUntil, JobResourceCustomUpdate properties, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<JobResource> Update(WaitUntil waitUntil, JobResourcePatch patch, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _jobResourcesClientDiagnostics.CreateScope("JobResource.Update");
             scope.Start();
@@ -290,7 +290,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, JobResourceCustomUpdate.ToRequestContent(properties), ifMatch, context);
+                HttpMessage message = _jobResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, JobResourcePatch.ToRequestContent(patch), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<JobResource> operation = new TestsArmOperation<JobResource>(
                     new JobResourceOperationSource(Client),
@@ -344,7 +344,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     JobResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    JobResourceCustomUpdate patch = new JobResourceCustomUpdate();
+                    JobResourcePatch patch = new JobResourcePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -392,7 +392,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     JobResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    JobResourceCustomUpdate patch = new JobResourceCustomUpdate();
+                    JobResourcePatch patch = new JobResourcePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -439,7 +439,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     JobResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    JobResourceCustomUpdate patch = new JobResourceCustomUpdate();
+                    JobResourcePatch patch = new JobResourcePatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<JobResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -482,7 +482,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     JobResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    JobResourceCustomUpdate patch = new JobResourceCustomUpdate();
+                    JobResourcePatch patch = new JobResourcePatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<JobResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -524,7 +524,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     JobResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    JobResourceCustomUpdate patch = new JobResourceCustomUpdate();
+                    JobResourcePatch patch = new JobResourcePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -570,7 +570,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     JobResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    JobResourceCustomUpdate patch = new JobResourceCustomUpdate();
+                    JobResourcePatch patch = new JobResourcePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

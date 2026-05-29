@@ -138,13 +138,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="writableSubResourceProp"> WritableSubResource property for testing WritableSubResource type replacement. </param>
         /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
         /// <param name="flattenedProperty"> Gets the FlattenedProperty. </param>
+        /// <param name="vmGalleryApplications"> Specifies the gallery applications that should be made available. </param>
         /// <param name="computeFleetVmCapacityReservationGroupId"> Gets or sets the Id. </param>
         /// <param name="extendedLocation"></param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
         /// <returns> A new <see cref="Tests.FooData"/> instance for mocking. </returns>
-        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, ETag? eTag = default, WritableSubResource writableSubResourceProp = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, ResourceIdentifier computeFleetVmCapacityReservationGroupId = default, ExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
+        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, ETag? eTag = default, WritableSubResource writableSubResourceProp = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, IEnumerable<string> vmGalleryApplications = default, ResourceIdentifier computeFleetVmCapacityReservationGroupId = default, ExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -185,12 +186,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="prop2"></param>
         /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
         /// <param name="flattenedProperty"> Gets the FlattenedProperty. </param>
+        /// <param name="vmGalleryApplications"> Specifies the gallery applications that should be made available. </param>
         /// <param name="eTag"> ETag property for testing etag parameter name generation. </param>
         /// <param name="writableSubResourceProp"> WritableSubResource property for testing WritableSubResource type replacement. </param>
         /// <param name="computeFleetVmCapacityReservationGroupId"> Gets or sets the Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nestedPropertyProperties"/> is null. </exception>
         /// <returns> A new <see cref="Models.FooProperties"/> instance for mocking. </returns>
-        public static FooProperties FooProperties(Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, ETag? eTag = default, WritableSubResource writableSubResourceProp = default, ResourceIdentifier computeFleetVmCapacityReservationGroupId = default)
+        public static FooProperties FooProperties(Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, IEnumerable<string> vmGalleryApplications = default, ETag? eTag = default, WritableSubResource writableSubResourceProp = default, ResourceIdentifier computeFleetVmCapacityReservationGroupId = default)
         {
             prop1 ??= new ChangeTrackingList<string>();
             prop2 ??= new ChangeTrackingList<int>();
@@ -316,10 +318,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         }
 
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.FooSettingsUpdate"/> instance for mocking. </returns>
-        public static FooSettingsUpdate FooSettingsUpdate(FooSettingsUpdateProperties properties = default)
+        /// <returns> A new <see cref="Models.FooConfigurationPatch"/> instance for mocking. </returns>
+        public static FooConfigurationPatch FooConfigurationPatch(FooSettingsUpdateProperties properties = default)
         {
-            return new FooSettingsUpdate(properties, default);
+            return new FooConfigurationPatch(properties, default);
         }
 
         /// <param name="marketplace"> Marketplace details of the resource. </param>
@@ -371,8 +373,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 default);
         }
 
+        /// <param name="limitObjectType"> The limit object type. </param>
         /// <returns> A new <see cref="Models.LimitJsonObject"/> instance for mocking. </returns>
-        public static LimitJsonObject LimitJsonObject()
+        public static LimitJsonObject LimitJsonObject(string limitObjectType = default)
         {
             return new UnknownLimitJsonObject(default, default);
         }
@@ -511,12 +514,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.ZooUpdate"/> instance for mocking. </returns>
-        public static ZooUpdate ZooUpdate(IDictionary<string, string> tags = default, ZooUpdateProperties properties = default)
+        /// <returns> A new <see cref="Models.ZooPatch"/> instance for mocking. </returns>
+        public static ZooPatch ZooPatch(IDictionary<string, string> tags = default, ZooUpdateProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ZooUpdate(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+            return new ZooPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
         /// <param name="something"> something. </param>
@@ -715,12 +718,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <param name="jobName"> Gets or sets the JobName. </param>
         /// <param name="tags"></param>
-        /// <returns> A new <see cref="Models.JobResourceCustomUpdate"/> instance for mocking. </returns>
-        public static JobResourceCustomUpdate JobResourceCustomUpdate(string jobName = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.JobResourcePatch"/> instance for mocking. </returns>
+        public static JobResourcePatch JobResourcePatch(string jobName = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new JobResourceCustomUpdate(jobName is null ? default : new JobProperties(jobName, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new JobResourcePatch(jobName is null ? default : new JobProperties(jobName, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

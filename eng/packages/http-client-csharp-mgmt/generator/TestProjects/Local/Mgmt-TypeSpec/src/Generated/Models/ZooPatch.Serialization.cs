@@ -14,62 +14,62 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> The JobResourceCustomUpdate. </summary>
-    public partial class JobResourceCustomUpdate : IJsonModel<JobResourceCustomUpdate>
+    /// <summary> The type used for update operations of the Zoo. </summary>
+    public partial class ZooPatch : IJsonModel<ZooPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual JobResourceCustomUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ZooPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<JobResourceCustomUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ZooPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeJobResourceCustomUpdate(document.RootElement, options);
+                        return DeserializeZooPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JobResourceCustomUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ZooPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<JobResourceCustomUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ZooPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(JobResourceCustomUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ZooPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<JobResourceCustomUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ZooPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        JobResourceCustomUpdate IPersistableModel<JobResourceCustomUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ZooPatch IPersistableModel<ZooPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<JobResourceCustomUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ZooPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="jobResourceCustomUpdate"> The <see cref="JobResourceCustomUpdate"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(JobResourceCustomUpdate jobResourceCustomUpdate)
+        /// <param name="zooPatch"> The <see cref="ZooPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ZooPatch zooPatch)
         {
-            if (jobResourceCustomUpdate == null)
+            if (zooPatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(jobResourceCustomUpdate, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(zooPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<JobResourceCustomUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ZooPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,15 +80,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<JobResourceCustomUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ZooPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobResourceCustomUpdate)} does not support writing '{format}' format.");
-            }
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                throw new FormatException($"The model {nameof(ZooPatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -105,6 +100,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -125,43 +125,34 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        JobResourceCustomUpdate IJsonModel<JobResourceCustomUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ZooPatch IJsonModel<ZooPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual JobResourceCustomUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ZooPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<JobResourceCustomUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ZooPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobResourceCustomUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ZooPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeJobResourceCustomUpdate(document.RootElement, options);
+            return DeserializeZooPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static JobResourceCustomUpdate DeserializeJobResourceCustomUpdate(JsonElement element, ModelReaderWriterOptions options)
+        internal static ZooPatch DeserializeZooPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            JobProperties properties = default;
             IDictionary<string, string> tags = default;
+            ZooUpdateProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = JobProperties.DeserializeJobProperties(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -183,12 +174,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     tags = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ZooUpdateProperties.DeserializeZooUpdateProperties(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new JobResourceCustomUpdate(properties, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new ZooPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);
         }
     }
 }

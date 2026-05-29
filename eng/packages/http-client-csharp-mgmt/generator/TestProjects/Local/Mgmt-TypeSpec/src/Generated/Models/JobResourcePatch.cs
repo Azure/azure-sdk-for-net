@@ -11,23 +11,23 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> The JobResourceCustomUpdate. </summary>
-    public partial class JobResourceCustomUpdate
+    /// <summary> The JobResourcePatch. </summary>
+    public partial class JobResourcePatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="JobResourceCustomUpdate"/>. </summary>
-        public JobResourceCustomUpdate()
+        /// <summary> Initializes a new instance of <see cref="JobResourcePatch"/>. </summary>
+        public JobResourcePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobResourceCustomUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobResourcePatch"/>. </summary>
         /// <param name="properties"></param>
         /// <param name="tags"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobResourceCustomUpdate(JobProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobResourcePatch(JobProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Tags = tags;

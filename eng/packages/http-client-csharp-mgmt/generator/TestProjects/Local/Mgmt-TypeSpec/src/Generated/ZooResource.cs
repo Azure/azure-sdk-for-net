@@ -215,12 +215,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="properties"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual async Task<ArmOperation<ZooResource>> UpdateAsync(WaitUntil waitUntil, ZooUpdate properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<ZooResource>> UpdateAsync(WaitUntil waitUntil, ZooPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooResource.Update");
             scope.Start();
@@ -230,7 +230,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _zoosRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ZooUpdate.ToRequestContent(properties), context);
+                HttpMessage message = _zoosRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ZooPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<ZooResource> operation = new TestsArmOperation<ZooResource>(
                     new ZooOperationSource(Client),
@@ -275,12 +275,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="properties"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual ArmOperation<ZooResource> Update(WaitUntil waitUntil, ZooUpdate properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<ZooResource> Update(WaitUntil waitUntil, ZooPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooResource.Update");
             scope.Start();
@@ -290,7 +290,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _zoosRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ZooUpdate.ToRequestContent(properties), context);
+                HttpMessage message = _zoosRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ZooPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<ZooResource> operation = new TestsArmOperation<ZooResource>(
                     new ZooOperationSource(Client),
@@ -648,7 +648,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     ZooData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ZooUpdate patch = new ZooUpdate();
+                    ZooPatch patch = new ZooPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -696,7 +696,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     ZooData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ZooUpdate patch = new ZooUpdate();
+                    ZooPatch patch = new ZooPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -743,7 +743,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     ZooData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ZooUpdate patch = new ZooUpdate();
+                    ZooPatch patch = new ZooPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<ZooResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -786,7 +786,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     ZooData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ZooUpdate patch = new ZooUpdate();
+                    ZooPatch patch = new ZooPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<ZooResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -828,7 +828,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     ZooData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ZooUpdate patch = new ZooUpdate();
+                    ZooPatch patch = new ZooPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -874,7 +874,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     ZooData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ZooUpdate patch = new ZooUpdate();
+                    ZooPatch patch = new ZooPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
