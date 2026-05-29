@@ -5,6 +5,7 @@
 ### Features Added
 
 - Subscribed the Statsbeat `MeterProvider` to the `MicrosoftOpenTelemetryFeatureSdkStatsMeter` meter so Feature SDKStats published by the Microsoft OpenTelemetry distro flow through the existing 24-hour Statsbeat pipeline.
+- Added `RouteStatsbeatToDistroEndpoint` AppContext switch (`Azure.Monitor.OpenTelemetry.Exporter.RouteStatsbeatToDistroEndpoint`). When enabled — typically by the Microsoft OpenTelemetry distro at startup — every `AzureMonitorStatsbeat` instance routes Statsbeat metrics to the distro-owned ingestion endpoints `https://us.stats.monitor.azure.com/` and `https://eudb.stats.monitor.azure.com/` instead of the existing internal Application Insights resources. Region selection still derives from the customer's connection string; unknown regions fall back to the non-EU distro endpoint.
 
 ### Breaking Changes
 

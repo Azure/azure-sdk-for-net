@@ -11,6 +11,43 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         internal const string Statsbeat_ConnectionString_EU = "InstrumentationKey=7dc56bab-3c0c-4e9f-9ebb-d1acadee8d0f;IngestionEndpoint=https://westeurope-5.in.applicationinsights.azure.com/;LiveEndpoint=https://westeurope.livediagnostics.monitor.azure.com/";
 
+        /// <summary>
+        /// Distro-owned Statsbeat ingestion endpoint, non-EU. Used when the
+        /// <see cref="RouteStatsbeatToDistroEndpointSwitchName"/> AppContext switch is enabled
+        /// (typically by the Microsoft OpenTelemetry distro at startup) and the customer's
+        /// connection string maps to a non-EU region (or is unknown).
+        /// </summary>
+        /// <remarks>
+        /// The new endpoint accepts the same Breeze envelope format as the existing AI resource
+        /// and does not require authentication; the placeholder instrumentation key in the
+        /// connection string satisfies the connection-string parser but is ignored server-side.
+        /// </remarks>
+        internal const string Statsbeat_ConnectionString_Distro_NonEU = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://us.stats.monitor.azure.com/";
+
+        /// <summary>
+        /// Distro-owned Statsbeat ingestion endpoint, EU data boundary. Used when the
+        /// <see cref="RouteStatsbeatToDistroEndpointSwitchName"/> AppContext switch is enabled
+        /// and the customer's connection string maps to an EU region.
+        /// </summary>
+        internal const string Statsbeat_ConnectionString_Distro_EU = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://eudb.stats.monitor.azure.com/";
+
+        /// <summary>
+        /// Process-wide <see cref="System.AppContext"/> switch name. When set to <c>true</c>,
+        /// every <see cref="AzureMonitorStatsbeat"/> instance routes its Statsbeat metrics to
+        /// the distro-owned ingestion endpoints
+        /// (<see cref="Statsbeat_ConnectionString_Distro_NonEU"/> /
+        /// <see cref="Statsbeat_ConnectionString_Distro_EU"/>) instead of the existing
+        /// Application Insights internal resources.
+        /// </summary>
+        /// <remarks>
+        /// Intended to be set by the Microsoft OpenTelemetry distro before any
+        /// <see cref="AzureMonitorMetricExporter"/> is constructed in the process. The switch
+        /// is sticky for the process lifetime and applies to all Statsbeat instances created
+        /// after it is set, including the customer's own Azure Monitor exporter when running
+        /// under the distro.
+        /// </remarks>
+        internal const string RouteStatsbeatToDistroEndpointSwitchName = "Azure.Monitor.OpenTelemetry.Exporter.RouteStatsbeatToDistroEndpoint";
+
         internal static readonly HashSet<string> s_EU_Endpoints = new()
         {
             "francecentral",

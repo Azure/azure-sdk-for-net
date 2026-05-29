@@ -12,6 +12,7 @@ using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
+    [Collection(nameof(DistroStatsbeatRoutingCollection))]
     public class StatsbeatTests
     {
         public static TheoryData<string> EuEndpoints
