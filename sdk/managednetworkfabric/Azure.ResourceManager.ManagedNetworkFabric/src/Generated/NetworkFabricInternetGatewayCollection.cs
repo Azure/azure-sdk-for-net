@@ -76,8 +76,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="internetGatewayName"> Name of the Internet Gateway. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<ArmOperation<NetworkFabricInternetGatewayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string internetGatewayName, NetworkFabricInternetGatewayData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="internetGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<NetworkFabricInternetGatewayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string internetGatewayName, NetworkFabricInternetGatewayData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(internetGatewayName, nameof(internetGatewayName));
+            Argument.AssertNotNull(data, nameof(data));
+
             using DiagnosticScope scope = _internetGatewaysClientDiagnostics.CreateScope("NetworkFabricInternetGatewayCollection.CreateOrUpdate");
             scope.Start();
             try
@@ -129,8 +134,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="internetGatewayName"> Name of the Internet Gateway. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual ArmOperation<NetworkFabricInternetGatewayResource> CreateOrUpdate(WaitUntil waitUntil, string internetGatewayName, NetworkFabricInternetGatewayData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="internetGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<NetworkFabricInternetGatewayResource> CreateOrUpdate(WaitUntil waitUntil, string internetGatewayName, NetworkFabricInternetGatewayData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(internetGatewayName, nameof(internetGatewayName));
+            Argument.AssertNotNull(data, nameof(data));
+
             using DiagnosticScope scope = _internetGatewaysClientDiagnostics.CreateScope("NetworkFabricInternetGatewayCollection.CreateOrUpdate");
             scope.Start();
             try

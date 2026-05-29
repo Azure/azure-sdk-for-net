@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
@@ -11,6 +12,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     public partial class NetworkFabricInternalNetworkData
     {
+        // Backward compatibility shim for the TypeSpec migration. The current generated property
+        // is BgpSettings and uses the shared BgpConfiguration model directly.
+        /// <summary> BGP configuration properties. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future version. Use BgpSettings instead.")]
+        public InternalNetworkBgpConfiguration BgpConfiguration
+        {
+            get => InternalNetworkBgpConfiguration.FromBgpConfiguration(BgpSettings);
+            set => BgpSettings = value;
+        }
+
         // Backward compatibility that adds back a previously safe flattened property.
         // This is no longer flattened because its type has more than one properties now.
         /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>

@@ -13,7 +13,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> IP Extended Community Id list properties. </summary>
-    public partial class IPExtendedCommunityIdList
+    internal partial class IPExtendedCommunityIdList
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -13,7 +13,8 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    internal partial class NetworkBootstrapInterfaceProperties : AnnotationResourceProperties, IJsonModel<NetworkBootstrapInterfaceProperties>
+    /// <summary> Network Bootstrap Interface Properties defines the properties of the resource. </summary>
+    public partial class NetworkBootstrapInterfaceProperties : AnnotationResourceProperties, IJsonModel<NetworkBootstrapInterfaceProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

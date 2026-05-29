@@ -17,6 +17,96 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public static partial class ArmManagedNetworkFabricModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.InternalNetworkBgpConfiguration"/>. </summary>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="bfdConfiguration"> BFD configuration properties. </param>
+        /// <param name="defaultRouteOriginate"> Originate a defaultRoute. Ex: "True" | "False". </param>
+        /// <param name="allowAS"> Allows for routes to be received and processed even if the router detects its own ASN in the AS-Path. 0 is disable, Possible values are 1-10, default is 2. </param>
+        /// <param name="allowASOverride"> Enable Or Disable state. </param>
+        /// <param name="fabricAsn"> ASN of Network Fabric. Example: 65048. </param>
+        /// <param name="peerAsn"> Peer ASN. Example: 65047. </param>
+        /// <param name="ipv4ListenRangePrefixes"> List of BGP IPv4 Listen Range prefixes. </param>
+        /// <param name="ipv6ListenRangePrefixes"> List of BGP IPv6 Listen Ranges prefixes. </param>
+        /// <param name="ipv4NeighborAddress"> List with stringified IPv4 Neighbor Addresses. </param>
+        /// <param name="ipv6NeighborAddress"> List with stringified IPv6 Neighbor Address. </param>
+        /// <returns> A new <see cref="Models.InternalNetworkBgpConfiguration"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version. Use BgpConfiguration instead.")]
+        public static InternalNetworkBgpConfiguration InternalNetworkBgpConfiguration(string annotation, BfdConfiguration bfdConfiguration, NetworkFabricBooleanValue? defaultRouteOriginate, int? allowAS, AllowASOverride? allowASOverride, long? fabricAsn, long? peerAsn, IEnumerable<string> ipv4ListenRangePrefixes, IEnumerable<string> ipv6ListenRangePrefixes, IEnumerable<NeighborAddress> ipv4NeighborAddress, IEnumerable<NeighborAddress> ipv6NeighborAddress)
+            => new InternalNetworkBgpConfiguration(annotation, additionalBinaryDataProperties: null, bfdConfiguration, defaultRouteOriginate, allowAS, allowASOverride, fabricAsn, peerAsn, (ipv4ListenRangePrefixes ?? new ChangeTrackingList<string>()).ToList(), (ipv6ListenRangePrefixes ?? new ChangeTrackingList<string>()).ToList(), (ipv4NeighborAddress ?? new ChangeTrackingList<NeighborAddress>()).ToList(), (ipv6NeighborAddress ?? new ChangeTrackingList<NeighborAddress>()).ToList(), bmpConfiguration: default, v4OverV6BgpSession: default, v6OverV4BgpSession: default);
+
+        /// <summary> Initializes a new instance of <see cref="Models.InternalNetworkBgpConfiguration"/>. </summary>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="bfdConfiguration"> BFD configuration properties. </param>
+        /// <param name="defaultRouteOriginate"> Originate a defaultRoute. Ex: "True" | "False". </param>
+        /// <param name="allowAS"> Allows for routes to be received and processed even if the router detects its own ASN in the AS-Path. 0 is disable, Possible values are 1-10, default is 2. </param>
+        /// <param name="allowASOverride"> Enable Or Disable state. </param>
+        /// <param name="fabricAsn"> ASN of Network Fabric. Example: 65048. </param>
+        /// <param name="peerAsn"> Peer ASN. Example: 65047. </param>
+        /// <param name="iPv4ListenRangePrefixes"> List of BGP IPv4 Listen Range prefixes. </param>
+        /// <param name="iPv6ListenRangePrefixes"> List of BGP IPv6 Listen Ranges prefixes. </param>
+        /// <param name="iPv4NeighborAddress"> List with stringified IPv4 Neighbor Addresses. </param>
+        /// <param name="iPv6NeighborAddress"> List with stringified IPv6 Neighbor Address. </param>
+        /// <param name="bmpConfiguration"> Bmp configuration properties. </param>
+        /// <param name="v4OverV6BgpSession"> State. </param>
+        /// <param name="v6OverV4BgpSession"> State. </param>
+        /// <returns> A new <see cref="Models.InternalNetworkBgpConfiguration"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version. Use BgpConfiguration instead.")]
+        public static InternalNetworkBgpConfiguration InternalNetworkBgpConfiguration(string annotation = default, BfdConfiguration bfdConfiguration = default, NetworkFabricBooleanValue? defaultRouteOriginate = default, int? allowAS = default, AllowASOverride? allowASOverride = default, long? fabricAsn = default, long? peerAsn = default, IEnumerable<string> iPv4ListenRangePrefixes = default, IEnumerable<string> iPv6ListenRangePrefixes = default, IEnumerable<NeighborAddress> iPv4NeighborAddress = default, IEnumerable<NeighborAddress> iPv6NeighborAddress = default, InternalNetworkBmpProperties bmpConfiguration = default, NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession = default, NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession = default)
+            => new InternalNetworkBgpConfiguration(annotation, additionalBinaryDataProperties: null, bfdConfiguration, defaultRouteOriginate, allowAS, allowASOverride, fabricAsn, peerAsn, (iPv4ListenRangePrefixes ?? new ChangeTrackingList<string>()).ToList(), (iPv6ListenRangePrefixes ?? new ChangeTrackingList<string>()).ToList(), (iPv4NeighborAddress ?? new ChangeTrackingList<NeighborAddress>()).ToList(), (iPv6NeighborAddress ?? new ChangeTrackingList<NeighborAddress>()).ToList(), bmpConfiguration, v4OverV6BgpSession, v6OverV4BgpSession);
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricInternalNetworkData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="mtu"> Maximum transmission unit. Default value is 1500. </param>
+        /// <param name="connectedIPv4Subnets"> List of Connected IPv4 Subnets. </param>
+        /// <param name="connectedIPv6Subnets"> List of connected IPv6 Subnets. </param>
+        /// <param name="importRoutePolicyId"> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </param>
+        /// <param name="exportRoutePolicyId"> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </param>
+        /// <param name="importRoutePolicy"> Import Route Policy either IPv4 or IPv6. </param>
+        /// <param name="exportRoutePolicy"> Export Route Policy either IPv4 or IPv6. </param>
+        /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
+        /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
+        /// <param name="isMonitoringEnabled"> To check whether monitoring of internal network is enabled or not. </param>
+        /// <param name="extension"> Extension. Example: NoExtension | NPB. </param>
+        /// <param name="vlanId"> Vlan identifier. Example: 1001. </param>
+        /// <param name="bgpConfiguration"> BGP configuration properties. </param>
+        /// <param name="staticRouteConfiguration"> Static Route Configuration properties. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricInternalNetworkData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version. Use the overload with BgpConfiguration bgpSettings instead.")]
+        public static NetworkFabricInternalNetworkData NetworkFabricInternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, int? mtu, IEnumerable<ConnectedSubnet> connectedIPv4Subnets, IEnumerable<ConnectedSubnet> connectedIPv6Subnets, ResourceIdentifier importRoutePolicyId, ResourceIdentifier exportRoutePolicyId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, StaticRouteConfigurationExtension? extension, int vlanId, InternalNetworkBgpConfiguration bgpConfiguration, InternalNetworkStaticRouteConfiguration staticRouteConfiguration, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return NetworkFabricInternalNetworkData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                annotation: annotation,
+                extension: extension,
+                mtu: mtu,
+                connectedIPv4Subnets: connectedIPv4Subnets,
+                connectedIPv6Subnets: connectedIPv6Subnets,
+                importRoutePolicy: importRoutePolicy,
+                exportRoutePolicy: exportRoutePolicy,
+                ingressAclId: ingressAclId,
+                egressAclId: egressAclId,
+                isMonitoringEnabled: isMonitoringEnabled,
+                vlanId: vlanId,
+                bgpSettings: bgpConfiguration,
+                staticRouteConfiguration: staticRouteConfiguration,
+                configurationState: configurationState,
+                provisioningState: provisioningState,
+                administrativeState: administrativeState);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.NetworkToNetworkInterconnectOptionBLayer3Configuration"/>. </summary>
         /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>

@@ -14,7 +14,8 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    internal partial class L2IsolationDomainProperties : AnnotationResourceProperties, IJsonModel<L2IsolationDomainProperties>
+    /// <summary> L2Isolation Domain Properties defines the properties of the resource. </summary>
+    public partial class L2IsolationDomainProperties : AnnotationResourceProperties, IJsonModel<L2IsolationDomainProperties>
     {
         /// <summary> Initializes a new instance of <see cref="L2IsolationDomainProperties"/> for deserialization. </summary>
         internal L2IsolationDomainProperties()

@@ -95,7 +95,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     [ModelReaderWriterBuildable(typeof(IcmpConfigurationProperties))]
     [ModelReaderWriterBuildable(typeof(ImportRoutePolicy))]
     [ModelReaderWriterBuildable(typeof(ImportRoutePolicyInformation))]
-    [ModelReaderWriterBuildable(typeof(InternalNetworkBgpConfiguration))]
     [ModelReaderWriterBuildable(typeof(InternalNetworkBmpProperties))]
     [ModelReaderWriterBuildable(typeof(InternalNetworkPatchProperties))]
     [ModelReaderWriterBuildable(typeof(InternalNetworkProperties))]

@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> BGP configuration properties. </summary>
-        public InternalNetworkBgpConfiguration BgpConfiguration
+        public BgpConfiguration BgpSettings
         {
             get
             {
-                return Properties is null ? default : Properties.BgpConfiguration;
+                return Properties is null ? default : Properties.BgpSettings;
             }
             set
             {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     Properties = new InternalNetworkProperties();
                 }
-                Properties.BgpConfiguration = value;
+                Properties.BgpSettings = value;
             }
         }
 

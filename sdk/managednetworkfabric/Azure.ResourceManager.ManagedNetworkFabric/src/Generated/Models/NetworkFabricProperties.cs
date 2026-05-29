@@ -12,7 +12,8 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    internal partial class NetworkFabricProperties : AnnotationResourceProperties
+    /// <summary> Network Fabric Properties defines the properties of the resource. </summary>
+    public partial class NetworkFabricProperties : AnnotationResourceProperties
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricProperties"/>. </summary>
         /// <param name="networkFabricSku"> Supported Network Fabric SKU.Example: Compute / Aggregate racks. Once the user chooses a particular SKU, only supported racks can be added to the Network Fabric. The SKU determines whether it is a single / multi rack Network Fabric. </param>
@@ -22,8 +23,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
         /// <param name="terminalServerConfiguration"> Network and credentials configuration currently applied to terminal server. </param>
         /// <param name="managementNetworkConfiguration"> Configuration to be used to setup the management network. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricSku"/>, <paramref name="networkFabricControllerId"/>, <paramref name="iPv4Prefix"/>, <paramref name="terminalServerConfiguration"/> or <paramref name="managementNetworkConfiguration"/> is null. </exception>
         public NetworkFabricProperties(string networkFabricSku, ResourceIdentifier networkFabricControllerId, int serverCountPerRack, string iPv4Prefix, long fabricAsn, TerminalServerConfiguration terminalServerConfiguration, ManagementNetworkConfigurationProperties managementNetworkConfiguration)
         {
+            Argument.AssertNotNull(networkFabricSku, nameof(networkFabricSku));
+            Argument.AssertNotNull(networkFabricControllerId, nameof(networkFabricControllerId));
+            Argument.AssertNotNull(iPv4Prefix, nameof(iPv4Prefix));
+            Argument.AssertNotNull(terminalServerConfiguration, nameof(terminalServerConfiguration));
+            Argument.AssertNotNull(managementNetworkConfiguration, nameof(managementNetworkConfiguration));
+
             NetworkFabricSku = networkFabricSku;
             RouterIds = new ChangeTrackingList<string>();
             FabricLocks = new ChangeTrackingList<NetworkFabricLock>();

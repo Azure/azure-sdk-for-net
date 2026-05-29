@@ -14,7 +14,8 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    internal partial class NetworkFabricProperties : AnnotationResourceProperties, IJsonModel<NetworkFabricProperties>
+    /// <summary> Network Fabric Properties defines the properties of the resource. </summary>
+    public partial class NetworkFabricProperties : AnnotationResourceProperties, IJsonModel<NetworkFabricProperties>
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricProperties"/> for deserialization. </summary>
         internal NetworkFabricProperties()

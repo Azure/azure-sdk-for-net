@@ -10,7 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    internal partial class NetworkMonitorProperties : AnnotationResourceProperties
+    /// <summary> Network Monitor Properties defines the properties of the resource. </summary>
+    public partial class NetworkMonitorProperties : AnnotationResourceProperties
     {
         /// <summary> Initializes a new instance of <see cref="NetworkMonitorProperties"/>. </summary>
         public NetworkMonitorProperties()

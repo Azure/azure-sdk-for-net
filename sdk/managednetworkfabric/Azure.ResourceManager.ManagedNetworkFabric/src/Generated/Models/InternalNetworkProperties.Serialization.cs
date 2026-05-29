@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             writer.WritePropertyName("vlanId"u8);
             writer.WriteNumberValue(VlanId);
-            if (Optional.IsDefined(BgpConfiguration))
+            if (Optional.IsDefined(BgpSettings))
             {
                 writer.WritePropertyName("bgpConfiguration"u8);
-                writer.WriteObjectValue(BgpConfiguration, options);
+                writer.WriteObjectValue(BgpSettings, options);
             }
             if (Optional.IsDefined(StaticRouteConfiguration))
             {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ResourceIdentifier egressAclId = default;
             IsMonitoringEnabled? isMonitoringEnabled = default;
             int vlanId = default;
-            InternalNetworkBgpConfiguration bgpConfiguration = default;
+            BgpConfiguration bgpSettings = default;
             InternalNetworkStaticRouteConfiguration staticRouteConfiguration = default;
             NativeIpv4PrefixLimitProperties nativeIPv4PrefixLimit = default;
             NativeIpv6PrefixLimitProperties nativeIPv6PrefixLimit = default;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    bgpConfiguration = InternalNetworkBgpConfiguration.DeserializeInternalNetworkBgpConfiguration(prop.Value, options);
+                    bgpSettings = BgpConfiguration.DeserializeBgpConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("staticRouteConfiguration"u8))
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 egressAclId,
                 isMonitoringEnabled,
                 vlanId,
-                bgpConfiguration,
+                bgpSettings,
                 staticRouteConfiguration,
                 nativeIPv4PrefixLimit,
                 nativeIPv6PrefixLimit,

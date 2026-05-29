@@ -14,7 +14,8 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    internal partial class NetworkTapProperties : AnnotationResourceProperties, IJsonModel<NetworkTapProperties>
+    /// <summary> Network Tap Properties defines the properties of the resource. </summary>
+    public partial class NetworkTapProperties : AnnotationResourceProperties, IJsonModel<NetworkTapProperties>
     {
         /// <summary> Initializes a new instance of <see cref="NetworkTapProperties"/> for deserialization. </summary>
         internal NetworkTapProperties()
