@@ -133,6 +133,51 @@ namespace Azure.Search.Documents.Tests
                 request.Headers.TryGetValue("x-ms-enable-elevated-read", out _),
                 "x-ms-enable-elevated-read header should not be present when null.");
         }
+
+        [Test]
+        public async Task SearchPaginationCarriesSecurityHeaders()
+        {
+            // First page: includes @search.nextPageParameters to trigger a second request
+            var page1 = new MockResponse(200);
+            page1.SetContent(
+                "{\"value\":[{\"@search.score\":1.0,\"id\":\"1\"}]," +
+                "\"@odata.nextLink\":\"https://fake-search.search.windows.net/indexes/test-index/docs?api-version=2026-05-01-Preview\"," +
+                "\"@search.nextPageParameters\":{\"search\":\"*\",\"skip\":1}}");
+
+            // Second page: no nextPageParameters
+            var page2 = new MockResponse(200);
+            page2.SetContent("{\"value\":[{\"@search.score\":1.0,\"id\":\"2\"}]}");
+
+            var transport = new MockTransport(new[] { page1, page2 });
+            var client = CreateTestClient(transport);
+
+            Response<SearchResults<SearchDocument>> response = await client.SearchAsync<SearchDocument>(
+                "*",
+                querySourceAuthorization: "my-auth-token",
+                enableElevatedRead: true);
+
+            // Drain all pages to trigger the second request
+            var allResults = new System.Collections.Generic.List<SearchResult<SearchDocument>>();
+            await foreach (SearchResult<SearchDocument> result in response.Value.GetResultsAsync())
+            {
+                allResults.Add(result);
+            }
+
+            Assert.AreEqual(2, allResults.Count);
+            Assert.AreEqual(2, transport.Requests.Count, "Expected two HTTP requests (page 1 + page 2).");
+
+            // Verify the SECOND request also carries the security headers
+            MockRequest secondRequest = transport.Requests[1];
+            Assert.IsTrue(
+                secondRequest.Headers.TryGetValue("x-ms-query-source-authorization", out string authValue),
+                "Second page request should carry x-ms-query-source-authorization header.");
+            Assert.AreEqual("my-auth-token", authValue);
+
+            Assert.IsTrue(
+                secondRequest.Headers.TryGetValue("x-ms-enable-elevated-read", out string elevatedValue),
+                "Second page request should carry x-ms-enable-elevated-read header.");
+            Assert.AreEqual("true", elevatedValue);
+        }
     }
 }
 #endif
