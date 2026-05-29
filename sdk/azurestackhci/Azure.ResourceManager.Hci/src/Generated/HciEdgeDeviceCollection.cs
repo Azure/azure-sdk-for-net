@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _edgeDevicesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), edgeDeviceName, HciEdgeDeviceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<HciEdgeDeviceResource> operation = new HciArmOperation<HciEdgeDeviceResource>(
-                    new HciEdgeDeviceOperationSource(Client),
+                    new HciEdgeDeviceResourceOperationSource(Client),
                     _edgeDevicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _edgeDevicesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), edgeDeviceName, HciEdgeDeviceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<HciEdgeDeviceResource> operation = new HciArmOperation<HciEdgeDeviceResource>(
-                    new HciEdgeDeviceOperationSource(Client),
+                    new HciEdgeDeviceResourceOperationSource(Client),
                     _edgeDevicesClientDiagnostics,
                     Pipeline,
                     message.Request,
