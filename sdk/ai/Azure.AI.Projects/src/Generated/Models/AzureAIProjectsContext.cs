@@ -409,6 +409,7 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(UnknownTrigger))]
     [ModelReaderWriterBuildable(typeof(UpdateMemoryRequest))]
     [ModelReaderWriterBuildable(typeof(UpdateMemoryStoreRequest))]
+    [ModelReaderWriterBuildable(typeof(UpdateModelVersionOptions))]
     [ModelReaderWriterBuildable(typeof(UrlCitationBody))]
     [ModelReaderWriterBuildable(typeof(UserProfileMemoryItem))]
     [ModelReaderWriterBuildable(typeof(WaitParam))]
