@@ -4,9 +4,9 @@
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.ArtifactSigning.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
-using Azure.ResourceManager.ArtifactSigning.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ArtifactSigning.Tests

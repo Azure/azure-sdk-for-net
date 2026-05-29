@@ -27,22 +27,18 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProfileData ProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CdnSkuName? skuName, string kind, ProfileResourceState? resourceState, ProfileProvisioningState? provisioningState, Guid? frontDoorId, int? originResponseTimeoutSeconds)
         {
-            return ProfileData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                tags: tags,
-                location: location,
-                skuName: skuName,
-                kind: kind,
-                identity: default,
-                resourceState: resourceState,
-                provisioningState: provisioningState,
-                extendedProperties: default,
-                frontDoorId: frontDoorId,
-                originResponseTimeoutSeconds: originResponseTimeoutSeconds,
-                logScrubbing: default);
+            return new ProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                resourceState is null && provisioningState is null && frontDoorId is null && originResponseTimeoutSeconds is null ? default : new ProfileProperties(resourceState, provisioningState, new ChangeTrackingDictionary<string, string>(), frontDoorId, originResponseTimeoutSeconds, default, default),
+                skuName is null ? default : new CdnSku(skuName, default),
+                kind,
+                default,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Cdn.CdnWebApplicationFirewallPolicyData"/>. </summary>

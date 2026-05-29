@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Resources
         internal virtual async Task<ArmOperation<ArmDeploymentResource>> UpdateAsync(WaitUntil waitUntil, ArmDeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
-            ArmDeploymentContent content = new ArmDeploymentContent(data.Location, new ArmDeploymentProperties(data.Properties.Mode.Value), data.Tags, null, null);
+            ArmDeploymentContent content = new ArmDeploymentContent(data.Location, new ArmDeploymentProperties(data.Properties.Mode.Value), data.Tags?.ToDictionary(pair => pair.Key, pair => pair.Value), null, null);
             return await UpdateAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
         }
 
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Resources
         internal virtual ArmOperation<ArmDeploymentResource> Update(WaitUntil waitUntil, ArmDeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
-            ArmDeploymentContent content = new ArmDeploymentContent(data.Location, new ArmDeploymentProperties(data.Properties.Mode.Value), data.Tags, null, null);
+            ArmDeploymentContent content = new ArmDeploymentContent(data.Location, new ArmDeploymentProperties(data.Properties.Mode.Value), data.Tags?.ToDictionary(pair => pair.Key, pair => pair.Value), null, null);
             return Update(waitUntil, content, cancellationToken);
         }
 

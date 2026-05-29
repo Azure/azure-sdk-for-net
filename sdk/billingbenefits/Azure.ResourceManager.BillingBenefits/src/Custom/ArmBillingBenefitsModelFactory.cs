@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 provisioningState is null && status is null && entityType is null && displayName is null && productCode is null && billingAccountResourceId is null && commitment is null && startOn is null && endOn is null && systemId is null && automaticShortfall is null && automaticShortfallSuppressReason is null && shortfall is null && milestones is null && resourceId is null && isAllowContributors is null && primaryResourceId is null && primaryBillingAccountResourceId is null ? default : new MaccModelProperties(
                     provisioningState,
                     status,
@@ -68,7 +67,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     isAllowContributors,
                     primaryResourceId,
                     primaryBillingAccountResourceId,
-                    null));
+                    null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -111,7 +111,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 provisioningState is null && status is null && entityType is null && displayName is null && productCode is null && billingAccountResourceId is null && commitment is null && startOn is null && endOn is null && systemId is null && automaticShortfall is null && automaticShortfallSuppressReason is null && shortfall is null && milestones is null && resourceId is null && isAllowContributors is null && primaryResourceId is null && primaryBillingAccountResourceId is null ? default : new MaccModelProperties(
@@ -139,7 +138,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 etag,
                 identity,
                 sku,
-                plan);
+                plan,
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -172,7 +172,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 provisioningState is null && status is null && entityType is null && displayName is null && productCode is null && billingAccountResourceId is null && commitment is null && startOn is null && endOn is null && systemId is null && automaticShortfall is null && automaticShortfallSuppressReason is null && shortfall is null && milestones is null && resourceId is null && isAllowContributors is null && primaryResourceId is null && primaryBillingAccountResourceId is null ? default : new MaccModelProperties(
                     provisioningState,
                     status,
@@ -192,7 +191,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     isAllowContributors,
                     primaryResourceId,
                     primaryBillingAccountResourceId,
-                    null));
+                    null),
+                additionalBinaryDataProperties: null);
         }
     }
 }

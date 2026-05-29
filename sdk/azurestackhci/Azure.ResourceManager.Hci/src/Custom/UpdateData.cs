@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.Hci
             data?.Name,
             data?.ResourceType ?? default,
             data?.SystemData,
-            additionalBinaryDataProperties: null,
             default,
-            data?.Location)
+            data?.Location,
+            null)
         {
         }
 

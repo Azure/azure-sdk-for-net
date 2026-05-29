@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NewRelicObservability
     /// from an instance of <see cref="ArmClient"/> using the GetNewRelicMonitorResource method.
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNewRelicMonitorResource method.
     /// </summary>
-    public partial class NewRelicMonitorResource : ArmResource
+    public partial class NewRelicMonitorResource
     {
         /// <summary>
         /// Update a NewRelicMonitorResource
