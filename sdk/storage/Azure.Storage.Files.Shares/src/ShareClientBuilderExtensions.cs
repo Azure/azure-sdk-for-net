@@ -9,15 +9,13 @@ using Azure.Core;
 using Azure.Core.Extensions;
 using Azure.Storage;
 using Azure.Storage.Files.Shares;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Microsoft.Extensions.Azure
 {
     /// <summary>
     /// Extension methods to add <see cref="ShareServiceClient"/> client to clients builder
     /// </summary>
-    [CodeGenType("FilesSharesClientBuilderExtensions")]
-    public static partial class ShareClientBuilderExtensions
+    public static class ShareClientBuilderExtensions
     {
         /// <summary>
         /// Registers a <see cref="ShareServiceClient"/> instance with the provided <paramref name="connectionString"/>
@@ -94,25 +92,6 @@ namespace Microsoft.Extensions.Azure
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<ShareServiceClient, ShareClientOptions>(configuration);
-        }
-
-        /// <summary> Registers a <see cref="ShareClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="shareUri"></param>
-        /// <param name="credential"></param>
-        public static IAzureClientBuilder<ShareClient, ShareClientOptions> AddShareClient<TBuilder>(this TBuilder builder, Uri shareUri, StorageSharedKeyCredential credential)
-            where TBuilder : IAzureClientFactoryBuilder
-        {
-            return builder.RegisterClientFactory<ShareClient, ShareClientOptions>(options => new ShareClient(shareUri, credential, options));
-        }
-
-        /// <summary> Registers a <see cref="ShareClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="shareUri"></param>
-        public static IAzureClientBuilder<ShareClient, ShareClientOptions> AddShareClient<TBuilder>(this TBuilder builder, Uri shareUri)
-            where TBuilder : IAzureClientFactoryBuilderWithCredential
-        {
-            return builder.RegisterClientFactory<ShareClient, ShareClientOptions>((options, credential) => new ShareClient(shareUri, credential, options));
         }
     }
 }
