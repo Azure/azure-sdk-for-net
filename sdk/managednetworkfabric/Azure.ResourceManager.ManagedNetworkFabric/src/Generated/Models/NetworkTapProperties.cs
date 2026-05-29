@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     {
         /// <summary> Initializes a new instance of <see cref="NetworkTapProperties"/>. </summary>
         /// <param name="networkPacketBrokerId"> ARM resource ID of the Network Packet Broker. </param>
-        /// <param name="destinations"> List of destinations to send the filter traffic. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkPacketBrokerId"/> or <paramref name="destinations"/> is null. </exception>
-        public NetworkTapProperties(ResourceIdentifier networkPacketBrokerId, IEnumerable<NetworkTapPropertiesDestinationsItem> destinations)
+        /// <param name="destinationSettings"> List of destinations to send the filter traffic. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkPacketBrokerId"/> or <paramref name="destinationSettings"/> is null. </exception>
+        public NetworkTapProperties(ResourceIdentifier networkPacketBrokerId, IEnumerable<NetworkTapDestinationProperties> destinationSettings)
         {
             Argument.AssertNotNull(networkPacketBrokerId, nameof(networkPacketBrokerId));
-            Argument.AssertNotNull(destinations, nameof(destinations));
+            Argument.AssertNotNull(destinationSettings, nameof(destinationSettings));
 
             NetworkPacketBrokerId = networkPacketBrokerId;
             NetworkFabricIds = new ChangeTrackingList<ResourceIdentifier>();
-            Destinations = destinations.ToList();
+            DestinationSettings = destinationSettings.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkTapProperties"/>. </summary>
@@ -36,18 +36,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="networkPacketBrokerId"> ARM resource ID of the Network Packet Broker. </param>
         /// <param name="sourceTapRuleId"> Source Tap Rule Id. ARM Resource ID of the Network Tap Rule. </param>
         /// <param name="networkFabricIds"> Associated Network Fabric Resource IDs. </param>
-        /// <param name="destinations"> List of destinations to send the filter traffic. </param>
+        /// <param name="destinationSettings"> List of destinations to send the filter traffic. </param>
         /// <param name="pollingType"> Polling type. </param>
         /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
         /// <param name="configurationState"> Gets the configurations state of the resource. </param>
         /// <param name="provisioningState"> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of Network Tap provisioning. </param>
         /// <param name="administrativeState"> Administrative state of the resource. Example -Enabled/Disabled. </param>
-        internal NetworkTapProperties(string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier networkPacketBrokerId, ResourceIdentifier sourceTapRuleId, IReadOnlyList<ResourceIdentifier> networkFabricIds, IList<NetworkTapPropertiesDestinationsItem> destinations, NetworkTapPollingType? pollingType, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState) : base(annotation, additionalBinaryDataProperties)
+        internal NetworkTapProperties(string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier networkPacketBrokerId, ResourceIdentifier sourceTapRuleId, IReadOnlyList<ResourceIdentifier> networkFabricIds, IList<NetworkTapDestinationProperties> destinationSettings, NetworkTapPollingType? pollingType, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState) : base(annotation, additionalBinaryDataProperties)
         {
             NetworkPacketBrokerId = networkPacketBrokerId;
             SourceTapRuleId = sourceTapRuleId;
             NetworkFabricIds = networkFabricIds;
-            Destinations = destinations;
+            DestinationSettings = destinationSettings;
             PollingType = pollingType;
             LastOperation = lastOperation;
             ConfigurationState = configurationState;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public IReadOnlyList<ResourceIdentifier> NetworkFabricIds { get; } = new ChangeTrackingList<ResourceIdentifier>();
 
         /// <summary> List of destinations to send the filter traffic. </summary>
-        public IList<NetworkTapPropertiesDestinationsItem> Destinations { get; } = new ChangeTrackingList<NetworkTapPropertiesDestinationsItem>();
+        public IList<NetworkTapDestinationProperties> DestinationSettings { get; } = new ChangeTrackingList<NetworkTapDestinationProperties>();
 
         /// <summary> Polling type. </summary>
         public NetworkTapPollingType? PollingType { get; set; }

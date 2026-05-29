@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Common properties for Layer3Configuration. </summary>
-        public NetworkToNetworkInterconnectOptionBLayer3Configuration OptionBLayer3Configuration
+        public OptionBLayer3Configuration OptionBLayer3Settings
         {
             get
             {
-                return Properties is null ? default : Properties.OptionBLayer3Configuration;
+                return Properties is null ? default : Properties.OptionBLayer3Settings;
             }
             set
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     Properties = new NetworkToNetworkInterconnectProperties();
                 }
-                Properties.OptionBLayer3Configuration = value;
+                Properties.OptionBLayer3Settings = value;
             }
         }
 

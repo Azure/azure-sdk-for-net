@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("layer2Configuration"u8);
                 writer.WriteObjectValue(Layer2Configuration, options);
             }
-            if (Optional.IsDefined(OptionBLayer3Configuration))
+            if (Optional.IsDefined(OptionBLayer3Settings))
             {
                 writer.WritePropertyName("optionBLayer3Configuration"u8);
-                writer.WriteObjectValue(OptionBLayer3Configuration, options);
+                writer.WriteObjectValue(OptionBLayer3Settings, options);
             }
             if (Optional.IsDefined(NpbStaticRouteConfiguration))
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IsManagementType? isManagementType = default;
             NetworkFabricBooleanValue useOptionB = default;
             Layer2Configuration layer2Configuration = default;
-            NetworkToNetworkInterconnectOptionBLayer3Configuration optionBLayer3Configuration = default;
+            OptionBLayer3Configuration optionBLayer3Settings = default;
             NpbStaticRouteConfiguration npbStaticRouteConfiguration = default;
             NniStaticRouteConfiguration staticRouteConfiguration = default;
             ImportRoutePolicyInformation importRoutePolicy = default;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    optionBLayer3Configuration = NetworkToNetworkInterconnectOptionBLayer3Configuration.DeserializeNetworkToNetworkInterconnectOptionBLayer3Configuration(prop.Value, options);
+                    optionBLayer3Settings = OptionBLayer3Configuration.DeserializeOptionBLayer3Configuration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("npbStaticRouteConfiguration"u8))
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 isManagementType,
                 useOptionB,
                 layer2Configuration,
-                optionBLayer3Configuration,
+                optionBLayer3Settings,
                 npbStaticRouteConfiguration,
                 staticRouteConfiguration,
                 importRoutePolicy,

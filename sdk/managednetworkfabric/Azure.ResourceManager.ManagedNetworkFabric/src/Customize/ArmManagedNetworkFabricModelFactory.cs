@@ -128,6 +128,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
         /// <returns> A new <see cref="Models.NetworkToNetworkInterconnectOptionBLayer3Configuration"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version. Use OptionBLayer3Configuration instead.")]
         public static NetworkToNetworkInterconnectOptionBLayer3Configuration NetworkToNetworkInterconnectOptionBLayer3Configuration(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, long? peerAsn, int? vlanId, long? fabricAsn)
         {
             return new NetworkToNetworkInterconnectOptionBLayer3Configuration(
@@ -136,13 +137,54 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 secondaryIPv4Prefix,
                 secondaryIPv6Prefix,
                 additionalBinaryDataProperties: null,
-                peerAsn.GetValueOrDefault(),
-                vlanId.GetValueOrDefault(),
+                peerAsn,
+                vlanId,
                 fabricAsn,
                 default,
                 default,
                 default);
         }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkToNetworkInterconnectData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="nniType"> Type of NNI used. Example: CE | NPB. </param>
+        /// <param name="isManagementType"> Configuration to use NNI for Infrastructure Management. Example: True/False. </param>
+        /// <param name="useOptionB"> Based on this option layer3 parameters are mandatory. Example: True/False. </param>
+        /// <param name="layer2Configuration"> Common properties for Layer2 Configuration. </param>
+        /// <param name="optionBLayer3Configuration"> Common properties for Layer3Configuration. </param>
+        /// <param name="npbStaticRouteConfiguration"> NPB Static Route Configuration properties. </param>
+        /// <param name="importRoutePolicy"> Import Route Policy configuration. </param>
+        /// <param name="exportRoutePolicy"> Export Route Policy configuration. </param>
+        /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
+        /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkToNetworkInterconnectData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version. Use the overload with OptionBLayer3Configuration optionBLayer3Settings instead.")]
+        public static NetworkToNetworkInterconnectData NetworkToNetworkInterconnectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NniType? nniType, IsManagementType? isManagementType, NetworkFabricBooleanValue useOptionB, Layer2Configuration layer2Configuration, NetworkToNetworkInterconnectOptionBLayer3Configuration optionBLayer3Configuration, NpbStaticRouteConfiguration npbStaticRouteConfiguration, ImportRoutePolicyInformation importRoutePolicy, ExportRoutePolicyInformation exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+            => NetworkToNetworkInterconnectData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                nniType: nniType,
+                isManagementType: isManagementType,
+                useOptionB: useOptionB,
+                layer2Configuration: layer2Configuration,
+                optionBLayer3Settings: optionBLayer3Configuration,
+                npbStaticRouteConfiguration: npbStaticRouteConfiguration,
+                importRoutePolicy: importRoutePolicy,
+                exportRoutePolicy: exportRoutePolicy,
+                egressAclId: egressAclId,
+                ingressAclId: ingressAclId,
+                configurationState: configurationState,
+                provisioningState: provisioningState,
+                administrativeState: administrativeState);
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricAccessControlListData"/>. </summary>
         /// <param name="id"> The id. </param>
@@ -399,7 +441,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkTapData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable CS0618 // Preserve obsolete compatibility overload.
+        [Obsolete("This method is obsolete and will be removed in a future version. Use the overload with NetworkTapDestinationProperties destinations instead.")]
         public static NetworkTapData NetworkTapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier networkPacketBrokerId, ResourceIdentifier sourceTapRuleId, IEnumerable<NetworkTapPropertiesDestinationsItem> destinations, NetworkTapPollingType? pollingType, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+#pragma warning restore CS0618
         {
             return new NetworkTapData(
                 id,
@@ -409,7 +454,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 additionalBinaryDataProperties: null,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                new NetworkTapProperties(annotation, null, networkPacketBrokerId, sourceTapRuleId, default, (destinations ?? new ChangeTrackingList<NetworkTapPropertiesDestinationsItem>()).ToList(), pollingType, default, configurationState, provisioningState, administrativeState),
+                new NetworkTapProperties(annotation, null, networkPacketBrokerId, sourceTapRuleId, default, (destinations ?? new ChangeTrackingList<NetworkTapPropertiesDestinationsItem>()).Cast<NetworkTapDestinationProperties>().ToList(), pollingType, default, configurationState, provisioningState, administrativeState),
                 identity: default);
         }
     }

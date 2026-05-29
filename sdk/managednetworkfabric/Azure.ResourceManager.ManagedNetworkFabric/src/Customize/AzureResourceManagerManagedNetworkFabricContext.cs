@@ -11,6 +11,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 #pragma warning disable CS0618 // Register obsolete compatibility models for ModelReaderWriter.
     [ModelReaderWriterBuildable(typeof(InternalNetworkBgpConfiguration))]
     [ModelReaderWriterBuildable(typeof(InternalNetworkStaticRouteConfiguration))]
+    [ModelReaderWriterBuildable(typeof(NetworkToNetworkInterconnectOptionBLayer3Configuration))]
+    [ModelReaderWriterBuildable(typeof(NetworkTapPatchableParametersDestinationsItem))]
+    [ModelReaderWriterBuildable(typeof(NetworkTapPropertiesDestinationsItem))]
     [ModelReaderWriterBuildable(typeof(NetworkDevicePatch))]
     [ModelReaderWriterBuildable(typeof(NetworkFabricAccessControlListPatch))]
     [ModelReaderWriterBuildable(typeof(NetworkFabricControllerPatch))]

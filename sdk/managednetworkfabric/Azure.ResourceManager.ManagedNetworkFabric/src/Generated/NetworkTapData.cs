@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Initializes a new instance of <see cref="NetworkTapData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="networkPacketBrokerId"> ARM resource ID of the Network Packet Broker. </param>
-        /// <param name="destinations"> List of destinations to send the filter traffic. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkPacketBrokerId"/> or <paramref name="destinations"/> is null. </exception>
-        public NetworkTapData(AzureLocation location, ResourceIdentifier networkPacketBrokerId, IEnumerable<NetworkTapPropertiesDestinationsItem> destinations) : base(location)
+        /// <param name="destinationSettings"> List of destinations to send the filter traffic. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkPacketBrokerId"/> or <paramref name="destinationSettings"/> is null. </exception>
+        public NetworkTapData(AzureLocation location, ResourceIdentifier networkPacketBrokerId, IEnumerable<NetworkTapDestinationProperties> destinationSettings) : base(location)
         {
             Argument.AssertNotNull(networkPacketBrokerId, nameof(networkPacketBrokerId));
-            Argument.AssertNotNull(destinations, nameof(destinations));
+            Argument.AssertNotNull(destinationSettings, nameof(destinationSettings));
 
-            Properties = new NetworkTapProperties(networkPacketBrokerId, destinations);
+            Properties = new NetworkTapProperties(networkPacketBrokerId, destinationSettings);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkTapData"/>. </summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> List of destinations to send the filter traffic. </summary>
-        public IList<NetworkTapPropertiesDestinationsItem> Destinations
+        public IList<NetworkTapDestinationProperties> DestinationSettings
         {
             get
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     Properties = new NetworkTapProperties();
                 }
-                return Properties.Destinations;
+                return Properties.DestinationSettings;
             }
         }
 

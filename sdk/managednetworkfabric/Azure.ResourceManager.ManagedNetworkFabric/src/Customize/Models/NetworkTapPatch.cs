@@ -5,8 +5,10 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric;
@@ -81,6 +83,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> List of destination properties to send the filter traffic. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future version. Use DestinationSettings instead.")]
         public IList<NetworkTapPatchableParametersDestinationsItem> Destinations
         {
             get
@@ -89,8 +93,67 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new NetworkTapPatchProperties();
                 }
-                return Properties.Destinations;
+                return new NetworkTapPatchableParametersDestinationsItemList(Properties.DestinationSettings);
             }
+        }
+
+        private sealed class NetworkTapPatchableParametersDestinationsItemList : IList<NetworkTapPatchableParametersDestinationsItem>
+        {
+            private readonly IList<DestinationPatchProperties> _inner;
+
+            public NetworkTapPatchableParametersDestinationsItemList(IList<DestinationPatchProperties> inner)
+            {
+                _inner = inner;
+            }
+
+            public NetworkTapPatchableParametersDestinationsItem this[int index]
+            {
+                get => FromDestinationPatchProperties(_inner[index]);
+                set => _inner[index] = ToDestinationPatchProperties(value);
+            }
+
+            public int Count => _inner.Count;
+            public bool IsReadOnly => _inner.IsReadOnly;
+            public void Add(NetworkTapPatchableParametersDestinationsItem item) => _inner.Add(ToDestinationPatchProperties(item));
+            public void Clear() => _inner.Clear();
+            public bool Contains(NetworkTapPatchableParametersDestinationsItem item) => _inner.Contains(ToDestinationPatchProperties(item));
+            public void CopyTo(NetworkTapPatchableParametersDestinationsItem[] array, int arrayIndex)
+            {
+                for (int i = 0; i < _inner.Count; i++)
+                {
+                    array[arrayIndex + i] = FromDestinationPatchProperties(_inner[i]);
+                }
+            }
+            public IEnumerator<NetworkTapPatchableParametersDestinationsItem> GetEnumerator()
+            {
+                foreach (DestinationPatchProperties item in _inner)
+                {
+                    yield return FromDestinationPatchProperties(item);
+                }
+            }
+            public int IndexOf(NetworkTapPatchableParametersDestinationsItem item) => _inner.IndexOf(ToDestinationPatchProperties(item));
+            public void Insert(int index, NetworkTapPatchableParametersDestinationsItem item) => _inner.Insert(index, ToDestinationPatchProperties(item));
+            public bool Remove(NetworkTapPatchableParametersDestinationsItem item) => _inner.Remove(ToDestinationPatchProperties(item));
+            public void RemoveAt(int index) => _inner.RemoveAt(index);
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+            private static NetworkTapPatchableParametersDestinationsItem FromDestinationPatchProperties(DestinationPatchProperties value)
+                => value is null ? null : new NetworkTapPatchableParametersDestinationsItem(
+                    value.Name,
+                    value.DestinationType,
+                    value.DestinationId,
+                    value.IsolationDomainProperties is null ? null : new IsolationDomainProperties(value.IsolationDomainProperties.Encapsulation, value.IsolationDomainProperties.NeighborGroupIds.ToList(), additionalBinaryDataProperties: null),
+                    value.DestinationTapRuleId,
+                    additionalBinaryDataProperties: null);
+
+            private static DestinationPatchProperties ToDestinationPatchProperties(NetworkTapPatchableParametersDestinationsItem value)
+                => value is null ? null : new DestinationPatchProperties(
+                    value.Name,
+                    value.DestinationType,
+                    value.DestinationId,
+                    value.IsolationDomainProperties is null ? null : new IsolationDomainPatchProperties(value.IsolationDomainProperties.Encapsulation, value.IsolationDomainProperties.NeighborGroupIds.ToList(), additionalBinaryDataProperties: null),
+                    value.DestinationTapRuleId,
+                    additionalBinaryDataProperties: null);
         }
 
         /// <param name="data"> The data to parse. </param>

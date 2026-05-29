@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             writer.WritePropertyName("destinations"u8);
             writer.WriteStartArray();
-            foreach (NetworkTapPropertiesDestinationsItem item in Destinations)
+            foreach (NetworkTapDestinationProperties item in DestinationSettings)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ResourceIdentifier networkPacketBrokerId = default;
             ResourceIdentifier sourceTapRuleId = default;
             IReadOnlyList<ResourceIdentifier> networkFabricIds = default;
-            IList<NetworkTapPropertiesDestinationsItem> destinations = default;
+            IList<NetworkTapDestinationProperties> destinationSettings = default;
             NetworkTapPollingType? pollingType = default;
             LastOperationProperties lastOperation = default;
             NetworkFabricConfigurationState? configurationState = default;
@@ -217,12 +217,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (prop.NameEquals("destinations"u8))
                 {
-                    List<NetworkTapPropertiesDestinationsItem> array = new List<NetworkTapPropertiesDestinationsItem>();
+                    List<NetworkTapDestinationProperties> array = new List<NetworkTapDestinationProperties>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkTapPropertiesDestinationsItem.DeserializeNetworkTapPropertiesDestinationsItem(item, options));
+                        array.Add(NetworkTapDestinationProperties.DeserializeNetworkTapDestinationProperties(item, options));
                     }
-                    destinations = array;
+                    destinationSettings = array;
                     continue;
                 }
                 if (prop.NameEquals("pollingType"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 networkPacketBrokerId,
                 sourceTapRuleId,
                 networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                destinations,
+                destinationSettings,
                 pollingType,
                 lastOperation,
                 configurationState,

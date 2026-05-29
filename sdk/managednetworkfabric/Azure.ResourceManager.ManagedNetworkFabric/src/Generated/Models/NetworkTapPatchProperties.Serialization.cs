@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("pollingType"u8);
                 writer.WriteStringValue(PollingType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Destinations))
+            if (Optional.IsCollectionDefined(DestinationSettings))
             {
                 writer.WritePropertyName("destinations"u8);
                 writer.WriteStartArray();
-                foreach (NetworkTapPatchableParametersDestinationsItem item in Destinations)
+                foreach (DestinationPatchProperties item in DestinationSettings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string annotation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             NetworkTapPollingType? pollingType = default;
-            IList<NetworkTapPatchableParametersDestinationsItem> destinations = default;
+            IList<DestinationPatchProperties> destinationSettings = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("annotation"u8))
@@ -143,12 +143,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<NetworkTapPatchableParametersDestinationsItem> array = new List<NetworkTapPatchableParametersDestinationsItem>();
+                    List<DestinationPatchProperties> array = new List<DestinationPatchProperties>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkTapPatchableParametersDestinationsItem.DeserializeNetworkTapPatchableParametersDestinationsItem(item, options));
+                        array.Add(DestinationPatchProperties.DeserializeDestinationPatchProperties(item, options));
                     }
-                    destinations = array;
+                    destinationSettings = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NetworkTapPatchProperties(annotation, additionalBinaryDataProperties, pollingType, destinations ?? new ChangeTrackingList<NetworkTapPatchableParametersDestinationsItem>());
+            return new NetworkTapPatchProperties(annotation, additionalBinaryDataProperties, pollingType, destinationSettings ?? new ChangeTrackingList<DestinationPatchProperties>());
         }
     }
 }

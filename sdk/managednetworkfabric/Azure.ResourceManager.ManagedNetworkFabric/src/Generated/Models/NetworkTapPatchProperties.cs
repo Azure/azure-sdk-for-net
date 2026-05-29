@@ -17,24 +17,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="NetworkTapPatchProperties"/>. </summary>
         public NetworkTapPatchProperties()
         {
-            Destinations = new ChangeTrackingList<NetworkTapPatchableParametersDestinationsItem>();
+            DestinationSettings = new ChangeTrackingList<DestinationPatchProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkTapPatchProperties"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="pollingType"> Polling type. </param>
-        /// <param name="destinations"> List of destination properties to send the filter traffic. </param>
-        internal NetworkTapPatchProperties(string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkTapPollingType? pollingType, IList<NetworkTapPatchableParametersDestinationsItem> destinations) : base(annotation, additionalBinaryDataProperties)
+        /// <param name="destinationSettings"> List of destination properties to send the filter traffic. </param>
+        internal NetworkTapPatchProperties(string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkTapPollingType? pollingType, IList<DestinationPatchProperties> destinationSettings) : base(annotation, additionalBinaryDataProperties)
         {
             PollingType = pollingType;
-            Destinations = destinations;
+            DestinationSettings = destinationSettings;
         }
 
         /// <summary> Polling type. </summary>
         public NetworkTapPollingType? PollingType { get; set; }
 
         /// <summary> List of destination properties to send the filter traffic. </summary>
-        public IList<NetworkTapPatchableParametersDestinationsItem> Destinations { get; } = new ChangeTrackingList<NetworkTapPatchableParametersDestinationsItem>();
+        public IList<DestinationPatchProperties> DestinationSettings { get; } = new ChangeTrackingList<DestinationPatchProperties>();
     }
 }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="isManagementType"> Configuration to use NNI for Infrastructure Management. Example: True/False. </param>
         /// <param name="useOptionB"> Based on this option layer3 parameters are mandatory. Example: True/False. </param>
         /// <param name="layer2Configuration"> Common properties for Layer2 Configuration. </param>
-        /// <param name="optionBLayer3Configuration"> Common properties for Layer3Configuration. </param>
+        /// <param name="optionBLayer3Settings"> Common properties for Layer3Configuration. </param>
         /// <param name="npbStaticRouteConfiguration"> NPB Static Route Configuration properties. </param>
         /// <param name="staticRouteConfiguration"> Static Route Configuration. </param>
         /// <param name="importRoutePolicy"> Import Route Policy information. </param>
@@ -43,13 +43,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkToNetworkInterconnectProperties(NniType? nniType, IsManagementType? isManagementType, NetworkFabricBooleanValue useOptionB, Layer2Configuration layer2Configuration, NetworkToNetworkInterconnectOptionBLayer3Configuration optionBLayer3Configuration, NpbStaticRouteConfiguration npbStaticRouteConfiguration, NniStaticRouteConfiguration staticRouteConfiguration, ImportRoutePolicyInformation importRoutePolicy, ExportRoutePolicyInformation exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId, NetworkFabricMicroBfdState? microBfdState, ConditionalDefaultRouteProperties conditionalDefaultRouteConfiguration, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkToNetworkInterconnectProperties(NniType? nniType, IsManagementType? isManagementType, NetworkFabricBooleanValue useOptionB, Layer2Configuration layer2Configuration, OptionBLayer3Configuration optionBLayer3Settings, NpbStaticRouteConfiguration npbStaticRouteConfiguration, NniStaticRouteConfiguration staticRouteConfiguration, ImportRoutePolicyInformation importRoutePolicy, ExportRoutePolicyInformation exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId, NetworkFabricMicroBfdState? microBfdState, ConditionalDefaultRouteProperties conditionalDefaultRouteConfiguration, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NniType = nniType;
             IsManagementType = isManagementType;
             UseOptionB = useOptionB;
             Layer2Configuration = layer2Configuration;
-            OptionBLayer3Configuration = optionBLayer3Configuration;
+            OptionBLayer3Settings = optionBLayer3Settings;
             NpbStaticRouteConfiguration = npbStaticRouteConfiguration;
             StaticRouteConfiguration = staticRouteConfiguration;
             ImportRoutePolicy = importRoutePolicy;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public Layer2Configuration Layer2Configuration { get; set; }
 
         /// <summary> Common properties for Layer3Configuration. </summary>
-        public NetworkToNetworkInterconnectOptionBLayer3Configuration OptionBLayer3Configuration { get; set; }
+        public OptionBLayer3Configuration OptionBLayer3Settings { get; set; }
 
         /// <summary> NPB Static Route Configuration properties. </summary>
         public NpbStaticRouteConfiguration NpbStaticRouteConfiguration { get; set; }
