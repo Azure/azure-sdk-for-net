@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
-    internal partial class ClusterOperationSource : IOperationSource<ClusterResource>
+    internal partial class PolyDeviceResourceOperationSource : IOperationSource<PolyDeviceResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal ClusterOperationSource(ArmClient client)
+        internal PolyDeviceResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        ClusterResource IOperationSource<ClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PolyDeviceResource IOperationSource<PolyDeviceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ClusterData data = ClusterData.DeserializeClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ClusterResource(_client, data);
+            PolyDeviceData data = PolyDeviceData.DeserializePolyDeviceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new PolyDeviceResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<ClusterResource> IOperationSource<ClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PolyDeviceResource> IOperationSource<PolyDeviceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ClusterData data = ClusterData.DeserializeClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ClusterResource(_client, data);
+            PolyDeviceData data = PolyDeviceData.DeserializePolyDeviceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new PolyDeviceResource(_client, data);
         }
     }
 }

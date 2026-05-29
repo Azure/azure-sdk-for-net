@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
-    internal partial class WorkloadNetworksOperationSource : IOperationSource<WorkloadNetworksResource>
+    internal partial class ClusterResourceOperationSource : IOperationSource<ClusterResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal WorkloadNetworksOperationSource(ArmClient client)
+        internal ClusterResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        WorkloadNetworksResource IOperationSource<WorkloadNetworksResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ClusterResource IOperationSource<ClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            WorkloadNetworksData data = WorkloadNetworksData.DeserializeWorkloadNetworksData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new WorkloadNetworksResource(_client, data);
+            ClusterData data = ClusterData.DeserializeClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ClusterResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<WorkloadNetworksResource> IOperationSource<WorkloadNetworksResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ClusterResource> IOperationSource<ClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            WorkloadNetworksData data = WorkloadNetworksData.DeserializeWorkloadNetworksData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new WorkloadNetworksResource(_client, data);
+            ClusterData data = ClusterData.DeserializeClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ClusterResource(_client, data);
         }
     }
 }

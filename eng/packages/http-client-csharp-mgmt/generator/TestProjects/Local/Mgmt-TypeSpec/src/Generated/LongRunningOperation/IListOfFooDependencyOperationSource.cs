@@ -19,10 +19,10 @@ using Azure.Generator.MgmtTypeSpec.Tests.Models;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
-    internal partial class FooDependencyListOperationSource : IOperationSource<IList<FooDependency>>
+    internal partial class IListOfFooDependencyOperationSource : IOperationSource<IList<FooDependency>>
     {
         /// <summary></summary>
-        internal FooDependencyListOperationSource()
+        internal IListOfFooDependencyOperationSource()
         {
         }
 

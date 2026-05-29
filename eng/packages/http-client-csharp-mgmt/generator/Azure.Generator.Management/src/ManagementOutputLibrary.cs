@@ -447,11 +447,7 @@ namespace Azure.Generator.Management
             }
 
             // Always register a concrete return-type source for non-resource/list/primitive/dictionary fallback paths.
-            // When the return type name matches a resource name (e.g. SampleData -> SampleDataResource),
-            // force a unique fallback operation source name to avoid file/class collisions.
-            var hasNameCollisionWithResourceSource = resourceProviders.Any(r => r.ResourceName == returnCSharpType.Name);
-            var fallbackName = hasNameCollisionWithResourceSource ? $"{returnCSharpType.Name}TypeOperationSource" : null;
-            operationSources.TryAdd(returnCSharpType, new OperationSourceProvider(returnCSharpType, fallbackName));
+            operationSources.TryAdd(returnCSharpType, new OperationSourceProvider(returnCSharpType));
         }
 
         internal bool IsResourceModelType(CSharpType type) => GetResourceDataTypes().ContainsKey(type);

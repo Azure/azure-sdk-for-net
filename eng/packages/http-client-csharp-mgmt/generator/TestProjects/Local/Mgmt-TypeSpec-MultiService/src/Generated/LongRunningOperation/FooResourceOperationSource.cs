@@ -12,16 +12,16 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
 {
     /// <summary></summary>
-    internal partial class PolyDeviceOperationSource : IOperationSource<PolyDeviceResource>
+    internal partial class FooResourceOperationSource : IOperationSource<FooResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal PolyDeviceOperationSource(ArmClient client)
+        internal FooResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        PolyDeviceResource IOperationSource<PolyDeviceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        FooResource IOperationSource<FooResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            PolyDeviceData data = PolyDeviceData.DeserializePolyDeviceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new PolyDeviceResource(_client, data);
+            FooData data = FooData.DeserializeFooData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new FooResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<PolyDeviceResource> IOperationSource<PolyDeviceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<FooResource> IOperationSource<FooResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            PolyDeviceData data = PolyDeviceData.DeserializePolyDeviceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new PolyDeviceResource(_client, data);
+            FooData data = FooData.DeserializeFooData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new FooResource(_client, data);
         }
     }
 }

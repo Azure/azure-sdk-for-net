@@ -151,15 +151,15 @@ namespace Azure.Generator.Management.Tests.Providers
             var names = operationSourcesList.Select(os => os.Name).OrderBy(n => n).ToList();
 
             // Both resources should have their own OperationSource
-            Assert.That(names, Does.Contain("SiteOperationSource"), "Should have SiteResourceOperationSource");
-            Assert.That(names, Does.Contain("SitesBySubscriptionOperationSource"), "Should have SitesBySubscriptionResourceOperationSource");
+            Assert.That(names, Does.Contain("SiteResourceOperationSource"), "Should have SiteResourceOperationSource");
+            Assert.That(names, Does.Contain("SitesBySubscriptionResourceOperationSource"), "Should have SitesBySubscriptionResourceOperationSource");
             // And the fallback entry keyed by the shared data type should be registered as a non-resource OperationSource
             Assert.That(names, Does.Contain("SiteDataOperationSource"),
                 "Should have a fallback OperationSource keyed by the shared data type for the non-wrap LRO path");
 
             // Verify each OperationSource implements IOperationSource<CorrectResourceType>
-            var siteOperationSource = operationSourcesList.First(os => os.Name == "SiteOperationSource");
-            var sitesBySubOperationSource = operationSourcesList.First(os => os.Name == "SitesBySubscriptionOperationSource");
+            var siteOperationSource = operationSourcesList.First(os => os.Name == "SiteResourceOperationSource");
+            var sitesBySubOperationSource = operationSourcesList.First(os => os.Name == "SitesBySubscriptionResourceOperationSource");
 
             // Check that the OperationSource implements IOperationSource<T> with the correct T
             var siteImplements = siteOperationSource.Implements;
@@ -346,13 +346,13 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [TestCase]
-        public void Verify_ListResultType_UsesElementListOperationSourceName()
+        public void Verify_GenericResultType_UsesGenericOperationSourceName()
         {
             _ = ManagementMockHelpers.LoadMockPlugin();
 
             var provider = new OperationSourceProvider(new CSharpType(typeof(IList<>), typeof(string)));
 
-            Assert.That(provider.Name, Is.EqualTo("StringListOperationSource"));
+            Assert.That(provider.Name, Is.EqualTo("IListOfStringOperationSource"));
         }
 
         private static (MethodProvider CreateResult, MethodProvider CreateResultAsync) GetNonResourceFrameworkOperationSourceMethods()

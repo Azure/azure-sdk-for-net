@@ -11,7 +11,6 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
-using System.Collections.Generic;
 using System.ClientModel.Primitives;
 using System.IO;
 using System.Linq;
@@ -27,7 +26,6 @@ namespace Azure.Generator.Management.Providers
         private readonly ResourceClientProvider? _resource;
         private readonly CSharpType _resultType;
         private readonly CSharpType _operationSourceInterface;
-        private readonly string? _nonResourceNameOverride;
 
         private readonly FieldProvider? _clientField;
 
@@ -36,17 +34,15 @@ namespace Azure.Generator.Management.Providers
         {
             _resource = resource;
             _resultType = resource.Type;
-            _nonResourceNameOverride = null;
             _clientField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(ArmClient), "_client", this);
             _operationSourceInterface = new CSharpType(typeof(IOperationSource<>), _resultType);
         }
 
         // Constructor for non-resource types
-        public OperationSourceProvider(CSharpType resultType, string? nameOverride = null)
+        public OperationSourceProvider(CSharpType resultType)
         {
             _resource = null;
             _resultType = resultType;
-            _nonResourceNameOverride = nameOverride;
             _clientField = null;
             _operationSourceInterface = new CSharpType(typeof(IOperationSource<>), _resultType);
         }
@@ -55,12 +51,7 @@ namespace Azure.Generator.Management.Providers
         {
             if (_resource != null)
             {
-                return $"{_resource.ResourceName}OperationSource";
-            }
-
-            if (_nonResourceNameOverride != null)
-            {
-                return _nonResourceNameOverride;
+                return $"{_resource.Name}OperationSource";
             }
 
             var typeName = BuildTypeName(_resultType);
@@ -69,14 +60,6 @@ namespace Azure.Generator.Management.Providers
 
         private static string BuildTypeName(CSharpType type)
         {
-            if (type.IsFrameworkType &&
-                type.FrameworkType is { IsGenericType: true } frameworkType &&
-                frameworkType.GetGenericTypeDefinition() == typeof(IList<>) &&
-                type.Arguments.Count == 1)
-            {
-                return $"{BuildTypeName(type.Arguments[0])}List";
-            }
-
             var argumentNames = string.Join("", type.Arguments.Select(BuildTypeName));
             return $"{type.Name}{(argumentNames.Length > 0 ? "Of" : string.Empty)}{argumentNames}";
         }

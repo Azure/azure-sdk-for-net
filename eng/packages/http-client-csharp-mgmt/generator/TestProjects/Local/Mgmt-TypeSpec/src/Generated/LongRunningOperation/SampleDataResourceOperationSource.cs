@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
-    internal partial class SAPVirtualInstanceOperationSource : IOperationSource<SAPVirtualInstanceResource>
+    internal partial class SampleDataResourceOperationSource : IOperationSource<SampleDataResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal SAPVirtualInstanceOperationSource(ArmClient client)
+        internal SampleDataResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        SAPVirtualInstanceResource IOperationSource<SAPVirtualInstanceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SampleDataResource IOperationSource<SampleDataResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            SAPVirtualInstanceData data = SAPVirtualInstanceData.DeserializeSAPVirtualInstanceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new SAPVirtualInstanceResource(_client, data);
+            SampleData data = SampleData.DeserializeSampleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SampleDataResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<SAPVirtualInstanceResource> IOperationSource<SAPVirtualInstanceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SampleDataResource> IOperationSource<SampleDataResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            SAPVirtualInstanceData data = SAPVirtualInstanceData.DeserializeSAPVirtualInstanceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new SAPVirtualInstanceResource(_client, data);
+            SampleData data = SampleData.DeserializeSampleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SampleDataResource(_client, data);
         }
     }
 }

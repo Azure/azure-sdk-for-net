@@ -12,16 +12,16 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
 {
     /// <summary></summary>
-    internal partial class WorkloadNetworkSegmentOperationSource : IOperationSource<WorkloadNetworkSegmentResource>
+    internal partial class BarResourceOperationSource : IOperationSource<BarResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal WorkloadNetworkSegmentOperationSource(ArmClient client)
+        internal BarResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        WorkloadNetworkSegmentResource IOperationSource<WorkloadNetworkSegmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        BarResource IOperationSource<BarResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            WorkloadNetworkSegmentData data = WorkloadNetworkSegmentData.DeserializeWorkloadNetworkSegmentData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new WorkloadNetworkSegmentResource(_client, data);
+            BarData data = BarData.DeserializeBarData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new BarResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<WorkloadNetworkSegmentResource> IOperationSource<WorkloadNetworkSegmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<BarResource> IOperationSource<BarResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            WorkloadNetworkSegmentData data = WorkloadNetworkSegmentData.DeserializeWorkloadNetworkSegmentData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new WorkloadNetworkSegmentResource(_client, data);
+            BarData data = BarData.DeserializeBarData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new BarResource(_client, data);
         }
     }
 }

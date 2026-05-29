@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
-    internal partial class EventGridDomainOperationSource : IOperationSource<EventGridDomainResource>
+    internal partial class BazResourceOperationSource : IOperationSource<BazResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal EventGridDomainOperationSource(ArmClient client)
+        internal BazResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        EventGridDomainResource IOperationSource<EventGridDomainResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        BazResource IOperationSource<BazResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            EventGridDomainData data = EventGridDomainData.DeserializeEventGridDomainData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new EventGridDomainResource(_client, data);
+            BazData data = BazData.DeserializeBazData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new BazResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<EventGridDomainResource> IOperationSource<EventGridDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<BazResource> IOperationSource<BazResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            EventGridDomainData data = EventGridDomainData.DeserializeEventGridDomainData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new EventGridDomainResource(_client, data);
+            BazData data = BazData.DeserializeBazData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new BazResource(_client, data);
         }
     }
 }
