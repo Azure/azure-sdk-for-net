@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DurableTask
                 HttpMessage message = _schedulersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DurableTaskSchedulerPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DurableTaskArmOperation<DurableTaskSchedulerResource> operation = new DurableTaskArmOperation<DurableTaskSchedulerResource>(
-                    new DurableTaskSchedulerOperationSource(Client),
+                    new DurableTaskSchedulerResourceOperationSource(Client),
                     _schedulersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DurableTask
                 HttpMessage message = _schedulersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DurableTaskSchedulerPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DurableTaskArmOperation<DurableTaskSchedulerResource> operation = new DurableTaskArmOperation<DurableTaskSchedulerResource>(
-                    new DurableTaskSchedulerOperationSource(Client),
+                    new DurableTaskSchedulerResourceOperationSource(Client),
                     _schedulersClientDiagnostics,
                     Pipeline,
                     message.Request,
