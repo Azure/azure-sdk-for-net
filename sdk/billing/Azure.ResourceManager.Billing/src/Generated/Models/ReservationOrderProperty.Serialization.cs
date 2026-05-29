@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
@@ -218,9 +219,9 @@ namespace Azure.ResourceManager.Billing.Models
             }
             string displayName = default;
             string enrollmentId = default;
-            string customerId = default;
-            string billingProfileId = default;
-            string billingAccountId = default;
+            ResourceIdentifier customerId = default;
+            ResourceIdentifier billingProfileId = default;
+            ResourceIdentifier billingAccountId = default;
             DateTimeOffset? requestOn = default;
             DateTimeOffset? createdOn = default;
             DateTimeOffset? expireOn = default;
@@ -250,17 +251,29 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (prop.NameEquals("customerId"u8))
                 {
-                    customerId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customerId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("billingProfileId"u8))
                 {
-                    billingProfileId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingProfileId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("billingAccountId"u8))
                 {
-                    billingAccountId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingAccountId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("requestDateTime"u8))

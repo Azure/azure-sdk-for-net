@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The array of validation results. </summary>
-        public IList<BillingTransferValidationResultProperties> Results
+        public IReadOnlyList<BillingTransferValidationResultProperties> Results
         {
             get
             {

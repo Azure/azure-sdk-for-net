@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of <see cref="BillingAccountPropertiesRegistrationNumber"/>. </summary>
         /// <param name="id"> The unique identification number of the organization linked with the billing account. </param>
         /// <param name="isRequired"> Identifies if the registration number is required for the billing account. </param>
-        /// <param name="type"> The types of registration number allowed based on the country of the billing account. </param>
+        /// <param name="registrationNumberType"> The types of registration number allowed based on the country of the billing account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingAccountPropertiesRegistrationNumber(string id, bool? isRequired, IReadOnlyList<string> @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, isRequired, @type, additionalBinaryDataProperties)
+        internal BillingAccountPropertiesRegistrationNumber(string id, bool? isRequired, IReadOnlyList<string> registrationNumberType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, isRequired, registrationNumberType, additionalBinaryDataProperties)
         {
         }
     }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Billing
     /// <summary>
     /// A class representing a BillingRoleDefinition along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingRoleDefinitionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EnrollmentAccountResource"/> using the GetBillingRoleDefinitions method.
+    /// Otherwise you can get one from its parent resource <see cref="BillingAccountResource"/> using the GetBillingRoleDefinitions method.
     /// </summary>
     public partial class BillingRoleDefinitionResource : ArmResource
     {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Billing
         private readonly BillingRoleDefinition _billingRoleDefinitionRestClient;
         private readonly BillingRoleDefinitionData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/enrollmentAccounts/billingRoleDefinitions";
+        public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/billingRoleDefinitions";
 
         /// <summary> Initializes a new instance of BillingRoleDefinitionResource for mocking. </summary>
         protected BillingRoleDefinitionResource()
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BillingRoleDefinitionResource(ArmClient client, BillingRoleDefinitionData data) : this(client, data.Id)
         {
-            this.HasData = true;
+            HasData = true;
             _data = data;
         }
 
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Billing
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingRoleDefinitionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            this.TryGetApiVersion(ResourceType, out string billingRoleDefinitionApiVersion);
+            TryGetApiVersion(ResourceType, out string billingRoleDefinitionApiVersion);
             _billingRoleDefinitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
             _billingRoleDefinitionRestClient = new BillingRoleDefinition(_billingRoleDefinitionClientDiagnostics, Pipeline, Endpoint, billingRoleDefinitionApiVersion ?? "2024-04-01");
-            BillingRoleDefinitionResource.ValidateResourceId(id);
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
@@ -72,11 +72,10 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="billingAccountName"> The billingAccountName. </param>
-        /// <param name="enrollmentAccountName"> The enrollmentAccountName. </param>
         /// <param name="roleDefinitionName"> The roleDefinitionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string enrollmentAccountName, string roleDefinitionName)
+        public static ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string roleDefinitionName)
         {
-            string resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions/{roleDefinitionName}";
+            string resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingRoleDefinitions/{roleDefinitionName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -91,15 +90,15 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Gets the definition for a role on an enrollment account. The operation is supported for billing accounts with agreement type Enterprise Agreement.
+        /// Gets the definition for a role on a billing account. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement, Microsoft Customer Agreement or Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions/{roleDefinitionName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingRoleDefinitions/{roleDefinitionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingRoleDefinitionByEnrollmentAccount_GetByEnrollmentAccount. </description>
+        /// <description> BillingRoleDefinitionByBillingAccount_GetByBillingAccount. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -122,7 +121,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByBillingAccountRequest(Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingRoleDefinitionData> response = Response.FromValue(BillingRoleDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -139,15 +138,15 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Gets the definition for a role on an enrollment account. The operation is supported for billing accounts with agreement type Enterprise Agreement.
+        /// Gets the definition for a role on a billing account. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement, Microsoft Customer Agreement or Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions/{roleDefinitionName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingRoleDefinitions/{roleDefinitionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingRoleDefinitionByEnrollmentAccount_GetByEnrollmentAccount. </description>
+        /// <description> BillingRoleDefinitionByBillingAccount_GetByBillingAccount. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -170,7 +169,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByBillingAccountRequest(Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingRoleDefinitionData> response = Response.FromValue(BillingRoleDefinitionData.FromResponse(result), result);
                 if (response.Value == null)

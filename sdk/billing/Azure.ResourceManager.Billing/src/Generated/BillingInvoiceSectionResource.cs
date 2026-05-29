@@ -1591,11 +1591,11 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary> Gets a collection of BillingRoleAssignments in the <see cref="BillingInvoiceSectionResource"/>. </summary>
-        /// <returns> An object representing collection of BillingRoleAssignments and their operations over a BillingRoleAssignmentResource. </returns>
-        public virtual BillingRoleAssignmentCollection GetBillingRoleAssignments()
+        /// <summary> Gets a collection of BillingInvoiceSectionRoleAssignments in the <see cref="BillingInvoiceSectionResource"/>. </summary>
+        /// <returns> An object representing collection of BillingInvoiceSectionRoleAssignments and their operations over a BillingInvoiceSectionRoleAssignmentResource. </returns>
+        public virtual BillingInvoiceSectionRoleAssignmentCollection GetBillingInvoiceSectionRoleAssignments()
         {
-            return this.GetCachedClient(client => new BillingRoleAssignmentCollection(client, Id));
+            return GetCachedClient(client => new BillingInvoiceSectionRoleAssignmentCollection(client, Id));
         }
 
         /// <summary> Gets a role assignment for the caller on an invoice section. The operation is supported for billing accounts with agreement type Microsoft Customer Agreement. </summary>
@@ -1604,11 +1604,11 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="billingRoleAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BillingRoleAssignmentResource>> GetBillingRoleAssignmentAsync(string billingRoleAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingInvoiceSectionRoleAssignmentResource>> GetBillingInvoiceSectionRoleAssignmentAsync(string billingRoleAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingRoleAssignmentName, nameof(billingRoleAssignmentName));
 
-            return await GetBillingRoleAssignments().GetAsync(billingRoleAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetBillingInvoiceSectionRoleAssignments().GetAsync(billingRoleAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a role assignment for the caller on an invoice section. The operation is supported for billing accounts with agreement type Microsoft Customer Agreement. </summary>
@@ -1617,18 +1617,18 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="billingRoleAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BillingRoleAssignmentResource> GetBillingRoleAssignment(string billingRoleAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<BillingInvoiceSectionRoleAssignmentResource> GetBillingInvoiceSectionRoleAssignment(string billingRoleAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingRoleAssignmentName, nameof(billingRoleAssignmentName));
 
-            return GetBillingRoleAssignments().Get(billingRoleAssignmentName, cancellationToken);
+            return GetBillingInvoiceSectionRoleAssignments().Get(billingRoleAssignmentName, cancellationToken);
         }
 
         /// <summary> Gets a collection of BillingTransferDetails in the <see cref="BillingInvoiceSectionResource"/>. </summary>
-        /// <returns> An object representing collection of BillingTransferDetails and their operations over a BillingTransferDetailsResource. </returns>
-        public virtual BillingTransferDetailsCollection GetAllBillingTransferDetails()
+        /// <returns> An object representing collection of BillingTransferDetails and their operations over a BillingTransferDetailResource. </returns>
+        public virtual BillingTransferDetailCollection GetBillingTransferDetails()
         {
-            return GetCachedClient(client => new BillingTransferDetailsCollection(client, Id));
+            return GetCachedClient(client => new BillingTransferDetailCollection(client, Id));
         }
 
         /// <summary> Gets a transfer request by ID. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement. </summary>
@@ -1637,11 +1637,11 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="transferName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BillingTransferDetailsResource>> GetBillingTransferDetailsAsync(string transferName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingTransferDetailResource>> GetBillingTransferDetailAsync(string transferName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transferName, nameof(transferName));
 
-            return await GetAllBillingTransferDetails().GetAsync(transferName, cancellationToken).ConfigureAwait(false);
+            return await GetBillingTransferDetails().GetAsync(transferName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a transfer request by ID. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement. </summary>
@@ -1650,31 +1650,18 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="transferName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BillingTransferDetailsResource> GetBillingTransferDetails(string transferName, CancellationToken cancellationToken = default)
+        public virtual Response<BillingTransferDetailResource> GetBillingTransferDetail(string transferName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transferName, nameof(transferName));
 
-            return GetAllBillingTransferDetails().Get(transferName, cancellationToken);
+            return GetBillingTransferDetails().Get(transferName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BillingRoleDefinitions in the <see cref="BillingInvoiceSectionResource"/>. </summary>
-        /// <returns> An object representing collection of BillingRoleDefinitions and their operations over a BillingRoleDefinitionResource. </returns>
-        public virtual BillingRoleDefinitionCollection GetBillingRoleDefinitions()
+        /// <summary> Gets a collection of BillingInvoiceSectionRoleDefinitions in the <see cref="BillingInvoiceSectionResource"/>. </summary>
+        /// <returns> An object representing collection of BillingInvoiceSectionRoleDefinitions and their operations over a BillingInvoiceSectionRoleDefinitionResource. </returns>
+        public virtual BillingInvoiceSectionRoleDefinitionCollection GetBillingInvoiceSectionRoleDefinitions()
         {
-            return this.GetCachedClient(client => new BillingRoleDefinitionCollection(client, Id));
-        }
-
-        /// <summary> Gets the definition for a role on an invoice section. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement. </summary>
-        /// <param name="roleDefinitionName"> The ID that uniquely identifies a role definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BillingRoleDefinitionResource>> GetBillingRoleDefinitionAsync(string roleDefinitionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
-
-            return await GetBillingRoleDefinitions().GetAsync(roleDefinitionName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new BillingInvoiceSectionRoleDefinitionCollection(client, Id));
         }
 
         /// <summary> Gets the definition for a role on an invoice section. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement. </summary>
@@ -1683,11 +1670,24 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BillingRoleDefinitionResource> GetBillingRoleDefinition(string roleDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingInvoiceSectionRoleDefinitionResource>> GetBillingInvoiceSectionRoleDefinitionAsync(string roleDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
 
-            return GetBillingRoleDefinitions().Get(roleDefinitionName, cancellationToken);
+            return await GetBillingInvoiceSectionRoleDefinitions().GetAsync(roleDefinitionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the definition for a role on an invoice section. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement. </summary>
+        /// <param name="roleDefinitionName"> The ID that uniquely identifies a role definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BillingInvoiceSectionRoleDefinitionResource> GetBillingInvoiceSectionRoleDefinition(string roleDefinitionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
+
+            return GetBillingInvoiceSectionRoleDefinitions().Get(roleDefinitionName, cancellationToken);
         }
     }
 }

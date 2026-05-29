@@ -17,11 +17,11 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> A transaction. </summary>
-    public partial class BillingTransactionData : ProxyResourceWithTags, IJsonModel<BillingTransactionData>
+    public partial class BillingTransactionData : ResourceData, IJsonModel<BillingTransactionData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BillingTransactionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BillingTransactionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -83,6 +83,22 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -91,7 +107,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BillingTransactionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -115,8 +131,8 @@ namespace Azure.ResourceManager.Billing.Models
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IDictionary<string, string> tags = default;
             BillingTransactionProperties properties = default;
+            IDictionary<string, string> tags = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -151,6 +167,15 @@ namespace Azure.ResourceManager.Billing.Models
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerBillingContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = BillingTransactionProperties.DeserializeBillingTransactionProperties(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -172,15 +197,6 @@ namespace Azure.ResourceManager.Billing.Models
                     tags = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = BillingTransactionProperties.DeserializeBillingTransactionProperties(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -192,8 +208,8 @@ namespace Azure.ResourceManager.Billing.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                properties);
+                properties,
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

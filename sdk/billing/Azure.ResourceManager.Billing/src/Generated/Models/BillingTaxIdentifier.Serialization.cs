@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(IdentifierType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(IdentifierType.Value.ToString());
             }
             if (Optional.IsDefined(Scope))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Billing.Models
                 return null;
             }
             string id = default;
-            BillingTaxIdentifierType? @type = default;
+            BillingTaxIdentifierType? identifierType = default;
             string scope = default;
             string country = default;
             BillingTaxIdentifierStatus? status = default;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    @type = new BillingTaxIdentifierType(prop.Value.GetString());
+                    identifierType = new BillingTaxIdentifierType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("scope"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Billing.Models
             }
             return new BillingTaxIdentifier(
                 id,
-                @type,
+                identifierType,
                 scope,
                 country,
                 status,

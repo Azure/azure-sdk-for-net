@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="paymentMethodType"> The type of payment method. </param>
         /// <param name="status"> Status of the payment method. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PaymentMethodLinkProperties(string accountHolderName, string displayName, string expiration, PaymentMethodFamily? family, string lastFourDigits, IReadOnlyList<PaymentMethodLogo> logos, PaymentMethodProjectionProperties paymentMethod, string paymentMethodId, string paymentMethodType, PaymentMethodStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PaymentMethodLinkProperties(string accountHolderName, string displayName, string expiration, PaymentMethodFamily? family, string lastFourDigits, IReadOnlyList<PaymentMethodLogo> logos, PaymentMethodProjectionProperties paymentMethod, ResourceIdentifier paymentMethodId, string paymentMethodType, PaymentMethodStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccountHolderName = accountHolderName;
             DisplayName = displayName;
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Billing.Models
         public PaymentMethodProjectionProperties PaymentMethod { get; set; }
 
         /// <summary> Id of payment method. Example: /providers/Microsoft.Billing/paymentMethods/ABCDABCDABC0. </summary>
-        public string PaymentMethodId { get; set; }
+        public ResourceIdentifier PaymentMethodId { get; set; }
 
         /// <summary> The type of payment method. </summary>
         public string PaymentMethodType { get; }

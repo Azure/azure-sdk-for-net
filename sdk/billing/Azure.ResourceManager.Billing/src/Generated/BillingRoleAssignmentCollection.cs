@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Billing
 {
     /// <summary>
     /// A class representing a collection of <see cref="BillingRoleAssignmentResource"/> and their operations.
-    /// Each <see cref="BillingRoleAssignmentResource"/> in the collection will belong to the same instance of <see cref="EnrollmentAccountResource"/>.
-    /// To get a <see cref="BillingRoleAssignmentCollection"/> instance call the GetBillingRoleAssignments method from an instance of <see cref="EnrollmentAccountResource"/>.
+    /// Each <see cref="BillingRoleAssignmentResource"/> in the collection will belong to the same instance of <see cref="BillingAccountResource"/>.
+    /// To get a <see cref="BillingRoleAssignmentCollection"/> instance call the GetBillingRoleAssignments method from an instance of <see cref="BillingAccountResource"/>.
     /// </summary>
     public partial class BillingRoleAssignmentCollection : ArmCollection, IEnumerable<BillingRoleAssignmentResource>, IAsyncEnumerable<BillingRoleAssignmentResource>
     {
@@ -38,19 +38,19 @@ namespace Azure.ResourceManager.Billing
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingRoleAssignmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            this.TryGetApiVersion(BillingRoleAssignmentResource.ResourceType, out string billingRoleAssignmentApiVersion);
+            TryGetApiVersion(BillingRoleAssignmentResource.ResourceType, out string billingRoleAssignmentApiVersion);
             _billingRoleAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingRoleAssignmentResource.ResourceType.Namespace, Diagnostics);
             _billingRoleAssignmentsRestClient = new BillingRoleAssignments(_billingRoleAssignmentsClientDiagnostics, Pipeline, Endpoint, billingRoleAssignmentApiVersion ?? "2024-04-01");
-            BillingRoleAssignmentCollection.ValidateResourceId(id);
+            ValidateResourceId(id);
         }
 
         /// <param name="id"></param>
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != EnrollmentAccountResource.ResourceType)
+            if (id.ResourceType != BillingAccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EnrollmentAccountResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BillingAccountResource.ResourceType), nameof(id));
             }
         }
 
@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.Billing
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingRoleAssignmentByEnrollmentAccount_CreateOrUpdateByEnrollmentAccount. </description>
+        /// <description> BillingRoleAssignmentByBillingAccount_CreateOrUpdateByBillingAccount. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleAssignmentsRestClient.CreateCreateOrUpdateByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, BillingRoleAssignmentData.ToRequestContent(data), context);
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateCreateOrUpdateByBillingAccountRequest(Id.Name, billingRoleAssignmentName, BillingRoleAssignmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingRoleAssignmentResource> operation = new BillingArmOperation<BillingRoleAssignmentResource>(
                     new BillingRoleAssignmentOperationSource(Client),
@@ -117,11 +117,11 @@ namespace Azure.ResourceManager.Billing
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingRoleAssignmentByEnrollmentAccount_CreateOrUpdateByEnrollmentAccount. </description>
+        /// <description> BillingRoleAssignmentByBillingAccount_CreateOrUpdateByBillingAccount. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleAssignmentsRestClient.CreateCreateOrUpdateByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, BillingRoleAssignmentData.ToRequestContent(data), context);
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateCreateOrUpdateByBillingAccountRequest(Id.Name, billingRoleAssignmentName, BillingRoleAssignmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingRoleAssignmentResource> operation = new BillingArmOperation<BillingRoleAssignmentResource>(
                     new BillingRoleAssignmentOperationSource(Client),
@@ -171,15 +171,15 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Gets a role assignment for the caller on a enrollment Account. The operation is supported only for billing accounts with agreement type Enterprise Agreement.
+        /// Gets a role assignment for the caller on a billing account. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement, Microsoft Customer Agreement or Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingRoleAssignmentByEnrollmentAccount_GetByEnrollmentAccount. </description>
+        /// <description> BillingRoleAssignmentByBillingAccount_GetByBillingAccount. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, context);
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByBillingAccountRequest(Id.Name, billingRoleAssignmentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingRoleAssignmentData> response = Response.FromValue(BillingRoleAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,15 +220,15 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Gets a role assignment for the caller on a enrollment Account. The operation is supported only for billing accounts with agreement type Enterprise Agreement.
+        /// Gets a role assignment for the caller on a billing account. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement, Microsoft Customer Agreement or Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingRoleAssignmentByEnrollmentAccount_GetByEnrollmentAccount. </description>
+        /// <description> BillingRoleAssignmentByBillingAccount_GetByBillingAccount. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, context);
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByBillingAccountRequest(Id.Name, billingRoleAssignmentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingRoleAssignmentData> response = Response.FromValue(BillingRoleAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -269,15 +269,15 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Lists the role assignments for the caller on a enrollment account. The operation is supported for billing accounts of type Enterprise Agreement.
+        /// Lists the role assignments for the caller on a billing account. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement, Microsoft Customer Agreement or Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleAssignments. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingRoleAssignments. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingRoleAssignmentByEnrollmentAccount_ListByEnrollmentAccount. </description>
+        /// <description> BillingRoleAssignmentByBillingAccount_ListByBillingAccount. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -285,27 +285,37 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingRoleAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingRoleAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BillingRoleAssignmentResource> GetAllAsync(string filter = default, long? maxCount = default, long? skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingRoleAssignmentData, BillingRoleAssignmentResource>(new BillingRoleAssignmentsGetByEnrollmentAccountAsyncCollectionResultOfT(_billingRoleAssignmentsRestClient, Id.Parent.Name, Id.Name, context, "BillingRoleAssignmentCollection.GetAll"), data => new BillingRoleAssignmentResource(Client, data));
+            return new AsyncPageableWrapper<BillingRoleAssignmentData, BillingRoleAssignmentResource>(new BillingRoleAssignmentsGetByBillingAccountAsyncCollectionResultOfT(
+                _billingRoleAssignmentsRestClient,
+                Id.Name,
+                filter,
+                maxCount,
+                skip,
+                context,
+                "BillingRoleAssignmentCollection.GetAll"), data => new BillingRoleAssignmentResource(Client, data));
         }
 
         /// <summary>
-        /// Lists the role assignments for the caller on a enrollment account. The operation is supported for billing accounts of type Enterprise Agreement.
+        /// Lists the role assignments for the caller on a billing account. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement, Microsoft Customer Agreement or Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleAssignments. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingRoleAssignments. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingRoleAssignmentByEnrollmentAccount_ListByEnrollmentAccount. </description>
+        /// <description> BillingRoleAssignmentByBillingAccount_ListByBillingAccount. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -313,15 +323,25 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingRoleAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingRoleAssignmentResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<BillingRoleAssignmentResource> GetAll(string filter = default, long? maxCount = default, long? skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingRoleAssignmentData, BillingRoleAssignmentResource>(new BillingRoleAssignmentsGetByEnrollmentAccountCollectionResultOfT(_billingRoleAssignmentsRestClient, Id.Parent.Name, Id.Name, context, "BillingRoleAssignmentCollection.GetAll"), data => new BillingRoleAssignmentResource(Client, data));
+            return new PageableWrapper<BillingRoleAssignmentData, BillingRoleAssignmentResource>(new BillingRoleAssignmentsGetByBillingAccountCollectionResultOfT(
+                _billingRoleAssignmentsRestClient,
+                Id.Name,
+                filter,
+                maxCount,
+                skip,
+                context,
+                "BillingRoleAssignmentCollection.GetAll"), data => new BillingRoleAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -329,11 +349,11 @@ namespace Azure.ResourceManager.Billing
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingRoleAssignmentByEnrollmentAccount_GetByEnrollmentAccount. </description>
+        /// <description> BillingRoleAssignmentByBillingAccount_GetByBillingAccount. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -357,7 +377,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, context);
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByBillingAccountRequest(Id.Name, billingRoleAssignmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingRoleAssignmentData> response = default;
@@ -386,11 +406,11 @@ namespace Azure.ResourceManager.Billing
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingRoleAssignmentByEnrollmentAccount_GetByEnrollmentAccount. </description>
+        /// <description> BillingRoleAssignmentByBillingAccount_GetByBillingAccount. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -414,7 +434,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, context);
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByBillingAccountRequest(Id.Name, billingRoleAssignmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingRoleAssignmentData> response = default;
@@ -443,11 +463,11 @@ namespace Azure.ResourceManager.Billing
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingRoleAssignmentByEnrollmentAccount_GetByEnrollmentAccount. </description>
+        /// <description> BillingRoleAssignmentByBillingAccount_GetByBillingAccount. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -471,7 +491,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, context);
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByBillingAccountRequest(Id.Name, billingRoleAssignmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingRoleAssignmentData> response = default;
@@ -504,11 +524,11 @@ namespace Azure.ResourceManager.Billing
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingRoleAssignments/{billingRoleAssignmentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BillingRoleAssignmentByEnrollmentAccount_GetByEnrollmentAccount. </description>
+        /// <description> BillingRoleAssignmentByBillingAccount_GetByBillingAccount. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -532,7 +552,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, context);
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByBillingAccountRequest(Id.Name, billingRoleAssignmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingRoleAssignmentData> response = default;
@@ -562,18 +582,18 @@ namespace Azure.ResourceManager.Billing
 
         IEnumerator<BillingRoleAssignmentResource> IEnumerable<BillingRoleAssignmentResource>.GetEnumerator()
         {
-            return this.GetAll().GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetAll().GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<BillingRoleAssignmentResource> IAsyncEnumerable<BillingRoleAssignmentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return this.GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

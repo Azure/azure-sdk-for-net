@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="extendedStatusInfo"> Extended status information. </param>
         /// <param name="productCode"> Represents UPN. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SavingsPlanModelProperties(string displayName, BillingProvisioningState? provisioningState, string displayProvisioningState, string userFriendlyAppliedScopeType, string billingScopeId, string billingProfileId, string customerId, string billingAccountId, BillingSavingsPlanTerm? term, bool? isRenewed, string renewSource, string renewDestination, BillingRenewProperties renewProperties, BillingPlan? billingPlan, BillingAppliedScopeType? appliedScopeType, BillingAppliedScopeProperties appliedScopeProperties, BillingBenefitCommitment commitment, DateTimeOffset? effectiveOn, DateTimeOffset? benefitStartOn, DateTimeOffset? expiryOn, DateTimeOffset? purchaseOn, SavingsPlanUtilization utilization, ExtendedStatusInfo extendedStatusInfo, string productCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SavingsPlanModelProperties(string displayName, BillingProvisioningState? provisioningState, string displayProvisioningState, string userFriendlyAppliedScopeType, string billingScopeId, ResourceIdentifier billingProfileId, ResourceIdentifier customerId, ResourceIdentifier billingAccountId, BillingSavingsPlanTerm? term, bool? isRenewed, string renewSource, string renewDestination, BillingRenewProperties renewProperties, BillingPlan? billingPlan, BillingAppliedScopeType? appliedScopeType, BillingAppliedScopeProperties appliedScopeProperties, BillingBenefitCommitment commitment, DateTimeOffset? effectiveOn, DateTimeOffset? benefitStartOn, DateTimeOffset? expiryOn, DateTimeOffset? purchaseOn, SavingsPlanUtilization utilization, ExtendedStatusInfo extendedStatusInfo, string productCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             ProvisioningState = provisioningState;
@@ -92,13 +93,13 @@ namespace Azure.ResourceManager.Billing.Models
         public string BillingScopeId { get; set; }
 
         /// <summary> Fully-qualified identifier of the billing profile where the savings plan is applied. Present only for Field-led or Customer-led customers. </summary>
-        public string BillingProfileId { get; }
+        public ResourceIdentifier BillingProfileId { get; }
 
         /// <summary> Fully-qualified identifier of the customer where the savings plan is applied. Present only for Partner-led customers. </summary>
-        public string CustomerId { get; }
+        public ResourceIdentifier CustomerId { get; }
 
         /// <summary> Fully-qualified identifier of the billing account where the savings plan is applied. </summary>
-        public string BillingAccountId { get; }
+        public ResourceIdentifier BillingAccountId { get; }
 
         /// <summary> Represents the Savings plan term in ISO 8601 format. </summary>
         public BillingSavingsPlanTerm? Term { get; set; }

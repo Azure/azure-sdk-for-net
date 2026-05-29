@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AvailableBalanceResource(ArmClient client, BillingAvailableBalanceData data) : this(client, data.Id)
         {
-            this.HasData = true;
+            HasData = true;
             _data = data;
         }
 
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Billing
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AvailableBalanceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            this.TryGetApiVersion(ResourceType, out string availableBalanceApiVersion);
+            TryGetApiVersion(ResourceType, out string availableBalanceApiVersion);
             _availableBalancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
             _availableBalancesRestClient = new AvailableBalances(_availableBalancesClientDiagnostics, Pipeline, Endpoint, availableBalanceApiVersion ?? "2024-04-01");
-            AvailableBalanceResource.ValidateResourceId(id);
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>

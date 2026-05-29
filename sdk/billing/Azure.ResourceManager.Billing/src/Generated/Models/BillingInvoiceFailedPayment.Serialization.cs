@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 throw new FormatException($"The model {nameof(BillingInvoiceFailedPayment)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Date))
+            if (options.Format != "W" && Optional.IsDefined(On))
             {
                 writer.WritePropertyName("date"u8);
-                writer.WriteStringValue(Date.Value, "O");
+                writer.WriteStringValue(On.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(FailedPaymentReason))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            DateTimeOffset? date = default;
+            DateTimeOffset? @on = default;
             BillingInvoiceFailedPaymentReason? failedPaymentReason = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    date = prop.Value.GetDateTimeOffset("O");
+                    @on = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("failedPaymentReason"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Billing.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BillingInvoiceFailedPayment(date, failedPaymentReason, additionalBinaryDataProperties);
+            return new BillingInvoiceFailedPayment(@on, failedPaymentReason, additionalBinaryDataProperties);
         }
     }
 }

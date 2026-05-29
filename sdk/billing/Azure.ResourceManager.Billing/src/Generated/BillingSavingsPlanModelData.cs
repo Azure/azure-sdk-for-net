@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Fully-qualified identifier of the billing profile where the savings plan is applied. Present only for Field-led or Customer-led customers. </summary>
-        public string BillingProfileId
+        public ResourceIdentifier BillingProfileId
         {
             get
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Fully-qualified identifier of the customer where the savings plan is applied. Present only for Partner-led customers. </summary>
-        public string CustomerId
+        public ResourceIdentifier CustomerId
         {
             get
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Fully-qualified identifier of the billing account where the savings plan is applied. </summary>
-        public string BillingAccountId
+        public ResourceIdentifier BillingAccountId
         {
             get
             {

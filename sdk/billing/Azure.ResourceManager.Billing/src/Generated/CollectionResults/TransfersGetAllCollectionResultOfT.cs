@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    internal partial class TransfersGetAllCollectionResultOfT : Pageable<BillingTransferDetailsData>
+    internal partial class TransfersGetAllCollectionResultOfT : Pageable<BillingTransferDetailData>
     {
         private readonly Transfers _client;
         private readonly string _billingAccountName;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of TransfersGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<BillingTransferDetailsData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<BillingTransferDetailData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Billing
                     yield break;
                 }
                 TransferDetailsListResult result = TransferDetailsListResult.FromResponse(response);
-                yield return Page<BillingTransferDetailsData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<BillingTransferDetailData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of <see cref="BillingRegistrationNumber"/>. </summary>
         public BillingRegistrationNumber()
         {
-            Type = new ChangeTrackingList<string>();
+            RegistrationNumberType = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingRegistrationNumber"/>. </summary>
         /// <param name="id"> The unique identification number of the organization linked with the billing account. </param>
         /// <param name="isRequired"> Identifies if the registration number is required for the billing account. </param>
-        /// <param name="type"> The types of registration number allowed based on the country of the billing account. </param>
+        /// <param name="registrationNumberType"> The types of registration number allowed based on the country of the billing account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingRegistrationNumber(string id, bool? isRequired, IReadOnlyList<string> @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingRegistrationNumber(string id, bool? isRequired, IReadOnlyList<string> registrationNumberType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             IsRequired = isRequired;
-            Type = @type;
+            RegistrationNumberType = registrationNumberType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.Billing.Models
         public bool? IsRequired { get; }
 
         /// <summary> The types of registration number allowed based on the country of the billing account. </summary>
-        public IReadOnlyList<string> Type { get; }
+        public IReadOnlyList<string> RegistrationNumberType { get; }
     }
 }

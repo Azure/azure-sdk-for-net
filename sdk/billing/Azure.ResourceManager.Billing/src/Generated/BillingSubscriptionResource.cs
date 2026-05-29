@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BillingSubscriptionResource(ArmClient client, BillingSubscriptionData data) : this(client, data.Id)
         {
-            this.HasData = true;
+            HasData = true;
             _data = data;
         }
 
@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.Billing
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            this.TryGetApiVersion(ResourceType, out string billingSubscriptionApiVersion);
+            TryGetApiVersion(ResourceType, out string billingSubscriptionApiVersion);
             _billingSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
             _billingSubscriptionsRestClient = new BillingSubscriptions(_billingSubscriptionsClientDiagnostics, Pipeline, Endpoint, billingSubscriptionApiVersion ?? "2024-04-01");
-            BillingSubscriptionResource.ValidateResourceId(id);
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
@@ -1000,7 +1000,7 @@ namespace Azure.ResourceManager.Billing
                 }
                 else
                 {
-                    BillingSubscriptionData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BillingSubscriptionData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     BillingSubscriptionPatch patch = new BillingSubscriptionPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -1048,7 +1048,7 @@ namespace Azure.ResourceManager.Billing
                 }
                 else
                 {
-                    BillingSubscriptionData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    BillingSubscriptionData current = Get(cancellationToken: cancellationToken).Value.Data;
                     BillingSubscriptionPatch patch = new BillingSubscriptionPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -1095,7 +1095,7 @@ namespace Azure.ResourceManager.Billing
                 }
                 else
                 {
-                    BillingSubscriptionData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BillingSubscriptionData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     BillingSubscriptionPatch patch = new BillingSubscriptionPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<BillingSubscriptionResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -1138,7 +1138,7 @@ namespace Azure.ResourceManager.Billing
                 }
                 else
                 {
-                    BillingSubscriptionData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    BillingSubscriptionData current = Get(cancellationToken: cancellationToken).Value.Data;
                     BillingSubscriptionPatch patch = new BillingSubscriptionPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<BillingSubscriptionResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
@@ -1180,7 +1180,7 @@ namespace Azure.ResourceManager.Billing
                 }
                 else
                 {
-                    BillingSubscriptionData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BillingSubscriptionData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     BillingSubscriptionPatch patch = new BillingSubscriptionPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -1226,7 +1226,7 @@ namespace Azure.ResourceManager.Billing
                 }
                 else
                 {
-                    BillingSubscriptionData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    BillingSubscriptionData current = Get(cancellationToken: cancellationToken).Value.Data;
                     BillingSubscriptionPatch patch = new BillingSubscriptionPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {

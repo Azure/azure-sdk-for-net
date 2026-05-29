@@ -23,15 +23,15 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Initializes a new instance of <see cref="BillingTaxIdentifier"/>. </summary>
         /// <param name="id"> The id of the tax identifier. </param>
-        /// <param name="type"> The type of the tax identifier. </param>
+        /// <param name="identifierType"> The type of the tax identifier. </param>
         /// <param name="scope"> The scope of the tax identifier. </param>
         /// <param name="country"> The country of the tax identifier. </param>
         /// <param name="status"> The status of the tax identifier. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingTaxIdentifier(string id, BillingTaxIdentifierType? @type, string scope, string country, BillingTaxIdentifierStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingTaxIdentifier(string id, BillingTaxIdentifierType? identifierType, string scope, string country, BillingTaxIdentifierStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            Type = @type;
+            IdentifierType = identifierType;
             Scope = scope;
             Country = country;
             Status = status;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Billing.Models
         public string Id { get; set; }
 
         /// <summary> The type of the tax identifier. </summary>
-        public BillingTaxIdentifierType? Type { get; set; }
+        public BillingTaxIdentifierType? IdentifierType { get; set; }
 
         /// <summary> The scope of the tax identifier. </summary>
         public string Scope { get; set; }

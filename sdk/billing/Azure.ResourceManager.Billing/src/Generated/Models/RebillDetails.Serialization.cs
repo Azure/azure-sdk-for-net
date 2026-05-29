@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("creditNoteDocumentId"u8);
                 writer.WriteStringValue(CreditNoteDocumentId);
             }
-            if (options.Format != "W" && Optional.IsDefined(RebillDetailsProperty))
+            if (options.Format != "W" && Optional.IsDefined(RebillDetailsValue))
             {
                 writer.WritePropertyName("rebillDetails"u8);
-                writer.WriteObjectValue(RebillDetailsProperty, options);
+                writer.WriteObjectValue(RebillDetailsValue, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Billing.Models
             }
             ResourceIdentifier invoiceDocumentId = default;
             ResourceIdentifier creditNoteDocumentId = default;
-            RebillDetails rebillDetailsProperty = default;
+            RebillDetails rebillDetailsValue = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    rebillDetailsProperty = DeserializeRebillDetails(prop.Value, options);
+                    rebillDetailsValue = DeserializeRebillDetails(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Billing.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RebillDetails(invoiceDocumentId, creditNoteDocumentId, rebillDetailsProperty, additionalBinaryDataProperties);
+            return new RebillDetails(invoiceDocumentId, creditNoteDocumentId, rebillDetailsValue, additionalBinaryDataProperties);
         }
     }
 }

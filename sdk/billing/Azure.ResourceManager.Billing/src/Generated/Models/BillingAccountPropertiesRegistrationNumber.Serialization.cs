@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Billing.Models
             }
             string id = default;
             bool? isRequired = default;
-            IReadOnlyList<string> @type = default;
+            IReadOnlyList<string> registrationNumberType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Billing.Models
                             array.Add(item.GetString());
                         }
                     }
-                    @type = array;
+                    registrationNumberType = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Billing.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BillingAccountPropertiesRegistrationNumber(id, isRequired, @type ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new BillingAccountPropertiesRegistrationNumber(id, isRequired, registrationNumberType ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

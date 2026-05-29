@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (options.Format != "W" && Optional.IsDefined(CustomerTenantId))
             {
                 writer.WritePropertyName("customerTenantId"u8);
-                writer.WriteStringValue(CustomerTenantId);
+                writer.WriteStringValue(CustomerTenantId.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedAccounts))
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Billing.Models
             InitiatorCustomerType? initiatorCustomerType = default;
             string canceledBy = default;
             IReadOnlyList<DetailedTransferStatus> detailedTransferStatus = default;
-            string customerTenantId = default;
+            Guid? customerTenantId = default;
             IReadOnlyList<BillingSupportedAccountType> supportedAccounts = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -288,7 +288,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (prop.NameEquals("customerTenantId"u8))
                 {
-                    customerTenantId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customerTenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("supportedAccounts"u8))

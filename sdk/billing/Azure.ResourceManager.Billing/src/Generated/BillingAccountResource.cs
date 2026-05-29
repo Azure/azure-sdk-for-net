@@ -1810,7 +1810,7 @@ namespace Azure.ResourceManager.Billing
         /// <returns> An object representing collection of BillingRoleAssignments and their operations over a BillingRoleAssignmentResource. </returns>
         public virtual BillingRoleAssignmentCollection GetBillingRoleAssignments()
         {
-            return this.GetCachedClient(client => new BillingRoleAssignmentCollection(client, Id));
+            return GetCachedClient(client => new BillingRoleAssignmentCollection(client, Id));
         }
 
         /// <summary> Gets a role assignment for the caller on a billing account. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement, Microsoft Customer Agreement or Enterprise Agreement. </summary>
@@ -1839,11 +1839,11 @@ namespace Azure.ResourceManager.Billing
             return GetBillingRoleAssignments().Get(billingRoleAssignmentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Invoices in the <see cref="BillingAccountResource"/>. </summary>
-        /// <returns> An object representing collection of Invoices and their operations over a InvoiceResource. </returns>
-        public virtual InvoiceCollection GetInvoices()
+        /// <summary> Gets a collection of BillingInvoices in the <see cref="BillingAccountResource"/>. </summary>
+        /// <returns> An object representing collection of BillingInvoices and their operations over a BillingInvoiceResource. </returns>
+        public virtual BillingInvoiceCollection GetBillingInvoices()
         {
-            return this.GetCachedClient(client => new InvoiceCollection(client, Id));
+            return GetCachedClient(client => new BillingInvoiceCollection(client, Id));
         }
 
         /// <summary> Gets an invoice by billing account name and ID. The operation is supported for all billing account types. </summary>
@@ -1852,11 +1852,11 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="invoiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<InvoiceResource>> GetInvoiceAsync(string invoiceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingInvoiceResource>> GetBillingInvoiceAsync(string invoiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(invoiceName, nameof(invoiceName));
 
-            return await GetInvoices().GetAsync(invoiceName, cancellationToken).ConfigureAwait(false);
+            return await GetBillingInvoices().GetAsync(invoiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an invoice by billing account name and ID. The operation is supported for all billing account types. </summary>
@@ -1865,11 +1865,11 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="invoiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<InvoiceResource> GetInvoice(string invoiceName, CancellationToken cancellationToken = default)
+        public virtual Response<BillingInvoiceResource> GetBillingInvoice(string invoiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(invoiceName, nameof(invoiceName));
 
-            return GetInvoices().Get(invoiceName, cancellationToken);
+            return GetBillingInvoices().Get(invoiceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of BillingAssociatedTenants in the <see cref="BillingAccountResource"/>. </summary>
@@ -1905,11 +1905,11 @@ namespace Azure.ResourceManager.Billing
             return GetBillingAssociatedTenants().Get(associatedTenantName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a <see cref="AvailableBalanceResource"/> along with the instance operations that can be performed on it in the <see cref="BillingAccountResource"/>. </summary>
-        /// <returns> Returns a <see cref="AvailableBalanceResource"/> object. </returns>
-        public virtual AvailableBalanceResource GetAvailableBalance()
+        /// <summary> Gets an object representing a <see cref="BillingAccountAvailableBalanceResource"/> along with the instance operations that can be performed on it in the <see cref="BillingAccountResource"/>. </summary>
+        /// <returns> Returns a <see cref="BillingAccountAvailableBalanceResource"/> object. </returns>
+        public virtual BillingAccountAvailableBalanceResource GetBillingAccountAvailableBalance()
         {
-            return new AvailableBalanceResource(Client, Id.AppendChildResource("availableBalance", "default"));
+            return new BillingAccountAvailableBalanceResource(Client, Id.AppendChildResource("availableBalance", "default"));
         }
 
         /// <summary> Gets a collection of BillingProducts in the <see cref="BillingAccountResource"/>. </summary>
@@ -1982,7 +1982,7 @@ namespace Azure.ResourceManager.Billing
         /// <returns> An object representing collection of BillingSubscriptions and their operations over a BillingSubscriptionResource. </returns>
         public virtual BillingSubscriptionCollection GetBillingSubscriptions()
         {
-            return this.GetCachedClient(client => new BillingSubscriptionCollection(client, Id));
+            return GetCachedClient(client => new BillingSubscriptionCollection(client, Id));
         }
 
         /// <summary> Gets a subscription by its ID. The operation is supported for billing accounts with agreement type Microsoft Customer Agreement,  Microsoft Partner Agreement, and Enterprise Agreement. </summary>
@@ -2020,11 +2020,11 @@ namespace Azure.ResourceManager.Billing
             return new BillingAccountPolicyResource(Client, Id.AppendChildResource("policies", "default"));
         }
 
-        /// <summary> Gets a collection of Customers in the <see cref="BillingAccountResource"/>. </summary>
-        /// <returns> An object representing collection of Customers and their operations over a CustomerResource. </returns>
-        public virtual CustomerCollection GetCustomers()
+        /// <summary> Gets a collection of BillingCustomers in the <see cref="BillingAccountResource"/>. </summary>
+        /// <returns> An object representing collection of BillingCustomers and their operations over a BillingCustomerResource. </returns>
+        public virtual BillingCustomerCollection GetBillingCustomers()
         {
-            return this.GetCachedClient(client => new CustomerCollection(client, Id));
+            return GetCachedClient(client => new BillingCustomerCollection(client, Id));
         }
 
         /// <summary> Gets a customer by its ID at billing account level. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement. </summary>
@@ -2033,11 +2033,11 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="customerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CustomerResource>> GetCustomerAsync(string customerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingCustomerResource>> GetBillingCustomerAsync(string customerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customerName, nameof(customerName));
 
-            return await GetCustomers().GetAsync(customerName, cancellationToken).ConfigureAwait(false);
+            return await GetBillingCustomers().GetAsync(customerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a customer by its ID at billing account level. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement. </summary>
@@ -2046,11 +2046,11 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="customerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CustomerResource> GetCustomer(string customerName, CancellationToken cancellationToken = default)
+        public virtual Response<BillingCustomerResource> GetBillingCustomer(string customerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customerName, nameof(customerName));
 
-            return GetCustomers().Get(customerName, cancellationToken);
+            return GetBillingCustomers().Get(customerName, cancellationToken);
         }
 
         /// <summary> Gets a collection of BillingDepartments in the <see cref="BillingAccountResource"/>. </summary>
@@ -2086,11 +2086,11 @@ namespace Azure.ResourceManager.Billing
             return GetBillingDepartments().Get(departmentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EnrollmentAccounts in the <see cref="BillingAccountResource"/>. </summary>
-        /// <returns> An object representing collection of EnrollmentAccounts and their operations over a EnrollmentAccountResource. </returns>
-        public virtual EnrollmentAccountCollection GetEnrollmentAccounts()
+        /// <summary> Gets a collection of BillingEnrollmentAccounts in the <see cref="BillingAccountResource"/>. </summary>
+        /// <returns> An object representing collection of BillingEnrollmentAccounts and their operations over a BillingEnrollmentAccountResource. </returns>
+        public virtual BillingEnrollmentAccountCollection GetBillingEnrollmentAccounts()
         {
-            return this.GetCachedClient(client => new EnrollmentAccountCollection(client, Id));
+            return GetCachedClient(client => new BillingEnrollmentAccountCollection(client, Id));
         }
 
         /// <summary> Gets an enrollment account by ID. The operation is supported only for billing accounts with agreement type Enterprise Agreement. </summary>
@@ -2099,11 +2099,11 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="enrollmentAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="enrollmentAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EnrollmentAccountResource>> GetEnrollmentAccountAsync(string enrollmentAccountName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingEnrollmentAccountResource>> GetBillingEnrollmentAccountAsync(string enrollmentAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(enrollmentAccountName, nameof(enrollmentAccountName));
 
-            return await GetEnrollmentAccounts().GetAsync(enrollmentAccountName, cancellationToken).ConfigureAwait(false);
+            return await GetBillingEnrollmentAccounts().GetAsync(enrollmentAccountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an enrollment account by ID. The operation is supported only for billing accounts with agreement type Enterprise Agreement. </summary>
@@ -2112,31 +2112,18 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="enrollmentAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="enrollmentAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EnrollmentAccountResource> GetEnrollmentAccount(string enrollmentAccountName, CancellationToken cancellationToken = default)
+        public virtual Response<BillingEnrollmentAccountResource> GetBillingEnrollmentAccount(string enrollmentAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(enrollmentAccountName, nameof(enrollmentAccountName));
 
-            return GetEnrollmentAccounts().Get(enrollmentAccountName, cancellationToken);
+            return GetBillingEnrollmentAccounts().Get(enrollmentAccountName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PaymentMethods in the <see cref="BillingAccountResource"/>. </summary>
-        /// <returns> An object representing collection of PaymentMethods and their operations over a PaymentMethodResource. </returns>
-        public virtual PaymentMethodCollection GetPaymentMethods()
+        /// <summary> Gets a collection of BillingAccountPaymentMethods in the <see cref="BillingAccountResource"/>. </summary>
+        /// <returns> An object representing collection of BillingAccountPaymentMethods and their operations over a BillingAccountPaymentMethodResource. </returns>
+        public virtual BillingAccountPaymentMethodCollection GetBillingAccountPaymentMethods()
         {
-            return this.GetCachedClient(client => new PaymentMethodCollection(client, Id));
-        }
-
-        /// <summary> Gets a payment method available for a billing account. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement. </summary>
-        /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="paymentMethodName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PaymentMethodResource>> GetPaymentMethodAsync(string paymentMethodName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(paymentMethodName, nameof(paymentMethodName));
-
-            return await GetPaymentMethods().GetAsync(paymentMethodName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new BillingAccountPaymentMethodCollection(client, Id));
         }
 
         /// <summary> Gets a payment method available for a billing account. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement. </summary>
@@ -2145,11 +2132,24 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="paymentMethodName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PaymentMethodResource> GetPaymentMethod(string paymentMethodName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingAccountPaymentMethodResource>> GetBillingAccountPaymentMethodAsync(string paymentMethodName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(paymentMethodName, nameof(paymentMethodName));
 
-            return GetPaymentMethods().Get(paymentMethodName, cancellationToken);
+            return await GetBillingAccountPaymentMethods().GetAsync(paymentMethodName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a payment method available for a billing account. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement. </summary>
+        /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="paymentMethodName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BillingAccountPaymentMethodResource> GetBillingAccountPaymentMethod(string paymentMethodName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(paymentMethodName, nameof(paymentMethodName));
+
+            return GetBillingAccountPaymentMethods().Get(paymentMethodName, cancellationToken);
         }
 
         /// <summary> Gets a collection of BillingReservationOrders in the <see cref="BillingAccountResource"/>. </summary>
@@ -2191,7 +2191,7 @@ namespace Azure.ResourceManager.Billing
         /// <returns> An object representing collection of BillingRoleDefinitions and their operations over a BillingRoleDefinitionResource. </returns>
         public virtual BillingRoleDefinitionCollection GetBillingRoleDefinitions()
         {
-            return this.GetCachedClient(client => new BillingRoleDefinitionCollection(client, Id));
+            return GetCachedClient(client => new BillingRoleDefinitionCollection(client, Id));
         }
 
         /// <summary> Gets the definition for a role on a billing account. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement, Microsoft Customer Agreement or Enterprise Agreement. </summary>

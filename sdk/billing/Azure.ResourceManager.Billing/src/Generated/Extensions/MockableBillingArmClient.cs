@@ -44,6 +44,33 @@ namespace Azure.ResourceManager.Billing.Mocking
             return new BillingRequestResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="BillingProfileRoleAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingProfileRoleAssignmentResource"/> object. </returns>
+        public virtual BillingProfileRoleAssignmentResource GetBillingProfileRoleAssignmentResource(ResourceIdentifier id)
+        {
+            BillingProfileRoleAssignmentResource.ValidateResourceId(id);
+            return new BillingProfileRoleAssignmentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="BillingCustomerRoleAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingCustomerRoleAssignmentResource"/> object. </returns>
+        public virtual BillingCustomerRoleAssignmentResource GetBillingCustomerRoleAssignmentResource(ResourceIdentifier id)
+        {
+            BillingCustomerRoleAssignmentResource.ValidateResourceId(id);
+            return new BillingCustomerRoleAssignmentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="BillingInvoiceSectionRoleAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingInvoiceSectionRoleAssignmentResource"/> object. </returns>
+        public virtual BillingInvoiceSectionRoleAssignmentResource GetBillingInvoiceSectionRoleAssignmentResource(ResourceIdentifier id)
+        {
+            BillingInvoiceSectionRoleAssignmentResource.ValidateResourceId(id);
+            return new BillingInvoiceSectionRoleAssignmentResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="BillingRoleAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BillingRoleAssignmentResource"/> object. </returns>
@@ -53,21 +80,50 @@ namespace Azure.ResourceManager.Billing.Mocking
             return new BillingRoleAssignmentResource(Client, id);
         }
 
-
-
-
-
-
-        /// <summary> Gets an object representing a <see cref="InvoiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="BillingDepartmentRoleAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InvoiceResource"/> object. </returns>
-        public virtual InvoiceResource GetInvoiceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BillingDepartmentRoleAssignmentResource"/> object. </returns>
+        public virtual BillingDepartmentRoleAssignmentResource GetBillingDepartmentRoleAssignmentResource(ResourceIdentifier id)
         {
-            InvoiceResource.ValidateResourceId(id);
-            return new InvoiceResource(Client, id);
+            BillingDepartmentRoleAssignmentResource.ValidateResourceId(id);
+            return new BillingDepartmentRoleAssignmentResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="BillingEnrollmentAccountRoleAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingEnrollmentAccountRoleAssignmentResource"/> object. </returns>
+        public virtual BillingEnrollmentAccountRoleAssignmentResource GetBillingEnrollmentAccountRoleAssignmentResource(ResourceIdentifier id)
+        {
+            BillingEnrollmentAccountRoleAssignmentResource.ValidateResourceId(id);
+            return new BillingEnrollmentAccountRoleAssignmentResource(Client, id);
+        }
 
+        /// <summary> Gets an object representing a <see cref="BillingInvoiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingInvoiceResource"/> object. </returns>
+        public virtual BillingInvoiceResource GetBillingInvoiceResource(ResourceIdentifier id)
+        {
+            BillingInvoiceResource.ValidateResourceId(id);
+            return new BillingInvoiceResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SubscriptionBillingInvoiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SubscriptionBillingInvoiceResource"/> object. </returns>
+        public virtual SubscriptionBillingInvoiceResource GetSubscriptionBillingInvoiceResource(ResourceIdentifier id)
+        {
+            SubscriptionBillingInvoiceResource.ValidateResourceId(id);
+            return new SubscriptionBillingInvoiceResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DefaultBillingInvoiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DefaultBillingInvoiceResource"/> object. </returns>
+        public virtual DefaultBillingInvoiceResource GetDefaultBillingInvoiceResource(ResourceIdentifier id)
+        {
+            DefaultBillingInvoiceResource.ValidateResourceId(id);
+            return new DefaultBillingInvoiceResource(Client, id);
+        }
 
         /// <summary> Gets an object representing a <see cref="BillingReservationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -96,6 +152,15 @@ namespace Azure.ResourceManager.Billing.Mocking
             return new BillingAssociatedTenantResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="BillingAccountAvailableBalanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingAccountAvailableBalanceResource"/> object. </returns>
+        public virtual BillingAccountAvailableBalanceResource GetBillingAccountAvailableBalanceResource(ResourceIdentifier id)
+        {
+            BillingAccountAvailableBalanceResource.ValidateResourceId(id);
+            return new BillingAccountAvailableBalanceResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="AvailableBalanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AvailableBalanceResource"/> object. </returns>
@@ -104,7 +169,6 @@ namespace Azure.ResourceManager.Billing.Mocking
             AvailableBalanceResource.ValidateResourceId(id);
             return new AvailableBalanceResource(Client, id);
         }
-
 
         /// <summary> Gets an object representing a <see cref="BillingProductResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -124,6 +188,15 @@ namespace Azure.ResourceManager.Billing.Mocking
             return new BillingProfileResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="BillingProfileSubscriptionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingProfileSubscriptionResource"/> object. </returns>
+        public virtual BillingProfileSubscriptionResource GetBillingProfileSubscriptionResource(ResourceIdentifier id)
+        {
+            BillingProfileSubscriptionResource.ValidateResourceId(id);
+            return new BillingProfileSubscriptionResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="BillingSubscriptionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BillingSubscriptionResource"/> object. </returns>
@@ -133,16 +206,23 @@ namespace Azure.ResourceManager.Billing.Mocking
             return new BillingSubscriptionResource(Client, id);
         }
 
-
-        /// <summary> Gets an object representing a <see cref="PolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="BillingCustomerPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicyResource"/> object. </returns>
-        public virtual PolicyResource GetPolicyResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BillingCustomerPolicyResource"/> object. </returns>
+        public virtual BillingCustomerPolicyResource GetBillingCustomerPolicyResource(ResourceIdentifier id)
         {
-            PolicyResource.ValidateResourceId(id);
-            return new PolicyResource(Client, id);
+            BillingCustomerPolicyResource.ValidateResourceId(id);
+            return new BillingCustomerPolicyResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="BillingProfileCustomerPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingProfileCustomerPolicyResource"/> object. </returns>
+        public virtual BillingProfileCustomerPolicyResource GetBillingProfileCustomerPolicyResource(ResourceIdentifier id)
+        {
+            BillingProfileCustomerPolicyResource.ValidateResourceId(id);
+            return new BillingProfileCustomerPolicyResource(Client, id);
+        }
 
         /// <summary> Gets an object representing a <see cref="BillingProfilePolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -171,15 +251,23 @@ namespace Azure.ResourceManager.Billing.Mocking
             return new SubscriptionPolicyResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="CustomerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="BillingProfileCustomerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CustomerResource"/> object. </returns>
-        public virtual CustomerResource GetCustomerResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BillingProfileCustomerResource"/> object. </returns>
+        public virtual BillingProfileCustomerResource GetBillingProfileCustomerResource(ResourceIdentifier id)
         {
-            CustomerResource.ValidateResourceId(id);
-            return new CustomerResource(Client, id);
+            BillingProfileCustomerResource.ValidateResourceId(id);
+            return new BillingProfileCustomerResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="BillingCustomerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingCustomerResource"/> object. </returns>
+        public virtual BillingCustomerResource GetBillingCustomerResource(ResourceIdentifier id)
+        {
+            BillingCustomerResource.ValidateResourceId(id);
+            return new BillingCustomerResource(Client, id);
+        }
 
         /// <summary> Gets an object representing a <see cref="BillingDepartmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -190,15 +278,23 @@ namespace Azure.ResourceManager.Billing.Mocking
             return new BillingDepartmentResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="EnrollmentAccountResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="BillingDepartmentEnrollmentAccountResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EnrollmentAccountResource"/> object. </returns>
-        public virtual EnrollmentAccountResource GetEnrollmentAccountResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BillingDepartmentEnrollmentAccountResource"/> object. </returns>
+        public virtual BillingDepartmentEnrollmentAccountResource GetBillingDepartmentEnrollmentAccountResource(ResourceIdentifier id)
         {
-            EnrollmentAccountResource.ValidateResourceId(id);
-            return new EnrollmentAccountResource(Client, id);
+            BillingDepartmentEnrollmentAccountResource.ValidateResourceId(id);
+            return new BillingDepartmentEnrollmentAccountResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="BillingEnrollmentAccountResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingEnrollmentAccountResource"/> object. </returns>
+        public virtual BillingEnrollmentAccountResource GetBillingEnrollmentAccountResource(ResourceIdentifier id)
+        {
+            BillingEnrollmentAccountResource.ValidateResourceId(id);
+            return new BillingEnrollmentAccountResource(Client, id);
+        }
 
         /// <summary> Gets an object representing a <see cref="BillingInvoiceSectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -209,13 +305,13 @@ namespace Azure.ResourceManager.Billing.Mocking
             return new BillingInvoiceSectionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PaymentMethodResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="BillingAccountPaymentMethodResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PaymentMethodResource"/> object. </returns>
-        public virtual PaymentMethodResource GetPaymentMethodResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BillingAccountPaymentMethodResource"/> object. </returns>
+        public virtual BillingAccountPaymentMethodResource GetBillingAccountPaymentMethodResource(ResourceIdentifier id)
         {
-            PaymentMethodResource.ValidateResourceId(id);
-            return new PaymentMethodResource(Client, id);
+            BillingAccountPaymentMethodResource.ValidateResourceId(id);
+            return new BillingAccountPaymentMethodResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="BillingPaymentMethodLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -227,6 +323,14 @@ namespace Azure.ResourceManager.Billing.Mocking
             return new BillingPaymentMethodLinkResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="BillingPaymentMethodResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingPaymentMethodResource"/> object. </returns>
+        public virtual BillingPaymentMethodResource GetBillingPaymentMethodResource(ResourceIdentifier id)
+        {
+            BillingPaymentMethodResource.ValidateResourceId(id);
+            return new BillingPaymentMethodResource(Client, id);
+        }
 
         /// <summary> Gets an object representing a <see cref="BillingReservationOrderResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -237,31 +341,31 @@ namespace Azure.ResourceManager.Billing.Mocking
             return new BillingReservationOrderResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="BillingTransferDetailsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="BillingTransferDetailResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BillingTransferDetailsResource"/> object. </returns>
-        public virtual BillingTransferDetailsResource GetBillingTransferDetailsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BillingTransferDetailResource"/> object. </returns>
+        public virtual BillingTransferDetailResource GetBillingTransferDetailResource(ResourceIdentifier id)
         {
-            BillingTransferDetailsResource.ValidateResourceId(id);
-            return new BillingTransferDetailsResource(Client, id);
+            BillingTransferDetailResource.ValidateResourceId(id);
+            return new BillingTransferDetailResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PartnerTransferDetailsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="PartnerTransferDetailResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PartnerTransferDetailsResource"/> object. </returns>
-        public virtual PartnerTransferDetailsResource GetPartnerTransferDetailsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PartnerTransferDetailResource"/> object. </returns>
+        public virtual PartnerTransferDetailResource GetPartnerTransferDetailResource(ResourceIdentifier id)
         {
-            PartnerTransferDetailsResource.ValidateResourceId(id);
-            return new PartnerTransferDetailsResource(Client, id);
+            PartnerTransferDetailResource.ValidateResourceId(id);
+            return new PartnerTransferDetailResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="RecipientTransferDetailsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="RecipientTransferDetailResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecipientTransferDetailsResource"/> object. </returns>
-        public virtual RecipientTransferDetailsResource GetRecipientTransferDetailsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RecipientTransferDetailResource"/> object. </returns>
+        public virtual RecipientTransferDetailResource GetRecipientTransferDetailResource(ResourceIdentifier id)
         {
-            RecipientTransferDetailsResource.ValidateResourceId(id);
-            return new RecipientTransferDetailsResource(Client, id);
+            RecipientTransferDetailResource.ValidateResourceId(id);
+            return new RecipientTransferDetailResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="BillingSavingsPlanModelResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -282,6 +386,33 @@ namespace Azure.ResourceManager.Billing.Mocking
             return new BillingPropertyResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="BillingProfileRoleDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingProfileRoleDefinitionResource"/> object. </returns>
+        public virtual BillingProfileRoleDefinitionResource GetBillingProfileRoleDefinitionResource(ResourceIdentifier id)
+        {
+            BillingProfileRoleDefinitionResource.ValidateResourceId(id);
+            return new BillingProfileRoleDefinitionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="BillingCustomerRoleDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingCustomerRoleDefinitionResource"/> object. </returns>
+        public virtual BillingCustomerRoleDefinitionResource GetBillingCustomerRoleDefinitionResource(ResourceIdentifier id)
+        {
+            BillingCustomerRoleDefinitionResource.ValidateResourceId(id);
+            return new BillingCustomerRoleDefinitionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="BillingInvoiceSectionRoleDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingInvoiceSectionRoleDefinitionResource"/> object. </returns>
+        public virtual BillingInvoiceSectionRoleDefinitionResource GetBillingInvoiceSectionRoleDefinitionResource(ResourceIdentifier id)
+        {
+            BillingInvoiceSectionRoleDefinitionResource.ValidateResourceId(id);
+            return new BillingInvoiceSectionRoleDefinitionResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="BillingRoleDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BillingRoleDefinitionResource"/> object. </returns>
@@ -291,10 +422,23 @@ namespace Azure.ResourceManager.Billing.Mocking
             return new BillingRoleDefinitionResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="BillingDepartmentRoleDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingDepartmentRoleDefinitionResource"/> object. </returns>
+        public virtual BillingDepartmentRoleDefinitionResource GetBillingDepartmentRoleDefinitionResource(ResourceIdentifier id)
+        {
+            BillingDepartmentRoleDefinitionResource.ValidateResourceId(id);
+            return new BillingDepartmentRoleDefinitionResource(Client, id);
+        }
 
-
-
-
+        /// <summary> Gets an object representing a <see cref="BillingEnrollmentAccountRoleDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BillingEnrollmentAccountRoleDefinitionResource"/> object. </returns>
+        public virtual BillingEnrollmentAccountRoleDefinitionResource GetBillingEnrollmentAccountRoleDefinitionResource(ResourceIdentifier id)
+        {
+            BillingEnrollmentAccountRoleDefinitionResource.ValidateResourceId(id);
+            return new BillingEnrollmentAccountRoleDefinitionResource(Client, id);
+        }
 
         /// <summary> Gets an object representing a <see cref="SavingsPlanOrderModelResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>

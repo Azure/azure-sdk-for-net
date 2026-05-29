@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("required"u8);
                 writer.WriteBooleanValue(IsRequired.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Type))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RegistrationNumberType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStartArray();
-                foreach (string item in Type)
+                foreach (string item in RegistrationNumberType)
                 {
                     if (item == null)
                     {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Billing.Models
             }
             string id = default;
             bool? isRequired = default;
-            IReadOnlyList<string> @type = default;
+            IReadOnlyList<string> registrationNumberType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Billing.Models
                             array.Add(item.GetString());
                         }
                     }
-                    @type = array;
+                    registrationNumberType = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Billing.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BillingRegistrationNumber(id, isRequired, @type ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new BillingRegistrationNumber(id, isRequired, registrationNumberType ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

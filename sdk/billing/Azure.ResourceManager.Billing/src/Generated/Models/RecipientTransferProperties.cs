@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Billing.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RecipientTransferProperties"/>. </summary>
-        internal RecipientTransferProperties()
+        public RecipientTransferProperties()
         {
             AllowedProductType = new ChangeTrackingList<EligibleProductType>();
             DetailedTransferStatus = new ChangeTrackingList<DetailedTransferStatus>();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="customerTenantId"> The customer tenant id. </param>
         /// <param name="supportedAccounts"> List of supported account types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecipientTransferProperties(DateTimeOffset? expireOn, IReadOnlyList<EligibleProductType> allowedProductType, PartnerTransferStatus? transferStatus, string recipientEmailId, string initiatorEmailId, string resellerId, string resellerName, InitiatorCustomerType? initiatorCustomerType, string canceledBy, IReadOnlyList<DetailedTransferStatus> detailedTransferStatus, string customerTenantId, IReadOnlyList<BillingSupportedAccountType> supportedAccounts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecipientTransferProperties(DateTimeOffset? expireOn, IReadOnlyList<EligibleProductType> allowedProductType, PartnerTransferStatus? transferStatus, string recipientEmailId, string initiatorEmailId, string resellerId, string resellerName, InitiatorCustomerType? initiatorCustomerType, string canceledBy, IReadOnlyList<DetailedTransferStatus> detailedTransferStatus, Guid? customerTenantId, IReadOnlyList<BillingSupportedAccountType> supportedAccounts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExpireOn = expireOn;
             AllowedProductType = allowedProductType;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Billing.Models
         public IReadOnlyList<DetailedTransferStatus> DetailedTransferStatus { get; } = new ChangeTrackingList<DetailedTransferStatus>();
 
         /// <summary> The customer tenant id. </summary>
-        public string CustomerTenantId { get; }
+        public Guid? CustomerTenantId { get; }
 
         /// <summary> List of supported account types. </summary>
         public IReadOnlyList<BillingSupportedAccountType> SupportedAccounts { get; } = new ChangeTrackingList<BillingSupportedAccountType>();

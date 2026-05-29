@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("creditType"u8);
                 writer.WriteStringValue(CreditType.Value.ToString());
             }
-            if (Optional.IsDefined(Date))
+            if (Optional.IsDefined(On))
             {
                 writer.WritePropertyName("date"u8);
-                writer.WriteStringValue(Date.Value, "O");
+                writer.WriteStringValue(On.Value, "O");
             }
             if (Optional.IsDefined(Discount))
             {
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Billing.Models
             string customerDisplayName = default;
             ResourceIdentifier customerId = default;
             BillingTransactionCreditType? creditType = default;
-            DateTimeOffset? date = default;
+            DateTimeOffset? @on = default;
             float? discount = default;
             BillingAmount effectivePrice = default;
             float? exchangeRate = default;
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    date = prop.Value.GetDateTimeOffset("O");
+                    @on = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("discount"u8))
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.Billing.Models
                 customerDisplayName,
                 customerId,
                 creditType,
-                date,
+                @on,
                 discount,
                 effectivePrice,
                 exchangeRate,

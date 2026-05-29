@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Fully-qualified identifier of the customerId where the benefit is applied. Present only for Enterprise Agreement PartnerLed customers. </summary>
-        public string CustomerId
+        public ResourceIdentifier CustomerId
         {
             get
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Billing profile Id associated to this reservation order. </summary>
-        public string BillingProfileId
+        public ResourceIdentifier BillingProfileId
         {
             get
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Billing account Id associated to this reservation order. </summary>
-        public string BillingAccountId
+        public ResourceIdentifier BillingAccountId
         {
             get
             {

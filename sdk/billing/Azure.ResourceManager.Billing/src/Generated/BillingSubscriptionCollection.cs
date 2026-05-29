@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.Billing
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingSubscriptionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            this.TryGetApiVersion(BillingSubscriptionResource.ResourceType, out string billingSubscriptionApiVersion);
+            TryGetApiVersion(BillingSubscriptionResource.ResourceType, out string billingSubscriptionApiVersion);
             _billingSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingSubscriptionResource.ResourceType.Namespace, Diagnostics);
             _billingSubscriptionsRestClient = new BillingSubscriptions(_billingSubscriptionsClientDiagnostics, Pipeline, Endpoint, billingSubscriptionApiVersion ?? "2024-04-01");
-            BillingSubscriptionCollection.ValidateResourceId(id);
+            ValidateResourceId(id);
         }
 
         /// <param name="id"></param>
@@ -500,18 +500,18 @@ namespace Azure.ResourceManager.Billing
 
         IEnumerator<BillingSubscriptionResource> IEnumerable<BillingSubscriptionResource>.GetEnumerator()
         {
-            return this.GetAll().GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetAll().GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<BillingSubscriptionResource> IAsyncEnumerable<BillingSubscriptionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return this.GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

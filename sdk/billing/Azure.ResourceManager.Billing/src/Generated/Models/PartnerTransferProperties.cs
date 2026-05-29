@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Billing.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PartnerTransferProperties"/>. </summary>
-        internal PartnerTransferProperties()
+        public PartnerTransferProperties()
         {
             DetailedTransferStatus = new ChangeTrackingList<DetailedTransferStatus>();
         }

@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (options.Format != "W" && Optional.IsDefined(TermDuration))
             {
                 writer.WritePropertyName("termDuration"u8);
-                writer.WriteStringValue(TermDuration);
+                writer.WriteStringValue(TermDuration.Value, "P");
             }
             if (Optional.IsDefined(Quantity))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Billing.Models
             string productId = default;
             string productTypeId = default;
             string skuId = default;
-            string termDuration = default;
+            TimeSpan? termDuration = default;
             long? quantity = default;
             DateTimeOffset? termEndOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    termDuration = prop.Value.GetString();
+                    termDuration = prop.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (prop.NameEquals("quantity"u8))

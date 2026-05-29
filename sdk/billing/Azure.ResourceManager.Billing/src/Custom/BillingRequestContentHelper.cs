@@ -9,11 +9,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Billing
 {
-    /// <summary>
-    /// Workaround helpers that build <see cref="RequestContent"/> for body parameter types that the
-    /// MPG/http-client-csharp-mgmt generator emits incorrect <c>ToRequestContent</c> calls for
-    /// (array body parameters and scalar <see cref="DateTimeOffset"/> body parameters).
-    /// </summary>
+    // Workaround helpers used by inline-patched Generated/*.cs call sites where the MPG generator
+    // emits invalid `T.ToRequestContent(value)` static-method invocations for body parameter types
+    // that have no such static method.
+    //   * IEnumerable<TModel> body params  — tracked at https://github.com/Azure/azure-sdk-for-net/issues/57716
+    //     (open; draft fix in PR https://github.com/Azure/azure-sdk-for-net/pull/57719).
+    //   * DateTimeOffset (scalar utcDateTime) body params — no existing issue; new one to be filed.
+    // TODO: remove this helper and the corresponding inline patches in src/Generated once both
+    //       generator bugs are fixed and the next regen no longer emits the broken calls.
     internal static class BillingRequestContentHelper
     {
         public static RequestContent ToRequestContent<T>(IEnumerable<T> items) where T : System.ClientModel.Primitives.IPersistableModel<T>

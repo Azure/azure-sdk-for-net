@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The provisioning tenant of the subscription. </summary>
-        public string SubscriptionAliasBeneficiaryTenantId
+        public Guid? SubscriptionBeneficiaryTenantId
         {
             get
             {
-                return Properties is null ? default : Properties.SubscriptionAliasBeneficiaryTenantId;
+                return Properties is null ? default : Properties.SubscriptionBeneficiaryTenantId;
             }
             set
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     Properties = new BillingSubscriptionAliasProperties();
                 }
-                Properties.SubscriptionAliasBeneficiaryTenantId = value;
+                Properties.SubscriptionBeneficiaryTenantId = value;
             }
         }
 
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The fully qualified ID that uniquely identifies a billing profile. </summary>
-        public string BillingProfileId
+        public ResourceIdentifier BillingProfileId
         {
             get
             {
@@ -180,11 +180,11 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The fully qualified ID that uniquely identifies a customer. </summary>
-        public string SubscriptionAliasCustomerId
+        public string SubscriptionCustomerId
         {
             get
             {
-                return Properties is null ? default : Properties.SubscriptionAliasCustomerId;
+                return Properties is null ? default : Properties.SubscriptionCustomerId;
             }
             set
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     Properties = new BillingSubscriptionAliasProperties();
                 }
-                Properties.SubscriptionAliasCustomerId = value;
+                Properties.SubscriptionCustomerId = value;
             }
         }
 
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The fully qualified ID that uniquely identifies an invoice section. </summary>
-        public string InvoiceSectionId
+        public ResourceIdentifier InvoiceSectionId
         {
             get
             {
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Unique identifier of the linked resource. </summary>
-        public string ResourceUri
+        public Uri ResourceUri
         {
             get
             {
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The duration in ISO8601 format for which you can use the subscription. Example: P1M, P3M, P1Y. </summary>
-        public string TermDuration
+        public TimeSpan? TermDuration
         {
             get
             {
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The tenant in which the subscription is provisioned. </summary>
-        public string ProvisioningTenantId
+        public Guid? ProvisioningTenantId
         {
             get
             {

@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("productId"u8);
                 writer.WriteStringValue(ProductId);
             }
-            if (Optional.IsCollectionDefined(Results))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Results))
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteStartArray();
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Billing.Models
             }
             string status = default;
             string productId = default;
-            IList<BillingTransferValidationResultProperties> results = default;
+            IReadOnlyList<BillingTransferValidationResultProperties> results = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

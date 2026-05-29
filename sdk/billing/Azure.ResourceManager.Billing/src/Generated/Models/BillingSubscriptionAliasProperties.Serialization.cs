@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
@@ -108,22 +109,22 @@ namespace Azure.ResourceManager.Billing.Models
                 return null;
             }
             BillingSubscriptionAutoRenewState? autoRenew = default;
-            string subscriptionAliasBeneficiaryTenantId = default;
+            Guid? subscriptionBeneficiaryTenantId = default;
             BillingBeneficiary beneficiary = default;
             string billingFrequency = default;
-            string billingProfileId = default;
+            ResourceIdentifier billingProfileId = default;
             IReadOnlyDictionary<string, string> billingPolicies = default;
             string billingProfileDisplayName = default;
             string billingProfileName = default;
             string consumptionCostCenter = default;
-            string subscriptionAliasCustomerId = default;
+            string subscriptionCustomerId = default;
             string customerDisplayName = default;
             string customerName = default;
             string displayName = default;
             string enrollmentAccountId = default;
             string enrollmentAccountDisplayName = default;
             EnrollmentAccountSubscriptionDetails enrollmentAccountSubscriptionDetails = default;
-            string invoiceSectionId = default;
+            ResourceIdentifier invoiceSectionId = default;
             string invoiceSectionDisplayName = default;
             string invoiceSectionName = default;
             BillingAmount lastMonthCharges = default;
@@ -140,11 +141,11 @@ namespace Azure.ResourceManager.Billing.Models
             string skuId = default;
             string skuDescription = default;
             BillingSystemOverrides systemOverrides = default;
-            string resourceUri = default;
-            string termDuration = default;
+            Uri resourceUri = default;
+            TimeSpan? termDuration = default;
             DateTimeOffset? termStartOn = default;
             DateTimeOffset? termEndOn = default;
-            string provisioningTenantId = default;
+            Guid? provisioningTenantId = default;
             BillingSubscriptionStatus? status = default;
             BillingSubscriptionOperationStatus? operationStatus = default;
             BillingProvisioningState? provisioningState = default;
@@ -166,7 +167,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (prop.NameEquals("beneficiaryTenantId"u8))
                 {
-                    subscriptionAliasBeneficiaryTenantId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    subscriptionBeneficiaryTenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("beneficiary"u8))
@@ -185,7 +190,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (prop.NameEquals("billingProfileId"u8))
                 {
-                    billingProfileId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingProfileId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("billingPolicies"u8))
@@ -226,7 +235,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (prop.NameEquals("customerId"u8))
                 {
-                    subscriptionAliasCustomerId = prop.Value.GetString();
+                    subscriptionCustomerId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("customerDisplayName"u8))
@@ -265,7 +274,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (prop.NameEquals("invoiceSectionId"u8))
                 {
-                    invoiceSectionId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    invoiceSectionId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("invoiceSectionDisplayName"u8))
@@ -382,12 +395,20 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (prop.NameEquals("resourceUri"u8))
                 {
-                    resourceUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("termDuration"u8))
                 {
-                    termDuration = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    termDuration = prop.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (prop.NameEquals("termStartDate"u8))
@@ -410,7 +431,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (prop.NameEquals("provisioningTenantId"u8))
                 {
-                    provisioningTenantId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningTenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -492,7 +517,7 @@ namespace Azure.ResourceManager.Billing.Models
             }
             return new BillingSubscriptionAliasProperties(
                 autoRenew,
-                subscriptionAliasBeneficiaryTenantId,
+                subscriptionBeneficiaryTenantId,
                 beneficiary,
                 billingFrequency,
                 billingProfileId,
@@ -500,7 +525,7 @@ namespace Azure.ResourceManager.Billing.Models
                 billingProfileDisplayName,
                 billingProfileName,
                 consumptionCostCenter,
-                subscriptionAliasCustomerId,
+                subscriptionCustomerId,
                 customerDisplayName,
                 customerName,
                 displayName,

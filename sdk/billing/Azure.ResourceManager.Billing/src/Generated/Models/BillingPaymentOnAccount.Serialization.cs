@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("invoiceName"u8);
                 writer.WriteStringValue(InvoiceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Date))
+            if (options.Format != "W" && Optional.IsDefined(On))
             {
                 writer.WritePropertyName("date"u8);
-                writer.WriteStringValue(Date.Value, "O");
+                writer.WriteStringValue(On.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(PaymentMethodType))
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Billing.Models
             string billingProfileDisplayName = default;
             ResourceIdentifier invoiceId = default;
             string invoiceName = default;
-            DateTimeOffset? date = default;
+            DateTimeOffset? @on = default;
             PaymentMethodFamily? paymentMethodType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    date = prop.Value.GetDateTimeOffset("O");
+                    @on = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("paymentMethodType"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Billing.Models
                 billingProfileDisplayName,
                 invoiceId,
                 invoiceName,
-                date,
+                @on,
                 paymentMethodType,
                 additionalBinaryDataProperties);
         }

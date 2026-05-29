@@ -18,8 +18,13 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Billing
 {
     /// <summary> The definition of the reservation. </summary>
-    public partial class BillingReservationData : ResourceData, IJsonModel<BillingReservationData>
+    public partial class BillingReservationData : TrackedResourceData, IJsonModel<BillingReservationData>
     {
+        /// <summary> Initializes a new instance of <see cref="BillingReservationData"/> for deserialization. </summary>
+        internal BillingReservationData()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -91,31 +96,10 @@ namespace Azure.ResourceManager.Billing
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
-            }
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteNumberValue(ETag.Value);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
             }
             if (Optional.IsDefined(Sku))
             {
@@ -154,10 +138,10 @@ namespace Azure.ResourceManager.Billing
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ReservationProperty properties = default;
-            string location = default;
-            int? eTag = default;
             IDictionary<string, string> tags = default;
+            AzureLocation location = default;
+            ReservationProperty properties = default;
+            int? eTag = default;
             ReservationSkuProperty sku = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -193,29 +177,6 @@ namespace Azure.ResourceManager.Billing
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerBillingContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = ReservationProperty.DeserializeReservationProperty(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("etag"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    eTag = prop.Value.GetInt32();
-                    continue;
-                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -235,6 +196,29 @@ namespace Azure.ResourceManager.Billing
                         }
                     }
                     tags = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ReservationProperty.DeserializeReservationProperty(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("etag"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("sku"u8))
@@ -257,10 +241,10 @@ namespace Azure.ResourceManager.Billing
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                properties,
-                location,
-                eTag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                eTag,
                 sku);
         }
     }

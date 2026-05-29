@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of <see cref="PartnerTransferDetailsListResult"/>. </summary>
         internal PartnerTransferDetailsListResult()
         {
-            Value = new ChangeTrackingList<PartnerTransferDetailsData>();
+            Value = new ChangeTrackingList<PartnerTransferDetailData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PartnerTransferDetailsListResult"/>. </summary>
         /// <param name="value"> The PartnerTransferDetails items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PartnerTransferDetailsListResult(IReadOnlyList<PartnerTransferDetailsData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PartnerTransferDetailsListResult(IReadOnlyList<PartnerTransferDetailData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The PartnerTransferDetails items on this page. </summary>
-        public IReadOnlyList<PartnerTransferDetailsData> Value { get; }
+        public IReadOnlyList<PartnerTransferDetailData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Id of payment method. Example: /providers/Microsoft.Billing/paymentMethods/ABCDABCDABC0. </summary>
-        public string PaymentMethodId
+        public ResourceIdentifier PaymentMethodId
         {
             get
             {

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="customerDisplayName"> The name of the customer. </param>
         /// <param name="customerId"> The fully qualified ID that uniquely identifies a customer. </param>
         /// <param name="creditType"> The credit type of the transaction. Applies only to credited transactions. </param>
-        /// <param name="date"> The date of transaction. </param>
+        /// <param name="on"> The date of transaction. </param>
         /// <param name="discount"> The percentage discount, if any, applied to this transaction. </param>
         /// <param name="effectivePrice"> The price of the product after applying any discounts. </param>
         /// <param name="exchangeRate"> The exchange rate used to convert charged amount to billing currency, if applicable. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="specialTaxationType"> Identifies the type of tax calculation used for the invoice. The field is applicable only to invoices with special tax calculation logic. </param>
         /// <param name="refundTransactionDetails"> The refund details of a transaction. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingTransactionProperties(BillingAmount azureCreditApplied, string azurePlan, string billingCurrency, BinaryData billingProfileDisplayName, ResourceIdentifier billingProfileId, BillingAmount consumptionCommitmentDecremented, string customerDisplayName, ResourceIdentifier customerId, BillingTransactionCreditType? creditType, DateTimeOffset? date, float? discount, BillingAmount effectivePrice, float? exchangeRate, string invoice, ResourceIdentifier invoiceId, string invoiceSectionDisplayName, ResourceIdentifier invoiceSectionId, bool? isThirdParty, BillingTransactionKind? kind, BillingAmount marketPrice, string partNumber, string pricingCurrency, string productDescription, string productFamily, string productTypeId, string productType, int? quantity, string reasonCode, DateTimeOffset? servicePeriodStartOn, DateTimeOffset? servicePeriodEndOn, BillingAmount subTotal, BillingAmount tax, BillingAmount transactionAmount, string transactionType, float? units, string unitOfMeasure, string unitType, SpecialTaxationType? specialTaxationType, RefundTransactionDetails refundTransactionDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingTransactionProperties(BillingAmount azureCreditApplied, string azurePlan, string billingCurrency, BinaryData billingProfileDisplayName, ResourceIdentifier billingProfileId, BillingAmount consumptionCommitmentDecremented, string customerDisplayName, ResourceIdentifier customerId, BillingTransactionCreditType? creditType, DateTimeOffset? @on, float? discount, BillingAmount effectivePrice, float? exchangeRate, string invoice, ResourceIdentifier invoiceId, string invoiceSectionDisplayName, ResourceIdentifier invoiceSectionId, bool? isThirdParty, BillingTransactionKind? kind, BillingAmount marketPrice, string partNumber, string pricingCurrency, string productDescription, string productFamily, string productTypeId, string productType, int? quantity, string reasonCode, DateTimeOffset? servicePeriodStartOn, DateTimeOffset? servicePeriodEndOn, BillingAmount subTotal, BillingAmount tax, BillingAmount transactionAmount, string transactionType, float? units, string unitOfMeasure, string unitType, SpecialTaxationType? specialTaxationType, RefundTransactionDetails refundTransactionDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AzureCreditApplied = azureCreditApplied;
             AzurePlan = azurePlan;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Billing.Models
             CustomerDisplayName = customerDisplayName;
             CustomerId = customerId;
             CreditType = creditType;
-            Date = date;
+            On = @on;
             Discount = discount;
             EffectivePrice = effectivePrice;
             ExchangeRate = exchangeRate;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Billing.Models
         public BillingTransactionCreditType? CreditType { get; set; }
 
         /// <summary> The date of transaction. </summary>
-        public DateTimeOffset? Date { get; set; }
+        public DateTimeOffset? On { get; set; }
 
         /// <summary> The percentage discount, if any, applied to this transaction. </summary>
         public float? Discount { get; set; }

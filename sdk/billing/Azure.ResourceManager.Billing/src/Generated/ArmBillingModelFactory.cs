@@ -467,6 +467,7 @@ namespace Azure.ResourceManager.Billing.Models
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A failed payment. </summary>
         /// <param name="on"> The date when the payment was attempted. </param>
         /// <param name="failedPaymentReason"> The reason that the payment failed. </param>
         /// <returns> A new <see cref="Models.BillingInvoiceFailedPayment"/> instance for mocking. </returns>
@@ -516,13 +517,14 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Rebill details for an invoice. </summary>
         /// <param name="invoiceDocumentId"> The ID of invoice. </param>
         /// <param name="creditNoteDocumentId"> The ID of credit note. </param>
-        /// <param name="rebillDetailsProperty"> The rebill details of an invoice. </param>
+        /// <param name="rebillDetailsValue"> The rebill details of an invoice. </param>
         /// <returns> A new <see cref="Models.InvoicePropertiesRebillDetails"/> instance for mocking. </returns>
-        public static InvoicePropertiesRebillDetails InvoicePropertiesRebillDetails(ResourceIdentifier invoiceDocumentId = default, ResourceIdentifier creditNoteDocumentId = default, RebillDetails rebillDetailsProperty = default)
+        public static InvoicePropertiesRebillDetails InvoicePropertiesRebillDetails(ResourceIdentifier invoiceDocumentId = default, ResourceIdentifier creditNoteDocumentId = default, RebillDetails rebillDetailsValue = default)
         {
-            return new InvoicePropertiesRebillDetails(invoiceDocumentId, creditNoteDocumentId, rebillDetailsProperty, additionalBinaryDataProperties: null);
+            return new InvoicePropertiesRebillDetails(invoiceDocumentId, creditNoteDocumentId, rebillDetailsValue, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The rebill details of an invoice. </summary>
         /// <param name="invoiceDocumentId"> The ID of invoice. </param>
         /// <param name="creditNoteDocumentId"> The ID of credit note. </param>
         /// <param name="rebillDetailsValue"> The rebill details of an invoice. </param>
@@ -646,6 +648,8 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="reservedResourceType"> The reserved source type of the reservation, e.g. virtual machine. </param>
         /// <param name="instanceFlexibility"> Allows reservation discount to be applied across skus within the same auto fit group. Not all skus support instance size flexibility. </param>
         /// <param name="displayName"> The display name of the reservation. </param>
@@ -683,12 +687,10 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="productCode"> Represents UPN. </param>
         /// <param name="trend"> last 7 day utilization trend for a reservation. </param>
         /// <param name="aggregates"> The array of aggregates of a reservation's utilization. </param>
-        /// <param name="location"> The location of the reservation. </param>
         /// <param name="eTag"></param>
-        /// <param name="tags"> Tags for this reservation. </param>
         /// <param name="skuName"> The name of the reservation sku. </param>
         /// <returns> A new <see cref="Billing.BillingReservationData"/> instance for mocking. </returns>
-        public static BillingReservationData BillingReservationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string reservedResourceType = default, InstanceFlexibility? instanceFlexibility = default, string displayName = default, IEnumerable<string> appliedScopes = default, string appliedScopeType = default, bool? isArchived = default, string capabilities = default, float? quantity = default, string provisioningState = default, DateTimeOffset? effectiveOn = default, DateTimeOffset? benefitStartOn = default, DateTimeOffset? lastUpdatedOn = default, DateTimeOffset? expireOn = default, DateTimeOffset? reservationExpireOn = default, DateTimeOffset? reviewOn = default, string skuDescription = default, ReservationExtendedStatusInfo extendedStatusInfo = default, ReservationBillingPlan? billingPlan = default, string displayProvisioningState = default, string provisioningSubState = default, DateTimeOffset? purchaseOn = default, DateTimeOffset? reservationPurchaseOn = default, ReservationSplitProperties splitProperties = default, ReservationMergeProperties mergeProperties = default, ReservationSwapProperties swapProperties = default, ReservationAppliedScopeProperties appliedScopeProperties = default, string billingScopeId = default, bool? isRenewed = default, string renewSource = default, string renewDestination = default, ReservationRenewProperties renewProperties = default, string term = default, string userFriendlyAppliedScopeType = default, string userFriendlyRenewState = default, string productCode = default, string trend = default, IEnumerable<ReservationUtilizationAggregates> aggregates = default, string location = default, int? eTag = default, IDictionary<string, string> tags = default, string skuName = default)
+        public static BillingReservationData BillingReservationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string reservedResourceType = default, InstanceFlexibility? instanceFlexibility = default, string displayName = default, IEnumerable<string> appliedScopes = default, string appliedScopeType = default, bool? isArchived = default, string capabilities = default, float? quantity = default, string provisioningState = default, DateTimeOffset? effectiveOn = default, DateTimeOffset? benefitStartOn = default, DateTimeOffset? lastUpdatedOn = default, DateTimeOffset? expireOn = default, DateTimeOffset? reservationExpireOn = default, DateTimeOffset? reviewOn = default, string skuDescription = default, ReservationExtendedStatusInfo extendedStatusInfo = default, ReservationBillingPlan? billingPlan = default, string displayProvisioningState = default, string provisioningSubState = default, DateTimeOffset? purchaseOn = default, DateTimeOffset? reservationPurchaseOn = default, ReservationSplitProperties splitProperties = default, ReservationMergeProperties mergeProperties = default, ReservationSwapProperties swapProperties = default, ReservationAppliedScopeProperties appliedScopeProperties = default, string billingScopeId = default, bool? isRenewed = default, string renewSource = default, string renewDestination = default, ReservationRenewProperties renewProperties = default, string term = default, string userFriendlyAppliedScopeType = default, string userFriendlyRenewState = default, string productCode = default, string trend = default, IEnumerable<ReservationUtilizationAggregates> aggregates = default, int? eTag = default, string skuName = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -698,6 +700,8 @@ namespace Azure.ResourceManager.Billing.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
+                location,
                 reservedResourceType is null && instanceFlexibility is null && displayName is null && appliedScopes is null && appliedScopeType is null && isArchived is null && capabilities is null && quantity is null && provisioningState is null && effectiveOn is null && benefitStartOn is null && lastUpdatedOn is null && expireOn is null && reservationExpireOn is null && reviewOn is null && skuDescription is null && extendedStatusInfo is null && billingPlan is null && displayProvisioningState is null && provisioningSubState is null && purchaseOn is null && reservationPurchaseOn is null && splitProperties is null && mergeProperties is null && swapProperties is null && appliedScopeProperties is null && billingScopeId is null && isRenewed is null && renewSource is null && renewDestination is null && renewProperties is null && term is null && userFriendlyAppliedScopeType is null && userFriendlyRenewState is null && productCode is null && trend is null && aggregates is null ? default : new ReservationProperty(
                     reservedResourceType,
                     instanceFlexibility,
@@ -736,9 +740,7 @@ namespace Azure.ResourceManager.Billing.Models
                     new ReservationPropertyUtilization(trend, (aggregates ?? new ChangeTrackingList<ReservationUtilizationAggregates>()).ToList(), null),
                     productCode,
                     null),
-                location,
                 eTag,
-                tags,
                 skuName is null ? default : new ReservationSkuProperty(skuName, null));
         }
 
@@ -947,15 +949,16 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Describes the registration number of the organization linked with the billing account. </summary>
         /// <param name="id"> The unique identification number of the organization linked with the billing account. </param>
         /// <param name="isRequired"> Identifies if the registration number is required for the billing account. </param>
-        /// <param name="type"> The types of registration number allowed based on the country of the billing account. </param>
+        /// <param name="registrationNumberType"> The types of registration number allowed based on the country of the billing account. </param>
         /// <returns> A new <see cref="Models.BillingAccountPropertiesRegistrationNumber"/> instance for mocking. </returns>
-        public static BillingAccountPropertiesRegistrationNumber BillingAccountPropertiesRegistrationNumber(string id = default, bool? isRequired = default, IEnumerable<string> @type = default)
+        public static BillingAccountPropertiesRegistrationNumber BillingAccountPropertiesRegistrationNumber(string id = default, bool? isRequired = default, IEnumerable<string> registrationNumberType = default)
         {
-            @type ??= new ChangeTrackingList<string>();
+            registrationNumberType ??= new ChangeTrackingList<string>();
 
-            return new BillingAccountPropertiesRegistrationNumber(id, isRequired, @type.ToList(), additionalBinaryDataProperties: null);
+            return new BillingAccountPropertiesRegistrationNumber(id, isRequired, registrationNumberType.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Describes the registration number of the organization linked with the billing account. </summary>
         /// <param name="id"> The unique identification number of the organization linked with the billing account. </param>
         /// <param name="isRequired"> Identifies if the registration number is required for the billing account. </param>
         /// <param name="registrationNumberType"> The types of registration number allowed based on the country of the billing account. </param>
@@ -967,23 +970,25 @@ namespace Azure.ResourceManager.Billing.Models
             return new BillingRegistrationNumber(id, isRequired, registrationNumberType.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Common fields that are returned in the response for all Azure Resource Manager resources. </summary>
+        /// <summary> A billing account. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> A billing account. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
-        /// <returns> A new <see cref="Models.ProxyResourceWithTags"/> instance for mocking. </returns>
-        public static ProxyResourceWithTags ProxyResourceWithTags(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.BillingAccountPatch"/> instance for mocking. </returns>
+        public static BillingAccountPatch BillingAccountPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BillingAccountProperties properties = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ProxyResourceWithTags(
+            return new BillingAccountPatch(
                 id,
                 name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                properties,
                 tags);
         }
 
@@ -1142,6 +1147,7 @@ namespace Azure.ResourceManager.Billing.Models
             return new AvailableBalancePropertiesAmount(currency, value, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A Payment on Account. </summary>
         /// <param name="amount"> Payment on Account amount. </param>
         /// <param name="billingProfileId"> The ID of the billing profile for the payments on account. </param>
         /// <param name="billingProfileDisplayName"> The name of the billing profile for the payments on account. </param>
@@ -1282,6 +1288,28 @@ namespace Azure.ResourceManager.Billing.Models
             return new CreatedSubscriptionReseller(resellerId, description, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A product. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> A product. </param>
+        /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
+        /// <returns> A new <see cref="Models.BillingProductPatch"/> instance for mocking. </returns>
+        public static BillingProductPatch BillingProductPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BillingProductProperties properties = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BillingProductPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                tags);
+        }
+
         /// <summary> The properties of the product to initiate a transfer. </summary>
         /// <param name="destinationInvoiceSectionId"> The destination invoice section id. </param>
         /// <returns> A new <see cref="Models.MoveProductContent"/> instance for mocking. </returns>
@@ -1402,6 +1430,7 @@ namespace Azure.ResourceManager.Billing.Models
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The billing profile spending limit. </summary>
         /// <param name="amount"> The initial amount for the billing profile. </param>
         /// <param name="currency"> The currency in which the charges for the billing profile are billed. </param>
         /// <param name="startOn"> The date when this spending limit goes into effect. </param>
@@ -1452,12 +1481,52 @@ namespace Azure.ResourceManager.Billing.Models
             return new DeleteBillingProfileEligibilityDetail(code, message, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Details for the next renewal term of a subscription. </summary>
+        /// <param name="billingFrequency"> The billing frequency in ISO8601 format of product in the subscription. Example: P1M, P3M, P1Y. </param>
+        /// <param name="productId"> Id of the product for which the subscription is purchased. </param>
+        /// <param name="productTypeId"> Type Id of the product for which the subscription is purchased. </param>
+        /// <param name="skuId"> The SKU ID of the product for which the subscription is purchased. This field is is only available  for Microsoft Customer Agreement billing accounts. </param>
+        /// <param name="termDuration"> The duration in ISO8601 format for which you can use the subscription. Example: P1M, P3M, P1Y. </param>
+        /// <param name="quantity"> The quantity of licenses or fulfillment units for the subscription. </param>
+        /// <param name="termEndOn"> End date of the term in UTC time. </param>
+        /// <returns> A new <see cref="Models.SubscriptionRenewalTermDetails"/> instance for mocking. </returns>
+        public static SubscriptionRenewalTermDetails SubscriptionRenewalTermDetails(string billingFrequency = default, string productId = default, string productTypeId = default, string skuId = default, TimeSpan? termDuration = default, long? quantity = default, DateTimeOffset? termEndOn = default)
+        {
+            return new SubscriptionRenewalTermDetails(
+                billingFrequency,
+                productId,
+                productTypeId,
+                skuId,
+                termDuration,
+                quantity,
+                termEndOn,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> System imposed policies that regulate behavior of the subscription. </summary>
+        /// <param name="cancellation"> The policy override for the subscription indicates whether the self-serve cancellation or seat reduction is allowed. </param>
+        /// <param name="cancellationAllowedEndOn"> The end date in UTC time by when the self-serve cancellation ends. </param>
+        /// <returns> A new <see cref="Models.BillingSystemOverrides"/> instance for mocking. </returns>
+        public static BillingSystemOverrides BillingSystemOverrides(PolicyOverrideCancellation? cancellation = default, DateTimeOffset? cancellationAllowedEndOn = default)
+        {
+            return new BillingSystemOverrides(cancellation, cancellationAllowedEndOn, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The suspension details for a subscription. This field is not available for Enterprise Agreement billing accounts. </summary>
+        /// <param name="effectiveOn"> The suspension effective date for a subscription. This field is not available for Enterprise Agreement billing accounts. </param>
+        /// <param name="reason"> The suspension reason for a subscription. This field is not available for Enterprise Agreement billing accounts. </param>
+        /// <returns> A new <see cref="Models.BillingSubscriptionStatusDetails"/> instance for mocking. </returns>
+        public static BillingSubscriptionStatusDetails BillingSubscriptionStatusDetails(DateTimeOffset? effectiveOn = default, SubscriptionStatusReason? reason = default)
+        {
+            return new BillingSubscriptionStatusDetails(effectiveOn, reason, additionalBinaryDataProperties: null);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="autoRenew"> Indicates whether auto renewal is turned on or off for a product. </param>
-        /// <param name="subscriptionAliasBeneficiaryTenantId"> The provisioning tenant of the subscription. </param>
+        /// <param name="subscriptionBeneficiaryTenantId"> The provisioning tenant of the subscription. </param>
         /// <param name="beneficiary"> The beneficiary of the billing subscription. </param>
         /// <param name="billingFrequency"> The billing frequency in ISO8601 format of product in the subscription. Example: P1M, P3M, P1Y. </param>
         /// <param name="billingProfileId"> The fully qualified ID that uniquely identifies a billing profile. </param>
@@ -1465,7 +1534,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="billingProfileDisplayName"> The name of the billing profile. </param>
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
         /// <param name="consumptionCostCenter"> The cost center applied to the subscription. This field is only available for consumption subscriptions of Microsoft Customer Agreement or Enterprise Agreement Type billing accounts. </param>
-        /// <param name="subscriptionAliasCustomerId"> The fully qualified ID that uniquely identifies a customer. </param>
+        /// <param name="subscriptionCustomerId"> The fully qualified ID that uniquely identifies a customer. </param>
         /// <param name="customerDisplayName"> The name of the customer. </param>
         /// <param name="customerName"> The ID that uniquely identifies a customer. </param>
         /// <param name="displayName"> The name of the billing subscription. </param>
@@ -1502,20 +1571,20 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="subscriptionEnrollmentAccountStatus"> The current enrollment account status of the subscription. This field is available only for the Enterprise Agreement Type. </param>
         /// <param name="nextBillingCycleBillingFrequency"> Billing frequency of the product under the subscription. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
-        /// <returns> A new <see cref="Billing.BillingSubscriptionData"/> instance for mocking. </returns>
-        public static BillingSubscriptionData BillingSubscriptionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BillingSubscriptionAutoRenewState? autoRenew = default, string subscriptionAliasBeneficiaryTenantId = default, BillingBeneficiary beneficiary = default, string billingFrequency = default, string billingProfileId = default, IReadOnlyDictionary<string, string> billingPolicies = default, string billingProfileDisplayName = default, string billingProfileName = default, string consumptionCostCenter = default, string subscriptionAliasCustomerId = default, string customerDisplayName = default, string customerName = default, string displayName = default, string enrollmentAccountId = default, string enrollmentAccountDisplayName = default, string invoiceSectionId = default, string invoiceSectionDisplayName = default, string invoiceSectionName = default, BillingAmount lastMonthCharges = default, BillingAmount monthToDateCharges = default, string offerId = default, string productCategory = default, string productType = default, string productTypeId = default, DateTimeOffset? purchaseOn = default, long? quantity = default, CreatedSubscriptionReseller reseller = default, SubscriptionRenewalTermDetails renewalTermDetails = default, string skuId = default, string skuDescription = default, BillingSystemOverrides systemOverrides = default, string resourceUri = default, string termDuration = default, DateTimeOffset? termStartOn = default, DateTimeOffset? termEndOn = default, string provisioningTenantId = default, BillingSubscriptionStatus? status = default, BillingSubscriptionOperationStatus? operationStatus = default, BillingProvisioningState? provisioningState = default, string subscriptionId = default, IEnumerable<string> suspensionReasons = default, IEnumerable<BillingSubscriptionStatusDetails> suspensionReasonDetails = default, DateTimeOffset? enrollmentAccountStartOn = default, SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus = default, string nextBillingCycleBillingFrequency = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.BillingSubscriptionPatch"/> instance for mocking. </returns>
+        public static BillingSubscriptionPatch BillingSubscriptionPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BillingSubscriptionAutoRenewState? autoRenew = default, Guid? subscriptionBeneficiaryTenantId = default, BillingBeneficiary beneficiary = default, string billingFrequency = default, ResourceIdentifier billingProfileId = default, IReadOnlyDictionary<string, string> billingPolicies = default, string billingProfileDisplayName = default, string billingProfileName = default, string consumptionCostCenter = default, string subscriptionCustomerId = default, string customerDisplayName = default, string customerName = default, string displayName = default, string enrollmentAccountId = default, string enrollmentAccountDisplayName = default, ResourceIdentifier invoiceSectionId = default, string invoiceSectionDisplayName = default, string invoiceSectionName = default, BillingAmount lastMonthCharges = default, BillingAmount monthToDateCharges = default, string offerId = default, string productCategory = default, string productType = default, string productTypeId = default, DateTimeOffset? purchaseOn = default, long? quantity = default, CreatedSubscriptionReseller reseller = default, SubscriptionRenewalTermDetails renewalTermDetails = default, string skuId = default, string skuDescription = default, BillingSystemOverrides systemOverrides = default, Uri resourceUri = default, TimeSpan? termDuration = default, DateTimeOffset? termStartOn = default, DateTimeOffset? termEndOn = default, Guid? provisioningTenantId = default, BillingSubscriptionStatus? status = default, BillingSubscriptionOperationStatus? operationStatus = default, BillingProvisioningState? provisioningState = default, string subscriptionId = default, IEnumerable<string> suspensionReasons = default, IEnumerable<BillingSubscriptionStatusDetails> suspensionReasonDetails = default, DateTimeOffset? enrollmentAccountStartOn = default, SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus = default, string nextBillingCycleBillingFrequency = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new BillingSubscriptionData(
+            return new BillingSubscriptionPatch(
                 id,
                 name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                autoRenew is null && subscriptionAliasBeneficiaryTenantId is null && beneficiary is null && billingFrequency is null && billingProfileId is null && billingPolicies is null && billingProfileDisplayName is null && billingProfileName is null && consumptionCostCenter is null && subscriptionAliasCustomerId is null && customerDisplayName is null && customerName is null && displayName is null && enrollmentAccountId is null && enrollmentAccountDisplayName is null && invoiceSectionId is null && invoiceSectionDisplayName is null && invoiceSectionName is null && lastMonthCharges is null && monthToDateCharges is null && offerId is null && productCategory is null && productType is null && productTypeId is null && purchaseOn is null && quantity is null && reseller is null && renewalTermDetails is null && skuId is null && skuDescription is null && systemOverrides is null && resourceUri is null && termDuration is null && termStartOn is null && termEndOn is null && provisioningTenantId is null && status is null && operationStatus is null && provisioningState is null && subscriptionId is null && suspensionReasons is null && suspensionReasonDetails is null && enrollmentAccountStartOn is null && subscriptionEnrollmentAccountStatus is null && nextBillingCycleBillingFrequency is null ? default : new BillingSubscriptionProperties(
+                autoRenew is null && subscriptionBeneficiaryTenantId is null && beneficiary is null && billingFrequency is null && billingProfileId is null && billingPolicies is null && billingProfileDisplayName is null && billingProfileName is null && consumptionCostCenter is null && subscriptionCustomerId is null && customerDisplayName is null && customerName is null && displayName is null && enrollmentAccountId is null && enrollmentAccountDisplayName is null && invoiceSectionId is null && invoiceSectionDisplayName is null && invoiceSectionName is null && lastMonthCharges is null && monthToDateCharges is null && offerId is null && productCategory is null && productType is null && productTypeId is null && purchaseOn is null && quantity is null && reseller is null && renewalTermDetails is null && skuId is null && skuDescription is null && systemOverrides is null && resourceUri is null && termDuration is null && termStartOn is null && termEndOn is null && provisioningTenantId is null && status is null && operationStatus is null && provisioningState is null && subscriptionId is null && suspensionReasons is null && suspensionReasonDetails is null && enrollmentAccountStartOn is null && subscriptionEnrollmentAccountStatus is null && nextBillingCycleBillingFrequency is null ? default : new BillingSubscriptionProperties(
                     autoRenew,
-                    subscriptionAliasBeneficiaryTenantId,
+                    subscriptionBeneficiaryTenantId,
                     beneficiary,
                     billingFrequency,
                     billingProfileId,
@@ -1523,7 +1592,7 @@ namespace Azure.ResourceManager.Billing.Models
                     billingProfileDisplayName,
                     billingProfileName,
                     consumptionCostCenter,
-                    subscriptionAliasCustomerId,
+                    subscriptionCustomerId,
                     customerDisplayName,
                     customerName,
                     displayName,
@@ -1560,156 +1629,6 @@ namespace Azure.ResourceManager.Billing.Models
                     (suspensionReasonDetails ?? new ChangeTrackingList<BillingSubscriptionStatusDetails>()).ToList(),
                     null),
                 tags);
-        }
-
-        /// <summary> Details for the next renewal term of a subscription. </summary>
-        /// <param name="billingFrequency"> The billing frequency in ISO8601 format of product in the subscription. Example: P1M, P3M, P1Y. </param>
-        /// <param name="productId"> Id of the product for which the subscription is purchased. </param>
-        /// <param name="productTypeId"> Type Id of the product for which the subscription is purchased. </param>
-        /// <param name="skuId"> The SKU ID of the product for which the subscription is purchased. This field is is only available  for Microsoft Customer Agreement billing accounts. </param>
-        /// <param name="termDuration"> The duration in ISO8601 format for which you can use the subscription. Example: P1M, P3M, P1Y. </param>
-        /// <param name="quantity"> The quantity of licenses or fulfillment units for the subscription. </param>
-        /// <param name="termEndOn"> End date of the term in UTC time. </param>
-        /// <returns> A new <see cref="Models.SubscriptionRenewalTermDetails"/> instance for mocking. </returns>
-        public static SubscriptionRenewalTermDetails SubscriptionRenewalTermDetails(string billingFrequency = default, string productId = default, string productTypeId = default, string skuId = default, string termDuration = default, long? quantity = default, DateTimeOffset? termEndOn = default)
-        {
-            return new SubscriptionRenewalTermDetails(
-                billingFrequency,
-                productId,
-                productTypeId,
-                skuId,
-                termDuration,
-                quantity,
-                termEndOn,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> System imposed policies that regulate behavior of the subscription. </summary>
-        /// <param name="cancellation"> The policy override for the subscription indicates whether the self-serve cancellation or seat reduction is allowed. </param>
-        /// <param name="cancellationAllowedEndOn"> The end date in UTC time by when the self-serve cancellation ends. </param>
-        /// <returns> A new <see cref="Models.BillingSystemOverrides"/> instance for mocking. </returns>
-        public static BillingSystemOverrides BillingSystemOverrides(PolicyOverrideCancellation? cancellation = default, DateTimeOffset? cancellationAllowedEndOn = default)
-        {
-            return new BillingSystemOverrides(cancellation, cancellationAllowedEndOn, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The suspension details for a subscription. This field is not available for Enterprise Agreement billing accounts. </summary>
-        /// <param name="effectiveOn"> The suspension effective date for a subscription. This field is not available for Enterprise Agreement billing accounts. </param>
-        /// <param name="reason"> The suspension reason for a subscription. This field is not available for Enterprise Agreement billing accounts. </param>
-        /// <returns> A new <see cref="Models.BillingSubscriptionStatusDetails"/> instance for mocking. </returns>
-        public static BillingSubscriptionStatusDetails BillingSubscriptionStatusDetails(DateTimeOffset? effectiveOn = default, SubscriptionStatusReason? reason = default)
-        {
-            return new BillingSubscriptionStatusDetails(effectiveOn, reason, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
-        /// <param name="autoRenew"> Indicates whether auto renewal is turned on or off for a product. </param>
-        /// <param name="subscriptionAliasBeneficiaryTenantId"> The provisioning tenant of the subscription. </param>
-        /// <param name="beneficiary"> The beneficiary of the billing subscription. </param>
-        /// <param name="billingFrequency"> The billing frequency in ISO8601 format of product in the subscription. Example: P1M, P3M, P1Y. </param>
-        /// <param name="billingProfileId"> The fully qualified ID that uniquely identifies a billing profile. </param>
-        /// <param name="billingPolicies"> Dictionary of billing policies associated with the subscription. </param>
-        /// <param name="billingProfileDisplayName"> The name of the billing profile. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="consumptionCostCenter"> The cost center applied to the subscription. This field is only available for consumption subscriptions of Microsoft Customer Agreement or Enterprise Agreement Type billing accounts. </param>
-        /// <param name="subscriptionAliasCustomerId"> The fully qualified ID that uniquely identifies a customer. </param>
-        /// <param name="customerDisplayName"> The name of the customer. </param>
-        /// <param name="customerName"> The ID that uniquely identifies a customer. </param>
-        /// <param name="displayName"> The name of the billing subscription. </param>
-        /// <param name="enrollmentAccountId"> The enrollment Account ID associated with the subscription. This field is available only for the Enterprise Agreement Type billing accounts. </param>
-        /// <param name="enrollmentAccountDisplayName"> The enrollment Account name associated with the subscription. This field is available only for the Enterprise Agreement Type billing accounts. </param>
-        /// <param name="invoiceSectionId"> The fully qualified ID that uniquely identifies an invoice section. </param>
-        /// <param name="invoiceSectionDisplayName"> The name of the invoice section. </param>
-        /// <param name="invoiceSectionName"> The ID that uniquely identifies an invoice section. </param>
-        /// <param name="lastMonthCharges"> The last month's charges. This field is only available for usage based subscriptions of Microsoft Customer Agreement billing accounts. </param>
-        /// <param name="monthToDateCharges"> The current month to date charges. This field is only available for usage based subscriptions of Microsoft Customer Agreement billing accounts. </param>
-        /// <param name="offerId"> The offer ID for the subscription. This field is only available for the Microsoft Online Services Program billing accounts or billing accounts with agreement type Enterprise Agreement. </param>
-        /// <param name="productCategory"> The category of the product for which the subscription is purchased. Possible values include: AzureSupport, Hardware, ReservationOrder, SaaS, SavingsPlanOrder, Software, UsageBased, Other. </param>
-        /// <param name="productType"> Type of the product for which the subscription is purchased. </param>
-        /// <param name="productTypeId"> Id of the product for which the subscription is purchased. </param>
-        /// <param name="purchaseOn"> Purchase date of the product in UTC time. </param>
-        /// <param name="quantity"> The quantity of licenses or fulfillment units for the subscription. </param>
-        /// <param name="reseller"> Reseller for this subscription. The fields is not available for Microsoft Partner Agreement billing accounts. </param>
-        /// <param name="renewalTermDetails"> Details for the next renewal term of a subscription. </param>
-        /// <param name="skuId"> The SKU ID of the product for which the subscription is purchased. This field is is only available  for Microsoft Customer Agreement billing accounts. </param>
-        /// <param name="skuDescription"> The SKU description of the product for which the subscription is purchased. This field is is only available for billing accounts with agreement type Microsoft Customer Agreement and Microsoft Partner Agreement. </param>
-        /// <param name="systemOverrides"> System imposed policies that regulate behavior of the subscription. </param>
-        /// <param name="resourceUri"> Unique identifier of the linked resource. </param>
-        /// <param name="termDuration"> The duration in ISO8601 format for which you can use the subscription. Example: P1M, P3M, P1Y. </param>
-        /// <param name="termStartOn"> Start date of the term in UTC time. </param>
-        /// <param name="termEndOn"> End date of the term in UTC time. </param>
-        /// <param name="provisioningTenantId"> The tenant in which the subscription is provisioned. </param>
-        /// <param name="status"> The status of the subscription. This field is not available for Enterprise Agreement billing accounts. </param>
-        /// <param name="operationStatus"> The status of an operation on the subscription. When None, there is no ongoing operation. When LockedForUpdate, write operations will be blocked on the Billing Subscription. Other is the default value and you may need to refer to the latest API version for more details. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource during a long-running operation. </param>
-        /// <param name="subscriptionId"> The ID of the subscription. </param>
-        /// <param name="suspensionReasons"> The suspension reason for a subscription. This field is not available for Enterprise Agreement billing accounts. </param>
-        /// <param name="suspensionReasonDetails"> The suspension details for a subscription. This field is not available for Enterprise Agreement billing accounts. </param>
-        /// <param name="enrollmentAccountStartOn"> The enrollment Account and the subscription association start date. This field is available only for the Enterprise Agreement Type. </param>
-        /// <param name="subscriptionEnrollmentAccountStatus"> The current enrollment account status of the subscription. This field is available only for the Enterprise Agreement Type. </param>
-        /// <param name="nextBillingCycleBillingFrequency"> Billing frequency of the product under the subscription. </param>
-        /// <returns> A new <see cref="Models.BillingSubscriptionPatch"/> instance for mocking. </returns>
-        public static BillingSubscriptionPatch BillingSubscriptionPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, BillingSubscriptionAutoRenewState? autoRenew = default, string subscriptionAliasBeneficiaryTenantId = default, BillingBeneficiary beneficiary = default, string billingFrequency = default, string billingProfileId = default, IReadOnlyDictionary<string, string> billingPolicies = default, string billingProfileDisplayName = default, string billingProfileName = default, string consumptionCostCenter = default, string subscriptionAliasCustomerId = default, string customerDisplayName = default, string customerName = default, string displayName = default, string enrollmentAccountId = default, string enrollmentAccountDisplayName = default, string invoiceSectionId = default, string invoiceSectionDisplayName = default, string invoiceSectionName = default, BillingAmount lastMonthCharges = default, BillingAmount monthToDateCharges = default, string offerId = default, string productCategory = default, string productType = default, string productTypeId = default, DateTimeOffset? purchaseOn = default, long? quantity = default, CreatedSubscriptionReseller reseller = default, SubscriptionRenewalTermDetails renewalTermDetails = default, string skuId = default, string skuDescription = default, BillingSystemOverrides systemOverrides = default, string resourceUri = default, string termDuration = default, DateTimeOffset? termStartOn = default, DateTimeOffset? termEndOn = default, string provisioningTenantId = default, BillingSubscriptionStatus? status = default, BillingSubscriptionOperationStatus? operationStatus = default, BillingProvisioningState? provisioningState = default, string subscriptionId = default, IEnumerable<string> suspensionReasons = default, IEnumerable<BillingSubscriptionStatusDetails> suspensionReasonDetails = default, DateTimeOffset? enrollmentAccountStartOn = default, SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus = default, string nextBillingCycleBillingFrequency = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BillingSubscriptionPatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                autoRenew is null && subscriptionAliasBeneficiaryTenantId is null && beneficiary is null && billingFrequency is null && billingProfileId is null && billingPolicies is null && billingProfileDisplayName is null && billingProfileName is null && consumptionCostCenter is null && subscriptionAliasCustomerId is null && customerDisplayName is null && customerName is null && displayName is null && enrollmentAccountId is null && enrollmentAccountDisplayName is null && invoiceSectionId is null && invoiceSectionDisplayName is null && invoiceSectionName is null && lastMonthCharges is null && monthToDateCharges is null && offerId is null && productCategory is null && productType is null && productTypeId is null && purchaseOn is null && quantity is null && reseller is null && renewalTermDetails is null && skuId is null && skuDescription is null && systemOverrides is null && resourceUri is null && termDuration is null && termStartOn is null && termEndOn is null && provisioningTenantId is null && status is null && operationStatus is null && provisioningState is null && subscriptionId is null && suspensionReasons is null && suspensionReasonDetails is null && enrollmentAccountStartOn is null && subscriptionEnrollmentAccountStatus is null && nextBillingCycleBillingFrequency is null ? default : new BillingSubscriptionProperties(
-                    autoRenew,
-                    subscriptionAliasBeneficiaryTenantId,
-                    beneficiary,
-                    billingFrequency,
-                    billingProfileId,
-                    billingPolicies,
-                    billingProfileDisplayName,
-                    billingProfileName,
-                    consumptionCostCenter,
-                    subscriptionAliasCustomerId,
-                    customerDisplayName,
-                    customerName,
-                    displayName,
-                    enrollmentAccountId,
-                    enrollmentAccountDisplayName,
-                    new EnrollmentAccountSubscriptionDetails(enrollmentAccountStartOn, subscriptionEnrollmentAccountStatus, null),
-                    invoiceSectionId,
-                    invoiceSectionDisplayName,
-                    invoiceSectionName,
-                    lastMonthCharges,
-                    monthToDateCharges,
-                    new NextBillingCycleDetails(nextBillingCycleBillingFrequency, null),
-                    offerId,
-                    productCategory,
-                    productType,
-                    productTypeId,
-                    purchaseOn,
-                    quantity,
-                    reseller,
-                    renewalTermDetails,
-                    skuId,
-                    skuDescription,
-                    systemOverrides,
-                    resourceUri,
-                    termDuration,
-                    termStartOn,
-                    termEndOn,
-                    provisioningTenantId,
-                    status,
-                    operationStatus,
-                    provisioningState,
-                    subscriptionId,
-                    (suspensionReasons ?? new ChangeTrackingList<string>()).ToList(),
-                    (suspensionReasonDetails ?? new ChangeTrackingList<BillingSubscriptionStatusDetails>()).ToList(),
-                    null));
         }
 
         /// <summary> Request parameters for cancel customer subscription. </summary>
@@ -2190,7 +2109,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="status"> Status of the payment method. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
         /// <returns> A new <see cref="Billing.BillingPaymentMethodLinkData"/> instance for mocking. </returns>
-        public static BillingPaymentMethodLinkData BillingPaymentMethodLinkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string accountHolderName = default, string displayName = default, string expiration = default, PaymentMethodFamily? family = default, string lastFourDigits = default, IEnumerable<PaymentMethodLogo> logos = default, PaymentMethodProjectionProperties paymentMethod = default, string paymentMethodId = default, string paymentMethodType = default, PaymentMethodStatus? status = default, IDictionary<string, string> tags = default)
+        public static BillingPaymentMethodLinkData BillingPaymentMethodLinkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string accountHolderName = default, string displayName = default, string expiration = default, PaymentMethodFamily? family = default, string lastFourDigits = default, IEnumerable<PaymentMethodLogo> logos = default, PaymentMethodProjectionProperties paymentMethod = default, ResourceIdentifier paymentMethodId = default, string paymentMethodType = default, PaymentMethodStatus? status = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2241,7 +2160,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="eTag"></param>
         /// <param name="tags"> Tags for this reservation. </param>
         /// <returns> A new <see cref="Billing.BillingReservationOrderData"/> instance for mocking. </returns>
-        public static BillingReservationOrderData BillingReservationOrderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string enrollmentId = default, string customerId = default, string billingProfileId = default, string billingAccountId = default, DateTimeOffset? requestOn = default, DateTimeOffset? createdOn = default, DateTimeOffset? expireOn = default, DateTimeOffset? reservationExpireOn = default, DateTimeOffset? benefitStartOn = default, int? originalQuantity = default, string term = default, string provisioningState = default, ReservationBillingPlan? billingPlan = default, ReservationOrderBillingPlanInformation planInformation = default, IEnumerable<BillingReservationData> reservations = default, DateTimeOffset? reviewedOn = default, ReservationExtendedStatusInfo extendedStatusInfo = default, string productCode = default, int? eTag = default, IDictionary<string, string> tags = default)
+        public static BillingReservationOrderData BillingReservationOrderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string enrollmentId = default, ResourceIdentifier customerId = default, ResourceIdentifier billingProfileId = default, ResourceIdentifier billingAccountId = default, DateTimeOffset? requestOn = default, DateTimeOffset? createdOn = default, DateTimeOffset? expireOn = default, DateTimeOffset? reservationExpireOn = default, DateTimeOffset? benefitStartOn = default, int? originalQuantity = default, string term = default, string provisioningState = default, ReservationBillingPlan? billingPlan = default, ReservationOrderBillingPlanInformation planInformation = default, IEnumerable<BillingReservationData> reservations = default, DateTimeOffset? reviewedOn = default, ReservationExtendedStatusInfo extendedStatusInfo = default, string productCode = default, int? eTag = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2300,12 +2219,12 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="canceledBy"> The email ID of the user who canceled the transfer request. </param>
         /// <param name="detailedTransferStatus"> Detailed transfer status. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
-        /// <returns> A new <see cref="Billing.BillingTransferDetailsData"/> instance for mocking. </returns>
-        public static BillingTransferDetailsData BillingTransferDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? expireOn = default, PartnerTransferStatus? transferStatus = default, string recipientEmailId = default, string initiatorEmailId = default, string canceledBy = default, IEnumerable<DetailedTransferStatus> detailedTransferStatus = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Billing.BillingTransferDetailData"/> instance for mocking. </returns>
+        public static BillingTransferDetailData BillingTransferDetailData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? expireOn = default, PartnerTransferStatus? transferStatus = default, string recipientEmailId = default, string initiatorEmailId = default, string canceledBy = default, IEnumerable<DetailedTransferStatus> detailedTransferStatus = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new BillingTransferDetailsData(
+            return new BillingTransferDetailData(
                 id,
                 name,
                 resourceType,
@@ -2365,12 +2284,12 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="canceledBy"> The email ID of the user who canceled the transfer request. </param>
         /// <param name="detailedTransferStatus"> Detailed transfer status. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
-        /// <returns> A new <see cref="Billing.PartnerTransferDetailsData"/> instance for mocking. </returns>
-        public static PartnerTransferDetailsData PartnerTransferDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? expireOn = default, PartnerTransferStatus? transferStatus = default, string recipientEmailId = default, InitiatorCustomerType? initiatorCustomerType = default, string initiatorEmailId = default, string resellerId = default, string resellerName = default, string canceledBy = default, IEnumerable<DetailedTransferStatus> detailedTransferStatus = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Billing.PartnerTransferDetailData"/> instance for mocking. </returns>
+        public static PartnerTransferDetailData PartnerTransferDetailData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? expireOn = default, PartnerTransferStatus? transferStatus = default, string recipientEmailId = default, InitiatorCustomerType? initiatorCustomerType = default, string initiatorEmailId = default, string resellerId = default, string resellerName = default, string canceledBy = default, IEnumerable<DetailedTransferStatus> detailedTransferStatus = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new PartnerTransferDetailsData(
+            return new PartnerTransferDetailData(
                 id,
                 name,
                 resourceType,
@@ -2407,12 +2326,12 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="customerTenantId"> The customer tenant id. </param>
         /// <param name="supportedAccounts"> List of supported account types. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
-        /// <returns> A new <see cref="Billing.RecipientTransferDetailsData"/> instance for mocking. </returns>
-        public static RecipientTransferDetailsData RecipientTransferDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? expireOn = default, IEnumerable<EligibleProductType> allowedProductType = default, PartnerTransferStatus? transferStatus = default, string recipientEmailId = default, string initiatorEmailId = default, string resellerId = default, string resellerName = default, InitiatorCustomerType? initiatorCustomerType = default, string canceledBy = default, IEnumerable<DetailedTransferStatus> detailedTransferStatus = default, string customerTenantId = default, IEnumerable<BillingSupportedAccountType> supportedAccounts = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Billing.RecipientTransferDetailData"/> instance for mocking. </returns>
+        public static RecipientTransferDetailData RecipientTransferDetailData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? expireOn = default, IEnumerable<EligibleProductType> allowedProductType = default, PartnerTransferStatus? transferStatus = default, string recipientEmailId = default, string initiatorEmailId = default, string resellerId = default, string resellerName = default, InitiatorCustomerType? initiatorCustomerType = default, string canceledBy = default, IEnumerable<DetailedTransferStatus> detailedTransferStatus = default, Guid? customerTenantId = default, IEnumerable<BillingSupportedAccountType> supportedAccounts = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new RecipientTransferDetailsData(
+            return new RecipientTransferDetailData(
                 id,
                 name,
                 resourceType,
@@ -2462,6 +2381,28 @@ namespace Azure.ResourceManager.Billing.Models
         public static BillingTransferValidationResultProperties BillingTransferValidationResultProperties(string level = default, string code = default, string message = default)
         {
             return new BillingTransferValidationResultProperties(level, code, message, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A transaction. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> A transaction. </param>
+        /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
+        /// <returns> A new <see cref="Models.BillingTransactionData"/> instance for mocking. </returns>
+        public static BillingTransactionData BillingTransactionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BillingTransactionProperties properties = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BillingTransactionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                tags);
         }
 
         /// <summary> The amount of any Azure credits automatically applied to this transaction. </summary>
@@ -2594,77 +2535,6 @@ namespace Azure.ResourceManager.Billing.Models
         public static BillingCheckAccessResult BillingCheckAccessResult(BillingProfileAccessDecision? accessDecision = default, string action = default)
         {
             return new BillingCheckAccessResult(accessDecision, action, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="displayName"> Display name. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource during a long-running operation. </param>
-        /// <param name="displayProvisioningState"> The provisioning state of the savings plan for display, e.g. Succeeded. </param>
-        /// <param name="userFriendlyAppliedScopeType"> The applied scope type of the savings plan for display, e.g. Shared. </param>
-        /// <param name="billingScopeId"> Subscription that will be charged for purchasing SavingsPlan. </param>
-        /// <param name="billingProfileId"> Fully-qualified identifier of the billing profile where the savings plan is applied. Present only for Field-led or Customer-led customers. </param>
-        /// <param name="customerId"> Fully-qualified identifier of the customer where the savings plan is applied. Present only for Partner-led customers. </param>
-        /// <param name="billingAccountId"> Fully-qualified identifier of the billing account where the savings plan is applied. </param>
-        /// <param name="term"> Represents the Savings plan term in ISO 8601 format. </param>
-        /// <param name="isRenewed"> Setting this to true will automatically purchase a new benefit on the expiration date time. </param>
-        /// <param name="renewSource"> SavingsPlan Id of the SavingsPlan from which this SavingsPlan is renewed. </param>
-        /// <param name="renewDestination"> SavingsPlan Id of the SavingsPlan which is purchased because of renew. </param>
-        /// <param name="billingPlan"> Represents the billing plan in ISO 8601 format. Required only for monthly purchases. </param>
-        /// <param name="appliedScopeType"> Type of the Applied Scope. </param>
-        /// <param name="appliedScopeProperties"> Properties specific to applied scope type. Not required if not applicable. </param>
-        /// <param name="commitment"> Commitment towards the benefit. </param>
-        /// <param name="effectiveOn"> DateTime of the savings plan starting when this version is effective from. </param>
-        /// <param name="benefitStartOn"> This is the DateTime when the savings plan benefit starts. </param>
-        /// <param name="expiryOn"> This is the date-time when the savings plan will expire. </param>
-        /// <param name="purchaseOn"> Date time when the savings plan was purchased. </param>
-        /// <param name="utilization"> Savings plan utilization. </param>
-        /// <param name="extendedStatusInfo"> Extended status information. </param>
-        /// <param name="productCode"> Represents UPN. </param>
-        /// <param name="renewPurchaseProperties"> Purchase request. </param>
-        /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
-        /// <param name="skuName"> Name of the SKU to be applied. </param>
-        /// <returns> A new <see cref="Billing.BillingSavingsPlanModelData"/> instance for mocking. </returns>
-        public static BillingSavingsPlanModelData BillingSavingsPlanModelData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, BillingProvisioningState? provisioningState = default, string displayProvisioningState = default, string userFriendlyAppliedScopeType = default, string billingScopeId = default, string billingProfileId = default, string customerId = default, string billingAccountId = default, BillingSavingsPlanTerm? term = default, bool? isRenewed = default, string renewSource = default, string renewDestination = default, BillingPlan? billingPlan = default, BillingAppliedScopeType? appliedScopeType = default, BillingAppliedScopeProperties appliedScopeProperties = default, BillingBenefitCommitment commitment = default, DateTimeOffset? effectiveOn = default, DateTimeOffset? benefitStartOn = default, DateTimeOffset? expiryOn = default, DateTimeOffset? purchaseOn = default, SavingsPlanUtilization utilization = default, ExtendedStatusInfo extendedStatusInfo = default, string productCode = default, BillingPurchaseProperties renewPurchaseProperties = default, IDictionary<string, string> tags = default, string skuName = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BillingSavingsPlanModelData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                displayName is null && provisioningState is null && displayProvisioningState is null && userFriendlyAppliedScopeType is null && billingScopeId is null && billingProfileId is null && customerId is null && billingAccountId is null && term is null && isRenewed is null && renewSource is null && renewDestination is null && billingPlan is null && appliedScopeType is null && appliedScopeProperties is null && commitment is null && effectiveOn is null && benefitStartOn is null && expiryOn is null && purchaseOn is null && utilization is null && extendedStatusInfo is null && productCode is null && renewPurchaseProperties is null ? default : new SavingsPlanModelProperties(
-                    displayName,
-                    provisioningState,
-                    displayProvisioningState,
-                    userFriendlyAppliedScopeType,
-                    billingScopeId,
-                    billingProfileId,
-                    customerId,
-                    billingAccountId,
-                    term,
-                    isRenewed,
-                    renewSource,
-                    renewDestination,
-                    new BillingRenewProperties(renewPurchaseProperties, null),
-                    billingPlan,
-                    appliedScopeType,
-                    appliedScopeProperties,
-                    commitment,
-                    effectiveOn,
-                    benefitStartOn,
-                    expiryOn,
-                    purchaseOn,
-                    utilization,
-                    extendedStatusInfo,
-                    productCode,
-                    null),
-                tags,
-                new BillingSku(skuName, null));
         }
 
         /// <summary> Savings plan utilization. </summary>
@@ -2885,57 +2755,6 @@ namespace Azure.ResourceManager.Billing.Models
             return new BillingRoleDefinitionProperties(description, permissions.ToList(), roleName, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="displayName"> Display name. </param>
-        /// <param name="provisioningState"> The provisioning state of the savings plan, e.g. Succeeded. </param>
-        /// <param name="billingScopeId"> Subscription that will be charged for purchasing SavingsPlan. </param>
-        /// <param name="billingProfileId"> Fully-qualified identifier of the billing profile where the savings plan is applied. Present only for Field-led or Customer-led customers. </param>
-        /// <param name="customerId"> Fully-qualified identifier of the customer where the savings plan is applied. Present only for Partner-led customers. </param>
-        /// <param name="billingAccountId"> Fully-qualified identifier of the billing account where the savings plan is applied. </param>
-        /// <param name="term"> Represents the Savings plan term in ISO 8601 format. </param>
-        /// <param name="billingPlan"> Represents the billing plan in ISO 8601 format. Required only for monthly purchases. </param>
-        /// <param name="benefitStartOn"> DateTime when the savings plan benefit started. </param>
-        /// <param name="expiryOn"> DateTime when the savings plan will expire. </param>
-        /// <param name="planInformation"> Information describing the type of billing plan for this savings plan. </param>
-        /// <param name="savingsPlans"> Gets the SavingsPlans. </param>
-        /// <param name="extendedStatusInfo"> Extended status information. </param>
-        /// <param name="productCode"> Represents UPN. </param>
-        /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
-        /// <param name="skuName"> Name of the SKU to be applied. </param>
-        /// <returns> A new <see cref="Billing.SavingsPlanOrderModelData"/> instance for mocking. </returns>
-        public static SavingsPlanOrderModelData SavingsPlanOrderModelData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string provisioningState = default, string billingScopeId = default, string billingProfileId = default, string customerId = default, string billingAccountId = default, BillingSavingsPlanTerm? term = default, BillingPlan? billingPlan = default, DateTimeOffset? benefitStartOn = default, DateTimeOffset? expiryOn = default, BillingPlanInformation planInformation = default, IEnumerable<string> savingsPlans = default, ExtendedStatusInfo extendedStatusInfo = default, string productCode = default, IDictionary<string, string> tags = default, string skuName = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new SavingsPlanOrderModelData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                displayName is null && provisioningState is null && billingScopeId is null && billingProfileId is null && customerId is null && billingAccountId is null && term is null && billingPlan is null && benefitStartOn is null && expiryOn is null && planInformation is null && savingsPlans is null && extendedStatusInfo is null && productCode is null ? default : new SavingsPlanOrderModelProperties(
-                    displayName,
-                    provisioningState,
-                    billingScopeId,
-                    billingProfileId,
-                    customerId,
-                    billingAccountId,
-                    term,
-                    billingPlan,
-                    benefitStartOn,
-                    expiryOn,
-                    planInformation,
-                    (savingsPlans ?? new ChangeTrackingList<string>()).ToList(),
-                    extendedStatusInfo,
-                    productCode,
-                    null),
-                tags,
-                new BillingSku(skuName, null));
-        }
-
         /// <summary> Information describing the type of billing plan for this savings plan. </summary>
         /// <param name="pricingCurrencyTotal"> Amount of money to be paid for the Order. Tax is not included. </param>
         /// <param name="startOn"> Date when the billing plan has started. </param>
@@ -2974,7 +2793,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="autoRenew"> Indicates whether auto renewal is turned on or off for a product. </param>
-        /// <param name="subscriptionAliasBeneficiaryTenantId"> The provisioning tenant of the subscription. </param>
+        /// <param name="subscriptionBeneficiaryTenantId"> The provisioning tenant of the subscription. </param>
         /// <param name="beneficiary"> The beneficiary of the billing subscription. </param>
         /// <param name="billingFrequency"> The billing frequency in ISO8601 format of product in the subscription. Example: P1M, P3M, P1Y. </param>
         /// <param name="billingProfileId"> The fully qualified ID that uniquely identifies a billing profile. </param>
@@ -2982,7 +2801,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="billingProfileDisplayName"> The name of the billing profile. </param>
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
         /// <param name="consumptionCostCenter"> The cost center applied to the subscription. This field is only available for consumption subscriptions of Microsoft Customer Agreement or Enterprise Agreement Type billing accounts. </param>
-        /// <param name="subscriptionAliasCustomerId"> The fully qualified ID that uniquely identifies a customer. </param>
+        /// <param name="subscriptionCustomerId"> The fully qualified ID that uniquely identifies a customer. </param>
         /// <param name="customerDisplayName"> The name of the customer. </param>
         /// <param name="customerName"> The ID that uniquely identifies a customer. </param>
         /// <param name="displayName"> The name of the billing subscription. </param>
@@ -3021,7 +2840,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="subscriptionAliasSubscriptionId"> The ID of the billing subscription with the subscription alias. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
         /// <returns> A new <see cref="Billing.BillingSubscriptionAliasData"/> instance for mocking. </returns>
-        public static BillingSubscriptionAliasData BillingSubscriptionAliasData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BillingSubscriptionAutoRenewState? autoRenew = default, string subscriptionAliasBeneficiaryTenantId = default, BillingBeneficiary beneficiary = default, string billingFrequency = default, string billingProfileId = default, IReadOnlyDictionary<string, string> billingPolicies = default, string billingProfileDisplayName = default, string billingProfileName = default, string consumptionCostCenter = default, string subscriptionAliasCustomerId = default, string customerDisplayName = default, string customerName = default, string displayName = default, string enrollmentAccountId = default, string enrollmentAccountDisplayName = default, string invoiceSectionId = default, string invoiceSectionDisplayName = default, string invoiceSectionName = default, BillingAmount lastMonthCharges = default, BillingAmount monthToDateCharges = default, string offerId = default, string productCategory = default, string productType = default, string productTypeId = default, DateTimeOffset? purchaseOn = default, long? quantity = default, CreatedSubscriptionReseller reseller = default, SubscriptionRenewalTermDetails renewalTermDetails = default, string skuId = default, string skuDescription = default, BillingSystemOverrides systemOverrides = default, string resourceUri = default, string termDuration = default, DateTimeOffset? termStartOn = default, DateTimeOffset? termEndOn = default, string provisioningTenantId = default, BillingSubscriptionStatus? status = default, BillingSubscriptionOperationStatus? operationStatus = default, BillingProvisioningState? provisioningState = default, string subscriptionId = default, IEnumerable<string> suspensionReasons = default, IEnumerable<BillingSubscriptionStatusDetails> suspensionReasonDetails = default, DateTimeOffset? enrollmentAccountStartOn = default, SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus = default, string nextBillingCycleBillingFrequency = default, string subscriptionAliasSubscriptionId = default, IDictionary<string, string> tags = default)
+        public static BillingSubscriptionAliasData BillingSubscriptionAliasData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BillingSubscriptionAutoRenewState? autoRenew = default, Guid? subscriptionBeneficiaryTenantId = default, BillingBeneficiary beneficiary = default, string billingFrequency = default, ResourceIdentifier billingProfileId = default, IReadOnlyDictionary<string, string> billingPolicies = default, string billingProfileDisplayName = default, string billingProfileName = default, string consumptionCostCenter = default, string subscriptionCustomerId = default, string customerDisplayName = default, string customerName = default, string displayName = default, string enrollmentAccountId = default, string enrollmentAccountDisplayName = default, ResourceIdentifier invoiceSectionId = default, string invoiceSectionDisplayName = default, string invoiceSectionName = default, BillingAmount lastMonthCharges = default, BillingAmount monthToDateCharges = default, string offerId = default, string productCategory = default, string productType = default, string productTypeId = default, DateTimeOffset? purchaseOn = default, long? quantity = default, CreatedSubscriptionReseller reseller = default, SubscriptionRenewalTermDetails renewalTermDetails = default, string skuId = default, string skuDescription = default, BillingSystemOverrides systemOverrides = default, Uri resourceUri = default, TimeSpan? termDuration = default, DateTimeOffset? termStartOn = default, DateTimeOffset? termEndOn = default, Guid? provisioningTenantId = default, BillingSubscriptionStatus? status = default, BillingSubscriptionOperationStatus? operationStatus = default, BillingProvisioningState? provisioningState = default, string subscriptionId = default, IEnumerable<string> suspensionReasons = default, IEnumerable<BillingSubscriptionStatusDetails> suspensionReasonDetails = default, DateTimeOffset? enrollmentAccountStartOn = default, SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus = default, string nextBillingCycleBillingFrequency = default, string subscriptionAliasSubscriptionId = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3031,9 +2850,9 @@ namespace Azure.ResourceManager.Billing.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                autoRenew is null && subscriptionAliasBeneficiaryTenantId is null && beneficiary is null && billingFrequency is null && billingProfileId is null && billingPolicies is null && billingProfileDisplayName is null && billingProfileName is null && consumptionCostCenter is null && subscriptionAliasCustomerId is null && customerDisplayName is null && customerName is null && displayName is null && enrollmentAccountId is null && enrollmentAccountDisplayName is null && invoiceSectionId is null && invoiceSectionDisplayName is null && invoiceSectionName is null && lastMonthCharges is null && monthToDateCharges is null && offerId is null && productCategory is null && productType is null && productTypeId is null && purchaseOn is null && quantity is null && reseller is null && renewalTermDetails is null && skuId is null && skuDescription is null && systemOverrides is null && resourceUri is null && termDuration is null && termStartOn is null && termEndOn is null && provisioningTenantId is null && status is null && operationStatus is null && provisioningState is null && subscriptionId is null && suspensionReasons is null && suspensionReasonDetails is null && enrollmentAccountStartOn is null && subscriptionEnrollmentAccountStatus is null && nextBillingCycleBillingFrequency is null && subscriptionAliasSubscriptionId is null ? default : new BillingSubscriptionAliasProperties(
+                autoRenew is null && subscriptionBeneficiaryTenantId is null && beneficiary is null && billingFrequency is null && billingProfileId is null && billingPolicies is null && billingProfileDisplayName is null && billingProfileName is null && consumptionCostCenter is null && subscriptionCustomerId is null && customerDisplayName is null && customerName is null && displayName is null && enrollmentAccountId is null && enrollmentAccountDisplayName is null && invoiceSectionId is null && invoiceSectionDisplayName is null && invoiceSectionName is null && lastMonthCharges is null && monthToDateCharges is null && offerId is null && productCategory is null && productType is null && productTypeId is null && purchaseOn is null && quantity is null && reseller is null && renewalTermDetails is null && skuId is null && skuDescription is null && systemOverrides is null && resourceUri is null && termDuration is null && termStartOn is null && termEndOn is null && provisioningTenantId is null && status is null && operationStatus is null && provisioningState is null && subscriptionId is null && suspensionReasons is null && suspensionReasonDetails is null && enrollmentAccountStartOn is null && subscriptionEnrollmentAccountStatus is null && nextBillingCycleBillingFrequency is null && subscriptionAliasSubscriptionId is null ? default : new BillingSubscriptionAliasProperties(
                     autoRenew,
-                    subscriptionAliasBeneficiaryTenantId,
+                    subscriptionBeneficiaryTenantId,
                     beneficiary,
                     billingFrequency,
                     billingProfileId,
@@ -3041,7 +2860,7 @@ namespace Azure.ResourceManager.Billing.Models
                     billingProfileDisplayName,
                     billingProfileName,
                     consumptionCostCenter,
-                    subscriptionAliasCustomerId,
+                    subscriptionCustomerId,
                     customerDisplayName,
                     customerName,
                     displayName,
@@ -3176,12 +2995,12 @@ namespace Azure.ResourceManager.Billing.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                autoRenew is null && billingFrequency is null && billingPolicies is null && billingProfileDisplayName is null && billingProfileName is null && consumptionCostCenter is null && customerDisplayName is null && displayName is null && enrollmentAccountId is null && enrollmentAccountDisplayName is null && enrollmentAccountStartOn is null && subscriptionEnrollmentAccountStatus is null && invoiceSectionDisplayName is null && invoiceSectionName is null && lastMonthCharges is null && monthToDateCharges is null && nextBillingCycleBillingFrequency is null && offerId is null && productCategory is null && productType is null && productTypeId is null && purchaseOn is null && quantity is null && reseller is null && renewalTermDetails is null && skuId is null && skuDescription is null && termStartOn is null && termEndOn is null && status is null && subscriptionId is null && suspensionReasons is null ? default : new BillingSubscriptionAliasProperties(
+                autoRenew is null && billingFrequency is null && billingProfileId is null && billingPolicies is null && billingProfileDisplayName is null && billingProfileName is null && consumptionCostCenter is null && customerDisplayName is null && displayName is null && enrollmentAccountId is null && enrollmentAccountDisplayName is null && enrollmentAccountStartOn is null && subscriptionEnrollmentAccountStatus is null && invoiceSectionId is null && invoiceSectionDisplayName is null && invoiceSectionName is null && lastMonthCharges is null && monthToDateCharges is null && nextBillingCycleBillingFrequency is null && offerId is null && productCategory is null && productType is null && productTypeId is null && purchaseOn is null && quantity is null && reseller is null && renewalTermDetails is null && skuId is null && skuDescription is null && termDuration is null && termStartOn is null && termEndOn is null && status is null && subscriptionId is null && suspensionReasons is null ? default : new BillingSubscriptionAliasProperties(
                     autoRenew,
                     default,
                     default,
                     billingFrequency,
-                    default,
+                    billingProfileId,
                     billingPolicies ?? new ChangeTrackingDictionary<string, string>(),
                     billingProfileDisplayName,
                     billingProfileName,
@@ -3193,7 +3012,7 @@ namespace Azure.ResourceManager.Billing.Models
                     enrollmentAccountId,
                     enrollmentAccountDisplayName,
                     new EnrollmentAccountSubscriptionDetails(enrollmentAccountStartOn, subscriptionEnrollmentAccountStatus, default),
-                    default,
+                    invoiceSectionId,
                     invoiceSectionDisplayName,
                     invoiceSectionName,
                     lastMonthCharges,
@@ -3211,7 +3030,7 @@ namespace Azure.ResourceManager.Billing.Models
                     skuDescription,
                     default,
                     default,
-                    default,
+                    termDuration,
                     termStartOn,
                     termEndOn,
                     default,
@@ -3279,12 +3098,12 @@ namespace Azure.ResourceManager.Billing.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                autoRenew is null && billingFrequency is null && billingPolicies is null && billingProfileDisplayName is null && billingProfileName is null && consumptionCostCenter is null && customerDisplayName is null && displayName is null && enrollmentAccountId is null && enrollmentAccountDisplayName is null && enrollmentAccountStartOn is null && subscriptionEnrollmentAccountStatus is null && invoiceSectionDisplayName is null && invoiceSectionName is null && lastMonthCharges is null && monthToDateCharges is null && nextBillingCycleBillingFrequency is null && offerId is null && productCategory is null && productType is null && productTypeId is null && purchaseOn is null && quantity is null && reseller is null && renewalTermDetails is null && skuId is null && skuDescription is null && termStartOn is null && termEndOn is null && status is null && subscriptionId is null && suspensionReasons is null ? default : new BillingSubscriptionProperties(
+                autoRenew is null && billingFrequency is null && billingProfileId is null && billingPolicies is null && billingProfileDisplayName is null && billingProfileName is null && consumptionCostCenter is null && customerDisplayName is null && displayName is null && enrollmentAccountId is null && enrollmentAccountDisplayName is null && enrollmentAccountStartOn is null && subscriptionEnrollmentAccountStatus is null && invoiceSectionId is null && invoiceSectionDisplayName is null && invoiceSectionName is null && lastMonthCharges is null && monthToDateCharges is null && nextBillingCycleBillingFrequency is null && offerId is null && productCategory is null && productType is null && productTypeId is null && purchaseOn is null && quantity is null && reseller is null && renewalTermDetails is null && skuId is null && skuDescription is null && termDuration is null && termStartOn is null && termEndOn is null && status is null && subscriptionId is null && suspensionReasons is null ? default : new BillingSubscriptionProperties(
                     autoRenew,
                     default,
                     default,
                     billingFrequency,
-                    default,
+                    billingProfileId,
                     billingPolicies ?? new ChangeTrackingDictionary<string, string>(),
                     billingProfileDisplayName,
                     billingProfileName,
@@ -3296,7 +3115,7 @@ namespace Azure.ResourceManager.Billing.Models
                     enrollmentAccountId,
                     enrollmentAccountDisplayName,
                     new EnrollmentAccountSubscriptionDetails(enrollmentAccountStartOn, subscriptionEnrollmentAccountStatus, default),
-                    default,
+                    invoiceSectionId,
                     invoiceSectionDisplayName,
                     invoiceSectionName,
                     lastMonthCharges,
@@ -3314,7 +3133,7 @@ namespace Azure.ResourceManager.Billing.Models
                     skuDescription,
                     default,
                     default,
-                    default,
+                    termDuration,
                     termStartOn,
                     termEndOn,
                     default,
@@ -3326,28 +3145,6 @@ namespace Azure.ResourceManager.Billing.Models
                     default,
                     default),
                 default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.BillingAccountPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> A billing account. </param>
-        /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
-        /// <returns> A new <see cref="Models.BillingAccountPatch"/> instance for mocking. </returns>
-        public static BillingAccountPatch BillingAccountPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BillingAccountProperties properties = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BillingAccountPatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BillingRoleAssignmentListResult"/>. </summary>
@@ -3383,9 +3180,9 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="productCode"> Represents UPN. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
         /// <returns> A new <see cref="Billing.SavingsPlanOrderModelData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SavingsPlanOrderModelData SavingsPlanOrderModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string skuName, string displayName, string provisioningState, string billingScopeId, ResourceIdentifier billingProfileId, ResourceIdentifier customerId, ResourceIdentifier billingAccountId, BillingSavingsPlanTerm? term, BillingPlan? billingPlan, DateTimeOffset? benefitStartOn, DateTimeOffset? expiryOn, BillingPlanInformation planInformation, IEnumerable<string> savingsPlans, ExtendedStatusInfo extendedStatusInfo, string productCode, IDictionary<string, string> tags)
+        public static SavingsPlanOrderModelData SavingsPlanOrderModelData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string skuName = default, string displayName = default, string provisioningState = default, string billingScopeId = default, ResourceIdentifier billingProfileId = default, ResourceIdentifier customerId = default, ResourceIdentifier billingAccountId = default, BillingSavingsPlanTerm? term = default, BillingPlan? billingPlan = default, DateTimeOffset? benefitStartOn = default, DateTimeOffset? expiryOn = default, BillingPlanInformation planInformation = default, IEnumerable<string> savingsPlans = default, ExtendedStatusInfo extendedStatusInfo = default, string productCode = default, IDictionary<string, string> tags = default)
         {
+            savingsPlans ??= new ChangeTrackingList<string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new SavingsPlanOrderModelData(
@@ -3394,24 +3191,9 @@ namespace Azure.ResourceManager.Billing.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                displayName is null && provisioningState is null && billingScopeId is null && term is null && billingPlan is null && benefitStartOn is null && expiryOn is null && planInformation is null && savingsPlans is null && extendedStatusInfo is null && productCode is null ? default : new SavingsPlanOrderModelProperties(
-                    displayName,
-                    provisioningState,
-                    billingScopeId,
-                    default,
-                    default,
-                    default,
-                    term,
-                    billingPlan,
-                    benefitStartOn,
-                    expiryOn,
-                    planInformation,
-                    (savingsPlans ?? new ChangeTrackingList<string>()).ToList(),
-                    extendedStatusInfo,
-                    productCode,
-                    default),
+                default,
                 tags,
-                skuName is null ? default : new BillingSku(skuName, default));
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Billing.BillingSavingsPlanModelData"/>. </summary>
@@ -3446,8 +3228,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="productCode"> Represents UPN. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
         /// <returns> A new <see cref="Billing.BillingSavingsPlanModelData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BillingSavingsPlanModelData BillingSavingsPlanModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string skuName, string displayName, BillingProvisioningState? provisioningState, string displayProvisioningState, string userFriendlyAppliedScopeType, string billingScopeId, ResourceIdentifier billingProfileId, ResourceIdentifier customerId, ResourceIdentifier billingAccountId, BillingSavingsPlanTerm? term, bool? isRenewed, string renewSource, string renewDestination, BillingPurchaseProperties renewPurchaseProperties, BillingPlan? billingPlan, BillingAppliedScopeType? appliedScopeType, BillingAppliedScopeProperties appliedScopeProperties, BillingBenefitCommitment commitment, DateTimeOffset? effectiveOn, DateTimeOffset? benefitStartOn, DateTimeOffset? expiryOn, DateTimeOffset? purchaseOn, SavingsPlanUtilization utilization, ExtendedStatusInfo extendedStatusInfo, string productCode, IDictionary<string, string> tags)
+        public static BillingSavingsPlanModelData BillingSavingsPlanModelData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string skuName = default, string displayName = default, BillingProvisioningState? provisioningState = default, string displayProvisioningState = default, string userFriendlyAppliedScopeType = default, string billingScopeId = default, ResourceIdentifier billingProfileId = default, ResourceIdentifier customerId = default, ResourceIdentifier billingAccountId = default, BillingSavingsPlanTerm? term = default, bool? isRenewed = default, string renewSource = default, string renewDestination = default, BillingPurchaseProperties renewPurchaseProperties = default, BillingPlan? billingPlan = default, BillingAppliedScopeType? appliedScopeType = default, BillingAppliedScopeProperties appliedScopeProperties = default, BillingBenefitCommitment commitment = default, DateTimeOffset? effectiveOn = default, DateTimeOffset? benefitStartOn = default, DateTimeOffset? expiryOn = default, DateTimeOffset? purchaseOn = default, SavingsPlanUtilization utilization = default, ExtendedStatusInfo extendedStatusInfo = default, string productCode = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3457,34 +3238,9 @@ namespace Azure.ResourceManager.Billing.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                displayName is null && provisioningState is null && displayProvisioningState is null && userFriendlyAppliedScopeType is null && billingScopeId is null && term is null && isRenewed is null && renewSource is null && renewDestination is null && renewPurchaseProperties is null && billingPlan is null && appliedScopeType is null && appliedScopeProperties is null && commitment is null && effectiveOn is null && benefitStartOn is null && expiryOn is null && purchaseOn is null && utilization is null && extendedStatusInfo is null && productCode is null ? default : new SavingsPlanModelProperties(
-                    displayName,
-                    provisioningState,
-                    displayProvisioningState,
-                    userFriendlyAppliedScopeType,
-                    billingScopeId,
-                    default,
-                    default,
-                    default,
-                    term,
-                    isRenewed,
-                    renewSource,
-                    renewDestination,
-                    new BillingRenewProperties(renewPurchaseProperties, default),
-                    billingPlan,
-                    appliedScopeType,
-                    appliedScopeProperties,
-                    commitment,
-                    effectiveOn,
-                    benefitStartOn,
-                    expiryOn,
-                    purchaseOn,
-                    utilization,
-                    extendedStatusInfo,
-                    productCode,
-                    default),
+                default,
                 tags,
-                skuName is null ? default : new BillingSku(skuName, default));
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Billing.BillingSubscriptionData"/>. </summary>
@@ -3539,9 +3295,11 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="subscriptionEnrollmentAccountStatus"> The current enrollment account status of the subscription. This field is available only for the Enterprise Agreement Type. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
         /// <returns> A new <see cref="Billing.BillingSubscriptionData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BillingSubscriptionData BillingSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingSubscriptionAutoRenewState? autoRenew, Guid? subscriptionBeneficiaryTenantId, BillingBeneficiary beneficiary, string billingFrequency, ResourceIdentifier billingProfileId, IReadOnlyDictionary<string, string> billingPolicies, string billingProfileDisplayName, string billingProfileName, string consumptionCostCenter, string subscriptionCustomerId, string customerDisplayName, string customerName, string displayName, string enrollmentAccountId, string enrollmentAccountDisplayName, ResourceIdentifier invoiceSectionId, string invoiceSectionDisplayName, string invoiceSectionName, BillingAmount lastMonthCharges, BillingAmount monthToDateCharges, string nextBillingCycleBillingFrequency, string offerId, string productCategory, string productType, string productTypeId, DateTimeOffset? purchaseOn, long? quantity, CreatedSubscriptionReseller reseller, SubscriptionRenewalTermDetails renewalTermDetails, string skuId, string skuDescription, BillingSystemOverrides systemOverrides, Uri resourceUri, TimeSpan? termDuration, DateTimeOffset? termStartOn, DateTimeOffset? termEndOn, Guid? provisioningTenantId, BillingSubscriptionStatus? status, BillingSubscriptionOperationStatus? operationStatus, BillingProvisioningState? provisioningState, string subscriptionId, IEnumerable<string> suspensionReasons, IEnumerable<BillingSubscriptionStatusDetails> suspensionReasonDetails, DateTimeOffset? enrollmentAccountStartOn, SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus, IDictionary<string, string> tags)
+        public static BillingSubscriptionData BillingSubscriptionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BillingSubscriptionAutoRenewState? autoRenew = default, Guid? subscriptionBeneficiaryTenantId = default, BillingBeneficiary beneficiary = default, string billingFrequency = default, ResourceIdentifier billingProfileId = default, IReadOnlyDictionary<string, string> billingPolicies = default, string billingProfileDisplayName = default, string billingProfileName = default, string consumptionCostCenter = default, string subscriptionCustomerId = default, string customerDisplayName = default, string customerName = default, string displayName = default, string enrollmentAccountId = default, string enrollmentAccountDisplayName = default, ResourceIdentifier invoiceSectionId = default, string invoiceSectionDisplayName = default, string invoiceSectionName = default, BillingAmount lastMonthCharges = default, BillingAmount monthToDateCharges = default, string nextBillingCycleBillingFrequency = default, string offerId = default, string productCategory = default, string productType = default, string productTypeId = default, DateTimeOffset? purchaseOn = default, long? quantity = default, CreatedSubscriptionReseller reseller = default, SubscriptionRenewalTermDetails renewalTermDetails = default, string skuId = default, string skuDescription = default, BillingSystemOverrides systemOverrides = default, Uri resourceUri = default, TimeSpan? termDuration = default, DateTimeOffset? termStartOn = default, DateTimeOffset? termEndOn = default, Guid? provisioningTenantId = default, BillingSubscriptionStatus? status = default, BillingSubscriptionOperationStatus? operationStatus = default, BillingProvisioningState? provisioningState = default, string subscriptionId = default, IEnumerable<string> suspensionReasons = default, IEnumerable<BillingSubscriptionStatusDetails> suspensionReasonDetails = default, DateTimeOffset? enrollmentAccountStartOn = default, SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus = default, IDictionary<string, string> tags = default)
         {
+            billingPolicies ??= new ChangeTrackingDictionary<string, string>();
+            suspensionReasons ??= new ChangeTrackingList<string>();
+            suspensionReasonDetails ??= new ChangeTrackingList<BillingSubscriptionStatusDetails>();
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new BillingSubscriptionData(
@@ -3550,52 +3308,7 @@ namespace Azure.ResourceManager.Billing.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                autoRenew is null && beneficiary is null && billingFrequency is null && billingPolicies is null && billingProfileDisplayName is null && billingProfileName is null && consumptionCostCenter is null && customerDisplayName is null && customerName is null && displayName is null && enrollmentAccountId is null && enrollmentAccountDisplayName is null && enrollmentAccountStartOn is null && subscriptionEnrollmentAccountStatus is null && invoiceSectionDisplayName is null && invoiceSectionName is null && lastMonthCharges is null && monthToDateCharges is null && nextBillingCycleBillingFrequency is null && offerId is null && productCategory is null && productType is null && productTypeId is null && purchaseOn is null && quantity is null && reseller is null && renewalTermDetails is null && skuId is null && skuDescription is null && systemOverrides is null && termStartOn is null && termEndOn is null && status is null && operationStatus is null && provisioningState is null && subscriptionId is null && suspensionReasons is null && suspensionReasonDetails is null ? default : new BillingSubscriptionProperties(
-                    autoRenew,
-                    default,
-                    beneficiary,
-                    billingFrequency,
-                    default,
-                    billingPolicies ?? new ChangeTrackingDictionary<string, string>(),
-                    billingProfileDisplayName,
-                    billingProfileName,
-                    consumptionCostCenter,
-                    default,
-                    customerDisplayName,
-                    customerName,
-                    displayName,
-                    enrollmentAccountId,
-                    enrollmentAccountDisplayName,
-                    new EnrollmentAccountSubscriptionDetails(enrollmentAccountStartOn, subscriptionEnrollmentAccountStatus, default),
-                    default,
-                    invoiceSectionDisplayName,
-                    invoiceSectionName,
-                    lastMonthCharges,
-                    monthToDateCharges,
-                    new NextBillingCycleDetails(nextBillingCycleBillingFrequency, default),
-                    offerId,
-                    productCategory,
-                    productType,
-                    productTypeId,
-                    purchaseOn,
-                    quantity,
-                    reseller,
-                    renewalTermDetails,
-                    skuId,
-                    skuDescription,
-                    systemOverrides,
-                    default,
-                    default,
-                    termStartOn,
-                    termEndOn,
-                    default,
-                    status,
-                    operationStatus,
-                    provisioningState,
-                    subscriptionId,
-                    (suspensionReasons ?? new ChangeTrackingList<string>()).ToList(),
-                    (suspensionReasonDetails ?? new ChangeTrackingList<BillingSubscriptionStatusDetails>()).ToList(),
-                    default),
+                default,
                 tags);
         }
 
@@ -3663,24 +3376,24 @@ namespace Azure.ResourceManager.Billing.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                autoRenew is null && beneficiary is null && billingFrequency is null && billingPolicies is null && billingProfileDisplayName is null && billingProfileName is null && consumptionCostCenter is null && subscriptionAliasCustomerId is null && customerDisplayName is null && customerName is null && displayName is null && enrollmentAccountId is null && enrollmentAccountDisplayName is null && enrollmentAccountStartOn is null && subscriptionEnrollmentAccountStatus is null && invoiceSectionDisplayName is null && invoiceSectionName is null && lastMonthCharges is null && monthToDateCharges is null && nextBillingCycleBillingFrequency is null && offerId is null && productCategory is null && productType is null && productTypeId is null && purchaseOn is null && quantity is null && reseller is null && renewalTermDetails is null && skuId is null && skuDescription is null && systemOverrides is null && termStartOn is null && termEndOn is null && status is null && operationStatus is null && provisioningState is null && subscriptionId is null && suspensionReasons is null && suspensionReasonDetails is null && subscriptionAliasSubscriptionId is null ? default : new BillingSubscriptionAliasProperties(
+                autoRenew is null && beneficiary is null && billingFrequency is null && billingProfileId is null && billingPolicies is null && billingProfileDisplayName is null && billingProfileName is null && consumptionCostCenter is null && customerDisplayName is null && customerName is null && displayName is null && enrollmentAccountId is null && enrollmentAccountDisplayName is null && enrollmentAccountStartOn is null && subscriptionEnrollmentAccountStatus is null && invoiceSectionId is null && invoiceSectionDisplayName is null && invoiceSectionName is null && lastMonthCharges is null && monthToDateCharges is null && nextBillingCycleBillingFrequency is null && offerId is null && productCategory is null && productType is null && productTypeId is null && purchaseOn is null && quantity is null && reseller is null && renewalTermDetails is null && skuId is null && skuDescription is null && systemOverrides is null && resourceUri is null && termDuration is null && termStartOn is null && termEndOn is null && provisioningTenantId is null && status is null && operationStatus is null && provisioningState is null && subscriptionId is null && suspensionReasons is null && suspensionReasonDetails is null && subscriptionAliasSubscriptionId is null ? default : new BillingSubscriptionAliasProperties(
                     autoRenew,
                     default,
                     beneficiary,
                     billingFrequency,
-                    default,
+                    billingProfileId,
                     billingPolicies ?? new ChangeTrackingDictionary<string, string>(),
                     billingProfileDisplayName,
                     billingProfileName,
                     consumptionCostCenter,
-                    subscriptionAliasCustomerId,
+                    default,
                     customerDisplayName,
                     customerName,
                     displayName,
                     enrollmentAccountId,
                     enrollmentAccountDisplayName,
                     new EnrollmentAccountSubscriptionDetails(enrollmentAccountStartOn, subscriptionEnrollmentAccountStatus, default),
-                    default,
+                    invoiceSectionId,
                     invoiceSectionDisplayName,
                     invoiceSectionName,
                     lastMonthCharges,
@@ -3697,11 +3410,11 @@ namespace Azure.ResourceManager.Billing.Models
                     skuId,
                     skuDescription,
                     systemOverrides,
-                    default,
-                    default,
+                    resourceUri,
+                    termDuration,
                     termStartOn,
                     termEndOn,
-                    default,
+                    provisioningTenantId,
                     status,
                     operationStatus,
                     provisioningState,
@@ -3776,13 +3489,12 @@ namespace Azure.ResourceManager.Billing.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                tags,
-                autoRenew is null && beneficiary is null && billingFrequency is null && billingPolicies is null && billingProfileDisplayName is null && billingProfileName is null && consumptionCostCenter is null && customerDisplayName is null && customerName is null && displayName is null && enrollmentAccountId is null && enrollmentAccountDisplayName is null && enrollmentAccountStartOn is null && subscriptionEnrollmentAccountStatus is null && invoiceSectionDisplayName is null && invoiceSectionName is null && lastMonthCharges is null && monthToDateCharges is null && nextBillingCycleBillingFrequency is null && offerId is null && productCategory is null && productType is null && productTypeId is null && purchaseOn is null && quantity is null && reseller is null && renewalTermDetails is null && skuId is null && skuDescription is null && systemOverrides is null && termStartOn is null && termEndOn is null && status is null && operationStatus is null && provisioningState is null && subscriptionId is null && suspensionReasons is null && suspensionReasonDetails is null ? default : new BillingSubscriptionProperties(
+                autoRenew is null && beneficiary is null && billingFrequency is null && billingProfileId is null && billingPolicies is null && billingProfileDisplayName is null && billingProfileName is null && consumptionCostCenter is null && customerDisplayName is null && customerName is null && displayName is null && enrollmentAccountId is null && enrollmentAccountDisplayName is null && enrollmentAccountStartOn is null && subscriptionEnrollmentAccountStatus is null && invoiceSectionId is null && invoiceSectionDisplayName is null && invoiceSectionName is null && lastMonthCharges is null && monthToDateCharges is null && nextBillingCycleBillingFrequency is null && offerId is null && productCategory is null && productType is null && productTypeId is null && purchaseOn is null && quantity is null && reseller is null && renewalTermDetails is null && skuId is null && skuDescription is null && systemOverrides is null && resourceUri is null && termDuration is null && termStartOn is null && termEndOn is null && provisioningTenantId is null && status is null && operationStatus is null && provisioningState is null && subscriptionId is null && suspensionReasons is null && suspensionReasonDetails is null ? default : new BillingSubscriptionProperties(
                     autoRenew,
                     default,
                     beneficiary,
                     billingFrequency,
-                    default,
+                    billingProfileId,
                     billingPolicies ?? new ChangeTrackingDictionary<string, string>(),
                     billingProfileDisplayName,
                     billingProfileName,
@@ -3794,7 +3506,7 @@ namespace Azure.ResourceManager.Billing.Models
                     enrollmentAccountId,
                     enrollmentAccountDisplayName,
                     new EnrollmentAccountSubscriptionDetails(enrollmentAccountStartOn, subscriptionEnrollmentAccountStatus, default),
-                    default,
+                    invoiceSectionId,
                     invoiceSectionDisplayName,
                     invoiceSectionName,
                     lastMonthCharges,
@@ -3811,40 +3523,19 @@ namespace Azure.ResourceManager.Billing.Models
                     skuId,
                     skuDescription,
                     systemOverrides,
-                    default,
-                    default,
+                    resourceUri,
+                    termDuration,
                     termStartOn,
                     termEndOn,
-                    default,
+                    provisioningTenantId,
                     status,
                     operationStatus,
                     provisioningState,
                     subscriptionId,
                     (suspensionReasons ?? new ChangeTrackingList<string>()).ToList(),
                     (suspensionReasonDetails ?? new ChangeTrackingList<BillingSubscriptionStatusDetails>()).ToList(),
-                    default));
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.BillingProductPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> A product. </param>
-        /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
-        /// <returns> A new <see cref="Models.BillingProductPatch"/> instance for mocking. </returns>
-        public static BillingProductPatch BillingProductPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BillingProductProperties properties = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BillingProductPatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                properties);
+                    default),
+                tags);
         }
 
         /// <summary> Initializes a new instance of <see cref="Billing.BillingReservationData"/>. </summary>
@@ -3905,6 +3596,8 @@ namespace Azure.ResourceManager.Billing.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
+                location,
                 reservedResourceType is null && instanceFlexibility is null && displayName is null && appliedScopes is null && appliedScopeType is null && isArchived is null && capabilities is null && quantity is null && provisioningState is null && effectiveOn is null && benefitStartOn is null && lastUpdatedOn is null && expireOn is null && reservationExpireOn is null && reviewOn is null && skuDescription is null && extendedStatusInfo is null && billingPlan is null && displayProvisioningState is null && provisioningSubState is null && purchaseOn is null && reservationPurchaseOn is null && splitProperties is null && mergeProperties is null && swapProperties is null && appliedScopeProperties is null && billingScopeId is null && isRenewed is null && renewSource is null && renewDestination is null && renewProperties is null && term is null && userFriendlyAppliedScopeType is null && userFriendlyRenewState is null && trend is null && aggregates is null && productCode is null ? default : new ReservationProperty(
                     reservedResourceType,
                     instanceFlexibility,
@@ -3943,9 +3636,7 @@ namespace Azure.ResourceManager.Billing.Models
                     new ReservationPropertyUtilization(trend, (aggregates ?? new ChangeTrackingList<ReservationUtilizationAggregates>()).ToList(), default),
                     productCode,
                     default),
-                location,
                 etag,
-                tags,
                 skuName is null ? default : new ReservationSkuProperty(skuName, default));
         }
 
@@ -4025,12 +3716,12 @@ namespace Azure.ResourceManager.Billing.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                displayName is null && enrollmentId is null && requestOn is null && createdOn is null && expireOn is null && reservationExpireOn is null && benefitStartOn is null && originalQuantity is null && term is null && provisioningState is null && billingPlan is null && planInformation is null && reservations is null && reviewedOn is null && extendedStatusInfo is null && productCode is null ? default : new ReservationOrderProperty(
+                displayName is null && enrollmentId is null && customerId is null && billingProfileId is null && billingAccountId is null && requestOn is null && createdOn is null && expireOn is null && reservationExpireOn is null && benefitStartOn is null && originalQuantity is null && term is null && provisioningState is null && billingPlan is null && planInformation is null && reservations is null && reviewedOn is null && extendedStatusInfo is null && productCode is null ? default : new ReservationOrderProperty(
                     displayName,
                     enrollmentId,
-                    default,
-                    default,
-                    default,
+                    customerId,
+                    billingProfileId,
+                    billingAccountId,
                     requestOn,
                     createdOn,
                     expireOn,
@@ -4048,28 +3739,6 @@ namespace Azure.ResourceManager.Billing.Models
                     default),
                 etag,
                 tags);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.BillingTransactionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> A transaction. </param>
-        /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
-        /// <returns> A new <see cref="Models.BillingTransactionData"/> instance for mocking. </returns>
-        public static BillingTransactionData BillingTransactionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BillingTransactionProperties properties = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BillingTransactionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BillingTransactionProperties"/>. </summary>
@@ -4126,7 +3795,7 @@ namespace Azure.ResourceManager.Billing.Models
                 customerDisplayName,
                 customerId,
                 creditType,
-                default,
+                @on,
                 discount,
                 effectivePrice,
                 exchangeRate,
@@ -4178,7 +3847,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="termDuration"> The term duration of the subscription. Example P1M and P1Y. </param>
         /// <returns> A new <see cref="Models.SubscriptionRenewalTermDetails"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SubscriptionRenewalTermDetails SubscriptionRenewalTermDetails(string billingFrequency, string productTypeId, long? quantity, string skuId, string termDuration)
+        public static SubscriptionRenewalTermDetails SubscriptionRenewalTermDetails(string billingFrequency, string productTypeId, long? quantity, string skuId, TimeSpan? termDuration)
         {
             return SubscriptionRenewalTermDetails(billingFrequency: billingFrequency, productId: default, productTypeId: productTypeId, skuId: skuId, termDuration: termDuration, quantity: quantity, termEndOn: default);
         }

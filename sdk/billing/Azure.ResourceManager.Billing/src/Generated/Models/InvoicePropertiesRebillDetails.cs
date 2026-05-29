@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of <see cref="InvoicePropertiesRebillDetails"/>. </summary>
         /// <param name="invoiceDocumentId"> The ID of invoice. </param>
         /// <param name="creditNoteDocumentId"> The ID of credit note. </param>
-        /// <param name="rebillDetailsProperty"> The rebill details of an invoice. </param>
+        /// <param name="rebillDetailsValue"> The rebill details of an invoice. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InvoicePropertiesRebillDetails(ResourceIdentifier invoiceDocumentId, ResourceIdentifier creditNoteDocumentId, RebillDetails rebillDetailsProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(invoiceDocumentId, creditNoteDocumentId, rebillDetailsProperty, additionalBinaryDataProperties)
+        internal InvoicePropertiesRebillDetails(ResourceIdentifier invoiceDocumentId, ResourceIdentifier creditNoteDocumentId, RebillDetails rebillDetailsValue, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(invoiceDocumentId, creditNoteDocumentId, rebillDetailsValue, additionalBinaryDataProperties)
         {
         }
     }

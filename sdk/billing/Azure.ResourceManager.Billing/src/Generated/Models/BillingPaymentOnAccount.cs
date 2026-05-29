@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="billingProfileDisplayName"> The name of the billing profile for the payments on account. </param>
         /// <param name="invoiceId"> The ID of the invoice for which the payments on account was generated. </param>
         /// <param name="invoiceName"> The name of the invoice for the payments on account. </param>
-        /// <param name="date"> The date of the payments on account. </param>
+        /// <param name="on"> The date of the payments on account. </param>
         /// <param name="paymentMethodType"> Payment on Account type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingPaymentOnAccount(CreatedSubscriptionReseller amount, ResourceIdentifier billingProfileId, string billingProfileDisplayName, ResourceIdentifier invoiceId, string invoiceName, DateTimeOffset? date, PaymentMethodFamily? paymentMethodType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingPaymentOnAccount(CreatedSubscriptionReseller amount, ResourceIdentifier billingProfileId, string billingProfileDisplayName, ResourceIdentifier invoiceId, string invoiceName, DateTimeOffset? @on, PaymentMethodFamily? paymentMethodType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Amount = amount;
             BillingProfileId = billingProfileId;
             BillingProfileDisplayName = billingProfileDisplayName;
             InvoiceId = invoiceId;
             InvoiceName = invoiceName;
-            Date = date;
+            On = @on;
             PaymentMethodType = paymentMethodType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Billing.Models
         public string InvoiceName { get; }
 
         /// <summary> The date of the payments on account. </summary>
-        public DateTimeOffset? Date { get; }
+        public DateTimeOffset? On { get; }
 
         /// <summary> Payment on Account type. </summary>
         public PaymentMethodFamily? PaymentMethodType { get; }

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
@@ -178,7 +179,7 @@ namespace Azure.ResourceManager.Billing.Models
             string lastFourDigits = default;
             IReadOnlyList<PaymentMethodLogo> logos = default;
             PaymentMethodProjectionProperties paymentMethod = default;
-            string paymentMethodId = default;
+            ResourceIdentifier paymentMethodId = default;
             string paymentMethodType = default;
             PaymentMethodStatus? status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -238,7 +239,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (prop.NameEquals("paymentMethodId"u8))
                 {
-                    paymentMethodId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    paymentMethodId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("paymentMethodType"u8))

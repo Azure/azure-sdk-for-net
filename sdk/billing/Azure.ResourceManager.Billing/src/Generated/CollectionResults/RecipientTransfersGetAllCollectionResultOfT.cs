@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    internal partial class RecipientTransfersGetAllCollectionResultOfT : Pageable<RecipientTransferDetailsData>
+    internal partial class RecipientTransfersGetAllCollectionResultOfT : Pageable<RecipientTransferDetailData>
     {
         private readonly RecipientTransfers _client;
         private readonly RequestContext _context;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of RecipientTransfersGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<RecipientTransferDetailsData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<RecipientTransferDetailData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Billing
                     yield break;
                 }
                 RecipientTransferDetailsListResult result = RecipientTransferDetailsListResult.FromResponse(response);
-                yield return Page<RecipientTransferDetailsData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<RecipientTransferDetailData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

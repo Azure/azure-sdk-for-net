@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="extendedStatusInfo"> Extended status information for the reservation. </param>
         /// <param name="productCode"> Represents UPN. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReservationOrderProperty(string displayName, string enrollmentId, string customerId, string billingProfileId, string billingAccountId, DateTimeOffset? requestOn, DateTimeOffset? createdOn, DateTimeOffset? expireOn, DateTimeOffset? reservationExpireOn, DateTimeOffset? benefitStartOn, int? originalQuantity, string term, string provisioningState, ReservationBillingPlan? billingPlan, ReservationOrderBillingPlanInformation planInformation, IList<BillingReservationData> reservations, DateTimeOffset? reviewedOn, ReservationExtendedStatusInfo extendedStatusInfo, string productCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReservationOrderProperty(string displayName, string enrollmentId, ResourceIdentifier customerId, ResourceIdentifier billingProfileId, ResourceIdentifier billingAccountId, DateTimeOffset? requestOn, DateTimeOffset? createdOn, DateTimeOffset? expireOn, DateTimeOffset? reservationExpireOn, DateTimeOffset? benefitStartOn, int? originalQuantity, string term, string provisioningState, ReservationBillingPlan? billingPlan, ReservationOrderBillingPlanInformation planInformation, IList<BillingReservationData> reservations, DateTimeOffset? reviewedOn, ReservationExtendedStatusInfo extendedStatusInfo, string productCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             EnrollmentId = enrollmentId;
@@ -75,13 +76,13 @@ namespace Azure.ResourceManager.Billing.Models
         public string EnrollmentId { get; set; }
 
         /// <summary> Fully-qualified identifier of the customerId where the benefit is applied. Present only for Enterprise Agreement PartnerLed customers. </summary>
-        public string CustomerId { get; set; }
+        public ResourceIdentifier CustomerId { get; set; }
 
         /// <summary> Billing profile Id associated to this reservation order. </summary>
-        public string BillingProfileId { get; set; }
+        public ResourceIdentifier BillingProfileId { get; set; }
 
         /// <summary> Billing account Id associated to this reservation order. </summary>
-        public string BillingAccountId { get; set; }
+        public ResourceIdentifier BillingAccountId { get; set; }
 
         /// <summary> This is the DateTime when the reservation order was initially requested for purchase. </summary>
         public DateTimeOffset? RequestOn { get; set; }

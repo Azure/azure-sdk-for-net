@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("endDate"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(LimitType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(LimitType.Value.ToString());
             }
             if (Optional.IsDefined(Status))
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Billing.Models
             string currency = default;
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
-            SpendingLimitType? @type = default;
+            SpendingLimitType? limitType = default;
             SpendingLimitStatus? status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    @type = new SpendingLimitType(prop.Value.GetString());
+                    limitType = new SpendingLimitType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Billing.Models
                 currency,
                 startOn,
                 endOn,
-                @type,
+                limitType,
                 status,
                 additionalBinaryDataProperties);
         }

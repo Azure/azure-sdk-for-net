@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="quantity"> The quantity of licenses or fulfillment units for the subscription. </param>
         /// <param name="termEndOn"> End date of the term in UTC time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionRenewalTermDetails(string billingFrequency, string productId, string productTypeId, string skuId, string termDuration, long? quantity, DateTimeOffset? termEndOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubscriptionRenewalTermDetails(string billingFrequency, string productId, string productTypeId, string skuId, TimeSpan? termDuration, long? quantity, DateTimeOffset? termEndOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BillingFrequency = billingFrequency;
             ProductId = productId;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Billing.Models
         public string SkuId { get; }
 
         /// <summary> The duration in ISO8601 format for which you can use the subscription. Example: P1M, P3M, P1Y. </summary>
-        public string TermDuration { get; }
+        public TimeSpan? TermDuration { get; }
 
         /// <summary> The quantity of licenses or fulfillment units for the subscription. </summary>
         public long? Quantity { get; }

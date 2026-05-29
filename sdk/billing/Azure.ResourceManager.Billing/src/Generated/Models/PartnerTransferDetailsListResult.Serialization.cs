@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (PartnerTransferDetailsData item in Value)
+                foreach (PartnerTransferDetailData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,17 +139,17 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            IReadOnlyList<PartnerTransferDetailsData> value = default;
+            IReadOnlyList<PartnerTransferDetailData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<PartnerTransferDetailsData> array = new List<PartnerTransferDetailsData>();
+                    List<PartnerTransferDetailData> array = new List<PartnerTransferDetailData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PartnerTransferDetailsData.DeserializePartnerTransferDetailsData(item, options));
+                        array.Add(PartnerTransferDetailData.DeserializePartnerTransferDetailData(item, options));
                     }
                     value = array;
                     continue;

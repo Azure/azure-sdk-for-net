@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingInvoiceFailedPayment"/>. </summary>
-        /// <param name="date"> The date when the payment was attempted. </param>
+        /// <param name="on"> The date when the payment was attempted. </param>
         /// <param name="failedPaymentReason"> The reason that the payment failed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingInvoiceFailedPayment(DateTimeOffset? date, BillingInvoiceFailedPaymentReason? failedPaymentReason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingInvoiceFailedPayment(DateTimeOffset? @on, BillingInvoiceFailedPaymentReason? failedPaymentReason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Date = date;
+            On = @on;
             FailedPaymentReason = failedPaymentReason;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The date when the payment was attempted. </summary>
-        public DateTimeOffset? Date { get; }
+        public DateTimeOffset? On { get; }
 
         /// <summary> The reason that the payment failed. </summary>
         public BillingInvoiceFailedPaymentReason? FailedPaymentReason { get; }

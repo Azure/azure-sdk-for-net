@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
@@ -241,9 +242,9 @@ namespace Azure.ResourceManager.Billing.Models
             string displayProvisioningState = default;
             string userFriendlyAppliedScopeType = default;
             string billingScopeId = default;
-            string billingProfileId = default;
-            string customerId = default;
-            string billingAccountId = default;
+            ResourceIdentifier billingProfileId = default;
+            ResourceIdentifier customerId = default;
+            ResourceIdentifier billingAccountId = default;
             BillingSavingsPlanTerm? term = default;
             bool? isRenewed = default;
             string renewSource = default;
@@ -294,17 +295,29 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (prop.NameEquals("billingProfileId"u8))
                 {
-                    billingProfileId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingProfileId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("customerId"u8))
                 {
-                    customerId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customerId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("billingAccountId"u8))
                 {
-                    billingAccountId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingAccountId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("term"u8))

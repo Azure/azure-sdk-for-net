@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="currency"> The currency in which the charges for the billing profile are billed. </param>
         /// <param name="startOn"> The date when this spending limit goes into effect. </param>
         /// <param name="endOn"> The date when this spending limit is no longer in effect. </param>
-        /// <param name="type"> The type of spending limit. </param>
+        /// <param name="limitType"> The type of spending limit. </param>
         /// <param name="status"> The status of current spending limit. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SpendingLimitDetails(float? amount, string currency, DateTimeOffset? startOn, DateTimeOffset? endOn, SpendingLimitType? @type, SpendingLimitStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SpendingLimitDetails(float? amount, string currency, DateTimeOffset? startOn, DateTimeOffset? endOn, SpendingLimitType? limitType, SpendingLimitStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Amount = amount;
             Currency = currency;
             StartOn = startOn;
             EndOn = endOn;
-            Type = @type;
+            LimitType = limitType;
             Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Billing.Models
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> The type of spending limit. </summary>
-        public SpendingLimitType? Type { get; }
+        public SpendingLimitType? LimitType { get; }
 
         /// <summary> The status of current spending limit. </summary>
         public SpendingLimitStatus? Status { get; }
