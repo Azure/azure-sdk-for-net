@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core" Version="1.56.0" />
+    <PackageReference Include="Azure.Core" Version="1.57.0" />
     <PackageReference Include="OpenTelemetry" Version="1.13.1" />
     <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.13.1" />
   </ItemGroup>
