@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="NodeDisruptionProfile"/>. </summary>
         /// <param name="nodeDisruptionPolicy"> The policy configuration for when to allow certain operations which require node re-image and trigger redeployment. For example, some operations, such as updating the .properties.ManagedClusterSecurityProfile.customCATrustCertificates field on an existing managed cluster, trigger rolling updates of the nodes. This setting allows control over when such updates are accepted. The default is 'Allow'. For a full list of covered operations see aka.ms/aks/nodedisruptionpolicy". </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NodeDisruptionProfile(NodeDisruptionPolicy? nodeDisruptionPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NodeDisruptionProfile(ManagedClusterNodeDisruptionPolicy? nodeDisruptionPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NodeDisruptionPolicy = nodeDisruptionPolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The policy configuration for when to allow certain operations which require node re-image and trigger redeployment. For example, some operations, such as updating the .properties.ManagedClusterSecurityProfile.customCATrustCertificates field on an existing managed cluster, trigger rolling updates of the nodes. This setting allows control over when such updates are accepted. The default is 'Allow'. For a full list of covered operations see aka.ms/aks/nodedisruptionpolicy". </summary>
         [WirePath("nodeDisruptionPolicy")]
-        public NodeDisruptionPolicy? NodeDisruptionPolicy { get; set; }
+        public ManagedClusterNodeDisruptionPolicy? NodeDisruptionPolicy { get; set; }
     }
 }

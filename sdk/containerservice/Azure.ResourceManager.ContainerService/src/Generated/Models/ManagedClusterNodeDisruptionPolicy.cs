@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The policy configuration for when to allow certain operations which require node re-image and trigger redeployment. For example, some operations, such as updating the .properties.ManagedClusterSecurityProfile.customCATrustCertificates field on an existing managed cluster, trigger rolling updates of the nodes. This setting allows control over when such updates are accepted. The default is 'Allow'. For a full list of covered operations see aka.ms/aks/nodedisruptionpolicy". </summary>
-    public readonly partial struct NodeDisruptionPolicy : IEquatable<NodeDisruptionPolicy>
+    public readonly partial struct ManagedClusterNodeDisruptionPolicy : IEquatable<ManagedClusterNodeDisruptionPolicy>
     {
         private readonly string _value;
         /// <summary> Allows operations that will require node re-image and trigger redeployment. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Blocks certain operations that will require node re-image and trigger redeployment. For a full list of covered operations see aka.ms/aks/nodedisruptionpolicy. </summary>
         private const string BlockValue = "Block";
 
-        /// <summary> Initializes a new instance of <see cref="NodeDisruptionPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterNodeDisruptionPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public NodeDisruptionPolicy(string value)
+        public ManagedClusterNodeDisruptionPolicy(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Allows operations that will require node re-image and trigger redeployment. </summary>
-        public static NodeDisruptionPolicy Allow { get; } = new NodeDisruptionPolicy(AllowValue);
+        public static ManagedClusterNodeDisruptionPolicy Allow { get; } = new ManagedClusterNodeDisruptionPolicy(AllowValue);
 
         /// <summary> Blocks certain operations that will require node re-image and trigger redeployment unless within the aksManagedNodeOSUpgradeSchedule maintenance window. For a full list of covered operations see aka.ms/aks/nodedisruptionpolicy . For more information on using the aksManagedNodeOSUpgradeSchedule maintenance window, please see https://learn.microsoft.com/azure/aks/planned-maintenance?tabs=azure-cli. </summary>
-        public static NodeDisruptionPolicy AllowDuringMaintenanceWindow { get; } = new NodeDisruptionPolicy(AllowDuringMaintenanceWindowValue);
+        public static ManagedClusterNodeDisruptionPolicy AllowDuringMaintenanceWindow { get; } = new ManagedClusterNodeDisruptionPolicy(AllowDuringMaintenanceWindowValue);
 
         /// <summary> Blocks certain operations that will require node re-image and trigger redeployment. For a full list of covered operations see aka.ms/aks/nodedisruptionpolicy. </summary>
-        public static NodeDisruptionPolicy Block { get; } = new NodeDisruptionPolicy(BlockValue);
+        public static ManagedClusterNodeDisruptionPolicy Block { get; } = new ManagedClusterNodeDisruptionPolicy(BlockValue);
 
-        /// <summary> Determines if two <see cref="NodeDisruptionPolicy"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ManagedClusterNodeDisruptionPolicy"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(NodeDisruptionPolicy left, NodeDisruptionPolicy right) => left.Equals(right);
+        public static bool operator ==(ManagedClusterNodeDisruptionPolicy left, ManagedClusterNodeDisruptionPolicy right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="NodeDisruptionPolicy"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ManagedClusterNodeDisruptionPolicy"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(NodeDisruptionPolicy left, NodeDisruptionPolicy right) => !left.Equals(right);
+        public static bool operator !=(ManagedClusterNodeDisruptionPolicy left, ManagedClusterNodeDisruptionPolicy right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="NodeDisruptionPolicy"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ManagedClusterNodeDisruptionPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NodeDisruptionPolicy(string value) => new NodeDisruptionPolicy(value);
+        public static implicit operator ManagedClusterNodeDisruptionPolicy(string value) => new ManagedClusterNodeDisruptionPolicy(value);
 
-        /// <summary> Converts a string to a <see cref="NodeDisruptionPolicy"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ManagedClusterNodeDisruptionPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator NodeDisruptionPolicy?(string value) => value == null ? null : new NodeDisruptionPolicy(value);
+        public static implicit operator ManagedClusterNodeDisruptionPolicy?(string value) => value == null ? null : new ManagedClusterNodeDisruptionPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is NodeDisruptionPolicy other && Equals(other);
+        public override bool Equals(object obj) => obj is ManagedClusterNodeDisruptionPolicy other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(NodeDisruptionPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ManagedClusterNodeDisruptionPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The policy configuration for when to allow certain operations which require node re-image and trigger redeployment. For example, some operations, such as updating the .properties.ManagedClusterSecurityProfile.customCATrustCertificates field on an existing managed cluster, trigger rolling updates of the nodes. This setting allows control over when such updates are accepted. The default is 'Allow'. For a full list of covered operations see aka.ms/aks/nodedisruptionpolicy". </summary>
         [WirePath("nodeDisruptionProfile.nodeDisruptionPolicy")]
-        public NodeDisruptionPolicy? NodeDisruptionPolicy
+        public ManagedClusterNodeDisruptionPolicy? NodeDisruptionPolicy
         {
             get
             {
