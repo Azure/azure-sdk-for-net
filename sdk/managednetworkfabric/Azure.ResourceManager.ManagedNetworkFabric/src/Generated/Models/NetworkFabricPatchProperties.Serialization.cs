@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("fabricASN"u8);
                 writer.WriteNumberValue(FabricAsn.Value);
             }
-            if (Optional.IsDefined(TerminalServerConfiguration))
+            if (Optional.IsDefined(TerminalServerSettings))
             {
                 writer.WritePropertyName("terminalServerConfiguration"u8);
-                writer.WriteObjectValue(TerminalServerConfiguration, options);
+                writer.WriteObjectValue(TerminalServerSettings, options);
             }
             if (Optional.IsDefined(ManagementNetworkConfiguration))
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string iPv4Prefix = default;
             string iPv6Prefix = default;
             long? fabricAsn = default;
-            NetworkFabricPatchablePropertiesTerminalServerConfiguration terminalServerConfiguration = default;
+            NetworkFabricTerminalServerPatchConfiguration terminalServerSettings = default;
             ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration = default;
             StorageAccountPatchConfiguration storageAccountConfiguration = default;
             int? hardwareAlertThreshold = default;
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    terminalServerConfiguration = NetworkFabricPatchablePropertiesTerminalServerConfiguration.DeserializeNetworkFabricPatchablePropertiesTerminalServerConfiguration(prop.Value, options);
+                    terminalServerSettings = NetworkFabricTerminalServerPatchConfiguration.DeserializeNetworkFabricTerminalServerPatchConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("managementNetworkConfiguration"u8))
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 iPv4Prefix,
                 iPv6Prefix,
                 fabricAsn,
-                terminalServerConfiguration,
+                terminalServerSettings,
                 managementNetworkConfiguration,
                 storageAccountConfiguration,
                 hardwareAlertThreshold,

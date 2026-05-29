@@ -139,11 +139,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Network and credentials configuration already applied to terminal server. </summary>
-        public NetworkFabricPatchablePropertiesTerminalServerConfiguration TerminalServerConfiguration
+        public NetworkFabricTerminalServerPatchConfiguration TerminalServerSettings
         {
             get
             {
-                return Properties is null ? default : Properties.TerminalServerConfiguration;
+                return Properties is null ? default : Properties.TerminalServerSettings;
             }
             set
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new NetworkFabricPatchProperties();
                 }
-                Properties.TerminalServerConfiguration = value;
+                Properties.TerminalServerSettings = value;
             }
         }
 

@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             get
             {
-                return Properties is null ? default : Properties.TerminalServerConfiguration;
+                return Properties is null ? default : NetworkFabricPatchablePropertiesTerminalServerConfiguration.FromNetworkFabricTerminalServerPatchConfiguration(Properties.TerminalServerSettings);
             }
             set
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new NetworkFabricPatchProperties();
                 }
-                Properties.TerminalServerConfiguration = value;
+                Properties.TerminalServerSettings = value?.ToNetworkFabricTerminalServerPatchConfiguration();
             }
         }
 

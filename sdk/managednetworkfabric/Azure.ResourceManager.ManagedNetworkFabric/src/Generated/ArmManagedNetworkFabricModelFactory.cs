@@ -2315,7 +2315,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="iPv4Prefix"> IPv4Prefix for Management Network. Example: 10.1.0.0/19. </param>
         /// <param name="iPv6Prefix"> IPv6Prefix for Management Network. Example: 3FFE:FFFF:0:CD40::/59. </param>
         /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
-        /// <param name="terminalServerConfiguration"> Network and credentials configuration already applied to terminal server. </param>
+        /// <param name="terminalServerSettings"> Network and credentials configuration already applied to terminal server. </param>
         /// <param name="managementNetworkConfiguration"> Configuration to be used to setup the management network. </param>
         /// <param name="storageAccountConfiguration"> Bring your own storage account configurations for Network Fabric. </param>
         /// <param name="hardwareAlertThreshold"> Hardware alert threshold percentage. Possible values are from 20 to 100. </param>
@@ -2327,18 +2327,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="qosConfigurationState"> QoS configuration state. Default is Disabled. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Models.NetworkFabricPatchContent"/> instance for mocking. </returns>
-        public static NetworkFabricPatchContent NetworkFabricPatchContent(IDictionary<string, string> tags = default, string annotation = default, int? rackCount = default, int? serverCountPerRack = default, string iPv4Prefix = default, string iPv6Prefix = default, long? fabricAsn = default, NetworkFabricPatchablePropertiesTerminalServerConfiguration terminalServerConfiguration = default, ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration = default, StorageAccountPatchConfiguration storageAccountConfiguration = default, int? hardwareAlertThreshold = default, IEnumerable<ResourceIdentifier> controlPlaneAcls = default, IEnumerable<ResourceIdentifier> trustedIPPrefixes = default, UniqueRouteDistinguisherPatchProperties uniqueRdConfiguration = default, IEnumerable<NetworkFabricFeatureFlag> featureFlags = default, AuthorizedTransceiverPatchProperties authorizedTransceiver = default, NetworkFabricQosConfigurationState? qosConfigurationState = default, NetworkFabricManagedServiceIdentityPatch identity = default)
+        public static NetworkFabricPatchContent NetworkFabricPatchContent(IDictionary<string, string> tags = default, string annotation = default, int? rackCount = default, int? serverCountPerRack = default, string iPv4Prefix = default, string iPv6Prefix = default, long? fabricAsn = default, NetworkFabricTerminalServerPatchConfiguration terminalServerSettings = default, ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration = default, StorageAccountPatchConfiguration storageAccountConfiguration = default, int? hardwareAlertThreshold = default, IEnumerable<ResourceIdentifier> controlPlaneAcls = default, IEnumerable<ResourceIdentifier> trustedIPPrefixes = default, UniqueRouteDistinguisherPatchProperties uniqueRdConfiguration = default, IEnumerable<NetworkFabricFeatureFlag> featureFlags = default, AuthorizedTransceiverPatchProperties authorizedTransceiver = default, NetworkFabricQosConfigurationState? qosConfigurationState = default, NetworkFabricManagedServiceIdentityPatch identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkFabricPatchContent(tags, additionalBinaryDataProperties: null, annotation is null && rackCount is null && serverCountPerRack is null && iPv4Prefix is null && iPv6Prefix is null && fabricAsn is null && terminalServerConfiguration is null && managementNetworkConfiguration is null && storageAccountConfiguration is null && hardwareAlertThreshold is null && controlPlaneAcls is null && trustedIPPrefixes is null && uniqueRdConfiguration is null && featureFlags is null && authorizedTransceiver is null && qosConfigurationState is null ? default : new NetworkFabricPatchProperties(
+            return new NetworkFabricPatchContent(tags, additionalBinaryDataProperties: null, annotation is null && rackCount is null && serverCountPerRack is null && iPv4Prefix is null && iPv6Prefix is null && fabricAsn is null && terminalServerSettings is null && managementNetworkConfiguration is null && storageAccountConfiguration is null && hardwareAlertThreshold is null && controlPlaneAcls is null && trustedIPPrefixes is null && uniqueRdConfiguration is null && featureFlags is null && authorizedTransceiver is null && qosConfigurationState is null ? default : new NetworkFabricPatchProperties(
                 annotation,
                 rackCount,
                 serverCountPerRack,
                 iPv4Prefix,
                 iPv6Prefix,
                 fabricAsn,
-                terminalServerConfiguration,
+                terminalServerSettings,
                 managementNetworkConfiguration,
                 storageAccountConfiguration,
                 hardwareAlertThreshold,

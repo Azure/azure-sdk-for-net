@@ -14,6 +14,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     [ModelReaderWriterBuildable(typeof(NetworkToNetworkInterconnectOptionBLayer3Configuration))]
     [ModelReaderWriterBuildable(typeof(NetworkTapPatchableParametersDestinationsItem))]
     [ModelReaderWriterBuildable(typeof(NetworkTapPropertiesDestinationsItem))]
+    [ModelReaderWriterBuildable(typeof(NetworkFabricPatchablePropertiesTerminalServerConfiguration))]
+    [ModelReaderWriterBuildable(typeof(TerminalServerPatchableProperties))]
     [ModelReaderWriterBuildable(typeof(TerminalServerConfiguration))]
     [ModelReaderWriterBuildable(typeof(NetworkDevicePatch))]
     [ModelReaderWriterBuildable(typeof(NetworkFabricAccessControlListPatch))]
