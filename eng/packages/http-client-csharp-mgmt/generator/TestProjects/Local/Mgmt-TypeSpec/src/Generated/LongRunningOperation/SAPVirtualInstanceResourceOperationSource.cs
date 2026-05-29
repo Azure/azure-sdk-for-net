@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
-    internal partial class ZooOperationSource : IOperationSource<ZooResource>
+    internal partial class SAPVirtualInstanceResourceOperationSource : IOperationSource<SAPVirtualInstanceResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal ZooOperationSource(ArmClient client)
+        internal SAPVirtualInstanceResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        ZooResource IOperationSource<ZooResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SAPVirtualInstanceResource IOperationSource<SAPVirtualInstanceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ZooData data = ZooData.DeserializeZooData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ZooResource(_client, data);
+            SAPVirtualInstanceData data = SAPVirtualInstanceData.DeserializeSAPVirtualInstanceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SAPVirtualInstanceResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<ZooResource> IOperationSource<ZooResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SAPVirtualInstanceResource> IOperationSource<SAPVirtualInstanceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ZooData data = ZooData.DeserializeZooData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ZooResource(_client, data);
+            SAPVirtualInstanceData data = SAPVirtualInstanceData.DeserializeSAPVirtualInstanceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SAPVirtualInstanceResource(_client, data);
         }
     }
 }

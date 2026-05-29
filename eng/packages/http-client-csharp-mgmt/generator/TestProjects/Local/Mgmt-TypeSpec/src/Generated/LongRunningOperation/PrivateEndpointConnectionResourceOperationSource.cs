@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
-    internal partial class PrivateEndpointConnectionOperationSource : IOperationSource<PrivateEndpointConnectionResource>
+    internal partial class PrivateEndpointConnectionResourceOperationSource : IOperationSource<PrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal PrivateEndpointConnectionOperationSource(ArmClient client)
+        internal PrivateEndpointConnectionResourceOperationSource(ArmClient client)
         {
             _client = client;
         }

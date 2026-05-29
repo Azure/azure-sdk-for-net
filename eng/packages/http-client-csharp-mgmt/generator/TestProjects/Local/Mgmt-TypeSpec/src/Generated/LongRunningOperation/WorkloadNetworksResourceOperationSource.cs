@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
-    internal partial class FooOperationSource : IOperationSource<FooResource>
+    internal partial class WorkloadNetworksResourceOperationSource : IOperationSource<WorkloadNetworksResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal FooOperationSource(ArmClient client)
+        internal WorkloadNetworksResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        FooResource IOperationSource<FooResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        WorkloadNetworksResource IOperationSource<WorkloadNetworksResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            FooData data = FooData.DeserializeFooData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new FooResource(_client, data);
+            WorkloadNetworksData data = WorkloadNetworksData.DeserializeWorkloadNetworksData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new WorkloadNetworksResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<FooResource> IOperationSource<FooResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<WorkloadNetworksResource> IOperationSource<WorkloadNetworksResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            FooData data = FooData.DeserializeFooData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new FooResource(_client, data);
+            WorkloadNetworksData data = WorkloadNetworksData.DeserializeWorkloadNetworksData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new WorkloadNetworksResource(_client, data);
         }
     }
 }

@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
-    internal partial class BazOperationSource : IOperationSource<BazResource>
+    internal partial class CycleTestStoreResourceOperationSource : IOperationSource<CycleTestStoreResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal BazOperationSource(ArmClient client)
+        internal CycleTestStoreResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        BazResource IOperationSource<BazResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CycleTestStoreResource IOperationSource<CycleTestStoreResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            BazData data = BazData.DeserializeBazData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new BazResource(_client, data);
+            CycleTestStoreData data = CycleTestStoreData.DeserializeCycleTestStoreData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new CycleTestStoreResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<BazResource> IOperationSource<BazResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CycleTestStoreResource> IOperationSource<CycleTestStoreResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            BazData data = BazData.DeserializeBazData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new BazResource(_client, data);
+            CycleTestStoreData data = CycleTestStoreData.DeserializeCycleTestStoreData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new CycleTestStoreResource(_client, data);
         }
     }
 }

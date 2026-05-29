@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
-    internal partial class CycleTestStoreOperationSource : IOperationSource<CycleTestStoreResource>
+    internal partial class EventGridDomainResourceOperationSource : IOperationSource<EventGridDomainResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal CycleTestStoreOperationSource(ArmClient client)
+        internal EventGridDomainResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        CycleTestStoreResource IOperationSource<CycleTestStoreResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        EventGridDomainResource IOperationSource<EventGridDomainResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            CycleTestStoreData data = CycleTestStoreData.DeserializeCycleTestStoreData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new CycleTestStoreResource(_client, data);
+            EventGridDomainData data = EventGridDomainData.DeserializeEventGridDomainData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new EventGridDomainResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<CycleTestStoreResource> IOperationSource<CycleTestStoreResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<EventGridDomainResource> IOperationSource<EventGridDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            CycleTestStoreData data = CycleTestStoreData.DeserializeCycleTestStoreData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new CycleTestStoreResource(_client, data);
+            EventGridDomainData data = EventGridDomainData.DeserializeEventGridDomainData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new EventGridDomainResource(_client, data);
         }
     }
 }
