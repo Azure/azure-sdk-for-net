@@ -307,8 +307,22 @@ function Update-MgmtPackageFolder() {
     $projectFolder = $projectFolder -replace "\\", "/"
     if (Test-Path -Path $projectFolder) {
       Write-Host "Path exists!"
-      $folderinfo = Get-ChildItem -Path $projectFolder
-      $mgmtPackageName = $folderinfo.Name
+      # A service folder may contain multiple Azure.ResourceManager.* packages where only
+      # some are still generated from swagger. Swagger-based packages have a src autorest
+      # config file, while TypeSpec-migrated packages do not, so narrow to the swagger one.
+      $folderinfo = @(Get-ChildItem -Path $projectFolder -Directory | Where-Object {
+        Test-Path -Path (Join-Path $_.FullName "src" $AUTOREST_CONFIG_FILE)
+      })
+      if ($folderinfo.Count -eq 0) {
+        Write-Host "[ERROR] No existing swagger-based management package was found under sdk/$packageName (expected exactly one Azure.ResourceManager.* folder containing src/$AUTOREST_CONFIG_FILE). It may be a new .NET SDK or already migrated to TypeSpec. We will not support onboarding a new service SDK from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+        exit 1
+      }
+      if ($folderinfo.Count -gt 1) {
+        $candidateNames = ($folderinfo.Name -join ", ")
+        Write-Host "[ERROR] Multiple swagger-based management packages were found under sdk/$packageName ($candidateNames). Cannot determine which package to generate from this swagger readme. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+        exit 1
+      }
+      $mgmtPackageName = $folderinfo[0].Name
       $projectFolder = "$sdkPath/sdk/$packageName/$mgmtPackageName"
     } else {
       Write-Host "[ERROR] Project directory doesn't exist. It is a new .NET SDK. We will not support onboard a new service SDK from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
