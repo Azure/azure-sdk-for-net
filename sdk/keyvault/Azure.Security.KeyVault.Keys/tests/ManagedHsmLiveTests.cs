@@ -157,5 +157,33 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             AssertKeyVaultKeysEqual(key, keyWithAttestation);
         }
+
+        [RecordedTest]
+        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V2026_01_01_Preview)]
+        public async Task CreateExternalKey()
+        {
+            string externalId = TestEnvironment.EkmExternalId;
+            if (string.IsNullOrEmpty(externalId))
+            {
+                throw new IgnoreException(
+                    "No external key ID provided. This test requires an EKM-connected Managed HSM " +
+                    "and an existing external key referenced by the EKM_EXTERNAL_ID environment variable.");
+            }
+
+            string keyName = Recording.GenerateId();
+            ExternalKey externalKey = new ExternalKey(externalId);
+
+            KeyVaultKey created = await Client.CreateExternalKeyAsync(keyName, externalKey);
+            RegisterForCleanup(created.Name);
+
+            Assert.AreEqual(keyName, created.Name);
+            Assert.IsNotNull(created.Properties.ExternalKey);
+            Assert.AreEqual(externalId, created.Properties.ExternalKey.Id);
+
+            // Verify the external_key reference is round-tripped on a subsequent GET.
+            KeyVaultKey fetched = await Client.GetKeyAsync(keyName);
+            Assert.IsNotNull(fetched.Properties.ExternalKey);
+            Assert.AreEqual(externalId, fetched.Properties.ExternalKey.Id);
+        }
     }
 }

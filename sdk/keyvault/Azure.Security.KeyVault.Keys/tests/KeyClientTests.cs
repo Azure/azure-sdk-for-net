@@ -43,6 +43,24 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
+        public void CreateExternalKeyArgumentValidation()
+        {
+            ExternalKey externalKey = new ExternalKey("ext-1");
+
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(
+                () => Client.CreateExternalKeyAsync(null, externalKey));
+            Assert.AreEqual("name", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentException>(
+                () => Client.CreateExternalKeyAsync(string.Empty, externalKey));
+            Assert.AreEqual("name", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentNullException>(
+                () => Client.CreateExternalKeyAsync("name", null));
+            Assert.AreEqual("externalKey", ex.ParamName);
+        }
+
+        [Test]
         public void UpdateKeyPropertiesArgumentValidation()
         {
             var keyOperations = new List<KeyOperation>() { KeyOperation.Sign };

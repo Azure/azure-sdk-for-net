@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Tests
@@ -73,6 +75,13 @@ namespace Azure.Security.KeyVault.Tests
         public string Sku => GetOptionalVariable("SKU") ?? "premium";
 
         /// <summary>
+        /// Gets the identifier of an existing key in the external HSM connected to the Managed HSM under
+        /// <see cref="ManagedHsmUrl"/>. Required for External Key Management (EKM) live tests; tests should
+        /// skip themselves when this is null.
+        /// </summary>
+        public string EkmExternalId => GetRecordedOptionalVariable("EKM_EXTERNAL_ID");
+
+        /// <summary>
         /// Gets the value of the "AZURE_KEYVAULT_ATTESTATION_URL" variable.
         /// </summary>
         public Uri AttestationUri => Uri.TryCreate(GetRecordedOptionalVariable("AZURE_KEYVAULT_ATTESTATION_URL"), UriKind.Absolute, out Uri attestationUri)
@@ -89,6 +98,37 @@ namespace Azure.Security.KeyVault.Tests
             {
                 throw new IgnoreException($"Required variable 'AZURE_MANAGEDHSM_URL' is not defined");
             }
+        }
+
+        /// <summary>
+        /// Local-developer credential chain used when recording or running live tests.
+        ///
+        /// The base implementation in <see cref="TestEnvironment.CreateDeveloperCredential"/>
+        /// uses <see cref="InteractiveBrowserCredential"/> configured with the WAM broker and
+        /// <c>IntPtr.Zero</c> as the parent window handle. When tests run from
+        /// <c>dotnet test</c> or Test Explorer there is no foreground window the broker can
+        /// attach to, so it fails with:
+        /// "A window handle must be configured. See https://aka.ms/msal-net-wam#parent-window-handles".
+        ///
+        /// This override prefers silent credentials already present on a dev box
+        /// (<c>az login</c>, Visual Studio, VS Code, <c>Connect-AzAccount</c>) and falls back
+        /// to a system-browser <see cref="InteractiveBrowserCredential"/> WITHOUT WAM,
+        /// which does not require a parent window handle and works in headless test hosts.
+        /// </summary>
+        protected override TokenCredential CreateDeveloperCredential()
+        {
+            // Explicitly construct InteractiveBrowserCredentialOptions WITHOUT enabling the
+            // WAM broker; this routes the sign-in through the default system browser using a
+            // localhost redirect, which works in headless test hosts (dotnet test / Test
+            // Explorer) where no parent window handle is available.
+            InteractiveBrowserCredentialOptions browserOptions = new();
+
+            return new ChainedTokenCredential(
+                new AzureCliCredential(),
+                new VisualStudioCredential(),
+                new VisualStudioCodeCredential(),
+                new AzurePowerShellCredential(),
+                new InteractiveBrowserCredential(browserOptions));
         }
     }
 }
