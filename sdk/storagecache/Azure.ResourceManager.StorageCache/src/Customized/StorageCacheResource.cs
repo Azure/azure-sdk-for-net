@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -70,105 +71,9 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Update cache space allocation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/caches/{cacheName}/spaceAllocation. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Caches_SpaceAllocation. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="StorageCacheResource"/>. </description>
-        /// </item>
-        /// </list>
+        /// Serializes the top-level array body for Caches_SpaceAllocation.
+        /// This is customized because generated code does not provide a usable helper for IEnumerable request content here.
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="spaceAllocation"> List containing storage target cache space percentage allocations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> UpdateSpaceAllocationAsync(WaitUntil waitUntil, IEnumerable<StorageTargetSpaceAllocation> spaceAllocation = default, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _cachesClientDiagnostics.CreateScope("StorageCacheResource.UpdateSpaceAllocation");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _cachesRestClient.CreateUpdateSpaceAllocationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ToRequestContent(spaceAllocation), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                StorageCacheArmOperation operation = new StorageCacheArmOperation(_cachesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update cache space allocation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/caches/{cacheName}/spaceAllocation. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Caches_SpaceAllocation. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="StorageCacheResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="spaceAllocation"> List containing storage target cache space percentage allocations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation UpdateSpaceAllocation(WaitUntil waitUntil, IEnumerable<StorageTargetSpaceAllocation> spaceAllocation = default, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _cachesClientDiagnostics.CreateScope("StorageCacheResource.UpdateSpaceAllocation");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _cachesRestClient.CreateUpdateSpaceAllocationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ToRequestContent(spaceAllocation), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                StorageCacheArmOperation operation = new StorageCacheArmOperation(_cachesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         private static RequestContent ToRequestContent(IEnumerable<StorageTargetSpaceAllocation> spaceAllocation)
         {
             if (spaceAllocation is null)
@@ -176,14 +81,18 @@ namespace Azure.ResourceManager.StorageCache
                 return null;
             }
 
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteStartArray();
-            foreach (StorageTargetSpaceAllocation item in spaceAllocation)
+            using MemoryStream stream = new MemoryStream();
+            using (Utf8JsonWriter writer = new Utf8JsonWriter(stream))
             {
-                content.JsonWriter.WriteObjectValue(item, ModelSerializationExtensions.WireOptions);
+                writer.WriteStartArray();
+                foreach (StorageTargetSpaceAllocation item in spaceAllocation)
+                {
+                    writer.WriteObjectValue(item, ModelSerializationExtensions.WireOptions);
+                }
+                writer.WriteEndArray();
             }
-            content.JsonWriter.WriteEndArray();
-            return content;
+
+            return RequestContent.Create(BinaryData.FromBytes(stream.ToArray()));
         }
     }
 }
