@@ -14,10 +14,13 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    // TCGC classifies DatabaseAccounts_CreateOrUpdate as `kind: "List"` (not `Create`) because the
-    // PUT op uses Azure.ResourceManager.Foundations.ArmCreateOperation with a request body type
-    // different from the resource model. MPG then drops Collection.CreateOrUpdate / CreateOrUpdateAsync.
+    // MPG generator does not classify `DatabaseAccounts_CreateOrUpdate` as an ARM Create operation
+    // because the PUT op is declared via Azure.ResourceManager.Foundations.ArmCreateOperation with a
+    // request body type (DatabaseAccountCreateUpdateParameters) different from the resource model
+    // (DatabaseAccountGetResults). The generator emits `CreateCreateOrUpdateRequest` on the REST
+    // client but drops Collection.CreateOrUpdate / CreateOrUpdateAsync.
     // Re-emit them against the generated CreateCreateOrUpdateRequest with final-state-via Location.
+    // TODO: remove this customization once https://github.com/Azure/azure-sdk-for-net/issues/59528 is fixed.
     public partial class CosmosDBAccountCollection
     {
         /// <summary>
