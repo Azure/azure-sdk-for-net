@@ -9,6 +9,7 @@
       "$id": "1",
       "kind": "client",
       "name": "MoveToExistingSubClient",
+      "isExactName": false,
       "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient",
       "doc": "Test for @clientLocation decorator - moving operations between clients",
       "methods": [],
@@ -41,7 +42,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -53,17 +55,20 @@
           "$id": "5",
           "kind": "client",
           "name": "AdminOperations",
+          "isExactName": false,
           "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient",
           "methods": [
             {
               "$id": "6",
               "kind": "basic",
               "name": "getAdminInfo",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "7",
                 "name": "getAdminInfo",
+                "isExactName": false,
                 "resourceName": "AdminOperations",
                 "accessibility": "public",
                 "parameters": [],
@@ -98,11 +103,13 @@
               "$id": "8",
               "kind": "basic",
               "name": "deleteUser",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "9",
                 "name": "deleteUser",
+                "isExactName": false,
                 "resourceName": "UserOperations",
                 "accessibility": "public",
                 "parameters": [],
@@ -163,7 +170,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient.AdminOperations.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient.AdminOperations.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -179,17 +187,20 @@
           "$id": "13",
           "kind": "client",
           "name": "UserOperations",
+          "isExactName": false,
           "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient",
           "methods": [
             {
               "$id": "14",
               "kind": "basic",
               "name": "getUser",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "15",
                 "name": "getUser",
+                "isExactName": false,
                 "resourceName": "UserOperations",
                 "accessibility": "public",
                 "parameters": [],
@@ -250,7 +261,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient.UserOperations.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient.UserOperations.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

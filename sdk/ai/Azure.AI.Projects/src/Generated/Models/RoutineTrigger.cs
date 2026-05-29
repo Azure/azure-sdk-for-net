@@ -9,7 +9,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Base model for a routine trigger.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ScheduleRoutineTrigger"/>, <see cref="TimerRoutineTrigger"/>, and <see cref="GitHubIssueOpenedRoutineTrigger"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ScheduleRoutineTrigger"/>, <see cref="TimerRoutineTrigger"/>, <see cref="GitHubIssueRoutineTrigger"/>, and <see cref="CustomRoutineTrigger"/>.
     /// </summary>
     public abstract partial class RoutineTrigger
     {
