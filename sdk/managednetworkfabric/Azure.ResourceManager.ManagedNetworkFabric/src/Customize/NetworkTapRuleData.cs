@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public PollingIntervalInSecond? PollingIntervalInSeconds
         {
             get => PollingIntervalInSecond;
-            set => PollingIntervalInSecond = value;
+            set => PollingIntervalInSecond = value.HasValue ? value.Value.ToSerialInt32() : null;
         }
     }
 }

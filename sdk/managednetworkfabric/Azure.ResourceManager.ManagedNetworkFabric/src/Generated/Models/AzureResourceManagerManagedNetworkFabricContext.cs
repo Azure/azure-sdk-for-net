@@ -43,6 +43,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     [ModelReaderWriterBuildable(typeof(CommitBatchStatusContent))]
     [ModelReaderWriterBuildable(typeof(CommitBatchStatusOperationResult))]
     [ModelReaderWriterBuildable(typeof(CommitBatchStatusResponseProperties))]
+    [ModelReaderWriterBuildable(typeof(CommitConfigurationContent))]
+    [ModelReaderWriterBuildable(typeof(CommitConfigurationResult))]
     [ModelReaderWriterBuildable(typeof(CommonDynamicMatchConfiguration))]
     [ModelReaderWriterBuildable(typeof(CommonMatchConditions))]
     [ModelReaderWriterBuildable(typeof(CommonPostActionResponseForDeviceROCommands))]

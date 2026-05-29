@@ -110,6 +110,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         // 3. Without this custom code, only the generated renamed methods with operation-specific result types
         //    would exist, removing the shipped API surface.
 
+        /// <summary> Backward-compatible shim for CommitConfiguration. Use ApplyConfiguration instead for richer result type. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use ApplyConfigurationAsync instead.")]
+        public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> CommitConfigurationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            ArmOperation<CommitConfigurationResult> operation = await ApplyConfigurationAsync(waitUntil, content: default, cancellationToken).ConfigureAwait(false);
+            return new CompatArmOperation<CommitConfigurationResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
+        }
+
+        /// <summary> Backward-compatible shim for CommitConfiguration. Use ApplyConfiguration instead for richer result type. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use ApplyConfiguration instead.")]
+        public virtual ArmOperation<StateUpdateCommonPostActionResult> CommitConfiguration(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            ArmOperation<CommitConfigurationResult> operation = ApplyConfiguration(waitUntil, content: default, cancellationToken);
+            return new CompatArmOperation<CommitConfigurationResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
+        }
+
         /// <summary> Backward-compatible shim for Deprovision. Use Deactivate instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use DeactivateAsync instead.")]

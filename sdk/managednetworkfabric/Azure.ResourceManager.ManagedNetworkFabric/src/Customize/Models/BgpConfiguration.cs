@@ -7,7 +7,6 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> BGP configuration properties. </summary>
     public partial class BgpConfiguration
     {
         // Backward compatibility shim for the TypeSpec migration. The generated constructor requires a

@@ -2025,6 +2025,46 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Commit Configuration Request. </summary>
+        /// <param name="commitStage"> Commit stage Action to be performed. </param>
+        /// <param name="commitPolicy"> Commit configuration Policy. Supported policy is StageCEConfiguration, which indicates to prepare the configuration for the CE device type. </param>
+        /// <param name="devices"> List of ARM resource IDs of devices to be included in the commit operation. Either CE1 or CE2 is allowed. </param>
+        /// <returns> A new <see cref="Models.CommitConfigurationContent"/> instance for mocking. </returns>
+        public static CommitConfigurationContent CommitConfigurationContent(NetworkFabricCommitStage? commitStage = default, NetworkFabricCommitConfigurationPolicy? commitPolicy = default, IEnumerable<string> devices = default)
+        {
+            devices ??= new ChangeTrackingList<string>();
+
+            return new CommitConfigurationContent(commitStage, commitPolicy, devices.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Commit Configuration Response. </summary>
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="operations"> The operations list. </param>
+        /// <param name="error"> If present, details of the operation error. </param>
+        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
+        /// <returns> A new <see cref="Models.CommitConfigurationResult"/> instance for mocking. </returns>
+        public static CommitConfigurationResult CommitConfigurationResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
+        {
+            operations ??= new ChangeTrackingList<OperationStatusResult>();
+
+            return new CommitConfigurationResult(
+                id,
+                name,
+                status,
+                percentComplete,
+                startOn,
+                endOn,
+                operations.ToList(),
+                error,
+                resourceId,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Commit Batch Status Response. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
