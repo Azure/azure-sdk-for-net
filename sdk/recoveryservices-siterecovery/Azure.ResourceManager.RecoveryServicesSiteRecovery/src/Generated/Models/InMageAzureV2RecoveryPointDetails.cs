@@ -14,19 +14,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class InMageAzureV2RecoveryPointDetails : ProviderSpecificRecoveryPointDetails
     {
         /// <summary> Initializes a new instance of <see cref="InMageAzureV2RecoveryPointDetails"/>. </summary>
-        internal InMageAzureV2RecoveryPointDetails()
+        internal InMageAzureV2RecoveryPointDetails() : base("InMageAzureV2")
         {
-            InstanceType = "InMageAzureV2";
         }
 
         /// <summary> Initializes a new instance of <see cref="InMageAzureV2RecoveryPointDetails"/>. </summary>
         /// <param name="instanceType"> Gets the provider type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="isMultiVmSyncPoint"> A value indicating whether the recovery point is multi VM consistent. </param>
-        internal InMageAzureV2RecoveryPointDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string isMultiVmSyncPoint) : base(instanceType, serializedAdditionalRawData)
+        internal InMageAzureV2RecoveryPointDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string isMultiVmSyncPoint) : base(instanceType, additionalBinaryDataProperties)
         {
             IsMultiVmSyncPoint = isMultiVmSyncPoint;
-            InstanceType = instanceType ?? "InMageAzureV2";
         }
 
         /// <summary> A value indicating whether the recovery point is multi VM consistent. </summary>

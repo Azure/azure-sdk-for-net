@@ -13,11 +13,6 @@ namespace Azure.AI.Projects
     /// <summary> The CreateOrUpdateRoutineRequest. </summary>
     internal partial class CreateOrUpdateRoutineRequest : IJsonModel<CreateOrUpdateRoutineRequest>
     {
-        /// <summary> Initializes a new instance of <see cref="CreateOrUpdateRoutineRequest"/> for deserialization. </summary>
-        internal CreateOrUpdateRoutineRequest()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual CreateOrUpdateRoutineRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -96,16 +91,22 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            writer.WritePropertyName("triggers"u8);
-            writer.WriteStartObject();
-            foreach (var item in Triggers)
+            if (Optional.IsCollectionDefined(Triggers))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
+                writer.WritePropertyName("triggers"u8);
+                writer.WriteStartObject();
+                foreach (var item in Triggers)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
-            writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue(Action, options);
+            if (Optional.IsDefined(Action))
+            {
+                writer.WritePropertyName("action"u8);
+                writer.WriteObjectValue(Action, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -171,6 +172,10 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("triggers"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     Dictionary<string, RoutineTrigger> dictionary = new Dictionary<string, RoutineTrigger>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
@@ -181,6 +186,10 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("action"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     action = RoutineAction.DeserializeRoutineAction(prop.Value, options);
                     continue;
                 }
@@ -189,7 +198,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CreateOrUpdateRoutineRequest(description, enabled, triggers, action, additionalBinaryDataProperties);
+            return new CreateOrUpdateRoutineRequest(description, enabled, triggers ?? new ChangeTrackingDictionary<string, RoutineTrigger>(), action, additionalBinaryDataProperties);
         }
     }
 }

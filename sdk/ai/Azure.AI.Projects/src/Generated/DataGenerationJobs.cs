@@ -7,6 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Projects.Memory;
 
 namespace Azure.AI.Projects
 {
@@ -93,6 +94,158 @@ namespace Azure.AI.Projects
         {
             ClientResult result = await GetGenerationJobAsync(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((DataGenerationJob)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns a list of data generation jobs.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual CollectionResult GetGenerationJobs(string foundryFeatures, int? limit, string order, string after, string before, RequestOptions options)
+        {
+            return new DataGenerationJobsGetGenerationJobsCollectionResult(
+                this,
+                foundryFeatures,
+                limit,
+                order,
+                after,
+                before,
+                options);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns a list of data generation jobs.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncCollectionResult GetGenerationJobsAsync(string foundryFeatures, int? limit, string order, string after, string before, RequestOptions options)
+        {
+            return new DataGenerationJobsGetGenerationJobsAsyncCollectionResult(
+                this,
+                foundryFeatures,
+                limit,
+                order,
+                after,
+                before,
+                options);
+        }
+
+        /// <summary> Returns a list of data generation jobs. </summary>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual CollectionResult<DataGenerationJob> GetGenerationJobs(FoundryFeaturesOptInKeys? foundryFeatures = default, int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+        {
+            return new DataGenerationJobsGetGenerationJobsCollectionResultOfT(
+                this,
+                foundryFeatures?.ToSerialString(),
+                limit,
+                order?.ToString(),
+                after,
+                before,
+                cancellationToken.ToRequestOptions());
+        }
+
+        /// <summary> Returns a list of data generation jobs. </summary>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual AsyncCollectionResult<DataGenerationJob> GetGenerationJobsAsync(FoundryFeaturesOptInKeys? foundryFeatures = default, int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+        {
+            return new DataGenerationJobsGetGenerationJobsAsyncCollectionResultOfT(
+                this,
+                foundryFeatures?.ToSerialString(),
+                limit,
+                order?.ToString(),
+                after,
+                before,
+                cancellationToken.ToRequestOptions());
         }
 
         /// <summary>
