@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Storage.Models
             StorageCorsRules cors = default;
             string defaultServiceVersion = default;
             DeleteRetentionPolicy deleteRetentionPolicy = default;
-            StaticWebsite staticWebsite = default;
+            BlobServiceStaticWebsite staticWebsite = default;
             bool? isVersioningEnabled = default;
             bool? isAutomaticSnapshotPolicyEnabled = default;
             BlobServiceChangeFeed changeFeed = default;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    staticWebsite = StaticWebsite.DeserializeStaticWebsite(prop.Value, options);
+                    staticWebsite = BlobServiceStaticWebsite.DeserializeBlobServiceStaticWebsite(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("isVersioningEnabled"u8))

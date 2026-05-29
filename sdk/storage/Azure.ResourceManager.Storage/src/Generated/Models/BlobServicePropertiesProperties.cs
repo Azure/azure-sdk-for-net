@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="containerDeleteRetentionPolicy"> The blob service properties for container soft delete. </param>
         /// <param name="lastAccessTimeTrackingPolicy"> The blob service property to configure last access time based tracking policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobServicePropertiesProperties(StorageCorsRules cors, string defaultServiceVersion, DeleteRetentionPolicy deleteRetentionPolicy, StaticWebsite staticWebsite, bool? isVersioningEnabled, bool? isAutomaticSnapshotPolicyEnabled, BlobServiceChangeFeed changeFeed, RestorePolicy restorePolicy, DeleteRetentionPolicy containerDeleteRetentionPolicy, LastAccessTimeTrackingPolicy lastAccessTimeTrackingPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobServicePropertiesProperties(StorageCorsRules cors, string defaultServiceVersion, DeleteRetentionPolicy deleteRetentionPolicy, BlobServiceStaticWebsite staticWebsite, bool? isVersioningEnabled, bool? isAutomaticSnapshotPolicyEnabled, BlobServiceChangeFeed changeFeed, RestorePolicy restorePolicy, DeleteRetentionPolicy containerDeleteRetentionPolicy, LastAccessTimeTrackingPolicy lastAccessTimeTrackingPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Cors = cors;
             DefaultServiceVersion = defaultServiceVersion;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The static website properties for blob storage. </summary>
         [WirePath("staticWebsite")]
-        public StaticWebsite StaticWebsite { get; set; }
+        public BlobServiceStaticWebsite StaticWebsite { get; set; }
 
         /// <summary> Versioning is enabled if set to true. </summary>
         [WirePath("isVersioningEnabled")]

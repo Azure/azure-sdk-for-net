@@ -10,7 +10,6 @@ using NUnit.Framework;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Tests.Samples;
-#pragma warning disable OPENAI001
 
 public class Sample_MemoryStore : SamplesBase
 {

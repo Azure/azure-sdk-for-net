@@ -49,19 +49,19 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The unique ID of the code interpreter tool call. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
 
         /// <summary> The status of the code interpreter tool call. Valid values are `in_progress`, `completed`, `incomplete`, `interpreting`, and `failed`. </summary>
-        public InputItemCodeInterpreterToolCallStatus Status { get; }
+        public InputItemCodeInterpreterToolCallStatus Status { get; set; }
 
         /// <summary> The ID of the container used to run the code. </summary>
-        public string ContainerId { get; }
+        public string ContainerId { get; set; }
 
-        /// <summary> Gets the Code. </summary>
-        public string Code { get; }
+        /// <summary> Gets or sets the Code. </summary>
+        public string Code { get; set; }
 
         /// <summary>
-        /// Gets the Outputs.
+        /// Gets or sets the Outputs.
         /// <para> To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -99,6 +99,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public IList<BinaryData> Outputs { get; }
+        public IList<BinaryData> Outputs { get; set; }
     }
 }

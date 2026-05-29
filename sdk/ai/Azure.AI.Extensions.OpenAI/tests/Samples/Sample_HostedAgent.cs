@@ -25,7 +25,7 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
             memory: "1Gi"
         )
         {
-            Image = dockerImage,
+            ContainerConfiguration = new(dockerImage)
         };
         return agentDefinition;
     }
@@ -93,7 +93,7 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:DeleteHostedAgent_HostedAgent_Async
-        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name);
+        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name, force: true);
         #endregion
     }
 
@@ -157,7 +157,7 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:DeleteHostedAgent_HostedAgent_Sync
-        projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name);
+        projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name, force: true);
         #endregion
     }
 
