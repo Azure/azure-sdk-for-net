@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "seagull",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
@@ -33,7 +34,8 @@
         "decorators": []
       },
       "value": "sparrow",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
@@ -49,7 +51,8 @@
         "decorators": []
       },
       "value": "goose",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "7",
@@ -65,7 +68,8 @@
         "decorators": []
       },
       "value": "eagle",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "9",
@@ -81,7 +85,8 @@
         "decorators": []
       },
       "value": "t-rex",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "11",
@@ -97,7 +102,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "13",
@@ -113,7 +119,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "15",
@@ -129,7 +136,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "17",
@@ -145,7 +153,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "19",
@@ -161,7 +170,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "21",
@@ -177,7 +187,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "23",
@@ -193,7 +204,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -211,6 +223,7 @@
           "name": "Bird"
         }
       },
+      "isExactName": false,
       "discriminatorProperty": {
         "$id": "26",
         "kind": "property",
@@ -234,7 +247,8 @@
             "name": "kind"
           }
         },
-        "isHttpMetadata": false
+        "isHttpMetadata": false,
+        "isExactName": false
       },
       "properties": [
         {
@@ -263,7 +277,8 @@
               "name": "wingspan"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ],
       "discriminatedSubtypes": {
@@ -282,6 +297,7 @@
               "name": "SeaGull"
             }
           },
+          "isExactName": false,
           "baseModel": {
             "$ref": "25"
           },
@@ -305,7 +321,8 @@
                   "name": "kind"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             }
           ]
         },
@@ -324,6 +341,7 @@
               "name": "Sparrow"
             }
           },
+          "isExactName": false,
           "baseModel": {
             "$ref": "25"
           },
@@ -347,7 +365,8 @@
                   "name": "kind"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             }
           ]
         },
@@ -366,6 +385,7 @@
               "name": "Goose"
             }
           },
+          "isExactName": false,
           "baseModel": {
             "$ref": "25"
           },
@@ -389,7 +409,8 @@
                   "name": "kind"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             }
           ]
         },
@@ -408,6 +429,7 @@
               "name": "Eagle"
             }
           },
+          "isExactName": false,
           "baseModel": {
             "$ref": "25"
           },
@@ -431,7 +453,8 @@
                   "name": "kind"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             },
             {
               "$id": "38",
@@ -459,7 +482,8 @@
                   "name": "friends"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             },
             {
               "$id": "40",
@@ -492,7 +516,8 @@
                   "name": "hate"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             },
             {
               "$id": "43",
@@ -513,7 +538,8 @@
                   "name": "partner"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             }
           ]
         }
@@ -545,6 +571,7 @@
           "name": "Dinosaur"
         }
       },
+      "isExactName": false,
       "discriminatorProperty": {
         "$id": "45",
         "kind": "property",
@@ -569,7 +596,8 @@
             "name": "kind"
           }
         },
-        "isHttpMetadata": false
+        "isHttpMetadata": false,
+        "isExactName": false
       },
       "properties": [
         {
@@ -598,7 +626,8 @@
               "name": "size"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ],
       "discriminatedSubtypes": {
@@ -617,6 +646,7 @@
               "name": "TRex"
             }
           },
+          "isExactName": false,
           "baseModel": {
             "$ref": "44"
           },
@@ -640,7 +670,8 @@
                   "name": "kind"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             }
           ]
         }
@@ -655,6 +686,7 @@
       "$id": "51",
       "kind": "client",
       "name": "SingleDiscriminatorClient",
+      "isExactName": false,
       "namespace": "Type.Model.Inheritance.SingleDiscriminator",
       "doc": "Illustrates inheritance with single discriminator.",
       "methods": [
@@ -662,11 +694,13 @@
           "$id": "52",
           "kind": "basic",
           "name": "getModel",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "53",
             "name": "getModel",
+            "isExactName": false,
             "resourceName": "SingleDiscriminator",
             "accessibility": "public",
             "parameters": [
@@ -701,9 +735,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getModel.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -755,11 +791,13 @@
           "$id": "56",
           "kind": "basic",
           "name": "putModel",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "57",
             "name": "putModel",
+            "isExactName": false,
             "resourceName": "SingleDiscriminator",
             "accessibility": "public",
             "parameters": [
@@ -796,9 +834,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putModel.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "60",
@@ -834,9 +874,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putModel.input",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
                 ],
+                "isExactName": false,
                 "serializationOptions": {
                   "json": {
                     "name": "input"
@@ -885,11 +927,13 @@
           "$id": "62",
           "kind": "basic",
           "name": "getRecursiveModel",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "63",
             "name": "getRecursiveModel",
+            "isExactName": false,
             "resourceName": "SingleDiscriminator",
             "accessibility": "public",
             "parameters": [
@@ -924,9 +968,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getRecursiveModel.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -978,11 +1024,13 @@
           "$id": "66",
           "kind": "basic",
           "name": "putRecursiveModel",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "67",
             "name": "putRecursiveModel",
+            "isExactName": false,
             "resourceName": "SingleDiscriminator",
             "accessibility": "public",
             "parameters": [
@@ -1019,9 +1067,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putRecursiveModel.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "70",
@@ -1057,9 +1107,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putRecursiveModel.input",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
                 ],
+                "isExactName": false,
                 "serializationOptions": {
                   "json": {
                     "name": "input"
@@ -1108,11 +1160,13 @@
           "$id": "72",
           "kind": "basic",
           "name": "getMissingDiscriminator",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "73",
             "name": "getMissingDiscriminator",
+            "isExactName": false,
             "resourceName": "SingleDiscriminator",
             "accessibility": "public",
             "parameters": [
@@ -1147,9 +1201,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getMissingDiscriminator.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1201,11 +1257,13 @@
           "$id": "76",
           "kind": "basic",
           "name": "getWrongDiscriminator",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "77",
             "name": "getWrongDiscriminator",
+            "isExactName": false,
             "resourceName": "SingleDiscriminator",
             "accessibility": "public",
             "parameters": [
@@ -1240,9 +1298,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getWrongDiscriminator.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1294,11 +1354,13 @@
           "$id": "80",
           "kind": "basic",
           "name": "getLegacyModel",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "81",
             "name": "getLegacyModel",
+            "isExactName": false,
             "resourceName": "SingleDiscriminator",
             "accessibility": "public",
             "parameters": [
@@ -1333,9 +1395,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getLegacyModel.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1413,7 +1477,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.endpoint"
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
@@ -11,20 +12,50 @@ namespace Azure.AI.Projects
     public partial class InvokeAgentResponsesApiDispatchPayload : RoutineDispatchPayload
     {
         /// <summary> Initializes a new instance of <see cref="InvokeAgentResponsesApiDispatchPayload"/>. </summary>
-        public InvokeAgentResponsesApiDispatchPayload() : base(RoutineDispatchPayloadType.InvokeAgentResponsesApi)
+        /// <param name="input"> The JSON value sent as the complete downstream responses input. The value is passed through as-is and can be an object, string, number, boolean, array, or null. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public InvokeAgentResponsesApiDispatchPayload(BinaryData input) : base(RoutineDispatchPayloadType.InvokeAgentResponsesApi)
         {
+            Argument.AssertNotNull(input, nameof(input));
+
+            Input = input;
         }
 
         /// <summary> Initializes a new instance of <see cref="InvokeAgentResponsesApiDispatchPayload"/>. </summary>
         /// <param name="type"> The manual dispatch payload type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="input"> The user input sent to the downstream responses target. </param>
-        internal InvokeAgentResponsesApiDispatchPayload(RoutineDispatchPayloadType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string input) : base(@type, additionalBinaryDataProperties)
+        /// <param name="input"> The JSON value sent as the complete downstream responses input. The value is passed through as-is and can be an object, string, number, boolean, array, or null. </param>
+        internal InvokeAgentResponsesApiDispatchPayload(RoutineDispatchPayloadType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData input) : base(@type, additionalBinaryDataProperties)
         {
             Input = input;
         }
 
-        /// <summary> The user input sent to the downstream responses target. </summary>
-        public string Input { get; set; }
+        /// <summary>
+        /// The JSON value sent as the complete downstream responses input. The value is passed through as-is and can be an object, string, number, boolean, array, or null.
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData Input { get; }
     }
 }
