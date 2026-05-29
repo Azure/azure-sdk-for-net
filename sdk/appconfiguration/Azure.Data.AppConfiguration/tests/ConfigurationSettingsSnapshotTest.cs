@@ -12,18 +12,18 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public void SetRetentionPeriodUsingConstructor()
         {
-            var settingSnapshot = new ConfigurationSnapshot(
-                "name",
-                ConfigurationSnapshotStatus.Ready,
-                new List<ConfigurationSettingsFilter>(),
-                new SnapshotComposition(),
-                DateTime.UtcNow,
-                DateTime.UtcNow,
-                10675199, // retention period
-                20,
-                20,
-                new Dictionary<string, string>(),
-                new ETag());
+            var settingSnapshot = ConfigurationModelFactory.ConfigurationSnapshot(
+                name: "name",
+                status: ConfigurationSnapshotStatus.Ready,
+                filters: new List<ConfigurationSettingsFilter>(),
+                snapshotComposition: new SnapshotComposition(),
+                createdOn: DateTime.UtcNow,
+                expiresOn: DateTime.UtcNow,
+                retentionPeriod: TimeSpan.FromSeconds(10675199),
+                sizeInBytes: 20,
+                itemCount: 20,
+                tags: new Dictionary<string, string>(),
+                eTag: new ETag());
 
             var retentionPeriod = settingSnapshot.RetentionPeriod;
             Assert.That(TimeSpan.FromSeconds(10675199), Is.EqualTo(retentionPeriod));
