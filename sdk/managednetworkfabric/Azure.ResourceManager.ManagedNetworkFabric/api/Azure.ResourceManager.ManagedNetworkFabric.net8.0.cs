@@ -5412,10 +5412,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public NetworkFabricExternalNetworkPatch() { }
         public string Annotation { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicy ExportRoutePolicy { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Use ExportRoutePolicy.ExportIpv4RoutePolicyId instead.")]
         public Azure.Core.ResourceIdentifier ExportRoutePolicyId { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicy ImportRoutePolicy { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Use ImportRoutePolicy.ImportIpv4RoutePolicyId instead.")]
         public Azure.Core.ResourceIdentifier ImportRoutePolicyId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier NetworkToNetworkInterconnectId { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkPatchOptionAProperties OptionAProperties { get { throw null; } set { } }
