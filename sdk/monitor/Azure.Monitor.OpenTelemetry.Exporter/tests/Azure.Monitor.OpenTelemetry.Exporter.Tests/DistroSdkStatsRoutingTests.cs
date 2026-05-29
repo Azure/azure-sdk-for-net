@@ -10,33 +10,33 @@ using Xunit;
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     /// <summary>
-    /// Tests for the distro Statsbeat routing AppContext switch. Isolated into its own class +
-    /// collection because the switch is process-wide; concurrent execution with the routing-off
-    /// tests in <see cref="StatsbeatTests"/> would race.
+    /// Tests for the distro SDK statistics routing AppContext switch. Isolated into its own
+    /// class + collection because the switch is process-wide; concurrent execution with the
+    /// routing-off tests in <see cref="StatsbeatTests"/> would race.
     /// </summary>
-    [Collection(nameof(DistroStatsbeatRoutingCollection))]
-    public class DistroStatsbeatRoutingTests : IDisposable
+    [Collection(nameof(DistroSdkStatsRoutingCollection))]
+    public class DistroSdkStatsRoutingTests : IDisposable
     {
         private readonly bool _previousSwitchValue;
         private readonly bool _hadSwitch;
 
-        public DistroStatsbeatRoutingTests()
+        public DistroSdkStatsRoutingTests()
         {
             _hadSwitch = AppContext.TryGetSwitch(
-                StatsbeatConstants.RouteStatsbeatToDistroEndpointSwitchName, out _previousSwitchValue);
-            AppContext.SetSwitch(StatsbeatConstants.RouteStatsbeatToDistroEndpointSwitchName, true);
+                StatsbeatConstants.RouteSdkStatsToDistroEndpointSwitchName, out _previousSwitchValue);
+            AppContext.SetSwitch(StatsbeatConstants.RouteSdkStatsToDistroEndpointSwitchName, true);
         }
 
         public void Dispose()
         {
             if (_hadSwitch)
             {
-                AppContext.SetSwitch(StatsbeatConstants.RouteStatsbeatToDistroEndpointSwitchName, _previousSwitchValue);
+                AppContext.SetSwitch(StatsbeatConstants.RouteSdkStatsToDistroEndpointSwitchName, _previousSwitchValue);
             }
             else
             {
                 // No clean "unset" API; the typical pattern is to leave it false.
-                AppContext.SetSwitch(StatsbeatConstants.RouteStatsbeatToDistroEndpointSwitchName, false);
+                AppContext.SetSwitch(StatsbeatConstants.RouteSdkStatsToDistroEndpointSwitchName, false);
             }
         }
 
@@ -49,7 +49,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var result = AzureMonitorStatsbeat.GetStatsbeatConnectionString(
                 ConnectionStringParser.GetValues(customerCs).IngestionEndpoint);
 
-            Assert.Equal(StatsbeatConstants.Statsbeat_ConnectionString_Distro_EU, result);
+            Assert.Equal(StatsbeatConstants.SdkStats_ConnectionString_Distro_EU, result);
         }
 
         [Theory]
@@ -61,7 +61,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var result = AzureMonitorStatsbeat.GetStatsbeatConnectionString(
                 ConnectionStringParser.GetValues(customerCs).IngestionEndpoint);
 
-            Assert.Equal(StatsbeatConstants.Statsbeat_ConnectionString_Distro_NonEU, result);
+            Assert.Equal(StatsbeatConstants.SdkStats_ConnectionString_Distro_NonEU, result);
         }
 
         [Fact]
@@ -75,7 +75,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var result = AzureMonitorStatsbeat.GetStatsbeatConnectionString(
                 ConnectionStringParser.GetValues(customerCs).IngestionEndpoint);
 
-            Assert.Equal(StatsbeatConstants.Statsbeat_ConnectionString_Distro_NonEU, result);
+            Assert.Equal(StatsbeatConstants.SdkStats_ConnectionString_Distro_NonEU, result);
         }
 
         [Fact]
@@ -90,7 +90,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             using var statsBeatInstance = new AzureMonitorStatsbeat(connectionStringVars, new MockPlatform());
 
-            Assert.Equal(StatsbeatConstants.Statsbeat_ConnectionString_Distro_NonEU, statsBeatInstance._statsbeat_ConnectionString);
+            Assert.Equal(StatsbeatConstants.SdkStats_ConnectionString_Distro_NonEU, statsBeatInstance._statsbeat_ConnectionString);
         }
     }
 }

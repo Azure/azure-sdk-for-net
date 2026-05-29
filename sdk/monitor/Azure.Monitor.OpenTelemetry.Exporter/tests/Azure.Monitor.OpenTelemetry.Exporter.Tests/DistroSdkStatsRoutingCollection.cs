@@ -5,8 +5,8 @@ using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
-    [CollectionDefinition(nameof(DistroStatsbeatRoutingCollection), DisableParallelization = true)]
-    public class DistroStatsbeatRoutingCollection
+    [CollectionDefinition(nameof(DistroSdkStatsRoutingCollection), DisableParallelization = true)]
+    public class DistroSdkStatsRoutingCollection
     {
         // AppContext switches are process-wide; serialize tests that mutate this switch.
     }

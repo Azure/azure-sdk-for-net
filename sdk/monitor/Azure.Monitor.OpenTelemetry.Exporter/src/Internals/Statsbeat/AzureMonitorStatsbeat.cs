@@ -95,20 +95,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         internal static string? GetStatsbeatConnectionString(string ingestionEndpoint)
         {
-            // When the distro AppContext switch is set, route Statsbeat to the distro-owned
-            // ingestion endpoints. Region selection still derives from the customer's
-            // ingestion endpoint when it maps to a known region; otherwise default to the
-            // non-EU distro endpoint instead of returning null (which would prevent
-            // Statsbeat initialization for the distro's inert exporter pin).
+            // When the distro AppContext switch is set, route SDK statistics to the
+            // distro-owned ingestion endpoints. Region selection still derives from the
+            // customer's ingestion endpoint when it maps to a known region; otherwise
+            // default to the non-EU distro endpoint instead of returning null (which would
+            // prevent Statsbeat initialization for the distro's inert exporter pin).
             var routeToDistroEndpoint =
-                AppContext.TryGetSwitch(StatsbeatConstants.RouteStatsbeatToDistroEndpointSwitchName, out var enabled)
+                AppContext.TryGetSwitch(StatsbeatConstants.RouteSdkStatsToDistroEndpointSwitchName, out var enabled)
                 && enabled;
 
             var patternMatch = s_endpoint_pattern.Match(ingestionEndpoint);
             if (!patternMatch.Success)
             {
                 return routeToDistroEndpoint
-                    ? StatsbeatConstants.Statsbeat_ConnectionString_Distro_NonEU
+                    ? StatsbeatConstants.SdkStats_ConnectionString_Distro_NonEU
                     : null;
             }
 
@@ -116,14 +116,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             if (StatsbeatConstants.s_EU_Endpoints.Contains(endpoint))
             {
                 return routeToDistroEndpoint
-                    ? StatsbeatConstants.Statsbeat_ConnectionString_Distro_EU
+                    ? StatsbeatConstants.SdkStats_ConnectionString_Distro_EU
                     : StatsbeatConstants.Statsbeat_ConnectionString_EU;
             }
 
             if (StatsbeatConstants.s_non_EU_Endpoints.Contains(endpoint))
             {
                 return routeToDistroEndpoint
-                    ? StatsbeatConstants.Statsbeat_ConnectionString_Distro_NonEU
+                    ? StatsbeatConstants.SdkStats_ConnectionString_Distro_NonEU
                     : StatsbeatConstants.Statsbeat_ConnectionString_NonEU;
             }
 
@@ -131,7 +131,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             // otherwise preserve existing behavior of returning null so the
             // AzureMonitorStatsbeat constructor throws and Statsbeat stays disabled.
             return routeToDistroEndpoint
-                ? StatsbeatConstants.Statsbeat_ConnectionString_Distro_NonEU
+                ? StatsbeatConstants.SdkStats_ConnectionString_Distro_NonEU
                 : null;
         }
 
