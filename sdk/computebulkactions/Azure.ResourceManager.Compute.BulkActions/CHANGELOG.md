@@ -1,11 +1,19 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.0.0-beta.1 (2026-06-01)
 
 ### Features Added
 
-### Breaking Changes
+- This is the initial preview release of the `Azure.ResourceManager.Compute.BulkActions` library.
 
-### Bugs Fixed
-
-### Other Changes
+- New endpoints were added for the following to be available in public preview
+virtualMachinesBulkDeallocate
+virtualMachinesBulkHibernate
+virtualMachinesBulkStart
+virtualMachinesBulkCreate
+virtualMachinesBulkVdiFlexCreate
+virtualMachinesBulkDelete
+virtualMachinesBulkReimage
+virtualMachinesBulkGetOperationStatus
+virtualMachinesBulkCancel
+launchBulkInstancesOperations

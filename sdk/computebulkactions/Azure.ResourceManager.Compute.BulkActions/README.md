@@ -1,4 +1,4 @@
-# Azure.ResourceManager.Compute.BulkActions management client library for .NET
+# Azure Compute BulkActions management client library for .NET
 
 This library supports managing Microsoft Azure resources.
 
