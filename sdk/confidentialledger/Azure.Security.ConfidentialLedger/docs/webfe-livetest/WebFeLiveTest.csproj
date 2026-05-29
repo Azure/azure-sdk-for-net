@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+    <RootNamespace>WebFeLiveTest</RootNamespace>
+    <!-- This project sits inside docs/ on purpose: it is a hand-run live-test harness,
+         not part of the SDK build or the .sln. The parent solution does not reference it. -->
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Reference the in-repo SDK src project so we always test the local build. -->
+    <ProjectReference Include="..\..\src\Azure.Security.ConfidentialLedger.csproj" />
+  </ItemGroup>
+</Project>
