@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of scenario run. </param>
-        internal ChaosScenarioRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ScenarioRunProperties properties) : base(id, name, resourceType, systemData)
+        internal ChaosScenarioRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ChaosScenarioRunProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> The properties of scenario run. </summary>
-        public ScenarioRunProperties Properties { get; }
+        public ChaosScenarioRunProperties Properties { get; }
     }
 }

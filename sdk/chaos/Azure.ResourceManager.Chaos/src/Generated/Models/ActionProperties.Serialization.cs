@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Chaos.Models
             string version = default;
             ChaosActionKind? actionType = default;
             IReadOnlyList<ChaosActionSupportedTargetType> supportedTargetTypes = default;
-            ActionPropertiesParametersSchema parametersSchema = default;
+            ChaosActionParametersSchema parametersSchema = default;
             IReadOnlyList<Guid> recommendedRoles = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    parametersSchema = ActionPropertiesParametersSchema.DeserializeActionPropertiesParametersSchema(prop.Value, options);
+                    parametersSchema = ChaosActionParametersSchema.DeserializeChaosActionParametersSchema(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("recommendedRoles"u8))

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="recommendationStatus"> The recommendation status. </param>
         /// <param name="evaluationRunOn"> The UTC time when the recommendation was evaluated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosScenarioRecommendation(RecommendationStatus recommendationStatus, DateTimeOffset? evaluationRunOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChaosScenarioRecommendation(ChaosRecommendationStatus recommendationStatus, DateTimeOffset? evaluationRunOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RecommendationStatus = recommendationStatus;
             EvaluationRunOn = evaluationRunOn;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> The recommendation status. </summary>
-        public RecommendationStatus RecommendationStatus { get; }
+        public ChaosRecommendationStatus RecommendationStatus { get; }
 
         /// <summary> The UTC time when the recommendation was evaluated. </summary>
         public DateTimeOffset? EvaluationRunOn { get; }

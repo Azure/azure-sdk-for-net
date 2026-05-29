@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Chaos.Models
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ValidationProperties properties = default;
+            ChaosScenarioValidationProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    properties = ValidationProperties.DeserializeValidationProperties(prop.Value, options);
+                    properties = ChaosScenarioValidationProperties.DeserializeChaosScenarioValidationProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

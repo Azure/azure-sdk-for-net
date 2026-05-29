@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Chaos.Models
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            PermissionsFixProperties properties = default;
+            ChaosPermissionsFixProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    properties = PermissionsFixProperties.DeserializePermissionsFixProperties(prop.Value, options);
+                    properties = ChaosPermissionsFixProperties.DeserializeChaosPermissionsFixProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

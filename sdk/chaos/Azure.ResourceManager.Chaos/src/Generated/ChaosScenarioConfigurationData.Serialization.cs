@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Chaos
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ScenarioConfigurationProperties properties = default;
+            ChaosScenarioConfigurationProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Chaos
                     {
                         continue;
                     }
-                    properties = ScenarioConfigurationProperties.DeserializeScenarioConfigurationProperties(prop.Value, options);
+                    properties = ChaosScenarioConfigurationProperties.DeserializeChaosScenarioConfigurationProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

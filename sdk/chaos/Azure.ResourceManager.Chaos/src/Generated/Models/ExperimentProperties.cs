@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="selectors"> List of selectors. </param>
         /// <param name="customerDataStorage"> Optional customer-managed Storage account where Experiment schema will be stored. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExperimentProperties(ChaosProvisioningState? provisioningState, IList<ChaosExperimentStep> steps, IList<ChaosTargetSelector> selectors, CustomerDataStorageProperties customerDataStorage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExperimentProperties(ChaosProvisioningState? provisioningState, IList<ChaosExperimentStep> steps, IList<ChaosTargetSelector> selectors, ChaosCustomerDataStorageProperties customerDataStorage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Steps = steps;
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.Chaos.Models
         public IList<ChaosTargetSelector> Selectors { get; } = new ChangeTrackingList<ChaosTargetSelector>();
 
         /// <summary> Optional customer-managed Storage account where Experiment schema will be stored. </summary>
-        public CustomerDataStorageProperties CustomerDataStorage { get; set; }
+        public ChaosCustomerDataStorageProperties CustomerDataStorage { get; set; }
     }
 }

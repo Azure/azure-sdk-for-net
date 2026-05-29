@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="parametersSchema"> JSON Schema describing the parameters for this action. </param>
         /// <param name="recommendedRoles"> Recommended Azure RBAC role definition GUIDs for this action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActionProperties(string canonicalId, string displayName, string description, string actionName, string version, ChaosActionKind? actionType, IReadOnlyList<ChaosActionSupportedTargetType> supportedTargetTypes, ActionPropertiesParametersSchema parametersSchema, IReadOnlyList<Guid> recommendedRoles, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActionProperties(string canonicalId, string displayName, string description, string actionName, string version, ChaosActionKind? actionType, IReadOnlyList<ChaosActionSupportedTargetType> supportedTargetTypes, ChaosActionParametersSchema parametersSchema, IReadOnlyList<Guid> recommendedRoles, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CanonicalId = canonicalId;
             DisplayName = displayName;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Chaos.Models
         public IReadOnlyList<ChaosActionSupportedTargetType> SupportedTargetTypes { get; } = new ChangeTrackingList<ChaosActionSupportedTargetType>();
 
         /// <summary> JSON Schema describing the parameters for this action. </summary>
-        public ActionPropertiesParametersSchema ParametersSchema { get; }
+        public ChaosActionParametersSchema ParametersSchema { get; }
 
         /// <summary> Recommended Azure RBAC role definition GUIDs for this action. </summary>
         public IReadOnlyList<Guid> RecommendedRoles { get; } = new ChangeTrackingList<Guid>();

@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of the discovered resource. </param>
-        internal ChaosDiscoveredData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DiscoveredResourceProperties properties) : base(id, name, resourceType, systemData)
+        internal ChaosDiscoveredData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ChaosDiscoveredResourceProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> The properties of the discovered resource. </summary>
-        public DiscoveredResourceProperties Properties { get; }
+        public ChaosDiscoveredResourceProperties Properties { get; }
     }
 }

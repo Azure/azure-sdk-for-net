@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Chaos.Models
             ChaosProvisioningState? provisioningState = default;
             IList<ChaosExperimentStep> steps = default;
             IList<ChaosTargetSelector> selectors = default;
-            CustomerDataStorageProperties customerDataStorage = default;
+            ChaosCustomerDataStorageProperties customerDataStorage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    customerDataStorage = CustomerDataStorageProperties.DeserializeCustomerDataStorageProperties(prop.Value, options);
+                    customerDataStorage = ChaosCustomerDataStorageProperties.DeserializeChaosCustomerDataStorageProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

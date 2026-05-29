@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Chaos.Models
             }
             ChaosProvisioningState? provisioningState = default;
             IReadOnlyList<ChaosPrivateEndpointConnectionData> privateEndpointConnections = default;
-            PublicNetworkAccessOption? publicNetworkAccess = default;
+            ChaosPrivateAccessPublicNetworkAccessOption? publicNetworkAccess = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = new PublicNetworkAccessOption(prop.Value.GetString());
+                    publicNetworkAccess = new ChaosPrivateAccessPublicNetworkAccessOption(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

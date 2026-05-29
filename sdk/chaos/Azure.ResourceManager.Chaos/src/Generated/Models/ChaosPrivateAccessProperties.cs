@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="privateEndpointConnections"> A readonly collection of private endpoint connection. Currently only one endpoint connection is supported. </param>
         /// <param name="publicNetworkAccess"> Public Network Access Control for PrivateAccess resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosPrivateAccessProperties(ChaosProvisioningState? provisioningState, IReadOnlyList<ChaosPrivateEndpointConnectionData> privateEndpointConnections, PublicNetworkAccessOption? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChaosPrivateAccessProperties(ChaosProvisioningState? provisioningState, IReadOnlyList<ChaosPrivateEndpointConnectionData> privateEndpointConnections, ChaosPrivateAccessPublicNetworkAccessOption? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PrivateEndpointConnections = privateEndpointConnections;
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.Chaos.Models
         public IReadOnlyList<ChaosPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
 
         /// <summary> Public Network Access Control for PrivateAccess resource. </summary>
-        public PublicNetworkAccessOption? PublicNetworkAccess { get; set; }
+        public ChaosPrivateAccessPublicNetworkAccessOption? PublicNetworkAccess { get; set; }
     }
 }
