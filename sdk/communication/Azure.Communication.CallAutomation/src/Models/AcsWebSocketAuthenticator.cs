@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation
     /// </code>
     /// </example>
     /// </summary>
-    public class AcsWebSocketAuthenticator
+    internal class AcsWebSocketAuthenticator
     {
         private readonly AzureKeyCredential _keyCredential;
         private readonly TokenCredential _tokenCredential;
@@ -74,13 +74,6 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AcsWebSocketAuthenticator"/> class for custom authentication scenarios.
-        /// </summary>
-        public AcsWebSocketAuthenticator()
-        {
-        }
-
-        /// <summary>
         /// Authenticates and configures a WebSocket connection for Azure Communication Services.
         /// This method allows customers to add authentication headers and configure WebSocket options.
         /// </summary>
@@ -117,85 +110,7 @@ namespace Azure.Communication.CallAutomation
             }
             else
             {
-                // Allow custom authentication - customer can override this method or add their own headers
-                await AuthenticateCustomAsync(webSocket, streamUrl, cancellationToken).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary>
-        /// Provides a method for customers to implement custom authentication logic.
-        /// Override this method to implement custom authentication scenarios.
-        /// </summary>
-        /// <param name="webSocket">The ClientWebSocket instance to authenticate.</param>
-        /// <param name="streamUrl">The WebSocket stream URL.</param>
-        /// <param name="cancellationToken">A cancellation token.</param>
-        /// <returns>A task that represents the asynchronous custom authentication operation.</returns>
-        protected virtual Task AuthenticateCustomAsync(
-            ClientWebSocket webSocket,
-            Uri streamUrl,
-            CancellationToken cancellationToken = default)
-        {
-            // Default implementation does nothing - customers can override for custom authentication
-            return Task.CompletedTask;
-        }
-
-        /// <summary>
-        /// Adds a custom header to the WebSocket request.
-        /// This method can be used to add additional headers before establishing the WebSocket connection.
-        /// </summary>
-        /// <param name="webSocket">The ClientWebSocket instance.</param>
-        /// <param name="headerName">The name of the header to add.</param>
-        /// <param name="headerValue">The value of the header to add.</param>
-        /// <exception cref="ArgumentNullException">Thrown when any parameter is null.</exception>
-        /// <exception cref="ArgumentException">Thrown when headerName is empty.</exception>
-        public void AddCustomHeader(ClientWebSocket webSocket, string headerName, string headerValue)
-        {
-            if (webSocket == null)
-                throw new ArgumentNullException(nameof(webSocket));
-            if (string.IsNullOrEmpty(headerName))
-                throw new ArgumentException("Header name cannot be null or empty.", nameof(headerName));
-            if (headerValue == null)
-                throw new ArgumentNullException(nameof(headerValue));
-
-            webSocket.Options.SetRequestHeader(headerName, headerValue);
-        }
-
-        /// <summary>
-        /// Configures WebSocket options such as keep-alive interval, buffer sizes, and subprotocols.
-        /// </summary>
-        /// <param name="webSocket">The ClientWebSocket instance to configure.</param>
-        /// <param name="keepAliveInterval">The WebSocket keep-alive interval.</param>
-        /// <param name="receiveBufferSize">The receive buffer size in bytes.</param>
-        /// <param name="sendBufferSize">The send buffer size in bytes.</param>
-        /// <param name="subProtocol">Optional subprotocol to add.</param>
-        /// <exception cref="ArgumentNullException">Thrown when webSocket is null.</exception>
-        public void ConfigureWebSocketOptions(
-            ClientWebSocket webSocket,
-            TimeSpan? keepAliveInterval = null,
-            int? receiveBufferSize = null,
-            int? sendBufferSize = null,
-            string subProtocol = null)
-        {
-            if (webSocket == null)
-                throw new ArgumentNullException(nameof(webSocket));
-
-            if (keepAliveInterval.HasValue)
-            {
-                webSocket.Options.KeepAliveInterval = keepAliveInterval.Value;
-            }
-
-            if (receiveBufferSize.HasValue && receiveBufferSize.Value > 0)
-            {
-                webSocket.Options.SetBuffer(receiveBufferSize.Value, receiveBufferSize.Value);
-            }
-            else if (sendBufferSize.HasValue && sendBufferSize.Value > 0)
-            {
-                webSocket.Options.SetBuffer(receiveBufferSize ?? 4096, sendBufferSize.Value);
-            }
-
-            if (!string.IsNullOrEmpty(subProtocol))
-            {
-                webSocket.Options.AddSubProtocol(subProtocol);
+                throw new InvalidOperationException("No authentication method configured.");
             }
         }
 

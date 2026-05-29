@@ -42,28 +42,32 @@ var client = new CallAutomationClient(endpoint, tokenCredential);
 
 ## Examples
 
-### WebSocket Authentication for Media Streaming and Transcription
+### WebSocket Connection for Media Streaming and Transcription
 
-`AcsWebSocketAuthenticator` authenticates WebSocket connections to ACS media streaming and transcription endpoints.
+Use `MediaWebSocketClient.Builder` to create authenticated WebSocket connections to ACS media streaming and transcription endpoints.
 
 ```C#
 var client = new CallAutomationClient(connectionString);
-var authenticator = client.GetWebSocketAuthenticator();
 
-var ws = new ClientWebSocket();
-var streamUrl = new Uri(callConnectionProperties.MediaStreamingSubscription.StreamUrl);
+// Minimal usage — only stream URL is required.
+// Connect timeout defaults to no timeout (waits until cancellation).
+// Keep-alive interval defaults to 30 seconds (from ClientWebSocket).
+// Buffer sizes default to 16,384 bytes for both send and receive (from ClientWebSocket).
+var ws = await MediaWebSocketClient
+    .Builder(client)
+    .WithStreamUrl(callConnectionProperties.MediaStreamingSubscription.StreamUrl)
+    .BuildAndConnectAsync(cancellationToken);
 
-await authenticator.AuthenticateWebSocketAsync(ws, streamUrl);
-await ws.ConnectAsync(streamUrl, CancellationToken.None);
-```
-
-You can also authenticate directly with HMAC or Azure AD credentials:
-```C#
-// HMAC authentication
-var authenticator = new AcsWebSocketAuthenticator(keyCredential, acsEndpoint);
-
-// Azure AD authentication
-var authenticator = new AcsWebSocketAuthenticator(tokenCredential, acsEndpoint);
+// Full usage with all optional settings
+var ws = await MediaWebSocketClient
+    .Builder(client)
+    .WithStreamUrl(callConnectionProperties.MediaStreamingSubscription.StreamUrl)
+    .WithConnectTimeout(TimeSpan.FromSeconds(30))
+    .WithKeepAliveInterval(TimeSpan.FromSeconds(15))
+    .WithBufferSize(receiveBufferSize: 8192, sendBufferSize: 8192)
+    .WithSubProtocol("graphql-ws")
+    .WithCustomHeader("X-Correlation-Id", correlationId)
+    .BuildAndConnectAsync(cancellationToken);
 ```
 
 ### Make a call to a phone number recipient

@@ -1,16 +1,5 @@
 namespace Azure.Communication.CallAutomation
 {
-    public partial class AcsWebSocketAuthenticator
-    {
-        public AcsWebSocketAuthenticator() { }
-        public AcsWebSocketAuthenticator(Azure.AzureKeyCredential keyCredential, string acsEndpoint) { }
-        public AcsWebSocketAuthenticator(Azure.Communication.CallAutomation.CallAutomationClient callAutomationClient) { }
-        public AcsWebSocketAuthenticator(Azure.Core.TokenCredential tokenCredential, string acsEndpoint) { }
-        public void AddCustomHeader(System.Net.WebSockets.ClientWebSocket webSocket, string headerName, string headerValue) { }
-        protected virtual System.Threading.Tasks.Task AuthenticateCustomAsync(System.Net.WebSockets.ClientWebSocket webSocket, System.Uri streamUrl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.Task AuthenticateWebSocketAsync(System.Net.WebSockets.ClientWebSocket webSocket, System.Uri streamUrl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public void ConfigureWebSocketOptions(System.Net.WebSockets.ClientWebSocket webSocket, System.TimeSpan? keepAliveInterval = default(System.TimeSpan?), int? receiveBufferSize = default(int?), int? sendBufferSize = default(int?), string subProtocol = null) { }
-    }
     public partial class AddParticipantEventResult
     {
         internal AddParticipantEventResult() { }
@@ -154,7 +143,6 @@ namespace Azure.Communication.CallAutomation
         public virtual Azure.Communication.CallAutomation.CallConnection GetCallConnection(string callConnectionId) { throw null; }
         public virtual Azure.Communication.CallAutomation.CallRecording GetCallRecording() { throw null; }
         public virtual Azure.Communication.CallAutomation.CallAutomationEventProcessor GetEventProcessor() { throw null; }
-        public virtual Azure.Communication.CallAutomation.AcsWebSocketAuthenticator GetWebSocketAuthenticator() { throw null; }
         public virtual Azure.Response RedirectCall(Azure.Communication.CallAutomation.RedirectCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response RedirectCall(string incomingCallContext, Azure.Communication.CallAutomation.CallInvite callInvite, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RedirectCallAsync(Azure.Communication.CallAutomation.RedirectCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1204,6 +1192,24 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.MediaStreamingUpdate MediaStreamingUpdate { get { throw null; } }
         public string StreamUrl { get { throw null; } }
         public static Azure.Communication.CallAutomation.MediaStreamingUpdated Deserialize(string content) { throw null; }
+    }
+    public sealed partial class MediaWebSocketClient : System.IDisposable
+    {
+        internal MediaWebSocketClient() { }
+        public static Azure.Communication.CallAutomation.MediaWebSocketClient.MediaWebSocketBuilder Builder(Azure.Communication.CallAutomation.CallAutomationClient client) { throw null; }
+        public void Dispose() { }
+        public sealed partial class MediaWebSocketBuilder
+        {
+            internal MediaWebSocketBuilder() { }
+            public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.MediaWebSocketClient> BuildAndConnectAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+            public Azure.Communication.CallAutomation.MediaWebSocketClient.MediaWebSocketBuilder WithBufferSize(int receiveBufferSize, int sendBufferSize) { throw null; }
+            public Azure.Communication.CallAutomation.MediaWebSocketClient.MediaWebSocketBuilder WithConnectTimeout(System.TimeSpan timeout) { throw null; }
+            public Azure.Communication.CallAutomation.MediaWebSocketClient.MediaWebSocketBuilder WithCustomHeader(string name, string value) { throw null; }
+            public Azure.Communication.CallAutomation.MediaWebSocketClient.MediaWebSocketBuilder WithKeepAliveInterval(System.TimeSpan interval) { throw null; }
+            public Azure.Communication.CallAutomation.MediaWebSocketClient.MediaWebSocketBuilder WithStreamUrl(string streamUrl) { throw null; }
+            public Azure.Communication.CallAutomation.MediaWebSocketClient.MediaWebSocketBuilder WithStreamUrl(System.Uri streamUrl) { throw null; }
+            public Azure.Communication.CallAutomation.MediaWebSocketClient.MediaWebSocketBuilder WithSubProtocol(string subProtocol) { throw null; }
+        }
     }
     public partial class MoveParticipantEventResult
     {

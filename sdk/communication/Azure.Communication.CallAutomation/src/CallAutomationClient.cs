@@ -462,17 +462,6 @@ namespace Azure.Communication.CallAutomation
 
         #endregion
 
-        /// <summary>
-        /// Gets an AcsWebSocketAuthenticator for establishing authenticated WebSocket connections
-        /// to Azure Communication Services media streaming and transcription endpoints.
-        /// This authenticator leverages the existing authentication configuration of this CallAutomationClient.
-        /// </summary>
-        /// <returns>An AcsWebSocketAuthenticator instance.</returns>
-        public virtual AcsWebSocketAuthenticator GetWebSocketAuthenticator()
-        {
-            return new AcsWebSocketAuthenticator(this);
-        }
-
         /// Answer an incoming call.
         /// <param name="incomingCallContext"> The incoming call context </param>
         /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
