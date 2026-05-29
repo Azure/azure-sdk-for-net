@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByNameRequest(Guid subscriptionId, AzureLocation location, string serviceName, RequestContext context)
+        internal HttpMessage CreateGetByNameRequest(Guid subscriptionId, string location, string serviceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/locations/", false);
-            uri.AppendPath(location.ToString(), true);
+            uri.AppendPath(location, true);
             uri.AppendPath("/deletedservices/", false);
             uri.AppendPath(serviceName, true);
             if (_apiVersion != null)
@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreatePurgeRequest(Guid subscriptionId, AzureLocation location, string serviceName, RequestContext context)
+        internal HttpMessage CreatePurgeRequest(Guid subscriptionId, string location, string serviceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.ApiManagement/locations/", false);
-            uri.AppendPath(location.ToString(), true);
+            uri.AppendPath(location, true);
             uri.AppendPath("/deletedservices/", false);
             uri.AppendPath(serviceName, true);
             if (_apiVersion != null)

@@ -13,13 +13,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A class representing a ApiManagementGlobalSchema along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ApiManagementGlobalSchemaResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementGlobalSchemas method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetApiManagementGlobalSchemas method.
     /// </summary>
     public partial class ApiManagementGlobalSchemaResource : ArmResource
     {

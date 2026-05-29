@@ -40,21 +40,21 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DeletedServiceContractResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ApiManagementDeletedServiceResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementArmClient.GetDeletedServiceContractResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementDeletedServiceResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DeletedServiceContractResource"/> object. </returns>
-        public static DeletedServiceContractResource GetDeletedServiceContractResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementDeletedServiceResource"/> object. </returns>
+        public static ApiManagementDeletedServiceResource GetApiManagementDeletedServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableApiManagementArmClient(client).GetDeletedServiceContractResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementDeletedServiceResource(id);
         }
 
         /// <summary>
@@ -1012,21 +1012,21 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GatewayContractResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ApiGatewayResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementArmClient.GetGatewayContractResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiGatewayResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="GatewayContractResource"/> object. </returns>
-        public static GatewayContractResource GetGatewayContractResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiGatewayResource"/> object. </returns>
+        public static ApiGatewayResource GetApiGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableApiManagementArmClient(client).GetGatewayContractResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiGatewayResource(id);
         }
 
         /// <summary>
@@ -1732,21 +1732,21 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ApiManagementGatewayConfigConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ApiGatewayConfigConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementGatewayConfigConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiGatewayConfigConnectionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementGatewayConfigConnectionResource"/> object. </returns>
-        public static ApiManagementGatewayConfigConnectionResource GetApiManagementGatewayConfigConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiGatewayConfigConnectionResource"/> object. </returns>
+        public static ApiGatewayConfigConnectionResource GetApiGatewayConfigConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableApiManagementArmClient(client).GetApiManagementGatewayConfigConnectionResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiGatewayConfigConnectionResource(id);
         }
 
         /// <summary>
@@ -1786,57 +1786,57 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PortalSigninSettingsResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ApiManagementPortalSignInSettingResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementArmClient.GetPortalSigninSettingsResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementPortalSignInSettingResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PortalSigninSettingsResource"/> object. </returns>
-        public static PortalSigninSettingsResource GetPortalSigninSettingsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementPortalSignInSettingResource"/> object. </returns>
+        public static ApiManagementPortalSignInSettingResource GetApiManagementPortalSignInSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableApiManagementArmClient(client).GetPortalSigninSettingsResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementPortalSignInSettingResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PortalSignupSettingsResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ApiManagementPortalSignUpSettingResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementArmClient.GetPortalSignupSettingsResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementPortalSignUpSettingResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PortalSignupSettingsResource"/> object. </returns>
-        public static PortalSignupSettingsResource GetPortalSignupSettingsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementPortalSignUpSettingResource"/> object. </returns>
+        public static ApiManagementPortalSignUpSettingResource GetApiManagementPortalSignUpSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableApiManagementArmClient(client).GetPortalSignupSettingsResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementPortalSignUpSettingResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PortalDelegationSettingsResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ApiManagementPortalDelegationSettingResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementArmClient.GetPortalDelegationSettingsResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementPortalDelegationSettingResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PortalDelegationSettingsResource"/> object. </returns>
-        public static PortalDelegationSettingsResource GetPortalDelegationSettingsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementPortalDelegationSettingResource"/> object. </returns>
+        public static ApiManagementPortalDelegationSettingResource GetApiManagementPortalDelegationSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableApiManagementArmClient(client).GetPortalDelegationSettingsResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementPortalDelegationSettingResource(id);
         }
 
         /// <summary>
@@ -1876,27 +1876,27 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets a collection of ApiManagementServiceResources in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of ApiManagementServices in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementServiceResources()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementServices()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ApiManagementServiceResources and their operations over a ApiManagementServiceResource. </returns>
-        public static ApiManagementServiceResourceCollection GetApiManagementServiceResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ApiManagementServices and their operations over a ApiManagementServiceResource. </returns>
+        public static ApiManagementServiceCollection GetApiManagementServices(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementServiceResources();
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementServices();
         }
 
         /// <summary>
         /// Gets an API Management service resource description.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementServiceResourceAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementServiceAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1904,18 +1904,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ApiManagementServiceResource>> GetApiManagementServiceResourceAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ApiManagementServiceResource>> GetApiManagementServiceAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementServiceResourceAsync(serviceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementServiceAsync(serviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets an API Management service resource description.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementServiceResource(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementService(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1923,35 +1923,35 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ApiManagementServiceResource> GetApiManagementServiceResource(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
+        public static Response<ApiManagementServiceResource> GetApiManagementService(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementServiceResource(serviceName, cancellationToken);
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementService(serviceName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of ApiManagementGatewayResources in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of ApiManagementGateways in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementGatewayResources()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementGateways()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ApiManagementGatewayResources and their operations over a ApiManagementGatewayResource. </returns>
-        public static ApiManagementGatewayResourceCollection GetApiManagementGatewayResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ApiManagementGateways and their operations over a ApiManagementGatewayResource. </returns>
+        public static ApiManagementGatewayCollection GetApiManagementGateways(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementGatewayResources();
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementGateways();
         }
 
         /// <summary>
         /// Gets an API Management gateway resource description.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementGatewayResourceAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementGatewayAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1959,18 +1959,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ApiManagementGatewayResource>> GetApiManagementGatewayResourceAsync(this ResourceGroupResource resourceGroupResource, string gatewayName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ApiManagementGatewayResource>> GetApiManagementGatewayAsync(this ResourceGroupResource resourceGroupResource, string gatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementGatewayResourceAsync(gatewayName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementGatewayAsync(gatewayName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets an API Management gateway resource description.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementGatewayResource(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementGateway(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1978,35 +1978,35 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ApiManagementGatewayResource> GetApiManagementGatewayResource(this ResourceGroupResource resourceGroupResource, string gatewayName, CancellationToken cancellationToken = default)
+        public static Response<ApiManagementGatewayResource> GetApiManagementGateway(this ResourceGroupResource resourceGroupResource, string gatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementGatewayResource(gatewayName, cancellationToken);
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementGateway(gatewayName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of PortalSigninSettings in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of ApiManagementPortalSignInSettings in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetAllPortalSigninSettings()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementPortalSignInSettings()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of PortalSigninSettings and their operations over a PortalSigninSettingsResource. </returns>
-        public static PortalSigninSettingsCollection GetAllPortalSigninSettings(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ApiManagementPortalSignInSettings and their operations over a ApiManagementPortalSignInSettingResource. </returns>
+        public static ApiManagementPortalSignInSettingCollection GetApiManagementPortalSignInSettings(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetAllPortalSigninSettings();
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementPortalSignInSettings();
         }
 
         /// <summary>
         /// Get Sign In Settings for the Portal
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetPortalSigninSettingsAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementPortalSignInSettingAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -2014,18 +2014,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<PortalSigninSettingsResource>> GetPortalSigninSettingsAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ApiManagementPortalSignInSettingResource>> GetApiManagementPortalSignInSettingAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetPortalSigninSettingsAsync(serviceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementPortalSignInSettingAsync(serviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get Sign In Settings for the Portal
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetPortalSigninSettings(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementPortalSignInSetting(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -2033,35 +2033,35 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<PortalSigninSettingsResource> GetPortalSigninSettings(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
+        public static Response<ApiManagementPortalSignInSettingResource> GetApiManagementPortalSignInSetting(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetPortalSigninSettings(serviceName, cancellationToken);
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementPortalSignInSetting(serviceName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of PortalSignupSettings in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of ApiManagementPortalSignUpSettings in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetAllPortalSignupSettings()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementPortalSignUpSettings()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of PortalSignupSettings and their operations over a PortalSignupSettingsResource. </returns>
-        public static PortalSignupSettingsCollection GetAllPortalSignupSettings(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ApiManagementPortalSignUpSettings and their operations over a ApiManagementPortalSignUpSettingResource. </returns>
+        public static ApiManagementPortalSignUpSettingCollection GetApiManagementPortalSignUpSettings(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetAllPortalSignupSettings();
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementPortalSignUpSettings();
         }
 
         /// <summary>
         /// Get Sign Up Settings for the Portal
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetPortalSignupSettingsAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementPortalSignUpSettingAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -2069,18 +2069,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<PortalSignupSettingsResource>> GetPortalSignupSettingsAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ApiManagementPortalSignUpSettingResource>> GetApiManagementPortalSignUpSettingAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetPortalSignupSettingsAsync(serviceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementPortalSignUpSettingAsync(serviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get Sign Up Settings for the Portal
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetPortalSignupSettings(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementPortalSignUpSetting(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -2088,35 +2088,35 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<PortalSignupSettingsResource> GetPortalSignupSettings(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
+        public static Response<ApiManagementPortalSignUpSettingResource> GetApiManagementPortalSignUpSetting(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetPortalSignupSettings(serviceName, cancellationToken);
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementPortalSignUpSetting(serviceName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of PortalDelegationSettings in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of ApiManagementPortalDelegationSettings in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetAllPortalDelegationSettings()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementPortalDelegationSettings()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of PortalDelegationSettings and their operations over a PortalDelegationSettingsResource. </returns>
-        public static PortalDelegationSettingsCollection GetAllPortalDelegationSettings(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ApiManagementPortalDelegationSettings and their operations over a ApiManagementPortalDelegationSettingResource. </returns>
+        public static ApiManagementPortalDelegationSettingCollection GetApiManagementPortalDelegationSettings(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetAllPortalDelegationSettings();
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementPortalDelegationSettings();
         }
 
         /// <summary>
         /// Get Delegation Settings for the Portal.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetPortalDelegationSettingsAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementPortalDelegationSettingAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -2124,18 +2124,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<PortalDelegationSettingsResource>> GetPortalDelegationSettingsAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ApiManagementPortalDelegationSettingResource>> GetApiManagementPortalDelegationSettingAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetPortalDelegationSettingsAsync(serviceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementPortalDelegationSettingAsync(serviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get Delegation Settings for the Portal.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetPortalDelegationSettings(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementPortalDelegationSetting(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -2143,75 +2143,3881 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<PortalDelegationSettingsResource> GetPortalDelegationSettings(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
+        public static Response<ApiManagementPortalDelegationSettingResource> GetApiManagementPortalDelegationSetting(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetPortalDelegationSettings(serviceName, cancellationToken);
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementPortalDelegationSetting(serviceName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of DeletedServiceContracts in the <see cref="SubscriptionResource"/>
+        /// Lists all APIs of the API Management service instance.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetDeletedServiceContracts()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApisAsync(string, string, int?, int?, string, bool?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| serviceUrl | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| path | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| isCurrent | filter | eq, ne |  |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="tags"> Include tags in the response. </param>
+        /// <param name="expandApiVersionSet"> Include full ApiVersionSet resource in response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiResource> GetApisAsync(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, string tags = default, bool? expandApiVersionSet = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApisAsync(serviceName, filter, top, skip, tags, expandApiVersionSet, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all APIs of the API Management service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApis(string, string, int?, int?, string, bool?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| serviceUrl | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| path | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| isCurrent | filter | eq, ne |  |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="tags"> Include tags in the response. </param>
+        /// <param name="expandApiVersionSet"> Include full ApiVersionSet resource in response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiResource> GetApis(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, string tags = default, bool? expandApiVersionSet = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApis(serviceName, filter, top, skip, tags, expandApiVersionSet, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the Global Policy definitions of the Api Management service.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementPoliciesAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiManagementPolicyResource> GetApiManagementPoliciesAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementPoliciesAsync(serviceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the Global Policy definitions of the Api Management service.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementPolicies(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiManagementPolicyResource> GetApiManagementPolicies(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementPolicies(serviceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of tags defined within a service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementTagsAsync(string, string, int?, int?, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="scope"> Scope like 'apis', 'products' or 'apis/{apiId}. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementTagResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiManagementTagResource> GetApiManagementTagsAsync(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, string scope = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementTagsAsync(serviceName, filter, top, skip, scope, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of tags defined within a service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementTags(string, string, int?, int?, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="scope"> Scope like 'apis', 'products' or 'apis/{apiId}. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementTagResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiManagementTagResource> GetApiManagementTags(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, string scope = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementTags(serviceName, filter, top, skip, scope, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of products in the specified service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementProductsAsync(string, string, int?, int?, bool?, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| terms | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| state | filter | eq |     |&lt;/br&gt;| groups | expand |     |     |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="expandGroups"> When set to true, the response contains an array of groups that have visibility to the product. The default is false. </param>
+        /// <param name="tags"> Products which are part of a specific tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementProductResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiManagementProductResource> GetApiManagementProductsAsync(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, bool? expandGroups = default, string tags = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementProductsAsync(serviceName, filter, top, skip, expandGroups, tags, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of products in the specified service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementProducts(string, string, int?, int?, bool?, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| terms | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| state | filter | eq |     |&lt;/br&gt;| groups | expand |     |     |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="expandGroups"> When set to true, the response contains an array of groups that have visibility to the product. The default is false. </param>
+        /// <param name="tags"> Products which are part of a specific tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementProductResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiManagementProductResource> GetApiManagementProducts(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, bool? expandGroups = default, string tags = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementProducts(serviceName, filter, top, skip, expandGroups, tags, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all diagnostics of the API Management service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementDiagnosticsAsync(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementDiagnosticResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiManagementDiagnosticResource> GetApiManagementDiagnosticsAsync(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementDiagnosticsAsync(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all diagnostics of the API Management service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementDiagnostics(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementDiagnosticResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiManagementDiagnosticResource> GetApiManagementDiagnostics(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementDiagnostics(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of issues in the specified service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementIssuesAsync(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| apiId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| title | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| authorName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| state | filter | eq |     |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementIssueResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiManagementIssueResource> GetApiManagementIssuesAsync(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementIssuesAsync(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of issues in the specified service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementIssues(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| apiId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| title | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| authorName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| state | filter | eq |     |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementIssueResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiManagementIssueResource> GetApiManagementIssues(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementIssues(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of API Version Sets in the specified service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiVersionSetsAsync(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiVersionSetResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiVersionSetResource> GetApiVersionSetsAsync(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiVersionSetsAsync(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of API Version Sets in the specified service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiVersionSets(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiVersionSetResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiVersionSetResource> GetApiVersionSets(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiVersionSets(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of authorization providers defined within a service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetAuthorizationProviderContractsAsync(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="AuthorizationProviderContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AuthorizationProviderContractResource> GetAuthorizationProviderContractsAsync(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetAuthorizationProviderContractsAsync(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of authorization providers defined within a service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetAuthorizationProviderContracts(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="AuthorizationProviderContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AuthorizationProviderContractResource> GetAuthorizationProviderContracts(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetAuthorizationProviderContracts(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of authorization servers defined within a service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementAuthorizationServersAsync(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementAuthorizationServerResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiManagementAuthorizationServerResource> GetApiManagementAuthorizationServersAsync(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementAuthorizationServersAsync(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of authorization servers defined within a service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementAuthorizationServers(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementAuthorizationServerResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiManagementAuthorizationServerResource> GetApiManagementAuthorizationServers(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementAuthorizationServers(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of backends in the specified service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementBackendsAsync(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| title | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| url | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementBackendResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiManagementBackendResource> GetApiManagementBackendsAsync(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementBackendsAsync(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of backends in the specified service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementBackends(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| title | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| url | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementBackendResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiManagementBackendResource> GetApiManagementBackends(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementBackends(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of all external Caches in the specified service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementCachesAsync(string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementCacheResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiManagementCacheResource> GetApiManagementCachesAsync(this ResourceGroupResource resourceGroupResource, string serviceName, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementCachesAsync(serviceName, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of all external Caches in the specified service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementCaches(string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementCacheResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiManagementCacheResource> GetApiManagementCaches(this ResourceGroupResource resourceGroupResource, string serviceName, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementCaches(serviceName, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of all certificates in the specified service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementCertificatesAsync(string, string, int?, int?, bool?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| subject | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| thumbprint | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| expirationDate | filter | ge, le, eq, ne, gt, lt |     |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="isKeyVaultRefreshFailed"> When set to true, the response contains only certificates entities which failed refresh. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementCertificateResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiManagementCertificateResource> GetApiManagementCertificatesAsync(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, bool? isKeyVaultRefreshFailed = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementCertificatesAsync(serviceName, filter, top, skip, isKeyVaultRefreshFailed, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of all certificates in the specified service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementCertificates(string, string, int?, int?, bool?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| subject | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| thumbprint | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| expirationDate | filter | ge, le, eq, ne, gt, lt |     |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="isKeyVaultRefreshFailed"> When set to true, the response contains only certificates entities which failed refresh. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementCertificateResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiManagementCertificateResource> GetApiManagementCertificates(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, bool? isKeyVaultRefreshFailed = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementCertificates(serviceName, filter, top, skip, isKeyVaultRefreshFailed, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the developer portal's content types. Content types describe content items' properties, validation rules, and constraints.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetContentTypeContractsAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ContentTypeContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ContentTypeContractResource> GetContentTypeContractsAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetContentTypeContractsAsync(serviceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the developer portal's content types. Content types describe content items' properties, validation rules, and constraints.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetContentTypeContracts(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ContentTypeContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ContentTypeContractResource> GetContentTypeContracts(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetContentTypeContracts(serviceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all Documentations of the API Management service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetDocumentationContractsAsync(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | eq |  contains |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DocumentationContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DocumentationContractResource> GetDocumentationContractsAsync(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetDocumentationContractsAsync(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all Documentations of the API Management service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetDocumentationContracts(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | eq |  contains |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DocumentationContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DocumentationContractResource> GetDocumentationContracts(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetDocumentationContracts(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all email templates
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementEmailTemplatesAsync(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementEmailTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiManagementEmailTemplateResource> GetApiManagementEmailTemplatesAsync(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementEmailTemplatesAsync(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all email templates
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementEmailTemplates(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementEmailTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiManagementEmailTemplateResource> GetApiManagementEmailTemplates(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementEmailTemplates(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of gateways registered with service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiGatewaysAsync(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| region | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiGatewayResource> GetApiGatewaysAsync(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiGatewaysAsync(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of gateways registered with service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiGateways(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| region | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiGatewayResource> GetApiGateways(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiGateways(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of groups defined within a service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementGroupsAsync(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| externalId | filter | eq |     |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiManagementGroupResource> GetApiManagementGroupsAsync(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementGroupsAsync(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of groups defined within a service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementGroups(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| externalId | filter | eq |     |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiManagementGroupResource> GetApiManagementGroups(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementGroups(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of registered users in the specified service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementUsersAsync(string, string, int?, int?, bool?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| firstName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| lastName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| email | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| state | filter | eq |     |&lt;/br&gt;| registrationDate | filter | ge, le, eq, ne, gt, lt |     |&lt;/br&gt;| note | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| groups | expand |     |     |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="expandGroups"> Detailed Group in response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementUserResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiManagementUserResource> GetApiManagementUsersAsync(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, bool? expandGroups = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementUsersAsync(serviceName, filter, top, skip, expandGroups, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of registered users in the specified service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementUsers(string, string, int?, int?, bool?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| firstName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| lastName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| email | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| state | filter | eq |     |&lt;/br&gt;| registrationDate | filter | ge, le, eq, ne, gt, lt |     |&lt;/br&gt;| note | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| groups | expand |     |     |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="expandGroups"> Detailed Group in response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementUserResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiManagementUserResource> GetApiManagementUsers(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, bool? expandGroups = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementUsers(serviceName, filter, top, skip, expandGroups, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of Identity Provider configured in the specified service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementIdentityProvidersAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementIdentityProviderResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiManagementIdentityProviderResource> GetApiManagementIdentityProvidersAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementIdentityProvidersAsync(serviceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of Identity Provider configured in the specified service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementIdentityProviders(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementIdentityProviderResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiManagementIdentityProviderResource> GetApiManagementIdentityProviders(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementIdentityProviders(serviceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of loggers in the specified service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementLoggersAsync(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| loggerType | filter | eq |     |&lt;/br&gt;| resourceId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementLoggerResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiManagementLoggerResource> GetApiManagementLoggersAsync(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementLoggersAsync(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of loggers in the specified service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementLoggers(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| loggerType | filter | eq |     |&lt;/br&gt;| resourceId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementLoggerResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiManagementLoggerResource> GetApiManagementLoggers(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementLoggers(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of named values defined within a service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementNamedValuesAsync(string, string, int?, int?, bool?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| tags | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith, any, all |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="isKeyVaultRefreshFailed"> When set to true, the response contains only named value entities which failed refresh. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementNamedValueResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiManagementNamedValueResource> GetApiManagementNamedValuesAsync(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, bool? isKeyVaultRefreshFailed = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementNamedValuesAsync(serviceName, filter, top, skip, isKeyVaultRefreshFailed, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of named values defined within a service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementNamedValues(string, string, int?, int?, bool?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| tags | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith, any, all |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="isKeyVaultRefreshFailed"> When set to true, the response contains only named value entities which failed refresh. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementNamedValueResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiManagementNamedValueResource> GetApiManagementNamedValues(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, bool? isKeyVaultRefreshFailed = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementNamedValues(serviceName, filter, top, skip, isKeyVaultRefreshFailed, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of properties defined within a service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementNotificationsAsync(string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementNotificationResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiManagementNotificationResource> GetApiManagementNotificationsAsync(this ResourceGroupResource resourceGroupResource, string serviceName, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementNotificationsAsync(serviceName, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of properties defined within a service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementNotifications(string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementNotificationResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiManagementNotificationResource> GetApiManagementNotifications(this ResourceGroupResource resourceGroupResource, string serviceName, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementNotifications(serviceName, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists of all the OpenId Connect Providers.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementOpenIdConnectProvidersAsync(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementOpenIdConnectProviderResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiManagementOpenIdConnectProviderResource> GetApiManagementOpenIdConnectProvidersAsync(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementOpenIdConnectProvidersAsync(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists of all the OpenId Connect Providers.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementOpenIdConnectProviders(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementOpenIdConnectProviderResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiManagementOpenIdConnectProviderResource> GetApiManagementOpenIdConnectProviders(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementOpenIdConnectProviders(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all policy fragments.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetPolicyFragmentContractsAsync(string, string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter, orderBy | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| value | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="PolicyFragmentContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PolicyFragmentContractResource> GetPolicyFragmentContractsAsync(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, string @orderby = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetPolicyFragmentContractsAsync(serviceName, filter, @orderby, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all policy fragments.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetPolicyFragmentContracts(string, string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter, orderBy | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| value | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="PolicyFragmentContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PolicyFragmentContractResource> GetPolicyFragmentContracts(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, string @orderby = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetPolicyFragmentContracts(serviceName, filter, @orderby, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all policy restrictions of API Management services.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetPolicyRestrictionContractsAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="PolicyRestrictionContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PolicyRestrictionContractResource> GetPolicyRestrictionContractsAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetPolicyRestrictionContractsAsync(serviceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all policy restrictions of API Management services.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetPolicyRestrictionContracts(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="PolicyRestrictionContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PolicyRestrictionContractResource> GetPolicyRestrictionContracts(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetPolicyRestrictionContracts(serviceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the developer portal configurations.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetPortalConfigContractsAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="PortalConfigContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PortalConfigContractResource> GetPortalConfigContractsAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetPortalConfigContractsAsync(serviceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the developer portal configurations.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetPortalConfigContracts(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="PortalConfigContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PortalConfigContractResource> GetPortalConfigContracts(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetPortalConfigContracts(serviceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of client applications in the specified service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetClientApplicationContractsAsync(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt; state | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ClientApplicationContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ClientApplicationContractResource> GetClientApplicationContractsAsync(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetClientApplicationContractsAsync(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of client applications in the specified service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetClientApplicationContracts(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt; state | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ClientApplicationContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ClientApplicationContractResource> GetClientApplicationContracts(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetClientApplicationContracts(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists developer portal's revisions.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementPortalRevisionsAsync(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter">
+        /// | Field       | Supported operators    | Supported functions               |
+        /// |-------------|------------------------|-----------------------------------|
+        /// |name | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
+        /// |description | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
+        /// |isCurrent | eq, ne |    |
+        /// </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementPortalRevisionResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiManagementPortalRevisionResource> GetApiManagementPortalRevisionsAsync(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementPortalRevisionsAsync(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists developer portal's revisions.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementPortalRevisions(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter">
+        /// | Field       | Supported operators    | Supported functions               |
+        /// |-------------|------------------------|-----------------------------------|
+        /// |name | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
+        /// |description | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
+        /// |isCurrent | eq, ne |    |
+        /// </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementPortalRevisionResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiManagementPortalRevisionResource> GetApiManagementPortalRevisions(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementPortalRevisions(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all subscriptions of the API Management service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementSubscriptionsAsync(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| stateComment | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| ownerId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| scope | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| userId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| productId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| state | filter | eq |     |&lt;/br&gt;| user | expand |     |     |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiManagementSubscriptionResource> GetApiManagementSubscriptionsAsync(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementSubscriptionsAsync(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all subscriptions of the API Management service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementSubscriptions(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| stateComment | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| ownerId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| scope | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| userId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| productId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| state | filter | eq |     |&lt;/br&gt;| user | expand |     |     |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiManagementSubscriptionResource> GetApiManagementSubscriptions(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementSubscriptions(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of schemas registered with service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementGlobalSchemasAsync(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementGlobalSchemaResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiManagementGlobalSchemaResource> GetApiManagementGlobalSchemasAsync(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementGlobalSchemasAsync(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of schemas registered with service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementGlobalSchemas(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementGlobalSchemaResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiManagementGlobalSchemaResource> GetApiManagementGlobalSchemas(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementGlobalSchemas(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Public settings.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementTenantSettingsAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> Not used. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementTenantSettingResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiManagementTenantSettingResource> GetApiManagementTenantSettingsAsync(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementTenantSettingsAsync(serviceName, filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Public settings.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementTenantSettings(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> Not used. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementTenantSettingResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiManagementTenantSettingResource> GetApiManagementTenantSettings(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementTenantSettings(serviceName, filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns list of access infos - for Git and Management endpoints.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetTenantAccessInfosAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> Not used. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="TenantAccessInfoResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<TenantAccessInfoResource> GetTenantAccessInfosAsync(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetTenantAccessInfosAsync(serviceName, filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns list of access infos - for Git and Management endpoints.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetTenantAccessInfos(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> Not used. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="TenantAccessInfoResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<TenantAccessInfoResource> GetTenantAccessInfos(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetTenantAccessInfos(serviceName, filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all workspaces of the API Management service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetWorkspaceContractsAsync(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="WorkspaceContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<WorkspaceContractResource> GetWorkspaceContractsAsync(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetWorkspaceContractsAsync(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all workspaces of the API Management service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetWorkspaceContracts(string, string, int?, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="WorkspaceContractResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<WorkspaceContractResource> GetWorkspaceContracts(this ResourceGroupResource resourceGroupResource, string serviceName, string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetWorkspaceContracts(serviceName, filter, top, skip, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all API Management gateway config connections within a gateway.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiGatewayConfigConnectionsAsync(string, int?, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="gatewayName"> The name of the API Management gateway. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skipToken"> Skip token for retrieving the next page of results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiGatewayConfigConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiGatewayConfigConnectionResource> GetApiGatewayConfigConnectionsAsync(this ResourceGroupResource resourceGroupResource, string gatewayName, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiGatewayConfigConnectionsAsync(gatewayName, top, skipToken, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all API Management gateway config connections within a gateway.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiGatewayConfigConnections(string, int?, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="gatewayName"> The name of the API Management gateway. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skipToken"> Skip token for retrieving the next page of results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiGatewayConfigConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiGatewayConfigConnectionResource> GetApiGatewayConfigConnections(this ResourceGroupResource resourceGroupResource, string gatewayName, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiGatewayConfigConnections(gatewayName, top, skipToken, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all API Management workspaceLinks for a service.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementWorkspaceLinksAsync(string, int?, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skipToken"> Skip token for retrieving the next page of results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementWorkspaceLinksResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiManagementWorkspaceLinksResource> GetApiManagementWorkspaceLinksAsync(this ResourceGroupResource resourceGroupResource, string serviceName, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementWorkspaceLinksAsync(serviceName, top, skipToken, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all API Management workspaceLinks for a service.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementWorkspaceLinks(string, int?, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skipToken"> Skip token for retrieving the next page of results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementWorkspaceLinksResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiManagementWorkspaceLinksResource> GetApiManagementWorkspaceLinks(this ResourceGroupResource resourceGroupResource, string serviceName, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementWorkspaceLinks(serviceName, top, skipToken, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all API Management gateway hostname bindings within a gateway.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetGatewayHostnameBindingResourcesAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="gatewayName"> The name of the API Management gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="GatewayHostnameBindingResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<GatewayHostnameBindingResource> GetGatewayHostnameBindingResourcesAsync(this ResourceGroupResource resourceGroupResource, string gatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetGatewayHostnameBindingResourcesAsync(gatewayName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all API Management gateway hostname bindings within a gateway.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetGatewayHostnameBindingResources(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="gatewayName"> The name of the API Management gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="GatewayHostnameBindingResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<GatewayHostnameBindingResource> GetGatewayHostnameBindingResources(this ResourceGroupResource resourceGroupResource, string gatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetGatewayHostnameBindingResources(gatewayName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all private endpoint connections of the API Management service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementPrivateEndpointConnectionsAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiManagementPrivateEndpointConnectionResource> GetApiManagementPrivateEndpointConnectionsAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementPrivateEndpointConnectionsAsync(serviceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all private endpoint connections of the API Management service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementPrivateEndpointConnections(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApiManagementPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiManagementPrivateEndpointConnectionResource> GetApiManagementPrivateEndpointConnections(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementPrivateEndpointConnections(serviceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the private link resources
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementPrivateLinkResourcesAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<ApiManagementPrivateLinkResourceListResult>> GetApiManagementPrivateLinkResourcesAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementPrivateLinkResourcesAsync(serviceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the private link resources
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementPrivateLinkResources(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<ApiManagementPrivateLinkResourceListResult> GetApiManagementPrivateLinkResources(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementPrivateLinkResources(serviceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiManagementDeletedServices in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementDeletedServices()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of DeletedServiceContracts and their operations over a DeletedServiceContractResource. </returns>
-        public static DeletedServiceContractCollection GetDeletedServiceContracts(this SubscriptionResource subscriptionResource)
+        /// <returns> An object representing collection of ApiManagementDeletedServices and their operations over a ApiManagementDeletedServiceResource. </returns>
+        public static ApiManagementDeletedServiceCollection GetApiManagementDeletedServices(this SubscriptionResource subscriptionResource)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetDeletedServiceContracts();
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementDeletedServices();
         }
 
         /// <summary>
         /// Get soft-deleted Api Management Service by name.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetDeletedServiceContractAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementDeletedServiceAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location name. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DeletedServiceContractResource>> GetDeletedServiceContractAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string serviceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ApiManagementDeletedServiceResource>> GetApiManagementDeletedServiceAsync(this SubscriptionResource subscriptionResource, string location, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetDeletedServiceContractAsync(location, serviceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementDeletedServiceAsync(location, serviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get soft-deleted Api Management Service by name.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetDeletedServiceContract(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementDeletedService(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location name. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DeletedServiceContractResource> GetDeletedServiceContract(this SubscriptionResource subscriptionResource, AzureLocation location, string serviceName, CancellationToken cancellationToken = default)
+        public static Response<ApiManagementDeletedServiceResource> GetApiManagementDeletedService(this SubscriptionResource subscriptionResource, string location, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetDeletedServiceContract(location, serviceName, cancellationToken);
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementDeletedService(location, serviceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of Apis in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApis()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of Apis and their operations over a ApiResource. </returns>
+        public static ApiCollection GetApis(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApis();
+        }
+
+        /// <summary>
+        /// Gets the details of the API specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiResource>> GetApiAsync(this SubscriptionResource subscriptionResource, string serviceName, string apiId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiAsync(serviceName, apiId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the API specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApi(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiResource> GetApi(this SubscriptionResource subscriptionResource, string serviceName, string apiId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApi(serviceName, apiId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiManagementPolicies in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementPolicies()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApiManagementPolicies and their operations over a ApiManagementPolicyResource. </returns>
+        public static ApiManagementPolicyCollection GetApiManagementPolicies(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementPolicies();
+        }
+
+        /// <summary>
+        /// Get the Global policy definition of the Api Management service.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementPolicyAsync(string, PolicyName, PolicyExportFormat?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="policyId"> The identifier of the Policy. </param>
+        /// <param name="format"> Policy Export Format. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiManagementPolicyResource>> GetApiManagementPolicyAsync(this SubscriptionResource subscriptionResource, string serviceName, PolicyName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementPolicyAsync(serviceName, policyId, format, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the Global policy definition of the Api Management service.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementPolicy(string, PolicyName, PolicyExportFormat?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="policyId"> The identifier of the Policy. </param>
+        /// <param name="format"> Policy Export Format. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiManagementPolicyResource> GetApiManagementPolicy(this SubscriptionResource subscriptionResource, string serviceName, PolicyName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementPolicy(serviceName, policyId, format, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiManagementTags in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementTags()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApiManagementTags and their operations over a ApiManagementTagResource. </returns>
+        public static ApiManagementTagCollection GetApiManagementTags(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementTags();
+        }
+
+        /// <summary>
+        /// Gets the details of the tag specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementTagAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiManagementTagResource>> GetApiManagementTagAsync(this SubscriptionResource subscriptionResource, string serviceName, string tagId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementTagAsync(serviceName, tagId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the tag specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementTag(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiManagementTagResource> GetApiManagementTag(this SubscriptionResource subscriptionResource, string serviceName, string tagId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementTag(serviceName, tagId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiManagementProducts in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementProducts()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApiManagementProducts and their operations over a ApiManagementProductResource. </returns>
+        public static ApiManagementProductCollection GetApiManagementProducts(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementProducts();
+        }
+
+        /// <summary>
+        /// Gets the details of the product specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementProductAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="productId"> Product identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiManagementProductResource>> GetApiManagementProductAsync(this SubscriptionResource subscriptionResource, string serviceName, string productId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementProductAsync(serviceName, productId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the product specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementProduct(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="productId"> Product identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiManagementProductResource> GetApiManagementProduct(this SubscriptionResource subscriptionResource, string serviceName, string productId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementProduct(serviceName, productId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiManagementDiagnostics in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementDiagnostics()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApiManagementDiagnostics and their operations over a ApiManagementDiagnosticResource. </returns>
+        public static ApiManagementDiagnosticCollection GetApiManagementDiagnostics(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementDiagnostics();
+        }
+
+        /// <summary>
+        /// Gets the details of the Diagnostic specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementDiagnosticAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="diagnosticId"> Diagnostic identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiManagementDiagnosticResource>> GetApiManagementDiagnosticAsync(this SubscriptionResource subscriptionResource, string serviceName, string diagnosticId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementDiagnosticAsync(serviceName, diagnosticId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the Diagnostic specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementDiagnostic(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="diagnosticId"> Diagnostic identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiManagementDiagnosticResource> GetApiManagementDiagnostic(this SubscriptionResource subscriptionResource, string serviceName, string diagnosticId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementDiagnostic(serviceName, diagnosticId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiManagementIssues in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementIssues()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApiManagementIssues and their operations over a ApiManagementIssueResource. </returns>
+        public static ApiManagementIssueCollection GetApiManagementIssues(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementIssues();
+        }
+
+        /// <summary>
+        /// Gets API Management issue details
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementIssueAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="issueId"> Issue identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiManagementIssueResource>> GetApiManagementIssueAsync(this SubscriptionResource subscriptionResource, string serviceName, string issueId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementIssueAsync(serviceName, issueId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets API Management issue details
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementIssue(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="issueId"> Issue identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiManagementIssueResource> GetApiManagementIssue(this SubscriptionResource subscriptionResource, string serviceName, string issueId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementIssue(serviceName, issueId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiVersionSets in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiVersionSets()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApiVersionSets and their operations over a ApiVersionSetResource. </returns>
+        public static ApiVersionSetCollection GetApiVersionSets(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiVersionSets();
+        }
+
+        /// <summary>
+        /// Gets the details of the Api Version Set specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiVersionSetAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiVersionSetResource>> GetApiVersionSetAsync(this SubscriptionResource subscriptionResource, string serviceName, string versionSetId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiVersionSetAsync(serviceName, versionSetId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the Api Version Set specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiVersionSet(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiVersionSetResource> GetApiVersionSet(this SubscriptionResource subscriptionResource, string serviceName, string versionSetId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiVersionSet(serviceName, versionSetId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of AuthorizationProviderContracts in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetAuthorizationProviderContracts()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of AuthorizationProviderContracts and their operations over a AuthorizationProviderContractResource. </returns>
+        public static AuthorizationProviderContractCollection GetAuthorizationProviderContracts(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetAuthorizationProviderContracts();
+        }
+
+        /// <summary>
+        /// Gets the details of the authorization provider specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetAuthorizationProviderContractAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="authorizationProviderId"> Identifier of the authorization provider. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<AuthorizationProviderContractResource>> GetAuthorizationProviderContractAsync(this SubscriptionResource subscriptionResource, string serviceName, string authorizationProviderId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetAuthorizationProviderContractAsync(serviceName, authorizationProviderId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the authorization provider specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetAuthorizationProviderContract(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="authorizationProviderId"> Identifier of the authorization provider. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<AuthorizationProviderContractResource> GetAuthorizationProviderContract(this SubscriptionResource subscriptionResource, string serviceName, string authorizationProviderId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetAuthorizationProviderContract(serviceName, authorizationProviderId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiManagementAuthorizationServers in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementAuthorizationServers()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApiManagementAuthorizationServers and their operations over a ApiManagementAuthorizationServerResource. </returns>
+        public static ApiManagementAuthorizationServerCollection GetApiManagementAuthorizationServers(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementAuthorizationServers();
+        }
+
+        /// <summary>
+        /// Gets the details of the authorization server specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementAuthorizationServerAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="authsid"> Identifier of the authorization server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiManagementAuthorizationServerResource>> GetApiManagementAuthorizationServerAsync(this SubscriptionResource subscriptionResource, string serviceName, string authsid, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementAuthorizationServerAsync(serviceName, authsid, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the authorization server specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementAuthorizationServer(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="authsid"> Identifier of the authorization server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiManagementAuthorizationServerResource> GetApiManagementAuthorizationServer(this SubscriptionResource subscriptionResource, string serviceName, string authsid, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementAuthorizationServer(serviceName, authsid, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiManagementBackends in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementBackends()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApiManagementBackends and their operations over a ApiManagementBackendResource. </returns>
+        public static ApiManagementBackendCollection GetApiManagementBackends(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementBackends();
+        }
+
+        /// <summary>
+        /// Gets the details of the backend specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementBackendAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="backendId"> Identifier of the Backend entity. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiManagementBackendResource>> GetApiManagementBackendAsync(this SubscriptionResource subscriptionResource, string serviceName, string backendId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementBackendAsync(serviceName, backendId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the backend specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementBackend(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="backendId"> Identifier of the Backend entity. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiManagementBackendResource> GetApiManagementBackend(this SubscriptionResource subscriptionResource, string serviceName, string backendId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementBackend(serviceName, backendId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiManagementCaches in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementCaches()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApiManagementCaches and their operations over a ApiManagementCacheResource. </returns>
+        public static ApiManagementCacheCollection GetApiManagementCaches(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementCaches();
+        }
+
+        /// <summary>
+        /// Gets the details of the Cache specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementCacheAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cacheId"> Identifier of the Cache entity. Cache identifier (should be either 'default' or valid Azure region identifier). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiManagementCacheResource>> GetApiManagementCacheAsync(this SubscriptionResource subscriptionResource, string serviceName, string cacheId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementCacheAsync(serviceName, cacheId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the Cache specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementCache(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="cacheId"> Identifier of the Cache entity. Cache identifier (should be either 'default' or valid Azure region identifier). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiManagementCacheResource> GetApiManagementCache(this SubscriptionResource subscriptionResource, string serviceName, string cacheId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementCache(serviceName, cacheId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiManagementCertificates in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementCertificates()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApiManagementCertificates and their operations over a ApiManagementCertificateResource. </returns>
+        public static ApiManagementCertificateCollection GetApiManagementCertificates(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementCertificates();
+        }
+
+        /// <summary>
+        /// Gets the details of the certificate specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementCertificateAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="certificateId"> Identifier of the certificate entity. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiManagementCertificateResource>> GetApiManagementCertificateAsync(this SubscriptionResource subscriptionResource, string serviceName, string certificateId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementCertificateAsync(serviceName, certificateId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the certificate specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementCertificate(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="certificateId"> Identifier of the certificate entity. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiManagementCertificateResource> GetApiManagementCertificate(this SubscriptionResource subscriptionResource, string serviceName, string certificateId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementCertificate(serviceName, certificateId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ContentTypeContracts in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetContentTypeContracts()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ContentTypeContracts and their operations over a ContentTypeContractResource. </returns>
+        public static ContentTypeContractCollection GetContentTypeContracts(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetContentTypeContracts();
+        }
+
+        /// <summary>
+        /// Gets the details of the developer portal's content type. Content types describe content items' properties, validation rules, and constraints.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetContentTypeContractAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ContentTypeContractResource>> GetContentTypeContractAsync(this SubscriptionResource subscriptionResource, string serviceName, string contentTypeId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetContentTypeContractAsync(serviceName, contentTypeId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the developer portal's content type. Content types describe content items' properties, validation rules, and constraints.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetContentTypeContract(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ContentTypeContractResource> GetContentTypeContract(this SubscriptionResource subscriptionResource, string serviceName, string contentTypeId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetContentTypeContract(serviceName, contentTypeId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of DocumentationContracts in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetDocumentationContracts()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of DocumentationContracts and their operations over a DocumentationContractResource. </returns>
+        public static DocumentationContractCollection GetDocumentationContracts(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetDocumentationContracts();
+        }
+
+        /// <summary>
+        /// Gets the details of the Documentation specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetDocumentationContractAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="documentationId"> Documentation identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<DocumentationContractResource>> GetDocumentationContractAsync(this SubscriptionResource subscriptionResource, string serviceName, string documentationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetDocumentationContractAsync(serviceName, documentationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the Documentation specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetDocumentationContract(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="documentationId"> Documentation identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<DocumentationContractResource> GetDocumentationContract(this SubscriptionResource subscriptionResource, string serviceName, string documentationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetDocumentationContract(serviceName, documentationId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiManagementEmailTemplates in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementEmailTemplates()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApiManagementEmailTemplates and their operations over a ApiManagementEmailTemplateResource. </returns>
+        public static ApiManagementEmailTemplateCollection GetApiManagementEmailTemplates(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementEmailTemplates();
+        }
+
+        /// <summary>
+        /// Gets the details of the email template specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementEmailTemplateAsync(string, TemplateName, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="templateName"> Email Template Name Identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiManagementEmailTemplateResource>> GetApiManagementEmailTemplateAsync(this SubscriptionResource subscriptionResource, string serviceName, TemplateName templateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementEmailTemplateAsync(serviceName, templateName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the email template specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementEmailTemplate(string, TemplateName, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="templateName"> Email Template Name Identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiManagementEmailTemplateResource> GetApiManagementEmailTemplate(this SubscriptionResource subscriptionResource, string serviceName, TemplateName templateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementEmailTemplate(serviceName, templateName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiGateways in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiGateways()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApiGateways and their operations over a ApiGatewayResource. </returns>
+        public static ApiGatewayCollection GetApiGateways(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiGateways();
+        }
+
+        /// <summary>
+        /// Gets the details of the Gateway specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiGatewayAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value 'managed'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiGatewayResource>> GetApiGatewayAsync(this SubscriptionResource subscriptionResource, string serviceName, string gatewayId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiGatewayAsync(serviceName, gatewayId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the Gateway specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiGateway(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value 'managed'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiGatewayResource> GetApiGateway(this SubscriptionResource subscriptionResource, string serviceName, string gatewayId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiGateway(serviceName, gatewayId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiManagementGroups in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementGroups()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApiManagementGroups and their operations over a ApiManagementGroupResource. </returns>
+        public static ApiManagementGroupCollection GetApiManagementGroups(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementGroups();
+        }
+
+        /// <summary>
+        /// Gets the details of the group specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementGroupAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="groupId"> Group identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiManagementGroupResource>> GetApiManagementGroupAsync(this SubscriptionResource subscriptionResource, string serviceName, string groupId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementGroupAsync(serviceName, groupId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the group specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementGroup(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="groupId"> Group identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiManagementGroupResource> GetApiManagementGroup(this SubscriptionResource subscriptionResource, string serviceName, string groupId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementGroup(serviceName, groupId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiManagementUsers in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementUsers()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApiManagementUsers and their operations over a ApiManagementUserResource. </returns>
+        public static ApiManagementUserCollection GetApiManagementUsers(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementUsers();
+        }
+
+        /// <summary>
+        /// Gets the details of the user specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementUserAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiManagementUserResource>> GetApiManagementUserAsync(this SubscriptionResource subscriptionResource, string serviceName, string userId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementUserAsync(serviceName, userId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the user specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementUser(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiManagementUserResource> GetApiManagementUser(this SubscriptionResource subscriptionResource, string serviceName, string userId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementUser(serviceName, userId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiManagementIdentityProviders in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementIdentityProviders()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApiManagementIdentityProviders and their operations over a ApiManagementIdentityProviderResource. </returns>
+        public static ApiManagementIdentityProviderCollection GetApiManagementIdentityProviders(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementIdentityProviders();
+        }
+
+        /// <summary>
+        /// Gets the configuration details of the identity Provider configured in specified service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementIdentityProviderAsync(string, IdentityProviderType, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="identityProviderName"> Identity Provider Type identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiManagementIdentityProviderResource>> GetApiManagementIdentityProviderAsync(this SubscriptionResource subscriptionResource, string serviceName, IdentityProviderType identityProviderName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementIdentityProviderAsync(serviceName, identityProviderName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the configuration details of the identity Provider configured in specified service instance.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementIdentityProvider(string, IdentityProviderType, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="identityProviderName"> Identity Provider Type identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiManagementIdentityProviderResource> GetApiManagementIdentityProvider(this SubscriptionResource subscriptionResource, string serviceName, IdentityProviderType identityProviderName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementIdentityProvider(serviceName, identityProviderName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiManagementLoggers in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementLoggers()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApiManagementLoggers and their operations over a ApiManagementLoggerResource. </returns>
+        public static ApiManagementLoggerCollection GetApiManagementLoggers(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementLoggers();
+        }
+
+        /// <summary>
+        /// Gets the details of the logger specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementLoggerAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="loggerId"> Logger identifier. Must be unique in the API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiManagementLoggerResource>> GetApiManagementLoggerAsync(this SubscriptionResource subscriptionResource, string serviceName, string loggerId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementLoggerAsync(serviceName, loggerId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the logger specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementLogger(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="loggerId"> Logger identifier. Must be unique in the API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiManagementLoggerResource> GetApiManagementLogger(this SubscriptionResource subscriptionResource, string serviceName, string loggerId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementLogger(serviceName, loggerId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiManagementNamedValues in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementNamedValues()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApiManagementNamedValues and their operations over a ApiManagementNamedValueResource. </returns>
+        public static ApiManagementNamedValueCollection GetApiManagementNamedValues(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementNamedValues();
+        }
+
+        /// <summary>
+        /// Gets the details of the named value specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementNamedValueAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="namedValueId"> Identifier of the NamedValue. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiManagementNamedValueResource>> GetApiManagementNamedValueAsync(this SubscriptionResource subscriptionResource, string serviceName, string namedValueId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementNamedValueAsync(serviceName, namedValueId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the named value specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementNamedValue(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="namedValueId"> Identifier of the NamedValue. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiManagementNamedValueResource> GetApiManagementNamedValue(this SubscriptionResource subscriptionResource, string serviceName, string namedValueId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementNamedValue(serviceName, namedValueId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiManagementNotifications in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementNotifications()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApiManagementNotifications and their operations over a ApiManagementNotificationResource. </returns>
+        public static ApiManagementNotificationCollection GetApiManagementNotifications(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementNotifications();
+        }
+
+        /// <summary>
+        /// Gets the details of the Notification specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementNotificationAsync(string, NotificationName, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="notificationName"> Notification Name Identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiManagementNotificationResource>> GetApiManagementNotificationAsync(this SubscriptionResource subscriptionResource, string serviceName, NotificationName notificationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementNotificationAsync(serviceName, notificationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the Notification specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementNotification(string, NotificationName, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="notificationName"> Notification Name Identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiManagementNotificationResource> GetApiManagementNotification(this SubscriptionResource subscriptionResource, string serviceName, NotificationName notificationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementNotification(serviceName, notificationName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiManagementOpenIdConnectProviders in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementOpenIdConnectProviders()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApiManagementOpenIdConnectProviders and their operations over a ApiManagementOpenIdConnectProviderResource. </returns>
+        public static ApiManagementOpenIdConnectProviderCollection GetApiManagementOpenIdConnectProviders(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementOpenIdConnectProviders();
+        }
+
+        /// <summary>
+        /// Gets specific OpenID Connect Provider without secrets.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementOpenIdConnectProviderAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="opid"> Identifier of the OpenID Connect Provider. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiManagementOpenIdConnectProviderResource>> GetApiManagementOpenIdConnectProviderAsync(this SubscriptionResource subscriptionResource, string serviceName, string opid, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementOpenIdConnectProviderAsync(serviceName, opid, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets specific OpenID Connect Provider without secrets.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementOpenIdConnectProvider(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="opid"> Identifier of the OpenID Connect Provider. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiManagementOpenIdConnectProviderResource> GetApiManagementOpenIdConnectProvider(this SubscriptionResource subscriptionResource, string serviceName, string opid, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementOpenIdConnectProvider(serviceName, opid, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of PolicyFragmentContracts in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetPolicyFragmentContracts()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of PolicyFragmentContracts and their operations over a PolicyFragmentContractResource. </returns>
+        public static PolicyFragmentContractCollection GetPolicyFragmentContracts(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetPolicyFragmentContracts();
+        }
+
+        /// <summary>
+        /// Gets a policy fragment.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetPolicyFragmentContractAsync(string, string, PolicyFragmentContentFormat?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="id"> A resource identifier. </param>
+        /// <param name="format"> Policy fragment content format. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<PolicyFragmentContractResource>> GetPolicyFragmentContractAsync(this SubscriptionResource subscriptionResource, string serviceName, string id, PolicyFragmentContentFormat? format = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetPolicyFragmentContractAsync(serviceName, id, format, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a policy fragment.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetPolicyFragmentContract(string, string, PolicyFragmentContentFormat?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="id"> A resource identifier. </param>
+        /// <param name="format"> Policy fragment content format. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<PolicyFragmentContractResource> GetPolicyFragmentContract(this SubscriptionResource subscriptionResource, string serviceName, string id, PolicyFragmentContentFormat? format = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetPolicyFragmentContract(serviceName, id, format, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of PolicyRestrictionContracts in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetPolicyRestrictionContracts()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of PolicyRestrictionContracts and their operations over a PolicyRestrictionContractResource. </returns>
+        public static PolicyRestrictionContractCollection GetPolicyRestrictionContracts(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetPolicyRestrictionContracts();
+        }
+
+        /// <summary>
+        /// Get the policy restriction of the Api Management service.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetPolicyRestrictionContractAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="policyRestrictionId"> Policy restrictions after an entity level. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<PolicyRestrictionContractResource>> GetPolicyRestrictionContractAsync(this SubscriptionResource subscriptionResource, string serviceName, string policyRestrictionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetPolicyRestrictionContractAsync(serviceName, policyRestrictionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the policy restriction of the Api Management service.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetPolicyRestrictionContract(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="policyRestrictionId"> Policy restrictions after an entity level. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<PolicyRestrictionContractResource> GetPolicyRestrictionContract(this SubscriptionResource subscriptionResource, string serviceName, string policyRestrictionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetPolicyRestrictionContract(serviceName, policyRestrictionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of PortalConfigContracts in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetPortalConfigContracts()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of PortalConfigContracts and their operations over a PortalConfigContractResource. </returns>
+        public static PortalConfigContractCollection GetPortalConfigContracts(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetPortalConfigContracts();
+        }
+
+        /// <summary>
+        /// Get the developer portal configuration.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetPortalConfigContractAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="portalConfigId"> Portal configuration identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<PortalConfigContractResource>> GetPortalConfigContractAsync(this SubscriptionResource subscriptionResource, string serviceName, string portalConfigId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetPortalConfigContractAsync(serviceName, portalConfigId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the developer portal configuration.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetPortalConfigContract(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="portalConfigId"> Portal configuration identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<PortalConfigContractResource> GetPortalConfigContract(this SubscriptionResource subscriptionResource, string serviceName, string portalConfigId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetPortalConfigContract(serviceName, portalConfigId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ClientApplicationContracts in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetClientApplicationContracts()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ClientApplicationContracts and their operations over a ClientApplicationContractResource. </returns>
+        public static ClientApplicationContractCollection GetClientApplicationContracts(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetClientApplicationContracts();
+        }
+
+        /// <summary>
+        /// Gets the details of the client application specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetClientApplicationContractAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="clientApplicationId"> Client Application identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ClientApplicationContractResource>> GetClientApplicationContractAsync(this SubscriptionResource subscriptionResource, string serviceName, string clientApplicationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetClientApplicationContractAsync(serviceName, clientApplicationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the client application specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetClientApplicationContract(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="clientApplicationId"> Client Application identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ClientApplicationContractResource> GetClientApplicationContract(this SubscriptionResource subscriptionResource, string serviceName, string clientApplicationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetClientApplicationContract(serviceName, clientApplicationId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiManagementPortalRevisions in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementPortalRevisions()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApiManagementPortalRevisions and their operations over a ApiManagementPortalRevisionResource. </returns>
+        public static ApiManagementPortalRevisionCollection GetApiManagementPortalRevisions(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementPortalRevisions();
+        }
+
+        /// <summary>
+        /// Gets the developer portal's revision specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementPortalRevisionAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="portalRevisionId"> Portal revision identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiManagementPortalRevisionResource>> GetApiManagementPortalRevisionAsync(this SubscriptionResource subscriptionResource, string serviceName, string portalRevisionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementPortalRevisionAsync(serviceName, portalRevisionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the developer portal's revision specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementPortalRevision(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="portalRevisionId"> Portal revision identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiManagementPortalRevisionResource> GetApiManagementPortalRevision(this SubscriptionResource subscriptionResource, string serviceName, string portalRevisionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementPortalRevision(serviceName, portalRevisionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiManagementSubscriptions in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementSubscriptions()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApiManagementSubscriptions and their operations over a ApiManagementSubscriptionResource. </returns>
+        public static ApiManagementSubscriptionCollection GetApiManagementSubscriptions(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementSubscriptions();
+        }
+
+        /// <summary>
+        /// Gets the specified Subscription entity.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementSubscriptionAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiManagementSubscriptionResource>> GetApiManagementSubscriptionAsync(this SubscriptionResource subscriptionResource, string serviceName, string sid, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementSubscriptionAsync(serviceName, sid, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified Subscription entity.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementSubscription(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiManagementSubscriptionResource> GetApiManagementSubscription(this SubscriptionResource subscriptionResource, string serviceName, string sid, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementSubscription(serviceName, sid, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiManagementGlobalSchemas in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementGlobalSchemas()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApiManagementGlobalSchemas and their operations over a ApiManagementGlobalSchemaResource. </returns>
+        public static ApiManagementGlobalSchemaCollection GetApiManagementGlobalSchemas(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementGlobalSchemas();
+        }
+
+        /// <summary>
+        /// Gets the details of the Schema specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementGlobalSchemaAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="schemaId"> Schema id identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiManagementGlobalSchemaResource>> GetApiManagementGlobalSchemaAsync(this SubscriptionResource subscriptionResource, string serviceName, string schemaId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementGlobalSchemaAsync(serviceName, schemaId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the Schema specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementGlobalSchema(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="schemaId"> Schema id identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiManagementGlobalSchemaResource> GetApiManagementGlobalSchema(this SubscriptionResource subscriptionResource, string serviceName, string schemaId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementGlobalSchema(serviceName, schemaId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiManagementTenantSettings in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementTenantSettings()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApiManagementTenantSettings and their operations over a ApiManagementTenantSettingResource. </returns>
+        public static ApiManagementTenantSettingCollection GetApiManagementTenantSettings(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementTenantSettings();
+        }
+
+        /// <summary>
+        /// Get tenant settings.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementTenantSettingAsync(string, SettingsType, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="settingsType"> The identifier of the settings. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiManagementTenantSettingResource>> GetApiManagementTenantSettingAsync(this SubscriptionResource subscriptionResource, string serviceName, SettingsType settingsType, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementTenantSettingAsync(serviceName, settingsType, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get tenant settings.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementTenantSetting(string, SettingsType, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="settingsType"> The identifier of the settings. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiManagementTenantSettingResource> GetApiManagementTenantSetting(this SubscriptionResource subscriptionResource, string serviceName, SettingsType settingsType, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementTenantSetting(serviceName, settingsType, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of TenantAccessInfos in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetTenantAccessInfos()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of TenantAccessInfos and their operations over a TenantAccessInfoResource. </returns>
+        public static TenantAccessInfoCollection GetTenantAccessInfos(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetTenantAccessInfos();
+        }
+
+        /// <summary>
+        /// Get tenant access information details without secrets.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetTenantAccessInfoAsync(string, AccessName, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="accessName"> The identifier of the Access configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<TenantAccessInfoResource>> GetTenantAccessInfoAsync(this SubscriptionResource subscriptionResource, string serviceName, AccessName accessName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetTenantAccessInfoAsync(serviceName, accessName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get tenant access information details without secrets.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetTenantAccessInfo(string, AccessName, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="accessName"> The identifier of the Access configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<TenantAccessInfoResource> GetTenantAccessInfo(this SubscriptionResource subscriptionResource, string serviceName, AccessName accessName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetTenantAccessInfo(serviceName, accessName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of WorkspaceContracts in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetWorkspaceContracts()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of WorkspaceContracts and their operations over a WorkspaceContractResource. </returns>
+        public static WorkspaceContractCollection GetWorkspaceContracts(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetWorkspaceContracts();
+        }
+
+        /// <summary>
+        /// Gets the details of the workspace specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetWorkspaceContractAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<WorkspaceContractResource>> GetWorkspaceContractAsync(this SubscriptionResource subscriptionResource, string serviceName, string workspaceId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetWorkspaceContractAsync(serviceName, workspaceId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the workspace specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetWorkspaceContract(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<WorkspaceContractResource> GetWorkspaceContract(this SubscriptionResource subscriptionResource, string serviceName, string workspaceId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetWorkspaceContract(serviceName, workspaceId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiGatewayConfigConnections in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiGatewayConfigConnections()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApiGatewayConfigConnections and their operations over a ApiGatewayConfigConnectionResource. </returns>
+        public static ApiGatewayConfigConnectionCollection GetApiGatewayConfigConnections(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiGatewayConfigConnections();
+        }
+
+        /// <summary>
+        /// Gets an API Management gateway config connection resource description.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiGatewayConfigConnectionAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="gatewayName"> The name of the API Management gateway. </param>
+        /// <param name="configConnectionName"> The name of the API Management gateway config connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiGatewayConfigConnectionResource>> GetApiGatewayConfigConnectionAsync(this SubscriptionResource subscriptionResource, string gatewayName, string configConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiGatewayConfigConnectionAsync(gatewayName, configConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an API Management gateway config connection resource description.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiGatewayConfigConnection(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="gatewayName"> The name of the API Management gateway. </param>
+        /// <param name="configConnectionName"> The name of the API Management gateway config connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiGatewayConfigConnectionResource> GetApiGatewayConfigConnection(this SubscriptionResource subscriptionResource, string gatewayName, string configConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiGatewayConfigConnection(gatewayName, configConnectionName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiManagementWorkspaceLinks in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetAllApiManagementWorkspaceLinks()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApiManagementWorkspaceLinks and their operations over a ApiManagementWorkspaceLinksResource. </returns>
+        public static ApiManagementWorkspaceLinksCollection GetAllApiManagementWorkspaceLinks(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetAllApiManagementWorkspaceLinks();
+        }
+
+        /// <summary>
+        /// Gets an API Management WorkspaceLink resource description.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementWorkspaceLinksAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiManagementWorkspaceLinksResource>> GetApiManagementWorkspaceLinksAsync(this SubscriptionResource subscriptionResource, string serviceName, string workspaceId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementWorkspaceLinksAsync(serviceName, workspaceId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an API Management WorkspaceLink resource description.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementWorkspaceLinks(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiManagementWorkspaceLinksResource> GetApiManagementWorkspaceLinks(this SubscriptionResource subscriptionResource, string serviceName, string workspaceId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementWorkspaceLinks(serviceName, workspaceId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of GatewayHostnameBindingResources in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetGatewayHostnameBindingResources()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of GatewayHostnameBindingResources and their operations over a GatewayHostnameBindingResource. </returns>
+        public static GatewayHostnameBindingResourceCollection GetGatewayHostnameBindingResources(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetGatewayHostnameBindingResources();
+        }
+
+        /// <summary>
+        /// Gets an API Management gateway hostname binding resource description.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetGatewayHostnameBindingResourceAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="gatewayName"> The name of the API Management gateway. </param>
+        /// <param name="hostnameBindingName"> Gateway hostname binding identifier. Must be unique in the scope of parent Gateway entity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<GatewayHostnameBindingResource>> GetGatewayHostnameBindingResourceAsync(this SubscriptionResource subscriptionResource, string gatewayName, string hostnameBindingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetGatewayHostnameBindingResourceAsync(gatewayName, hostnameBindingName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an API Management gateway hostname binding resource description.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetGatewayHostnameBindingResource(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="gatewayName"> The name of the API Management gateway. </param>
+        /// <param name="hostnameBindingName"> Gateway hostname binding identifier. Must be unique in the scope of parent Gateway entity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<GatewayHostnameBindingResource> GetGatewayHostnameBindingResource(this SubscriptionResource subscriptionResource, string gatewayName, string hostnameBindingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetGatewayHostnameBindingResource(gatewayName, hostnameBindingName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiManagementPrivateEndpointConnections in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementPrivateEndpointConnections()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApiManagementPrivateEndpointConnections and their operations over a ApiManagementPrivateEndpointConnectionResource. </returns>
+        public static ApiManagementPrivateEndpointConnectionCollection GetApiManagementPrivateEndpointConnections(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementPrivateEndpointConnections();
+        }
+
+        /// <summary>
+        /// Gets the details of the Private Endpoint Connection specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementPrivateEndpointConnectionAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiManagementPrivateEndpointConnectionResource>> GetApiManagementPrivateEndpointConnectionAsync(this SubscriptionResource subscriptionResource, string serviceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementPrivateEndpointConnectionAsync(serviceName, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the Private Endpoint Connection specified by its identifier.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementPrivateEndpointConnection(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiManagementPrivateEndpointConnectionResource> GetApiManagementPrivateEndpointConnection(this SubscriptionResource subscriptionResource, string serviceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementPrivateEndpointConnection(serviceName, privateEndpointConnectionName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ApiManagementPrivateLinkResources in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementPrivateLinkResources()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ApiManagementPrivateLinkResources and their operations over a ApiManagementPrivateLinkResource. </returns>
+        public static ApiManagementPrivateLinkResourceCollection GetApiManagementPrivateLinkResources(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementPrivateLinkResources();
+        }
+
+        /// <summary>
+        /// Gets the private link resources
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementPrivateLinkResourceAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="privateLinkSubResourceName"> The name of the private link associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ApiManagementPrivateLinkResource>> GetApiManagementPrivateLinkResourceAsync(this SubscriptionResource subscriptionResource, string serviceName, string privateLinkSubResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementPrivateLinkResourceAsync(serviceName, privateLinkSubResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the private link resources
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementPrivateLinkResource(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="privateLinkSubResourceName"> The name of the private link associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ApiManagementPrivateLinkResource> GetApiManagementPrivateLinkResource(this SubscriptionResource subscriptionResource, string serviceName, string privateLinkSubResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementPrivateLinkResource(serviceName, privateLinkSubResourceName, cancellationToken);
         }
 
         /// <summary>
         /// Lists all API Management services within an Azure subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementServiceResourcesAsync(int?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementServicesAsync(int?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -2220,18 +6026,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ApiManagementServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ApiManagementServiceResource> GetApiManagementServiceResourcesAsync(this SubscriptionResource subscriptionResource, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ApiManagementServiceResource> GetApiManagementServicesAsync(this SubscriptionResource subscriptionResource, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementServiceResourcesAsync(top, skipToken, cancellationToken);
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementServicesAsync(top, skipToken, cancellationToken);
         }
 
         /// <summary>
         /// Lists all API Management services within an Azure subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementServiceResources(int?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementServices(int?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -2240,18 +6046,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ApiManagementServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ApiManagementServiceResource> GetApiManagementServiceResources(this SubscriptionResource subscriptionResource, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public static Pageable<ApiManagementServiceResource> GetApiManagementServices(this SubscriptionResource subscriptionResource, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementServiceResources(top, skipToken, cancellationToken);
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementServices(top, skipToken, cancellationToken);
         }
 
         /// <summary>
         /// List all API Management gateways within a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementGatewayResourcesAsync(int?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementGatewaysAsync(int?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -2260,18 +6066,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ApiManagementGatewayResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ApiManagementGatewayResource> GetApiManagementGatewayResourcesAsync(this SubscriptionResource subscriptionResource, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ApiManagementGatewayResource> GetApiManagementGatewaysAsync(this SubscriptionResource subscriptionResource, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementGatewayResourcesAsync(top, skipToken, cancellationToken);
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementGatewaysAsync(top, skipToken, cancellationToken);
         }
 
         /// <summary>
         /// List all API Management gateways within a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementGatewayResources(int?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementGateways(int?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -2280,11 +6086,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ApiManagementGatewayResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ApiManagementGatewayResource> GetApiManagementGatewayResources(this SubscriptionResource subscriptionResource, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public static Pageable<ApiManagementGatewayResource> GetApiManagementGateways(this SubscriptionResource subscriptionResource, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementGatewayResources(top, skipToken, cancellationToken);
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementGateways(top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -2297,8 +6103,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DeletedServiceContractResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DeletedServiceContractResource> GetBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiManagementDeletedServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiManagementDeletedServiceResource> GetBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -2315,8 +6121,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DeletedServiceContractResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DeletedServiceContractResource> GetBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiManagementDeletedServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiManagementDeletedServiceResource> GetBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,15 +14,16 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ApiManagement.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A class representing a collection of <see cref="TenantAccessInfoResource"/> and their operations.
-    /// Each <see cref="TenantAccessInfoResource"/> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource"/>.
-    /// To get a <see cref="TenantAccessInfoCollection"/> instance call the GetTenantAccessInfos method from an instance of <see cref="ApiManagementServiceResource"/>.
+    /// Each <see cref="TenantAccessInfoResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="TenantAccessInfoCollection"/> instance call the GetTenantAccessInfos method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
-    public partial class TenantAccessInfoCollection : ArmCollection, IEnumerable<TenantAccessInfoResource>, IAsyncEnumerable<TenantAccessInfoResource>
+    public partial class TenantAccessInfoCollection : ArmCollection
     {
         private readonly ClientDiagnostics _tenantAccessClientDiagnostics;
         private readonly TenantAccess _tenantAccessRestClient;
@@ -49,9 +48,9 @@ namespace Azure.ResourceManager.ApiManagement
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ApiManagementServiceResource.ResourceType)
+            if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -73,13 +72,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="content"> Parameters supplied to retrieve the Tenant Access Information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<TenantAccessInfoResource>> CreateOrUpdateAsync(WaitUntil waitUntil, AccessName accessName, ETag ifMatch, TenantAccessInfoCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<TenantAccessInfoResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serviceName, AccessName accessName, ETag ifMatch, TenantAccessInfoCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.CreateOrUpdate");
@@ -90,7 +92,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantAccessRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, accessName.ToString(), ifMatch, TenantAccessInfoCreateOrUpdateContent.ToRequestContent(content), context);
+                HttpMessage message = _tenantAccessRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, accessName.ToString(), ifMatch, TenantAccessInfoCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TenantAccessInfoData> response = Response.FromValue(TenantAccessInfoData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -127,13 +129,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="content"> Parameters supplied to retrieve the Tenant Access Information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<TenantAccessInfoResource> CreateOrUpdate(WaitUntil waitUntil, AccessName accessName, ETag ifMatch, TenantAccessInfoCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<TenantAccessInfoResource> CreateOrUpdate(WaitUntil waitUntil, string serviceName, AccessName accessName, ETag ifMatch, TenantAccessInfoCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.CreateOrUpdate");
@@ -144,7 +149,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantAccessRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, accessName.ToString(), ifMatch, TenantAccessInfoCreateOrUpdateContent.ToRequestContent(content), context);
+                HttpMessage message = _tenantAccessRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, accessName.ToString(), ifMatch, TenantAccessInfoCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TenantAccessInfoData> response = Response.FromValue(TenantAccessInfoData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -180,10 +185,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TenantAccessInfoResource>> GetAsync(AccessName accessName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<TenantAccessInfoResource>> GetAsync(string serviceName, AccessName accessName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
             using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.Get");
             scope.Start();
             try
@@ -192,7 +202,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantAccessRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, accessName.ToString(), context);
+                HttpMessage message = _tenantAccessRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, accessName.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TenantAccessInfoData> response = Response.FromValue(TenantAccessInfoData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,10 +235,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TenantAccessInfoResource> Get(AccessName accessName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<TenantAccessInfoResource> Get(string serviceName, AccessName accessName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
             using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.Get");
             scope.Start();
             try
@@ -237,7 +252,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantAccessRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, accessName.ToString(), context);
+                HttpMessage message = _tenantAccessRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, accessName.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TenantAccessInfoData> response = Response.FromValue(TenantAccessInfoData.FromResponse(result), result);
                 if (response.Value == null)
@@ -254,78 +269,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Returns list of access infos - for Git and Management endpoints.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AccessInformationContracts_ListByService. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> Not used. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TenantAccessInfoResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TenantAccessInfoResource> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<TenantAccessInfoData, TenantAccessInfoResource>(new TenantAccessGetByServiceAsyncCollectionResultOfT(
-                _tenantAccessRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                filter,
-                context,
-                "TenantAccessInfoCollection.GetAll"), data => new TenantAccessInfoResource(Client, data));
-        }
-
-        /// <summary>
-        /// Returns list of access infos - for Git and Management endpoints.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AccessInformationContracts_ListByService. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> Not used. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TenantAccessInfoResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TenantAccessInfoResource> GetAll(string filter = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<TenantAccessInfoData, TenantAccessInfoResource>(new TenantAccessGetByServiceCollectionResultOfT(
-                _tenantAccessRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                filter,
-                context,
-                "TenantAccessInfoCollection.GetAll"), data => new TenantAccessInfoResource(Client, data));
-        }
-
-        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
@@ -342,10 +285,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(AccessName accessName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string serviceName, AccessName accessName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
             using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.Exists");
             scope.Start();
             try
@@ -354,7 +302,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantAccessRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, accessName.ToString(), context);
+                HttpMessage message = _tenantAccessRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, accessName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<TenantAccessInfoData> response = default;
@@ -395,10 +343,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(AccessName accessName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string serviceName, AccessName accessName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
             using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.Exists");
             scope.Start();
             try
@@ -407,7 +360,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantAccessRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, accessName.ToString(), context);
+                HttpMessage message = _tenantAccessRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, accessName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<TenantAccessInfoData> response = default;
@@ -448,10 +401,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<TenantAccessInfoResource>> GetIfExistsAsync(AccessName accessName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<TenantAccessInfoResource>> GetIfExistsAsync(string serviceName, AccessName accessName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
             using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.GetIfExists");
             scope.Start();
             try
@@ -460,7 +418,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantAccessRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, accessName.ToString(), context);
+                HttpMessage message = _tenantAccessRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, accessName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<TenantAccessInfoData> response = default;
@@ -505,10 +463,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<TenantAccessInfoResource> GetIfExists(AccessName accessName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<TenantAccessInfoResource> GetIfExists(string serviceName, AccessName accessName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
             using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.GetIfExists");
             scope.Start();
             try
@@ -517,7 +480,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantAccessRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, accessName.ToString(), context);
+                HttpMessage message = _tenantAccessRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, accessName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<TenantAccessInfoData> response = default;
@@ -543,22 +506,6 @@ namespace Azure.ResourceManager.ApiManagement
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<TenantAccessInfoResource> IEnumerable<TenantAccessInfoResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<TenantAccessInfoResource> IAsyncEnumerable<TenantAccessInfoResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

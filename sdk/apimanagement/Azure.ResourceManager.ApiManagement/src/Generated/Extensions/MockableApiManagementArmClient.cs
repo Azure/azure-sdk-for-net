@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="DeletedServiceContractResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ApiManagementDeletedServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeletedServiceContractResource"/> object. </returns>
-        public virtual DeletedServiceContractResource GetDeletedServiceContractResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementDeletedServiceResource"/> object. </returns>
+        public virtual ApiManagementDeletedServiceResource GetApiManagementDeletedServiceResource(ResourceIdentifier id)
         {
-            DeletedServiceContractResource.ValidateResourceId(id);
-            return new DeletedServiceContractResource(Client, id);
+            ApiManagementDeletedServiceResource.ValidateResourceId(id);
+            return new ApiManagementDeletedServiceResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ApiManagementServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -512,13 +512,13 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
             return new ApiManagementEmailTemplateResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="GatewayContractResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ApiGatewayResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GatewayContractResource"/> object. </returns>
-        public virtual GatewayContractResource GetGatewayContractResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiGatewayResource"/> object. </returns>
+        public virtual ApiGatewayResource GetApiGatewayResource(ResourceIdentifier id)
         {
-            GatewayContractResource.ValidateResourceId(id);
-            return new GatewayContractResource(Client, id);
+            ApiGatewayResource.ValidateResourceId(id);
+            return new ApiGatewayResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ApiManagementGatewayHostnameConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -872,13 +872,13 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
             return new ApiManagementGatewayResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ApiManagementGatewayConfigConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ApiGatewayConfigConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementGatewayConfigConnectionResource"/> object. </returns>
-        public virtual ApiManagementGatewayConfigConnectionResource GetApiManagementGatewayConfigConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiGatewayConfigConnectionResource"/> object. </returns>
+        public virtual ApiGatewayConfigConnectionResource GetApiGatewayConfigConnectionResource(ResourceIdentifier id)
         {
-            ApiManagementGatewayConfigConnectionResource.ValidateResourceId(id);
-            return new ApiManagementGatewayConfigConnectionResource(Client, id);
+            ApiGatewayConfigConnectionResource.ValidateResourceId(id);
+            return new ApiGatewayConfigConnectionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ApiManagementWorkspaceLinksResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -899,31 +899,31 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
             return new GatewayHostnameBindingResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PortalSigninSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ApiManagementPortalSignInSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PortalSigninSettingsResource"/> object. </returns>
-        public virtual PortalSigninSettingsResource GetPortalSigninSettingsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementPortalSignInSettingResource"/> object. </returns>
+        public virtual ApiManagementPortalSignInSettingResource GetApiManagementPortalSignInSettingResource(ResourceIdentifier id)
         {
-            PortalSigninSettingsResource.ValidateResourceId(id);
-            return new PortalSigninSettingsResource(Client, id);
+            ApiManagementPortalSignInSettingResource.ValidateResourceId(id);
+            return new ApiManagementPortalSignInSettingResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PortalSignupSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ApiManagementPortalSignUpSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PortalSignupSettingsResource"/> object. </returns>
-        public virtual PortalSignupSettingsResource GetPortalSignupSettingsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementPortalSignUpSettingResource"/> object. </returns>
+        public virtual ApiManagementPortalSignUpSettingResource GetApiManagementPortalSignUpSettingResource(ResourceIdentifier id)
         {
-            PortalSignupSettingsResource.ValidateResourceId(id);
-            return new PortalSignupSettingsResource(Client, id);
+            ApiManagementPortalSignUpSettingResource.ValidateResourceId(id);
+            return new ApiManagementPortalSignUpSettingResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PortalDelegationSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ApiManagementPortalDelegationSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PortalDelegationSettingsResource"/> object. </returns>
-        public virtual PortalDelegationSettingsResource GetPortalDelegationSettingsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementPortalDelegationSettingResource"/> object. </returns>
+        public virtual ApiManagementPortalDelegationSettingResource GetApiManagementPortalDelegationSettingResource(ResourceIdentifier id)
         {
-            PortalDelegationSettingsResource.ValidateResourceId(id);
-            return new PortalDelegationSettingsResource(Client, id);
+            ApiManagementPortalDelegationSettingResource.ValidateResourceId(id);
+            return new ApiManagementPortalDelegationSettingResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ApiManagementPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>

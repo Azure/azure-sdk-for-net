@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,15 +13,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A class representing a collection of <see cref="ClientApplicationContractResource"/> and their operations.
-    /// Each <see cref="ClientApplicationContractResource"/> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource"/>.
-    /// To get a <see cref="ClientApplicationContractCollection"/> instance call the GetClientApplicationContracts method from an instance of <see cref="ApiManagementServiceResource"/>.
+    /// Each <see cref="ClientApplicationContractResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="ClientApplicationContractCollection"/> instance call the GetClientApplicationContracts method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
-    public partial class ClientApplicationContractCollection : ArmCollection, IEnumerable<ClientApplicationContractResource>, IAsyncEnumerable<ClientApplicationContractResource>
+    public partial class ClientApplicationContractCollection : ArmCollection
     {
         private readonly ClientDiagnostics _clientApplicationClientDiagnostics;
         private readonly ClientApplication _clientApplicationRestClient;
@@ -48,9 +47,9 @@ namespace Azure.ResourceManager.ApiManagement
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ApiManagementServiceResource.ResourceType)
+            if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -72,13 +71,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="clientApplicationId"> Client Application identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="data"> Create or update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientApplicationId"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="clientApplicationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ClientApplicationContractResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clientApplicationId, ClientApplicationContractData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/>, <paramref name="clientApplicationId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="clientApplicationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<ClientApplicationContractResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serviceName, string clientApplicationId, ClientApplicationContractData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(clientApplicationId, nameof(clientApplicationId));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clientApplicationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, clientApplicationId, ClientApplicationContractData.ToRequestContent(data), context);
+                HttpMessage message = _clientApplicationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, clientApplicationId, ClientApplicationContractData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ClientApplicationContractData> response = Response.FromValue(ClientApplicationContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -127,13 +128,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="clientApplicationId"> Client Application identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="data"> Create or update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientApplicationId"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="clientApplicationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ClientApplicationContractResource> CreateOrUpdate(WaitUntil waitUntil, string clientApplicationId, ClientApplicationContractData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/>, <paramref name="clientApplicationId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="clientApplicationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<ClientApplicationContractResource> CreateOrUpdate(WaitUntil waitUntil, string serviceName, string clientApplicationId, ClientApplicationContractData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(clientApplicationId, nameof(clientApplicationId));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -145,7 +148,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clientApplicationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, clientApplicationId, ClientApplicationContractData.ToRequestContent(data), context);
+                HttpMessage message = _clientApplicationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, clientApplicationId, ClientApplicationContractData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ClientApplicationContractData> response = Response.FromValue(ClientApplicationContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -181,12 +184,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="clientApplicationId"> Client Application identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientApplicationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="clientApplicationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ClientApplicationContractResource>> GetAsync(string clientApplicationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="clientApplicationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="clientApplicationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ClientApplicationContractResource>> GetAsync(string serviceName, string clientApplicationId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(clientApplicationId, nameof(clientApplicationId));
 
             using DiagnosticScope scope = _clientApplicationClientDiagnostics.CreateScope("ClientApplicationContractCollection.Get");
@@ -197,7 +202,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clientApplicationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, clientApplicationId, context);
+                HttpMessage message = _clientApplicationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, clientApplicationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ClientApplicationContractData> response = Response.FromValue(ClientApplicationContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -230,12 +235,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="clientApplicationId"> Client Application identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientApplicationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="clientApplicationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ClientApplicationContractResource> Get(string clientApplicationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="clientApplicationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="clientApplicationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ClientApplicationContractResource> Get(string serviceName, string clientApplicationId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(clientApplicationId, nameof(clientApplicationId));
 
             using DiagnosticScope scope = _clientApplicationClientDiagnostics.CreateScope("ClientApplicationContractCollection.Get");
@@ -246,7 +253,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clientApplicationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, clientApplicationId, context);
+                HttpMessage message = _clientApplicationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, clientApplicationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ClientApplicationContractData> response = Response.FromValue(ClientApplicationContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -263,86 +270,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Lists a collection of client applications in the specified service instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/clientApplications. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ClientApplicationContracts_ListByService. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt; state | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClientApplicationContractResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ClientApplicationContractResource> GetAllAsync(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ClientApplicationContractData, ClientApplicationContractResource>(new ClientApplicationGetByServiceAsyncCollectionResultOfT(
-                _clientApplicationRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                filter,
-                top,
-                skip,
-                context,
-                "ClientApplicationContractCollection.GetAll"), data => new ClientApplicationContractResource(Client, data));
-        }
-
-        /// <summary>
-        /// Lists a collection of client applications in the specified service instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/clientApplications. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ClientApplicationContracts_ListByService. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt; state | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;|. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClientApplicationContractResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ClientApplicationContractResource> GetAll(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ClientApplicationContractData, ClientApplicationContractResource>(new ClientApplicationGetByServiceCollectionResultOfT(
-                _clientApplicationRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                filter,
-                top,
-                skip,
-                context,
-                "ClientApplicationContractCollection.GetAll"), data => new ClientApplicationContractResource(Client, data));
-        }
-
-        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
@@ -359,12 +286,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="clientApplicationId"> Client Application identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientApplicationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="clientApplicationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string clientApplicationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="clientApplicationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="clientApplicationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string serviceName, string clientApplicationId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(clientApplicationId, nameof(clientApplicationId));
 
             using DiagnosticScope scope = _clientApplicationClientDiagnostics.CreateScope("ClientApplicationContractCollection.Exists");
@@ -375,7 +304,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clientApplicationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, clientApplicationId, context);
+                HttpMessage message = _clientApplicationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, clientApplicationId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ClientApplicationContractData> response = default;
@@ -416,12 +345,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="clientApplicationId"> Client Application identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientApplicationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="clientApplicationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string clientApplicationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="clientApplicationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="clientApplicationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string serviceName, string clientApplicationId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(clientApplicationId, nameof(clientApplicationId));
 
             using DiagnosticScope scope = _clientApplicationClientDiagnostics.CreateScope("ClientApplicationContractCollection.Exists");
@@ -432,7 +363,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clientApplicationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, clientApplicationId, context);
+                HttpMessage message = _clientApplicationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, clientApplicationId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ClientApplicationContractData> response = default;
@@ -473,12 +404,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="clientApplicationId"> Client Application identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientApplicationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="clientApplicationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<ClientApplicationContractResource>> GetIfExistsAsync(string clientApplicationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="clientApplicationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="clientApplicationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<ClientApplicationContractResource>> GetIfExistsAsync(string serviceName, string clientApplicationId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(clientApplicationId, nameof(clientApplicationId));
 
             using DiagnosticScope scope = _clientApplicationClientDiagnostics.CreateScope("ClientApplicationContractCollection.GetIfExists");
@@ -489,7 +422,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clientApplicationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, clientApplicationId, context);
+                HttpMessage message = _clientApplicationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, clientApplicationId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ClientApplicationContractData> response = default;
@@ -534,12 +467,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="clientApplicationId"> Client Application identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientApplicationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="clientApplicationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<ClientApplicationContractResource> GetIfExists(string clientApplicationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="clientApplicationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="clientApplicationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<ClientApplicationContractResource> GetIfExists(string serviceName, string clientApplicationId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(clientApplicationId, nameof(clientApplicationId));
 
             using DiagnosticScope scope = _clientApplicationClientDiagnostics.CreateScope("ClientApplicationContractCollection.GetIfExists");
@@ -550,7 +485,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clientApplicationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, clientApplicationId, context);
+                HttpMessage message = _clientApplicationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, clientApplicationId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ClientApplicationContractData> response = default;
@@ -576,22 +511,6 @@ namespace Azure.ResourceManager.ApiManagement
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<ClientApplicationContractResource> IEnumerable<ClientApplicationContractResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<ClientApplicationContractResource> IAsyncEnumerable<ClientApplicationContractResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

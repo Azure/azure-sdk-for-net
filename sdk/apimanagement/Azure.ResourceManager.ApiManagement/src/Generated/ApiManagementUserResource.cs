@@ -14,13 +14,14 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ApiManagement.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A class representing a ApiManagementUser along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ApiManagementUserResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementUsers method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetApiManagementUsers method.
     /// </summary>
     public partial class ApiManagementUserResource : ArmResource
     {

@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,15 +13,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A class representing a collection of <see cref="PortalConfigContractResource"/> and their operations.
-    /// Each <see cref="PortalConfigContractResource"/> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource"/>.
-    /// To get a <see cref="PortalConfigContractCollection"/> instance call the GetPortalConfigContracts method from an instance of <see cref="ApiManagementServiceResource"/>.
+    /// Each <see cref="PortalConfigContractResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="PortalConfigContractCollection"/> instance call the GetPortalConfigContracts method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
-    public partial class PortalConfigContractCollection : ArmCollection, IEnumerable<PortalConfigContractResource>, IAsyncEnumerable<PortalConfigContractResource>
+    public partial class PortalConfigContractCollection : ArmCollection
     {
         private readonly ClientDiagnostics _portalConfigClientDiagnostics;
         private readonly PortalConfig _portalConfigRestClient;
@@ -48,9 +47,9 @@ namespace Azure.ResourceManager.ApiManagement
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ApiManagementServiceResource.ResourceType)
+            if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -72,14 +71,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="portalConfigId"> Portal configuration identifier. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="data"> Update the developer portal configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<PortalConfigContractResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string portalConfigId, ETag ifMatch, PortalConfigContractData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/>, <paramref name="portalConfigId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<PortalConfigContractResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serviceName, string portalConfigId, ETag ifMatch, PortalConfigContractData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(portalConfigId, nameof(portalConfigId));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _portalConfigRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalConfigId, ifMatch, PortalConfigContractData.ToRequestContent(data), context);
+                HttpMessage message = _portalConfigRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, portalConfigId, ifMatch, PortalConfigContractData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PortalConfigContractData> response = Response.FromValue(PortalConfigContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -128,14 +129,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="portalConfigId"> Portal configuration identifier. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="data"> Update the developer portal configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<PortalConfigContractResource> CreateOrUpdate(WaitUntil waitUntil, string portalConfigId, ETag ifMatch, PortalConfigContractData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/>, <paramref name="portalConfigId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<PortalConfigContractResource> CreateOrUpdate(WaitUntil waitUntil, string serviceName, string portalConfigId, ETag ifMatch, PortalConfigContractData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(portalConfigId, nameof(portalConfigId));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -147,7 +150,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _portalConfigRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalConfigId, ifMatch, PortalConfigContractData.ToRequestContent(data), context);
+                HttpMessage message = _portalConfigRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, portalConfigId, ifMatch, PortalConfigContractData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PortalConfigContractData> response = Response.FromValue(PortalConfigContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -183,12 +186,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="portalConfigId"> Portal configuration identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<PortalConfigContractResource>> GetAsync(string portalConfigId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="portalConfigId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<PortalConfigContractResource>> GetAsync(string serviceName, string portalConfigId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(portalConfigId, nameof(portalConfigId));
 
             using DiagnosticScope scope = _portalConfigClientDiagnostics.CreateScope("PortalConfigContractCollection.Get");
@@ -199,7 +204,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalConfigId, context);
+                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, portalConfigId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PortalConfigContractData> response = Response.FromValue(PortalConfigContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -232,12 +237,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="portalConfigId"> Portal configuration identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<PortalConfigContractResource> Get(string portalConfigId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="portalConfigId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<PortalConfigContractResource> Get(string serviceName, string portalConfigId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(portalConfigId, nameof(portalConfigId));
 
             using DiagnosticScope scope = _portalConfigClientDiagnostics.CreateScope("PortalConfigContractCollection.Get");
@@ -248,7 +255,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalConfigId, context);
+                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, portalConfigId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PortalConfigContractData> response = Response.FromValue(PortalConfigContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -265,74 +272,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Lists the developer portal configurations.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PortalConfigContracts_ListByService. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PortalConfigContractResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PortalConfigContractResource> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<PortalConfigContractData, PortalConfigContractResource>(new PortalConfigGetByServiceAsyncCollectionResultOfT(
-                _portalConfigRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "PortalConfigContractCollection.GetAll"), data => new PortalConfigContractResource(Client, data));
-        }
-
-        /// <summary>
-        /// Lists the developer portal configurations.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PortalConfigContracts_ListByService. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PortalConfigContractResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PortalConfigContractResource> GetAll(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<PortalConfigContractData, PortalConfigContractResource>(new PortalConfigGetByServiceCollectionResultOfT(
-                _portalConfigRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "PortalConfigContractCollection.GetAll"), data => new PortalConfigContractResource(Client, data));
-        }
-
-        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
@@ -349,12 +288,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="portalConfigId"> Portal configuration identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string portalConfigId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="portalConfigId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string serviceName, string portalConfigId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(portalConfigId, nameof(portalConfigId));
 
             using DiagnosticScope scope = _portalConfigClientDiagnostics.CreateScope("PortalConfigContractCollection.Exists");
@@ -365,7 +306,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalConfigId, context);
+                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, portalConfigId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PortalConfigContractData> response = default;
@@ -406,12 +347,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="portalConfigId"> Portal configuration identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string portalConfigId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="portalConfigId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string serviceName, string portalConfigId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(portalConfigId, nameof(portalConfigId));
 
             using DiagnosticScope scope = _portalConfigClientDiagnostics.CreateScope("PortalConfigContractCollection.Exists");
@@ -422,7 +365,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalConfigId, context);
+                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, portalConfigId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PortalConfigContractData> response = default;
@@ -463,12 +406,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="portalConfigId"> Portal configuration identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<PortalConfigContractResource>> GetIfExistsAsync(string portalConfigId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="portalConfigId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<PortalConfigContractResource>> GetIfExistsAsync(string serviceName, string portalConfigId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(portalConfigId, nameof(portalConfigId));
 
             using DiagnosticScope scope = _portalConfigClientDiagnostics.CreateScope("PortalConfigContractCollection.GetIfExists");
@@ -479,7 +424,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalConfigId, context);
+                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, portalConfigId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PortalConfigContractData> response = default;
@@ -524,12 +469,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="portalConfigId"> Portal configuration identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<PortalConfigContractResource> GetIfExists(string portalConfigId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="portalConfigId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<PortalConfigContractResource> GetIfExists(string serviceName, string portalConfigId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(portalConfigId, nameof(portalConfigId));
 
             using DiagnosticScope scope = _portalConfigClientDiagnostics.CreateScope("PortalConfigContractCollection.GetIfExists");
@@ -540,7 +487,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalConfigId, context);
+                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceName, portalConfigId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PortalConfigContractData> response = default;
@@ -566,22 +513,6 @@ namespace Azure.ResourceManager.ApiManagement
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<PortalConfigContractResource> IEnumerable<PortalConfigContractResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<PortalConfigContractResource> IAsyncEnumerable<PortalConfigContractResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

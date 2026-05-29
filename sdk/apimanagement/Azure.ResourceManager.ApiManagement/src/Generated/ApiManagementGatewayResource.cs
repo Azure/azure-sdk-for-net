@@ -20,9 +20,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a ApiManagementGatewayResource along with the instance operations that can be performed on it.
+    /// A class representing a ApiManagementGateway along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ApiManagementGatewayResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetApiManagementGatewayResources method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetApiManagementGateways method.
     /// </summary>
     public partial class ApiManagementGatewayResource : ArmResource
     {
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApiManagementGatewayResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string apiManagementGatewayResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string apiManagementGatewayApiVersion);
             _apiGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _apiGatewayRestClient = new ApiGateway(_apiGatewayClientDiagnostics, Pipeline, Endpoint, apiManagementGatewayResourceApiVersion ?? "2025-09-01-preview");
+            _apiGatewayRestClient = new ApiGateway(_apiGatewayClientDiagnostics, Pipeline, Endpoint, apiManagementGatewayApiVersion ?? "2025-09-01-preview");
             _apiManagementGatewaySkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _apiManagementGatewaySkusRestClient = new ApiManagementGatewaySkus(_apiManagementGatewaySkusClientDiagnostics, Pipeline, Endpoint, apiManagementGatewayResourceApiVersion ?? "2025-09-01-preview");
+            _apiManagementGatewaySkusRestClient = new ApiManagementGatewaySkus(_apiManagementGatewaySkusClientDiagnostics, Pipeline, Endpoint, apiManagementGatewayApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ApiManagement
                 HttpMessage message = _apiGatewayRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ApiGatewayPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ApiManagementArmOperation<ApiManagementGatewayResource> operation = new ApiManagementArmOperation<ApiManagementGatewayResource>(
-                    new ApiManagementGatewayResourceOperationSource(Client),
+                    new ApiManagementGatewayOperationSource(Client),
                     _apiGatewayClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ApiManagement
                 HttpMessage message = _apiGatewayRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ApiGatewayPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ApiManagementArmOperation<ApiManagementGatewayResource> operation = new ApiManagementArmOperation<ApiManagementGatewayResource>(
-                    new ApiManagementGatewayResourceOperationSource(Client),
+                    new ApiManagementGatewayOperationSource(Client),
                     _apiGatewayClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.ApiManagement
                 HttpMessage message = _apiGatewayRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ApiManagementArmOperation<ApiManagementGatewayResource> operation = new ApiManagementArmOperation<ApiManagementGatewayResource>(
-                    new ApiManagementGatewayResourceOperationSource(Client),
+                    new ApiManagementGatewayOperationSource(Client),
                     _apiGatewayClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.ApiManagement
                 HttpMessage message = _apiGatewayRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ApiManagementArmOperation<ApiManagementGatewayResource> operation = new ApiManagementArmOperation<ApiManagementGatewayResource>(
-                    new ApiManagementGatewayResourceOperationSource(Client),
+                    new ApiManagementGatewayOperationSource(Client),
                     _apiGatewayClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -769,72 +769,6 @@ namespace Azure.ResourceManager.ApiManagement
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets a collection of ApiManagementGatewayConfigConnectionResources in the <see cref="ApiManagementGatewayResource"/>. </summary>
-        /// <returns> An object representing collection of ApiManagementGatewayConfigConnectionResources and their operations over a ApiManagementGatewayConfigConnectionResource. </returns>
-        public virtual ApiManagementGatewayConfigConnectionResourceCollection GetApiManagementGatewayConfigConnectionResources()
-        {
-            return GetCachedClient(client => new ApiManagementGatewayConfigConnectionResourceCollection(client, Id));
-        }
-
-        /// <summary> Gets an API Management gateway config connection resource description. </summary>
-        /// <param name="configConnectionName"> The name of the API Management gateway config connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="configConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ApiManagementGatewayConfigConnectionResource>> GetApiManagementGatewayConfigConnectionResourceAsync(string configConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(configConnectionName, nameof(configConnectionName));
-
-            return await GetApiManagementGatewayConfigConnectionResources().GetAsync(configConnectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets an API Management gateway config connection resource description. </summary>
-        /// <param name="configConnectionName"> The name of the API Management gateway config connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="configConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ApiManagementGatewayConfigConnectionResource> GetApiManagementGatewayConfigConnectionResource(string configConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(configConnectionName, nameof(configConnectionName));
-
-            return GetApiManagementGatewayConfigConnectionResources().Get(configConnectionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of GatewayHostnameBindingResources in the <see cref="ApiManagementGatewayResource"/>. </summary>
-        /// <returns> An object representing collection of GatewayHostnameBindingResources and their operations over a GatewayHostnameBindingResource. </returns>
-        public virtual GatewayHostnameBindingResourceCollection GetGatewayHostnameBindingResources()
-        {
-            return GetCachedClient(client => new GatewayHostnameBindingResourceCollection(client, Id));
-        }
-
-        /// <summary> Gets an API Management gateway hostname binding resource description. </summary>
-        /// <param name="hostnameBindingName"> Gateway hostname binding identifier. Must be unique in the scope of parent Gateway entity. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostnameBindingName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="hostnameBindingName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<GatewayHostnameBindingResource>> GetGatewayHostnameBindingResourceAsync(string hostnameBindingName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(hostnameBindingName, nameof(hostnameBindingName));
-
-            return await GetGatewayHostnameBindingResources().GetAsync(hostnameBindingName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets an API Management gateway hostname binding resource description. </summary>
-        /// <param name="hostnameBindingName"> Gateway hostname binding identifier. Must be unique in the scope of parent Gateway entity. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostnameBindingName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="hostnameBindingName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<GatewayHostnameBindingResource> GetGatewayHostnameBindingResource(string hostnameBindingName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(hostnameBindingName, nameof(hostnameBindingName));
-
-            return GetGatewayHostnameBindingResources().Get(hostnameBindingName, cancellationToken);
         }
     }
 }

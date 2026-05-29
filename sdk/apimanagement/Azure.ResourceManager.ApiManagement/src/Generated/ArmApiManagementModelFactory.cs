@@ -1532,35 +1532,35 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="enabled"> Redirect Anonymous users to the Sign-In page. </param>
-        /// <returns> A new <see cref="ApiManagement.PortalSigninSettingsData"/> instance for mocking. </returns>
-        public static PortalSigninSettingsData PortalSigninSettingsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? enabled = default)
+        /// <param name="isRedirectEnabled"> Redirect Anonymous users to the Sign-In page. </param>
+        /// <returns> A new <see cref="ApiManagement.ApiManagementPortalSignInSettingData"/> instance for mocking. </returns>
+        public static ApiManagementPortalSignInSettingData ApiManagementPortalSignInSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isRedirectEnabled = default)
         {
-            return new PortalSigninSettingsData(
+            return new ApiManagementPortalSignInSettingData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                enabled is null ? default : new PortalSigninSettingProperties(enabled, null));
+                isRedirectEnabled is null ? default : new PortalSigninSettingProperties(isRedirectEnabled, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="enabled"> Allow users to sign up on a developer portal. </param>
+        /// <param name="isSignUpDeveloperPortalEnabled"> Allow users to sign up on a developer portal. </param>
         /// <param name="termsOfService"> Terms of service contract properties. </param>
-        /// <returns> A new <see cref="ApiManagement.PortalSignupSettingsData"/> instance for mocking. </returns>
-        public static PortalSignupSettingsData PortalSignupSettingsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? enabled = default, TermsOfServiceProperties termsOfService = default)
+        /// <returns> A new <see cref="ApiManagement.ApiManagementPortalSignUpSettingData"/> instance for mocking. </returns>
+        public static ApiManagementPortalSignUpSettingData ApiManagementPortalSignUpSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isSignUpDeveloperPortalEnabled = default, TermsOfServiceProperties termsOfService = default)
         {
-            return new PortalSignupSettingsData(
+            return new ApiManagementPortalSignUpSettingData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                enabled is null && termsOfService is null ? default : new PortalSignupSettingsProperties(enabled, termsOfService, null));
+                isSignUpDeveloperPortalEnabled is null && termsOfService is null ? default : new PortalSignupSettingsProperties(isSignUpDeveloperPortalEnabled, termsOfService, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1571,10 +1571,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="validationKey"> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </param>
         /// <param name="subscriptionsEnabled"> Enable or disable delegation for subscriptions. </param>
         /// <param name="userRegistrationEnabled"> Enable or disable delegation for user registration. </param>
-        /// <returns> A new <see cref="ApiManagement.PortalDelegationSettingsData"/> instance for mocking. </returns>
-        public static PortalDelegationSettingsData PortalDelegationSettingsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string uri = default, string validationKey = default, bool? subscriptionsEnabled = default, bool? userRegistrationEnabled = default)
+        /// <returns> A new <see cref="ApiManagement.ApiManagementPortalDelegationSettingData"/> instance for mocking. </returns>
+        public static ApiManagementPortalDelegationSettingData ApiManagementPortalDelegationSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string uri = default, string validationKey = default, bool? subscriptionsEnabled = default, bool? userRegistrationEnabled = default)
         {
-            return new PortalDelegationSettingsData(
+            return new ApiManagementPortalDelegationSettingData(
                 id,
                 name,
                 resourceType,
@@ -3564,6 +3564,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new ApiManagementPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), null));
         }
 
+        /// <summary> The response of a PrivateLinkResource list operation. </summary>
+        /// <param name="value"> The PrivateLinkResource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.ApiManagementPrivateLinkResourceListResult"/> instance for mocking. </returns>
+        public static ApiManagementPrivateLinkResourceListResult ApiManagementPrivateLinkResourceListResult(IEnumerable<ApiManagementPrivateLinkResourceData> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<ApiManagementPrivateLinkResourceData>();
+
+            return new ApiManagementPrivateLinkResourceListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -5007,6 +5018,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     default,
                     termsOfService,
                     default));
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementPortalDelegationSettingData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="uri"> A delegation Url. </param>
+        /// <param name="validationKey"> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </param>
+        /// <param name="isSubscriptionDelegationEnabled"> Subscriptions delegation settings. </param>
+        /// <param name="isUserRegistrationDelegationEnabled"> User registration delegation settings. </param>
+        /// <returns> A new <see cref="ApiManagement.ApiManagementPortalDelegationSettingData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ApiManagementPortalDelegationSettingData ApiManagementPortalDelegationSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri uri, string validationKey, bool? isSubscriptionDelegationEnabled, bool? isUserRegistrationDelegationEnabled)
+        {
+            return new ApiManagementPortalDelegationSettingData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                validationKey is null && isUserRegistrationDelegationEnabled is null ? default : new PortalDelegationSettingsProperties(default, validationKey, default, new RegistrationDelegationSettingsProperties(isUserRegistrationDelegationEnabled, default), default));
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementPrivateEndpointConnectionData"/>. </summary>

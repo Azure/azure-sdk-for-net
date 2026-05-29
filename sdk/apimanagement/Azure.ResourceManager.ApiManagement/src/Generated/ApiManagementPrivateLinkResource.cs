@@ -13,13 +13,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a ApiManagementPrivateLink along with the instance operations that can be performed on it.
+    /// A class representing a ApiManagementPrivateLinkResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ApiManagementPrivateLinkResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementPrivateLinks method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetApiManagementPrivateLinkResources method.
     /// </summary>
     public partial class ApiManagementPrivateLinkResource : ArmResource
     {
@@ -48,9 +49,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApiManagementPrivateLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string apiManagementPrivateLinkApiVersion);
+            TryGetApiVersion(ResourceType, out string apiManagementPrivateLinkResourceApiVersion);
             _privateEndpointConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionRestClient = new PrivateEndpointConnection(_privateEndpointConnectionClientDiagnostics, Pipeline, Endpoint, apiManagementPrivateLinkApiVersion ?? "2025-09-01-preview");
+            _privateEndpointConnectionRestClient = new PrivateEndpointConnection(_privateEndpointConnectionClientDiagnostics, Pipeline, Endpoint, apiManagementPrivateLinkResourceApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

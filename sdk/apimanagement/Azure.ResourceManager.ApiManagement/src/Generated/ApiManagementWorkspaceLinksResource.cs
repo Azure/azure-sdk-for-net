@@ -13,13 +13,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a ApiManagementWorkspaceLinksResource along with the instance operations that can be performed on it.
+    /// A class representing a ApiManagementWorkspaceLinks along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ApiManagementWorkspaceLinksResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementWorkspaceLinksResources method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetAllApiManagementWorkspaceLinks method.
     /// </summary>
     public partial class ApiManagementWorkspaceLinksResource : ArmResource
     {
@@ -48,9 +49,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApiManagementWorkspaceLinksResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string apiManagementWorkspaceLinksResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string apiManagementWorkspaceLinksApiVersion);
             _apiManagementWorkspaceLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _apiManagementWorkspaceLinkRestClient = new ApiManagementWorkspaceLink(_apiManagementWorkspaceLinkClientDiagnostics, Pipeline, Endpoint, apiManagementWorkspaceLinksResourceApiVersion ?? "2025-09-01-preview");
+            _apiManagementWorkspaceLinkRestClient = new ApiManagementWorkspaceLink(_apiManagementWorkspaceLinkClientDiagnostics, Pipeline, Endpoint, apiManagementWorkspaceLinksApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

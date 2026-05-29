@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A class representing a collection of <see cref="ApiManagementGatewayCertificateAuthorityResource"/> and their operations.
-    /// Each <see cref="ApiManagementGatewayCertificateAuthorityResource"/> in the collection will belong to the same instance of <see cref="GatewayContractResource"/>.
-    /// To get a <see cref="ApiManagementGatewayCertificateAuthorityCollection"/> instance call the GetApiManagementGatewayCertificateAuthorities method from an instance of <see cref="GatewayContractResource"/>.
+    /// Each <see cref="ApiManagementGatewayCertificateAuthorityResource"/> in the collection will belong to the same instance of <see cref="ApiGatewayResource"/>.
+    /// To get a <see cref="ApiManagementGatewayCertificateAuthorityCollection"/> instance call the GetApiManagementGatewayCertificateAuthorities method from an instance of <see cref="ApiGatewayResource"/>.
     /// </summary>
     public partial class ApiManagementGatewayCertificateAuthorityCollection : ArmCollection, IEnumerable<ApiManagementGatewayCertificateAuthorityResource>, IAsyncEnumerable<ApiManagementGatewayCertificateAuthorityResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.ApiManagement
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != GatewayContractResource.ResourceType)
+            if (id.ResourceType != ApiGatewayResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GatewayContractResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiGatewayResource.ResourceType), nameof(id));
             }
         }
 
