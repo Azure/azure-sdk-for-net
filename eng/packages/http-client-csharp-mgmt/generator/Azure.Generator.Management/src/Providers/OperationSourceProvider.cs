@@ -26,6 +26,7 @@ namespace Azure.Generator.Management.Providers
         private readonly ResourceClientProvider? _resource;
         private readonly CSharpType _resultType;
         private readonly CSharpType _operationSourceInterface;
+        private readonly string? _nonResourceNameOverride;
 
         private readonly FieldProvider? _clientField;
 
@@ -34,15 +35,17 @@ namespace Azure.Generator.Management.Providers
         {
             _resource = resource;
             _resultType = resource.Type;
+            _nonResourceNameOverride = null;
             _clientField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(ArmClient), "_client", this);
             _operationSourceInterface = new CSharpType(typeof(IOperationSource<>), _resultType);
         }
 
         // Constructor for non-resource types
-        public OperationSourceProvider(CSharpType resultType)
+        public OperationSourceProvider(CSharpType resultType, string? nameOverride = null)
         {
             _resource = null;
             _resultType = resultType;
+            _nonResourceNameOverride = nameOverride;
             _clientField = null;
             _operationSourceInterface = new CSharpType(typeof(IOperationSource<>), _resultType);
         }
@@ -52,6 +55,11 @@ namespace Azure.Generator.Management.Providers
             if (_resource != null)
             {
                 return $"{_resource.ResourceName}OperationSource";
+            }
+
+            if (_nonResourceNameOverride != null)
+            {
+                return _nonResourceNameOverride;
             }
 
             var typeName = BuildTypeName(_resultType);
