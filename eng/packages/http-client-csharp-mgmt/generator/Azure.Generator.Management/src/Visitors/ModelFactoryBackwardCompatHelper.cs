@@ -65,6 +65,9 @@ namespace Azure.Generator.Management.Visitors
         internal static void AddMissingLastContractModelFactoryMethods(ModelFactoryProvider modelFactory)
         {
             var previousMethods = modelFactory.LastContractView?.Methods;
+            // Some older generated libraries do not populate LastContractView methods, but still have API
+            // baselines checked in. Use the baseline as a last-resort source for method names that must remain
+            // available so existing tests and callers can compile after regeneration.
             var restoreOnlyMissingMethodNames = previousMethods is null || previousMethods.Count == 0;
             if (restoreOnlyMissingMethodNames && !TryGetApiModelFactoryMethods(out previousMethods))
             {
@@ -79,6 +82,9 @@ namespace Azure.Generator.Management.Visitors
                 var returnType = previousMethod.Signature.ReturnType;
                 if (returnType is null
                     || KnownManagementTypes.IsKnownManagementType(returnType)
+                    // API-baseline fallback is intentionally conservative: it restores only factory method names
+                    // that disappeared entirely. Signature-level compatibility still relies on LastContractView,
+                    // which has richer type information than the rendered API listing.
                     || (restoreOnlyMissingMethodNames && methods.Any(method => method.Signature.Name == previousMethod.Signature.Name))
                     || (restoreOnlyMissingMethodNames && customMethods.Any(method => method.Signature.Name == previousMethod.Signature.Name))
                     || methods.Any(method => HasSameCSharpSignature(method.Signature, previousMethod.Signature))
@@ -132,6 +138,8 @@ namespace Azure.Generator.Management.Visitors
                     continue;
                 }
 
+                // Model factory methods are named after the model they create. Matching by method name lets us
+                // reattach the current model provider and rebuild the body from the current full constructor.
                 var parameterProviders = BuildParametersFromApiSignature(match.Groups["parameters"].Value, modelProvider);
                 var signature = new MethodSignature(
                     modelProvider.Name,
@@ -149,6 +157,9 @@ namespace Azure.Generator.Management.Visitors
 
         private static IReadOnlyList<ParameterProvider> BuildParametersFromApiSignature(string parameterList, ModelProvider modelProvider)
         {
+            // The API listing gives us stable parameter names, but not generator PropertyProvider instances.
+            // Reconnect parameters to current public properties by the same name so constructor repair can reuse
+            // the existing property-to-constructor matching logic.
             var propertiesByParameterName = EnumeratePublicProperties(modelProvider)
                 .GroupBy(property => property.Name.ToVariableName(), StringComparer.OrdinalIgnoreCase)
                 .ToDictionary(group => group.Key, group => group.First(), StringComparer.OrdinalIgnoreCase);
@@ -762,6 +773,8 @@ namespace Azure.Generator.Management.Visitors
         }
 
         private static ValueExpression GetDefaultArgument(ParameterProvider parameter)
+            // Emit typed defaults when a parameter has no explicit default. Bare `default` can become ambiguous
+            // when a generated model exposes multiple constructors with the same arity.
             => parameter.DefaultValue ?? Default.CastTo(parameter.Type);
 
         private static bool TryBuildCompatibilityArgument(
