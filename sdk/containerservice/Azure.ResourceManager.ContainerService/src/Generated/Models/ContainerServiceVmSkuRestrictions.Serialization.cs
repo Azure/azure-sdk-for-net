@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            ResourceSkuRestrictionsType? @type = default;
+            ContainerServiceVmSkuRestrictionsType? @type = default;
             IReadOnlyList<string> values = default;
             ContainerServiceVmSkuRestrictionInfo restrictionInfo = default;
-            ResourceSkuRestrictionsReasonCode? reasonCode = default;
+            ContainerServiceVmSkuRestrictionsReasonCode? reasonCode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    @type = new ResourceSkuRestrictionsType(prop.Value.GetString());
+                    @type = new ContainerServiceVmSkuRestrictionsType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("values"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    reasonCode = new ResourceSkuRestrictionsReasonCode(prop.Value.GetString());
+                    reasonCode = new ContainerServiceVmSkuRestrictionsReasonCode(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

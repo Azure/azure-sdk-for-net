@@ -1813,11 +1813,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static Azure.ResourceManager.ContainerService.Models.ContainerServiceTrustedAccessRoleRule ContainerServiceTrustedAccessRoleRule(System.Collections.Generic.IEnumerable<string> verbs = null, System.Collections.Generic.IEnumerable<string> apiGroups = null, System.Collections.Generic.IEnumerable<string> resources = null, System.Collections.Generic.IEnumerable<string> resourceNames = null, System.Collections.Generic.IEnumerable<string> nonResourceUrls = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSku ContainerServiceVmSku(string resourceType = null, string name = null, string tier = null, string size = null, string family = null, string kind = null, Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCapacity capacity = null, System.Collections.Generic.IEnumerable<string> locations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuLocationInfo> locationInfo = null, System.Collections.Generic.IEnumerable<string> apiVersions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCosts> costs = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCapabilities> capabilities = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictions> restrictions = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCapabilities ContainerServiceVmSkuCapabilities(string name = null, string value = null) { throw null; }
-        public static Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCapacity ContainerServiceVmSkuCapacity(long? minimum = default(long?), long? maximum = default(long?), long? @default = default(long?), Azure.ResourceManager.ContainerService.Models.ResourceSkuCapacityScaleType? scaleType = default(Azure.ResourceManager.ContainerService.Models.ResourceSkuCapacityScaleType?)) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCapacity ContainerServiceVmSkuCapacity(long? minimum = default(long?), long? maximum = default(long?), long? @default = default(long?), Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCapacityScaleType? scaleType = default(Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCapacityScaleType?)) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCosts ContainerServiceVmSkuCosts(string meterID = null, long? quantity = default(long?), string extendedUnit = null) { throw null; }
-        public static Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuLocationInfo ContainerServiceVmSkuLocationInfo(string location = null, System.Collections.Generic.IEnumerable<string> zones = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuZoneDetails> zoneDetails = null, System.Collections.Generic.IEnumerable<string> extendedLocations = null, Azure.ResourceManager.ContainerService.Models.ContainerServiceExtendedLocationType? type = default(Azure.ResourceManager.ContainerService.Models.ContainerServiceExtendedLocationType?)) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuLocationInfo ContainerServiceVmSkuLocationInfo(Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<string> zones = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuZoneDetails> zoneDetails = null, System.Collections.Generic.IEnumerable<string> extendedLocations = null, Azure.ResourceManager.ContainerService.Models.ContainerServiceExtendedLocationType? type = default(Azure.ResourceManager.ContainerService.Models.ContainerServiceExtendedLocationType?)) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionInfo ContainerServiceVmSkuRestrictionInfo(System.Collections.Generic.IEnumerable<string> locations = null, System.Collections.Generic.IEnumerable<string> zones = null) { throw null; }
-        public static Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictions ContainerServiceVmSkuRestrictions(Azure.ResourceManager.ContainerService.Models.ResourceSkuRestrictionsType? type = default(Azure.ResourceManager.ContainerService.Models.ResourceSkuRestrictionsType?), System.Collections.Generic.IEnumerable<string> values = null, Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionInfo restrictionInfo = null, Azure.ResourceManager.ContainerService.Models.ResourceSkuRestrictionsReasonCode? reasonCode = default(Azure.ResourceManager.ContainerService.Models.ResourceSkuRestrictionsReasonCode?)) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictions ContainerServiceVmSkuRestrictions(Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionsType? type = default(Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionsType?), System.Collections.Generic.IEnumerable<string> values = null, Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionInfo restrictionInfo = null, Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionsReasonCode? reasonCode = default(Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionsReasonCode?)) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuZoneDetails ContainerServiceVmSkuZoneDetails(System.Collections.Generic.IEnumerable<string> name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCapabilities> capabilities = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.GuardrailsAvailableVersionData GuardrailsAvailableVersionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ContainerService.Models.GuardrailsAvailableVersionsProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.GuardrailsAvailableVersionsProperties GuardrailsAvailableVersionsProperties(bool? isDefaultVersion = default(bool?), Azure.ResourceManager.ContainerService.Models.GuardrailsSupport? support = default(Azure.ResourceManager.ContainerService.Models.GuardrailsSupport?)) { throw null; }
@@ -3002,7 +3002,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public long? Default { get { throw null; } }
         public long? Maximum { get { throw null; } }
         public long? Minimum { get { throw null; } }
-        public Azure.ResourceManager.ContainerService.Models.ResourceSkuCapacityScaleType? ScaleType { get { throw null; } }
+        public Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCapacityScaleType? ScaleType { get { throw null; } }
         protected virtual Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCapacity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCapacity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3012,6 +3012,24 @@ namespace Azure.ResourceManager.ContainerService.Models
         Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCapacity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCapacity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCapacity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCapacity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerServiceVmSkuCapacityScaleType : System.IEquatable<Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCapacityScaleType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerServiceVmSkuCapacityScaleType(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCapacityScaleType Automatic { get { throw null; } }
+        public static Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCapacityScaleType Manual { get { throw null; } }
+        public static Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCapacityScaleType None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCapacityScaleType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCapacityScaleType left, Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCapacityScaleType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCapacityScaleType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCapacityScaleType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCapacityScaleType left, Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCapacityScaleType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ContainerServiceVmSkuCosts : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCosts>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuCosts>
     {
@@ -3033,7 +3051,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         internal ContainerServiceVmSkuLocationInfo() { }
         public System.Collections.Generic.IReadOnlyList<string> ExtendedLocations { get { throw null; } }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation Location { get { throw null; } }
         public Azure.ResourceManager.ContainerService.Models.ContainerServiceExtendedLocationType? Type { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuZoneDetails> ZoneDetails { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
@@ -3065,9 +3083,9 @@ namespace Azure.ResourceManager.ContainerService.Models
     public partial class ContainerServiceVmSkuRestrictions : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictions>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictions>
     {
         internal ContainerServiceVmSkuRestrictions() { }
-        public Azure.ResourceManager.ContainerService.Models.ResourceSkuRestrictionsReasonCode? ReasonCode { get { throw null; } }
+        public Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionsReasonCode? ReasonCode { get { throw null; } }
         public Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionInfo RestrictionInfo { get { throw null; } }
-        public Azure.ResourceManager.ContainerService.Models.ResourceSkuRestrictionsType? Type { get { throw null; } }
+        public Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionsType? Type { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Values { get { throw null; } }
         protected virtual Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3078,6 +3096,40 @@ namespace Azure.ResourceManager.ContainerService.Models
         Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerServiceVmSkuRestrictionsReasonCode : System.IEquatable<Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionsReasonCode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerServiceVmSkuRestrictionsReasonCode(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionsReasonCode NotAvailableForSubscription { get { throw null; } }
+        public static Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionsReasonCode QuotaId { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionsReasonCode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionsReasonCode left, Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionsReasonCode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionsReasonCode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionsReasonCode? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionsReasonCode left, Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionsReasonCode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerServiceVmSkuRestrictionsType : System.IEquatable<Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionsType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerServiceVmSkuRestrictionsType(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionsType Location { get { throw null; } }
+        public static Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionsType Zone { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionsType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionsType left, Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionsType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionsType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionsType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionsType left, Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuRestrictionsType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ContainerServiceVmSkuZoneDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuZoneDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ContainerServiceVmSkuZoneDetails>
     {
@@ -5592,58 +5644,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         Azure.ResourceManager.ContainerService.Models.RebalanceLoadBalancersContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.RebalanceLoadBalancersContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.RebalanceLoadBalancersContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.RebalanceLoadBalancersContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResourceSkuCapacityScaleType : System.IEquatable<Azure.ResourceManager.ContainerService.Models.ResourceSkuCapacityScaleType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ResourceSkuCapacityScaleType(string value) { throw null; }
-        public static Azure.ResourceManager.ContainerService.Models.ResourceSkuCapacityScaleType Automatic { get { throw null; } }
-        public static Azure.ResourceManager.ContainerService.Models.ResourceSkuCapacityScaleType Manual { get { throw null; } }
-        public static Azure.ResourceManager.ContainerService.Models.ResourceSkuCapacityScaleType None { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ContainerService.Models.ResourceSkuCapacityScaleType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ContainerService.Models.ResourceSkuCapacityScaleType left, Azure.ResourceManager.ContainerService.Models.ResourceSkuCapacityScaleType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerService.Models.ResourceSkuCapacityScaleType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerService.Models.ResourceSkuCapacityScaleType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ContainerService.Models.ResourceSkuCapacityScaleType left, Azure.ResourceManager.ContainerService.Models.ResourceSkuCapacityScaleType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResourceSkuRestrictionsReasonCode : System.IEquatable<Azure.ResourceManager.ContainerService.Models.ResourceSkuRestrictionsReasonCode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ResourceSkuRestrictionsReasonCode(string value) { throw null; }
-        public static Azure.ResourceManager.ContainerService.Models.ResourceSkuRestrictionsReasonCode NotAvailableForSubscription { get { throw null; } }
-        public static Azure.ResourceManager.ContainerService.Models.ResourceSkuRestrictionsReasonCode QuotaId { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ContainerService.Models.ResourceSkuRestrictionsReasonCode other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ContainerService.Models.ResourceSkuRestrictionsReasonCode left, Azure.ResourceManager.ContainerService.Models.ResourceSkuRestrictionsReasonCode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerService.Models.ResourceSkuRestrictionsReasonCode (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerService.Models.ResourceSkuRestrictionsReasonCode? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ContainerService.Models.ResourceSkuRestrictionsReasonCode left, Azure.ResourceManager.ContainerService.Models.ResourceSkuRestrictionsReasonCode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResourceSkuRestrictionsType : System.IEquatable<Azure.ResourceManager.ContainerService.Models.ResourceSkuRestrictionsType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ResourceSkuRestrictionsType(string value) { throw null; }
-        public static Azure.ResourceManager.ContainerService.Models.ResourceSkuRestrictionsType Location { get { throw null; } }
-        public static Azure.ResourceManager.ContainerService.Models.ResourceSkuRestrictionsType Zone { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ContainerService.Models.ResourceSkuRestrictionsType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ContainerService.Models.ResourceSkuRestrictionsType left, Azure.ResourceManager.ContainerService.Models.ResourceSkuRestrictionsType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerService.Models.ResourceSkuRestrictionsType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerService.Models.ResourceSkuRestrictionsType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ContainerService.Models.ResourceSkuRestrictionsType left, Azure.ResourceManager.ContainerService.Models.ResourceSkuRestrictionsType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class SafeguardsAvailableVersionsProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.SafeguardsAvailableVersionsProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.SafeguardsAvailableVersionsProperties>
     {

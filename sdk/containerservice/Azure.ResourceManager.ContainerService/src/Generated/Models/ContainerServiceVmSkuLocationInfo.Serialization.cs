@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            string location = default;
+            AzureLocation location = default;
             IReadOnlyList<string> zones = default;
             IReadOnlyList<ContainerServiceVmSkuZoneDetails> zoneDetails = default;
             IReadOnlyList<string> extendedLocations = default;
@@ -176,7 +177,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("zones"u8))
