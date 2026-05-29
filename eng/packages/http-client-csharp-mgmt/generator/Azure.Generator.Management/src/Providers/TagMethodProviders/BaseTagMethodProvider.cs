@@ -266,7 +266,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             }
             else
             {
-                statements.Add(tagOperation(resourceDataVar.Property("Tags")));
+                statements.Add(tagOperation(resourceDataVar.Property("Tags").CastTo(typeof(IDictionary<string, string>))));
                 statements.Add(UpdateResourceStatement(resourceDataVar, cancellationTokenParam, _updateMethodProvider, out resultVar));
             }
 

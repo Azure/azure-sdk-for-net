@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
@@ -12,7 +13,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Visitors
@@ -57,6 +60,170 @@ namespace Azure.Generator.Management.Visitors
                     method.Update(signature: method.Signature, bodyStatements: updatedBodyStatements);
                 }
             }
+        }
+
+        internal static void AddMissingLastContractModelFactoryMethods(ModelFactoryProvider modelFactory)
+        {
+            var previousMethods = modelFactory.LastContractView?.Methods;
+            var restoreOnlyMissingMethodNames = previousMethods is null || previousMethods.Count == 0;
+            if (restoreOnlyMissingMethodNames && !TryGetApiModelFactoryMethods(out previousMethods))
+            {
+                return;
+            }
+
+            var methods = modelFactory.Methods.ToList();
+            var customMethods = modelFactory.CustomCodeView?.Methods ?? [];
+            var updated = false;
+            foreach (var previousMethod in previousMethods!)
+            {
+                var returnType = previousMethod.Signature.ReturnType;
+                if (returnType is null
+                    || KnownManagementTypes.IsKnownManagementType(returnType)
+                    || (restoreOnlyMissingMethodNames && methods.Any(method => method.Signature.Name == previousMethod.Signature.Name))
+                    || (restoreOnlyMissingMethodNames && customMethods.Any(method => method.Signature.Name == previousMethod.Signature.Name))
+                    || methods.Any(method => HasSameCSharpSignature(method.Signature, previousMethod.Signature))
+                    || customMethods.Any(method => HasSameCSharpSignature(method.Signature, previousMethod.Signature))
+                    || !TryCreateBackwardCompatMethod(previousMethod, modelFactory, out var restoredMethod))
+                {
+                    continue;
+                }
+
+                methods.Add(restoredMethod);
+                updated = true;
+            }
+
+            if (updated)
+            {
+                modelFactory.Update(methods: methods);
+            }
+        }
+
+        private static bool TryGetApiModelFactoryMethods([NotNullWhen(true)] out IReadOnlyList<MethodProvider>? methods)
+        {
+            methods = null;
+            var apiDirectory = Path.Combine(ManagementClientGenerator.Instance.Configuration.OutputDirectory, "api");
+            if (!Directory.Exists(apiDirectory))
+            {
+                return false;
+            }
+
+            var apiFile = Directory.EnumerateFiles(apiDirectory, "*.cs").FirstOrDefault();
+            if (apiFile is null)
+            {
+                return false;
+            }
+
+            var modelProviders = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ModelProvider>().ToArray();
+            var modelProvidersByName = modelProviders.ToDictionary(model => model.Name, StringComparer.Ordinal);
+            var result = new List<MethodProvider>();
+            foreach (var line in File.ReadLines(apiFile))
+            {
+                if (!line.Contains("public static ", StringComparison.Ordinal)
+                    || !line.Contains(") { throw null; }", StringComparison.Ordinal))
+                {
+                    continue;
+                }
+
+                var match = Regex.Match(line, @"public static (?<returnType>[\w\.\?]+) (?<methodName>\w+)\((?<parameters>.*)\) \{ throw null; \}");
+                if (!match.Success
+                    || !modelProvidersByName.TryGetValue(match.Groups["methodName"].Value, out var modelProvider)
+                    || modelProvider.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Abstract))
+                {
+                    continue;
+                }
+
+                var parameterProviders = BuildParametersFromApiSignature(match.Groups["parameters"].Value, modelProvider);
+                var signature = new MethodSignature(
+                    modelProvider.Name,
+                    null,
+                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                    modelProvider.Type,
+                    null,
+                    parameterProviders);
+                result.Add(new MethodProvider(signature, MethodBodyStatement.Empty, modelProvider));
+            }
+
+            methods = result;
+            return result.Count > 0;
+        }
+
+        private static IReadOnlyList<ParameterProvider> BuildParametersFromApiSignature(string parameterList, ModelProvider modelProvider)
+        {
+            var propertiesByParameterName = EnumeratePublicProperties(modelProvider)
+                .GroupBy(property => property.Name.ToVariableName(), StringComparer.OrdinalIgnoreCase)
+                .ToDictionary(group => group.Key, group => group.First(), StringComparer.OrdinalIgnoreCase);
+            var parameters = new List<ParameterProvider>();
+            foreach (var parameter in SplitParameters(parameterList))
+            {
+                var parameterName = GetParameterName(parameter);
+                if (parameterName is null || !propertiesByParameterName.TryGetValue(parameterName, out var property))
+                {
+                    continue;
+                }
+
+                parameters.Add(new ParameterProvider(
+                    parameterName,
+                    $"",
+                    property.Type.InputType,
+                    Default,
+                    property: property));
+            }
+
+            return parameters;
+        }
+
+        private static IEnumerable<PropertyProvider> EnumeratePublicProperties(ModelProvider modelProvider)
+        {
+            var currentModel = modelProvider;
+            do
+            {
+                foreach (var property in currentModel.Properties)
+                {
+                    if (property.Modifiers.HasFlag(MethodSignatureModifiers.Public))
+                    {
+                        yield return property;
+                    }
+                }
+
+                currentModel = currentModel.BaseModelProvider;
+            }
+            while (currentModel is not null);
+        }
+
+        private static IEnumerable<string> SplitParameters(string parameterList)
+        {
+            var start = 0;
+            var depth = 0;
+            for (var i = 0; i < parameterList.Length; i++)
+            {
+                switch (parameterList[i])
+                {
+                    case '<':
+                    case '(':
+                        depth++;
+                        break;
+                    case '>':
+                    case ')':
+                        depth--;
+                        break;
+                    case ',' when depth == 0:
+                        yield return parameterList[start..i].Trim();
+                        start = i + 1;
+                        break;
+                }
+            }
+
+            if (start < parameterList.Length)
+            {
+                yield return parameterList[start..].Trim();
+            }
+        }
+
+        private static string? GetParameterName(string parameter)
+        {
+            var declaration = parameter.Split('=')[0].Trim();
+            var lastSpace = declaration.LastIndexOf(' ');
+            return lastSpace < 0 ? null : declaration[(lastSpace + 1)..].TrimStart('@');
         }
 
         internal static void FixConstructorCalls(IReadOnlyList<MethodProvider> methods)
@@ -206,7 +373,7 @@ namespace Azure.Generator.Management.Visitors
                 }
                 else
                 {
-                    arguments.Add(constructorParameter.DefaultValue ?? Default);
+                    arguments.Add(GetDefaultArgument(constructorParameter));
                     var index = arguments.Count - 1;
                     if (!changed && !IsDefaultExpression(newInstanceExpression.Parameters[index]))
                     {
@@ -252,7 +419,7 @@ namespace Azure.Generator.Management.Visitors
                 }
                 else
                 {
-                    arguments.Add(constructorParameter.DefaultValue ?? Default);
+                    arguments.Add(GetDefaultArgument(constructorParameter));
                 }
             }
 
@@ -340,7 +507,7 @@ namespace Azure.Generator.Management.Visitors
                 {
                     // Parameters added after the old overload was generated must remain defaulted, but we emit them as
                     // named positional references so the generated call remains stable if later parameters move again.
-                    newArgs.Add(Snippet.PositionalReference(primaryParams[i], primaryParams[i].DefaultValue ?? Default));
+                    newArgs.Add(Snippet.PositionalReference(primaryParams[i], GetDefaultArgument(primaryParams[i])));
                     changed = true;
                 }
             }
@@ -429,6 +596,13 @@ namespace Azure.Generator.Management.Visitors
             }
 
             return false;
+        }
+
+        private static bool HasSameCSharpSignature(MethodSignature first, MethodSignature second)
+        {
+            return first.Name == second.Name
+                && first.Parameters.Count == second.Parameters.Count
+                && first.Parameters.Zip(second.Parameters).All(pair => pair.First.Type.AreNamesEqual(pair.Second.Type));
         }
 
         /// <summary>
@@ -559,7 +733,7 @@ namespace Azure.Generator.Management.Visitors
                 }
                 else
                 {
-                    arguments.Add(constructorParameter.DefaultValue ?? Default);
+                    arguments.Add(GetDefaultArgument(constructorParameter));
                     changed = true;
                 }
             }
@@ -586,6 +760,9 @@ namespace Azure.Generator.Management.Visitors
                     return false;
             }
         }
+
+        private static ValueExpression GetDefaultArgument(ParameterProvider parameter)
+            => parameter.DefaultValue ?? Default.CastTo(parameter.Type);
 
         private static bool TryBuildCompatibilityArgument(
             MethodProvider method,
@@ -655,7 +832,7 @@ namespace Azure.Generator.Management.Visitors
                 }
                 else
                 {
-                    nestedArguments.Add(nestedParameter.DefaultValue ?? Default);
+                    nestedArguments.Add(GetDefaultArgument(nestedParameter));
                 }
             }
 

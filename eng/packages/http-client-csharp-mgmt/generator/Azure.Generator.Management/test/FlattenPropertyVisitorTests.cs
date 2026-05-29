@@ -362,7 +362,7 @@ namespace Azure.Generator.Mgmt.Tests
             var keywordExpression = statement!.Expression as KeywordExpression;
             var newInstance = keywordExpression!.Expression as NewInstanceExpression;
             Assert.That(newInstance!.Parameters.Count, Is.EqualTo(constructorParameters.Count));
-            Assert.That(newInstance.Parameters[additionalDataIndex].ToDisplayString(), Is.EqualTo("default"));
+            Assert.That(newInstance.Parameters[additionalDataIndex].ToDisplayString(), Does.Contain("IDictionary<string, global::System.BinaryData>)default"));
             Assert.That(newInstance.Parameters[propertiesIndex].ToDisplayString(), Does.Contain("testProvisioningState"));
             Assert.That(newInstance.Parameters[propertiesIndex].ToDisplayString(), Does.Contain("TestProperties"));
         }

@@ -223,7 +223,7 @@ namespace Azure.Generator.Mgmt.Tests
 
             var rendered = new TypeProviderWriter(modelFactory).Write().Content;
             Assert.That(rendered, Does.Contain("string legacyValue"));
-            Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel(id, name, default);"));
+            Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel(id, name, ((global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>)default));"));
         }
 
         [Test]
@@ -296,7 +296,7 @@ namespace Azure.Generator.Mgmt.Tests
 
             var rendered = new TypeProviderWriter(modelFactory).Write().Content;
             Assert.That(rendered, Does.Not.Contain("name0"));
-            Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel(id, name, default);"));
+            Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel(id, name, ((global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>)default));"));
         }
 
         private static void SetLastContractView(TypeProvider typeProvider, TypeProvider lastContractView)
