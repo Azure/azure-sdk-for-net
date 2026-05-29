@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
@@ -33,7 +34,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -51,6 +53,7 @@
           "name": "Plant"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "6",
@@ -76,7 +79,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "8",
@@ -102,7 +106,8 @@
               "name": "species"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -112,6 +117,7 @@
       "$id": "10",
       "kind": "client",
       "name": "ClientDocClient",
+      "isExactName": false,
       "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientDoc",
       "doc": "Test for @clientDoc decorator.",
       "methods": [],
@@ -144,7 +150,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDoc.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDoc.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -156,18 +163,21 @@
           "$id": "14",
           "kind": "client",
           "name": "Documentation",
+          "isExactName": false,
           "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientDoc.Documentation",
           "methods": [
             {
               "$id": "15",
               "kind": "basic",
               "name": "harvest",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Retrieves a plant from the garden by submitting its name.",
               "operation": {
                 "$id": "16",
                 "name": "harvest",
+                "isExactName": false,
                 "resourceName": "Documentation",
                 "doc": "Retrieves a plant from the garden by submitting its name.",
                 "accessibility": "public",
@@ -205,9 +215,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDoc.Documentation.harvest.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "19",
@@ -240,9 +252,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDoc.Documentation.harvest.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "21",
@@ -278,9 +292,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDoc.Documentation.harvest.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -372,7 +388,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDoc.Documentation.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientDoc.Documentation.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

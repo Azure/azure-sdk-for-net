@@ -439,14 +439,23 @@ namespace Azure.Generator.Management
                     }
 
                     // Find all resource providers that use this data type
-                    var resourceProviders = ResourceProviders.Where(r => r.ResourceData.Type.Equals(returnCSharpType));
+                    var resourceProviders = ResourceProviders.Where(r => r.ResourceData.Type.Equals(returnCSharpType)).ToList();
 
-                    if (resourceProviders.Any())
+                    if (resourceProviders.Count > 0)
                     {
                         // For each resource provider, create an OperationSource keyed by the resource type
                         foreach (var resourceProvider in resourceProviders)
                         {
                             operationSources.TryAdd(resourceProvider.Type, new OperationSourceProvider(resourceProvider));
+                        }
+
+                        // Mirror TryGetResourceClientProvider: when multiple resources share the same data type
+                        // the reader treats the response as a non-resource (raw data type) because wrapping
+                        // would pick an arbitrary resource. Register a matching key so the reader's lookup
+                        // in BuildLroHandling succeeds.
+                        if (resourceProviders.Count > 1)
+                        {
+                            operationSources.TryAdd(returnCSharpType, new OperationSourceProvider(returnCSharpType));
                         }
                     }
                     else

@@ -80,7 +80,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateGetSessionFilesRequest(string agentName, string agentSessionId, string path, string foundryFeatures, string userIsolationKey, RequestOptions options)
+        internal PipelineMessage CreateGetSessionFilesRequest(string agentName, string agentSessionId, string foundryFeatures, string path, string userIsolationKey, int? limit, string order, string after, string before, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -89,7 +89,26 @@ namespace Azure.AI.Projects.Agents
             uri.AppendPath("/endpoint/sessions/", false);
             uri.AppendPath(agentSessionId, true);
             uri.AppendPath("/files", false);
-            uri.AppendQuery("path", path, true);
+            if (path != null)
+            {
+                uri.AppendQuery("path", path, true);
+            }
+            if (limit != null)
+            {
+                uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit), true);
+            }
+            if (order != null)
+            {
+                uri.AppendQuery("order", order, true);
+            }
+            if (after != null)
+            {
+                uri.AppendQuery("after", after, true);
+            }
+            if (before != null)
+            {
+                uri.AppendQuery("before", before, true);
+            }
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
