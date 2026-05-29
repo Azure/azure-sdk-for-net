@@ -202,6 +202,188 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             }
         }
 
+        [Test]
+        public void PlatformManagedDeserializesSerializesRoundtrip()
+        {
+            string originalJson = @"{
+    ""platformManaged"": {
+        ""certificateUsage"": ""AzureFrontDoor"",
+        ""metadata"": {
+            ""provider"": ""contoso"",
+            ""enabled"": true,
+            ""settings"": {
+                ""region"": ""westus""
+            }
+        }
+    }
+}";
+
+            CertificatePolicy policy = new CertificatePolicy();
+            using (JsonStream json = new JsonStream(originalJson))
+            {
+                policy.Deserialize(json.AsStream());
+            }
+
+            Assert.NotNull(policy.PlatformManaged);
+            Assert.AreEqual("AzureFrontDoor", policy.PlatformManaged.CertificateUsage);
+            Assert.AreEqual(@"""contoso""", policy.PlatformManaged.Metadata["provider"].ToString());
+            Assert.AreEqual("true", policy.PlatformManaged.Metadata["enabled"].ToString());
+            using (JsonDocument settings = JsonDocument.Parse(policy.PlatformManaged.Metadata["settings"].ToString()))
+            {
+                Assert.AreEqual("westus", settings.RootElement.GetProperty("region").GetString());
+            }
+
+            const string expectedJson = @"{
+  ""platformManaged"": {
+    ""certificateUsage"": ""AzureFrontDoor"",
+    ""metadata"": {
+      ""provider"": ""contoso"",
+      ""enabled"": true,
+      ""settings"": {
+        ""region"": ""westus""
+      }
+    }
+  }
+}";
+
+            using JsonStream expectedStream = new JsonStream();
+            using (Utf8JsonWriter expectedWriter = expectedStream.CreateWriter())
+            {
+                using JsonDocument expectedDocument = JsonDocument.Parse(expectedJson);
+                expectedDocument.WriteTo(expectedWriter);
+            }
+
+            using JsonStream actualStream = new JsonStream();
+            actualStream.WriteObject(policy);
+
+            Assert.AreEqual(expectedStream.ToString(), actualStream.ToString());
+        }
+
+        [Test]
+        public void PlatformManagedSerialized()
+        {
+            CertificatePolicy policy = new CertificatePolicy
+            {
+                PlatformManaged = new PlatformManaged("AzureFrontDoor"),
+            };
+            policy.PlatformManaged.Metadata["provider"] = BinaryData.FromString(@"""contoso""");
+            policy.PlatformManaged.Metadata["enabled"] = BinaryData.FromString("true");
+            policy.PlatformManaged.Metadata["settings"] = BinaryData.FromString(@"{""region"":""westus""}");
+
+            using JsonStream json = new JsonStream();
+            json.WriteObject(policy);
+
+            Assert.AreEqual(@"{""platformManaged"":{""certificateUsage"":""AzureFrontDoor"",""metadata"":{""provider"":""contoso"",""enabled"":true,""settings"":{""region"":""westus""}}}}", json.ToString());
+        }
+
+        [Test]
+        public void PlatformManagedConstructorValidation()
+        {
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => new PlatformManaged(null));
+            Assert.AreEqual("certificateUsage", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentException>(() => new PlatformManaged(string.Empty));
+            Assert.AreEqual("certificateUsage", ex.ParamName);
+        }
+
+        [Test]
+        public void PlatformManagedSerializedWithoutMetadataOmitsMetadataProperty()
+        {
+            CertificatePolicy policy = new CertificatePolicy
+            {
+                PlatformManaged = new PlatformManaged("AzureFrontDoor"),
+            };
+
+            using JsonStream json = new JsonStream();
+            json.WriteObject(policy);
+
+            Assert.AreEqual(@"{""platformManaged"":{""certificateUsage"":""AzureFrontDoor""}}", json.ToString());
+        }
+
+        [Test]
+        public void CertificatePolicyWithoutPlatformManagedOmitsProperty()
+        {
+            CertificatePolicy policy = new CertificatePolicy();
+
+            using JsonStream json = new JsonStream();
+            json.WriteObject(policy);
+
+            Assert.IsNull(policy.PlatformManaged);
+            StringAssert.DoesNotContain("platformManaged", json.ToString());
+        }
+
+        [Test]
+        public void PlatformManagedDeserializesNullValueAsNull()
+        {
+            const string originalJson = @"{""platformManaged"":null}";
+
+            CertificatePolicy policy = new CertificatePolicy();
+            using (JsonStream json = new JsonStream(originalJson))
+            {
+                policy.Deserialize(json.AsStream());
+            }
+
+            Assert.IsNull(policy.PlatformManaged);
+        }
+
+        [Test]
+        public void PlatformManagedDeserializesEmptyMetadataAsEmpty()
+        {
+            const string originalJson = @"{""platformManaged"":{""certificateUsage"":""AzureFrontDoor"",""metadata"":{}}}";
+
+            CertificatePolicy policy = new CertificatePolicy();
+            using (JsonStream json = new JsonStream(originalJson))
+            {
+                policy.Deserialize(json.AsStream());
+            }
+
+            Assert.NotNull(policy.PlatformManaged);
+            Assert.AreEqual("AzureFrontDoor", policy.PlatformManaged.CertificateUsage);
+            Assert.AreEqual(0, policy.PlatformManaged.Metadata.Count);
+
+            // An empty metadata dictionary must NOT be re-emitted as a "metadata" block.
+            using JsonStream output = new JsonStream();
+            output.WriteObject(policy);
+            Assert.AreEqual(@"{""platformManaged"":{""certificateUsage"":""AzureFrontDoor""}}", output.ToString());
+        }
+
+        [Test]
+        public void PlatformManagedDeserializesNullMetadataValue()
+        {
+            const string originalJson = @"{""platformManaged"":{""certificateUsage"":""AzureFrontDoor"",""metadata"":null}}";
+
+            CertificatePolicy policy = new CertificatePolicy();
+            using (JsonStream json = new JsonStream(originalJson))
+            {
+                policy.Deserialize(json.AsStream());
+            }
+
+            Assert.NotNull(policy.PlatformManaged);
+            Assert.AreEqual("AzureFrontDoor", policy.PlatformManaged.CertificateUsage);
+            Assert.AreEqual(0, policy.PlatformManaged.Metadata.Count);
+        }
+
+        [Test]
+        public void PlatformManagedMetadataIsLazyInitialized()
+        {
+            PlatformManaged platformManaged = new PlatformManaged("AzureFrontDoor");
+            Assert.NotNull(platformManaged.Metadata);
+            Assert.AreEqual(0, platformManaged.Metadata.Count);
+
+            // Ensure the same reference is returned on subsequent access (LazyInitializer behavior).
+            Assert.AreSame(platformManaged.Metadata, platformManaged.Metadata);
+        }
+
+        [Test]
+        public void PlatformManagedCertificateUsageIsMutable()
+        {
+            PlatformManaged platformManaged = new PlatformManaged("AzureFrontDoor");
+            Assert.AreEqual("AzureFrontDoor", platformManaged.CertificateUsage);
+
+            platformManaged.CertificateUsage = "AzureApplicationGateway";
+            Assert.AreEqual("AzureApplicationGateway", platformManaged.CertificateUsage);
+        }
+
         public static object[] KeyPolicySerializationTestCases =
         {
             new object[] {new CertificatePolicy() { KeyType = CertificateKeyType.Rsa }, @"{""key_props"":{""kty"":""RSA""}}" },
@@ -239,6 +421,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.AreEqual(expected.CertificateTransparency, actual.CertificateTransparency);
             Assert.AreEqual(expected.CertificateType, actual.CertificateType);
             Assert.AreEqual(expected.ContentType, actual.ContentType);
+            AssertAreEqual(expected.PlatformManaged, actual.PlatformManaged);
             Assert.AreEqual(expected.CreatedOn, actual.CreatedOn);
             Assert.AreEqual(expected.Enabled, actual.Enabled);
             CollectionAssert.AreEqual(expected.EnhancedKeyUsage, actual.EnhancedKeyUsage);
@@ -260,6 +443,24 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CollectionAssert.AreEqual(expected?.UserPrincipalNames, actual?.UserPrincipalNames, StringComparer.Ordinal);
             CollectionAssert.AreEqual(expected?.UniformResourceIdentifiers, actual?.UniformResourceIdentifiers, StringComparer.Ordinal);
             CollectionAssert.AreEqual(expected?.IpAddresses, actual?.IpAddresses, StringComparer.Ordinal);
+        }
+
+        private static void AssertAreEqual(PlatformManaged expected, PlatformManaged actual)
+        {
+            Assert.AreEqual(expected?.CertificateUsage, actual?.CertificateUsage);
+
+            if (expected is null)
+            {
+                Assert.IsNull(actual);
+                return;
+            }
+
+            Assert.NotNull(actual);
+            Assert.AreEqual(expected.Metadata.Count, actual.Metadata.Count);
+            foreach (KeyValuePair<string, BinaryData> metadata in expected.Metadata)
+            {
+                Assert.AreEqual(metadata.Value?.ToString(), actual.Metadata[metadata.Key]?.ToString());
+            }
         }
 
         private class LifetimeActionComparer : IComparer<LifetimeAction>, IComparer
