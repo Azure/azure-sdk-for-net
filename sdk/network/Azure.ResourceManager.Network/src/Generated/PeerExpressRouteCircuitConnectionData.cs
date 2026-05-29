@@ -7,95 +7,99 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the PeerExpressRouteCircuitConnection data model.
-    /// Peer Express Route Circuit Connection in an ExpressRouteCircuitPeering resource.
-    /// </summary>
-    public partial class PeerExpressRouteCircuitConnectionData : NetworkResourceData
+    /// <summary> Peer Express Route Circuit Connection in an ExpressRouteCircuitPeering resource. </summary>
+    public partial class PeerExpressRouteCircuitConnectionData : SubResourceModel
     {
         /// <summary> Initializes a new instance of <see cref="PeerExpressRouteCircuitConnectionData"/>. </summary>
-        public PeerExpressRouteCircuitConnectionData()
+        internal PeerExpressRouteCircuitConnectionData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="PeerExpressRouteCircuitConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="expressRouteCircuitPeering"> Reference to Express Route Circuit Private Peering Resource of the circuit. </param>
-        /// <param name="peerExpressRouteCircuitPeering"> Reference to Express Route Circuit Private Peering Resource of the peered circuit. </param>
-        /// <param name="addressPrefix"> /29 IP address space to carve out Customer addresses for tunnels. </param>
-        /// <param name="circuitConnectionStatus"> Express Route Circuit connection state. </param>
-        /// <param name="connectionName"> The name of the express route circuit connection resource. </param>
-        /// <param name="authResourceGuid"> The resource guid of the authorization used for the express route circuit connection. </param>
-        /// <param name="provisioningState"> The provisioning state of the peer express route circuit connection resource. </param>
-        internal PeerExpressRouteCircuitConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource expressRouteCircuitPeering, WritableSubResource peerExpressRouteCircuitPeering, string addressPrefix, CircuitConnectionStatus? circuitConnectionStatus, string connectionName, Guid? authResourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the peer express route circuit connection. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal PeerExpressRouteCircuitConnectionData(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, PeerExpressRouteCircuitConnectionPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            ExpressRouteCircuitPeering = expressRouteCircuitPeering;
-            PeerExpressRouteCircuitPeering = peerExpressRouteCircuitPeering;
-            AddressPrefix = addressPrefix;
-            CircuitConnectionStatus = circuitConnectionStatus;
-            ConnectionName = connectionName;
-            AuthResourceGuid = authResourceGuid;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the peer express route circuit connection. </summary>
+        internal PeerExpressRouteCircuitConnectionPropertiesFormat Properties { get; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
-        /// <summary> Reference to Express Route Circuit Private Peering Resource of the circuit. </summary>
-        internal WritableSubResource ExpressRouteCircuitPeering { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.expressRouteCircuitPeering.id")]
-        public ResourceIdentifier ExpressRouteCircuitPeeringId
-        {
-            get => ExpressRouteCircuitPeering is null ? default : ExpressRouteCircuitPeering.Id;
-            set
-            {
-                if (ExpressRouteCircuitPeering is null)
-                    ExpressRouteCircuitPeering = new WritableSubResource();
-                ExpressRouteCircuitPeering.Id = value;
-            }
-        }
-
-        /// <summary> Reference to Express Route Circuit Private Peering Resource of the peered circuit. </summary>
-        internal WritableSubResource PeerExpressRouteCircuitPeering { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.peerExpressRouteCircuitPeering.id")]
-        public ResourceIdentifier PeerExpressRouteCircuitPeeringId
-        {
-            get => PeerExpressRouteCircuitPeering is null ? default : PeerExpressRouteCircuitPeering.Id;
-            set
-            {
-                if (PeerExpressRouteCircuitPeering is null)
-                    PeerExpressRouteCircuitPeering = new WritableSubResource();
-                PeerExpressRouteCircuitPeering.Id = value;
-            }
-        }
 
         /// <summary> /29 IP address space to carve out Customer addresses for tunnels. </summary>
-        [WirePath("properties.addressPrefix")]
-        public string AddressPrefix { get; set; }
+        public string AddressPrefix
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AddressPrefix;
+            }
+        }
+
         /// <summary> Express Route Circuit connection state. </summary>
-        [WirePath("properties.circuitConnectionStatus")]
-        public CircuitConnectionStatus? CircuitConnectionStatus { get; }
+        public CircuitConnectionStatus? CircuitConnectionStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CircuitConnectionStatus;
+            }
+        }
+
         /// <summary> The name of the express route circuit connection resource. </summary>
-        [WirePath("properties.connectionName")]
-        public string ConnectionName { get; set; }
+        public string ConnectionName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionName;
+            }
+        }
+
         /// <summary> The resource guid of the authorization used for the express route circuit connection. </summary>
-        [WirePath("properties.authResourceGuid")]
-        public Guid? AuthResourceGuid { get; set; }
+        public string AuthResourceGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuthResourceGuid;
+            }
+        }
+
         /// <summary> The provisioning state of the peer express route circuit connection resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public string ExpressRouteCircuitPeeringId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpressRouteCircuitPeeringId;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public string PeerExpressRouteCircuitPeeringId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeerExpressRouteCircuitPeeringId;
+            }
+        }
     }
 }

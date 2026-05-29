@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class VpnLinkConnectionSharedKeyOperationSource : IOperationSource<VpnLinkConnectionSharedKeyResource>
+    /// <summary></summary>
+    internal partial class VpnLinkConnectionSharedKeyOperationSource : IOperationSource<VpnLinkConnectionSharedKeyResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal VpnLinkConnectionSharedKeyOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         VpnLinkConnectionSharedKeyResource IOperationSource<VpnLinkConnectionSharedKeyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VpnLinkConnectionSharedKeyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            VpnLinkConnectionSharedKeyData data = VpnLinkConnectionSharedKeyData.DeserializeVpnLinkConnectionSharedKeyData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new VpnLinkConnectionSharedKeyResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<VpnLinkConnectionSharedKeyResource> IOperationSource<VpnLinkConnectionSharedKeyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VpnLinkConnectionSharedKeyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return await Task.FromResult(new VpnLinkConnectionSharedKeyResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            VpnLinkConnectionSharedKeyData data = VpnLinkConnectionSharedKeyData.DeserializeVpnLinkConnectionSharedKeyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new VpnLinkConnectionSharedKeyResource(_client, data);
         }
     }
 }

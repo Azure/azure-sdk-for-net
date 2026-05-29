@@ -7,42 +7,65 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Private Link Configuration on an application gateway. </summary>
-    public partial class ApplicationGatewayPrivateLinkConfiguration : NetworkResourceData
+    public partial class ApplicationGatewayPrivateLinkConfiguration : SubResource
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkConfiguration"/>. </summary>
         public ApplicationGatewayPrivateLinkConfiguration()
         {
-            IPConfigurations = new ChangeTrackingList<ApplicationGatewayPrivateLinkIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="ipConfigurations"> An array of application gateway private link ip configurations. </param>
-        /// <param name="provisioningState"> The provisioning state of the application gateway private link configuration. </param>
-        internal ApplicationGatewayPrivateLinkConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<ApplicationGatewayPrivateLinkIPConfiguration> ipConfigurations, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the application gateway private link configuration. </param>
+        /// <param name="name"> Name of the private link configuration that is unique within an Application Gateway. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="type"> Type of the resource. </param>
+        internal ApplicationGatewayPrivateLinkConfiguration(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationGatewayPrivateLinkConfigurationProperties properties, string name, ETag? eTag, string @type) : base(id, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            IPConfigurations = ipConfigurations;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            Name = name;
+            ETag = eTag;
+            Type = @type;
         }
 
+        /// <summary> Properties of the application gateway private link configuration. </summary>
+        internal ApplicationGatewayPrivateLinkConfigurationProperties Properties { get; set; }
+
+        /// <summary> Name of the private link configuration that is unique within an Application Gateway. </summary>
+        public string Name { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
+
+        /// <summary> Type of the resource. </summary>
+        public string Type { get; }
+
         /// <summary> An array of application gateway private link ip configurations. </summary>
-        [WirePath("properties.ipConfigurations")]
-        public IList<ApplicationGatewayPrivateLinkIPConfiguration> IPConfigurations { get; }
+        public IList<ApplicationGatewayPrivateLinkIPConfiguration> IpConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPrivateLinkConfigurationProperties();
+                }
+                return Properties.IpConfigurations;
+            }
+        }
+
         /// <summary> The provisioning state of the application gateway private link configuration. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

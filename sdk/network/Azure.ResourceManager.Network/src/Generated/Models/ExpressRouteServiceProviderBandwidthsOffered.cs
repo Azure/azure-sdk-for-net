@@ -13,59 +13,29 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Contains bandwidths offered in ExpressRouteServiceProvider resources. </summary>
     public partial class ExpressRouteServiceProviderBandwidthsOffered
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteServiceProviderBandwidthsOffered"/>. </summary>
-        public ExpressRouteServiceProviderBandwidthsOffered()
+        internal ExpressRouteServiceProviderBandwidthsOffered()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteServiceProviderBandwidthsOffered"/>. </summary>
         /// <param name="offerName"> The OfferName. </param>
         /// <param name="valueInMbps"> The ValueInMbps. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRouteServiceProviderBandwidthsOffered(string offerName, int? valueInMbps, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRouteServiceProviderBandwidthsOffered(string offerName, int? valueInMbps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OfferName = offerName;
             ValueInMbps = valueInMbps;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The OfferName. </summary>
-        [WirePath("offerName")]
-        public string OfferName { get; set; }
+        public string OfferName { get; }
+
         /// <summary> The ValueInMbps. </summary>
-        [WirePath("valueInMbps")]
-        public int? ValueInMbps { get; set; }
+        public int? ValueInMbps { get; }
     }
 }

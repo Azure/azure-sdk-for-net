@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class PrivateDnsZoneGroupOperationSource : IOperationSource<PrivateDnsZoneGroupResource>
+    /// <summary></summary>
+    internal partial class PrivateDnsZoneGroupOperationSource : IOperationSource<PrivateDnsZoneGroupResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal PrivateDnsZoneGroupOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         PrivateDnsZoneGroupResource IOperationSource<PrivateDnsZoneGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PrivateDnsZoneGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            PrivateDnsZoneGroupData data = PrivateDnsZoneGroupData.DeserializePrivateDnsZoneGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new PrivateDnsZoneGroupResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<PrivateDnsZoneGroupResource> IOperationSource<PrivateDnsZoneGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PrivateDnsZoneGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return await Task.FromResult(new PrivateDnsZoneGroupResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            PrivateDnsZoneGroupData data = PrivateDnsZoneGroupData.DeserializePrivateDnsZoneGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new PrivateDnsZoneGroupResource(_client, data);
         }
     }
 }

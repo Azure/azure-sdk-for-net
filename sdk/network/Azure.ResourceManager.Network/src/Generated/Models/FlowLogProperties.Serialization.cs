@@ -8,16 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class FlowLogProperties : IUtf8JsonSerializable, IJsonModel<FlowLogProperties>
+    /// <summary> Parameters that define the configuration of flow log. </summary>
+    internal partial class FlowLogProperties : IJsonModel<FlowLogProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FlowLogProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="FlowLogProperties"/> for deserialization. </summary>
+        internal FlowLogProperties()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FlowLogProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FlowLogProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFlowLogProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FlowLogProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FlowLogProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FlowLogProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FlowLogProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FlowLogProperties IPersistableModel<FlowLogProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FlowLogProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FlowLogProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,31 +74,44 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FlowLogProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FlowLogProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FlowLogProperties)} does not support writing '{format}' format.");
             }
-
-            if (Optional.IsDefined(FormatType))
+            writer.WritePropertyName("storageId"u8);
+            writer.WriteStringValue(StorageId);
+            if (Optional.IsDefined(EnabledFilteringCriteria))
             {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(FormatType.Value.ToString());
+                writer.WritePropertyName("enabledFilteringCriteria"u8);
+                writer.WriteStringValue(EnabledFilteringCriteria);
             }
-            if (Optional.IsDefined(Version))
+            if (Optional.IsDefined(RecordTypes))
             {
-                writer.WritePropertyName("version"u8);
-                writer.WriteNumberValue(Version.Value);
+                writer.WritePropertyName("recordTypes"u8);
+                writer.WriteStringValue(RecordTypes);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            writer.WritePropertyName("enabled"u8);
+            writer.WriteBooleanValue(Enabled);
+            if (Optional.IsDefined(RetentionPolicy))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("retentionPolicy"u8);
+                writer.WriteObjectValue(RetentionPolicy, options);
+            }
+            if (Optional.IsDefined(Format))
+            {
+                writer.WritePropertyName("format"u8);
+                writer.WriteObjectValue(Format, options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -62,135 +120,91 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        FlowLogProperties IJsonModel<FlowLogProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FlowLogProperties IJsonModel<FlowLogProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FlowLogProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FlowLogProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FlowLogProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FlowLogProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFlowLogProperties(document.RootElement, options);
         }
 
-        internal static FlowLogProperties DeserializeFlowLogProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FlowLogProperties DeserializeFlowLogProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            FlowLogFormatType? type = default;
-            int? version = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string storageId = default;
+            string enabledFilteringCriteria = default;
+            string recordTypes = default;
+            bool enabled = default;
+            RetentionPolicyParameters retentionPolicy = default;
+            FlowLogFormatParameters format = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("storageId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new FlowLogFormatType(property.Value.GetString());
+                    storageId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"u8))
+                if (prop.NameEquals("enabledFilteringCriteria"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    enabledFilteringCriteria = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("recordTypes"u8))
+                {
+                    recordTypes = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("enabled"u8))
+                {
+                    enabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("retentionPolicy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    version = property.Value.GetInt32();
+                    retentionPolicy = RetentionPolicyParameters.DeserializeRetentionPolicyParameters(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("format"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    format = FlowLogFormatParameters.DeserializeFlowLogFormatParameters(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new FlowLogProperties(type, version, serializedAdditionalRawData);
+            return new FlowLogProperties(
+                storageId,
+                enabledFilteringCriteria,
+                recordTypes,
+                enabled,
+                retentionPolicy,
+                format,
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FormatType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  type: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FormatType))
-                {
-                    builder.Append("  type: ");
-                    builder.AppendLine($"'{FormatType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Version), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  version: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Version))
-                {
-                    builder.Append("  version: ");
-                    builder.AppendLine($"{Version.Value}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<FlowLogProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FlowLogProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(FlowLogProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        FlowLogProperties IPersistableModel<FlowLogProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FlowLogProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFlowLogProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FlowLogProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<FlowLogProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

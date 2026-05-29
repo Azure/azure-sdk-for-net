@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct PreferredRoutingGateway : IEquatable<PreferredRoutingGateway>
     {
         private readonly string _value;
+        /// <summary> ExpressRoute. </summary>
+        private const string ExpressRouteValue = "ExpressRoute";
+        /// <summary> VpnGateway. </summary>
+        private const string VpnGatewayValue = "VpnGateway";
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
 
         /// <summary> Initializes a new instance of <see cref="PreferredRoutingGateway"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PreferredRoutingGateway(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ExpressRouteValue = "ExpressRoute";
-        private const string VpnGatewayValue = "VpnGateway";
-        private const string NoneValue = "None";
+            _value = value;
+        }
 
         /// <summary> ExpressRoute. </summary>
         public static PreferredRoutingGateway ExpressRoute { get; } = new PreferredRoutingGateway(ExpressRouteValue);
+
         /// <summary> VpnGateway. </summary>
         public static PreferredRoutingGateway VpnGateway { get; } = new PreferredRoutingGateway(VpnGatewayValue);
+
         /// <summary> None. </summary>
         public static PreferredRoutingGateway None { get; } = new PreferredRoutingGateway(NoneValue);
+
         /// <summary> Determines if two <see cref="PreferredRoutingGateway"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PreferredRoutingGateway left, PreferredRoutingGateway right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PreferredRoutingGateway"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PreferredRoutingGateway left, PreferredRoutingGateway right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PreferredRoutingGateway"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PreferredRoutingGateway"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PreferredRoutingGateway(string value) => new PreferredRoutingGateway(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PreferredRoutingGateway"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PreferredRoutingGateway?(string value) => value == null ? null : new PreferredRoutingGateway(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PreferredRoutingGateway other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PreferredRoutingGateway other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

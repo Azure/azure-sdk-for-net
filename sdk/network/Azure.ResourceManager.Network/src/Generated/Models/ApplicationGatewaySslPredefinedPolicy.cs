@@ -7,37 +7,50 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> An Ssl predefined policy. </summary>
-    public partial class ApplicationGatewaySslPredefinedPolicy : NetworkResourceData
+    public partial class ApplicationGatewaySslPredefinedPolicy : SubResource
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslPredefinedPolicy"/>. </summary>
-        public ApplicationGatewaySslPredefinedPolicy()
+        internal ApplicationGatewaySslPredefinedPolicy()
         {
-            CipherSuites = new ChangeTrackingList<ApplicationGatewaySslCipherSuite>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslPredefinedPolicy"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="cipherSuites"> Ssl cipher suites to be enabled in the specified order for application gateway. </param>
-        /// <param name="minProtocolVersion"> Minimum version of Ssl protocol to be supported on application gateway. </param>
-        internal ApplicationGatewaySslPredefinedPolicy(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ApplicationGatewaySslCipherSuite> cipherSuites, ApplicationGatewaySslProtocol? minProtocolVersion) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the Ssl predefined policy. </param>
+        /// <param name="properties"> Properties of the application gateway SSL predefined policy. </param>
+        internal ApplicationGatewaySslPredefinedPolicy(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ApplicationGatewaySslPredefinedPolicyPropertiesFormat properties) : base(id, additionalBinaryDataProperties)
         {
-            CipherSuites = cipherSuites;
-            MinProtocolVersion = minProtocolVersion;
+            Name = name;
+            Properties = properties;
         }
 
+        /// <summary> Name of the Ssl predefined policy. </summary>
+        public string Name { get; }
+
+        /// <summary> Properties of the application gateway SSL predefined policy. </summary>
+        internal ApplicationGatewaySslPredefinedPolicyPropertiesFormat Properties { get; }
+
         /// <summary> Ssl cipher suites to be enabled in the specified order for application gateway. </summary>
-        [WirePath("properties.cipherSuites")]
-        public IList<ApplicationGatewaySslCipherSuite> CipherSuites { get; }
+        public IList<ApplicationGatewaySslCipherSuite> CipherSuites
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CipherSuites;
+            }
+        }
+
         /// <summary> Minimum version of Ssl protocol to be supported on application gateway. </summary>
-        [WirePath("properties.minProtocolVersion")]
-        public ApplicationGatewaySslProtocol? MinProtocolVersion { get; set; }
+        public ApplicationGatewaySslProtocol? MinProtocolVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MinProtocolVersion;
+            }
+        }
     }
 }

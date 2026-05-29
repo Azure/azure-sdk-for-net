@@ -7,57 +7,88 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> ServiceAssociationLink resource. </summary>
-    public partial class ServiceAssociationLink : NetworkResourceData
+    public partial class ServiceAssociationLink : SubResource
     {
         /// <summary> Initializes a new instance of <see cref="ServiceAssociationLink"/>. </summary>
-        public ServiceAssociationLink()
+        internal ServiceAssociationLink()
         {
-            Locations = new ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceAssociationLink"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="linkedResourceType"> Resource type of the linked resource. </param>
-        /// <param name="link"> Link to the external resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the service association link resource. </param>
-        /// <param name="allowDelete"> If true, the resource can be deleted. </param>
-        /// <param name="locations"> A list of locations. </param>
-        internal ServiceAssociationLink(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ResourceType? linkedResourceType, ResourceIdentifier link, NetworkProvisioningState? provisioningState, bool? allowDelete, IList<AzureLocation> locations) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Resource navigation link properties format. </param>
+        /// <param name="name"> Name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="type"> Resource type. </param>
+        internal ServiceAssociationLink(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServiceAssociationLinkPropertiesFormat properties, string name, ETag? eTag, string @type) : base(id, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            LinkedResourceType = linkedResourceType;
-            Link = link;
-            ProvisioningState = provisioningState;
-            AllowDelete = allowDelete;
-            Locations = locations;
+            Properties = properties;
+            Name = name;
+            ETag = eTag;
+            Type = @type;
         }
 
+        /// <summary> Resource navigation link properties format. </summary>
+        internal ServiceAssociationLinkPropertiesFormat Properties { get; }
+
+        /// <summary> Name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
+        public string Name { get; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
+
+        /// <summary> Resource type. </summary>
+        public string Type { get; }
+
         /// <summary> Resource type of the linked resource. </summary>
-        [WirePath("properties.linkedResourceType")]
-        public ResourceType? LinkedResourceType { get; set; }
+        public string LinkedResourceType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LinkedResourceType;
+            }
+        }
+
         /// <summary> Link to the external resource. </summary>
-        [WirePath("properties.link")]
-        public ResourceIdentifier Link { get; set; }
+        public string Link
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Link;
+            }
+        }
+
         /// <summary> The provisioning state of the service association link resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> If true, the resource can be deleted. </summary>
-        [WirePath("properties.allowDelete")]
-        public bool? AllowDelete { get; set; }
+        public bool? AllowDelete
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowDelete;
+            }
+        }
+
         /// <summary> A list of locations. </summary>
-        [WirePath("properties.locations")]
-        public IList<AzureLocation> Locations { get; }
+        public IList<string> Locations
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Locations;
+            }
+        }
     }
 }

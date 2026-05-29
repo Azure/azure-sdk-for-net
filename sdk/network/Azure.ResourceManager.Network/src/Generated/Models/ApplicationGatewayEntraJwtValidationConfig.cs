@@ -7,57 +7,111 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Entra JWT Validation Configuration of an application gateway. </summary>
-    public partial class ApplicationGatewayEntraJwtValidationConfig : NetworkResourceData
+    public partial class ApplicationGatewayEntraJwtValidationConfig : SubResource
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayEntraJwtValidationConfig"/>. </summary>
         public ApplicationGatewayEntraJwtValidationConfig()
         {
-            Audiences = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayEntraJwtValidationConfig"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="unAuthorizedRequestAction"> Unauthorized request action. </param>
-        /// <param name="tenantId"> The Tenant ID of the Microsoft Entra ID application. </param>
-        /// <param name="clientId"> The Client ID of the Microsoft Entra ID application. </param>
-        /// <param name="audiences"> List of acceptable audience claims that can be present in the token (aud claim). A maximum of 5 audiences are permitted. </param>
-        /// <param name="provisioningState"> The provisioning state of the entra jwt validation configuration resource. </param>
-        internal ApplicationGatewayEntraJwtValidationConfig(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ApplicationGatewayUnAuthorizedRequestAction? unAuthorizedRequestAction, Guid? tenantId, string clientId, IList<string> audiences, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the application gateway entra jwt validation configuration. </param>
+        /// <param name="name"> Name of the entra jwt validation configuration that is unique within an application gateway. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal ApplicationGatewayEntraJwtValidationConfig(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationGatewayEntraJWTValidationConfigPropertiesFormat properties, string name, ETag? eTag) : base(id, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            UnAuthorizedRequestAction = unAuthorizedRequestAction;
-            TenantId = tenantId;
-            ClientId = clientId;
-            Audiences = audiences;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            Name = name;
+            ETag = eTag;
         }
 
+        /// <summary> Properties of the application gateway entra jwt validation configuration. </summary>
+        internal ApplicationGatewayEntraJWTValidationConfigPropertiesFormat Properties { get; set; }
+
+        /// <summary> Name of the entra jwt validation configuration that is unique within an application gateway. </summary>
+        public string Name { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> Unauthorized request action. </summary>
-        [WirePath("properties.unAuthorizedRequestAction")]
-        public ApplicationGatewayUnAuthorizedRequestAction? UnAuthorizedRequestAction { get; set; }
+        public ApplicationGatewayUnAuthorizedRequestAction? UnAuthorizedRequestAction
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UnAuthorizedRequestAction;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayEntraJWTValidationConfigPropertiesFormat();
+                }
+                Properties.UnAuthorizedRequestAction = value;
+            }
+        }
+
         /// <summary> The Tenant ID of the Microsoft Entra ID application. </summary>
-        [WirePath("properties.tenantId")]
-        public Guid? TenantId { get; set; }
+        public string TenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TenantId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayEntraJWTValidationConfigPropertiesFormat();
+                }
+                Properties.TenantId = value;
+            }
+        }
+
         /// <summary> The Client ID of the Microsoft Entra ID application. </summary>
-        [WirePath("properties.clientId")]
-        public string ClientId { get; set; }
+        public string ClientId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayEntraJWTValidationConfigPropertiesFormat();
+                }
+                Properties.ClientId = value;
+            }
+        }
+
         /// <summary> List of acceptable audience claims that can be present in the token (aud claim). A maximum of 5 audiences are permitted. </summary>
-        [WirePath("properties.audiences")]
-        public IList<string> Audiences { get; }
+        public IList<string> Audiences
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayEntraJWTValidationConfigPropertiesFormat();
+                }
+                return Properties.Audiences;
+            }
+        }
+
         /// <summary> The provisioning state of the entra jwt validation configuration resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

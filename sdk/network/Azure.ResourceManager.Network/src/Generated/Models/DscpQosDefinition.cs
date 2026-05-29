@@ -7,90 +7,61 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Quality of Service defines the traffic configuration between endpoints. Mandatory to have one marking. </summary>
     public partial class DscpQosDefinition
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DscpQosDefinition"/>. </summary>
         public DscpQosDefinition()
         {
             Markings = new ChangeTrackingList<int>();
-            SourceIPRanges = new ChangeTrackingList<QosIPRange>();
-            DestinationIPRanges = new ChangeTrackingList<QosIPRange>();
+            SourceIpRanges = new ChangeTrackingList<QosIPRange>();
+            DestinationIpRanges = new ChangeTrackingList<QosIPRange>();
             SourcePortRanges = new ChangeTrackingList<QosPortRange>();
             DestinationPortRanges = new ChangeTrackingList<QosPortRange>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DscpQosDefinition"/>. </summary>
         /// <param name="markings"> List of markings to be used in the configuration. </param>
-        /// <param name="sourceIPRanges"> Source IP ranges. </param>
-        /// <param name="destinationIPRanges"> Destination IP ranges. </param>
+        /// <param name="sourceIpRanges"> Source IP ranges. </param>
+        /// <param name="destinationIpRanges"> Destination IP ranges. </param>
         /// <param name="sourcePortRanges"> Sources port ranges. </param>
         /// <param name="destinationPortRanges"> Destination port ranges. </param>
         /// <param name="protocol"> RNM supported protocol types. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DscpQosDefinition(IList<int> markings, IList<QosIPRange> sourceIPRanges, IList<QosIPRange> destinationIPRanges, IList<QosPortRange> sourcePortRanges, IList<QosPortRange> destinationPortRanges, ProtocolType? protocol, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DscpQosDefinition(IList<int> markings, IList<QosIPRange> sourceIpRanges, IList<QosIPRange> destinationIpRanges, IList<QosPortRange> sourcePortRanges, IList<QosPortRange> destinationPortRanges, ProtocolType? protocol, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Markings = markings;
-            SourceIPRanges = sourceIPRanges;
-            DestinationIPRanges = destinationIPRanges;
+            SourceIpRanges = sourceIpRanges;
+            DestinationIpRanges = destinationIpRanges;
             SourcePortRanges = sourcePortRanges;
             DestinationPortRanges = destinationPortRanges;
             Protocol = protocol;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of markings to be used in the configuration. </summary>
-        [WirePath("markings")]
         public IList<int> Markings { get; }
+
         /// <summary> Source IP ranges. </summary>
-        [WirePath("sourceIpRanges")]
-        public IList<QosIPRange> SourceIPRanges { get; }
+        public IList<QosIPRange> SourceIpRanges { get; }
+
         /// <summary> Destination IP ranges. </summary>
-        [WirePath("destinationIpRanges")]
-        public IList<QosIPRange> DestinationIPRanges { get; }
+        public IList<QosIPRange> DestinationIpRanges { get; }
+
         /// <summary> Sources port ranges. </summary>
-        [WirePath("sourcePortRanges")]
         public IList<QosPortRange> SourcePortRanges { get; }
+
         /// <summary> Destination port ranges. </summary>
-        [WirePath("destinationPortRanges")]
         public IList<QosPortRange> DestinationPortRanges { get; }
+
         /// <summary> RNM supported protocol types. </summary>
-        [WirePath("protocol")]
         public ProtocolType? Protocol { get; set; }
     }
 }

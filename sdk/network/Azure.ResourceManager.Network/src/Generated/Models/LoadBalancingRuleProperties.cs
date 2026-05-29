@@ -7,14 +7,17 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of the load balancer. </summary>
-    public partial class LoadBalancingRuleProperties
+    internal partial class LoadBalancingRuleProperties
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="LoadBalancingRuleProperties"/>. </summary>
         /// <param name="protocol"> The reference to the transport protocol used by the load balancing rule. </param>
         /// <param name="frontendPort"> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 0 and 65534. Note that value 0 enables "Any Port". </param>
@@ -23,7 +26,6 @@ namespace Azure.ResourceManager.Network.Models
             BackendAddressPools = new ChangeTrackingList<WritableSubResource>();
             Protocol = protocol;
             FrontendPort = frontendPort;
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancingRuleProperties"/>. </summary>
@@ -41,8 +43,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="disableOutboundSnat"> Configures SNAT for the VMs in the backend pool to use the publicIP address specified in the frontend of the load balancing rule. </param>
         /// <param name="enableConnectionTracking"> Defines whether connections between 2 communicating endpoints can be tracked and associated to the same backend VM over its lifetime when using UDP protocol. </param>
         /// <param name="provisioningState"> The provisioning state of the load balancing rule resource. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal LoadBalancingRuleProperties(WritableSubResource frontendIPConfiguration, WritableSubResource backendAddressPool, IList<WritableSubResource> backendAddressPools, WritableSubResource probe, LoadBalancingTransportProtocol protocol, LoadDistribution? loadDistribution, int frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, bool? disableOutboundSnat, bool? enableConnectionTracking, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LoadBalancingRuleProperties(SubResource frontendIPConfiguration, SubResource backendAddressPool, IList<WritableSubResource> backendAddressPools, SubResource probe, LoadBalancingTransportProtocol protocol, LoadDistribution? loadDistribution, int frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, bool? disableOutboundSnat, bool? enableConnectionTracking, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FrontendIPConfiguration = frontendIPConfiguration;
             BackendAddressPool = backendAddressPool;
@@ -58,123 +60,100 @@ namespace Azure.ResourceManager.Network.Models
             DisableOutboundSnat = disableOutboundSnat;
             EnableConnectionTracking = enableConnectionTracking;
             ProvisioningState = provisioningState;
-            AdditionalProperties = additionalProperties;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="LoadBalancingRuleProperties"/> for deserialization. </summary>
-        internal LoadBalancingRuleProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A reference to frontend IP addresses. </summary>
-        internal WritableSubResource FrontendIPConfiguration { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("frontendIPConfiguration.id")]
-        public ResourceIdentifier FrontendIPConfigurationId
+        internal SubResource FrontendIPConfiguration { get; set; }
+
+        /// <summary> A reference to a pool of DIPs. Inbound traffic is randomly load balanced across IPs in the backend IPs. </summary>
+        internal SubResource BackendAddressPool { get; set; }
+
+        /// <summary> An array of references to pool of DIPs. </summary>
+        public IList<WritableSubResource> BackendAddressPools { get; } = new ChangeTrackingList<WritableSubResource>();
+
+        /// <summary> The reference to the load balancer probe used by the load balancing rule. </summary>
+        internal SubResource Probe { get; set; }
+
+        /// <summary> The reference to the transport protocol used by the load balancing rule. </summary>
+        public LoadBalancingTransportProtocol Protocol { get; set; }
+
+        /// <summary> The load distribution policy for this rule. </summary>
+        public LoadDistribution? LoadDistribution { get; set; }
+
+        /// <summary> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 0 and 65534. Note that value 0 enables "Any Port". </summary>
+        public int FrontendPort { get; set; }
+
+        /// <summary> The port used for internal connections on the endpoint. Acceptable values are between 0 and 65535. Note that value 0 enables "Any Port". </summary>
+        public int? BackendPort { get; set; }
+
+        /// <summary> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </summary>
+        public int? IdleTimeoutInMinutes { get; set; }
+
+        /// <summary> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </summary>
+        public bool? EnableFloatingIP { get; set; }
+
+        /// <summary> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </summary>
+        public bool? EnableTcpReset { get; set; }
+
+        /// <summary> Configures SNAT for the VMs in the backend pool to use the publicIP address specified in the frontend of the load balancing rule. </summary>
+        public bool? DisableOutboundSnat { get; set; }
+
+        /// <summary> Defines whether connections between 2 communicating endpoints can be tracked and associated to the same backend VM over its lifetime when using UDP protocol. </summary>
+        public bool? EnableConnectionTracking { get; set; }
+
+        /// <summary> The provisioning state of the load balancing rule resource. </summary>
+        public NetworkProvisioningState? ProvisioningState { get; }
+
+        /// <summary> Resource ID. </summary>
+        public string FrontendIPConfigurationId
         {
-            get => FrontendIPConfiguration is null ? default : FrontendIPConfiguration.Id;
+            get
+            {
+                return FrontendIPConfiguration is null ? default : FrontendIPConfiguration.Id;
+            }
             set
             {
                 if (FrontendIPConfiguration is null)
-                    FrontendIPConfiguration = new WritableSubResource();
+                {
+                    FrontendIPConfiguration = new SubResource();
+                }
                 FrontendIPConfiguration.Id = value;
             }
         }
 
-        /// <summary> A reference to a pool of DIPs. Inbound traffic is randomly load balanced across IPs in the backend IPs. </summary>
-        internal WritableSubResource BackendAddressPool { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("backendAddressPool.id")]
-        public ResourceIdentifier BackendAddressPoolId
+        /// <summary> Resource ID. </summary>
+        public string BackendAddressPoolId
         {
-            get => BackendAddressPool is null ? default : BackendAddressPool.Id;
+            get
+            {
+                return BackendAddressPool is null ? default : BackendAddressPool.Id;
+            }
             set
             {
                 if (BackendAddressPool is null)
-                    BackendAddressPool = new WritableSubResource();
+                {
+                    BackendAddressPool = new SubResource();
+                }
                 BackendAddressPool.Id = value;
             }
         }
 
-        /// <summary> An array of references to pool of DIPs. </summary>
-        [WirePath("backendAddressPools")]
-        public IList<WritableSubResource> BackendAddressPools { get; }
-        /// <summary> The reference to the load balancer probe used by the load balancing rule. </summary>
-        internal WritableSubResource Probe { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("probe.id")]
-        public ResourceIdentifier ProbeId
+        /// <summary> Resource ID. </summary>
+        public string ProbeId
         {
-            get => Probe is null ? default : Probe.Id;
+            get
+            {
+                return Probe is null ? default : Probe.Id;
+            }
             set
             {
                 if (Probe is null)
-                    Probe = new WritableSubResource();
+                {
+                    Probe = new SubResource();
+                }
                 Probe.Id = value;
             }
         }
-
-        /// <summary> The reference to the transport protocol used by the load balancing rule. </summary>
-        [WirePath("protocol")]
-        public LoadBalancingTransportProtocol Protocol { get; set; }
-        /// <summary> The load distribution policy for this rule. </summary>
-        [WirePath("loadDistribution")]
-        public LoadDistribution? LoadDistribution { get; set; }
-        /// <summary> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 0 and 65534. Note that value 0 enables "Any Port". </summary>
-        [WirePath("frontendPort")]
-        public int FrontendPort { get; set; }
-        /// <summary> The port used for internal connections on the endpoint. Acceptable values are between 0 and 65535. Note that value 0 enables "Any Port". </summary>
-        [WirePath("backendPort")]
-        public int? BackendPort { get; set; }
-        /// <summary> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </summary>
-        [WirePath("idleTimeoutInMinutes")]
-        public int? IdleTimeoutInMinutes { get; set; }
-        /// <summary> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </summary>
-        [WirePath("enableFloatingIP")]
-        public bool? EnableFloatingIP { get; set; }
-        /// <summary> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </summary>
-        [WirePath("enableTcpReset")]
-        public bool? EnableTcpReset { get; set; }
-        /// <summary> Configures SNAT for the VMs in the backend pool to use the publicIP address specified in the frontend of the load balancing rule. </summary>
-        [WirePath("disableOutboundSnat")]
-        public bool? DisableOutboundSnat { get; set; }
-        /// <summary> Defines whether connections between 2 communicating endpoints can be tracked and associated to the same backend VM over its lifetime when using UDP protocol. </summary>
-        [WirePath("enableConnectionTracking")]
-        public bool? EnableConnectionTracking { get; set; }
-        /// <summary> The provisioning state of the load balancing rule resource. </summary>
-        [WirePath("provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("AdditionalProperties")]
-        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

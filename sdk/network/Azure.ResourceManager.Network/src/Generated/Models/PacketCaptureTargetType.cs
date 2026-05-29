@@ -11,8 +11,8 @@ namespace Azure.ResourceManager.Network.Models
     public enum PacketCaptureTargetType
     {
         /// <summary> AzureVM. </summary>
-        AzureVm,
+        AzureVM,
         /// <summary> AzureVMSS. </summary>
-        AzureVmss
+        AzureVMSS
     }
 }

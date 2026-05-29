@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class VpnSiteOperationSource : IOperationSource<VpnSiteResource>
+    /// <summary></summary>
+    internal partial class VpnSiteOperationSource : IOperationSource<VpnSiteResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal VpnSiteOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         VpnSiteResource IOperationSource<VpnSiteResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VpnSiteData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            VpnSiteData data = VpnSiteData.DeserializeVpnSiteData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new VpnSiteResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<VpnSiteResource> IOperationSource<VpnSiteResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VpnSiteData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return await Task.FromResult(new VpnSiteResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            VpnSiteData data = VpnSiteData.DeserializeVpnSiteData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new VpnSiteResource(_client, data);
         }
     }
 }

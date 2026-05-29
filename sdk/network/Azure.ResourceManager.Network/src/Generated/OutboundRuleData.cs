@@ -7,84 +7,146 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the OutboundRule data model.
-    /// Outbound rule of the load balancer.
-    /// </summary>
-    public partial class OutboundRuleData : NetworkResourceData
+    /// <summary> Outbound rule of the load balancer. </summary>
+    public partial class OutboundRuleData : SubResourceModel
     {
         /// <summary> Initializes a new instance of <see cref="OutboundRuleData"/>. </summary>
         public OutboundRuleData()
         {
-            FrontendIPConfigurations = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OutboundRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="allocatedOutboundPorts"> The number of outbound ports to be used for NAT. </param>
-        /// <param name="frontendIPConfigurations"> The Frontend IP addresses of the load balancer. </param>
-        /// <param name="backendAddressPool"> A reference to a pool of DIPs. Outbound traffic is randomly load balanced across IPs in the backend IPs. </param>
-        /// <param name="provisioningState"> The provisioning state of the outbound rule resource. </param>
-        /// <param name="protocol"> The protocol for the outbound rule in load balancer. </param>
-        /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
-        /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. </param>
-        internal OutboundRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, int? allocatedOutboundPorts, IList<WritableSubResource> frontendIPConfigurations, WritableSubResource backendAddressPool, NetworkProvisioningState? provisioningState, LoadBalancerOutboundRuleProtocol? protocol, bool? enableTcpReset, int? idleTimeoutInMinutes) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of load balancer outbound rule. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal OutboundRuleData(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, OutboundRulePropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            AllocatedOutboundPorts = allocatedOutboundPorts;
-            FrontendIPConfigurations = frontendIPConfigurations;
-            BackendAddressPool = backendAddressPool;
-            ProvisioningState = provisioningState;
-            Protocol = protocol;
-            EnableTcpReset = enableTcpReset;
-            IdleTimeoutInMinutes = idleTimeoutInMinutes;
+            Properties = properties;
+            ETag = eTag;
         }
 
+        /// <summary> Properties of load balancer outbound rule. </summary>
+        internal OutboundRulePropertiesFormat Properties { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> The number of outbound ports to be used for NAT. </summary>
-        [WirePath("properties.allocatedOutboundPorts")]
-        public int? AllocatedOutboundPorts { get; set; }
-        /// <summary> The Frontend IP addresses of the load balancer. </summary>
-        [WirePath("properties.frontendIPConfigurations")]
-        public IList<WritableSubResource> FrontendIPConfigurations { get; }
-        /// <summary> A reference to a pool of DIPs. Outbound traffic is randomly load balanced across IPs in the backend IPs. </summary>
-        internal WritableSubResource BackendAddressPool { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.backendAddressPool.id")]
-        public ResourceIdentifier BackendAddressPoolId
+        public int? AllocatedOutboundPorts
         {
-            get => BackendAddressPool is null ? default : BackendAddressPool.Id;
+            get
+            {
+                return Properties is null ? default : Properties.AllocatedOutboundPorts;
+            }
             set
             {
-                if (BackendAddressPool is null)
-                    BackendAddressPool = new WritableSubResource();
-                BackendAddressPool.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new OutboundRulePropertiesFormat();
+                }
+                Properties.AllocatedOutboundPorts = value;
+            }
+        }
+
+        /// <summary> The Frontend IP addresses of the load balancer. </summary>
+        public IList<SubResource> FrontendIPConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new OutboundRulePropertiesFormat();
+                }
+                return Properties.FrontendIPConfigurations;
             }
         }
 
         /// <summary> The provisioning state of the outbound rule resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The protocol for the outbound rule in load balancer. </summary>
-        [WirePath("properties.protocol")]
-        public LoadBalancerOutboundRuleProtocol? Protocol { get; set; }
+        public LoadBalancerOutboundRuleProtocol? Protocol
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Protocol;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new OutboundRulePropertiesFormat();
+                    }
+                    Properties.Protocol = value.Value;
+                }
+            }
+        }
+
         /// <summary> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </summary>
-        [WirePath("properties.enableTcpReset")]
-        public bool? EnableTcpReset { get; set; }
+        public bool? EnableTcpReset
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableTcpReset;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OutboundRulePropertiesFormat();
+                }
+                Properties.EnableTcpReset = value;
+            }
+        }
+
         /// <summary> The timeout for the TCP idle connection. </summary>
-        [WirePath("properties.idleTimeoutInMinutes")]
-        public int? IdleTimeoutInMinutes { get; set; }
+        public int? IdleTimeoutInMinutes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IdleTimeoutInMinutes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OutboundRulePropertiesFormat();
+                }
+                Properties.IdleTimeoutInMinutes = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public string BackendAddressPoolId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackendAddressPoolId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OutboundRulePropertiesFormat();
+                }
+                Properties.BackendAddressPoolId = value;
+            }
+        }
     }
 }

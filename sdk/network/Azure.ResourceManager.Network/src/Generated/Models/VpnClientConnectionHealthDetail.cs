@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> VPN client connection health detail. </summary>
     public partial class VpnClientConnectionHealthDetail
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VpnClientConnectionHealthDetail"/>. </summary>
         internal VpnClientConnectionHealthDetail()
@@ -52,10 +23,10 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="VpnClientConnectionHealthDetail"/>. </summary>
         /// <param name="vpnConnectionId"> The vpn client Id. </param>
-        /// <param name="vpnConnectionDurationInSeconds"> The duration time of a connected vpn client. </param>
-        /// <param name="vpnConnectionOn"> The start time of a connected vpn client. </param>
-        /// <param name="publicIPAddress"> The public Ip of a connected vpn client. </param>
-        /// <param name="privateIPAddress"> The assigned private Ip of a connected vpn client. </param>
+        /// <param name="vpnConnectionDuration"> The duration time of a connected vpn client. </param>
+        /// <param name="vpnConnectionTime"> The start time of a connected vpn client. </param>
+        /// <param name="publicIpAddress"> The public Ip of a connected vpn client. </param>
+        /// <param name="privateIpAddress"> The assigned private Ip of a connected vpn client. </param>
         /// <param name="vpnUserName"> The user name of a connected vpn client. </param>
         /// <param name="maxBandwidth"> The max band width. </param>
         /// <param name="egressPacketsTransferred"> The egress packets per second. </param>
@@ -63,14 +34,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ingressPacketsTransferred"> The ingress packets per second. </param>
         /// <param name="ingressBytesTransferred"> The ingress bytes per second. </param>
         /// <param name="maxPacketsPerSecond"> The max packets transferred per second. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VpnClientConnectionHealthDetail(string vpnConnectionId, long? vpnConnectionDurationInSeconds, DateTimeOffset? vpnConnectionOn, string publicIPAddress, string privateIPAddress, string vpnUserName, long? maxBandwidth, long? egressPacketsTransferred, long? egressBytesTransferred, long? ingressPacketsTransferred, long? ingressBytesTransferred, long? maxPacketsPerSecond, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VpnClientConnectionHealthDetail(string vpnConnectionId, long? vpnConnectionDuration, string vpnConnectionTime, string publicIpAddress, string privateIpAddress, string vpnUserName, long? maxBandwidth, long? egressPacketsTransferred, long? egressBytesTransferred, long? ingressPacketsTransferred, long? ingressBytesTransferred, long? maxPacketsPerSecond, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VpnConnectionId = vpnConnectionId;
-            VpnConnectionDurationInSeconds = vpnConnectionDurationInSeconds;
-            VpnConnectionOn = vpnConnectionOn;
-            PublicIPAddress = publicIPAddress;
-            PrivateIPAddress = privateIPAddress;
+            VpnConnectionDuration = vpnConnectionDuration;
+            VpnConnectionTime = vpnConnectionTime;
+            PublicIpAddress = publicIpAddress;
+            PrivateIpAddress = privateIpAddress;
             VpnUserName = vpnUserName;
             MaxBandwidth = maxBandwidth;
             EgressPacketsTransferred = egressPacketsTransferred;
@@ -78,44 +49,43 @@ namespace Azure.ResourceManager.Network.Models
             IngressPacketsTransferred = ingressPacketsTransferred;
             IngressBytesTransferred = ingressBytesTransferred;
             MaxPacketsPerSecond = maxPacketsPerSecond;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The vpn client Id. </summary>
-        [WirePath("vpnConnectionId")]
         public string VpnConnectionId { get; }
+
         /// <summary> The duration time of a connected vpn client. </summary>
-        [WirePath("vpnConnectionDuration")]
-        public long? VpnConnectionDurationInSeconds { get; }
+        public long? VpnConnectionDuration { get; }
+
         /// <summary> The start time of a connected vpn client. </summary>
-        [WirePath("vpnConnectionTime")]
-        public DateTimeOffset? VpnConnectionOn { get; }
+        public string VpnConnectionTime { get; }
+
         /// <summary> The public Ip of a connected vpn client. </summary>
-        [WirePath("publicIpAddress")]
-        public string PublicIPAddress { get; }
+        public string PublicIpAddress { get; }
+
         /// <summary> The assigned private Ip of a connected vpn client. </summary>
-        [WirePath("privateIpAddress")]
-        public string PrivateIPAddress { get; }
+        public string PrivateIpAddress { get; }
+
         /// <summary> The user name of a connected vpn client. </summary>
-        [WirePath("vpnUserName")]
         public string VpnUserName { get; }
+
         /// <summary> The max band width. </summary>
-        [WirePath("maxBandwidth")]
         public long? MaxBandwidth { get; }
+
         /// <summary> The egress packets per second. </summary>
-        [WirePath("egressPacketsTransferred")]
         public long? EgressPacketsTransferred { get; }
+
         /// <summary> The egress bytes per second. </summary>
-        [WirePath("egressBytesTransferred")]
         public long? EgressBytesTransferred { get; }
+
         /// <summary> The ingress packets per second. </summary>
-        [WirePath("ingressPacketsTransferred")]
         public long? IngressPacketsTransferred { get; }
+
         /// <summary> The ingress bytes per second. </summary>
-        [WirePath("ingressBytesTransferred")]
         public long? IngressBytesTransferred { get; }
+
         /// <summary> The max packets transferred per second. </summary>
-        [WirePath("maxPacketsPerSecond")]
         public long? MaxPacketsPerSecond { get; }
     }
 }

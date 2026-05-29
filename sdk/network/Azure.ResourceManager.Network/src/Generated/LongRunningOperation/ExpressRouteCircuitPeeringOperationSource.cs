@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class ExpressRouteCircuitPeeringOperationSource : IOperationSource<ExpressRouteCircuitPeeringResource>
+    /// <summary></summary>
+    internal partial class ExpressRouteCircuitPeeringOperationSource : IOperationSource<ExpressRouteCircuitPeeringResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ExpressRouteCircuitPeeringOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ExpressRouteCircuitPeeringResource IOperationSource<ExpressRouteCircuitPeeringResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ExpressRouteCircuitPeeringData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ExpressRouteCircuitPeeringData data = ExpressRouteCircuitPeeringData.DeserializeExpressRouteCircuitPeeringData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ExpressRouteCircuitPeeringResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ExpressRouteCircuitPeeringResource> IOperationSource<ExpressRouteCircuitPeeringResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ExpressRouteCircuitPeeringData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return await Task.FromResult(new ExpressRouteCircuitPeeringResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ExpressRouteCircuitPeeringData data = ExpressRouteCircuitPeeringData.DeserializeExpressRouteCircuitPeeringData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ExpressRouteCircuitPeeringResource(_client, data);
         }
     }
 }

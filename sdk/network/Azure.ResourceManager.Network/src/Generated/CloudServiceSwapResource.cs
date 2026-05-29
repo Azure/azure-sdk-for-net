@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A Class representing a CloudServiceSwap along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CloudServiceSwapResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetCloudServiceSwapResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetCloudServiceSwap method.
+    /// A class representing a CloudServiceSwap along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CloudServiceSwapResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetCloudServiceSwaps method.
     /// </summary>
     public partial class CloudServiceSwapResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="CloudServiceSwapResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="groupName"> The groupName. </param>
-        /// <param name="resourceName"> The resourceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string groupName, string resourceName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Compute/cloudServices/{resourceName}/providers/Microsoft.Network/cloudServiceSlots/swap";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _cloudServiceSwapVipSwapClientDiagnostics;
-        private readonly VipSwapRestOperations _cloudServiceSwapVipSwapRestClient;
+        private readonly ClientDiagnostics _vipSwapClientDiagnostics;
+        private readonly VipSwap _vipSwapRestClient;
         private readonly CloudServiceSwapData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/cloudServiceSlots";
 
-        /// <summary> Initializes a new instance of the <see cref="CloudServiceSwapResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of CloudServiceSwapResource for mocking. </summary>
         protected CloudServiceSwapResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CloudServiceSwapResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceSwapResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CloudServiceSwapResource(ArmClient client, CloudServiceSwapData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.Network
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CloudServiceSwapResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceSwapResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CloudServiceSwapResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cloudServiceSwapVipSwapClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string cloudServiceSwapVipSwapApiVersion);
-            _cloudServiceSwapVipSwapRestClient = new VipSwapRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cloudServiceSwapVipSwapApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string cloudServiceSwapApiVersion);
+            _vipSwapClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
+            _vipSwapRestClient = new VipSwap(_vipSwapClientDiagnostics, Pipeline, Endpoint, cloudServiceSwapApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual CloudServiceSwapData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="groupName"> The groupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="singletonResource"> The singletonResource. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string groupName, string resourceName, string singletonResource)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/microsoft.Compute/cloudServices/{resourceName}/providers/Microsoft.Network/cloudServiceSlots/{singletonResource}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the SwapResource which identifies the slot type for the specified cloud service. The slot type on a cloud service can either be Staging or Production
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Compute/cloudServices/{resourceName}/providers/Microsoft.Network/cloudServiceSlots/{singletonResource}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/microsoft.Compute/cloudServices/{resourceName}/providers/Microsoft.Network/cloudServiceSlots/{singletonResource}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VipSwap_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SwapResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudServiceSwapResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CloudServiceSwapResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CloudServiceSwapResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _cloudServiceSwapVipSwapClientDiagnostics.CreateScope("CloudServiceSwapResource.Get");
+            using DiagnosticScope scope = _vipSwapClientDiagnostics.CreateScope("CloudServiceSwapResource.Get");
             scope.Start();
             try
             {
-                var response = await _cloudServiceSwapVipSwapRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _vipSwapRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CloudServiceSwapData> response = Response.FromValue(CloudServiceSwapData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CloudServiceSwapResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.Network
         /// Gets the SwapResource which identifies the slot type for the specified cloud service. The slot type on a cloud service can either be Staging or Production
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Compute/cloudServices/{resourceName}/providers/Microsoft.Network/cloudServiceSlots/{singletonResource}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/microsoft.Compute/cloudServices/{resourceName}/providers/Microsoft.Network/cloudServiceSlots/{singletonResource}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VipSwap_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SwapResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudServiceSwapResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CloudServiceSwapResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CloudServiceSwapResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _cloudServiceSwapVipSwapClientDiagnostics.CreateScope("CloudServiceSwapResource.Get");
+            using DiagnosticScope scope = _vipSwapClientDiagnostics.CreateScope("CloudServiceSwapResource.Get");
             scope.Start();
             try
             {
-                var response = _cloudServiceSwapVipSwapRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _vipSwapRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CloudServiceSwapData> response = Response.FromValue(CloudServiceSwapData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CloudServiceSwapResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -169,23 +188,23 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Performs vip swap operation on swappable cloud services.
+        /// Update a CloudServiceSwap.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Compute/cloudServices/{resourceName}/providers/Microsoft.Network/cloudServiceSlots/{singletonResource}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/microsoft.Compute/cloudServices/{resourceName}/providers/Microsoft.Network/cloudServiceSlots/{singletonResource}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VipSwap_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> SwapResources_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudServiceSwapResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CloudServiceSwapResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -197,14 +216,21 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cloudServiceSwapVipSwapClientDiagnostics.CreateScope("CloudServiceSwapResource.Update");
+            using DiagnosticScope scope = _vipSwapClientDiagnostics.CreateScope("CloudServiceSwapResource.Update");
             scope.Start();
             try
             {
-                var response = await _cloudServiceSwapVipSwapRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_cloudServiceSwapVipSwapClientDiagnostics, Pipeline, _cloudServiceSwapVipSwapRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _vipSwapRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, CloudServiceSwapData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation operation = new NetworkArmOperation(_vipSwapClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -215,23 +241,23 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Performs vip swap operation on swappable cloud services.
+        /// Update a CloudServiceSwap.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Compute/cloudServices/{resourceName}/providers/Microsoft.Network/cloudServiceSlots/{singletonResource}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/microsoft.Compute/cloudServices/{resourceName}/providers/Microsoft.Network/cloudServiceSlots/{singletonResource}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VipSwap_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> SwapResources_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudServiceSwapResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CloudServiceSwapResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -243,14 +269,21 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cloudServiceSwapVipSwapClientDiagnostics.CreateScope("CloudServiceSwapResource.Update");
+            using DiagnosticScope scope = _vipSwapClientDiagnostics.CreateScope("CloudServiceSwapResource.Update");
             scope.Start();
             try
             {
-                var response = _cloudServiceSwapVipSwapRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new NetworkArmOperation(_cloudServiceSwapVipSwapClientDiagnostics, Pipeline, _cloudServiceSwapVipSwapRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _vipSwapRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, CloudServiceSwapData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation operation = new NetworkArmOperation(_vipSwapClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

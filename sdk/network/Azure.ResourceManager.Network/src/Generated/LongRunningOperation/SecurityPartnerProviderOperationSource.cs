@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class SecurityPartnerProviderOperationSource : IOperationSource<SecurityPartnerProviderResource>
+    /// <summary></summary>
+    internal partial class SecurityPartnerProviderOperationSource : IOperationSource<SecurityPartnerProviderResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal SecurityPartnerProviderOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         SecurityPartnerProviderResource IOperationSource<SecurityPartnerProviderResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SecurityPartnerProviderData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            SecurityPartnerProviderData data = SecurityPartnerProviderData.DeserializeSecurityPartnerProviderData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SecurityPartnerProviderResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<SecurityPartnerProviderResource> IOperationSource<SecurityPartnerProviderResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SecurityPartnerProviderData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return await Task.FromResult(new SecurityPartnerProviderResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            SecurityPartnerProviderData data = SecurityPartnerProviderData.DeserializeSecurityPartnerProviderData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SecurityPartnerProviderResource(_client, data);
         }
     }
 }

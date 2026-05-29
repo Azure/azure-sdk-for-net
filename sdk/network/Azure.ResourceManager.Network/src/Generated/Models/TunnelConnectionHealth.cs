@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> VirtualNetworkGatewayConnection properties. </summary>
     public partial class TunnelConnectionHealth
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TunnelConnectionHealth"/>. </summary>
         internal TunnelConnectionHealth()
@@ -55,32 +26,31 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="connectionStatus"> Virtual Network Gateway connection status. </param>
         /// <param name="ingressBytesTransferred"> The Ingress Bytes Transferred in this connection. </param>
         /// <param name="egressBytesTransferred"> The Egress Bytes Transferred in this connection. </param>
-        /// <param name="lastConnectionEstablishedOn"> The time at which connection was established in Utc format. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TunnelConnectionHealth(string tunnel, VirtualNetworkGatewayConnectionStatus? connectionStatus, long? ingressBytesTransferred, long? egressBytesTransferred, string lastConnectionEstablishedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="lastConnectionEstablishedUtcTime"> The time at which connection was established in Utc format. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TunnelConnectionHealth(string tunnel, VirtualNetworkGatewayConnectionStatus? connectionStatus, long? ingressBytesTransferred, long? egressBytesTransferred, string lastConnectionEstablishedUtcTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tunnel = tunnel;
             ConnectionStatus = connectionStatus;
             IngressBytesTransferred = ingressBytesTransferred;
             EgressBytesTransferred = egressBytesTransferred;
-            LastConnectionEstablishedOn = lastConnectionEstablishedOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            LastConnectionEstablishedUtcTime = lastConnectionEstablishedUtcTime;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Tunnel name. </summary>
-        [WirePath("tunnel")]
         public string Tunnel { get; }
+
         /// <summary> Virtual Network Gateway connection status. </summary>
-        [WirePath("connectionStatus")]
         public VirtualNetworkGatewayConnectionStatus? ConnectionStatus { get; }
+
         /// <summary> The Ingress Bytes Transferred in this connection. </summary>
-        [WirePath("ingressBytesTransferred")]
         public long? IngressBytesTransferred { get; }
+
         /// <summary> The Egress Bytes Transferred in this connection. </summary>
-        [WirePath("egressBytesTransferred")]
         public long? EgressBytesTransferred { get; }
+
         /// <summary> The time at which connection was established in Utc format. </summary>
-        [WirePath("lastConnectionEstablishedUtcTime")]
-        public string LastConnectionEstablishedOn { get; }
+        public string LastConnectionEstablishedUtcTime { get; }
     }
 }

@@ -8,17 +8,57 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectivityHopInfo : IUtf8JsonSerializable, IJsonModel<ConnectivityHopInfo>
+    /// <summary> Information about a hop between the source and the destination. </summary>
+    public partial class ConnectivityHopInfo : IJsonModel<ConnectivityHopInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectivityHopInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ConnectivityHopInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectivityHopInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeConnectivityHopInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConnectivityHopInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectivityHopInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ConnectivityHopInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ConnectivityHopInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConnectivityHopInfo IPersistableModel<ConnectivityHopInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ConnectivityHopInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConnectivityHopInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,16 +70,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityHopInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectivityHopInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConnectivityHopInfo)} does not support writing '{format}' format.");
             }
-
-            if (options.Format != "W" && Optional.IsDefined(ConnectivityHopType))
+            if (options.Format != "W" && Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ConnectivityHopType);
+                writer.WriteStringValue(Type);
             }
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
@@ -60,8 +99,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("nextHopIds"u8);
                 writer.WriteStartArray();
-                foreach (var item in NextHopIds)
+                foreach (string item in NextHopIds)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -70,8 +114,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("previousHopIds"u8);
                 writer.WriteStartArray();
-                foreach (var item in PreviousHopIds)
+                foreach (string item in PreviousHopIds)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -80,7 +129,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
-                foreach (var item in Links)
+                foreach (HopLink item in Links)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -90,7 +139,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("previousLinks"u8);
                 writer.WriteStartArray();
-                foreach (var item in PreviousLinks)
+                foreach (HopLink item in PreviousLinks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -100,21 +149,21 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("issues"u8);
                 writer.WriteStartArray();
-                foreach (var item in Issues)
+                foreach (Models.ConnectivityIssueInfo item in Issues)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<Models.ConnectivityIssueInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -123,27 +172,32 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        ConnectivityHopInfo IJsonModel<ConnectivityHopInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConnectivityHopInfo IJsonModel<ConnectivityHopInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ConnectivityHopInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityHopInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectivityHopInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConnectivityHopInfo)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeConnectivityHopInfo(document.RootElement, options);
         }
 
-        internal static ConnectivityHopInfo DeserializeConnectivityHopInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ConnectivityHopInfo DeserializeConnectivityHopInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string type = default;
+            string @type = default;
             string id = default;
             string address = default;
             ResourceIdentifier resourceId = default;
@@ -151,113 +205,125 @@ namespace Azure.ResourceManager.Network.Models
             IReadOnlyList<string> previousHopIds = default;
             IReadOnlyList<HopLink> links = default;
             IReadOnlyList<HopLink> previousLinks = default;
-            IReadOnlyList<ConnectivityIssueInfo> issues = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IReadOnlyList<Models.ConnectivityIssueInfo> issues = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    @type = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("address"u8))
+                if (prop.NameEquals("address"u8))
                 {
-                    address = property.Value.GetString();
+                    address = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceId"u8))
+                if (prop.NameEquals("resourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resourceId = new ResourceIdentifier(property.Value.GetString());
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("nextHopIds"u8))
+                if (prop.NameEquals("nextHopIds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     nextHopIds = array;
                     continue;
                 }
-                if (property.NameEquals("previousHopIds"u8))
+                if (prop.NameEquals("previousHopIds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     previousHopIds = array;
                     continue;
                 }
-                if (property.NameEquals("links"u8))
+                if (prop.NameEquals("links"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<HopLink> array = new List<HopLink>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(HopLink.DeserializeHopLink(item, options));
                     }
                     links = array;
                     continue;
                 }
-                if (property.NameEquals("previousLinks"u8))
+                if (prop.NameEquals("previousLinks"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<HopLink> array = new List<HopLink>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(HopLink.DeserializeHopLink(item, options));
                     }
                     previousLinks = array;
                     continue;
                 }
-                if (property.NameEquals("issues"u8))
+                if (prop.NameEquals("issues"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<ConnectivityIssueInfo> array = new List<ConnectivityIssueInfo>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    List<Models.ConnectivityIssueInfo> array = new List<Models.ConnectivityIssueInfo>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityIssueInfo.DeserializeConnectivityIssueInfo(item, options));
+                        array.Add(Models.ConnectivityIssueInfo.DeserializeConnectivityIssueInfo(item, options));
                     }
                     issues = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ConnectivityHopInfo(
-                type,
+                @type,
                 id,
                 address,
                 resourceId,
@@ -265,281 +331,8 @@ namespace Azure.ResourceManager.Network.Models
                 previousHopIds ?? new ChangeTrackingList<string>(),
                 links ?? new ChangeTrackingList<HopLink>(),
                 previousLinks ?? new ChangeTrackingList<HopLink>(),
-                issues ?? new ChangeTrackingList<ConnectivityIssueInfo>(),
-                serializedAdditionalRawData);
+                issues ?? new ChangeTrackingList<Models.ConnectivityIssueInfo>(),
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectivityHopType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  type: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ConnectivityHopType))
-                {
-                    builder.Append("  type: ");
-                    if (ConnectivityHopType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ConnectivityHopType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ConnectivityHopType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    if (Id.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Id}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Id}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Address), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  address: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Address))
-                {
-                    builder.Append("  address: ");
-                    if (Address.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Address}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Address}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  resourceId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ResourceId))
-                {
-                    builder.Append("  resourceId: ");
-                    builder.AppendLine($"'{ResourceId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextHopIds), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  nextHopIds: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(NextHopIds))
-                {
-                    if (NextHopIds.Any())
-                    {
-                        builder.Append("  nextHopIds: ");
-                        builder.AppendLine("[");
-                        foreach (var item in NextHopIds)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreviousHopIds), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  previousHopIds: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(PreviousHopIds))
-                {
-                    if (PreviousHopIds.Any())
-                    {
-                        builder.Append("  previousHopIds: ");
-                        builder.AppendLine("[");
-                        foreach (var item in PreviousHopIds)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Links), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  links: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Links))
-                {
-                    if (Links.Any())
-                    {
-                        builder.Append("  links: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Links)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  links: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreviousLinks), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  previousLinks: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(PreviousLinks))
-                {
-                    if (PreviousLinks.Any())
-                    {
-                        builder.Append("  previousLinks: ");
-                        builder.AppendLine("[");
-                        foreach (var item in PreviousLinks)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  previousLinks: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Issues), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  issues: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Issues))
-                {
-                    if (Issues.Any())
-                    {
-                        builder.Append("  issues: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Issues)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  issues: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ConnectivityHopInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityHopInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ConnectivityHopInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ConnectivityHopInfo IPersistableModel<ConnectivityHopInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityHopInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeConnectivityHopInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ConnectivityHopInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ConnectivityHopInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

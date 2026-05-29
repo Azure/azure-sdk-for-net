@@ -7,147 +7,299 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the PublicIPAddress data model.
-    /// Public IP address resource.
-    /// </summary>
-    public partial class PublicIPAddressData : NetworkTrackedResourceData
+    /// <summary> Public IP address resource. </summary>
+    public partial class PublicIPAddressData : Resource
     {
         /// <summary> Initializes a new instance of <see cref="PublicIPAddressData"/>. </summary>
         public PublicIPAddressData()
         {
             Zones = new ChangeTrackingList<string>();
-            IPTags = new ChangeTrackingList<IPTag>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PublicIPAddressData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Public IP address properties. </param>
         /// <param name="extendedLocation"> The extended location of the public ip address. </param>
         /// <param name="sku"> The public IP address SKU. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="zones"> A list of availability zones denoting the IP allocated for the resource needs to come from. </param>
-        /// <param name="publicIPAllocationMethod"> The public IP address allocation method. </param>
-        /// <param name="publicIPAddressVersion"> The public IP address version. </param>
-        /// <param name="ipConfiguration"> The IP configuration associated with the public IP address. </param>
-        /// <param name="dnsSettings"> The FQDN of the DNS record associated with the public IP address. </param>
-        /// <param name="ddosSettings"> The DDoS protection custom policy associated with the public IP address. </param>
-        /// <param name="ipTags"> The list of tags associated with the public IP address. </param>
-        /// <param name="ipAddress"> The IP address associated with the public IP address resource. </param>
-        /// <param name="publicIPPrefix"> The Public IP Prefix this Public IP Address should be allocated from. </param>
-        /// <param name="idleTimeoutInMinutes"> The idle timeout of the public IP address. </param>
-        /// <param name="resourceGuid"> The resource GUID property of the public IP address resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the public IP address resource. </param>
-        /// <param name="servicePublicIPAddress"> The service public IP address of the public IP address resource. </param>
-        /// <param name="natGateway"> The NatGateway for the Public IP address. </param>
-        /// <param name="migrationPhase"> Migration phase of Public IP Address. </param>
-        /// <param name="linkedPublicIPAddress"> The linked public IP address of the public IP address resource. </param>
-        /// <param name="deleteOption"> Specify what happens to the public IP address when the VM using it is deleted. </param>
-        internal PublicIPAddressData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, PublicIPAddressSku sku, ETag? etag, IList<string> zones, NetworkIPAllocationMethod? publicIPAllocationMethod, NetworkIPVersion? publicIPAddressVersion, NetworkIPConfiguration ipConfiguration, PublicIPAddressDnsSettings dnsSettings, DdosSettings ddosSettings, IList<IPTag> ipTags, string ipAddress, WritableSubResource publicIPPrefix, int? idleTimeoutInMinutes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, PublicIPAddressData servicePublicIPAddress, NatGatewayData natGateway, PublicIPAddressMigrationPhase? migrationPhase, PublicIPAddressData linkedPublicIPAddress, IPAddressDeleteOption? deleteOption) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal PublicIPAddressData(string id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, PublicIPAddressPropertiesFormat properties, Resources.Models.ExtendedLocation extendedLocation, PublicIPAddressSku sku, ETag? eTag, IList<string> zones) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
+            Properties = properties;
             ExtendedLocation = extendedLocation;
             Sku = sku;
-            ETag = etag;
+            ETag = eTag;
             Zones = zones;
-            PublicIPAllocationMethod = publicIPAllocationMethod;
-            PublicIPAddressVersion = publicIPAddressVersion;
-            IPConfiguration = ipConfiguration;
-            DnsSettings = dnsSettings;
-            DdosSettings = ddosSettings;
-            IPTags = ipTags;
-            IPAddress = ipAddress;
-            PublicIPPrefix = publicIPPrefix;
-            IdleTimeoutInMinutes = idleTimeoutInMinutes;
-            ResourceGuid = resourceGuid;
-            ProvisioningState = provisioningState;
-            ServicePublicIPAddress = servicePublicIPAddress;
-            NatGateway = natGateway;
-            MigrationPhase = migrationPhase;
-            LinkedPublicIPAddress = linkedPublicIPAddress;
-            DeleteOption = deleteOption;
         }
 
+        /// <summary> Public IP address properties. </summary>
+        internal PublicIPAddressPropertiesFormat Properties { get; set; }
+
         /// <summary> The extended location of the public ip address. </summary>
-        [WirePath("extendedLocation")]
-        public ExtendedLocation ExtendedLocation { get; set; }
+        public Resources.Models.ExtendedLocation ExtendedLocation { get; set; }
+
         /// <summary> The public IP address SKU. </summary>
-        [WirePath("sku")]
         public PublicIPAddressSku Sku { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> A list of availability zones denoting the IP allocated for the resource needs to come from. </summary>
-        [WirePath("zones")]
         public IList<string> Zones { get; }
+
         /// <summary> The public IP address allocation method. </summary>
-        [WirePath("properties.publicIPAllocationMethod")]
-        public NetworkIPAllocationMethod? PublicIPAllocationMethod { get; set; }
-        /// <summary> The public IP address version. </summary>
-        [WirePath("properties.publicIPAddressVersion")]
-        public NetworkIPVersion? PublicIPAddressVersion { get; set; }
-        /// <summary> The IP configuration associated with the public IP address. </summary>
-        [WirePath("properties.ipConfiguration")]
-        public NetworkIPConfiguration IPConfiguration { get; }
-        /// <summary> The FQDN of the DNS record associated with the public IP address. </summary>
-        [WirePath("properties.dnsSettings")]
-        public PublicIPAddressDnsSettings DnsSettings { get; set; }
-        /// <summary> The DDoS protection custom policy associated with the public IP address. </summary>
-        [WirePath("properties.ddosSettings")]
-        public DdosSettings DdosSettings { get; set; }
-        /// <summary> The list of tags associated with the public IP address. </summary>
-        [WirePath("properties.ipTags")]
-        public IList<IPTag> IPTags { get; }
-        /// <summary> The IP address associated with the public IP address resource. </summary>
-        [WirePath("properties.ipAddress")]
-        public string IPAddress { get; set; }
-        /// <summary> The Public IP Prefix this Public IP Address should be allocated from. </summary>
-        internal WritableSubResource PublicIPPrefix { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.publicIPPrefix.id")]
-        public ResourceIdentifier PublicIPPrefixId
+        public NetworkIPAllocationMethod? PublicIPAllocationMethod
         {
-            get => PublicIPPrefix is null ? default : PublicIPPrefix.Id;
+            get
+            {
+                return Properties is null ? default : Properties.PublicIPAllocationMethod;
+            }
             set
             {
-                if (PublicIPPrefix is null)
-                    PublicIPPrefix = new WritableSubResource();
-                PublicIPPrefix.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new PublicIPAddressPropertiesFormat();
+                }
+                Properties.PublicIPAllocationMethod = value;
+            }
+        }
+
+        /// <summary> The public IP address version. </summary>
+        public NetworkIPVersion? PublicIPAddressVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicIPAddressVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PublicIPAddressPropertiesFormat();
+                }
+                Properties.PublicIPAddressVersion = value;
+            }
+        }
+
+        /// <summary> The IP configuration associated with the public IP address. </summary>
+        public NetworkIPConfiguration IpConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IpConfiguration;
+            }
+        }
+
+        /// <summary> The FQDN of the DNS record associated with the public IP address. </summary>
+        public PublicIPAddressDnsSettings DnsSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DnsSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PublicIPAddressPropertiesFormat();
+                }
+                Properties.DnsSettings = value;
+            }
+        }
+
+        /// <summary> The DDoS protection custom policy associated with the public IP address. </summary>
+        public DdosSettings DdosSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DdosSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PublicIPAddressPropertiesFormat();
+                }
+                Properties.DdosSettings = value;
+            }
+        }
+
+        /// <summary> The list of tags associated with the public IP address. </summary>
+        public IList<IPTag> IpTags
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PublicIPAddressPropertiesFormat();
+                }
+                return Properties.IpTags;
+            }
+        }
+
+        /// <summary> The IP address associated with the public IP address resource. </summary>
+        public string IpAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IpAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PublicIPAddressPropertiesFormat();
+                }
+                Properties.IpAddress = value;
             }
         }
 
         /// <summary> The idle timeout of the public IP address. </summary>
-        [WirePath("properties.idleTimeoutInMinutes")]
-        public int? IdleTimeoutInMinutes { get; set; }
+        public int? IdleTimeoutInMinutes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IdleTimeoutInMinutes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PublicIPAddressPropertiesFormat();
+                }
+                Properties.IdleTimeoutInMinutes = value;
+            }
+        }
+
         /// <summary> The resource GUID property of the public IP address resource. </summary>
-        [WirePath("properties.resourceGuid")]
-        public Guid? ResourceGuid { get; }
+        public string ResourceGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceGuid;
+            }
+        }
+
         /// <summary> The provisioning state of the public IP address resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The service public IP address of the public IP address resource. </summary>
-        [WirePath("properties.servicePublicIPAddress")]
-        public PublicIPAddressData ServicePublicIPAddress { get; set; }
+        public PublicIPAddressData ServicePublicIPAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServicePublicIPAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PublicIPAddressPropertiesFormat();
+                }
+                Properties.ServicePublicIPAddress = value;
+            }
+        }
+
         /// <summary> The NatGateway for the Public IP address. </summary>
-        [WirePath("properties.natGateway")]
-        public NatGatewayData NatGateway { get; set; }
+        public NatGatewayData NatGateway
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NatGateway;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PublicIPAddressPropertiesFormat();
+                }
+                Properties.NatGateway = value;
+            }
+        }
+
         /// <summary> Migration phase of Public IP Address. </summary>
-        [WirePath("properties.migrationPhase")]
-        public PublicIPAddressMigrationPhase? MigrationPhase { get; set; }
+        public PublicIPAddressMigrationPhase? MigrationPhase
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MigrationPhase;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PublicIPAddressPropertiesFormat();
+                }
+                Properties.MigrationPhase = value;
+            }
+        }
+
         /// <summary> The linked public IP address of the public IP address resource. </summary>
-        [WirePath("properties.linkedPublicIPAddress")]
-        public PublicIPAddressData LinkedPublicIPAddress { get; set; }
+        public PublicIPAddressData LinkedPublicIPAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LinkedPublicIPAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PublicIPAddressPropertiesFormat();
+                }
+                Properties.LinkedPublicIPAddress = value;
+            }
+        }
+
         /// <summary> Specify what happens to the public IP address when the VM using it is deleted. </summary>
-        [WirePath("properties.deleteOption")]
-        public IPAddressDeleteOption? DeleteOption { get; set; }
+        public DeleteOptions? DeleteOption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeleteOption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PublicIPAddressPropertiesFormat();
+                }
+                Properties.DeleteOption = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public string PublicIPPrefixId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicIPPrefixId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PublicIPAddressPropertiesFormat();
+                }
+                Properties.PublicIPPrefixId = value;
+            }
+        }
     }
 }

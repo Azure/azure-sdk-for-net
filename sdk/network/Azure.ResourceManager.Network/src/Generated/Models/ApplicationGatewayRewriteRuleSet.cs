@@ -7,42 +7,60 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Rewrite rule set of an application gateway. </summary>
-    public partial class ApplicationGatewayRewriteRuleSet : NetworkResourceData
+    public partial class ApplicationGatewayRewriteRuleSet : SubResource
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRewriteRuleSet"/>. </summary>
         public ApplicationGatewayRewriteRuleSet()
         {
-            RewriteRules = new ChangeTrackingList<ApplicationGatewayRewriteRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRewriteRuleSet"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="rewriteRules"> Rewrite rules in the rewrite rule set. </param>
-        /// <param name="provisioningState"> The provisioning state of the rewrite rule set resource. </param>
-        internal ApplicationGatewayRewriteRuleSet(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<ApplicationGatewayRewriteRule> rewriteRules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the application gateway rewrite rule set. </param>
+        /// <param name="name"> Name of the rewrite rule set that is unique within an Application Gateway. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal ApplicationGatewayRewriteRuleSet(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationGatewayRewriteRuleSetPropertiesFormat properties, string name, ETag? eTag) : base(id, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            RewriteRules = rewriteRules;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            Name = name;
+            ETag = eTag;
         }
 
+        /// <summary> Properties of the application gateway rewrite rule set. </summary>
+        internal ApplicationGatewayRewriteRuleSetPropertiesFormat Properties { get; set; }
+
+        /// <summary> Name of the rewrite rule set that is unique within an Application Gateway. </summary>
+        public string Name { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> Rewrite rules in the rewrite rule set. </summary>
-        [WirePath("properties.rewriteRules")]
-        public IList<ApplicationGatewayRewriteRule> RewriteRules { get; }
+        public IList<ApplicationGatewayRewriteRule> RewriteRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRewriteRuleSetPropertiesFormat();
+                }
+                return Properties.RewriteRules;
+            }
+        }
+
         /// <summary> The provisioning state of the rewrite rule set resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

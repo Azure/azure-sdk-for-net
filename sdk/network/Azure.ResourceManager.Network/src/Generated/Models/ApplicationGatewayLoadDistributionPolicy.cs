@@ -7,47 +7,82 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Load Distribution Policy of an application gateway. </summary>
-    public partial class ApplicationGatewayLoadDistributionPolicy : NetworkResourceData
+    public partial class ApplicationGatewayLoadDistributionPolicy : SubResource
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayLoadDistributionPolicy"/>. </summary>
         public ApplicationGatewayLoadDistributionPolicy()
         {
-            LoadDistributionTargets = new ChangeTrackingList<ApplicationGatewayLoadDistributionTarget>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayLoadDistributionPolicy"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="loadDistributionTargets"> Load Distribution Targets resource of an application gateway. </param>
-        /// <param name="loadDistributionAlgorithm"> Load Distribution Targets resource of an application gateway. </param>
-        /// <param name="provisioningState"> The provisioning state of the Load Distribution Policy resource. </param>
-        internal ApplicationGatewayLoadDistributionPolicy(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<ApplicationGatewayLoadDistributionTarget> loadDistributionTargets, ApplicationGatewayLoadDistributionAlgorithm? loadDistributionAlgorithm, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the application gateway load distribution policy. </param>
+        /// <param name="name"> Name of the load distribution policy that is unique within an Application Gateway. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="type"> Type of the resource. </param>
+        internal ApplicationGatewayLoadDistributionPolicy(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationGatewayLoadDistributionPolicyPropertiesFormat properties, string name, ETag? eTag, string @type) : base(id, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            LoadDistributionTargets = loadDistributionTargets;
-            LoadDistributionAlgorithm = loadDistributionAlgorithm;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            Name = name;
+            ETag = eTag;
+            Type = @type;
         }
 
+        /// <summary> Properties of the application gateway load distribution policy. </summary>
+        internal ApplicationGatewayLoadDistributionPolicyPropertiesFormat Properties { get; set; }
+
+        /// <summary> Name of the load distribution policy that is unique within an Application Gateway. </summary>
+        public string Name { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
+
+        /// <summary> Type of the resource. </summary>
+        public string Type { get; }
+
         /// <summary> Load Distribution Targets resource of an application gateway. </summary>
-        [WirePath("properties.loadDistributionTargets")]
-        public IList<ApplicationGatewayLoadDistributionTarget> LoadDistributionTargets { get; }
+        public IList<ApplicationGatewayLoadDistributionTarget> LoadDistributionTargets
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayLoadDistributionPolicyPropertiesFormat();
+                }
+                return Properties.LoadDistributionTargets;
+            }
+        }
+
         /// <summary> Load Distribution Targets resource of an application gateway. </summary>
-        [WirePath("properties.loadDistributionAlgorithm")]
-        public ApplicationGatewayLoadDistributionAlgorithm? LoadDistributionAlgorithm { get; set; }
+        public ApplicationGatewayLoadDistributionAlgorithm? LoadDistributionAlgorithm
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LoadDistributionAlgorithm;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayLoadDistributionPolicyPropertiesFormat();
+                }
+                Properties.LoadDistributionAlgorithm = value;
+            }
+        }
+
         /// <summary> The provisioning state of the Load Distribution Policy resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

@@ -7,64 +7,97 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the HubRouteTable data model.
-    /// RouteTable resource in a virtual hub.
-    /// </summary>
-    public partial class HubRouteTableData : NetworkResourceData
+    /// <summary> RouteTable resource in a virtual hub. </summary>
+    public partial class HubRouteTableData : SubResourceModel
     {
         /// <summary> Initializes a new instance of <see cref="HubRouteTableData"/>. </summary>
         public HubRouteTableData()
         {
-            Routes = new ChangeTrackingList<HubRoute>();
-            Labels = new ChangeTrackingList<string>();
-            AssociatedConnections = new ChangeTrackingList<string>();
-            PropagatingConnections = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HubRouteTableData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="routes"> List of all routes. </param>
-        /// <param name="labels"> List of labels associated with this route table. </param>
-        /// <param name="associatedConnections"> List of all connections associated with this route table. </param>
-        /// <param name="propagatingConnections"> List of all connections that advertise to this route table. </param>
-        /// <param name="provisioningState"> The provisioning state of the RouteTable resource. </param>
-        internal HubRouteTableData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<HubRoute> routes, IList<string> labels, IReadOnlyList<string> associatedConnections, IReadOnlyList<string> propagatingConnections, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the RouteTable resource. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal HubRouteTableData(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, HubRouteTableProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            Routes = routes;
-            Labels = labels;
-            AssociatedConnections = associatedConnections;
-            PropagatingConnections = propagatingConnections;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            ETag = eTag;
         }
 
+        /// <summary> Properties of the RouteTable resource. </summary>
+        internal HubRouteTableProperties Properties { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> List of all routes. </summary>
-        [WirePath("properties.routes")]
-        public IList<HubRoute> Routes { get; }
+        public IList<HubRoute> Routes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new HubRouteTableProperties();
+                }
+                return Properties.Routes;
+            }
+        }
+
         /// <summary> List of labels associated with this route table. </summary>
-        [WirePath("properties.labels")]
-        public IList<string> Labels { get; }
+        public IList<string> Labels
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new HubRouteTableProperties();
+                }
+                return Properties.Labels;
+            }
+        }
+
         /// <summary> List of all connections associated with this route table. </summary>
-        [WirePath("properties.associatedConnections")]
-        public IReadOnlyList<string> AssociatedConnections { get; }
+        public IReadOnlyList<string> AssociatedConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new HubRouteTableProperties();
+                }
+                return Properties.AssociatedConnections;
+            }
+        }
+
         /// <summary> List of all connections that advertise to this route table. </summary>
-        [WirePath("properties.propagatingConnections")]
-        public IReadOnlyList<string> PropagatingConnections { get; }
+        public IReadOnlyList<string> PropagatingConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new HubRouteTableProperties();
+                }
+                return Properties.PropagatingConnections;
+            }
+        }
+
         /// <summary> The provisioning state of the RouteTable resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

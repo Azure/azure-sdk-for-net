@@ -7,46 +7,58 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the RoutingIntent data model.
-    /// The routing intent child resource of a Virtual hub.
-    /// </summary>
-    public partial class RoutingIntentData : NetworkResourceData
+    /// <summary> The routing intent child resource of a Virtual hub. </summary>
+    public partial class RoutingIntentData : SubResourceModel
     {
         /// <summary> Initializes a new instance of <see cref="RoutingIntentData"/>. </summary>
         public RoutingIntentData()
         {
-            RoutingPolicies = new ChangeTrackingList<RoutingPolicy>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RoutingIntentData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="routingPolicies"> List of routing policies. </param>
-        /// <param name="provisioningState"> The provisioning state of the RoutingIntent resource. </param>
-        internal RoutingIntentData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<RoutingPolicy> routingPolicies, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the RoutingIntent resource. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal RoutingIntentData(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, RoutingIntentProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            RoutingPolicies = routingPolicies;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            ETag = eTag;
         }
 
+        /// <summary> Properties of the RoutingIntent resource. </summary>
+        internal RoutingIntentProperties Properties { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> List of routing policies. </summary>
-        [WirePath("properties.routingPolicies")]
-        public IList<RoutingPolicy> RoutingPolicies { get; }
+        public IList<RoutingPolicy> RoutingPolicies
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoutingIntentProperties();
+                }
+                return Properties.RoutingPolicies;
+            }
+        }
+
         /// <summary> The provisioning state of the RoutingIntent resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

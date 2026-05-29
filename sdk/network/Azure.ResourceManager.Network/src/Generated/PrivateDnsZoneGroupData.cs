@@ -7,46 +7,58 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the PrivateDnsZoneGroup data model.
-    /// Private dns zone group resource.
-    /// </summary>
-    public partial class PrivateDnsZoneGroupData : NetworkResourceData
+    /// <summary> Private dns zone group resource. </summary>
+    public partial class PrivateDnsZoneGroupData : SubResourceModel
     {
         /// <summary> Initializes a new instance of <see cref="PrivateDnsZoneGroupData"/>. </summary>
         public PrivateDnsZoneGroupData()
         {
-            PrivateDnsZoneConfigs = new ChangeTrackingList<PrivateDnsZoneConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateDnsZoneGroupData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="provisioningState"> The provisioning state of the private dns zone group resource. </param>
-        /// <param name="privateDnsZoneConfigs"> A collection of private dns zone configurations of the private dns zone group. </param>
-        internal PrivateDnsZoneGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, NetworkProvisioningState? provisioningState, IList<PrivateDnsZoneConfig> privateDnsZoneConfigs) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="properties"> Properties of the private dns zone group. </param>
+        internal PrivateDnsZoneGroupData(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ETag? eTag, PrivateDnsZoneGroupPropertiesFormat properties) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            ProvisioningState = provisioningState;
-            PrivateDnsZoneConfigs = privateDnsZoneConfigs;
+            ETag = eTag;
+            Properties = properties;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
+
+        /// <summary> Properties of the private dns zone group. </summary>
+        internal PrivateDnsZoneGroupPropertiesFormat Properties { get; set; }
+
         /// <summary> The provisioning state of the private dns zone group resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> A collection of private dns zone configurations of the private dns zone group. </summary>
-        [WirePath("properties.privateDnsZoneConfigs")]
-        public IList<PrivateDnsZoneConfig> PrivateDnsZoneConfigs { get; }
+        public IList<PrivateDnsZoneConfig> PrivateDnsZoneConfigs
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateDnsZoneGroupPropertiesFormat();
+                }
+                return Properties.PrivateDnsZoneConfigs;
+            }
+        }
     }
 }

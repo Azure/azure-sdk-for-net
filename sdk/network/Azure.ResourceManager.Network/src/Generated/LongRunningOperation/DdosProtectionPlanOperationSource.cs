@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class DdosProtectionPlanOperationSource : IOperationSource<DdosProtectionPlanResource>
+    /// <summary></summary>
+    internal partial class DdosProtectionPlanOperationSource : IOperationSource<DdosProtectionPlanResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DdosProtectionPlanOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DdosProtectionPlanResource IOperationSource<DdosProtectionPlanResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DdosProtectionPlanData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DdosProtectionPlanData data = DdosProtectionPlanData.DeserializeDdosProtectionPlanData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DdosProtectionPlanResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DdosProtectionPlanResource> IOperationSource<DdosProtectionPlanResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DdosProtectionPlanData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return await Task.FromResult(new DdosProtectionPlanResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DdosProtectionPlanData data = DdosProtectionPlanData.DeserializeDdosProtectionPlanData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DdosProtectionPlanResource(_client, data);
         }
     }
 }

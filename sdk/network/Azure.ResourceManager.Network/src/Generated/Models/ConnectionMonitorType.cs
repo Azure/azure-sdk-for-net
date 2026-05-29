@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ConnectionMonitorType : IEquatable<ConnectionMonitorType>
     {
         private readonly string _value;
+        /// <summary> MultiEndpoint. </summary>
+        private const string MultiEndpointValue = "MultiEndpoint";
+        /// <summary> SingleSourceDestination. </summary>
+        private const string SingleSourceDestinationValue = "SingleSourceDestination";
 
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnectionMonitorType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MultiEndpointValue = "MultiEndpoint";
-        private const string SingleSourceDestinationValue = "SingleSourceDestination";
+            _value = value;
+        }
 
         /// <summary> MultiEndpoint. </summary>
         public static ConnectionMonitorType MultiEndpoint { get; } = new ConnectionMonitorType(MultiEndpointValue);
+
         /// <summary> SingleSourceDestination. </summary>
         public static ConnectionMonitorType SingleSourceDestination { get; } = new ConnectionMonitorType(SingleSourceDestinationValue);
+
         /// <summary> Determines if two <see cref="ConnectionMonitorType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConnectionMonitorType left, ConnectionMonitorType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConnectionMonitorType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConnectionMonitorType left, ConnectionMonitorType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectionMonitorType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConnectionMonitorType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConnectionMonitorType(string value) => new ConnectionMonitorType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConnectionMonitorType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConnectionMonitorType?(string value) => value == null ? null : new ConnectionMonitorType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConnectionMonitorType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConnectionMonitorType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

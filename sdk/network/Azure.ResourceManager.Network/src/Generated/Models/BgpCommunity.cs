@@ -7,46 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Contains bgp community information offered in Service Community resources. </summary>
     public partial class BgpCommunity
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BgpCommunity"/>. </summary>
-        public BgpCommunity()
+        internal BgpCommunity()
         {
             CommunityPrefixes = new ChangeTrackingList<string>();
         }
@@ -58,8 +30,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="communityPrefixes"> The prefixes that the bgp community contains. </param>
         /// <param name="isAuthorizedToUse"> Customer is authorized to use bgp community or not. </param>
         /// <param name="serviceGroup"> The service group of the bgp community contains. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BgpCommunity(string serviceSupportedRegion, string communityName, string communityValue, IList<string> communityPrefixes, bool? isAuthorizedToUse, string serviceGroup, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BgpCommunity(string serviceSupportedRegion, string communityName, string communityValue, IList<string> communityPrefixes, bool? isAuthorizedToUse, string serviceGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceSupportedRegion = serviceSupportedRegion;
             CommunityName = communityName;
@@ -67,26 +39,25 @@ namespace Azure.ResourceManager.Network.Models
             CommunityPrefixes = communityPrefixes;
             IsAuthorizedToUse = isAuthorizedToUse;
             ServiceGroup = serviceGroup;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The region which the service support. e.g. For O365, region is Global. </summary>
-        [WirePath("serviceSupportedRegion")]
-        public string ServiceSupportedRegion { get; set; }
+        public string ServiceSupportedRegion { get; }
+
         /// <summary> The name of the bgp community. e.g. Skype. </summary>
-        [WirePath("communityName")]
-        public string CommunityName { get; set; }
+        public string CommunityName { get; }
+
         /// <summary> The value of the bgp community. For more information: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-routing. </summary>
-        [WirePath("communityValue")]
-        public string CommunityValue { get; set; }
+        public string CommunityValue { get; }
+
         /// <summary> The prefixes that the bgp community contains. </summary>
-        [WirePath("communityPrefixes")]
         public IList<string> CommunityPrefixes { get; }
+
         /// <summary> Customer is authorized to use bgp community or not. </summary>
-        [WirePath("isAuthorizedToUse")]
-        public bool? IsAuthorizedToUse { get; set; }
+        public bool? IsAuthorizedToUse { get; }
+
         /// <summary> The service group of the bgp community contains. </summary>
-        [WirePath("serviceGroup")]
-        public string ServiceGroup { get; set; }
+        public string ServiceGroup { get; }
     }
 }

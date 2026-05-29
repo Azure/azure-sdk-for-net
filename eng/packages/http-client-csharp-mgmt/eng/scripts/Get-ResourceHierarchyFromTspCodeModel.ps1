@@ -367,6 +367,10 @@ foreach ($client in $childClients) {
             $resourceType  = [string]$cumulative[$cumulative.Length - 1]
             if ($cumulative.Length -gt 1) {
                 [string[]] $parentChain = $cumulative[0..($cumulative.Length - 2)]
+                if ($GeneratedDir -and $resourceTypeToClassName.Count -gt 0) {
+                    $nearestGeneratedParent = @($parentChain | Where-Object { $resourceTypeToClassName.ContainsKey($_) } | Select-Object -Last 1)
+                    [string[]] $parentChain = @($nearestGeneratedParent)
+                }
             }
             else {
                 [string[]] $parentChain = @()

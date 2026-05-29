@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Represents the VerifierWorkspace update API request interface. </summary>
     public partial class NetworkVerifierWorkspacePatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkVerifierWorkspacePatch"/>. </summary>
         public NetworkVerifierWorkspacePatch()
@@ -54,28 +26,33 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="NetworkVerifierWorkspacePatch"/>. </summary>
         /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
         /// <param name="properties"> Represents the VerifierWorkspace update properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkVerifierWorkspacePatch(IDictionary<string, string> tags, VerifierWorkspaceUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkVerifierWorkspacePatch(IDictionary<string, string> tags, VerifierWorkspaceUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Dictionary of &lt;string&gt;. </summary>
-        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> Represents the VerifierWorkspace update properties. </summary>
         internal VerifierWorkspaceUpdateProperties Properties { get; set; }
-        /// <summary> Gets or sets the verifier workspace update description. </summary>
-        [WirePath("properties.description")]
+
+        /// <summary> Gets or sets the Description. </summary>
         public string VerifierWorkspaceUpdateDescription
         {
-            get => Properties is null ? default : Properties.Description;
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
             set
             {
                 if (Properties is null)
+                {
                     Properties = new VerifierWorkspaceUpdateProperties();
+                }
                 Properties.Description = value;
             }
         }

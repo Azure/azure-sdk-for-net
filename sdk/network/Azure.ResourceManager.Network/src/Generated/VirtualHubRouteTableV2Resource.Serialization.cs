@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class VirtualHubRouteTableV2Resource : IJsonModel<VirtualHubRouteTableV2Data>
     {
-        private static VirtualHubRouteTableV2Data s_dataDeserializationInstance;
-        private static VirtualHubRouteTableV2Data DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<VirtualHubRouteTableV2Data> s_dataDeserializationInstance;
 
+        private static IJsonModel<VirtualHubRouteTableV2Data> DataDeserializationInstance => s_dataDeserializationInstance ??= new VirtualHubRouteTableV2Data();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualHubRouteTableV2Data>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualHubRouteTableV2Data>)Data).Write(writer, options);
 
-        VirtualHubRouteTableV2Data IJsonModel<VirtualHubRouteTableV2Data>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualHubRouteTableV2Data>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualHubRouteTableV2Data IJsonModel<VirtualHubRouteTableV2Data>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<VirtualHubRouteTableV2Data>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualHubRouteTableV2Data>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         VirtualHubRouteTableV2Data IPersistableModel<VirtualHubRouteTableV2Data>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualHubRouteTableV2Data>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<VirtualHubRouteTableV2Data>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualHubRouteTableV2Data>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VirtualHubRouteTableV2Data>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

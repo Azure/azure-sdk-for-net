@@ -7,17 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the ExpressRouteCircuitConnection data model.
-    /// Express Route Circuit Connection in an ExpressRouteCircuitPeering resource.
-    /// </summary>
-    public partial class ExpressRouteCircuitConnectionData : NetworkResourceData
+    /// <summary> Express Route Circuit Connection in an ExpressRouteCircuitPeering resource. </summary>
+    public partial class ExpressRouteCircuitConnectionData : SubResourceModel
     {
         /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitConnectionData"/>. </summary>
         public ExpressRouteCircuitConnectionData()
@@ -26,76 +22,124 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="expressRouteCircuitPeering"> Reference to Express Route Circuit Private Peering Resource of the circuit initiating connection. </param>
-        /// <param name="peerExpressRouteCircuitPeering"> Reference to Express Route Circuit Private Peering Resource of the peered circuit. </param>
-        /// <param name="addressPrefix"> /29 IP address space to carve out Customer addresses for tunnels. </param>
-        /// <param name="authorizationKey"> The authorization key. </param>
-        /// <param name="ipv6CircuitConnectionConfig"> IPv6 Address PrefixProperties of the express route circuit connection. </param>
-        /// <param name="circuitConnectionStatus"> Express Route Circuit connection state. </param>
-        /// <param name="provisioningState"> The provisioning state of the express route circuit connection resource. </param>
-        internal ExpressRouteCircuitConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource expressRouteCircuitPeering, WritableSubResource peerExpressRouteCircuitPeering, string addressPrefix, string authorizationKey, IPv6CircuitConnectionConfig ipv6CircuitConnectionConfig, CircuitConnectionStatus? circuitConnectionStatus, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the express route circuit connection. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal ExpressRouteCircuitConnectionData(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ExpressRouteCircuitConnectionPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            ExpressRouteCircuitPeering = expressRouteCircuitPeering;
-            PeerExpressRouteCircuitPeering = peerExpressRouteCircuitPeering;
-            AddressPrefix = addressPrefix;
-            AuthorizationKey = authorizationKey;
-            IPv6CircuitConnectionConfig = ipv6CircuitConnectionConfig;
-            CircuitConnectionStatus = circuitConnectionStatus;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the express route circuit connection. </summary>
+        internal ExpressRouteCircuitConnectionPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
-        /// <summary> Reference to Express Route Circuit Private Peering Resource of the circuit initiating connection. </summary>
-        internal WritableSubResource ExpressRouteCircuitPeering { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.expressRouteCircuitPeering.id")]
-        public ResourceIdentifier ExpressRouteCircuitPeeringId
-        {
-            get => ExpressRouteCircuitPeering is null ? default : ExpressRouteCircuitPeering.Id;
-            set
-            {
-                if (ExpressRouteCircuitPeering is null)
-                    ExpressRouteCircuitPeering = new WritableSubResource();
-                ExpressRouteCircuitPeering.Id = value;
-            }
-        }
-
-        /// <summary> Reference to Express Route Circuit Private Peering Resource of the peered circuit. </summary>
-        internal WritableSubResource PeerExpressRouteCircuitPeering { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.peerExpressRouteCircuitPeering.id")]
-        public ResourceIdentifier PeerExpressRouteCircuitPeeringId
-        {
-            get => PeerExpressRouteCircuitPeering is null ? default : PeerExpressRouteCircuitPeering.Id;
-            set
-            {
-                if (PeerExpressRouteCircuitPeering is null)
-                    PeerExpressRouteCircuitPeering = new WritableSubResource();
-                PeerExpressRouteCircuitPeering.Id = value;
-            }
-        }
 
         /// <summary> /29 IP address space to carve out Customer addresses for tunnels. </summary>
-        [WirePath("properties.addressPrefix")]
-        public string AddressPrefix { get; set; }
+        public string AddressPrefix
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AddressPrefix;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitConnectionPropertiesFormat();
+                }
+                Properties.AddressPrefix = value;
+            }
+        }
+
         /// <summary> The authorization key. </summary>
-        [WirePath("properties.authorizationKey")]
-        public string AuthorizationKey { get; set; }
+        public string AuthorizationKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuthorizationKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitConnectionPropertiesFormat();
+                }
+                Properties.AuthorizationKey = value;
+            }
+        }
+
         /// <summary> IPv6 Address PrefixProperties of the express route circuit connection. </summary>
-        [WirePath("properties.ipv6CircuitConnectionConfig")]
-        public IPv6CircuitConnectionConfig IPv6CircuitConnectionConfig { get; set; }
+        public IPv6CircuitConnectionConfig Ipv6CircuitConnectionConfig
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Ipv6CircuitConnectionConfig;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitConnectionPropertiesFormat();
+                }
+                Properties.Ipv6CircuitConnectionConfig = value;
+            }
+        }
+
         /// <summary> Express Route Circuit connection state. </summary>
-        [WirePath("properties.circuitConnectionStatus")]
-        public CircuitConnectionStatus? CircuitConnectionStatus { get; }
+        public CircuitConnectionStatus? CircuitConnectionStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CircuitConnectionStatus;
+            }
+        }
+
         /// <summary> The provisioning state of the express route circuit connection resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public string ExpressRouteCircuitPeeringId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpressRouteCircuitPeeringId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitConnectionPropertiesFormat();
+                }
+                Properties.ExpressRouteCircuitPeeringId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public string PeerExpressRouteCircuitPeeringId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeerExpressRouteCircuitPeeringId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitConnectionPropertiesFormat();
+                }
+                Properties.PeerExpressRouteCircuitPeeringId = value;
+            }
+        }
     }
 }

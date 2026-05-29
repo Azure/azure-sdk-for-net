@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The service tag information. </summary>
     public partial class ServiceTagInformation
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceTagInformation"/>. </summary>
         internal ServiceTagInformation()
@@ -55,27 +26,26 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> The name of service tag. </param>
         /// <param name="id"> The ID of service tag. </param>
         /// <param name="serviceTagChangeNumber"> The iteration number of service tag object for region. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceTagInformation(ServiceTagInformationPropertiesFormat properties, string name, string id, string serviceTagChangeNumber, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceTagInformation(ServiceTagInformationPropertiesFormat properties, string name, string id, string serviceTagChangeNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Name = name;
             Id = id;
             ServiceTagChangeNumber = serviceTagChangeNumber;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of the service tag information. </summary>
-        [WirePath("properties")]
         public ServiceTagInformationPropertiesFormat Properties { get; }
+
         /// <summary> The name of service tag. </summary>
-        [WirePath("name")]
         public string Name { get; }
+
         /// <summary> The ID of service tag. </summary>
-        [WirePath("id")]
         public string Id { get; }
+
         /// <summary> The iteration number of service tag object for region. </summary>
-        [WirePath("serviceTagChangeNumber")]
         public string ServiceTagChangeNumber { get; }
     }
 }

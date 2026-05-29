@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class NetworkSecurityGroupOperationSource : IOperationSource<NetworkSecurityGroupResource>
+    /// <summary></summary>
+    internal partial class NetworkSecurityGroupOperationSource : IOperationSource<NetworkSecurityGroupResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal NetworkSecurityGroupOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         NetworkSecurityGroupResource IOperationSource<NetworkSecurityGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkSecurityGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NetworkSecurityGroupData data = NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NetworkSecurityGroupResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NetworkSecurityGroupResource> IOperationSource<NetworkSecurityGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkSecurityGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return await Task.FromResult(new NetworkSecurityGroupResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NetworkSecurityGroupData data = NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkSecurityGroupResource(_client, data);
         }
     }
 }

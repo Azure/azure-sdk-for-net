@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class VirtualNetworkApplianceOperationSource : IOperationSource<VirtualNetworkApplianceResource>
+    /// <summary></summary>
+    internal partial class VirtualNetworkApplianceOperationSource : IOperationSource<VirtualNetworkApplianceResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal VirtualNetworkApplianceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         VirtualNetworkApplianceResource IOperationSource<VirtualNetworkApplianceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualNetworkApplianceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            VirtualNetworkApplianceData data = VirtualNetworkApplianceData.DeserializeVirtualNetworkApplianceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new VirtualNetworkApplianceResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<VirtualNetworkApplianceResource> IOperationSource<VirtualNetworkApplianceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualNetworkApplianceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return await Task.FromResult(new VirtualNetworkApplianceResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            VirtualNetworkApplianceData data = VirtualNetworkApplianceData.DeserializeVirtualNetworkApplianceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new VirtualNetworkApplianceResource(_client, data);
         }
     }
 }

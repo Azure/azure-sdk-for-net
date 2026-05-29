@@ -7,69 +7,109 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the NetworkManager data model.
-    /// The Managed Network resource
-    /// </summary>
-    public partial class NetworkManagerData : NetworkTrackedResourceData
+    /// <summary> The Managed Network resource. </summary>
+    public partial class NetworkManagerData : Resource
     {
         /// <summary> Initializes a new instance of <see cref="NetworkManagerData"/>. </summary>
         public NetworkManagerData()
         {
-            NetworkManagerScopeAccesses = new ChangeTrackingList<NetworkConfigurationDeploymentType>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkManagerData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The network manager properties. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="systemData"> The system metadata related to this resource. </param>
-        /// <param name="description"> A description of the network manager. </param>
-        /// <param name="networkManagerScopes"> Scope of Network Manager. </param>
-        /// <param name="networkManagerScopeAccesses"> Scope Access. </param>
-        /// <param name="provisioningState"> The provisioning state of the network manager resource. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        internal NetworkManagerData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, SystemData systemData, string description, NetworkManagerPropertiesNetworkManagerScopes networkManagerScopes, IList<NetworkConfigurationDeploymentType> networkManagerScopeAccesses, NetworkProvisioningState? provisioningState, Guid? resourceGuid) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal NetworkManagerData(string id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkManagerProperties properties, ETag? eTag, SystemData systemData) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
-            ETag = etag;
+            Properties = properties;
+            ETag = eTag;
             SystemData = systemData;
-            Description = description;
-            NetworkManagerScopes = networkManagerScopes;
-            NetworkManagerScopeAccesses = networkManagerScopeAccesses;
-            ProvisioningState = provisioningState;
-            ResourceGuid = resourceGuid;
         }
 
+        /// <summary> The network manager properties. </summary>
+        internal NetworkManagerProperties Properties { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> The system metadata related to this resource. </summary>
-        [WirePath("systemData")]
         public SystemData SystemData { get; }
+
         /// <summary> A description of the network manager. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkManagerProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Scope of Network Manager. </summary>
-        [WirePath("properties.networkManagerScopes")]
-        public NetworkManagerPropertiesNetworkManagerScopes NetworkManagerScopes { get; set; }
+        public NetworkManagerPropertiesNetworkManagerScopes NetworkManagerScopes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkManagerScopes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkManagerProperties();
+                }
+                Properties.NetworkManagerScopes = value;
+            }
+        }
+
         /// <summary> Scope Access. </summary>
-        [WirePath("properties.networkManagerScopeAccesses")]
-        public IList<NetworkConfigurationDeploymentType> NetworkManagerScopeAccesses { get; }
+        public IList<ConfigurationType> NetworkManagerScopeAccesses
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkManagerProperties();
+                }
+                return Properties.NetworkManagerScopeAccesses;
+            }
+        }
+
         /// <summary> The provisioning state of the network manager resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Unique identifier for this resource. </summary>
-        [WirePath("properties.resourceGuid")]
-        public Guid? ResourceGuid { get; }
+        public string ResourceGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceGuid;
+            }
+        }
     }
 }

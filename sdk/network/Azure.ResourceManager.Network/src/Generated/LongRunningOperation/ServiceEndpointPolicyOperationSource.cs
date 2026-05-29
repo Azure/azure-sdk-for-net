@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class ServiceEndpointPolicyOperationSource : IOperationSource<ServiceEndpointPolicyResource>
+    /// <summary></summary>
+    internal partial class ServiceEndpointPolicyOperationSource : IOperationSource<ServiceEndpointPolicyResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ServiceEndpointPolicyOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ServiceEndpointPolicyResource IOperationSource<ServiceEndpointPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ServiceEndpointPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ServiceEndpointPolicyData data = ServiceEndpointPolicyData.DeserializeServiceEndpointPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ServiceEndpointPolicyResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ServiceEndpointPolicyResource> IOperationSource<ServiceEndpointPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ServiceEndpointPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return await Task.FromResult(new ServiceEndpointPolicyResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ServiceEndpointPolicyData data = ServiceEndpointPolicyData.DeserializeServiceEndpointPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ServiceEndpointPolicyResource(_client, data);
         }
     }
 }

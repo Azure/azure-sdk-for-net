@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class VpnServerConfigurationPolicyGroupOperationSource : IOperationSource<VpnServerConfigurationPolicyGroupResource>
+    /// <summary></summary>
+    internal partial class VpnServerConfigurationPolicyGroupOperationSource : IOperationSource<VpnServerConfigurationPolicyGroupResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal VpnServerConfigurationPolicyGroupOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         VpnServerConfigurationPolicyGroupResource IOperationSource<VpnServerConfigurationPolicyGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VpnServerConfigurationPolicyGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            VpnServerConfigurationPolicyGroupData data = VpnServerConfigurationPolicyGroupData.DeserializeVpnServerConfigurationPolicyGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new VpnServerConfigurationPolicyGroupResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<VpnServerConfigurationPolicyGroupResource> IOperationSource<VpnServerConfigurationPolicyGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VpnServerConfigurationPolicyGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return await Task.FromResult(new VpnServerConfigurationPolicyGroupResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            VpnServerConfigurationPolicyGroupData data = VpnServerConfigurationPolicyGroupData.DeserializeVpnServerConfigurationPolicyGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new VpnServerConfigurationPolicyGroupResource(_client, data);
         }
     }
 }

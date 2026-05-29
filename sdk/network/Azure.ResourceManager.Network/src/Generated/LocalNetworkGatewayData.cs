@@ -7,67 +7,125 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the LocalNetworkGateway data model.
-    /// A common class for general resource information.
-    /// </summary>
-    public partial class LocalNetworkGatewayData : NetworkTrackedResourceData
+    /// <summary> A common class for general resource information. </summary>
+    public partial class LocalNetworkGatewayData : Resource
     {
         /// <summary> Initializes a new instance of <see cref="LocalNetworkGatewayData"/>. </summary>
         public LocalNetworkGatewayData()
         {
+
         }
 
         /// <summary> Initializes a new instance of <see cref="LocalNetworkGatewayData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="localNetworkAddressSpace"> Local network site address space. </param>
-        /// <param name="gatewayIPAddress"> IP address of local network gateway. </param>
-        /// <param name="fqdn"> FQDN of local network gateway. </param>
-        /// <param name="bgpSettings"> Local network gateway's BGP speaker settings. </param>
-        /// <param name="resourceGuid"> The resource GUID property of the local network gateway resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the local network gateway resource. </param>
-        internal LocalNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, VirtualNetworkAddressSpace localNetworkAddressSpace, string gatewayIPAddress, string fqdn, BgpSettings bgpSettings, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the local network gateway. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal LocalNetworkGatewayData(string id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, LocalNetworkGatewayPropertiesFormat properties, ETag? eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            LocalNetworkAddressSpace = localNetworkAddressSpace;
-            GatewayIPAddress = gatewayIPAddress;
-            Fqdn = fqdn;
-            BgpSettings = bgpSettings;
-            ResourceGuid = resourceGuid;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            ETag = eTag;
         }
 
+        /// <summary> Properties of the local network gateway. </summary>
+        internal LocalNetworkGatewayPropertiesFormat Properties { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> Local network site address space. </summary>
-        [WirePath("properties.localNetworkAddressSpace")]
-        public VirtualNetworkAddressSpace LocalNetworkAddressSpace { get; set; }
+        public VirtualNetworkAddressSpace LocalNetworkAddressSpace
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LocalNetworkAddressSpace;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LocalNetworkGatewayPropertiesFormat();
+                }
+                Properties.LocalNetworkAddressSpace = value;
+            }
+        }
+
         /// <summary> IP address of local network gateway. </summary>
-        [WirePath("properties.gatewayIpAddress")]
-        public string GatewayIPAddress { get; set; }
+        public string GatewayIpAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GatewayIpAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LocalNetworkGatewayPropertiesFormat();
+                }
+                Properties.GatewayIpAddress = value;
+            }
+        }
+
         /// <summary> FQDN of local network gateway. </summary>
-        [WirePath("properties.fqdn")]
-        public string Fqdn { get; set; }
+        public string Fqdn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Fqdn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LocalNetworkGatewayPropertiesFormat();
+                }
+                Properties.Fqdn = value;
+            }
+        }
+
         /// <summary> Local network gateway's BGP speaker settings. </summary>
-        [WirePath("properties.bgpSettings")]
-        public BgpSettings BgpSettings { get; set; }
+        public BgpSettings BgpSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BgpSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LocalNetworkGatewayPropertiesFormat();
+                }
+                Properties.BgpSettings = value;
+            }
+        }
+
         /// <summary> The resource GUID property of the local network gateway resource. </summary>
-        [WirePath("properties.resourceGuid")]
-        public Guid? ResourceGuid { get; }
+        public string ResourceGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceGuid;
+            }
+        }
+
         /// <summary> The provisioning state of the local network gateway resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

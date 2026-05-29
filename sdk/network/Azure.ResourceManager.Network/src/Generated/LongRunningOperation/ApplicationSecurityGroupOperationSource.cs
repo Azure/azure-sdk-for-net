@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class ApplicationSecurityGroupOperationSource : IOperationSource<ApplicationSecurityGroupResource>
+    /// <summary></summary>
+    internal partial class ApplicationSecurityGroupOperationSource : IOperationSource<ApplicationSecurityGroupResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ApplicationSecurityGroupOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ApplicationSecurityGroupResource IOperationSource<ApplicationSecurityGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ApplicationSecurityGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ApplicationSecurityGroupData data = ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ApplicationSecurityGroupResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ApplicationSecurityGroupResource> IOperationSource<ApplicationSecurityGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ApplicationSecurityGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return await Task.FromResult(new ApplicationSecurityGroupResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ApplicationSecurityGroupData data = ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ApplicationSecurityGroupResource(_client, data);
         }
     }
 }

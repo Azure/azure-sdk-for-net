@@ -7,81 +7,100 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of the service gateway service. </summary>
     public partial class ServiceGatewayService
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceGatewayService"/>. </summary>
         public ServiceGatewayService()
         {
-            LoadBalancerBackendPools = new ChangeTrackingList<BackendAddressPoolData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceGatewayService"/>. </summary>
         /// <param name="name"> Name of the service. </param>
-        /// <param name="serviceType"> Name of the service. </param>
-        /// <param name="isDefault"> Set to true to mark default service for inbound or outbound. </param>
-        /// <param name="loadBalancerBackendPools"> An array of load balancer backend address pools. </param>
-        /// <param name="publicNatGatewayId"> Azure Resource Id of public natgateway. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceGatewayService(string name, ServiceType? serviceType, bool? isDefault, IList<BackendAddressPoolData> loadBalancerBackendPools, string publicNatGatewayId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Properties of service gateway service. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceGatewayService(string name, ServiceGatewayServicePropertiesFormat properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            ServiceType = serviceType;
-            IsDefault = isDefault;
-            LoadBalancerBackendPools = loadBalancerBackendPools;
-            PublicNatGatewayId = publicNatGatewayId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the service. </summary>
-        [WirePath("name")]
         public string Name { get; set; }
+
+        /// <summary> Properties of service gateway service. </summary>
+        internal ServiceGatewayServicePropertiesFormat Properties { get; set; }
+
         /// <summary> Name of the service. </summary>
-        [WirePath("properties.serviceType")]
-        public ServiceType? ServiceType { get; set; }
+        public ServiceType? ServiceType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceGatewayServicePropertiesFormat();
+                }
+                Properties.ServiceType = value;
+            }
+        }
+
         /// <summary> Set to true to mark default service for inbound or outbound. </summary>
-        [WirePath("properties.isDefault")]
-        public bool? IsDefault { get; set; }
+        public bool? IsDefault
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsDefault;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceGatewayServicePropertiesFormat();
+                }
+                Properties.IsDefault = value;
+            }
+        }
+
         /// <summary> An array of load balancer backend address pools. </summary>
-        [WirePath("properties.loadBalancerBackendPools")]
-        public IList<BackendAddressPoolData> LoadBalancerBackendPools { get; }
+        public IList<BackendAddressPoolData> LoadBalancerBackendPools
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceGatewayServicePropertiesFormat();
+                }
+                return Properties.LoadBalancerBackendPools;
+            }
+        }
+
         /// <summary> Azure Resource Id of public natgateway. </summary>
-        [WirePath("properties.publicNatGatewayId")]
-        public string PublicNatGatewayId { get; set; }
+        public string PublicNatGatewayId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNatGatewayId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceGatewayServicePropertiesFormat();
+                }
+                Properties.PublicNatGatewayId = value;
+            }
+        }
     }
 }

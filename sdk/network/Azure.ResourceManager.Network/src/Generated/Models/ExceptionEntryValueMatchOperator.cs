@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ExceptionEntryValueMatchOperator : IEquatable<ExceptionEntryValueMatchOperator>
     {
         private readonly string _value;
+        /// <summary> Equals. </summary>
+        private const string EqualsValue = "Equals";
+        /// <summary> Contains. </summary>
+        private const string ContainsValue = "Contains";
+        /// <summary> StartsWith. </summary>
+        private const string StartsWithValue = "StartsWith";
+        /// <summary> EndsWith. </summary>
+        private const string EndsWithValue = "EndsWith";
+        /// <summary> IPMatch. </summary>
+        private const string IPMatchValue = "IPMatch";
 
         /// <summary> Initializes a new instance of <see cref="ExceptionEntryValueMatchOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExceptionEntryValueMatchOperator(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string EqualsValueValue = "Equals";
-        private const string ContainsValue = "Contains";
-        private const string StartsWithValue = "StartsWith";
-        private const string EndsWithValue = "EndsWith";
-        private const string IPMatchValue = "IPMatch";
-
         /// <summary> Equals. </summary>
-        public static ExceptionEntryValueMatchOperator EqualsValue { get; } = new ExceptionEntryValueMatchOperator(EqualsValueValue);
+        public static ExceptionEntryValueMatchOperator Equals { get; } = new ExceptionEntryValueMatchOperator(EqualsValue);
+
         /// <summary> Contains. </summary>
         public static ExceptionEntryValueMatchOperator Contains { get; } = new ExceptionEntryValueMatchOperator(ContainsValue);
+
         /// <summary> StartsWith. </summary>
         public static ExceptionEntryValueMatchOperator StartsWith { get; } = new ExceptionEntryValueMatchOperator(StartsWithValue);
+
         /// <summary> EndsWith. </summary>
         public static ExceptionEntryValueMatchOperator EndsWith { get; } = new ExceptionEntryValueMatchOperator(EndsWithValue);
+
         /// <summary> IPMatch. </summary>
         public static ExceptionEntryValueMatchOperator IPMatch { get; } = new ExceptionEntryValueMatchOperator(IPMatchValue);
+
         /// <summary> Determines if two <see cref="ExceptionEntryValueMatchOperator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExceptionEntryValueMatchOperator left, ExceptionEntryValueMatchOperator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExceptionEntryValueMatchOperator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExceptionEntryValueMatchOperator left, ExceptionEntryValueMatchOperator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExceptionEntryValueMatchOperator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExceptionEntryValueMatchOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExceptionEntryValueMatchOperator(string value) => new ExceptionEntryValueMatchOperator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExceptionEntryValueMatchOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExceptionEntryValueMatchOperator?(string value) => value == null ? null : new ExceptionEntryValueMatchOperator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExceptionEntryValueMatchOperator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExceptionEntryValueMatchOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

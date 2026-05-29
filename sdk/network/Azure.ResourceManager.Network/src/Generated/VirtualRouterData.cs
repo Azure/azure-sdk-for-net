@@ -7,94 +7,124 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the VirtualRouter data model.
-    /// VirtualRouter Resource.
-    /// </summary>
-    public partial class VirtualRouterData : NetworkTrackedResourceData
+    /// <summary> VirtualRouter Resource. </summary>
+    public partial class VirtualRouterData : Resource
     {
         /// <summary> Initializes a new instance of <see cref="VirtualRouterData"/>. </summary>
         public VirtualRouterData()
         {
-            VirtualRouterIPs = new ChangeTrackingList<string>();
-            Peerings = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualRouterData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="virtualRouterAsn"> VirtualRouter ASN. </param>
-        /// <param name="virtualRouterIPs"> VirtualRouter IPs. </param>
-        /// <param name="hostedSubnet"> The Subnet on which VirtualRouter is hosted. </param>
-        /// <param name="hostedGateway"> The Gateway on which VirtualRouter is hosted. </param>
-        /// <param name="peerings"> List of references to VirtualRouterPeerings. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal VirtualRouterData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, long? virtualRouterAsn, IList<string> virtualRouterIPs, WritableSubResource hostedSubnet, WritableSubResource hostedGateway, IReadOnlyList<WritableSubResource> peerings, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the Virtual Router. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal VirtualRouterData(string id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualRouterPropertiesFormat properties, ETag? eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            VirtualRouterAsn = virtualRouterAsn;
-            VirtualRouterIPs = virtualRouterIPs;
-            HostedSubnet = hostedSubnet;
-            HostedGateway = hostedGateway;
-            Peerings = peerings;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            ETag = eTag;
         }
 
+        /// <summary> Properties of the Virtual Router. </summary>
+        internal VirtualRouterPropertiesFormat Properties { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> VirtualRouter ASN. </summary>
-        [WirePath("properties.virtualRouterAsn")]
-        public long? VirtualRouterAsn { get; set; }
-        /// <summary> VirtualRouter IPs. </summary>
-        [WirePath("properties.virtualRouterIps")]
-        public IList<string> VirtualRouterIPs { get; }
-        /// <summary> The Subnet on which VirtualRouter is hosted. </summary>
-        internal WritableSubResource HostedSubnet { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.hostedSubnet.id")]
-        public ResourceIdentifier HostedSubnetId
+        public long? VirtualRouterAsn
         {
-            get => HostedSubnet is null ? default : HostedSubnet.Id;
+            get
+            {
+                return Properties is null ? default : Properties.VirtualRouterAsn;
+            }
             set
             {
-                if (HostedSubnet is null)
-                    HostedSubnet = new WritableSubResource();
-                HostedSubnet.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new VirtualRouterPropertiesFormat();
+                }
+                Properties.VirtualRouterAsn = value;
             }
         }
 
-        /// <summary> The Gateway on which VirtualRouter is hosted. </summary>
-        internal WritableSubResource HostedGateway { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.hostedGateway.id")]
-        public ResourceIdentifier HostedGatewayId
+        /// <summary> VirtualRouter IPs. </summary>
+        public IList<string> VirtualRouterIps
         {
-            get => HostedGateway is null ? default : HostedGateway.Id;
-            set
+            get
             {
-                if (HostedGateway is null)
-                    HostedGateway = new WritableSubResource();
-                HostedGateway.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new VirtualRouterPropertiesFormat();
+                }
+                return Properties.VirtualRouterIps;
             }
         }
 
         /// <summary> List of references to VirtualRouterPeerings. </summary>
-        [WirePath("properties.peerings")]
-        public IReadOnlyList<WritableSubResource> Peerings { get; }
+        public IReadOnlyList<SubResource> Peerings
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualRouterPropertiesFormat();
+                }
+                return Properties.Peerings;
+            }
+        }
+
         /// <summary> The provisioning state of the resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public string HostedSubnetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostedSubnetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualRouterPropertiesFormat();
+                }
+                Properties.HostedSubnetId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public string HostedGatewayId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostedGatewayId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualRouterPropertiesFormat();
+                }
+                Properties.HostedGatewayId = value;
+            }
+        }
     }
 }

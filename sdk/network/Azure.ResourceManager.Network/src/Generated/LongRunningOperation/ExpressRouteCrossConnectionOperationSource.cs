@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class ExpressRouteCrossConnectionOperationSource : IOperationSource<ExpressRouteCrossConnectionResource>
+    /// <summary></summary>
+    internal partial class ExpressRouteCrossConnectionOperationSource : IOperationSource<ExpressRouteCrossConnectionResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ExpressRouteCrossConnectionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ExpressRouteCrossConnectionResource IOperationSource<ExpressRouteCrossConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ExpressRouteCrossConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ExpressRouteCrossConnectionData data = ExpressRouteCrossConnectionData.DeserializeExpressRouteCrossConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ExpressRouteCrossConnectionResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ExpressRouteCrossConnectionResource> IOperationSource<ExpressRouteCrossConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ExpressRouteCrossConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return await Task.FromResult(new ExpressRouteCrossConnectionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ExpressRouteCrossConnectionData data = ExpressRouteCrossConnectionData.DeserializeExpressRouteCrossConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ExpressRouteCrossConnectionResource(_client, data);
         }
     }
 }

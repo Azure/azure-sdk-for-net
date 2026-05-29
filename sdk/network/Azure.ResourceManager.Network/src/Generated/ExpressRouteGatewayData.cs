@@ -7,88 +7,111 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the ExpressRouteGateway data model.
-    /// ExpressRoute gateway resource.
-    /// </summary>
-    public partial class ExpressRouteGatewayData : NetworkTrackedResourceData
+    /// <summary> ExpressRoute gateway resource. </summary>
+    public partial class ExpressRouteGatewayData : Resource
     {
         /// <summary> Initializes a new instance of <see cref="ExpressRouteGatewayData"/>. </summary>
         public ExpressRouteGatewayData()
         {
-            ExpressRouteConnectionList = new ChangeTrackingList<ExpressRouteConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteGatewayData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="autoScaleConfiguration"> Configuration for auto scaling. </param>
-        /// <param name="expressRouteConnectionList"> List of ExpressRoute connections to the ExpressRoute gateway. </param>
-        /// <param name="provisioningState"> The provisioning state of the express route gateway resource. </param>
-        /// <param name="virtualHub"> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </param>
-        /// <param name="allowNonVirtualWanTraffic"> Configures this gateway to accept traffic from non Virtual WAN networks. </param>
-        internal ExpressRouteGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration, IList<ExpressRouteConnectionData> expressRouteConnectionList, NetworkProvisioningState? provisioningState, WritableSubResource virtualHub, bool? allowNonVirtualWanTraffic) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the express route gateway. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal ExpressRouteGatewayData(string id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExpressRouteGatewayProperties properties, ETag? eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            AutoScaleConfiguration = autoScaleConfiguration;
-            ExpressRouteConnectionList = expressRouteConnectionList;
-            ProvisioningState = provisioningState;
-            VirtualHub = virtualHub;
-            AllowNonVirtualWanTraffic = allowNonVirtualWanTraffic;
+            Properties = properties;
+            ETag = eTag;
         }
 
+        /// <summary> Properties of the express route gateway. </summary>
+        internal ExpressRouteGatewayProperties Properties { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
-        /// <summary> Configuration for auto scaling. </summary>
-        internal ExpressRouteGatewayPropertiesAutoScaleConfiguration AutoScaleConfiguration { get; set; }
-        /// <summary> Minimum and maximum number of scale units to deploy. </summary>
-        [WirePath("properties.autoScaleConfiguration.bounds")]
-        public ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds AutoScaleBounds
+
+        /// <summary> List of ExpressRoute connections to the ExpressRoute gateway. </summary>
+        public IList<ExpressRouteConnectionData> ExpressRouteConnections
         {
-            get => AutoScaleConfiguration is null ? default : AutoScaleConfiguration.Bounds;
-            set
+            get
             {
-                if (AutoScaleConfiguration is null)
-                    AutoScaleConfiguration = new ExpressRouteGatewayPropertiesAutoScaleConfiguration();
-                AutoScaleConfiguration.Bounds = value;
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteGatewayProperties();
+                }
+                return Properties.ExpressRouteConnections;
             }
         }
 
-        /// <summary> List of ExpressRoute connections to the ExpressRoute gateway. </summary>
-        [WirePath("properties.expressRouteConnections")]
-        public IList<ExpressRouteConnectionData> ExpressRouteConnectionList { get; }
         /// <summary> The provisioning state of the express route gateway resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
-        /// <summary> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </summary>
-        internal WritableSubResource VirtualHub { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.virtualHub.id")]
-        public ResourceIdentifier VirtualHubId
+        public NetworkProvisioningState? ProvisioningState
         {
-            get => VirtualHub is null ? default : VirtualHub.Id;
-            set
+            get
             {
-                if (VirtualHub is null)
-                    VirtualHub = new WritableSubResource();
-                VirtualHub.Id = value;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
         /// <summary> Configures this gateway to accept traffic from non Virtual WAN networks. </summary>
-        [WirePath("properties.allowNonVirtualWanTraffic")]
-        public bool? AllowNonVirtualWanTraffic { get; set; }
+        public bool? AllowNonVirtualWanTraffic
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowNonVirtualWanTraffic;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteGatewayProperties();
+                }
+                Properties.AllowNonVirtualWanTraffic = value;
+            }
+        }
+
+        /// <summary> Minimum and maximum number of scale units to deploy. </summary>
+        public ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds AutoScaleBounds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutoScaleBounds;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteGatewayProperties();
+                }
+                Properties.AutoScaleBounds = value;
+            }
+        }
+
+        /// <summary> The resource URI for the Virtual Hub where the ExpressRoute gateway is or will be deployed. The Virtual Hub resource and the ExpressRoute gateway resource reside in the same subscription. </summary>
+        public string VirtualHubId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualHubId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteGatewayProperties();
+                }
+                Properties.VirtualHubId = value;
+            }
+        }
     }
 }

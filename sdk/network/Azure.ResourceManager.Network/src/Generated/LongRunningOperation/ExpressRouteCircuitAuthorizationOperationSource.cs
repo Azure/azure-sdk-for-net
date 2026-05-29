@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class ExpressRouteCircuitAuthorizationOperationSource : IOperationSource<ExpressRouteCircuitAuthorizationResource>
+    /// <summary></summary>
+    internal partial class ExpressRouteCircuitAuthorizationOperationSource : IOperationSource<ExpressRouteCircuitAuthorizationResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ExpressRouteCircuitAuthorizationOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ExpressRouteCircuitAuthorizationResource IOperationSource<ExpressRouteCircuitAuthorizationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ExpressRouteCircuitAuthorizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ExpressRouteCircuitAuthorizationData data = ExpressRouteCircuitAuthorizationData.DeserializeExpressRouteCircuitAuthorizationData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ExpressRouteCircuitAuthorizationResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ExpressRouteCircuitAuthorizationResource> IOperationSource<ExpressRouteCircuitAuthorizationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ExpressRouteCircuitAuthorizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return await Task.FromResult(new ExpressRouteCircuitAuthorizationResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ExpressRouteCircuitAuthorizationData data = ExpressRouteCircuitAuthorizationData.DeserializeExpressRouteCircuitAuthorizationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ExpressRouteCircuitAuthorizationResource(_client, data);
         }
     }
 }

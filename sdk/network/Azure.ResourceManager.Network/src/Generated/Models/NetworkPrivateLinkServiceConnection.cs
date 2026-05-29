@@ -7,57 +7,116 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> PrivateLinkServiceConnection resource. </summary>
-    public partial class NetworkPrivateLinkServiceConnection : NetworkResourceData
+    public partial class NetworkPrivateLinkServiceConnection : SubResource
     {
         /// <summary> Initializes a new instance of <see cref="NetworkPrivateLinkServiceConnection"/>. </summary>
         public NetworkPrivateLinkServiceConnection()
         {
-            GroupIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkPrivateLinkServiceConnection"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="provisioningState"> The provisioning state of the private link service connection resource. </param>
-        /// <param name="privateLinkServiceId"> The resource id of private link service. </param>
-        /// <param name="groupIds"> The ID(s) of the group(s) obtained from the remote resource that this private endpoint should connect to. </param>
-        /// <param name="requestMessage"> A message passed to the owner of the remote resource with this connection request. Restricted to 140 chars. </param>
-        /// <param name="connectionState"> A collection of read-only information about the state of the connection to the remote resource. </param>
-        internal NetworkPrivateLinkServiceConnection(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, NetworkProvisioningState? provisioningState, ResourceIdentifier privateLinkServiceId, IList<string> groupIds, string requestMessage, NetworkPrivateLinkServiceConnectionState connectionState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the private link service connection. </param>
+        /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="type"> The resource type. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal NetworkPrivateLinkServiceConnection(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateLinkServiceConnectionProperties properties, string name, string @type, ETag? eTag) : base(id, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            ProvisioningState = provisioningState;
-            PrivateLinkServiceId = privateLinkServiceId;
-            GroupIds = groupIds;
-            RequestMessage = requestMessage;
-            ConnectionState = connectionState;
+            Properties = properties;
+            Name = name;
+            Type = @type;
+            ETag = eTag;
         }
 
+        /// <summary> Properties of the private link service connection. </summary>
+        internal PrivateLinkServiceConnectionProperties Properties { get; set; }
+
+        /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
+        public string Name { get; set; }
+
+        /// <summary> The resource type. </summary>
+        public string Type { get; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> The provisioning state of the private link service connection resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The resource id of private link service. </summary>
-        [WirePath("properties.privateLinkServiceId")]
-        public ResourceIdentifier PrivateLinkServiceId { get; set; }
+        public string PrivateLinkServiceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkServiceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateLinkServiceConnectionProperties();
+                }
+                Properties.PrivateLinkServiceId = value;
+            }
+        }
+
         /// <summary> The ID(s) of the group(s) obtained from the remote resource that this private endpoint should connect to. </summary>
-        [WirePath("properties.groupIds")]
-        public IList<string> GroupIds { get; }
+        public IList<string> GroupIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateLinkServiceConnectionProperties();
+                }
+                return Properties.GroupIds;
+            }
+        }
+
         /// <summary> A message passed to the owner of the remote resource with this connection request. Restricted to 140 chars. </summary>
-        [WirePath("properties.requestMessage")]
-        public string RequestMessage { get; set; }
+        public string RequestMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequestMessage;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateLinkServiceConnectionProperties();
+                }
+                Properties.RequestMessage = value;
+            }
+        }
+
         /// <summary> A collection of read-only information about the state of the connection to the remote resource. </summary>
-        [WirePath("properties.privateLinkServiceConnectionState")]
-        public NetworkPrivateLinkServiceConnectionState ConnectionState { get; set; }
+        public NetworkPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateLinkServiceConnectionProperties();
+                }
+                Properties.PrivateLinkServiceConnectionState = value;
+            }
+        }
     }
 }

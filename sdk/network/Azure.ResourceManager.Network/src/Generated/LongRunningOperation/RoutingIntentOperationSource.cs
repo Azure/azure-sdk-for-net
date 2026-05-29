@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class RoutingIntentOperationSource : IOperationSource<RoutingIntentResource>
+    /// <summary></summary>
+    internal partial class RoutingIntentOperationSource : IOperationSource<RoutingIntentResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal RoutingIntentOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         RoutingIntentResource IOperationSource<RoutingIntentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RoutingIntentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            RoutingIntentData data = RoutingIntentData.DeserializeRoutingIntentData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new RoutingIntentResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<RoutingIntentResource> IOperationSource<RoutingIntentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RoutingIntentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return await Task.FromResult(new RoutingIntentResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            RoutingIntentData data = RoutingIntentData.DeserializeRoutingIntentData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new RoutingIntentResource(_client, data);
         }
     }
 }

@@ -7,66 +7,137 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the NetworkVirtualApplianceConnection data model.
-    /// NetworkVirtualApplianceConnection resource.
-    /// </summary>
-    public partial class NetworkVirtualApplianceConnectionData : NetworkResourceData
+    /// <summary> NetworkVirtualApplianceConnection resource. </summary>
+    public partial class NetworkVirtualApplianceConnectionData : SubResourceModel
     {
         /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceConnectionData"/>. </summary>
         public NetworkVirtualApplianceConnectionData()
         {
-            BgpPeerAddress = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="namePropertiesName"> The name of the resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the NetworkVirtualApplianceConnection resource. </param>
-        /// <param name="asn"> Network Virtual Appliance ASN. </param>
-        /// <param name="tunnelIdentifier"> Unique identifier for the connection. </param>
-        /// <param name="bgpPeerAddress"> List of bgpPeerAddresses for the NVA instances. </param>
-        /// <param name="enableInternetSecurity"> Enable internet security. </param>
-        /// <param name="connectionRoutingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
-        internal NetworkVirtualApplianceConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string namePropertiesName, NetworkProvisioningState? provisioningState, long? asn, long? tunnelIdentifier, IList<string> bgpPeerAddress, bool? enableInternetSecurity, RoutingConfiguration connectionRoutingConfiguration) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the express route connection. </param>
+        internal NetworkVirtualApplianceConnectionData(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, NetworkVirtualApplianceConnectionProperties properties) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            NamePropertiesName = namePropertiesName;
-            ProvisioningState = provisioningState;
-            Asn = asn;
-            TunnelIdentifier = tunnelIdentifier;
-            BgpPeerAddress = bgpPeerAddress;
-            EnableInternetSecurity = enableInternetSecurity;
-            ConnectionRoutingConfiguration = connectionRoutingConfiguration;
+            Properties = properties;
         }
 
+        /// <summary> Properties of the express route connection. </summary>
+        internal NetworkVirtualApplianceConnectionProperties Properties { get; set; }
+
         /// <summary> The name of the resource. </summary>
-        [WirePath("properties.name")]
-        public string NamePropertiesName { get; set; }
+        public string Name
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Name;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkVirtualApplianceConnectionProperties();
+                }
+                Properties.Name = value;
+            }
+        }
+
         /// <summary> The provisioning state of the NetworkVirtualApplianceConnection resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Network Virtual Appliance ASN. </summary>
-        [WirePath("properties.asn")]
-        public long? Asn { get; set; }
+        public long? Asn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Asn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkVirtualApplianceConnectionProperties();
+                }
+                Properties.Asn = value;
+            }
+        }
+
         /// <summary> Unique identifier for the connection. </summary>
-        [WirePath("properties.tunnelIdentifier")]
-        public long? TunnelIdentifier { get; set; }
+        public long? TunnelIdentifier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TunnelIdentifier;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkVirtualApplianceConnectionProperties();
+                }
+                Properties.TunnelIdentifier = value;
+            }
+        }
+
         /// <summary> List of bgpPeerAddresses for the NVA instances. </summary>
-        [WirePath("properties.bgpPeerAddress")]
-        public IList<string> BgpPeerAddress { get; }
+        public IList<string> BgpPeerAddress
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkVirtualApplianceConnectionProperties();
+                }
+                return Properties.BgpPeerAddress;
+            }
+        }
+
         /// <summary> Enable internet security. </summary>
-        [WirePath("properties.enableInternetSecurity")]
-        public bool? EnableInternetSecurity { get; set; }
+        public bool? EnableInternetSecurity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableInternetSecurity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkVirtualApplianceConnectionProperties();
+                }
+                Properties.EnableInternetSecurity = value;
+            }
+        }
+
         /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
-        [WirePath("properties.routingConfiguration")]
-        public RoutingConfiguration ConnectionRoutingConfiguration { get; set; }
+        public RoutingConfiguration RoutingConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoutingConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkVirtualApplianceConnectionProperties();
+                }
+                Properties.RoutingConfiguration = value;
+            }
+        }
     }
 }

@@ -8,74 +8,61 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the NetworkSecurityPerimeterLoggingConfiguration data model.
-    /// The NSP logging configuration
-    /// </summary>
-    public partial class NetworkSecurityPerimeterLoggingConfigurationData : ResourceData
+    /// <summary> The NSP logging configuration. </summary>
+    public partial class NetworkSecurityPerimeterLoggingConfigurationData : SecurityPerimeterProxyResource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterLoggingConfigurationData"/>. </summary>
         public NetworkSecurityPerimeterLoggingConfigurationData()
         {
-            EnabledLogCategories = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterLoggingConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="enabledLogCategories"> The log categories to enable in the NSP logging configuration. </param>
-        /// <param name="version"> The version of the NSP logging configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterLoggingConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<string> enabledLogCategories, string version, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}". </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the NSP logging configuration. </param>
+        internal NetworkSecurityPerimeterLoggingConfigurationData(ResourceIdentifier id, string name, string @type, SecurityPerimeterSystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NspLoggingConfigurationProperties properties) : base(id, name, @type, systemData, additionalBinaryDataProperties)
         {
-            EnabledLogCategories = enabledLogCategories;
-            Version = version;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
         }
 
+        /// <summary> Properties of the NSP logging configuration. </summary>
+        internal NspLoggingConfigurationProperties Properties { get; set; }
+
         /// <summary> The log categories to enable in the NSP logging configuration. </summary>
-        [WirePath("properties.enabledLogCategories")]
-        public IList<string> EnabledLogCategories { get; }
+        public IList<string> EnabledLogCategories
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NspLoggingConfigurationProperties();
+                }
+                return Properties.EnabledLogCategories;
+            }
+        }
+
         /// <summary> The version of the NSP logging configuration. </summary>
-        [WirePath("properties.version")]
-        public string Version { get; set; }
+        public string Version
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Version;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NspLoggingConfigurationProperties();
+                }
+                Properties.Version = value;
+            }
+        }
     }
 }

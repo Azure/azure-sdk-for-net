@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Parameters to compare with network configuration. </summary>
     public partial class NetworkConfigurationDiagnosticProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkConfigurationDiagnosticProfile"/>. </summary>
         /// <param name="direction"> The direction of the traffic. </param>
@@ -72,36 +44,30 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="source"> Traffic source. Accepted values are '*', IP Address/CIDR, Service Tag. </param>
         /// <param name="destination"> Traffic destination. Accepted values are: '*', IP Address/CIDR, Service Tag. </param>
         /// <param name="destinationPort"> Traffic destination port. Accepted values are '*' and a single port in the range (0 - 65535). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkConfigurationDiagnosticProfile(NetworkTrafficDirection direction, string protocol, string source, string destination, string destinationPort, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkConfigurationDiagnosticProfile(NetworkTrafficDirection direction, string protocol, string source, string destination, string destinationPort, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Direction = direction;
             Protocol = protocol;
             Source = source;
             Destination = destination;
             DestinationPort = destinationPort;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetworkConfigurationDiagnosticProfile"/> for deserialization. </summary>
-        internal NetworkConfigurationDiagnosticProfile()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The direction of the traffic. </summary>
-        [WirePath("direction")]
         public NetworkTrafficDirection Direction { get; set; }
+
         /// <summary> Protocol to be verified on. Accepted values are '*', TCP, UDP. </summary>
-        [WirePath("protocol")]
         public string Protocol { get; set; }
+
         /// <summary> Traffic source. Accepted values are '*', IP Address/CIDR, Service Tag. </summary>
-        [WirePath("source")]
         public string Source { get; set; }
+
         /// <summary> Traffic destination. Accepted values are: '*', IP Address/CIDR, Service Tag. </summary>
-        [WirePath("destination")]
         public string Destination { get; set; }
+
         /// <summary> Traffic destination port. Accepted values are '*' and a single port in the range (0 - 65535). </summary>
-        [WirePath("destinationPort")]
         public string DestinationPort { get; set; }
     }
 }

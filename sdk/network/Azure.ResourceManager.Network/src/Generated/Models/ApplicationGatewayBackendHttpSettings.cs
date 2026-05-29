@@ -7,136 +7,333 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Backend address pool settings of an application gateway. </summary>
-    public partial class ApplicationGatewayBackendHttpSettings : NetworkResourceData
+    public partial class ApplicationGatewayBackendHttpSettings : SubResource
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendHttpSettings"/>. </summary>
         public ApplicationGatewayBackendHttpSettings()
         {
-            AuthenticationCertificates = new ChangeTrackingList<WritableSubResource>();
-            TrustedRootCertificates = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendHttpSettings"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="port"> The destination port on the backend. </param>
-        /// <param name="protocol"> The protocol used to communicate with the backend. </param>
-        /// <param name="cookieBasedAffinity"> Cookie based affinity. </param>
-        /// <param name="requestTimeoutInSeconds"> Request timeout in seconds. Application Gateway will fail the request if response is not received within RequestTimeout. Acceptable values are from 1 second to 86400 seconds. </param>
-        /// <param name="probe"> Probe resource of an application gateway. </param>
-        /// <param name="authenticationCertificates"> Array of references to application gateway authentication certificates. </param>
-        /// <param name="trustedRootCertificates"> Array of references to application gateway trusted root certificates. </param>
-        /// <param name="connectionDraining"> Connection draining of the backend http settings resource. </param>
-        /// <param name="hostName"> Host header to be sent to the backend servers. </param>
-        /// <param name="pickHostNameFromBackendAddress"> Whether to pick host header should be picked from the host name of the backend server. Default value is false. </param>
-        /// <param name="affinityCookieName"> Cookie name to use for the affinity cookie. </param>
-        /// <param name="probeEnabled"> Whether the probe is enabled. Default value is false. </param>
-        /// <param name="path"> Path which should be used as a prefix for all HTTP requests. Null means no path will be prefixed. Default value is null. </param>
-        /// <param name="isDedicatedBackendConnectionEnabled"> Enable or disable dedicated connection per backend server. Default is set to false. </param>
-        /// <param name="isValidateCertChainAndExpiryEnabled"> Verify or skip both chain and expiry validations of the certificate on the backend server. Default is set to true. </param>
-        /// <param name="isValidateSniEnabled"> When enabled, verifies if the Common Name of the certificate provided by the backend server matches the Server Name Indication (SNI) value. Default value is true. </param>
-        /// <param name="sniName"> Specify an SNI value to match the common name of the certificate on the backend. By default, the application gateway uses the incoming request’s host header as the SNI. Default value is null. </param>
-        /// <param name="provisioningState"> The provisioning state of the backend HTTP settings resource. </param>
-        internal ApplicationGatewayBackendHttpSettings(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, int? port, ApplicationGatewayProtocol? protocol, ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity, int? requestTimeoutInSeconds, WritableSubResource probe, IList<WritableSubResource> authenticationCertificates, IList<WritableSubResource> trustedRootCertificates, ApplicationGatewayConnectionDraining connectionDraining, string hostName, bool? pickHostNameFromBackendAddress, string affinityCookieName, bool? probeEnabled, string path, bool? isDedicatedBackendConnectionEnabled, bool? isValidateCertChainAndExpiryEnabled, bool? isValidateSniEnabled, string sniName, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the application gateway backend HTTP settings. </param>
+        /// <param name="name"> Name of the backend http settings that is unique within an Application Gateway. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="type"> Type of the resource. </param>
+        internal ApplicationGatewayBackendHttpSettings(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationGatewayBackendHttpSettingsPropertiesFormat properties, string name, ETag? eTag, string @type) : base(id, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            Port = port;
-            Protocol = protocol;
-            CookieBasedAffinity = cookieBasedAffinity;
-            RequestTimeoutInSeconds = requestTimeoutInSeconds;
-            Probe = probe;
-            AuthenticationCertificates = authenticationCertificates;
-            TrustedRootCertificates = trustedRootCertificates;
-            ConnectionDraining = connectionDraining;
-            HostName = hostName;
-            PickHostNameFromBackendAddress = pickHostNameFromBackendAddress;
-            AffinityCookieName = affinityCookieName;
-            ProbeEnabled = probeEnabled;
-            Path = path;
-            IsDedicatedBackendConnectionEnabled = isDedicatedBackendConnectionEnabled;
-            IsValidateCertChainAndExpiryEnabled = isValidateCertChainAndExpiryEnabled;
-            IsValidateSniEnabled = isValidateSniEnabled;
-            SniName = sniName;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            Name = name;
+            ETag = eTag;
+            Type = @type;
         }
 
+        /// <summary> Properties of the application gateway backend HTTP settings. </summary>
+        internal ApplicationGatewayBackendHttpSettingsPropertiesFormat Properties { get; set; }
+
+        /// <summary> Name of the backend http settings that is unique within an Application Gateway. </summary>
+        public string Name { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
+
+        /// <summary> Type of the resource. </summary>
+        public string Type { get; }
+
         /// <summary> The destination port on the backend. </summary>
-        [WirePath("properties.port")]
-        public int? Port { get; set; }
-        /// <summary> The protocol used to communicate with the backend. </summary>
-        [WirePath("properties.protocol")]
-        public ApplicationGatewayProtocol? Protocol { get; set; }
-        /// <summary> Cookie based affinity. </summary>
-        [WirePath("properties.cookieBasedAffinity")]
-        public ApplicationGatewayCookieBasedAffinity? CookieBasedAffinity { get; set; }
-        /// <summary> Request timeout in seconds. Application Gateway will fail the request if response is not received within RequestTimeout. Acceptable values are from 1 second to 86400 seconds. </summary>
-        [WirePath("properties.requestTimeout")]
-        public int? RequestTimeoutInSeconds { get; set; }
-        /// <summary> Probe resource of an application gateway. </summary>
-        internal WritableSubResource Probe { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.probe.id")]
-        public ResourceIdentifier ProbeId
+        public int? Port
         {
-            get => Probe is null ? default : Probe.Id;
+            get
+            {
+                return Properties is null ? default : Properties.Port;
+            }
             set
             {
-                if (Probe is null)
-                    Probe = new WritableSubResource();
-                Probe.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendHttpSettingsPropertiesFormat();
+                }
+                Properties.Port = value;
+            }
+        }
+
+        /// <summary> The protocol used to communicate with the backend. </summary>
+        public ApplicationGatewayProtocol? Protocol
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Protocol;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendHttpSettingsPropertiesFormat();
+                }
+                Properties.Protocol = value;
+            }
+        }
+
+        /// <summary> Cookie based affinity. </summary>
+        public ApplicationGatewayCookieBasedAffinity? CookieBasedAffinity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CookieBasedAffinity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendHttpSettingsPropertiesFormat();
+                }
+                Properties.CookieBasedAffinity = value;
+            }
+        }
+
+        /// <summary> Request timeout in seconds. Application Gateway will fail the request if response is not received within RequestTimeout. Acceptable values are from 1 second to 86400 seconds. </summary>
+        public int? RequestTimeout
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequestTimeout;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendHttpSettingsPropertiesFormat();
+                }
+                Properties.RequestTimeout = value;
             }
         }
 
         /// <summary> Array of references to application gateway authentication certificates. </summary>
-        [WirePath("properties.authenticationCertificates")]
-        public IList<WritableSubResource> AuthenticationCertificates { get; }
+        public IList<SubResource> AuthenticationCertificates
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendHttpSettingsPropertiesFormat();
+                }
+                return Properties.AuthenticationCertificates;
+            }
+        }
+
         /// <summary> Array of references to application gateway trusted root certificates. </summary>
-        [WirePath("properties.trustedRootCertificates")]
-        public IList<WritableSubResource> TrustedRootCertificates { get; }
+        public IList<SubResource> TrustedRootCertificates
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendHttpSettingsPropertiesFormat();
+                }
+                return Properties.TrustedRootCertificates;
+            }
+        }
+
         /// <summary> Connection draining of the backend http settings resource. </summary>
-        [WirePath("properties.connectionDraining")]
-        public ApplicationGatewayConnectionDraining ConnectionDraining { get; set; }
+        public ApplicationGatewayConnectionDraining ConnectionDraining
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionDraining;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendHttpSettingsPropertiesFormat();
+                }
+                Properties.ConnectionDraining = value;
+            }
+        }
+
         /// <summary> Host header to be sent to the backend servers. </summary>
-        [WirePath("properties.hostName")]
-        public string HostName { get; set; }
+        public string HostName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendHttpSettingsPropertiesFormat();
+                }
+                Properties.HostName = value;
+            }
+        }
+
         /// <summary> Whether to pick host header should be picked from the host name of the backend server. Default value is false. </summary>
-        [WirePath("properties.pickHostNameFromBackendAddress")]
-        public bool? PickHostNameFromBackendAddress { get; set; }
+        public bool? PickHostNameFromBackendAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PickHostNameFromBackendAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendHttpSettingsPropertiesFormat();
+                }
+                Properties.PickHostNameFromBackendAddress = value;
+            }
+        }
+
         /// <summary> Cookie name to use for the affinity cookie. </summary>
-        [WirePath("properties.affinityCookieName")]
-        public string AffinityCookieName { get; set; }
+        public string AffinityCookieName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AffinityCookieName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendHttpSettingsPropertiesFormat();
+                }
+                Properties.AffinityCookieName = value;
+            }
+        }
+
         /// <summary> Whether the probe is enabled. Default value is false. </summary>
-        [WirePath("properties.probeEnabled")]
-        public bool? ProbeEnabled { get; set; }
+        public bool? ProbeEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProbeEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendHttpSettingsPropertiesFormat();
+                }
+                Properties.ProbeEnabled = value;
+            }
+        }
+
         /// <summary> Path which should be used as a prefix for all HTTP requests. Null means no path will be prefixed. Default value is null. </summary>
-        [WirePath("properties.path")]
-        public string Path { get; set; }
+        public string Path
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Path;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendHttpSettingsPropertiesFormat();
+                }
+                Properties.Path = value;
+            }
+        }
+
         /// <summary> Enable or disable dedicated connection per backend server. Default is set to false. </summary>
-        [WirePath("properties.dedicatedBackendConnection")]
-        public bool? IsDedicatedBackendConnectionEnabled { get; set; }
+        public bool? DedicatedBackendConnection
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DedicatedBackendConnection;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendHttpSettingsPropertiesFormat();
+                }
+                Properties.DedicatedBackendConnection = value;
+            }
+        }
+
         /// <summary> Verify or skip both chain and expiry validations of the certificate on the backend server. Default is set to true. </summary>
-        [WirePath("properties.validateCertChainAndExpiry")]
-        public bool? IsValidateCertChainAndExpiryEnabled { get; set; }
+        public bool? ValidateCertChainAndExpiry
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ValidateCertChainAndExpiry;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendHttpSettingsPropertiesFormat();
+                }
+                Properties.ValidateCertChainAndExpiry = value;
+            }
+        }
+
         /// <summary> When enabled, verifies if the Common Name of the certificate provided by the backend server matches the Server Name Indication (SNI) value. Default value is true. </summary>
-        [WirePath("properties.validateSNI")]
-        public bool? IsValidateSniEnabled { get; set; }
+        public bool? ValidateSNI
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ValidateSNI;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendHttpSettingsPropertiesFormat();
+                }
+                Properties.ValidateSNI = value;
+            }
+        }
+
         /// <summary> Specify an SNI value to match the common name of the certificate on the backend. By default, the application gateway uses the incoming request’s host header as the SNI. Default value is null. </summary>
-        [WirePath("properties.sniName")]
-        public string SniName { get; set; }
+        public string SniName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SniName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendHttpSettingsPropertiesFormat();
+                }
+                Properties.SniName = value;
+            }
+        }
+
         /// <summary> The provisioning state of the backend HTTP settings resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public string ProbeId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProbeId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendHttpSettingsPropertiesFormat();
+                }
+                Properties.ProbeId = value;
+            }
+        }
     }
 }

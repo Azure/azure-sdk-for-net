@@ -7,44 +7,15 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
+using Azure;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> An IP Configuration of the private endpoint. </summary>
     public partial class PrivateEndpointIPConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointIPConfiguration"/>. </summary>
         public PrivateEndpointIPConfiguration()
@@ -52,41 +23,81 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointIPConfiguration"/>. </summary>
+        /// <param name="properties"> Properties of private endpoint IP configurations. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. </param>
-        /// <param name="privateEndpointIPConfigurationType"> The resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="groupId"> The ID of a group obtained from the remote resource that this private endpoint should connect to. </param>
-        /// <param name="memberName"> The member name of a group obtained from the remote resource that this private endpoint should connect to. </param>
-        /// <param name="privateIPAddress"> A private ip address obtained from the private endpoint's subnet. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointIPConfiguration(string name, string privateEndpointIPConfigurationType, ETag? etag, string groupId, string memberName, IPAddress privateIPAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="type"> The resource type. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateEndpointIPConfiguration(PrivateEndpointIPConfigurationProperties properties, string name, string @type, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Properties = properties;
             Name = name;
-            PrivateEndpointIPConfigurationType = privateEndpointIPConfigurationType;
-            ETag = etag;
-            GroupId = groupId;
-            MemberName = memberName;
-            PrivateIPAddress = privateIPAddress;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Type = @type;
+            ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Properties of private endpoint IP configurations. </summary>
+        internal PrivateEndpointIPConfigurationProperties Properties { get; set; }
+
         /// <summary> The name of the resource that is unique within a resource group. </summary>
-        [WirePath("name")]
         public string Name { get; set; }
+
         /// <summary> The resource type. </summary>
-        [WirePath("type")]
-        public string PrivateEndpointIPConfigurationType { get; }
+        public string Type { get; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> The ID of a group obtained from the remote resource that this private endpoint should connect to. </summary>
-        [WirePath("properties.groupId")]
-        public string GroupId { get; set; }
+        public string GroupId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GroupId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointIPConfigurationProperties();
+                }
+                Properties.GroupId = value;
+            }
+        }
+
         /// <summary> The member name of a group obtained from the remote resource that this private endpoint should connect to. </summary>
-        [WirePath("properties.memberName")]
-        public string MemberName { get; set; }
+        public string MemberName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MemberName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointIPConfigurationProperties();
+                }
+                Properties.MemberName = value;
+            }
+        }
+
         /// <summary> A private ip address obtained from the private endpoint's subnet. </summary>
-        [WirePath("properties.privateIPAddress")]
-        public IPAddress PrivateIPAddress { get; set; }
+        public string PrivateIPAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointIPConfigurationProperties();
+                }
+                Properties.PrivateIPAddress = value;
+            }
+        }
     }
 }

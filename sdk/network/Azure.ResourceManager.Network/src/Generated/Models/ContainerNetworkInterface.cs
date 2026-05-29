@@ -7,65 +7,79 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Container network interface child resource. </summary>
-    public partial class ContainerNetworkInterface : NetworkResourceData
+    public partial class ContainerNetworkInterface : SubResource
     {
         /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterface"/>. </summary>
-        public ContainerNetworkInterface()
+        internal ContainerNetworkInterface()
         {
-            IPConfigurations = new ChangeTrackingList<ContainerNetworkInterfaceIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterface"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="containerNetworkInterfaceConfiguration"> Container network interface configuration from which this container network interface is created. </param>
-        /// <param name="container"> Reference to the container to which this container network interface is attached. </param>
-        /// <param name="ipConfigurations"> Reference to the ip configuration on this container nic. </param>
-        /// <param name="provisioningState"> The provisioning state of the container network interface resource. </param>
-        internal ContainerNetworkInterface(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ContainerNetworkInterfaceConfiguration containerNetworkInterfaceConfiguration, WritableSubResource container, IReadOnlyList<ContainerNetworkInterfaceIPConfiguration> ipConfigurations, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Container network interface properties. </param>
+        /// <param name="name"> The name of the resource. This name can be used to access the resource. </param>
+        /// <param name="type"> Sub Resource type. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal ContainerNetworkInterface(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ContainerNetworkInterfacePropertiesFormat properties, string name, string @type, ETag? eTag) : base(id, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            ContainerNetworkInterfaceConfiguration = containerNetworkInterfaceConfiguration;
-            Container = container;
-            IPConfigurations = ipConfigurations;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            Name = name;
+            Type = @type;
+            ETag = eTag;
         }
 
+        /// <summary> Container network interface properties. </summary>
+        internal ContainerNetworkInterfacePropertiesFormat Properties { get; }
+
+        /// <summary> The name of the resource. This name can be used to access the resource. </summary>
+        public string Name { get; }
+
+        /// <summary> Sub Resource type. </summary>
+        public string Type { get; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> Container network interface configuration from which this container network interface is created. </summary>
-        [WirePath("properties.containerNetworkInterfaceConfiguration")]
-        public ContainerNetworkInterfaceConfiguration ContainerNetworkInterfaceConfiguration { get; }
-        /// <summary> Reference to the container to which this container network interface is attached. </summary>
-        internal WritableSubResource Container { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.container.id")]
-        public ResourceIdentifier ContainerId
+        public ContainerNetworkInterfaceConfiguration ContainerNetworkInterfaceConfiguration
         {
-            get => Container is null ? default : Container.Id;
-            set
+            get
             {
-                if (Container is null)
-                    Container = new WritableSubResource();
-                Container.Id = value;
+                return Properties is null ? default : Properties.ContainerNetworkInterfaceConfiguration;
             }
         }
 
         /// <summary> Reference to the ip configuration on this container nic. </summary>
-        [WirePath("properties.ipConfigurations")]
-        public IReadOnlyList<ContainerNetworkInterfaceIPConfiguration> IPConfigurations { get; }
+        public IReadOnlyList<ContainerNetworkInterfaceIPConfiguration> IpConfigurations
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IpConfigurations;
+            }
+        }
+
         /// <summary> The provisioning state of the container network interface resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public string ContainerId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ContainerId;
+            }
+        }
     }
 }

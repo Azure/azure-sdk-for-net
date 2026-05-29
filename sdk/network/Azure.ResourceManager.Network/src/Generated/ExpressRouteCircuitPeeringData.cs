@@ -7,156 +7,344 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the ExpressRouteCircuitPeering data model.
-    /// Peering in an ExpressRouteCircuit resource.
-    /// </summary>
-    public partial class ExpressRouteCircuitPeeringData : NetworkResourceData
+    /// <summary> Peering in an ExpressRouteCircuit resource. </summary>
+    public partial class ExpressRouteCircuitPeeringData : SubResourceModel
     {
         /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitPeeringData"/>. </summary>
         public ExpressRouteCircuitPeeringData()
         {
-            Connections = new ChangeTrackingList<ExpressRouteCircuitConnectionData>();
-            PeeredConnections = new ChangeTrackingList<PeerExpressRouteCircuitConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitPeeringData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="peeringType"> The peering type. </param>
-        /// <param name="state"> The peering state. </param>
-        /// <param name="azureASN"> The Azure ASN. </param>
-        /// <param name="peerASN"> The peer ASN. </param>
-        /// <param name="primaryPeerAddressPrefix"> The primary address prefix. </param>
-        /// <param name="secondaryPeerAddressPrefix"> The secondary address prefix. </param>
-        /// <param name="primaryAzurePort"> The primary port. </param>
-        /// <param name="secondaryAzurePort"> The secondary port. </param>
-        /// <param name="sharedKey"> The shared key. </param>
-        /// <param name="vlanId"> The VLAN ID. </param>
-        /// <param name="microsoftPeeringConfig"> The Microsoft peering configuration. </param>
-        /// <param name="stats"> The peering stats of express route circuit. </param>
-        /// <param name="provisioningState"> The provisioning state of the express route circuit peering resource. </param>
-        /// <param name="gatewayManagerETag"> The GatewayManager Etag. </param>
-        /// <param name="lastModifiedBy"> Who was the last to modify the peering. </param>
-        /// <param name="routeFilter"> The reference to the RouteFilter resource. </param>
-        /// <param name="ipv6PeeringConfig"> The IPv6 peering configuration. </param>
-        /// <param name="expressRouteConnection"> The ExpressRoute connection. </param>
-        /// <param name="connections"> The list of circuit connections associated with Azure Private Peering for this circuit. </param>
-        /// <param name="peeredConnections"> The list of peered circuit connections associated with Azure Private Peering for this circuit. </param>
-        internal ExpressRouteCircuitPeeringData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ExpressRoutePeeringType? peeringType, ExpressRoutePeeringState? state, int? azureASN, long? peerASN, string primaryPeerAddressPrefix, string secondaryPeerAddressPrefix, string primaryAzurePort, string secondaryAzurePort, string sharedKey, int? vlanId, ExpressRouteCircuitPeeringConfig microsoftPeeringConfig, ExpressRouteCircuitStats stats, NetworkProvisioningState? provisioningState, string gatewayManagerETag, string lastModifiedBy, WritableSubResource routeFilter, IPv6ExpressRouteCircuitPeeringConfig ipv6PeeringConfig, SubResource expressRouteConnection, IList<ExpressRouteCircuitConnectionData> connections, IReadOnlyList<PeerExpressRouteCircuitConnectionData> peeredConnections) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the express route circuit peering. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal ExpressRouteCircuitPeeringData(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ExpressRouteCircuitPeeringPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            PeeringType = peeringType;
-            State = state;
-            AzureASN = azureASN;
-            PeerASN = peerASN;
-            PrimaryPeerAddressPrefix = primaryPeerAddressPrefix;
-            SecondaryPeerAddressPrefix = secondaryPeerAddressPrefix;
-            PrimaryAzurePort = primaryAzurePort;
-            SecondaryAzurePort = secondaryAzurePort;
-            SharedKey = sharedKey;
-            VlanId = vlanId;
-            MicrosoftPeeringConfig = microsoftPeeringConfig;
-            Stats = stats;
-            ProvisioningState = provisioningState;
-            GatewayManagerETag = gatewayManagerETag;
-            LastModifiedBy = lastModifiedBy;
-            RouteFilter = routeFilter;
-            IPv6PeeringConfig = ipv6PeeringConfig;
-            ExpressRouteConnection = expressRouteConnection;
-            Connections = connections;
-            PeeredConnections = peeredConnections;
+            Properties = properties;
+            ETag = eTag;
         }
 
+        /// <summary> Properties of the express route circuit peering. </summary>
+        internal ExpressRouteCircuitPeeringPropertiesFormat Properties { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> The peering type. </summary>
-        [WirePath("properties.peeringType")]
-        public ExpressRoutePeeringType? PeeringType { get; set; }
-        /// <summary> The peering state. </summary>
-        [WirePath("properties.state")]
-        public ExpressRoutePeeringState? State { get; set; }
-        /// <summary> The Azure ASN. </summary>
-        [WirePath("properties.azureASN")]
-        public int? AzureASN { get; set; }
-        /// <summary> The peer ASN. </summary>
-        [WirePath("properties.peerASN")]
-        public long? PeerASN { get; set; }
-        /// <summary> The primary address prefix. </summary>
-        [WirePath("properties.primaryPeerAddressPrefix")]
-        public string PrimaryPeerAddressPrefix { get; set; }
-        /// <summary> The secondary address prefix. </summary>
-        [WirePath("properties.secondaryPeerAddressPrefix")]
-        public string SecondaryPeerAddressPrefix { get; set; }
-        /// <summary> The primary port. </summary>
-        [WirePath("properties.primaryAzurePort")]
-        public string PrimaryAzurePort { get; set; }
-        /// <summary> The secondary port. </summary>
-        [WirePath("properties.secondaryAzurePort")]
-        public string SecondaryAzurePort { get; set; }
-        /// <summary> The shared key. </summary>
-        [WirePath("properties.sharedKey")]
-        public string SharedKey { get; set; }
-        /// <summary> The VLAN ID. </summary>
-        [WirePath("properties.vlanId")]
-        public int? VlanId { get; set; }
-        /// <summary> The Microsoft peering configuration. </summary>
-        [WirePath("properties.microsoftPeeringConfig")]
-        public ExpressRouteCircuitPeeringConfig MicrosoftPeeringConfig { get; set; }
-        /// <summary> The peering stats of express route circuit. </summary>
-        [WirePath("properties.stats")]
-        public ExpressRouteCircuitStats Stats { get; set; }
-        /// <summary> The provisioning state of the express route circuit peering resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
-        /// <summary> The GatewayManager Etag. </summary>
-        [WirePath("properties.gatewayManagerEtag")]
-        public string GatewayManagerETag { get; set; }
-        /// <summary> Who was the last to modify the peering. </summary>
-        [WirePath("properties.lastModifiedBy")]
-        public string LastModifiedBy { get; }
-        /// <summary> The reference to the RouteFilter resource. </summary>
-        internal WritableSubResource RouteFilter { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.routeFilter.id")]
-        public ResourceIdentifier RouteFilterId
+        public ExpressRoutePeeringType? PeeringType
         {
-            get => RouteFilter is null ? default : RouteFilter.Id;
+            get
+            {
+                return Properties is null ? default : Properties.PeeringType;
+            }
             set
             {
-                if (RouteFilter is null)
-                    RouteFilter = new WritableSubResource();
-                RouteFilter.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPeeringPropertiesFormat();
+                }
+                Properties.PeeringType = value;
+            }
+        }
+
+        /// <summary> The peering state. </summary>
+        public ExpressRoutePeeringState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPeeringPropertiesFormat();
+                }
+                Properties.State = value;
+            }
+        }
+
+        /// <summary> The Azure ASN. </summary>
+        public int? AzureASN
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureASN;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPeeringPropertiesFormat();
+                }
+                Properties.AzureASN = value;
+            }
+        }
+
+        /// <summary> The peer ASN. </summary>
+        public long? PeerASN
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeerASN;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPeeringPropertiesFormat();
+                }
+                Properties.PeerASN = value;
+            }
+        }
+
+        /// <summary> The primary address prefix. </summary>
+        public string PrimaryPeerAddressPrefix
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrimaryPeerAddressPrefix;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPeeringPropertiesFormat();
+                }
+                Properties.PrimaryPeerAddressPrefix = value;
+            }
+        }
+
+        /// <summary> The secondary address prefix. </summary>
+        public string SecondaryPeerAddressPrefix
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecondaryPeerAddressPrefix;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPeeringPropertiesFormat();
+                }
+                Properties.SecondaryPeerAddressPrefix = value;
+            }
+        }
+
+        /// <summary> The primary port. </summary>
+        public string PrimaryAzurePort
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrimaryAzurePort;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPeeringPropertiesFormat();
+                }
+                Properties.PrimaryAzurePort = value;
+            }
+        }
+
+        /// <summary> The secondary port. </summary>
+        public string SecondaryAzurePort
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecondaryAzurePort;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPeeringPropertiesFormat();
+                }
+                Properties.SecondaryAzurePort = value;
+            }
+        }
+
+        /// <summary> The shared key. </summary>
+        public string SharedKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SharedKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPeeringPropertiesFormat();
+                }
+                Properties.SharedKey = value;
+            }
+        }
+
+        /// <summary> The VLAN ID. </summary>
+        public int? VlanId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VlanId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPeeringPropertiesFormat();
+                }
+                Properties.VlanId = value;
+            }
+        }
+
+        /// <summary> The Microsoft peering configuration. </summary>
+        public ExpressRouteCircuitPeeringConfig MicrosoftPeeringConfig
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MicrosoftPeeringConfig;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPeeringPropertiesFormat();
+                }
+                Properties.MicrosoftPeeringConfig = value;
+            }
+        }
+
+        /// <summary> The peering stats of express route circuit. </summary>
+        public ExpressRouteCircuitStats Stats
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Stats;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPeeringPropertiesFormat();
+                }
+                Properties.Stats = value;
+            }
+        }
+
+        /// <summary> The provisioning state of the express route circuit peering resource. </summary>
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The GatewayManager Etag. </summary>
+        public string GatewayManagerEtag
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GatewayManagerEtag;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPeeringPropertiesFormat();
+                }
+                Properties.GatewayManagerEtag = value;
+            }
+        }
+
+        /// <summary> Who was the last to modify the peering. </summary>
+        public string LastModifiedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedBy;
             }
         }
 
         /// <summary> The IPv6 peering configuration. </summary>
-        [WirePath("properties.ipv6PeeringConfig")]
-        public IPv6ExpressRouteCircuitPeeringConfig IPv6PeeringConfig { get; set; }
-        /// <summary> The ExpressRoute connection. </summary>
-        internal SubResource ExpressRouteConnection { get; set; }
-        /// <summary> Gets Id. </summary>
-        [WirePath("properties.expressRouteConnection.id")]
-        public ResourceIdentifier ExpressRouteConnectionId
+        public IPv6ExpressRouteCircuitPeeringConfig Ipv6PeeringConfig
         {
-            get => ExpressRouteConnection is null ? default : ExpressRouteConnection.Id;
+            get
+            {
+                return Properties is null ? default : Properties.Ipv6PeeringConfig;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPeeringPropertiesFormat();
+                }
+                Properties.Ipv6PeeringConfig = value;
+            }
         }
 
         /// <summary> The list of circuit connections associated with Azure Private Peering for this circuit. </summary>
-        [WirePath("properties.connections")]
-        public IList<ExpressRouteCircuitConnectionData> Connections { get; }
+        public IList<ExpressRouteCircuitConnectionData> Connections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPeeringPropertiesFormat();
+                }
+                return Properties.Connections;
+            }
+        }
+
         /// <summary> The list of peered circuit connections associated with Azure Private Peering for this circuit. </summary>
-        [WirePath("properties.peeredConnections")]
-        public IReadOnlyList<PeerExpressRouteCircuitConnectionData> PeeredConnections { get; }
+        public IReadOnlyList<PeerExpressRouteCircuitConnectionData> PeeredConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPeeringPropertiesFormat();
+                }
+                return Properties.PeeredConnections;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public string RouteFilterId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RouteFilterId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPeeringPropertiesFormat();
+                }
+                Properties.RouteFilterId = value;
+            }
+        }
+
+        /// <summary> The ID of the ExpressRouteConnection. </summary>
+        public string ExpressRouteConnectionId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpressRouteConnectionId;
+            }
+        }
     }
 }

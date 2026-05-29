@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class InboundSecurityRuleOperationSource : IOperationSource<InboundSecurityRuleResource>
+    /// <summary></summary>
+    internal partial class InboundSecurityRuleOperationSource : IOperationSource<InboundSecurityRuleResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal InboundSecurityRuleOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         InboundSecurityRuleResource IOperationSource<InboundSecurityRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<InboundSecurityRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            InboundSecurityRuleData data = InboundSecurityRuleData.DeserializeInboundSecurityRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new InboundSecurityRuleResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<InboundSecurityRuleResource> IOperationSource<InboundSecurityRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<InboundSecurityRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return await Task.FromResult(new InboundSecurityRuleResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            InboundSecurityRuleData data = InboundSecurityRuleData.DeserializeInboundSecurityRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new InboundSecurityRuleResource(_client, data);
         }
     }
 }

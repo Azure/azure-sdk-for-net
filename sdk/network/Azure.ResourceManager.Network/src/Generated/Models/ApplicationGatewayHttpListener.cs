@@ -7,149 +7,214 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Http listener of an application gateway. </summary>
-    public partial class ApplicationGatewayHttpListener : NetworkResourceData
+    public partial class ApplicationGatewayHttpListener : SubResource
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayHttpListener"/>. </summary>
         public ApplicationGatewayHttpListener()
         {
-            CustomErrorConfigurations = new ChangeTrackingList<ApplicationGatewayCustomError>();
-            HostNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayHttpListener"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="frontendIPConfiguration"> Frontend IP configuration resource of an application gateway. </param>
-        /// <param name="frontendPort"> Frontend port resource of an application gateway. </param>
-        /// <param name="protocol"> Protocol of the HTTP listener. </param>
-        /// <param name="hostName"> Host name of HTTP listener. </param>
-        /// <param name="sslCertificate"> SSL certificate resource of an application gateway. </param>
-        /// <param name="sslProfile"> SSL profile resource of the application gateway. </param>
-        /// <param name="requireServerNameIndication"> Applicable only if protocol is https. Enables SNI for multi-hosting. </param>
-        /// <param name="provisioningState"> The provisioning state of the HTTP listener resource. </param>
-        /// <param name="customErrorConfigurations"> Custom error configurations of the HTTP listener. </param>
-        /// <param name="firewallPolicy"> Reference to the FirewallPolicy resource. </param>
-        /// <param name="hostNames"> List of Host names for HTTP Listener that allows special wildcard characters as well. </param>
-        internal ApplicationGatewayHttpListener(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource frontendIPConfiguration, WritableSubResource frontendPort, ApplicationGatewayProtocol? protocol, string hostName, WritableSubResource sslCertificate, WritableSubResource sslProfile, bool? requireServerNameIndication, NetworkProvisioningState? provisioningState, IList<ApplicationGatewayCustomError> customErrorConfigurations, WritableSubResource firewallPolicy, IList<string> hostNames) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the application gateway HTTP listener. </param>
+        /// <param name="name"> Name of the HTTP listener that is unique within an Application Gateway. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="type"> Type of the resource. </param>
+        internal ApplicationGatewayHttpListener(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationGatewayHttpListenerPropertiesFormat properties, string name, ETag? eTag, string @type) : base(id, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            FrontendIPConfiguration = frontendIPConfiguration;
-            FrontendPort = frontendPort;
-            Protocol = protocol;
-            HostName = hostName;
-            SslCertificate = sslCertificate;
-            SslProfile = sslProfile;
-            RequireServerNameIndication = requireServerNameIndication;
-            ProvisioningState = provisioningState;
-            CustomErrorConfigurations = customErrorConfigurations;
-            FirewallPolicy = firewallPolicy;
-            HostNames = hostNames;
+            Properties = properties;
+            Name = name;
+            ETag = eTag;
+            Type = @type;
         }
+
+        /// <summary> Properties of the application gateway HTTP listener. </summary>
+        internal ApplicationGatewayHttpListenerPropertiesFormat Properties { get; set; }
+
+        /// <summary> Name of the HTTP listener that is unique within an Application Gateway. </summary>
+        public string Name { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
-        /// <summary> Frontend IP configuration resource of an application gateway. </summary>
-        internal WritableSubResource FrontendIPConfiguration { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.frontendIPConfiguration.id")]
-        public ResourceIdentifier FrontendIPConfigurationId
-        {
-            get => FrontendIPConfiguration is null ? default : FrontendIPConfiguration.Id;
-            set
-            {
-                if (FrontendIPConfiguration is null)
-                    FrontendIPConfiguration = new WritableSubResource();
-                FrontendIPConfiguration.Id = value;
-            }
-        }
 
-        /// <summary> Frontend port resource of an application gateway. </summary>
-        internal WritableSubResource FrontendPort { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.frontendPort.id")]
-        public ResourceIdentifier FrontendPortId
-        {
-            get => FrontendPort is null ? default : FrontendPort.Id;
-            set
-            {
-                if (FrontendPort is null)
-                    FrontendPort = new WritableSubResource();
-                FrontendPort.Id = value;
-            }
-        }
+        /// <summary> Type of the resource. </summary>
+        public string Type { get; }
 
         /// <summary> Protocol of the HTTP listener. </summary>
-        [WirePath("properties.protocol")]
-        public ApplicationGatewayProtocol? Protocol { get; set; }
-        /// <summary> Host name of HTTP listener. </summary>
-        [WirePath("properties.hostName")]
-        public string HostName { get; set; }
-        /// <summary> SSL certificate resource of an application gateway. </summary>
-        internal WritableSubResource SslCertificate { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.sslCertificate.id")]
-        public ResourceIdentifier SslCertificateId
+        public ApplicationGatewayProtocol? Protocol
         {
-            get => SslCertificate is null ? default : SslCertificate.Id;
+            get
+            {
+                return Properties is null ? default : Properties.Protocol;
+            }
             set
             {
-                if (SslCertificate is null)
-                    SslCertificate = new WritableSubResource();
-                SslCertificate.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayHttpListenerPropertiesFormat();
+                }
+                Properties.Protocol = value;
             }
         }
 
-        /// <summary> SSL profile resource of the application gateway. </summary>
-        internal WritableSubResource SslProfile { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.sslProfile.id")]
-        public ResourceIdentifier SslProfileId
+        /// <summary> Host name of HTTP listener. </summary>
+        public string HostName
         {
-            get => SslProfile is null ? default : SslProfile.Id;
+            get
+            {
+                return Properties is null ? default : Properties.HostName;
+            }
             set
             {
-                if (SslProfile is null)
-                    SslProfile = new WritableSubResource();
-                SslProfile.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayHttpListenerPropertiesFormat();
+                }
+                Properties.HostName = value;
             }
         }
 
         /// <summary> Applicable only if protocol is https. Enables SNI for multi-hosting. </summary>
-        [WirePath("properties.requireServerNameIndication")]
-        public bool? RequireServerNameIndication { get; set; }
-        /// <summary> The provisioning state of the HTTP listener resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
-        /// <summary> Custom error configurations of the HTTP listener. </summary>
-        [WirePath("properties.customErrorConfigurations")]
-        public IList<ApplicationGatewayCustomError> CustomErrorConfigurations { get; }
-        /// <summary> Reference to the FirewallPolicy resource. </summary>
-        internal WritableSubResource FirewallPolicy { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.firewallPolicy.id")]
-        public ResourceIdentifier FirewallPolicyId
+        public bool? RequireServerNameIndication
         {
-            get => FirewallPolicy is null ? default : FirewallPolicy.Id;
+            get
+            {
+                return Properties is null ? default : Properties.RequireServerNameIndication;
+            }
             set
             {
-                if (FirewallPolicy is null)
-                    FirewallPolicy = new WritableSubResource();
-                FirewallPolicy.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayHttpListenerPropertiesFormat();
+                }
+                Properties.RequireServerNameIndication = value;
+            }
+        }
+
+        /// <summary> The provisioning state of the HTTP listener resource. </summary>
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Custom error configurations of the HTTP listener. </summary>
+        public IList<ApplicationGatewayCustomError> CustomErrorConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayHttpListenerPropertiesFormat();
+                }
+                return Properties.CustomErrorConfigurations;
             }
         }
 
         /// <summary> List of Host names for HTTP Listener that allows special wildcard characters as well. </summary>
-        [WirePath("properties.hostNames")]
-        public IList<string> HostNames { get; }
+        public IList<string> HostNames
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayHttpListenerPropertiesFormat();
+                }
+                return Properties.HostNames;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public string FrontendIPConfigurationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FrontendIPConfigurationId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayHttpListenerPropertiesFormat();
+                }
+                Properties.FrontendIPConfigurationId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public string FrontendPortId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FrontendPortId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayHttpListenerPropertiesFormat();
+                }
+                Properties.FrontendPortId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public string SslCertificateId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SslCertificateId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayHttpListenerPropertiesFormat();
+                }
+                Properties.SslCertificateId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public string SslProfileId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SslProfileId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayHttpListenerPropertiesFormat();
+                }
+                Properties.SslProfileId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public string FirewallPolicyId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FirewallPolicyId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayHttpListenerPropertiesFormat();
+                }
+                Properties.FirewallPolicyId = value;
+            }
+        }
     }
 }

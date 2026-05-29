@@ -7,113 +7,123 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The network manager effective connectivity configuration. </summary>
     public partial class EffectiveConnectivityConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EffectiveConnectivityConfiguration"/>. </summary>
         internal EffectiveConnectivityConfiguration()
         {
             ConfigurationGroups = new ChangeTrackingList<NetworkConfigurationGroup>();
-            Hubs = new ChangeTrackingList<ConnectivityHub>();
-            AppliesToGroups = new ChangeTrackingList<ConnectivityGroupItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EffectiveConnectivityConfiguration"/>. </summary>
         /// <param name="id"> Connectivity configuration ID. </param>
+        /// <param name="properties"> Properties of a network manager connectivity configuration. </param>
         /// <param name="configurationGroups"> Effective configuration groups. </param>
-        /// <param name="description"> A description of the connectivity configuration. </param>
-        /// <param name="connectivityTopology"> Connectivity topology type. </param>
-        /// <param name="hubs"> List of hubItems. </param>
-        /// <param name="isGlobal"> Flag if global mesh is supported. </param>
-        /// <param name="connectivityCapabilities"> Collection of additional settings to enhance specific topology behaviors of the connectivity configuration resource. </param>
-        /// <param name="appliesToGroups"> Groups for configuration. </param>
-        /// <param name="provisioningState"> The provisioning state of the connectivity configuration resource. </param>
-        /// <param name="deleteExistingPeering"> Flag if need to remove current existing peerings. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EffectiveConnectivityConfiguration(string id, IReadOnlyList<NetworkConfigurationGroup> configurationGroups, string description, ConnectivityTopology? connectivityTopology, IReadOnlyList<ConnectivityHub> hubs, GlobalMeshSupportFlag? isGlobal, ConnectivityConfigurationPropertiesConnectivityCapabilities connectivityCapabilities, IReadOnlyList<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, Guid? resourceGuid, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EffectiveConnectivityConfiguration(string id, ConnectivityConfigurationProperties properties, IReadOnlyList<NetworkConfigurationGroup> configurationGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
+            Properties = properties;
             ConfigurationGroups = configurationGroups;
-            Description = description;
-            ConnectivityTopology = connectivityTopology;
-            Hubs = hubs;
-            IsGlobal = isGlobal;
-            ConnectivityCapabilities = connectivityCapabilities;
-            AppliesToGroups = appliesToGroups;
-            ProvisioningState = provisioningState;
-            DeleteExistingPeering = deleteExistingPeering;
-            ResourceGuid = resourceGuid;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Connectivity configuration ID. </summary>
-        [WirePath("id")]
         public string Id { get; }
+
+        /// <summary> Properties of a network manager connectivity configuration. </summary>
+        internal ConnectivityConfigurationProperties Properties { get; }
+
         /// <summary> Effective configuration groups. </summary>
-        [WirePath("configurationGroups")]
         public IReadOnlyList<NetworkConfigurationGroup> ConfigurationGroups { get; }
+
         /// <summary> A description of the connectivity configuration. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+        }
+
         /// <summary> Connectivity topology type. </summary>
-        [WirePath("properties.connectivityTopology")]
-        public ConnectivityTopology? ConnectivityTopology { get; }
+        public ConnectivityTopology? ConnectivityTopology
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectivityTopology;
+            }
+        }
+
         /// <summary> List of hubItems. </summary>
-        [WirePath("properties.hubs")]
-        public IReadOnlyList<ConnectivityHub> Hubs { get; }
+        public IList<Hub> Hubs
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Hubs;
+            }
+        }
+
         /// <summary> Flag if global mesh is supported. </summary>
-        [WirePath("properties.isGlobal")]
-        public GlobalMeshSupportFlag? IsGlobal { get; }
+        public IsGlobal? IsGlobal
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsGlobal;
+            }
+        }
+
         /// <summary> Collection of additional settings to enhance specific topology behaviors of the connectivity configuration resource. </summary>
-        [WirePath("properties.connectivityCapabilities")]
-        public ConnectivityConfigurationPropertiesConnectivityCapabilities ConnectivityCapabilities { get; }
+        public ConnectivityConfigurationPropertiesConnectivityCapabilities ConnectivityCapabilities
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectivityCapabilities;
+            }
+        }
+
         /// <summary> Groups for configuration. </summary>
-        [WirePath("properties.appliesToGroups")]
-        public IReadOnlyList<ConnectivityGroupItem> AppliesToGroups { get; }
+        public IList<ConnectivityGroupItem> AppliesToGroups
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AppliesToGroups;
+            }
+        }
+
         /// <summary> The provisioning state of the connectivity configuration resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Flag if need to remove current existing peerings. </summary>
-        [WirePath("properties.deleteExistingPeering")]
-        public DeleteExistingPeering? DeleteExistingPeering { get; }
+        public DeleteExistingPeering? DeleteExistingPeering
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeleteExistingPeering;
+            }
+        }
+
         /// <summary> Unique identifier for this resource. </summary>
-        [WirePath("properties.resourceGuid")]
-        public Guid? ResourceGuid { get; }
+        public string ResourceGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceGuid;
+            }
+        }
     }
 }

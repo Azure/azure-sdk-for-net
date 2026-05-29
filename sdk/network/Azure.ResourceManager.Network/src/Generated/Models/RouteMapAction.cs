@@ -6,67 +6,81 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
+using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Action to be taken on a route matching a RouteMap criterion. </summary>
-    public partial class RouteMapAction
+    /// <summary> Kind of actions which can be taken on a matched route. Add, Replace, Remove refer to parameters on the route, like community or prefix. </summary>
+    public readonly partial struct RouteMapAction : IEquatable<RouteMapAction>
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private readonly string _value;
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> Remove. </summary>
+        private const string RemoveValue = "Remove";
+        /// <summary> Add. </summary>
+        private const string AddValue = "Add";
+        /// <summary> Replace. </summary>
+        private const string ReplaceValue = "Replace";
+        /// <summary> Drop. </summary>
+        private const string DropValue = "Drop";
 
         /// <summary> Initializes a new instance of <see cref="RouteMapAction"/>. </summary>
-        public RouteMapAction()
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RouteMapAction(string value)
         {
-            Parameters = new ChangeTrackingList<RouteMapActionParameter>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RouteMapAction"/>. </summary>
-        /// <param name="actionType"> Type of action to be taken. Supported types are 'Remove', 'Add', 'Replace', and 'Drop.'. </param>
-        /// <param name="parameters"> List of parameters relevant to the action.For instance if type is drop then parameters has list of prefixes to be dropped.If type is add, parameters would have list of ASN numbers to be added. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RouteMapAction(RouteMapActionType? actionType, IList<RouteMapActionParameter> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            ActionType = actionType;
-            Parameters = parameters;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
+        /// <summary> Unknown. </summary>
+        public static RouteMapAction Unknown { get; } = new RouteMapAction(UnknownValue);
 
-        /// <summary> Type of action to be taken. Supported types are 'Remove', 'Add', 'Replace', and 'Drop.'. </summary>
-        [WirePath("type")]
-        public RouteMapActionType? ActionType { get; set; }
-        /// <summary> List of parameters relevant to the action.For instance if type is drop then parameters has list of prefixes to be dropped.If type is add, parameters would have list of ASN numbers to be added. </summary>
-        [WirePath("parameters")]
-        public IList<RouteMapActionParameter> Parameters { get; }
+        /// <summary> Remove. </summary>
+        public static RouteMapAction Remove { get; } = new RouteMapAction(RemoveValue);
+
+        /// <summary> Add. </summary>
+        public static RouteMapAction Add { get; } = new RouteMapAction(AddValue);
+
+        /// <summary> Replace. </summary>
+        public static RouteMapAction Replace { get; } = new RouteMapAction(ReplaceValue);
+
+        /// <summary> Drop. </summary>
+        public static RouteMapAction Drop { get; } = new RouteMapAction(DropValue);
+
+        /// <summary> Determines if two <see cref="RouteMapAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(RouteMapAction left, RouteMapAction right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="RouteMapAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(RouteMapAction left, RouteMapAction right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="RouteMapAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RouteMapAction(string value) => new RouteMapAction(value);
+
+        /// <summary> Converts a string to a <see cref="RouteMapAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RouteMapAction?(string value) => value == null ? null : new RouteMapAction(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is RouteMapAction other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(RouteMapAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

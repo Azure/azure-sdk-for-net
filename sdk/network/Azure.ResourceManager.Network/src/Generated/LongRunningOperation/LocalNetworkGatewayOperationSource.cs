@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class LocalNetworkGatewayOperationSource : IOperationSource<LocalNetworkGatewayResource>
+    /// <summary></summary>
+    internal partial class LocalNetworkGatewayOperationSource : IOperationSource<LocalNetworkGatewayResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal LocalNetworkGatewayOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         LocalNetworkGatewayResource IOperationSource<LocalNetworkGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<LocalNetworkGatewayData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            LocalNetworkGatewayData data = LocalNetworkGatewayData.DeserializeLocalNetworkGatewayData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new LocalNetworkGatewayResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<LocalNetworkGatewayResource> IOperationSource<LocalNetworkGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<LocalNetworkGatewayData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return await Task.FromResult(new LocalNetworkGatewayResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            LocalNetworkGatewayData data = LocalNetworkGatewayData.DeserializeLocalNetworkGatewayData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new LocalNetworkGatewayResource(_client, data);
         }
     }
 }

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Represents the Reachability Analysis Run properties. </summary>
     public partial class ReachabilityAnalysisRunProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReachabilityAnalysisRunProperties"/>. </summary>
         /// <param name="intentId"> Id of the intent resource to run analysis on. </param>
@@ -62,8 +34,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="analysisResult"></param>
         /// <param name="errorMessage"></param>
         /// <param name="provisioningState"> Provisioning states of a resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReachabilityAnalysisRunProperties(string description, string intentId, AnalysisRunIntentContent intentContent, string analysisResult, string errorMessage, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ReachabilityAnalysisRunProperties(string description, string intentId, AnalysisRunIntentContent intentContent, string analysisResult, string errorMessage, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             IntentId = intentId;
@@ -71,31 +43,25 @@ namespace Azure.ResourceManager.Network.Models
             AnalysisResult = analysisResult;
             ErrorMessage = errorMessage;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReachabilityAnalysisRunProperties"/> for deserialization. </summary>
-        internal ReachabilityAnalysisRunProperties()
-        {
-        }
-
-        /// <summary> Gets or sets the description. </summary>
-        [WirePath("description")]
+        /// <summary> Gets or sets the Description. </summary>
         public string Description { get; set; }
+
         /// <summary> Id of the intent resource to run analysis on. </summary>
-        [WirePath("intentId")]
         public string IntentId { get; set; }
+
         /// <summary> Intent information. </summary>
-        [WirePath("intentContent")]
         public AnalysisRunIntentContent IntentContent { get; }
-        /// <summary> Gets the analysis result. </summary>
-        [WirePath("analysisResult")]
+
+        /// <summary> Gets the AnalysisResult. </summary>
         public string AnalysisResult { get; }
-        /// <summary> Gets the error message. </summary>
-        [WirePath("errorMessage")]
+
+        /// <summary> Gets the ErrorMessage. </summary>
         public string ErrorMessage { get; }
+
         /// <summary> Provisioning states of a resource. </summary>
-        [WirePath("provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; set; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

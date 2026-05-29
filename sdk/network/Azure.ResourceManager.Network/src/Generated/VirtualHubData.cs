@@ -7,251 +7,376 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the VirtualHub data model.
-    /// VirtualHub Resource.
-    /// </summary>
-    public partial class VirtualHubData : NetworkTrackedResourceData
+    /// <summary> VirtualHub Resource. </summary>
+    public partial class VirtualHubData : TrackedResourceWithSettableIdOptionalLocation
     {
         /// <summary> Initializes a new instance of <see cref="VirtualHubData"/>. </summary>
         public VirtualHubData()
         {
-            VirtualHubRouteTableV2S = new ChangeTrackingList<VirtualHubRouteTableV2Data>();
-            BgpConnections = new ChangeTrackingList<WritableSubResource>();
-            IPConfigurations = new ChangeTrackingList<WritableSubResource>();
-            RouteMaps = new ChangeTrackingList<WritableSubResource>();
-            VirtualRouterIPs = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualHubData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the virtual hub. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="kind"> Kind of service virtual hub. This is metadata used for the Azure portal experience for Route Server. </param>
-        /// <param name="virtualWan"> The VirtualWAN to which the VirtualHub belongs. </param>
-        /// <param name="vpnGateway"> The VpnGateway associated with this VirtualHub. </param>
-        /// <param name="p2sVpnGateway"> The P2SVpnGateway associated with this VirtualHub. </param>
-        /// <param name="expressRouteGateway"> The expressRouteGateway associated with this VirtualHub. </param>
-        /// <param name="azureFirewall"> The azureFirewall associated with this VirtualHub. </param>
-        /// <param name="securityPartnerProvider"> The securityPartnerProvider associated with this VirtualHub. </param>
-        /// <param name="addressPrefix"> Address-prefix for this VirtualHub. </param>
-        /// <param name="routeTable"> The routeTable associated with this virtual hub. </param>
-        /// <param name="provisioningState"> The provisioning state of the virtual hub resource. </param>
-        /// <param name="securityProviderName"> The Security Provider name. </param>
-        /// <param name="virtualHubRouteTableV2S"> List of all virtual hub route table v2s associated with this VirtualHub. </param>
-        /// <param name="sku"> The sku of this VirtualHub. </param>
-        /// <param name="routingState"> The routing state. </param>
-        /// <param name="bgpConnections"> List of references to Bgp Connections. </param>
-        /// <param name="ipConfigurations"> List of references to IpConfigurations. </param>
-        /// <param name="routeMaps"> List of references to RouteMaps. </param>
-        /// <param name="virtualRouterAsn"> VirtualRouter ASN. </param>
-        /// <param name="virtualRouterIPs"> VirtualRouter IPs. </param>
-        /// <param name="allowBranchToBranchTraffic"> Flag to control transit for VirtualRouter hub. </param>
-        /// <param name="preferredRoutingGateway"> The preferred gateway to route on-prem traffic. </param>
-        /// <param name="hubRoutingPreference"> The hubRoutingPreference of this VirtualHub. </param>
-        /// <param name="virtualRouterAutoScaleConfiguration"> The VirtualHub Router autoscale configuration. </param>
-        internal VirtualHubData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string kind, WritableSubResource virtualWan, WritableSubResource vpnGateway, WritableSubResource p2sVpnGateway, WritableSubResource expressRouteGateway, WritableSubResource azureFirewall, WritableSubResource securityPartnerProvider, string addressPrefix, VirtualHubRouteTable routeTable, NetworkProvisioningState? provisioningState, string securityProviderName, IList<VirtualHubRouteTableV2Data> virtualHubRouteTableV2S, string sku, RoutingState? routingState, IReadOnlyList<WritableSubResource> bgpConnections, IReadOnlyList<WritableSubResource> ipConfigurations, IReadOnlyList<WritableSubResource> routeMaps, long? virtualRouterAsn, IList<string> virtualRouterIPs, bool? allowBranchToBranchTraffic, PreferredRoutingGateway? preferredRoutingGateway, HubRoutingPreference? hubRoutingPreference, VirtualRouterAutoScaleConfiguration virtualRouterAutoScaleConfiguration) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal VirtualHubData(string id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualHubProperties properties, ETag? eTag, string kind) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
-            ETag = etag;
+            Properties = properties;
+            ETag = eTag;
             Kind = kind;
-            VirtualWan = virtualWan;
-            VpnGateway = vpnGateway;
-            P2SVpnGateway = p2sVpnGateway;
-            ExpressRouteGateway = expressRouteGateway;
-            AzureFirewall = azureFirewall;
-            SecurityPartnerProvider = securityPartnerProvider;
-            AddressPrefix = addressPrefix;
-            RouteTable = routeTable;
-            ProvisioningState = provisioningState;
-            SecurityProviderName = securityProviderName;
-            VirtualHubRouteTableV2S = virtualHubRouteTableV2S;
-            Sku = sku;
-            RoutingState = routingState;
-            BgpConnections = bgpConnections;
-            IPConfigurations = ipConfigurations;
-            RouteMaps = routeMaps;
-            VirtualRouterAsn = virtualRouterAsn;
-            VirtualRouterIPs = virtualRouterIPs;
-            AllowBranchToBranchTraffic = allowBranchToBranchTraffic;
-            PreferredRoutingGateway = preferredRoutingGateway;
-            HubRoutingPreference = hubRoutingPreference;
-            VirtualRouterAutoScaleConfiguration = virtualRouterAutoScaleConfiguration;
         }
+
+        /// <summary> Properties of the virtual hub. </summary>
+        internal VirtualHubProperties Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> Kind of service virtual hub. This is metadata used for the Azure portal experience for Route Server. </summary>
-        [WirePath("kind")]
         public string Kind { get; }
-        /// <summary> The VirtualWAN to which the VirtualHub belongs. </summary>
-        internal WritableSubResource VirtualWan { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.virtualWan.id")]
-        public ResourceIdentifier VirtualWanId
-        {
-            get => VirtualWan is null ? default : VirtualWan.Id;
-            set
-            {
-                if (VirtualWan is null)
-                    VirtualWan = new WritableSubResource();
-                VirtualWan.Id = value;
-            }
-        }
-
-        /// <summary> The VpnGateway associated with this VirtualHub. </summary>
-        internal WritableSubResource VpnGateway { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.vpnGateway.id")]
-        public ResourceIdentifier VpnGatewayId
-        {
-            get => VpnGateway is null ? default : VpnGateway.Id;
-            set
-            {
-                if (VpnGateway is null)
-                    VpnGateway = new WritableSubResource();
-                VpnGateway.Id = value;
-            }
-        }
-
-        /// <summary> The P2SVpnGateway associated with this VirtualHub. </summary>
-        internal WritableSubResource P2SVpnGateway { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.p2SVpnGateway.id")]
-        public ResourceIdentifier P2SVpnGatewayId
-        {
-            get => P2SVpnGateway is null ? default : P2SVpnGateway.Id;
-            set
-            {
-                if (P2SVpnGateway is null)
-                    P2SVpnGateway = new WritableSubResource();
-                P2SVpnGateway.Id = value;
-            }
-        }
-
-        /// <summary> The expressRouteGateway associated with this VirtualHub. </summary>
-        internal WritableSubResource ExpressRouteGateway { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.expressRouteGateway.id")]
-        public ResourceIdentifier ExpressRouteGatewayId
-        {
-            get => ExpressRouteGateway is null ? default : ExpressRouteGateway.Id;
-            set
-            {
-                if (ExpressRouteGateway is null)
-                    ExpressRouteGateway = new WritableSubResource();
-                ExpressRouteGateway.Id = value;
-            }
-        }
-
-        /// <summary> The azureFirewall associated with this VirtualHub. </summary>
-        internal WritableSubResource AzureFirewall { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.azureFirewall.id")]
-        public ResourceIdentifier AzureFirewallId
-        {
-            get => AzureFirewall is null ? default : AzureFirewall.Id;
-            set
-            {
-                if (AzureFirewall is null)
-                    AzureFirewall = new WritableSubResource();
-                AzureFirewall.Id = value;
-            }
-        }
-
-        /// <summary> The securityPartnerProvider associated with this VirtualHub. </summary>
-        internal WritableSubResource SecurityPartnerProvider { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.securityPartnerProvider.id")]
-        public ResourceIdentifier SecurityPartnerProviderId
-        {
-            get => SecurityPartnerProvider is null ? default : SecurityPartnerProvider.Id;
-            set
-            {
-                if (SecurityPartnerProvider is null)
-                    SecurityPartnerProvider = new WritableSubResource();
-                SecurityPartnerProvider.Id = value;
-            }
-        }
 
         /// <summary> Address-prefix for this VirtualHub. </summary>
-        [WirePath("properties.addressPrefix")]
-        public string AddressPrefix { get; set; }
-        /// <summary> The routeTable associated with this virtual hub. </summary>
-        internal VirtualHubRouteTable RouteTable { get; set; }
-        /// <summary> List of all routes. </summary>
-        [WirePath("properties.routeTable.routes")]
-        public IList<VirtualHubRoute> Routes
+        public string AddressPrefix
         {
             get
             {
-                if (RouteTable is null)
-                    RouteTable = new VirtualHubRouteTable();
-                return RouteTable.Routes;
+                return Properties is null ? default : Properties.AddressPrefix;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                Properties.AddressPrefix = value;
             }
         }
 
         /// <summary> The provisioning state of the virtual hub resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
-        /// <summary> The Security Provider name. </summary>
-        [WirePath("properties.securityProviderName")]
-        public string SecurityProviderName { get; set; }
-        /// <summary> List of all virtual hub route table v2s associated with this VirtualHub. </summary>
-        [WirePath("properties.virtualHubRouteTableV2s")]
-        public IList<VirtualHubRouteTableV2Data> VirtualHubRouteTableV2S { get; }
-        /// <summary> The sku of this VirtualHub. </summary>
-        [WirePath("properties.sku")]
-        public string Sku { get; set; }
-        /// <summary> The routing state. </summary>
-        [WirePath("properties.routingState")]
-        public RoutingState? RoutingState { get; }
-        /// <summary> List of references to Bgp Connections. </summary>
-        [WirePath("properties.bgpConnections")]
-        public IReadOnlyList<WritableSubResource> BgpConnections { get; }
-        /// <summary> List of references to IpConfigurations. </summary>
-        [WirePath("properties.ipConfigurations")]
-        public IReadOnlyList<WritableSubResource> IPConfigurations { get; }
-        /// <summary> List of references to RouteMaps. </summary>
-        [WirePath("properties.routeMaps")]
-        public IReadOnlyList<WritableSubResource> RouteMaps { get; }
-        /// <summary> VirtualRouter ASN. </summary>
-        [WirePath("properties.virtualRouterAsn")]
-        public long? VirtualRouterAsn { get; set; }
-        /// <summary> VirtualRouter IPs. </summary>
-        [WirePath("properties.virtualRouterIps")]
-        public IList<string> VirtualRouterIPs { get; }
-        /// <summary> Flag to control transit for VirtualRouter hub. </summary>
-        [WirePath("properties.allowBranchToBranchTraffic")]
-        public bool? AllowBranchToBranchTraffic { get; set; }
-        /// <summary> The preferred gateway to route on-prem traffic. </summary>
-        [WirePath("properties.preferredRoutingGateway")]
-        public PreferredRoutingGateway? PreferredRoutingGateway { get; set; }
-        /// <summary> The hubRoutingPreference of this VirtualHub. </summary>
-        [WirePath("properties.hubRoutingPreference")]
-        public HubRoutingPreference? HubRoutingPreference { get; set; }
-        /// <summary> The VirtualHub Router autoscale configuration. </summary>
-        internal VirtualRouterAutoScaleConfiguration VirtualRouterAutoScaleConfiguration { get; set; }
-        /// <summary> The minimum number of scale units for VirtualHub Router. </summary>
-        [WirePath("properties.virtualRouterAutoScaleConfiguration.minCapacity")]
-        public int? VirtualRouterAutoScaleMinCapacity
+        public NetworkProvisioningState? ProvisioningState
         {
-            get => VirtualRouterAutoScaleConfiguration is null ? default : VirtualRouterAutoScaleConfiguration.MinCapacity;
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The Security Provider name. </summary>
+        public string SecurityProviderName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecurityProviderName;
+            }
             set
             {
-                if (VirtualRouterAutoScaleConfiguration is null)
-                    VirtualRouterAutoScaleConfiguration = new VirtualRouterAutoScaleConfiguration();
-                VirtualRouterAutoScaleConfiguration.MinCapacity = value;
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                Properties.SecurityProviderName = value;
+            }
+        }
+
+        /// <summary> List of all virtual hub route table v2s associated with this VirtualHub. </summary>
+        public IList<VirtualHubRouteTableV2Data> VirtualHubRouteTableV2s
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                return Properties.VirtualHubRouteTableV2s;
+            }
+        }
+
+        /// <summary> The sku of this VirtualHub. </summary>
+        public string Sku
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Sku;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                Properties.Sku = value;
+            }
+        }
+
+        /// <summary> The routing state. </summary>
+        public RoutingState? RoutingState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoutingState;
+            }
+        }
+
+        /// <summary> List of references to Bgp Connections. </summary>
+        public IReadOnlyList<SubResource> BgpConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                return Properties.BgpConnections;
+            }
+        }
+
+        /// <summary> List of references to IpConfigurations. </summary>
+        public IReadOnlyList<SubResource> IpConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                return Properties.IpConfigurations;
+            }
+        }
+
+        /// <summary> List of references to RouteMaps. </summary>
+        public IReadOnlyList<SubResource> RouteMaps
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                return Properties.RouteMaps;
+            }
+        }
+
+        /// <summary> VirtualRouter ASN. </summary>
+        public long? VirtualRouterAsn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualRouterAsn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                Properties.VirtualRouterAsn = value;
+            }
+        }
+
+        /// <summary> VirtualRouter IPs. </summary>
+        public IList<string> VirtualRouterIps
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                return Properties.VirtualRouterIps;
+            }
+        }
+
+        /// <summary> Flag to control transit for VirtualRouter hub. </summary>
+        public bool? AllowBranchToBranchTraffic
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowBranchToBranchTraffic;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                Properties.AllowBranchToBranchTraffic = value;
+            }
+        }
+
+        /// <summary> The preferred gateway to route on-prem traffic. </summary>
+        public PreferredRoutingGateway? PreferredRoutingGateway
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PreferredRoutingGateway;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                Properties.PreferredRoutingGateway = value;
+            }
+        }
+
+        /// <summary> The hubRoutingPreference of this VirtualHub. </summary>
+        public HubRoutingPreference? HubRoutingPreference
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HubRoutingPreference;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                Properties.HubRoutingPreference = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public string VirtualWanId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualWanId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                Properties.VirtualWanId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public string VpnGatewayId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VpnGatewayId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                Properties.VpnGatewayId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public string P2SVpnGatewayId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.P2SVpnGatewayId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                Properties.P2SVpnGatewayId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public string ExpressRouteGatewayId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpressRouteGatewayId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                Properties.ExpressRouteGatewayId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public string AzureFirewallId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureFirewallId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                Properties.AzureFirewallId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public string SecurityPartnerProviderId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecurityPartnerProviderId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                Properties.SecurityPartnerProviderId = value;
+            }
+        }
+
+        /// <summary> List of all routes. </summary>
+        public IList<VirtualHubRoute> RouteTableRoutes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                return Properties.RouteTableRoutes;
+            }
+        }
+
+        /// <summary> The minimum number of scale units for VirtualHub Router. </summary>
+        public int? VirtualRouterAutoScaleMinCapacity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualRouterAutoScaleMinCapacity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                Properties.VirtualRouterAutoScaleMinCapacity = value;
             }
         }
     }

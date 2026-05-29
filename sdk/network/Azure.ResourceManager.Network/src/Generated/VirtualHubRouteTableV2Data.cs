@@ -7,52 +7,71 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the VirtualHubRouteTableV2 data model.
-    /// VirtualHubRouteTableV2 Resource.
-    /// </summary>
-    public partial class VirtualHubRouteTableV2Data : NetworkResourceData
+    /// <summary> VirtualHubRouteTableV2 Resource. </summary>
+    public partial class VirtualHubRouteTableV2Data : SubResourceModel
     {
         /// <summary> Initializes a new instance of <see cref="VirtualHubRouteTableV2Data"/>. </summary>
         public VirtualHubRouteTableV2Data()
         {
-            Routes = new ChangeTrackingList<VirtualHubRouteV2>();
-            AttachedConnections = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualHubRouteTableV2Data"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="routes"> List of all routes. </param>
-        /// <param name="attachedConnections"> List of all connections attached to this route table v2. </param>
-        /// <param name="provisioningState"> The provisioning state of the virtual hub route table v2 resource. </param>
-        internal VirtualHubRouteTableV2Data(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<VirtualHubRouteV2> routes, IList<string> attachedConnections, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the virtual hub route table v2. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal VirtualHubRouteTableV2Data(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, VirtualHubRouteTableV2Properties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            Routes = routes;
-            AttachedConnections = attachedConnections;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            ETag = eTag;
         }
 
+        /// <summary> Properties of the virtual hub route table v2. </summary>
+        internal VirtualHubRouteTableV2Properties Properties { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> List of all routes. </summary>
-        [WirePath("properties.routes")]
-        public IList<VirtualHubRouteV2> Routes { get; }
+        public IList<VirtualHubRouteV2> Routes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubRouteTableV2Properties();
+                }
+                return Properties.Routes;
+            }
+        }
+
         /// <summary> List of all connections attached to this route table v2. </summary>
-        [WirePath("properties.attachedConnections")]
-        public IList<string> AttachedConnections { get; }
+        public IList<string> AttachedConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubRouteTableV2Properties();
+                }
+                return Properties.AttachedConnections;
+            }
+        }
+
         /// <summary> The provisioning state of the virtual hub route table v2 resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

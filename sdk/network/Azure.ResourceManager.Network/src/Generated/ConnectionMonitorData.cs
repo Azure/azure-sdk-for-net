@@ -7,150 +7,150 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the ConnectionMonitor data model.
-    /// Information about the connection monitor.
-    /// </summary>
-    public partial class ConnectionMonitorData : ResourceData
+    /// <summary> Information about the connection monitor. </summary>
+    public partial class ConnectionMonitorData : TrackedResourceWithEtag
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorData"/>. </summary>
         internal ConnectionMonitorData()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            Endpoints = new ChangeTrackingList<ConnectionMonitorEndpoint>();
-            TestConfigurations = new ChangeTrackingList<ConnectionMonitorTestConfiguration>();
-            TestGroups = new ChangeTrackingList<ConnectionMonitorTestGroup>();
-            Outputs = new ChangeTrackingList<ConnectionMonitorOutput>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="id"> ID of the connection monitor. </param>
+        /// <param name="name"> Name of the connection monitor. </param>
+        /// <param name="type"> Connection monitor type. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="location"> Connection monitor location. </param>
         /// <param name="tags"> Connection monitor tags. </param>
-        /// <param name="source"> Describes the source of connection monitor. </param>
-        /// <param name="destination"> Describes the destination of connection monitor. </param>
-        /// <param name="autoStart"> Determines if the connection monitor will start automatically once created. </param>
-        /// <param name="monitoringIntervalInSeconds"> Monitoring interval in seconds. </param>
-        /// <param name="endpoints"> List of connection monitor endpoints. </param>
-        /// <param name="testConfigurations"> List of connection monitor test configurations. </param>
-        /// <param name="testGroups"> List of connection monitor test groups. </param>
-        /// <param name="outputs"> List of connection monitor outputs. </param>
-        /// <param name="notes"> Optional notes to be associated with the connection monitor. </param>
-        /// <param name="provisioningState"> The provisioning state of the connection monitor. </param>
-        /// <param name="startOn"> The date and time when the connection monitor was started. </param>
-        /// <param name="monitoringStatus"> The monitoring status of the connection monitor. </param>
-        /// <param name="connectionMonitorType"> Type of connection monitor. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, AzureLocation? location, IReadOnlyDictionary<string, string> tags, ConnectionMonitorSource source, ConnectionMonitorDestination destination, bool? autoStart, int? monitoringIntervalInSeconds, IReadOnlyList<ConnectionMonitorEndpoint> endpoints, IReadOnlyList<ConnectionMonitorTestConfiguration> testConfigurations, IReadOnlyList<ConnectionMonitorTestGroup> testGroups, IReadOnlyList<ConnectionMonitorOutput> outputs, string notes, NetworkProvisioningState? provisioningState, DateTimeOffset? startOn, string monitoringStatus, ConnectionMonitorType? connectionMonitorType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the connection monitor result. </param>
+        internal ConnectionMonitorData(string id, string name, string @type, string eTag, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConnectionMonitorResultProperties properties) : base(id, name, @type, eTag, location, tags, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            Location = location;
-            Tags = tags;
-            Source = source;
-            Destination = destination;
-            AutoStart = autoStart;
-            MonitoringIntervalInSeconds = monitoringIntervalInSeconds;
-            Endpoints = endpoints;
-            TestConfigurations = testConfigurations;
-            TestGroups = testGroups;
-            Outputs = outputs;
-            Notes = notes;
-            ProvisioningState = provisioningState;
-            StartOn = startOn;
-            MonitoringStatus = monitoringStatus;
-            ConnectionMonitorType = connectionMonitorType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
         }
 
-        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; }
-        /// <summary> Connection monitor location. </summary>
-        [WirePath("location")]
-        public AzureLocation? Location { get; }
-        /// <summary> Connection monitor tags. </summary>
-        [WirePath("tags")]
-        public IReadOnlyDictionary<string, string> Tags { get; }
+        /// <summary> Properties of the connection monitor result. </summary>
+        internal ConnectionMonitorResultProperties Properties { get; }
+
         /// <summary> Describes the source of connection monitor. </summary>
-        [WirePath("properties.source")]
-        public ConnectionMonitorSource Source { get; }
+        public ConnectionMonitorSource Source
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Source;
+            }
+        }
+
         /// <summary> Describes the destination of connection monitor. </summary>
-        [WirePath("properties.destination")]
-        public ConnectionMonitorDestination Destination { get; }
+        public ConnectionMonitorDestination Destination
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Destination;
+            }
+        }
+
         /// <summary> Determines if the connection monitor will start automatically once created. </summary>
-        [WirePath("properties.autoStart")]
-        public bool? AutoStart { get; }
+        public bool? AutoStart
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutoStart;
+            }
+        }
+
         /// <summary> Monitoring interval in seconds. </summary>
-        [WirePath("properties.monitoringIntervalInSeconds")]
-        public int? MonitoringIntervalInSeconds { get; }
+        public int? MonitoringIntervalInSeconds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MonitoringIntervalInSeconds;
+            }
+        }
+
         /// <summary> List of connection monitor endpoints. </summary>
-        [WirePath("properties.endpoints")]
-        public IReadOnlyList<ConnectionMonitorEndpoint> Endpoints { get; }
+        public IList<ConnectionMonitorEndpoint> Endpoints
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Endpoints;
+            }
+        }
+
         /// <summary> List of connection monitor test configurations. </summary>
-        [WirePath("properties.testConfigurations")]
-        public IReadOnlyList<ConnectionMonitorTestConfiguration> TestConfigurations { get; }
+        public IList<ConnectionMonitorTestConfiguration> TestConfigurations
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TestConfigurations;
+            }
+        }
+
         /// <summary> List of connection monitor test groups. </summary>
-        [WirePath("properties.testGroups")]
-        public IReadOnlyList<ConnectionMonitorTestGroup> TestGroups { get; }
+        public IList<ConnectionMonitorTestGroup> TestGroups
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TestGroups;
+            }
+        }
+
         /// <summary> List of connection monitor outputs. </summary>
-        [WirePath("properties.outputs")]
-        public IReadOnlyList<ConnectionMonitorOutput> Outputs { get; }
+        public IList<ConnectionMonitorOutput> Outputs
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Outputs;
+            }
+        }
+
         /// <summary> Optional notes to be associated with the connection monitor. </summary>
-        [WirePath("properties.notes")]
-        public string Notes { get; }
+        public string Notes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Notes;
+            }
+        }
+
         /// <summary> The provisioning state of the connection monitor. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The date and time when the connection monitor was started. </summary>
-        [WirePath("properties.startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartOn;
+            }
+        }
+
         /// <summary> The monitoring status of the connection monitor. </summary>
-        [WirePath("properties.monitoringStatus")]
-        public string MonitoringStatus { get; }
+        public string MonitoringStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MonitoringStatus;
+            }
+        }
+
         /// <summary> Type of connection monitor. </summary>
-        [WirePath("properties.connectionMonitorType")]
-        public ConnectionMonitorType? ConnectionMonitorType { get; }
+        public ConnectionMonitorType? ConnectionMonitorType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionMonitorType;
+            }
+        }
     }
 }

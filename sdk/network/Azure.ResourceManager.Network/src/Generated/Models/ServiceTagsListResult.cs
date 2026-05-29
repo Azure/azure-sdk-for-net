@@ -7,45 +7,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for the ListServiceTags API service call. </summary>
-    public partial class ServiceTagsListResult : ResourceData
+    public partial class ServiceTagsListResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceTagsListResult"/>. </summary>
         internal ServiceTagsListResult()
@@ -54,35 +24,45 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceTagsListResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="name"> The name of the cloud. </param>
+        /// <param name="id"> The ID of the cloud. </param>
+        /// <param name="type"> The azure resource type. </param>
         /// <param name="changeNumber"> The iteration number. </param>
         /// <param name="cloud"> The name of the cloud. </param>
         /// <param name="values"> The list of service tag information resources. </param>
         /// <param name="nextLink"> The URL to get next page of service tag information resources. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceTagsListResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string changeNumber, string cloud, IReadOnlyList<ServiceTagInformation> values, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceTagsListResult(string name, string id, string @type, string changeNumber, string cloud, IReadOnlyList<ServiceTagInformation> values, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Name = name;
+            Id = id;
+            Type = @type;
             ChangeNumber = changeNumber;
             Cloud = cloud;
             Values = values;
             NextLink = nextLink;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The iteration number. </summary>
-        [WirePath("changeNumber")]
-        public string ChangeNumber { get; }
         /// <summary> The name of the cloud. </summary>
-        [WirePath("cloud")]
+        public string Name { get; }
+
+        /// <summary> The ID of the cloud. </summary>
+        public string Id { get; }
+
+        /// <summary> The azure resource type. </summary>
+        public string Type { get; }
+
+        /// <summary> The iteration number. </summary>
+        public string ChangeNumber { get; }
+
+        /// <summary> The name of the cloud. </summary>
         public string Cloud { get; }
+
         /// <summary> The list of service tag information resources. </summary>
-        [WirePath("values")]
         public IReadOnlyList<ServiceTagInformation> Values { get; }
+
         /// <summary> The URL to get next page of service tag information resources. </summary>
-        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

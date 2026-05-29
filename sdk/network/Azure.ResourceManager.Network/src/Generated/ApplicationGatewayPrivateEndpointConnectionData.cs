@@ -7,16 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the ApplicationGatewayPrivateEndpointConnection data model.
-    /// Private Endpoint connection on an application gateway.
-    /// </summary>
-    public partial class ApplicationGatewayPrivateEndpointConnectionData : NetworkResourceData
+    /// <summary> Private Endpoint connection on an application gateway. </summary>
+    public partial class ApplicationGatewayPrivateEndpointConnectionData : SubResourceModel
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateEndpointConnectionData"/>. </summary>
         public ApplicationGatewayPrivateEndpointConnectionData()
@@ -25,37 +22,65 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="privateEndpoint"> The resource of private end point. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the application gateway private endpoint connection resource. </param>
-        /// <param name="linkIdentifier"> The consumer link id. </param>
-        internal ApplicationGatewayPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, PrivateEndpointData privateEndpoint, NetworkPrivateLinkServiceConnectionState connectionState, NetworkProvisioningState? provisioningState, string linkIdentifier) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the application gateway private endpoint connection. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal ApplicationGatewayPrivateEndpointConnectionData(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ApplicationGatewayPrivateEndpointConnectionProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            PrivateEndpoint = privateEndpoint;
-            ConnectionState = connectionState;
-            ProvisioningState = provisioningState;
-            LinkIdentifier = linkIdentifier;
+            Properties = properties;
+            ETag = eTag;
         }
 
+        /// <summary> Properties of the application gateway private endpoint connection. </summary>
+        internal ApplicationGatewayPrivateEndpointConnectionProperties Properties { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> The resource of private end point. </summary>
-        [WirePath("properties.privateEndpoint")]
-        public PrivateEndpointData PrivateEndpoint { get; }
+        public PrivateEndpointData PrivateEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateEndpoint;
+            }
+        }
+
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        [WirePath("properties.privateLinkServiceConnectionState")]
-        public NetworkPrivateLinkServiceConnectionState ConnectionState { get; set; }
+        public NetworkPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPrivateEndpointConnectionProperties();
+                }
+                Properties.PrivateLinkServiceConnectionState = value;
+            }
+        }
+
         /// <summary> The provisioning state of the application gateway private endpoint connection resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The consumer link id. </summary>
-        [WirePath("properties.linkIdentifier")]
-        public string LinkIdentifier { get; }
+        public string LinkIdentifier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LinkIdentifier;
+            }
+        }
     }
 }

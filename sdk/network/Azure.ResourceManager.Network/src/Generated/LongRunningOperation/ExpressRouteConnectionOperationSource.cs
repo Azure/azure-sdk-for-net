@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class ExpressRouteConnectionOperationSource : IOperationSource<ExpressRouteConnectionResource>
+    /// <summary></summary>
+    internal partial class ExpressRouteConnectionOperationSource : IOperationSource<ExpressRouteConnectionResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ExpressRouteConnectionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ExpressRouteConnectionResource IOperationSource<ExpressRouteConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ExpressRouteConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ExpressRouteConnectionData data = ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ExpressRouteConnectionResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ExpressRouteConnectionResource> IOperationSource<ExpressRouteConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ExpressRouteConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return await Task.FromResult(new ExpressRouteConnectionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ExpressRouteConnectionData data = ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ExpressRouteConnectionResource(_client, data);
         }
     }
 }

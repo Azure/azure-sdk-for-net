@@ -7,80 +7,70 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> VPN client root certificate of virtual network gateway. </summary>
-    public partial class VpnClientRootCertificate : NetworkResourceData
+    public partial class VpnClientRootCertificate : SubResource
     {
         /// <summary> Initializes a new instance of <see cref="VpnClientRootCertificate"/>. </summary>
         /// <param name="publicCertData"> The certificate public data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertData"/> is null. </exception>
-        public VpnClientRootCertificate(BinaryData publicCertData)
+        public VpnClientRootCertificate(string publicCertData)
         {
             Argument.AssertNotNull(publicCertData, nameof(publicCertData));
 
-            PublicCertData = publicCertData;
+            Properties = new VpnClientRootCertificatePropertiesFormat(publicCertData);
         }
 
         /// <summary> Initializes a new instance of <see cref="VpnClientRootCertificate"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="publicCertData"> The certificate public data. </param>
-        /// <param name="provisioningState"> The provisioning state of the VPN client root certificate resource. </param>
-        internal VpnClientRootCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, BinaryData publicCertData, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the vpn client root certificate. </param>
+        /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal VpnClientRootCertificate(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, VpnClientRootCertificatePropertiesFormat properties, string name, ETag? eTag) : base(id, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            PublicCertData = publicCertData;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            Name = name;
+            ETag = eTag;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VpnClientRootCertificate"/> for deserialization. </summary>
-        internal VpnClientRootCertificate()
-        {
-        }
+        /// <summary> Properties of the vpn client root certificate. </summary>
+        internal VpnClientRootCertificatePropertiesFormat Properties { get; set; }
+
+        /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
+        public string Name { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
-        /// <summary>
-        /// The certificate public data.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("properties.publicCertData")]
-        public BinaryData PublicCertData { get; set; }
+
+        /// <summary> The certificate public data. </summary>
+        public string PublicCertData
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicCertData;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnClientRootCertificatePropertiesFormat();
+                }
+                Properties.PublicCertData = value;
+            }
+        }
+
         /// <summary> The provisioning state of the VPN client root certificate resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

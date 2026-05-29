@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct NetworkIntentPolicyBasedService : IEquatable<NetworkIntentPolicyBasedService>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> All. </summary>
+        private const string AllValue = "All";
+        /// <summary> AllowRulesOnly. </summary>
+        private const string AllowRulesOnlyValue = "AllowRulesOnly";
 
         /// <summary> Initializes a new instance of <see cref="NetworkIntentPolicyBasedService"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkIntentPolicyBasedService(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string AllValue = "All";
-        private const string AllowRulesOnlyValue = "AllowRulesOnly";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static NetworkIntentPolicyBasedService None { get; } = new NetworkIntentPolicyBasedService(NoneValue);
+
         /// <summary> All. </summary>
         public static NetworkIntentPolicyBasedService All { get; } = new NetworkIntentPolicyBasedService(AllValue);
+
         /// <summary> AllowRulesOnly. </summary>
         public static NetworkIntentPolicyBasedService AllowRulesOnly { get; } = new NetworkIntentPolicyBasedService(AllowRulesOnlyValue);
+
         /// <summary> Determines if two <see cref="NetworkIntentPolicyBasedService"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkIntentPolicyBasedService left, NetworkIntentPolicyBasedService right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkIntentPolicyBasedService"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkIntentPolicyBasedService left, NetworkIntentPolicyBasedService right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkIntentPolicyBasedService"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkIntentPolicyBasedService"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkIntentPolicyBasedService(string value) => new NetworkIntentPolicyBasedService(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkIntentPolicyBasedService"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkIntentPolicyBasedService?(string value) => value == null ? null : new NetworkIntentPolicyBasedService(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkIntentPolicyBasedService other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkIntentPolicyBasedService other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

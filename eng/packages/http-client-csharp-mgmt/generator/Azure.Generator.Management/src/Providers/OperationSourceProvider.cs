@@ -94,7 +94,6 @@ namespace Azure.Generator.Management.Providers
             }
             else
             {
-                // Non-resource type: just deserialize and return
                 body = new MethodBodyStatement[]
                 {
                     UsingDeclare("document", typeof(JsonDocument), Static(typeof(JsonDocument)).Invoke(nameof(JsonDocument.ParseAsync), [KnownAzureParameters.Response.Property(nameof(Response.ContentStream)), Default, KnownAzureParameters.CancellationTokenWithoutDefault], true), out var documentVariable),
@@ -130,7 +129,6 @@ namespace Azure.Generator.Management.Providers
             }
             else
             {
-                // Non-resource type: just deserialize and return
                 body = new MethodBodyStatement[]
                 {
                     UsingDeclare("document", typeof(JsonDocument), Static(typeof(JsonDocument)).Invoke(nameof(JsonDocument.Parse), [KnownAzureParameters.Response.Property(nameof(Response.ContentStream))]), out var documentVariable),

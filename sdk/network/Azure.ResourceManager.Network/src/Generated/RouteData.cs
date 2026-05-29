@@ -7,16 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the Route data model.
-    /// Route resource.
-    /// </summary>
-    public partial class RouteData : NetworkWritableResourceData
+    /// <summary> Route resource. </summary>
+    public partial class RouteData : SubResourceModel
     {
         /// <summary> Initializes a new instance of <see cref="RouteData"/>. </summary>
         public RouteData()
@@ -25,42 +22,106 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="RouteData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="addressPrefix"> The destination CIDR to which the route applies. </param>
-        /// <param name="nextHopType"> The type of Azure hop the packet should be sent to. </param>
-        /// <param name="nextHopIPAddress"> The IP address packets should be forwarded to. Next hop values are only allowed in routes where the next hop type is VirtualAppliance. </param>
-        /// <param name="provisioningState"> The provisioning state of the route resource. </param>
-        /// <param name="hasBgpOverride"> A value indicating whether this route overrides overlapping BGP routes regardless of LPM. </param>
-        internal RouteData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string addressPrefix, RouteNextHopType? nextHopType, string nextHopIPAddress, NetworkProvisioningState? provisioningState, bool? hasBgpOverride) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the route. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal RouteData(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, RoutePropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            AddressPrefix = addressPrefix;
-            NextHopType = nextHopType;
-            NextHopIPAddress = nextHopIPAddress;
-            ProvisioningState = provisioningState;
-            HasBgpOverride = hasBgpOverride;
+            Properties = properties;
+            ETag = eTag;
         }
 
+        /// <summary> Properties of the route. </summary>
+        internal RoutePropertiesFormat Properties { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> The destination CIDR to which the route applies. </summary>
-        [WirePath("properties.addressPrefix")]
-        public string AddressPrefix { get; set; }
+        public string AddressPrefix
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AddressPrefix;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoutePropertiesFormat();
+                }
+                Properties.AddressPrefix = value;
+            }
+        }
+
         /// <summary> The type of Azure hop the packet should be sent to. </summary>
-        [WirePath("properties.nextHopType")]
-        public RouteNextHopType? NextHopType { get; set; }
+        public RouteNextHopType? NextHopType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NextHopType;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new RoutePropertiesFormat();
+                    }
+                    Properties.NextHopType = value.Value;
+                }
+            }
+        }
+
         /// <summary> The IP address packets should be forwarded to. Next hop values are only allowed in routes where the next hop type is VirtualAppliance. </summary>
-        [WirePath("properties.nextHopIpAddress")]
-        public string NextHopIPAddress { get; set; }
+        public string NextHopIpAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NextHopIpAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoutePropertiesFormat();
+                }
+                Properties.NextHopIpAddress = value;
+            }
+        }
+
         /// <summary> The provisioning state of the route resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> A value indicating whether this route overrides overlapping BGP routes regardless of LPM. </summary>
-        [WirePath("properties.hasBgpOverride")]
-        public bool? HasBgpOverride { get; set; }
+        public bool? HasBgpOverride
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HasBgpOverride;
+            }
+        }
+
+        /// <summary> List of next hop IP addresses for ECMP routing. Must contain between 2 and 64 IP addresses. </summary>
+        public IList<string> NextHopIpAddresses
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoutePropertiesFormat();
+                }
+                return Properties.NextHopIpAddresses;
+            }
+        }
     }
 }

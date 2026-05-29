@@ -7,90 +7,184 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Backend address pool settings of an application gateway. </summary>
-    public partial class ApplicationGatewayBackendSettings : NetworkResourceData
+    public partial class ApplicationGatewayBackendSettings : SubResource
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendSettings"/>. </summary>
         public ApplicationGatewayBackendSettings()
         {
-            TrustedRootCertificates = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendSettings"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="port"> The destination port on the backend. </param>
-        /// <param name="protocol"> The protocol used to communicate with the backend. </param>
-        /// <param name="timeoutInSeconds"> Connection timeout in seconds. Application Gateway will fail the request if response is not received within ConnectionTimeout. Acceptable values are from 1 second to 86400 seconds. </param>
-        /// <param name="probe"> Probe resource of an application gateway. </param>
-        /// <param name="trustedRootCertificates"> Array of references to application gateway trusted root certificates. </param>
-        /// <param name="hostName"> Server name indication to be sent to the backend servers for Tls protocol. </param>
-        /// <param name="pickHostNameFromBackendAddress"> Whether to pick server name indication from the host name of the backend server for Tls protocol. Default value is false. </param>
-        /// <param name="isL4ClientIPPreservationEnabled"> Whether to send Proxy Protocol header to backend servers over TCP or TLS protocols. Default value is false. </param>
-        /// <param name="provisioningState"> The provisioning state of the backend HTTP settings resource. </param>
-        internal ApplicationGatewayBackendSettings(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, int? port, ApplicationGatewayProtocol? protocol, int? timeoutInSeconds, WritableSubResource probe, IList<WritableSubResource> trustedRootCertificates, string hostName, bool? pickHostNameFromBackendAddress, bool? isL4ClientIPPreservationEnabled, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the application gateway backend settings. </param>
+        /// <param name="name"> Name of the backend settings that is unique within an Application Gateway. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="type"> Type of the resource. </param>
+        internal ApplicationGatewayBackendSettings(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationGatewayBackendSettingsPropertiesFormat properties, string name, ETag? eTag, string @type) : base(id, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            Port = port;
-            Protocol = protocol;
-            TimeoutInSeconds = timeoutInSeconds;
-            Probe = probe;
-            TrustedRootCertificates = trustedRootCertificates;
-            HostName = hostName;
-            PickHostNameFromBackendAddress = pickHostNameFromBackendAddress;
-            IsL4ClientIPPreservationEnabled = isL4ClientIPPreservationEnabled;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            Name = name;
+            ETag = eTag;
+            Type = @type;
         }
 
+        /// <summary> Properties of the application gateway backend settings. </summary>
+        internal ApplicationGatewayBackendSettingsPropertiesFormat Properties { get; set; }
+
+        /// <summary> Name of the backend settings that is unique within an Application Gateway. </summary>
+        public string Name { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
+
+        /// <summary> Type of the resource. </summary>
+        public string Type { get; }
+
         /// <summary> The destination port on the backend. </summary>
-        [WirePath("properties.port")]
-        public int? Port { get; set; }
-        /// <summary> The protocol used to communicate with the backend. </summary>
-        [WirePath("properties.protocol")]
-        public ApplicationGatewayProtocol? Protocol { get; set; }
-        /// <summary> Connection timeout in seconds. Application Gateway will fail the request if response is not received within ConnectionTimeout. Acceptable values are from 1 second to 86400 seconds. </summary>
-        [WirePath("properties.timeout")]
-        public int? TimeoutInSeconds { get; set; }
-        /// <summary> Probe resource of an application gateway. </summary>
-        internal WritableSubResource Probe { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.probe.id")]
-        public ResourceIdentifier ProbeId
+        public int? Port
         {
-            get => Probe is null ? default : Probe.Id;
+            get
+            {
+                return Properties is null ? default : Properties.Port;
+            }
             set
             {
-                if (Probe is null)
-                    Probe = new WritableSubResource();
-                Probe.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendSettingsPropertiesFormat();
+                }
+                Properties.Port = value;
+            }
+        }
+
+        /// <summary> The protocol used to communicate with the backend. </summary>
+        public ApplicationGatewayProtocol? Protocol
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Protocol;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendSettingsPropertiesFormat();
+                }
+                Properties.Protocol = value;
+            }
+        }
+
+        /// <summary> Connection timeout in seconds. Application Gateway will fail the request if response is not received within ConnectionTimeout. Acceptable values are from 1 second to 86400 seconds. </summary>
+        public int? Timeout
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Timeout;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendSettingsPropertiesFormat();
+                }
+                Properties.Timeout = value;
             }
         }
 
         /// <summary> Array of references to application gateway trusted root certificates. </summary>
-        [WirePath("properties.trustedRootCertificates")]
-        public IList<WritableSubResource> TrustedRootCertificates { get; }
+        public IList<SubResource> TrustedRootCertificates
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendSettingsPropertiesFormat();
+                }
+                return Properties.TrustedRootCertificates;
+            }
+        }
+
         /// <summary> Server name indication to be sent to the backend servers for Tls protocol. </summary>
-        [WirePath("properties.hostName")]
-        public string HostName { get; set; }
+        public string HostName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendSettingsPropertiesFormat();
+                }
+                Properties.HostName = value;
+            }
+        }
+
         /// <summary> Whether to pick server name indication from the host name of the backend server for Tls protocol. Default value is false. </summary>
-        [WirePath("properties.pickHostNameFromBackendAddress")]
-        public bool? PickHostNameFromBackendAddress { get; set; }
+        public bool? PickHostNameFromBackendAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PickHostNameFromBackendAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendSettingsPropertiesFormat();
+                }
+                Properties.PickHostNameFromBackendAddress = value;
+            }
+        }
+
         /// <summary> Whether to send Proxy Protocol header to backend servers over TCP or TLS protocols. Default value is false. </summary>
-        [WirePath("properties.enableL4ClientIpPreservation")]
-        public bool? IsL4ClientIPPreservationEnabled { get; set; }
+        public bool? EnableL4ClientIpPreservation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableL4ClientIpPreservation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendSettingsPropertiesFormat();
+                }
+                Properties.EnableL4ClientIpPreservation = value;
+            }
+        }
+
         /// <summary> The provisioning state of the backend HTTP settings resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public string ProbeId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProbeId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendSettingsPropertiesFormat();
+                }
+                Properties.ProbeId = value;
+            }
+        }
     }
 }

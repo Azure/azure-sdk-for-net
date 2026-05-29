@@ -7,173 +7,287 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the FirewallPolicy data model.
-    /// FirewallPolicy Resource.
-    /// </summary>
-    public partial class FirewallPolicyData : NetworkTrackedResourceData
+    /// <summary> FirewallPolicy Resource. </summary>
+    public partial class FirewallPolicyData : Resource
     {
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyData"/>. </summary>
         public FirewallPolicyData()
         {
-            RuleCollectionGroups = new ChangeTrackingList<WritableSubResource>();
-            Firewalls = new ChangeTrackingList<WritableSubResource>();
-            ChildPolicies = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the firewall policy. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="identity"> The identity of the firewall policy. </param>
-        /// <param name="size"> A read-only string that represents the size of the FirewallPolicyPropertiesFormat in MB. (ex 0.5MB). </param>
-        /// <param name="ruleCollectionGroups"> List of references to FirewallPolicyRuleCollectionGroups. </param>
-        /// <param name="provisioningState"> The provisioning state of the firewall policy resource. </param>
-        /// <param name="basePolicy"> The parent firewall policy from which rules are inherited. </param>
-        /// <param name="firewalls"> List of references to Azure Firewalls that this Firewall Policy is associated with. </param>
-        /// <param name="childPolicies"> List of references to Child Firewall Policies. </param>
-        /// <param name="threatIntelMode"> The operation mode for Threat Intelligence. </param>
-        /// <param name="threatIntelWhitelist"> ThreatIntel Whitelist for Firewall Policy. </param>
-        /// <param name="insights"> Insights on Firewall Policy. </param>
-        /// <param name="snat"> The private IP addresses/IP ranges to which traffic will not be SNAT. </param>
-        /// <param name="sql"> SQL Settings definition. </param>
-        /// <param name="dnsSettings"> DNS Proxy Settings definition. </param>
-        /// <param name="explicitProxy"> Explicit Proxy Settings definition. </param>
-        /// <param name="intrusionDetection"> The configuration for Intrusion detection. </param>
-        /// <param name="transportSecurity"> TLS Configuration definition. </param>
-        /// <param name="sku"> The Firewall Policy SKU. </param>
-        internal FirewallPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ManagedServiceIdentity identity, string size, IReadOnlyList<WritableSubResource> ruleCollectionGroups, NetworkProvisioningState? provisioningState, WritableSubResource basePolicy, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> childPolicies, AzureFirewallThreatIntelMode? threatIntelMode, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, FirewallPolicyInsights insights, FirewallPolicySnat snat, FirewallPolicySQL sql, DnsSettings dnsSettings, FirewallPolicyExplicitProxy explicitProxy, FirewallPolicyIntrusionDetection intrusionDetection, FirewallPolicyTransportSecurity transportSecurity, FirewallPolicySku sku) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal FirewallPolicyData(string id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, FirewallPolicyPropertiesFormat properties, ETag? eTag, ManagedServiceIdentity identity) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
-            ETag = etag;
+            Properties = properties;
+            ETag = eTag;
             Identity = identity;
-            Size = size;
-            RuleCollectionGroups = ruleCollectionGroups;
-            ProvisioningState = provisioningState;
-            BasePolicy = basePolicy;
-            Firewalls = firewalls;
-            ChildPolicies = childPolicies;
-            ThreatIntelMode = threatIntelMode;
-            ThreatIntelWhitelist = threatIntelWhitelist;
-            Insights = insights;
-            Snat = snat;
-            Sql = sql;
-            DnsSettings = dnsSettings;
-            ExplicitProxy = explicitProxy;
-            IntrusionDetection = intrusionDetection;
-            TransportSecurity = transportSecurity;
-            Sku = sku;
         }
 
+        /// <summary> Properties of the firewall policy. </summary>
+        internal FirewallPolicyPropertiesFormat Properties { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> The identity of the firewall policy. </summary>
-        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> A read-only string that represents the size of the FirewallPolicyPropertiesFormat in MB. (ex 0.5MB). </summary>
-        [WirePath("properties.size")]
-        public string Size { get; }
-        /// <summary> List of references to FirewallPolicyRuleCollectionGroups. </summary>
-        [WirePath("properties.ruleCollectionGroups")]
-        public IReadOnlyList<WritableSubResource> RuleCollectionGroups { get; }
-        /// <summary> The provisioning state of the firewall policy resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
-        /// <summary> The parent firewall policy from which rules are inherited. </summary>
-        internal WritableSubResource BasePolicy { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.basePolicy.id")]
-        public ResourceIdentifier BasePolicyId
+        public string Size
         {
-            get => BasePolicy is null ? default : BasePolicy.Id;
-            set
+            get
             {
-                if (BasePolicy is null)
-                    BasePolicy = new WritableSubResource();
-                BasePolicy.Id = value;
+                return Properties is null ? default : Properties.Size;
+            }
+        }
+
+        /// <summary> List of references to FirewallPolicyRuleCollectionGroups. </summary>
+        public IReadOnlyList<SubResource> RuleCollectionGroups
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyPropertiesFormat();
+                }
+                return Properties.RuleCollectionGroups;
+            }
+        }
+
+        /// <summary> The provisioning state of the firewall policy resource. </summary>
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
         /// <summary> List of references to Azure Firewalls that this Firewall Policy is associated with. </summary>
-        [WirePath("properties.firewalls")]
-        public IReadOnlyList<WritableSubResource> Firewalls { get; }
-        /// <summary> List of references to Child Firewall Policies. </summary>
-        [WirePath("properties.childPolicies")]
-        public IReadOnlyList<WritableSubResource> ChildPolicies { get; }
-        /// <summary> The operation mode for Threat Intelligence. </summary>
-        [WirePath("properties.threatIntelMode")]
-        public AzureFirewallThreatIntelMode? ThreatIntelMode { get; set; }
-        /// <summary> ThreatIntel Whitelist for Firewall Policy. </summary>
-        [WirePath("properties.threatIntelWhitelist")]
-        public FirewallPolicyThreatIntelWhitelist ThreatIntelWhitelist { get; set; }
-        /// <summary> Insights on Firewall Policy. </summary>
-        [WirePath("properties.insights")]
-        public FirewallPolicyInsights Insights { get; set; }
-        /// <summary> The private IP addresses/IP ranges to which traffic will not be SNAT. </summary>
-        [WirePath("properties.snat")]
-        public FirewallPolicySnat Snat { get; set; }
-        /// <summary> SQL Settings definition. </summary>
-        internal FirewallPolicySQL Sql { get; set; }
-        /// <summary> A flag to indicate if SQL Redirect traffic filtering is enabled. Turning on the flag requires no rule using port 11000-11999. </summary>
-        [WirePath("properties.sql.allowSqlRedirect")]
-        public bool? AllowSqlRedirect
+        public IReadOnlyList<SubResource> Firewalls
         {
-            get => Sql is null ? default : Sql.AllowSqlRedirect;
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyPropertiesFormat();
+                }
+                return Properties.Firewalls;
+            }
+        }
+
+        /// <summary> List of references to Child Firewall Policies. </summary>
+        public IReadOnlyList<SubResource> ChildPolicies
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyPropertiesFormat();
+                }
+                return Properties.ChildPolicies;
+            }
+        }
+
+        /// <summary> The operation mode for Threat Intelligence. </summary>
+        public AzureFirewallThreatIntelMode? ThreatIntelMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ThreatIntelMode;
+            }
             set
             {
-                if (Sql is null)
-                    Sql = new FirewallPolicySQL();
-                Sql.AllowSqlRedirect = value;
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyPropertiesFormat();
+                }
+                Properties.ThreatIntelMode = value;
+            }
+        }
+
+        /// <summary> ThreatIntel Whitelist for Firewall Policy. </summary>
+        public FirewallPolicyThreatIntelWhitelist ThreatIntelWhitelist
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ThreatIntelWhitelist;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyPropertiesFormat();
+                }
+                Properties.ThreatIntelWhitelist = value;
+            }
+        }
+
+        /// <summary> Insights on Firewall Policy. </summary>
+        public FirewallPolicyInsights Insights
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Insights;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyPropertiesFormat();
+                }
+                Properties.Insights = value;
+            }
+        }
+
+        /// <summary> The private IP addresses/IP ranges to which traffic will not be SNAT. </summary>
+        public FirewallPolicySnat Snat
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Snat;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyPropertiesFormat();
+                }
+                Properties.Snat = value;
             }
         }
 
         /// <summary> DNS Proxy Settings definition. </summary>
-        [WirePath("properties.dnsSettings")]
-        public DnsSettings DnsSettings { get; set; }
-        /// <summary> Explicit Proxy Settings definition. </summary>
-        [WirePath("properties.explicitProxy")]
-        public FirewallPolicyExplicitProxy ExplicitProxy { get; set; }
-        /// <summary> The configuration for Intrusion detection. </summary>
-        [WirePath("properties.intrusionDetection")]
-        public FirewallPolicyIntrusionDetection IntrusionDetection { get; set; }
-        /// <summary> TLS Configuration definition. </summary>
-        internal FirewallPolicyTransportSecurity TransportSecurity { get; set; }
-        /// <summary> The CA used for intermediate CA generation. </summary>
-        [WirePath("properties.transportSecurity.certificateAuthority")]
-        public FirewallPolicyCertificateAuthority TransportSecurityCertificateAuthority
+        public DnsSettings DnsSettings
         {
-            get => TransportSecurity is null ? default : TransportSecurity.CertificateAuthority;
+            get
+            {
+                return Properties is null ? default : Properties.DnsSettings;
+            }
             set
             {
-                if (TransportSecurity is null)
-                    TransportSecurity = new FirewallPolicyTransportSecurity();
-                TransportSecurity.CertificateAuthority = value;
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyPropertiesFormat();
+                }
+                Properties.DnsSettings = value;
             }
         }
 
-        /// <summary> The Firewall Policy SKU. </summary>
-        internal FirewallPolicySku Sku { get; set; }
-        /// <summary> Tier of Firewall Policy. </summary>
-        [WirePath("properties.sku.tier")]
-        public FirewallPolicySkuTier? SkuTier
+        /// <summary> Explicit Proxy Settings definition. </summary>
+        public FirewallPolicyExplicitProxy ExplicitProxy
         {
-            get => Sku is null ? default : Sku.Tier;
+            get
+            {
+                return Properties is null ? default : Properties.ExplicitProxy;
+            }
             set
             {
-                if (Sku is null)
-                    Sku = new FirewallPolicySku();
-                Sku.Tier = value;
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyPropertiesFormat();
+                }
+                Properties.ExplicitProxy = value;
+            }
+        }
+
+        /// <summary> The configuration for Intrusion detection. </summary>
+        public FirewallPolicyIntrusionDetection IntrusionDetection
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IntrusionDetection;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyPropertiesFormat();
+                }
+                Properties.IntrusionDetection = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public string BasePolicyId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BasePolicyId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyPropertiesFormat();
+                }
+                Properties.BasePolicyId = value;
+            }
+        }
+
+        /// <summary> A flag to indicate if SQL Redirect traffic filtering is enabled. Turning on the flag requires no rule using port 11000-11999. </summary>
+        public bool? AllowSqlRedirect
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowSqlRedirect;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyPropertiesFormat();
+                }
+                Properties.AllowSqlRedirect = value;
+            }
+        }
+
+        /// <summary> The CA used for intermediate CA generation. </summary>
+        public FirewallPolicyCertificateAuthority TransportSecurityCertificateAuthority
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TransportSecurityCertificateAuthority;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyPropertiesFormat();
+                }
+                Properties.TransportSecurityCertificateAuthority = value;
+            }
+        }
+
+        /// <summary> Tier of Firewall Policy. </summary>
+        public FirewallPolicySkuTier? SkuTier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SkuTier;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyPropertiesFormat();
+                }
+                Properties.SkuTier = value;
             }
         }
     }

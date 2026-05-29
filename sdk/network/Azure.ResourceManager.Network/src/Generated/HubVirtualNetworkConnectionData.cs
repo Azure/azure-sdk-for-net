@@ -7,17 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the HubVirtualNetworkConnection data model.
-    /// HubVirtualNetworkConnection Resource.
-    /// </summary>
-    public partial class HubVirtualNetworkConnectionData : NetworkResourceData
+    /// <summary> HubVirtualNetworkConnection Resource. </summary>
+    public partial class HubVirtualNetworkConnectionData : SubResourceModel
     {
         /// <summary> Initializes a new instance of <see cref="HubVirtualNetworkConnectionData"/>. </summary>
         public HubVirtualNetworkConnectionData()
@@ -26,59 +22,132 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="HubVirtualNetworkConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="remoteVirtualNetwork"> Reference to the remote virtual network. </param>
-        /// <param name="allowHubToRemoteVnetTransit"> Deprecated: VirtualHub to RemoteVnet transit to enabled or not. </param>
-        /// <param name="allowRemoteVnetToUseHubVnetGateways"> Deprecated: Allow RemoteVnet to use Virtual Hub's gateways. </param>
-        /// <param name="enableInternetSecurity"> Enable internet security. </param>
-        /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
-        /// <param name="provisioningState"> The provisioning state of the hub virtual network connection resource. </param>
-        internal HubVirtualNetworkConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource remoteVirtualNetwork, bool? allowHubToRemoteVnetTransit, bool? allowRemoteVnetToUseHubVnetGateways, bool? enableInternetSecurity, RoutingConfiguration routingConfiguration, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the hub virtual network connection. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal HubVirtualNetworkConnectionData(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, HubVirtualNetworkConnectionProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            RemoteVirtualNetwork = remoteVirtualNetwork;
-            AllowHubToRemoteVnetTransit = allowHubToRemoteVnetTransit;
-            AllowRemoteVnetToUseHubVnetGateways = allowRemoteVnetToUseHubVnetGateways;
-            EnableInternetSecurity = enableInternetSecurity;
-            RoutingConfiguration = routingConfiguration;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            ETag = eTag;
         }
 
+        /// <summary> Properties of the hub virtual network connection. </summary>
+        internal HubVirtualNetworkConnectionProperties Properties { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
-        /// <summary> Reference to the remote virtual network. </summary>
-        internal WritableSubResource RemoteVirtualNetwork { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.remoteVirtualNetwork.id")]
-        public ResourceIdentifier RemoteVirtualNetworkId
+
+        /// <summary> Deprecated: VirtualHub to RemoteVnet transit to enabled or not. </summary>
+        public bool? AllowHubToRemoteVnetTransit
         {
-            get => RemoteVirtualNetwork is null ? default : RemoteVirtualNetwork.Id;
+            get
+            {
+                return Properties is null ? default : Properties.AllowHubToRemoteVnetTransit;
+            }
             set
             {
-                if (RemoteVirtualNetwork is null)
-                    RemoteVirtualNetwork = new WritableSubResource();
-                RemoteVirtualNetwork.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new HubVirtualNetworkConnectionProperties();
+                }
+                Properties.AllowHubToRemoteVnetTransit = value;
             }
         }
 
-        /// <summary> Deprecated: VirtualHub to RemoteVnet transit to enabled or not. </summary>
-        [WirePath("properties.allowHubToRemoteVnetTransit")]
-        public bool? AllowHubToRemoteVnetTransit { get; set; }
         /// <summary> Deprecated: Allow RemoteVnet to use Virtual Hub's gateways. </summary>
-        [WirePath("properties.allowRemoteVnetToUseHubVnetGateways")]
-        public bool? AllowRemoteVnetToUseHubVnetGateways { get; set; }
+        public bool? AllowRemoteVnetToUseHubVnetGateways
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowRemoteVnetToUseHubVnetGateways;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HubVirtualNetworkConnectionProperties();
+                }
+                Properties.AllowRemoteVnetToUseHubVnetGateways = value;
+            }
+        }
+
         /// <summary> Enable internet security. </summary>
-        [WirePath("properties.enableInternetSecurity")]
-        public bool? EnableInternetSecurity { get; set; }
+        public bool? EnableInternetSecurity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableInternetSecurity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HubVirtualNetworkConnectionProperties();
+                }
+                Properties.EnableInternetSecurity = value;
+            }
+        }
+
         /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
-        [WirePath("properties.routingConfiguration")]
-        public RoutingConfiguration RoutingConfiguration { get; set; }
+        public RoutingConfiguration RoutingConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoutingConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HubVirtualNetworkConnectionProperties();
+                }
+                Properties.RoutingConfiguration = value;
+            }
+        }
+
         /// <summary> The provisioning state of the hub virtual network connection resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public string RemoteVirtualNetworkId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RemoteVirtualNetworkId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HubVirtualNetworkConnectionProperties();
+                }
+                Properties.RemoteVirtualNetworkId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public string ConnectionPolicyId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionPolicyId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HubVirtualNetworkConnectionProperties();
+                }
+                Properties.ConnectionPolicyId = value;
+            }
+        }
     }
 }

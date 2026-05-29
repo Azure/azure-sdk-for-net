@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Usage details for subnet. </summary>
     public partial class VirtualNetworkUsage
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkUsage"/>. </summary>
         internal VirtualNetworkUsage()
@@ -57,31 +28,30 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="limit"> Indicates the size of the subnet. </param>
         /// <param name="name"> The name containing common and localized value for usage. </param>
         /// <param name="unit"> Usage units. Returns 'Count'. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkUsage(double? currentValue, ResourceIdentifier id, double? limit, VirtualNetworkUsageName name, string unit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworkUsage(double? currentValue, ResourceIdentifier id, double? limit, VirtualNetworkUsageName name, string unit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CurrentValue = currentValue;
             Id = id;
             Limit = limit;
             Name = name;
             Unit = unit;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates number of IPs used from the Subnet. </summary>
-        [WirePath("currentValue")]
         public double? CurrentValue { get; }
+
         /// <summary> Subnet identifier. </summary>
-        [WirePath("id")]
         public ResourceIdentifier Id { get; }
+
         /// <summary> Indicates the size of the subnet. </summary>
-        [WirePath("limit")]
         public double? Limit { get; }
+
         /// <summary> The name containing common and localized value for usage. </summary>
-        [WirePath("name")]
         public VirtualNetworkUsageName Name { get; }
+
         /// <summary> Usage units. Returns 'Count'. </summary>
-        [WirePath("unit")]
         public string Unit { get; }
     }
 }

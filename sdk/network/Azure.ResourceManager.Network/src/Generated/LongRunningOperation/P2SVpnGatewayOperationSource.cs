@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class P2SVpnGatewayOperationSource : IOperationSource<P2SVpnGatewayResource>
+    /// <summary></summary>
+    internal partial class P2SVpnGatewayOperationSource : IOperationSource<P2SVpnGatewayResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal P2SVpnGatewayOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         P2SVpnGatewayResource IOperationSource<P2SVpnGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<P2SVpnGatewayData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            P2SVpnGatewayData data = P2SVpnGatewayData.DeserializeP2SVpnGatewayData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new P2SVpnGatewayResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<P2SVpnGatewayResource> IOperationSource<P2SVpnGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<P2SVpnGatewayData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return await Task.FromResult(new P2SVpnGatewayResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            P2SVpnGatewayData data = P2SVpnGatewayData.DeserializeP2SVpnGatewayData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new P2SVpnGatewayResource(_client, data);
         }
     }
 }

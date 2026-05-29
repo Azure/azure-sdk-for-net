@@ -21,30 +21,21 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="ActiveConnectivityConfiguration"/>. </summary>
         /// <param name="id"> Connectivity configuration ID. </param>
+        /// <param name="properties"> Properties of a network manager connectivity configuration. </param>
         /// <param name="configurationGroups"> Effective configuration groups. </param>
-        /// <param name="description"> A description of the connectivity configuration. </param>
-        /// <param name="connectivityTopology"> Connectivity topology type. </param>
-        /// <param name="hubs"> List of hubItems. </param>
-        /// <param name="isGlobal"> Flag if global mesh is supported. </param>
-        /// <param name="connectivityCapabilities"> Collection of additional settings to enhance specific topology behaviors of the connectivity configuration resource. </param>
-        /// <param name="appliesToGroups"> Groups for configuration. </param>
-        /// <param name="provisioningState"> The provisioning state of the connectivity configuration resource. </param>
-        /// <param name="deleteExistingPeering"> Flag if need to remove current existing peerings. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="committedOn"> Deployment time string. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="commitOn"> Deployment time string. </param>
         /// <param name="region"> Deployment region. </param>
-        internal ActiveConnectivityConfiguration(string id, IReadOnlyList<NetworkConfigurationGroup> configurationGroups, string description, ConnectivityTopology? connectivityTopology, IReadOnlyList<ConnectivityHub> hubs, GlobalMeshSupportFlag? isGlobal, ConnectivityConfigurationPropertiesConnectivityCapabilities connectivityCapabilities, IReadOnlyList<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, Guid? resourceGuid, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? committedOn, AzureLocation? region) : base(id, configurationGroups, description, connectivityTopology, hubs, isGlobal, connectivityCapabilities, appliesToGroups, provisioningState, deleteExistingPeering, resourceGuid, serializedAdditionalRawData)
+        internal ActiveConnectivityConfiguration(string id, ConnectivityConfigurationProperties properties, IReadOnlyList<NetworkConfigurationGroup> configurationGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? commitOn, AzureLocation? region) : base(id, properties, configurationGroups, additionalBinaryDataProperties)
         {
-            CommittedOn = committedOn;
+            CommitOn = commitOn;
             Region = region;
         }
 
         /// <summary> Deployment time string. </summary>
-        [WirePath("commitTime")]
-        public DateTimeOffset? CommittedOn { get; }
+        public DateTimeOffset? CommitOn { get; }
+
         /// <summary> Deployment region. </summary>
-        [WirePath("region")]
         public AzureLocation? Region { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct DdosTrafficType : IEquatable<DdosTrafficType>
     {
         private readonly string _value;
+        /// <summary> Tcp. </summary>
+        private const string TcpValue = "Tcp";
+        /// <summary> Udp. </summary>
+        private const string UdpValue = "Udp";
+        /// <summary> TcpSyn. </summary>
+        private const string TcpSynValue = "TcpSyn";
 
         /// <summary> Initializes a new instance of <see cref="DdosTrafficType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DdosTrafficType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TcpValue = "Tcp";
-        private const string UdpValue = "Udp";
-        private const string TcpSynValue = "TcpSyn";
+            _value = value;
+        }
 
         /// <summary> Tcp. </summary>
         public static DdosTrafficType Tcp { get; } = new DdosTrafficType(TcpValue);
+
         /// <summary> Udp. </summary>
         public static DdosTrafficType Udp { get; } = new DdosTrafficType(UdpValue);
+
         /// <summary> TcpSyn. </summary>
         public static DdosTrafficType TcpSyn { get; } = new DdosTrafficType(TcpSynValue);
+
         /// <summary> Determines if two <see cref="DdosTrafficType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DdosTrafficType left, DdosTrafficType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DdosTrafficType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DdosTrafficType left, DdosTrafficType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DdosTrafficType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DdosTrafficType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DdosTrafficType(string value) => new DdosTrafficType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DdosTrafficType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DdosTrafficType?(string value) => value == null ? null : new DdosTrafficType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DdosTrafficType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DdosTrafficType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -430,14 +430,14 @@ namespace Azure.Generator.Management
             if (lroMetadata != null)
             {
                 var returnType = lroMetadata.ReturnType;
-                if (returnType is InputModelType inputModelType)
+                var returnCSharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(returnType);
+                if (returnCSharpType == null)
                 {
-                    var returnCSharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(inputModelType);
-                    if (returnCSharpType == null)
-                    {
-                        return;
-                    }
+                    return;
+                }
 
+                if (returnType is InputModelType)
+                {
                     // Find all resource providers that use this data type
                     var resourceProviders = ResourceProviders.Where(r => r.ResourceData.Type.Equals(returnCSharpType)).ToList();
 
@@ -463,6 +463,11 @@ namespace Azure.Generator.Management
                         // This is a non-resource model - use the data type as the key
                         operationSources.TryAdd(returnCSharpType, new OperationSourceProvider(returnCSharpType));
                     }
+                }
+                else
+                {
+                    // Primitive or framework LRO final-result types still need an operation source.
+                    operationSources.TryAdd(returnCSharpType, new OperationSourceProvider(returnCSharpType));
                 }
             }
         }

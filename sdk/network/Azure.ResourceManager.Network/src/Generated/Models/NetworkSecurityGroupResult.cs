@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Network configuration diagnostic result corresponded provided traffic query. </summary>
     public partial class NetworkSecurityGroupResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityGroupResult"/>. </summary>
         internal NetworkSecurityGroupResult()
@@ -54,19 +26,18 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityGroupResult"/>. </summary>
         /// <param name="securityRuleAccessResult"> The network traffic is allowed or denied. </param>
         /// <param name="evaluatedNetworkSecurityGroups"> List of results network security groups diagnostic. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityGroupResult(SecurityRuleAccess? securityRuleAccessResult, IReadOnlyList<EvaluatedNetworkSecurityGroup> evaluatedNetworkSecurityGroups, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkSecurityGroupResult(SecurityRuleAccess? securityRuleAccessResult, IReadOnlyList<EvaluatedNetworkSecurityGroup> evaluatedNetworkSecurityGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecurityRuleAccessResult = securityRuleAccessResult;
             EvaluatedNetworkSecurityGroups = evaluatedNetworkSecurityGroups;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The network traffic is allowed or denied. </summary>
-        [WirePath("securityRuleAccessResult")]
         public SecurityRuleAccess? SecurityRuleAccessResult { get; }
+
         /// <summary> List of results network security groups diagnostic. </summary>
-        [WirePath("evaluatedNetworkSecurityGroups")]
         public IReadOnlyList<EvaluatedNetworkSecurityGroup> EvaluatedNetworkSecurityGroups { get; }
     }
 }

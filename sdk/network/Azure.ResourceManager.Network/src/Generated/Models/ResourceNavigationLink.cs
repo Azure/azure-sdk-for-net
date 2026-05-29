@@ -7,46 +7,70 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> ResourceNavigationLink resource. </summary>
-    public partial class ResourceNavigationLink : NetworkResourceData
+    public partial class ResourceNavigationLink : SubResource
     {
         /// <summary> Initializes a new instance of <see cref="ResourceNavigationLink"/>. </summary>
-        public ResourceNavigationLink()
+        internal ResourceNavigationLink()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceNavigationLink"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="linkedResourceType"> Resource type of the linked resource. </param>
-        /// <param name="link"> Link to the external resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource navigation link resource. </param>
-        internal ResourceNavigationLink(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ResourceType? linkedResourceType, ResourceIdentifier link, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Resource navigation link properties format. </param>
+        /// <param name="name"> Name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="type"> Resource type. </param>
+        internal ResourceNavigationLink(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceNavigationLinkFormat properties, string name, ETag? eTag, string @type) : base(id, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            LinkedResourceType = linkedResourceType;
-            Link = link;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            Name = name;
+            ETag = eTag;
+            Type = @type;
         }
 
+        /// <summary> Resource navigation link properties format. </summary>
+        internal ResourceNavigationLinkFormat Properties { get; }
+
+        /// <summary> Name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
+        public string Name { get; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
+
+        /// <summary> Resource type. </summary>
+        public string Type { get; }
+
         /// <summary> Resource type of the linked resource. </summary>
-        [WirePath("properties.linkedResourceType")]
-        public ResourceType? LinkedResourceType { get; set; }
+        public string LinkedResourceType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LinkedResourceType;
+            }
+        }
+
         /// <summary> Link to the external resource. </summary>
-        [WirePath("properties.link")]
-        public ResourceIdentifier Link { get; set; }
+        public string Link
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Link;
+            }
+        }
+
         /// <summary> The provisioning state of the resource navigation link resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

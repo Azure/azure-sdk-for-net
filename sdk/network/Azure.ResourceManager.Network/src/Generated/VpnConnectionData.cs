@@ -7,146 +7,315 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the VpnConnection data model.
-    /// VpnConnection Resource.
-    /// </summary>
-    public partial class VpnConnectionData : NetworkResourceData
+    /// <summary> VpnConnection Resource. </summary>
+    public partial class VpnConnectionData : SubResourceModel
     {
         /// <summary> Initializes a new instance of <see cref="VpnConnectionData"/>. </summary>
         public VpnConnectionData()
         {
-            IPsecPolicies = new ChangeTrackingList<IPsecPolicy>();
-            TrafficSelectorPolicies = new ChangeTrackingList<TrafficSelectorPolicy>();
-            VpnLinkConnections = new ChangeTrackingList<VpnSiteLinkConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VpnConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="remoteVpnSite"> Id of the connected vpn site. </param>
-        /// <param name="routingWeight"> Routing weight for vpn connection. </param>
-        /// <param name="dpdTimeoutSeconds"> DPD timeout in seconds for vpn connection. </param>
-        /// <param name="connectionStatus"> The connection status. </param>
-        /// <param name="vpnConnectionProtocolType"> Connection protocol used for this connection. </param>
-        /// <param name="ingressBytesTransferred"> Ingress bytes transferred. </param>
-        /// <param name="egressBytesTransferred"> Egress bytes transferred. </param>
-        /// <param name="connectionBandwidth"> Expected bandwidth in MBPS. </param>
-        /// <param name="sharedKey"> Deprecated: SharedKey for the vpn connection. This is no more used. </param>
-        /// <param name="enableBgp"> EnableBgp flag. </param>
-        /// <param name="usePolicyBasedTrafficSelectors"> Enable policy-based traffic selectors. </param>
-        /// <param name="ipsecPolicies"> The IPSec Policies to be considered by this connection. </param>
-        /// <param name="trafficSelectorPolicies"> The Traffic Selector Policies to be considered by this connection. </param>
-        /// <param name="enableRateLimiting"> EnableBgp flag. </param>
-        /// <param name="enableInternetSecurity"> Enable internet security. </param>
-        /// <param name="useLocalAzureIPAddress"> Use local azure ip to initiate connection. </param>
-        /// <param name="provisioningState"> The provisioning state of the VPN connection resource. </param>
-        /// <param name="vpnLinkConnections"> List of all vpn site link connections to the gateway. </param>
-        /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
-        internal VpnConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource remoteVpnSite, int? routingWeight, int? dpdTimeoutSeconds, VpnConnectionStatus? connectionStatus, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType, long? ingressBytesTransferred, long? egressBytesTransferred, int? connectionBandwidth, string sharedKey, bool? enableBgp, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> ipsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, bool? enableRateLimiting, bool? enableInternetSecurity, bool? useLocalAzureIPAddress, NetworkProvisioningState? provisioningState, IList<VpnSiteLinkConnectionData> vpnLinkConnections, RoutingConfiguration routingConfiguration) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the VPN connection. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal VpnConnectionData(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, VpnConnectionProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            RemoteVpnSite = remoteVpnSite;
-            RoutingWeight = routingWeight;
-            DpdTimeoutSeconds = dpdTimeoutSeconds;
-            ConnectionStatus = connectionStatus;
-            VpnConnectionProtocolType = vpnConnectionProtocolType;
-            IngressBytesTransferred = ingressBytesTransferred;
-            EgressBytesTransferred = egressBytesTransferred;
-            ConnectionBandwidth = connectionBandwidth;
-            SharedKey = sharedKey;
-            EnableBgp = enableBgp;
-            UsePolicyBasedTrafficSelectors = usePolicyBasedTrafficSelectors;
-            IPsecPolicies = ipsecPolicies;
-            TrafficSelectorPolicies = trafficSelectorPolicies;
-            EnableRateLimiting = enableRateLimiting;
-            EnableInternetSecurity = enableInternetSecurity;
-            UseLocalAzureIPAddress = useLocalAzureIPAddress;
-            ProvisioningState = provisioningState;
-            VpnLinkConnections = vpnLinkConnections;
-            RoutingConfiguration = routingConfiguration;
+            Properties = properties;
+            ETag = eTag;
         }
 
+        /// <summary> Properties of the VPN connection. </summary>
+        internal VpnConnectionProperties Properties { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
-        /// <summary> Id of the connected vpn site. </summary>
-        internal WritableSubResource RemoteVpnSite { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.remoteVpnSite.id")]
-        public ResourceIdentifier RemoteVpnSiteId
+
+        /// <summary> Routing weight for vpn connection. </summary>
+        public int? RoutingWeight
         {
-            get => RemoteVpnSite is null ? default : RemoteVpnSite.Id;
+            get
+            {
+                return Properties is null ? default : Properties.RoutingWeight;
+            }
             set
             {
-                if (RemoteVpnSite is null)
-                    RemoteVpnSite = new WritableSubResource();
-                RemoteVpnSite.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new VpnConnectionProperties();
+                }
+                Properties.RoutingWeight = value;
             }
         }
 
-        /// <summary> Routing weight for vpn connection. </summary>
-        [WirePath("properties.routingWeight")]
-        public int? RoutingWeight { get; set; }
         /// <summary> DPD timeout in seconds for vpn connection. </summary>
-        [WirePath("properties.dpdTimeoutSeconds")]
-        public int? DpdTimeoutSeconds { get; set; }
+        public int? DpdTimeoutSeconds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DpdTimeoutSeconds;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnConnectionProperties();
+                }
+                Properties.DpdTimeoutSeconds = value;
+            }
+        }
+
         /// <summary> The connection status. </summary>
-        [WirePath("properties.connectionStatus")]
-        public VpnConnectionStatus? ConnectionStatus { get; }
+        public VpnConnectionStatus? ConnectionStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionStatus;
+            }
+        }
+
         /// <summary> Connection protocol used for this connection. </summary>
-        [WirePath("properties.vpnConnectionProtocolType")]
-        public VirtualNetworkGatewayConnectionProtocol? VpnConnectionProtocolType { get; set; }
+        public VirtualNetworkGatewayConnectionProtocol? VpnConnectionProtocolType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VpnConnectionProtocolType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnConnectionProperties();
+                }
+                Properties.VpnConnectionProtocolType = value;
+            }
+        }
+
         /// <summary> Ingress bytes transferred. </summary>
-        [WirePath("properties.ingressBytesTransferred")]
-        public long? IngressBytesTransferred { get; }
+        public long? IngressBytesTransferred
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IngressBytesTransferred;
+            }
+        }
+
         /// <summary> Egress bytes transferred. </summary>
-        [WirePath("properties.egressBytesTransferred")]
-        public long? EgressBytesTransferred { get; }
+        public long? EgressBytesTransferred
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EgressBytesTransferred;
+            }
+        }
+
         /// <summary> Expected bandwidth in MBPS. </summary>
-        [WirePath("properties.connectionBandwidth")]
-        public int? ConnectionBandwidth { get; set; }
+        public int? ConnectionBandwidth
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionBandwidth;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnConnectionProperties();
+                }
+                Properties.ConnectionBandwidth = value;
+            }
+        }
+
         /// <summary> Deprecated: SharedKey for the vpn connection. This is no more used. </summary>
-        [WirePath("properties.sharedKey")]
-        public string SharedKey { get; set; }
+        public string SharedKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SharedKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnConnectionProperties();
+                }
+                Properties.SharedKey = value;
+            }
+        }
+
         /// <summary> EnableBgp flag. </summary>
-        [WirePath("properties.enableBgp")]
-        public bool? EnableBgp { get; set; }
+        public bool? EnableBgp
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableBgp;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnConnectionProperties();
+                }
+                Properties.EnableBgp = value;
+            }
+        }
+
         /// <summary> Enable policy-based traffic selectors. </summary>
-        [WirePath("properties.usePolicyBasedTrafficSelectors")]
-        public bool? UsePolicyBasedTrafficSelectors { get; set; }
+        public bool? UsePolicyBasedTrafficSelectors
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UsePolicyBasedTrafficSelectors;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnConnectionProperties();
+                }
+                Properties.UsePolicyBasedTrafficSelectors = value;
+            }
+        }
+
         /// <summary> The IPSec Policies to be considered by this connection. </summary>
-        [WirePath("properties.ipsecPolicies")]
-        public IList<IPsecPolicy> IPsecPolicies { get; }
+        public IList<IPsecPolicy> IpsecPolicies
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnConnectionProperties();
+                }
+                return Properties.IpsecPolicies;
+            }
+        }
+
         /// <summary> The Traffic Selector Policies to be considered by this connection. </summary>
-        [WirePath("properties.trafficSelectorPolicies")]
-        public IList<TrafficSelectorPolicy> TrafficSelectorPolicies { get; }
+        public IList<TrafficSelectorPolicy> TrafficSelectorPolicies
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnConnectionProperties();
+                }
+                return Properties.TrafficSelectorPolicies;
+            }
+        }
+
         /// <summary> EnableBgp flag. </summary>
-        [WirePath("properties.enableRateLimiting")]
-        public bool? EnableRateLimiting { get; set; }
+        public bool? EnableRateLimiting
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableRateLimiting;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnConnectionProperties();
+                }
+                Properties.EnableRateLimiting = value;
+            }
+        }
+
         /// <summary> Enable internet security. </summary>
-        [WirePath("properties.enableInternetSecurity")]
-        public bool? EnableInternetSecurity { get; set; }
+        public bool? EnableInternetSecurity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableInternetSecurity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnConnectionProperties();
+                }
+                Properties.EnableInternetSecurity = value;
+            }
+        }
+
         /// <summary> Use local azure ip to initiate connection. </summary>
-        [WirePath("properties.useLocalAzureIpAddress")]
-        public bool? UseLocalAzureIPAddress { get; set; }
+        public bool? UseLocalAzureIpAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UseLocalAzureIpAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnConnectionProperties();
+                }
+                Properties.UseLocalAzureIpAddress = value;
+            }
+        }
+
         /// <summary> The provisioning state of the VPN connection resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> List of all vpn site link connections to the gateway. </summary>
-        [WirePath("properties.vpnLinkConnections")]
-        public IList<VpnSiteLinkConnectionData> VpnLinkConnections { get; }
+        public IList<VpnSiteLinkConnectionData> VpnLinkConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnConnectionProperties();
+                }
+                return Properties.VpnLinkConnections;
+            }
+        }
+
         /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
-        [WirePath("properties.routingConfiguration")]
-        public RoutingConfiguration RoutingConfiguration { get; set; }
+        public RoutingConfiguration RoutingConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoutingConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnConnectionProperties();
+                }
+                Properties.RoutingConfiguration = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public string RemoteVpnSiteId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RemoteVpnSiteId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnConnectionProperties();
+                }
+                Properties.RemoteVpnSiteId = value;
+            }
+        }
     }
 }

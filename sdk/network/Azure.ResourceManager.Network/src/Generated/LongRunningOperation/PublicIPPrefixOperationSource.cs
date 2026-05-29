@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class PublicIPPrefixOperationSource : IOperationSource<PublicIPPrefixResource>
+    /// <summary></summary>
+    internal partial class PublicIPPrefixOperationSource : IOperationSource<PublicIPPrefixResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal PublicIPPrefixOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         PublicIPPrefixResource IOperationSource<PublicIPPrefixResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PublicIPPrefixData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            PublicIPPrefixData data = PublicIPPrefixData.DeserializePublicIPPrefixData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new PublicIPPrefixResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<PublicIPPrefixResource> IOperationSource<PublicIPPrefixResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PublicIPPrefixData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return await Task.FromResult(new PublicIPPrefixResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            PublicIPPrefixData data = PublicIPPrefixData.DeserializePublicIPPrefixData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new PublicIPPrefixResource(_client, data);
         }
     }
 }

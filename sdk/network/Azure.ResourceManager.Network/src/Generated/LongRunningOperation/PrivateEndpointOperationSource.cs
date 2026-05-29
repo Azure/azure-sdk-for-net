@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class PrivateEndpointOperationSource : IOperationSource<PrivateEndpointResource>
+    /// <summary></summary>
+    internal partial class PrivateEndpointOperationSource : IOperationSource<PrivateEndpointResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal PrivateEndpointOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         PrivateEndpointResource IOperationSource<PrivateEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PrivateEndpointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            PrivateEndpointData data = PrivateEndpointData.DeserializePrivateEndpointData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new PrivateEndpointResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<PrivateEndpointResource> IOperationSource<PrivateEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PrivateEndpointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return await Task.FromResult(new PrivateEndpointResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            PrivateEndpointData data = PrivateEndpointData.DeserializePrivateEndpointData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new PrivateEndpointResource(_client, data);
         }
     }
 }

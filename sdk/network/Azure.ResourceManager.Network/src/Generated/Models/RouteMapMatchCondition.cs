@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct RouteMapMatchCondition : IEquatable<RouteMapMatchCondition>
     {
         private readonly string _value;
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> Contains. </summary>
+        private const string ContainsValue = "Contains";
+        /// <summary> Equals. </summary>
+        private const string EqualsValue = "Equals";
+        /// <summary> NotContains. </summary>
+        private const string NotContainsValue = "NotContains";
+        /// <summary> NotEquals. </summary>
+        private const string NotEqualsValue = "NotEquals";
 
         /// <summary> Initializes a new instance of <see cref="RouteMapMatchCondition"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RouteMapMatchCondition(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string ContainsValue = "Contains";
-        private const string EqualsValueValue = "Equals";
-        private const string NotContainsValue = "NotContains";
-        private const string NotEqualsValue = "NotEquals";
+            _value = value;
+        }
 
         /// <summary> Unknown. </summary>
         public static RouteMapMatchCondition Unknown { get; } = new RouteMapMatchCondition(UnknownValue);
+
         /// <summary> Contains. </summary>
         public static RouteMapMatchCondition Contains { get; } = new RouteMapMatchCondition(ContainsValue);
+
         /// <summary> Equals. </summary>
-        public static RouteMapMatchCondition EqualsValue { get; } = new RouteMapMatchCondition(EqualsValueValue);
+        public static RouteMapMatchCondition Equals { get; } = new RouteMapMatchCondition(EqualsValue);
+
         /// <summary> NotContains. </summary>
         public static RouteMapMatchCondition NotContains { get; } = new RouteMapMatchCondition(NotContainsValue);
+
         /// <summary> NotEquals. </summary>
         public static RouteMapMatchCondition NotEquals { get; } = new RouteMapMatchCondition(NotEqualsValue);
+
         /// <summary> Determines if two <see cref="RouteMapMatchCondition"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RouteMapMatchCondition left, RouteMapMatchCondition right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RouteMapMatchCondition"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RouteMapMatchCondition left, RouteMapMatchCondition right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RouteMapMatchCondition"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RouteMapMatchCondition"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RouteMapMatchCondition(string value) => new RouteMapMatchCondition(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RouteMapMatchCondition"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RouteMapMatchCondition?(string value) => value == null ? null : new RouteMapMatchCondition(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RouteMapMatchCondition other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RouteMapMatchCondition other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

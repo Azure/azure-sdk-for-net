@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class EffectiveDefaultSecurityAdminRule : IUtf8JsonSerializable, IJsonModel<EffectiveDefaultSecurityAdminRule>
+    /// <summary> Network default admin rule. </summary>
+    public partial class EffectiveDefaultSecurityAdminRule : EffectiveBaseSecurityAdminRule, IJsonModel<EffectiveDefaultSecurityAdminRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EffectiveDefaultSecurityAdminRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override EffectiveBaseSecurityAdminRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EffectiveDefaultSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEffectiveDefaultSecurityAdminRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EffectiveDefaultSecurityAdminRule)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EffectiveDefaultSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EffectiveDefaultSecurityAdminRule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EffectiveDefaultSecurityAdminRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EffectiveDefaultSecurityAdminRule IPersistableModel<EffectiveDefaultSecurityAdminRule>.Create(BinaryData data, ModelReaderWriterOptions options) => (EffectiveDefaultSecurityAdminRule)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EffectiveDefaultSecurityAdminRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EffectiveDefaultSecurityAdminRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,330 +69,116 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EffectiveDefaultSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EffectiveDefaultSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EffectiveDefaultSecurityAdminRule)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(Flag))
-            {
-                writer.WritePropertyName("flag"u8);
-                writer.WriteStringValue(Flag);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Protocol))
-            {
-                writer.WritePropertyName("protocol"u8);
-                writer.WriteStringValue(Protocol.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Sources))
-            {
-                writer.WritePropertyName("sources"u8);
-                writer.WriteStartArray();
-                foreach (var item in Sources)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Destinations))
-            {
-                writer.WritePropertyName("destinations"u8);
-                writer.WriteStartArray();
-                foreach (var item in Destinations)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SourcePortRanges))
-            {
-                writer.WritePropertyName("sourcePortRanges"u8);
-                writer.WriteStartArray();
-                foreach (var item in SourcePortRanges)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DestinationPortRanges))
-            {
-                writer.WritePropertyName("destinationPortRanges"u8);
-                writer.WriteStartArray();
-                foreach (var item in DestinationPortRanges)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(Access))
-            {
-                writer.WritePropertyName("access"u8);
-                writer.WriteStringValue(Access.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(Priority))
-            {
-                writer.WritePropertyName("priority"u8);
-                writer.WriteNumberValue(Priority.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Direction))
-            {
-                writer.WritePropertyName("direction"u8);
-                writer.WriteStringValue(Direction.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
-            {
-                writer.WritePropertyName("resourceGuid"u8);
-                writer.WriteStringValue(ResourceGuid.Value);
-            }
-            writer.WriteEndObject();
         }
 
-        EffectiveDefaultSecurityAdminRule IJsonModel<EffectiveDefaultSecurityAdminRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EffectiveDefaultSecurityAdminRule IJsonModel<EffectiveDefaultSecurityAdminRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (EffectiveDefaultSecurityAdminRule)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override EffectiveBaseSecurityAdminRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EffectiveDefaultSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EffectiveDefaultSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EffectiveDefaultSecurityAdminRule)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEffectiveDefaultSecurityAdminRule(document.RootElement, options);
         }
 
-        internal static EffectiveDefaultSecurityAdminRule DeserializeEffectiveDefaultSecurityAdminRule(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static EffectiveDefaultSecurityAdminRule DeserializeEffectiveDefaultSecurityAdminRule(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceIdentifier id = default;
+            string id = default;
             string configurationDescription = default;
             string ruleCollectionDescription = default;
             IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups = default;
             IReadOnlyList<NetworkConfigurationGroup> ruleGroups = default;
             EffectiveAdminRuleKind kind = default;
-            string description = default;
-            string flag = default;
-            SecurityConfigurationRuleProtocol? protocol = default;
-            IReadOnlyList<AddressPrefixItem> sources = default;
-            IReadOnlyList<AddressPrefixItem> destinations = default;
-            IReadOnlyList<string> sourcePortRanges = default;
-            IReadOnlyList<string> destinationPortRanges = default;
-            SecurityConfigurationRuleAccess? access = default;
-            int? priority = default;
-            SecurityConfigurationRuleDirection? direction = default;
-            NetworkProvisioningState? provisioningState = default;
-            Guid? resourceGuid = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            DefaultAdminPropertiesFormat properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("configurationDescription"u8))
+                if (prop.NameEquals("configurationDescription"u8))
                 {
-                    configurationDescription = property.Value.GetString();
+                    configurationDescription = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ruleCollectionDescription"u8))
+                if (prop.NameEquals("ruleCollectionDescription"u8))
                 {
-                    ruleCollectionDescription = property.Value.GetString();
+                    ruleCollectionDescription = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ruleCollectionAppliesToGroups"u8))
+                if (prop.NameEquals("ruleCollectionAppliesToGroups"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<NetworkManagerSecurityGroupItem> array = new List<NetworkManagerSecurityGroupItem>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(NetworkManagerSecurityGroupItem.DeserializeNetworkManagerSecurityGroupItem(item, options));
                     }
                     ruleCollectionAppliesToGroups = array;
                     continue;
                 }
-                if (property.NameEquals("ruleGroups"u8))
+                if (prop.NameEquals("ruleGroups"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<NetworkConfigurationGroup> array = new List<NetworkConfigurationGroup>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(NetworkConfigurationGroup.DeserializeNetworkConfigurationGroup(item, options));
                     }
                     ruleGroups = array;
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    kind = new EffectiveAdminRuleKind(property.Value.GetString());
+                    kind = new EffectiveAdminRuleKind(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("flag"u8))
-                        {
-                            flag = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("protocol"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            protocol = new SecurityConfigurationRuleProtocol(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("sources"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<AddressPrefixItem> array = new List<AddressPrefixItem>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(AddressPrefixItem.DeserializeAddressPrefixItem(item, options));
-                            }
-                            sources = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("destinations"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<AddressPrefixItem> array = new List<AddressPrefixItem>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(AddressPrefixItem.DeserializeAddressPrefixItem(item, options));
-                            }
-                            destinations = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("sourcePortRanges"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            sourcePortRanges = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("destinationPortRanges"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            destinationPortRanges = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("access"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            access = new SecurityConfigurationRuleAccess(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("priority"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            priority = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("direction"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            direction = new SecurityConfigurationRuleDirection(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("resourceGuid"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            resourceGuid = property0.Value.GetGuid();
-                            continue;
-                        }
-                    }
+                    properties = DefaultAdminPropertiesFormat.DeserializeDefaultAdminPropertiesFormat(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new EffectiveDefaultSecurityAdminRule(
                 id,
                 configurationDescription,
@@ -361,443 +186,8 @@ namespace Azure.ResourceManager.Network.Models
                 ruleCollectionAppliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>(),
                 ruleGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>(),
                 kind,
-                serializedAdditionalRawData,
-                description,
-                flag,
-                protocol,
-                sources ?? new ChangeTrackingList<AddressPrefixItem>(),
-                destinations ?? new ChangeTrackingList<AddressPrefixItem>(),
-                sourcePortRanges ?? new ChangeTrackingList<string>(),
-                destinationPortRanges ?? new ChangeTrackingList<string>(),
-                access,
-                priority,
-                direction,
-                provisioningState,
-                resourceGuid);
+                additionalBinaryDataProperties,
+                properties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ResourceId))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{ResourceId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfigurationDescription), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  configurationDescription: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ConfigurationDescription))
-                {
-                    builder.Append("  configurationDescription: ");
-                    if (ConfigurationDescription.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ConfigurationDescription}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ConfigurationDescription}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleCollectionDescription), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ruleCollectionDescription: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RuleCollectionDescription))
-                {
-                    builder.Append("  ruleCollectionDescription: ");
-                    if (RuleCollectionDescription.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{RuleCollectionDescription}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{RuleCollectionDescription}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleCollectionAppliesToGroups), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ruleCollectionAppliesToGroups: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(RuleCollectionAppliesToGroups))
-                {
-                    if (RuleCollectionAppliesToGroups.Any())
-                    {
-                        builder.Append("  ruleCollectionAppliesToGroups: ");
-                        builder.AppendLine("[");
-                        foreach (var item in RuleCollectionAppliesToGroups)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  ruleCollectionAppliesToGroups: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleGroups), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ruleGroups: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(RuleGroups))
-                {
-                    if (RuleGroups.Any())
-                    {
-                        builder.Append("  ruleGroups: ");
-                        builder.AppendLine("[");
-                        foreach (var item in RuleGroups)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  ruleGroups: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine($"'{Kind.ToString()}'");
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    description: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Description))
-                {
-                    builder.Append("    description: ");
-                    if (Description.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Description}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Description}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Flag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    flag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Flag))
-                {
-                    builder.Append("    flag: ");
-                    if (Flag.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Flag}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Flag}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Protocol), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    protocol: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Protocol))
-                {
-                    builder.Append("    protocol: ");
-                    builder.AppendLine($"'{Protocol.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sources), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    sources: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Sources))
-                {
-                    if (Sources.Any())
-                    {
-                        builder.Append("    sources: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Sources)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    sources: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Destinations), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    destinations: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Destinations))
-                {
-                    if (Destinations.Any())
-                    {
-                        builder.Append("    destinations: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Destinations)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    destinations: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourcePortRanges), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    sourcePortRanges: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(SourcePortRanges))
-                {
-                    if (SourcePortRanges.Any())
-                    {
-                        builder.Append("    sourcePortRanges: ");
-                        builder.AppendLine("[");
-                        foreach (var item in SourcePortRanges)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("      '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"      '{item}'");
-                            }
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DestinationPortRanges), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    destinationPortRanges: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(DestinationPortRanges))
-                {
-                    if (DestinationPortRanges.Any())
-                    {
-                        builder.Append("    destinationPortRanges: ");
-                        builder.AppendLine("[");
-                        foreach (var item in DestinationPortRanges)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("      '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"      '{item}'");
-                            }
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Access), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    access: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Access))
-                {
-                    builder.Append("    access: ");
-                    builder.AppendLine($"'{Access.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Priority), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    priority: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Priority))
-                {
-                    builder.Append("    priority: ");
-                    builder.AppendLine($"{Priority.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Direction), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    direction: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Direction))
-                {
-                    builder.Append("    direction: ");
-                    builder.AppendLine($"'{Direction.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("    provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceGuid), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    resourceGuid: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ResourceGuid))
-                {
-                    builder.Append("    resourceGuid: ");
-                    builder.AppendLine($"'{ResourceGuid.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<EffectiveDefaultSecurityAdminRule>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EffectiveDefaultSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(EffectiveDefaultSecurityAdminRule)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        EffectiveDefaultSecurityAdminRule IPersistableModel<EffectiveDefaultSecurityAdminRule>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EffectiveDefaultSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeEffectiveDefaultSecurityAdminRule(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EffectiveDefaultSecurityAdminRule)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<EffectiveDefaultSecurityAdminRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

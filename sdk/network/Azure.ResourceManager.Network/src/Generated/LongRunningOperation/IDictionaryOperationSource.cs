@@ -5,61 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class IDictionaryOperationSource : IOperationSource<IDictionary<string, IList<PeerRoute>>>
+    /// <summary></summary>
+    internal partial class IDictionaryOperationSource : IOperationSource<IDictionary<string, IList<PeerRoute>>>
     {
-        IDictionary<string, IList<PeerRoute>> IOperationSource<IDictionary<string, IList<PeerRoute>>>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal IDictionaryOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            Dictionary<string, IList<PeerRoute>> dictionary = new Dictionary<string, IList<PeerRoute>>();
-            foreach (var property in document.RootElement.EnumerateObject())
-            {
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    dictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    List<PeerRoute> array = new List<PeerRoute>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(PeerRoute.DeserializePeerRoute(item));
-                    }
-                    dictionary.Add(property.Name, array);
-                }
-            }
-            return dictionary;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        IDictionary<string, IList<PeerRoute>> IOperationSource<IDictionary<string, IList<PeerRoute>>>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return ModelReaderWriter.Read<IDictionary<string, IList<PeerRoute>>>(new BinaryData(Encoding.UTF8.GetBytes(document.RootElement.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<IDictionary<string, IList<PeerRoute>>> IOperationSource<IDictionary<string, IList<PeerRoute>>>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            Dictionary<string, IList<PeerRoute>> dictionary = new Dictionary<string, IList<PeerRoute>>();
-            foreach (var property in document.RootElement.EnumerateObject())
-            {
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    dictionary.Add(property.Name, null);
-                }
-                else
-                {
-                    List<PeerRoute> array = new List<PeerRoute>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(PeerRoute.DeserializePeerRoute(item));
-                    }
-                    dictionary.Add(property.Name, array);
-                }
-            }
-            return dictionary;
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return ModelReaderWriter.Read<IDictionary<string, IList<PeerRoute>>>(new BinaryData(Encoding.UTF8.GetBytes(document.RootElement.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default);
         }
     }
 }

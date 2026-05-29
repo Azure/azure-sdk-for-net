@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network security rules evaluation result. </summary>
     public partial class NetworkSecurityRulesEvaluationResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityRulesEvaluationResult"/>. </summary>
         internal NetworkSecurityRulesEvaluationResult()
@@ -57,8 +28,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sourcePortMatched"> Value indicating whether source port is matched. </param>
         /// <param name="destinationMatched"> Value indicating whether destination is matched. </param>
         /// <param name="destinationPortMatched"> Value indicating whether destination port is matched. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityRulesEvaluationResult(string name, bool? protocolMatched, bool? sourceMatched, bool? sourcePortMatched, bool? destinationMatched, bool? destinationPortMatched, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkSecurityRulesEvaluationResult(string name, bool? protocolMatched, bool? sourceMatched, bool? sourcePortMatched, bool? destinationMatched, bool? destinationPortMatched, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ProtocolMatched = protocolMatched;
@@ -66,26 +37,25 @@ namespace Azure.ResourceManager.Network.Models
             SourcePortMatched = sourcePortMatched;
             DestinationMatched = destinationMatched;
             DestinationPortMatched = destinationPortMatched;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the network security rule. </summary>
-        [WirePath("name")]
         public string Name { get; }
+
         /// <summary> Value indicating whether protocol is matched. </summary>
-        [WirePath("protocolMatched")]
         public bool? ProtocolMatched { get; }
+
         /// <summary> Value indicating whether source is matched. </summary>
-        [WirePath("sourceMatched")]
         public bool? SourceMatched { get; }
+
         /// <summary> Value indicating whether source port is matched. </summary>
-        [WirePath("sourcePortMatched")]
         public bool? SourcePortMatched { get; }
+
         /// <summary> Value indicating whether destination is matched. </summary>
-        [WirePath("destinationMatched")]
         public bool? DestinationMatched { get; }
+
         /// <summary> Value indicating whether destination port is matched. </summary>
-        [WirePath("destinationPortMatched")]
         public bool? DestinationPortMatched { get; }
     }
 }

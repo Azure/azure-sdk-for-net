@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for GetConnectionSharedKey API service call. </summary>
-    public partial class ConnectionSharedKey : NetworkSubResource
+    public partial class ConnectionSharedKey : SubResource
     {
         /// <summary> Initializes a new instance of <see cref="ConnectionSharedKey"/>. </summary>
         /// <param name="value"> The virtual network connection shared key value. </param>
@@ -26,20 +26,14 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="ConnectionSharedKey"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The virtual network connection shared key value. </param>
-        internal ConnectionSharedKey(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData, string value) : base(id, serializedAdditionalRawData)
+        internal ConnectionSharedKey(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string value) : base(id, additionalBinaryDataProperties)
         {
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionSharedKey"/> for deserialization. </summary>
-        internal ConnectionSharedKey()
-        {
-        }
-
         /// <summary> The virtual network connection shared key value. </summary>
-        [WirePath("value")]
         public string Value { get; set; }
     }
 }

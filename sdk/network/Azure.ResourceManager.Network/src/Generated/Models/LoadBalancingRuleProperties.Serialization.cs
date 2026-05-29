@@ -8,18 +8,63 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class LoadBalancingRuleProperties : IUtf8JsonSerializable, IJsonModel<LoadBalancingRuleProperties>
+    /// <summary> Properties of the load balancer. </summary>
+    internal partial class LoadBalancingRuleProperties : IJsonModel<LoadBalancingRuleProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadBalancingRuleProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="LoadBalancingRuleProperties"/> for deserialization. </summary>
+        internal LoadBalancingRuleProperties()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LoadBalancingRuleProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LoadBalancingRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLoadBalancingRuleProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LoadBalancingRuleProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LoadBalancingRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(LoadBalancingRuleProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LoadBalancingRuleProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LoadBalancingRuleProperties IPersistableModel<LoadBalancingRuleProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LoadBalancingRuleProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LoadBalancingRuleProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,28 +76,32 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LoadBalancingRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LoadBalancingRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LoadBalancingRuleProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(FrontendIPConfiguration))
             {
                 writer.WritePropertyName("frontendIPConfiguration"u8);
-                ((IJsonModel<WritableSubResource>)FrontendIPConfiguration).Write(writer, options);
+                writer.WriteObjectValue(FrontendIPConfiguration, options);
             }
             if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool"u8);
-                ((IJsonModel<WritableSubResource>)BackendAddressPool).Write(writer, options);
+                writer.WriteObjectValue(BackendAddressPool, options);
             }
             if (Optional.IsCollectionDefined(BackendAddressPools))
             {
                 writer.WritePropertyName("backendAddressPools"u8);
                 writer.WriteStartArray();
-                foreach (var item in BackendAddressPools)
+                foreach (WritableSubResource item in BackendAddressPools)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
@@ -60,7 +109,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Probe))
             {
                 writer.WritePropertyName("probe"u8);
-                ((IJsonModel<WritableSubResource>)Probe).Write(writer, options);
+                writer.WriteObjectValue(Probe, options);
             }
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
@@ -106,44 +155,52 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            foreach (var item in AdditionalProperties)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                foreach (var item in _additionalBinaryDataProperties)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
             }
         }
 
-        LoadBalancingRuleProperties IJsonModel<LoadBalancingRuleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LoadBalancingRuleProperties IJsonModel<LoadBalancingRuleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LoadBalancingRuleProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LoadBalancingRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LoadBalancingRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LoadBalancingRuleProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeLoadBalancingRuleProperties(document.RootElement, options);
         }
 
-        internal static LoadBalancingRuleProperties DeserializeLoadBalancingRuleProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static LoadBalancingRuleProperties DeserializeLoadBalancingRuleProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            WritableSubResource frontendIPConfiguration = default;
-            WritableSubResource backendAddressPool = default;
+            SubResource frontendIPConfiguration = default;
+            SubResource backendAddressPool = default;
             IList<WritableSubResource> backendAddressPools = default;
-            WritableSubResource probe = default;
+            SubResource probe = default;
             LoadBalancingTransportProtocol protocol = default;
             LoadDistribution? loadDistribution = default;
             int frontendPort = default;
@@ -154,136 +211,144 @@ namespace Azure.ResourceManager.Network.Models
             bool? disableOutboundSnat = default;
             bool? enableConnectionTracking = default;
             NetworkProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("frontendIPConfiguration"u8))
+                if (prop.NameEquals("frontendIPConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    frontendIPConfiguration = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                    frontendIPConfiguration = SubResource.DeserializeSubResource(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("backendAddressPool"u8))
+                if (prop.NameEquals("backendAddressPool"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    backendAddressPool = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                    backendAddressPool = SubResource.DeserializeSubResource(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("backendAddressPools"u8))
+                if (prop.NameEquals("backendAddressPools"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<WritableSubResource> array = new List<WritableSubResource>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerNetworkContext.Default));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     backendAddressPools = array;
                     continue;
                 }
-                if (property.NameEquals("probe"u8))
+                if (prop.NameEquals("probe"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    probe = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                    probe = SubResource.DeserializeSubResource(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("protocol"u8))
+                if (prop.NameEquals("protocol"u8))
                 {
-                    protocol = new LoadBalancingTransportProtocol(property.Value.GetString());
+                    protocol = new LoadBalancingTransportProtocol(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("loadDistribution"u8))
+                if (prop.NameEquals("loadDistribution"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    loadDistribution = new LoadDistribution(property.Value.GetString());
+                    loadDistribution = new LoadDistribution(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("frontendPort"u8))
+                if (prop.NameEquals("frontendPort"u8))
                 {
-                    frontendPort = property.Value.GetInt32();
+                    frontendPort = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("backendPort"u8))
+                if (prop.NameEquals("backendPort"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    backendPort = property.Value.GetInt32();
+                    backendPort = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("idleTimeoutInMinutes"u8))
+                if (prop.NameEquals("idleTimeoutInMinutes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    idleTimeoutInMinutes = property.Value.GetInt32();
+                    idleTimeoutInMinutes = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("enableFloatingIP"u8))
+                if (prop.NameEquals("enableFloatingIP"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enableFloatingIP = property.Value.GetBoolean();
+                    enableFloatingIP = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableTcpReset"u8))
+                if (prop.NameEquals("enableTcpReset"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enableTcpReset = property.Value.GetBoolean();
+                    enableTcpReset = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("disableOutboundSnat"u8))
+                if (prop.NameEquals("disableOutboundSnat"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    disableOutboundSnat = property.Value.GetBoolean();
+                    disableOutboundSnat = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableConnectionTracking"u8))
+                if (prop.NameEquals("enableConnectionTracking"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enableConnectionTracking = property.Value.GetBoolean();
+                    enableConnectionTracking = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new NetworkProvisioningState(property.Value.GetString());
+                    provisioningState = new NetworkProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
             }
-            additionalProperties = additionalPropertiesDictionary;
             return new LoadBalancingRuleProperties(
                 frontendIPConfiguration,
                 backendAddressPool,
@@ -299,280 +364,7 @@ namespace Azure.ResourceManager.Network.Models
                 disableOutboundSnat,
                 enableConnectionTracking,
                 provisioningState,
-                additionalProperties);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("FrontendIPConfigurationId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  frontendIPConfiguration: ");
-                builder.AppendLine("{");
-                builder.Append("    id: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(FrontendIPConfiguration))
-                {
-                    builder.Append("  frontendIPConfiguration: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, FrontendIPConfiguration, options, 2, false, "  frontendIPConfiguration: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("BackendAddressPoolId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  backendAddressPool: ");
-                builder.AppendLine("{");
-                builder.Append("    id: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(BackendAddressPool))
-                {
-                    builder.Append("  backendAddressPool: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, BackendAddressPool, options, 2, false, "  backendAddressPool: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackendAddressPools), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  backendAddressPools: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(BackendAddressPools))
-                {
-                    if (BackendAddressPools.Any())
-                    {
-                        builder.Append("  backendAddressPools: ");
-                        builder.AppendLine("[");
-                        foreach (var item in BackendAddressPools)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  backendAddressPools: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ProbeId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  probe: ");
-                builder.AppendLine("{");
-                builder.Append("    id: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Probe))
-                {
-                    builder.Append("  probe: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Probe, options, 2, false, "  probe: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Protocol), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  protocol: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  protocol: ");
-                builder.AppendLine($"'{Protocol.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LoadDistribution), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  loadDistribution: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LoadDistribution))
-                {
-                    builder.Append("  loadDistribution: ");
-                    builder.AppendLine($"'{LoadDistribution.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FrontendPort), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  frontendPort: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  frontendPort: ");
-                builder.AppendLine($"{FrontendPort}");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackendPort), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  backendPort: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(BackendPort))
-                {
-                    builder.Append("  backendPort: ");
-                    builder.AppendLine($"{BackendPort.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IdleTimeoutInMinutes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  idleTimeoutInMinutes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IdleTimeoutInMinutes))
-                {
-                    builder.Append("  idleTimeoutInMinutes: ");
-                    builder.AppendLine($"{IdleTimeoutInMinutes.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableFloatingIP), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  enableFloatingIP: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnableFloatingIP))
-                {
-                    builder.Append("  enableFloatingIP: ");
-                    var boolValue = EnableFloatingIP.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableTcpReset), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  enableTcpReset: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnableTcpReset))
-                {
-                    builder.Append("  enableTcpReset: ");
-                    var boolValue = EnableTcpReset.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisableOutboundSnat), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  disableOutboundSnat: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DisableOutboundSnat))
-                {
-                    builder.Append("  disableOutboundSnat: ");
-                    var boolValue = DisableOutboundSnat.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableConnectionTracking), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  enableConnectionTracking: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnableConnectionTracking))
-                {
-                    builder.Append("  enableConnectionTracking: ");
-                    var boolValue = EnableConnectionTracking.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("  provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<LoadBalancingRuleProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LoadBalancingRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(LoadBalancingRuleProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        LoadBalancingRuleProperties IPersistableModel<LoadBalancingRuleProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LoadBalancingRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeLoadBalancingRuleProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LoadBalancingRuleProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<LoadBalancingRuleProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

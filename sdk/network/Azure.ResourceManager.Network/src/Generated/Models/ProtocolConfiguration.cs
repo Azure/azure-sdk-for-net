@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Configuration of the protocol. </summary>
     internal partial class ProtocolConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ProtocolConfiguration"/>. </summary>
         public ProtocolConfiguration()
@@ -51,16 +22,15 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProtocolConfiguration"/>. </summary>
-        /// <param name="httpProtocolConfiguration"> HTTP configuration of the connectivity check. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProtocolConfiguration(NetworkHttpConfiguration httpProtocolConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="httpConfiguration"> HTTP configuration of the connectivity check. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ProtocolConfiguration(HTTPConfiguration httpConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            HttpProtocolConfiguration = httpProtocolConfiguration;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            HTTPConfiguration = httpConfiguration;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> HTTP configuration of the connectivity check. </summary>
-        [WirePath("HTTPConfiguration")]
-        public NetworkHttpConfiguration HttpProtocolConfiguration { get; set; }
+        public HTTPConfiguration HTTPConfiguration { get; set; }
     }
 }

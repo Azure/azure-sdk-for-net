@@ -7,16 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the VpnLinkConnectionSharedKey data model.
-    /// SharedKey Resource .
-    /// </summary>
-    public partial class VpnLinkConnectionSharedKeyData : NetworkResourceData
+    /// <summary> SharedKey Resource . </summary>
+    public partial class VpnLinkConnectionSharedKeyData : SubResourceModel
     {
         /// <summary> Initializes a new instance of <see cref="VpnLinkConnectionSharedKeyData"/>. </summary>
         public VpnLinkConnectionSharedKeyData()
@@ -25,17 +21,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="VpnLinkConnectionSharedKeyData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="properties"> Properties of the shared key. </param>
-        internal VpnLinkConnectionSharedKeyData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, VpnLinkConnectionSharedKeyProperties properties) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal VpnLinkConnectionSharedKeyData(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, VpnLinkConnectionSharedKeyProperties properties) : base(id, additionalBinaryDataProperties, name, @type)
         {
             Properties = properties;
         }
 
         /// <summary> Properties of the shared key. </summary>
-        [WirePath("properties")]
         public VpnLinkConnectionSharedKeyProperties Properties { get; set; }
     }
 }
