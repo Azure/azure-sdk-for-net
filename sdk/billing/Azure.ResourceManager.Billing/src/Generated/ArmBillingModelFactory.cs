@@ -2030,9 +2030,10 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="logos"> The list of logos for the payment method. </param>
         /// <param name="paymentMethodType"> The type of payment method. </param>
         /// <param name="status"> Status of the payment method. </param>
+        /// <param name="paymentMethodProjectionPropertiesType"> Gets the PaymentMethodProjectionPropertiesType. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
         /// <returns> A new <see cref="Billing.BillingPaymentMethodData"/> instance for mocking. </returns>
-        public static BillingPaymentMethodData BillingPaymentMethodData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier paymentMethodId = default, string accountHolderName = default, string displayName = default, string expiration = default, PaymentMethodFamily? family = default, string lastFourDigits = default, IEnumerable<PaymentMethodLogo> logos = default, string paymentMethodType = default, PaymentMethodStatus? status = default, IDictionary<string, string> tags = default)
+        public static BillingPaymentMethodData BillingPaymentMethodData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier paymentMethodId = default, string accountHolderName = default, string displayName = default, string expiration = default, PaymentMethodFamily? family = default, string lastFourDigits = default, IEnumerable<PaymentMethodLogo> logos = default, string paymentMethodType = default, PaymentMethodStatus? status = default, string paymentMethodProjectionPropertiesType = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2042,7 +2043,7 @@ namespace Azure.ResourceManager.Billing.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                paymentMethodId is null && accountHolderName is null && displayName is null && expiration is null && family is null && lastFourDigits is null && logos is null && paymentMethodType is null && status is null ? default : new PaymentMethodProjectionProperties(
+                paymentMethodId is null && accountHolderName is null && displayName is null && expiration is null && family is null && lastFourDigits is null && logos is null && paymentMethodType is null && status is null && paymentMethodProjectionPropertiesType is null ? default : new PaymentMethodProjectionProperties(
                     paymentMethodId,
                     accountHolderName,
                     displayName,
@@ -3538,6 +3539,28 @@ namespace Azure.ResourceManager.Billing.Models
                 tags);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Billing.BillingPaymentMethodData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="paymentMethodId"> Id of payment method. </param>
+        /// <param name="accountHolderName"> The account holder name for the payment method. This is only supported for payment methods with family CreditCard. </param>
+        /// <param name="displayName"> The display name of the payment method. </param>
+        /// <param name="expiration"> The expiration month and year of the payment method. This is only supported for payment methods with family CreditCard. </param>
+        /// <param name="family"> The family of payment method. </param>
+        /// <param name="lastFourDigits"> Last four digits of payment method. </param>
+        /// <param name="logos"> The list of logos for the payment method. </param>
+        /// <param name="paymentMethodType"> The type of payment method. </param>
+        /// <param name="status"> Status of the payment method. </param>
+        /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
+        /// <returns> A new <see cref="Billing.BillingPaymentMethodData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BillingPaymentMethodData BillingPaymentMethodData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier paymentMethodId, string accountHolderName, string displayName, string expiration, PaymentMethodFamily? family, string lastFourDigits, IEnumerable<PaymentMethodLogo> logos, string paymentMethodType, PaymentMethodStatus? status, IDictionary<string, string> tags)
+        {
+            return BillingPaymentMethodData(id: id, name: name, resourceType: resourceType, systemData: systemData, paymentMethodId: paymentMethodId, accountHolderName: accountHolderName, displayName: displayName, expiration: expiration, family: family, lastFourDigits: lastFourDigits, logos: logos, paymentMethodType: paymentMethodType, status: status, paymentMethodProjectionPropertiesType: default, tags: tags);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Billing.BillingReservationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -3869,7 +3892,7 @@ namespace Azure.ResourceManager.Billing.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BillingPaymentMethodData BillingPaymentMethodData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PaymentMethodFamily? family, string paymentMethodType, string accountHolderName, string expiration, string lastFourDigits, string displayName, IEnumerable<PaymentMethodLogo> logos, PaymentMethodStatus? status)
         {
-            return BillingPaymentMethodData(id: id, name: name, resourceType: resourceType, systemData: systemData, paymentMethodId: default, accountHolderName: accountHolderName, displayName: displayName, expiration: expiration, family: family, lastFourDigits: lastFourDigits, logos: logos, paymentMethodType: paymentMethodType, status: status, tags: default);
+            return BillingPaymentMethodData(id: id, name: name, resourceType: resourceType, systemData: systemData, paymentMethodId: default, accountHolderName: accountHolderName, displayName: displayName, expiration: expiration, family: family, lastFourDigits: lastFourDigits, logos: logos, paymentMethodType: paymentMethodType, status: status, paymentMethodProjectionPropertiesType: default, tags: default);
         }
 
         /// <summary> Initializes a new instance of BillingPaymentMethodLinkData. </summary>

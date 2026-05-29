@@ -146,5 +146,14 @@ namespace Azure.ResourceManager.Billing
                 Properties.Status = value;
             }
         }
+
+        /// <summary> Gets the PaymentMethodProjectionPropertiesType. </summary>
+        public string PaymentMethodProjectionPropertiesType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PaymentMethodProjectionPropertiesType;
+            }
+        }
     }
 }

@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     BillingCustomerPolicyData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<BillingCustomerPolicyResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<BillingCustomerPolicyResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     BillingCustomerPolicyData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<BillingCustomerPolicyResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<BillingCustomerPolicyResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     BillingCustomerPolicyData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<BillingCustomerPolicyResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<BillingCustomerPolicyResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     BillingCustomerPolicyData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<BillingCustomerPolicyResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<BillingCustomerPolicyResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     BillingCustomerPolicyData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<BillingCustomerPolicyResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<BillingCustomerPolicyResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     BillingCustomerPolicyData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<BillingCustomerPolicyResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<BillingCustomerPolicyResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

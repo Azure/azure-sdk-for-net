@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -1304,46 +1303,6 @@ namespace Azure.ResourceManager.Billing
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableBillingTenantResource(tenantResource).GetAll(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a URL to download multiple invoice documents (invoice pdf, tax receipts, credit notes) as a zip file. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBillingTenantResource.DownloadDocumentsByBillingSubscriptionAsync(WaitUntil, string, IEnumerable{BillingDocumentDownloadRequestContent}, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID that uniquely identifies a billing subscription. </param>
-        /// <param name="parameters"> A list of download details for individual documents. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<ArmOperation<BillingDocumentDownloadResult>> DownloadDocumentsByBillingSubscriptionAsync(this TenantResource tenantResource, WaitUntil waitUntil, string subscriptionId, IEnumerable<BillingDocumentDownloadRequestContent> parameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return await GetMockableBillingTenantResource(tenantResource).DownloadDocumentsByBillingSubscriptionAsync(waitUntil, subscriptionId, parameters, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a URL to download multiple invoice documents (invoice pdf, tax receipts, credit notes) as a zip file. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBillingTenantResource.DownloadDocumentsByBillingSubscription(WaitUntil, string, IEnumerable{BillingDocumentDownloadRequestContent}, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="subscriptionId"> The ID that uniquely identifies a billing subscription. </param>
-        /// <param name="parameters"> A list of download details for individual documents. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static ArmOperation<BillingDocumentDownloadResult> DownloadDocumentsByBillingSubscription(this TenantResource tenantResource, WaitUntil waitUntil, string subscriptionId, IEnumerable<BillingDocumentDownloadRequestContent> parameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableBillingTenantResource(tenantResource).DownloadDocumentsByBillingSubscription(waitUntil, subscriptionId, parameters, cancellationToken);
         }
 
         /// <summary>

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The SKU to be applied for this resource. </summary>
-    internal partial class BillingSku : IJsonModel<BillingSku>
+    public partial class BillingSku : IJsonModel<BillingSku>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

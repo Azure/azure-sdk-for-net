@@ -9,17 +9,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Billing
 {
-    // Workaround helpers used by inline-patched Generated/*.cs call sites where the MPG generator
-    // emits invalid `T.ToRequestContent(value)` static-method invocations for body parameter types
-    // that have no such static method.
-    //   * IEnumerable<TModel> body params  — tracked at https://github.com/Azure/azure-sdk-for-net/issues/57716
-    //     (open; draft fix in PR https://github.com/Azure/azure-sdk-for-net/pull/57719).
-    //   * DateTimeOffset (scalar utcDateTime) body params — no existing issue; new one to be filed.
-    // TODO: remove this helper and the corresponding inline patches in src/Generated once both
-    //       generator bugs are fixed and the next regen no longer emits the broken calls.
+    /// <summary>
+    /// Workaround for MPG generator bugs where the emitter invokes <c>parameters.ToRequestContent()</c>
+    /// on a body parameter type that has no such method. The replacements are exposed as
+    /// <b>extension methods</b> and called from <c>[CodeGenSuppress]</c>-ed replacement methods in
+    /// <c>Custom\BillingAccountResource.cs</c> / <c>Custom\Extensions\MockableBillingTenantResource.cs</c>.
+    ///
+    /// Tracking issues:
+    ///   * IEnumerable&lt;TModel&gt; body params  —
+    ///     https://github.com/Azure/azure-sdk-for-net/issues/57716 (open; draft fix PR #57719).
+    ///   * DateTimeOffset (scalar utcDateTime) body params —
+    ///     https://github.com/Azure/azure-sdk-for-net/issues/59539 (open).
+    /// TODO: remove these extension methods, the corresponding <c>[CodeGenSuppress]</c> attributes,
+    ///       and the replacement methods once the upstream generator fixes ship and the next regen
+    ///       no longer emits the broken calls.
+    /// </summary>
     internal static class BillingRequestContentHelper
     {
-        public static RequestContent ToRequestContent<T>(IEnumerable<T> items) where T : System.ClientModel.Primitives.IPersistableModel<T>
+        public static RequestContent ToRequestContent<T>(this IEnumerable<T> items) where T : System.ClientModel.Primitives.IPersistableModel<T>
         {
             using MemoryStream stream = new MemoryStream();
             using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
@@ -41,7 +48,7 @@ namespace Azure.ResourceManager.Billing
             return RequestContent.Create(stream.ToArray());
         }
 
-        public static RequestContent ToRequestContent(DateTimeOffset value)
+        public static RequestContent ToRequestContent(this DateTimeOffset value)
         {
             using MemoryStream stream = new MemoryStream();
             using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
