@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -117,16 +118,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string provisioningState = default;
             string targetProvisioningState = default;
             DateTimeOffset? createdAtUtc = default;
-            string gatewayUri = default;
+            Uri gatewayUri = default;
             Uri gatewayRegionalUri = default;
-            string portalUri = default;
-            string managementApiUri = default;
-            string scmUri = default;
-            string developerPortalUri = default;
+            Uri portalUri = default;
+            Uri managementApiUri = default;
+            Uri scmUri = default;
+            Uri developerPortalUri = default;
             IList<HostnameConfiguration> hostnameConfigurations = default;
             IReadOnlyList<IPAddress> publicIPAddresses = default;
             IReadOnlyList<IPAddress> privateIPAddresses = default;
-            string publicIpAddressId = default;
+            ResourceIdentifier publicIPAddressId = default;
             PublicNetworkAccess? publicNetworkAccess = default;
             ConfigurationApi configurationApi = default;
             VirtualNetworkConfiguration virtualNetworkConfiguration = default;
@@ -177,7 +178,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("gatewayUrl"u8))
                 {
-                    gatewayUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    gatewayUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("gatewayRegionalUrl"u8))
@@ -191,22 +196,38 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("portalUrl"u8))
                 {
-                    portalUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    portalUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("managementApiUrl"u8))
                 {
-                    managementApiUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    managementApiUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("scmUrl"u8))
                 {
-                    scmUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scmUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("developerPortalUrl"u8))
                 {
-                    developerPortalUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    developerPortalUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("hostnameConfigurations"u8))
@@ -267,7 +288,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("publicIpAddressId"u8))
                 {
-                    publicIpAddressId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    publicIPAddressId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("publicNetworkAccess"u8))
@@ -509,7 +534,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 hostnameConfigurations ?? new ChangeTrackingList<HostnameConfiguration>(),
                 publicIPAddresses ?? new ChangeTrackingList<IPAddress>(),
                 privateIPAddresses ?? new ChangeTrackingList<IPAddress>(),
-                publicIpAddressId,
+                publicIPAddressId,
                 publicNetworkAccess,
                 configurationApi,
                 virtualNetworkConfiguration,

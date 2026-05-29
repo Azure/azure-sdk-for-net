@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary></summary>
-    public partial class AccessInformationContractResource : IJsonModel<TenantAccessInfoData>
+    public partial class TenantAccessInfoResource : IJsonModel<TenantAccessInfoData>
     {
         private static IJsonModel<TenantAccessInfoData> s_dataDeserializationInstance;
 

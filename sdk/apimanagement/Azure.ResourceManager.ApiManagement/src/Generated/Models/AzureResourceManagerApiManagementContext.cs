@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AccessInformationCollection))]
     [ModelReaderWriterBuildable(typeof(AccessInformationContractProperties))]
-    [ModelReaderWriterBuildable(typeof(AccessInformationContractResource))]
     [ModelReaderWriterBuildable(typeof(AccessInformationCreateParameterProperties))]
     [ModelReaderWriterBuildable(typeof(AccessInformationUpdateParameterProperties))]
     [ModelReaderWriterBuildable(typeof(AdditionalLocation))]
@@ -558,6 +557,7 @@ namespace Azure.ResourceManager.ApiManagement
     [ModelReaderWriterBuildable(typeof(TenantAccessInfoCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(TenantAccessInfoData))]
     [ModelReaderWriterBuildable(typeof(TenantAccessInfoPatch))]
+    [ModelReaderWriterBuildable(typeof(TenantAccessInfoResource))]
     [ModelReaderWriterBuildable(typeof(TenantAccessInfoSecretsDetails))]
     [ModelReaderWriterBuildable(typeof(TenantConfigurationSyncStateContract))]
     [ModelReaderWriterBuildable(typeof(TenantConfigurationSyncStateContractProperties))]

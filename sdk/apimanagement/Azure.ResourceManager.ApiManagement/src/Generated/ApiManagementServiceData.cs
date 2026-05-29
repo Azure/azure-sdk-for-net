@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Gateway URL of the API Management service. </summary>
         [WirePath("properties.gatewayUrl")]
-        public string GatewayUri
+        public Uri GatewayUri
         {
             get
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Publisher portal endpoint Url of the API Management service. </summary>
         [WirePath("properties.portalUrl")]
-        public string PortalUri
+        public Uri PortalUri
         {
             get
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Management API endpoint URL of the API Management service. </summary>
         [WirePath("properties.managementApiUrl")]
-        public string ManagementApiUri
+        public Uri ManagementApiUri
         {
             get
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> SCM endpoint URL of the API Management service. </summary>
         [WirePath("properties.scmUrl")]
-        public string ScmUri
+        public Uri ScmUri
         {
             get
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> DEveloper Portal endpoint URL of the API Management service. </summary>
         [WirePath("properties.developerPortalUrl")]
-        public string DeveloperPortalUri
+        public Uri DeveloperPortalUri
         {
             get
             {
@@ -233,11 +233,11 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Public Standard SKU IP V4 based IP address to be associated with Virtual Network deployed service in the region. Supported only for Developer and Premium SKU being deployed in Virtual Network. </summary>
         [WirePath("properties.publicIpAddressId")]
-        public string PublicIpAddressId
+        public ResourceIdentifier PublicIPAddressId
         {
             get
             {
-                return Properties is null ? default : Properties.PublicIpAddressId;
+                return Properties is null ? default : Properties.PublicIPAddressId;
             }
             set
             {
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new ApiManagementServiceProperties();
                 }
-                Properties.PublicIpAddressId = value;
+                Properties.PublicIPAddressId = value;
             }
         }
 

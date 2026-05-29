@@ -1678,21 +1678,21 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="AccessInformationContractResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="TenantAccessInfoResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementArmClient.GetAccessInformationContractResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementArmClient.GetTenantAccessInfoResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AccessInformationContractResource"/> object. </returns>
-        public static AccessInformationContractResource GetAccessInformationContractResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TenantAccessInfoResource"/> object. </returns>
+        public static TenantAccessInfoResource GetTenantAccessInfoResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableApiManagementArmClient(client).GetAccessInformationContractResource(id);
+            return GetMockableApiManagementArmClient(client).GetTenantAccessInfoResource(id);
         }
 
         /// <summary>

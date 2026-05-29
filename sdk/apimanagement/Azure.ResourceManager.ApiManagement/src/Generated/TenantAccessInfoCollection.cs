@@ -20,28 +20,28 @@ using Azure.ResourceManager.ApiManagement.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AccessInformationContractResource"/> and their operations.
-    /// Each <see cref="AccessInformationContractResource"/> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource"/>.
-    /// To get a <see cref="AccessInformationContractCollection"/> instance call the GetAccessInformationContracts method from an instance of <see cref="ApiManagementServiceResource"/>.
+    /// A class representing a collection of <see cref="TenantAccessInfoResource"/> and their operations.
+    /// Each <see cref="TenantAccessInfoResource"/> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource"/>.
+    /// To get a <see cref="TenantAccessInfoCollection"/> instance call the GetTenantAccessInfos method from an instance of <see cref="ApiManagementServiceResource"/>.
     /// </summary>
-    public partial class AccessInformationContractCollection : ArmCollection, IEnumerable<AccessInformationContractResource>, IAsyncEnumerable<AccessInformationContractResource>
+    public partial class TenantAccessInfoCollection : ArmCollection, IEnumerable<TenantAccessInfoResource>, IAsyncEnumerable<TenantAccessInfoResource>
     {
         private readonly ClientDiagnostics _tenantAccessClientDiagnostics;
         private readonly TenantAccess _tenantAccessRestClient;
 
-        /// <summary> Initializes a new instance of AccessInformationContractCollection for mocking. </summary>
-        protected AccessInformationContractCollection()
+        /// <summary> Initializes a new instance of TenantAccessInfoCollection for mocking. </summary>
+        protected TenantAccessInfoCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccessInformationContractCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantAccessInfoCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AccessInformationContractCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal TenantAccessInfoCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AccessInformationContractResource.ResourceType, out string accessInformationContractApiVersion);
-            _tenantAccessClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", AccessInformationContractResource.ResourceType.Namespace, Diagnostics);
-            _tenantAccessRestClient = new TenantAccess(_tenantAccessClientDiagnostics, Pipeline, Endpoint, accessInformationContractApiVersion ?? "2025-09-01-preview");
+            TryGetApiVersion(TenantAccessInfoResource.ResourceType, out string tenantAccessInfoApiVersion);
+            _tenantAccessClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", TenantAccessInfoResource.ResourceType.Namespace, Diagnostics);
+            _tenantAccessRestClient = new TenantAccess(_tenantAccessClientDiagnostics, Pipeline, Endpoint, tenantAccessInfoApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -78,11 +78,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="content"> Parameters supplied to retrieve the Tenant Access Information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<AccessInformationContractResource>> CreateOrUpdateAsync(WaitUntil waitUntil, AccessName accessName, ETag ifMatch, TenantAccessInfoCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TenantAccessInfoResource>> CreateOrUpdateAsync(WaitUntil waitUntil, AccessName accessName, ETag ifMatch, TenantAccessInfoCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("AccessInformationContractCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApiManagement
                 Response<TenantAccessInfoData> response = Response.FromValue(TenantAccessInfoData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ApiManagementArmOperation<AccessInformationContractResource> operation = new ApiManagementArmOperation<AccessInformationContractResource>(Response.FromValue(new AccessInformationContractResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ApiManagementArmOperation<TenantAccessInfoResource> operation = new ApiManagementArmOperation<TenantAccessInfoResource>(Response.FromValue(new TenantAccessInfoResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -132,11 +132,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="content"> Parameters supplied to retrieve the Tenant Access Information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<AccessInformationContractResource> CreateOrUpdate(WaitUntil waitUntil, AccessName accessName, ETag ifMatch, TenantAccessInfoCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TenantAccessInfoResource> CreateOrUpdate(WaitUntil waitUntil, AccessName accessName, ETag ifMatch, TenantAccessInfoCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("AccessInformationContractCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ApiManagement
                 Response<TenantAccessInfoData> response = Response.FromValue(TenantAccessInfoData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ApiManagementArmOperation<AccessInformationContractResource> operation = new ApiManagementArmOperation<AccessInformationContractResource>(Response.FromValue(new AccessInformationContractResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ApiManagementArmOperation<TenantAccessInfoResource> operation = new ApiManagementArmOperation<TenantAccessInfoResource>(Response.FromValue(new TenantAccessInfoResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -182,9 +182,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AccessInformationContractResource>> GetAsync(AccessName accessName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TenantAccessInfoResource>> GetAsync(AccessName accessName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("AccessInformationContractCollection.Get");
+            using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.Get");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AccessInformationContractResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantAccessInfoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,9 +227,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AccessInformationContractResource> Get(AccessName accessName, CancellationToken cancellationToken = default)
+        public virtual Response<TenantAccessInfoResource> Get(AccessName accessName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("AccessInformationContractCollection.Get");
+            using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.Get");
             scope.Start();
             try
             {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AccessInformationContractResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantAccessInfoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -272,21 +272,21 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="filter"> Not used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AccessInformationContractResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AccessInformationContractResource> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TenantAccessInfoResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<TenantAccessInfoResource> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TenantAccessInfoData, AccessInformationContractResource>(new TenantAccessGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<TenantAccessInfoData, TenantAccessInfoResource>(new TenantAccessGetByServiceAsyncCollectionResultOfT(
                 _tenantAccessRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
                 context,
-                "AccessInformationContractCollection.GetAll"), data => new AccessInformationContractResource(Client, data));
+                "TenantAccessInfoCollection.GetAll"), data => new TenantAccessInfoResource(Client, data));
         }
 
         /// <summary>
@@ -308,21 +308,21 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="filter"> Not used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AccessInformationContractResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AccessInformationContractResource> GetAll(string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TenantAccessInfoResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<TenantAccessInfoResource> GetAll(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TenantAccessInfoData, AccessInformationContractResource>(new TenantAccessGetByServiceCollectionResultOfT(
+            return new PageableWrapper<TenantAccessInfoData, TenantAccessInfoResource>(new TenantAccessGetByServiceCollectionResultOfT(
                 _tenantAccessRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
                 context,
-                "AccessInformationContractCollection.GetAll"), data => new AccessInformationContractResource(Client, data));
+                "TenantAccessInfoCollection.GetAll"), data => new TenantAccessInfoResource(Client, data));
         }
 
         /// <summary>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(AccessName accessName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("AccessInformationContractCollection.Exists");
+            using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.Exists");
             scope.Start();
             try
             {
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(AccessName accessName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("AccessInformationContractCollection.Exists");
+            using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.Exists");
             scope.Start();
             try
             {
@@ -450,9 +450,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<AccessInformationContractResource>> GetIfExistsAsync(AccessName accessName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<TenantAccessInfoResource>> GetIfExistsAsync(AccessName accessName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("AccessInformationContractCollection.GetIfExists");
+            using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -477,9 +477,9 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<AccessInformationContractResource>(response.GetRawResponse());
+                    return new NoValueResponse<TenantAccessInfoResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new AccessInformationContractResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantAccessInfoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -507,9 +507,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<AccessInformationContractResource> GetIfExists(AccessName accessName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<TenantAccessInfoResource> GetIfExists(AccessName accessName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("AccessInformationContractCollection.GetIfExists");
+            using DiagnosticScope scope = _tenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -534,9 +534,9 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<AccessInformationContractResource>(response.GetRawResponse());
+                    return new NoValueResponse<TenantAccessInfoResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new AccessInformationContractResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantAccessInfoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        IEnumerator<AccessInformationContractResource> IEnumerable<AccessInformationContractResource>.GetEnumerator()
+        IEnumerator<TenantAccessInfoResource> IEnumerable<TenantAccessInfoResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<AccessInformationContractResource> IAsyncEnumerable<AccessInformationContractResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<TenantAccessInfoResource> IAsyncEnumerable<TenantAccessInfoResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

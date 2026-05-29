@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string title = default;
             string description = default;
-            ResourceIdentifier userId = default;
+            string userId = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("createdDate"u8))
@@ -166,11 +166,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("userId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    userId = new ResourceIdentifier(prop.Value.GetString());
+                    userId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

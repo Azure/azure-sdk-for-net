@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> A resource identifier for the user created the issue. </summary>
         [WirePath("properties.userId")]
-        public ResourceIdentifier UserId
+        public string UserId
         {
             get
             {

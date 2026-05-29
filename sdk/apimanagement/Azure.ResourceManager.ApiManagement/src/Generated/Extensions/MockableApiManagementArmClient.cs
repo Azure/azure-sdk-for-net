@@ -845,13 +845,13 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
             return new ServiceWorkspaceTagProductLinkResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="AccessInformationContractResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="TenantAccessInfoResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AccessInformationContractResource"/> object. </returns>
-        public virtual AccessInformationContractResource GetAccessInformationContractResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TenantAccessInfoResource"/> object. </returns>
+        public virtual TenantAccessInfoResource GetTenantAccessInfoResource(ResourceIdentifier id)
         {
-            AccessInformationContractResource.ValidateResourceId(id);
-            return new AccessInformationContractResource(Client, id);
+            TenantAccessInfoResource.ValidateResourceId(id);
+            return new TenantAccessInfoResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="WorkspaceContractResource"/> along with the instance operations that can be performed on it but with no data. </summary>

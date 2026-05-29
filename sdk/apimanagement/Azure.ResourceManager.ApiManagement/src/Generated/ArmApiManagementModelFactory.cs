@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="hostnameConfigurations"> Custom hostname configuration of the API Management service. </param>
         /// <param name="publicIPAddresses"> Public Static Load Balanced IP addresses of the API Management service in Primary region. Available only for Basic, Standard, Premium and Isolated SKU. </param>
         /// <param name="privateIPAddresses"> Private Static Load Balanced IP addresses of the API Management service in Primary region which is deployed in an Internal Virtual Network. Available only for Basic, Standard, Premium and Isolated SKU. </param>
-        /// <param name="publicIpAddressId"> Public Standard SKU IP V4 based IP address to be associated with Virtual Network deployed service in the region. Supported only for Developer and Premium SKU being deployed in Virtual Network. </param>
+        /// <param name="publicIPAddressId"> Public Standard SKU IP V4 based IP address to be associated with Virtual Network deployed service in the region. Supported only for Developer and Premium SKU being deployed in Virtual Network. </param>
         /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this API Management service.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'. </param>
         /// <param name="virtualNetworkConfiguration"> Virtual network configuration of the API Management service. </param>
         /// <param name="additionalLocations"> Additional datacenter locations of the API Management service. </param>
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="eTag"> ETag of the resource. </param>
         /// <param name="zones"> The availability zones. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementServiceData"/> instance for mocking. </returns>
-        public static ApiManagementServiceData ApiManagementServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string notificationSenderEmail = default, string provisioningState = default, string targetProvisioningState = default, DateTimeOffset? createdAtUtc = default, string gatewayUri = default, Uri gatewayRegionalUri = default, string portalUri = default, string managementApiUri = default, string scmUri = default, string developerPortalUri = default, IEnumerable<HostnameConfiguration> hostnameConfigurations = default, IEnumerable<IPAddress> publicIPAddresses = default, IEnumerable<IPAddress> privateIPAddresses = default, string publicIpAddressId = default, PublicNetworkAccess? publicNetworkAccess = default, VirtualNetworkConfiguration virtualNetworkConfiguration = default, IEnumerable<AdditionalLocation> additionalLocations = default, IDictionary<string, string> customProperties = default, IEnumerable<CertificateConfiguration> certificates = default, bool? enableClientCertificate = default, ApiManagementNatGatewayState? natGatewayState = default, IEnumerable<string> outboundPublicIPAddresses = default, bool? disableGateway = default, VirtualNetworkType? virtualNetworkType = default, bool? restore = default, IEnumerable<RemotePrivateEndpointConnectionWrapper> privateEndpointConnections = default, PlatformVersion? platformVersion = default, LegacyPortalStatus? legacyPortalStatus = default, DeveloperPortalStatus? developerPortalStatus = default, ReleaseChannel? releaseChannel = default, bool? zoneRedundant = default, LegacyApiState? legacyApi = default, string minApiVersion = default, string publisherEmail = default, string publisherName = default, ApiManagementServiceSkuProperties sku = default, ManagedServiceIdentity identity = default, ETag? eTag = default, IEnumerable<string> zones = default)
+        public static ApiManagementServiceData ApiManagementServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string notificationSenderEmail = default, string provisioningState = default, string targetProvisioningState = default, DateTimeOffset? createdAtUtc = default, Uri gatewayUri = default, Uri gatewayRegionalUri = default, Uri portalUri = default, Uri managementApiUri = default, Uri scmUri = default, Uri developerPortalUri = default, IEnumerable<HostnameConfiguration> hostnameConfigurations = default, IEnumerable<IPAddress> publicIPAddresses = default, IEnumerable<IPAddress> privateIPAddresses = default, ResourceIdentifier publicIPAddressId = default, PublicNetworkAccess? publicNetworkAccess = default, VirtualNetworkConfiguration virtualNetworkConfiguration = default, IEnumerable<AdditionalLocation> additionalLocations = default, IDictionary<string, string> customProperties = default, IEnumerable<CertificateConfiguration> certificates = default, bool? enableClientCertificate = default, ApiManagementNatGatewayState? natGatewayState = default, IEnumerable<string> outboundPublicIPAddresses = default, bool? disableGateway = default, VirtualNetworkType? virtualNetworkType = default, bool? restore = default, IEnumerable<RemotePrivateEndpointConnectionWrapper> privateEndpointConnections = default, PlatformVersion? platformVersion = default, LegacyPortalStatus? legacyPortalStatus = default, DeveloperPortalStatus? developerPortalStatus = default, ReleaseChannel? releaseChannel = default, bool? zoneRedundant = default, LegacyApiState? legacyApi = default, string minApiVersion = default, string publisherEmail = default, string publisherName = default, ApiManagementServiceSkuProperties sku = default, ManagedServiceIdentity identity = default, ETag? eTag = default, IEnumerable<string> zones = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     (hostnameConfigurations ?? new ChangeTrackingList<HostnameConfiguration>()).ToList(),
                     (publicIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
                     (privateIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
-                    publicIpAddressId,
+                    publicIPAddressId,
                     publicNetworkAccess,
                     new ConfigurationApi(legacyApi, null),
                     virtualNetworkConfiguration,
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="hostnameConfigurations"> Custom hostname configuration of the API Management service. </param>
         /// <param name="publicIPAddresses"> Public Static Load Balanced IP addresses of the API Management service in Primary region. Available only for Basic, Standard, Premium and Isolated SKU. </param>
         /// <param name="privateIPAddresses"> Private Static Load Balanced IP addresses of the API Management service in Primary region which is deployed in an Internal Virtual Network. Available only for Basic, Standard, Premium and Isolated SKU. </param>
-        /// <param name="publicIpAddressId"> Public Standard SKU IP V4 based IP address to be associated with Virtual Network deployed service in the region. Supported only for Developer and Premium SKU being deployed in Virtual Network. </param>
+        /// <param name="publicIPAddressId"> Public Standard SKU IP V4 based IP address to be associated with Virtual Network deployed service in the region. Supported only for Developer and Premium SKU being deployed in Virtual Network. </param>
         /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this API Management service.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'. </param>
         /// <param name="virtualNetworkConfiguration"> Virtual network configuration of the API Management service. </param>
         /// <param name="additionalLocations"> Additional datacenter locations of the API Management service. </param>
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="eTag"> ETag of the resource. </param>
         /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
         /// <returns> A new <see cref="Models.ApiManagementServicePatch"/> instance for mocking. </returns>
-        public static ApiManagementServicePatch ApiManagementServicePatch(string id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, string notificationSenderEmail = default, string provisioningState = default, string targetProvisioningState = default, DateTimeOffset? createdAtUtc = default, string gatewayUri = default, Uri gatewayRegionalUri = default, string portalUri = default, string managementApiUri = default, string scmUri = default, string developerPortalUri = default, IEnumerable<HostnameConfiguration> hostnameConfigurations = default, IEnumerable<IPAddress> publicIPAddresses = default, IEnumerable<IPAddress> privateIPAddresses = default, string publicIpAddressId = default, PublicNetworkAccess? publicNetworkAccess = default, VirtualNetworkConfiguration virtualNetworkConfiguration = default, IEnumerable<AdditionalLocation> additionalLocations = default, IDictionary<string, string> customProperties = default, IEnumerable<CertificateConfiguration> certificates = default, bool? enableClientCertificate = default, ApiManagementNatGatewayState? natGatewayState = default, IEnumerable<string> outboundPublicIPAddresses = default, bool? disableGateway = default, VirtualNetworkType? virtualNetworkType = default, bool? restore = default, IEnumerable<RemotePrivateEndpointConnectionWrapper> privateEndpointConnections = default, PlatformVersion? platformVersion = default, LegacyPortalStatus? legacyPortalStatus = default, DeveloperPortalStatus? developerPortalStatus = default, ReleaseChannel? releaseChannel = default, bool? zoneRedundant = default, LegacyApiState? legacyApi = default, string minApiVersion = default, string publisherEmail = default, string publisherName = default, ApiManagementServiceSkuProperties sku = default, ManagedServiceIdentity identity = default, ETag? eTag = default, IEnumerable<string> zones = default)
+        public static ApiManagementServicePatch ApiManagementServicePatch(string id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, string notificationSenderEmail = default, string provisioningState = default, string targetProvisioningState = default, DateTimeOffset? createdAtUtc = default, Uri gatewayUri = default, Uri gatewayRegionalUri = default, Uri portalUri = default, Uri managementApiUri = default, Uri scmUri = default, Uri developerPortalUri = default, IEnumerable<HostnameConfiguration> hostnameConfigurations = default, IEnumerable<IPAddress> publicIPAddresses = default, IEnumerable<IPAddress> privateIPAddresses = default, ResourceIdentifier publicIPAddressId = default, PublicNetworkAccess? publicNetworkAccess = default, VirtualNetworkConfiguration virtualNetworkConfiguration = default, IEnumerable<AdditionalLocation> additionalLocations = default, IDictionary<string, string> customProperties = default, IEnumerable<CertificateConfiguration> certificates = default, bool? enableClientCertificate = default, ApiManagementNatGatewayState? natGatewayState = default, IEnumerable<string> outboundPublicIPAddresses = default, bool? disableGateway = default, VirtualNetworkType? virtualNetworkType = default, bool? restore = default, IEnumerable<RemotePrivateEndpointConnectionWrapper> privateEndpointConnections = default, PlatformVersion? platformVersion = default, LegacyPortalStatus? legacyPortalStatus = default, DeveloperPortalStatus? developerPortalStatus = default, ReleaseChannel? releaseChannel = default, bool? zoneRedundant = default, LegacyApiState? legacyApi = default, string minApiVersion = default, string publisherEmail = default, string publisherName = default, ApiManagementServiceSkuProperties sku = default, ManagedServiceIdentity identity = default, ETag? eTag = default, IEnumerable<string> zones = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 @type,
                 tags,
                 additionalBinaryDataProperties: null,
-                notificationSenderEmail is null && provisioningState is null && targetProvisioningState is null && createdAtUtc is null && gatewayUri is null && gatewayRegionalUri is null && portalUri is null && managementApiUri is null && scmUri is null && developerPortalUri is null && hostnameConfigurations is null && publicIPAddresses is null && privateIPAddresses is null && publicIpAddressId is null && publicNetworkAccess is null && virtualNetworkConfiguration is null && additionalLocations is null && customProperties is null && certificates is null && enableClientCertificate is null && natGatewayState is null && outboundPublicIPAddresses is null && disableGateway is null && virtualNetworkType is null && restore is null && privateEndpointConnections is null && platformVersion is null && legacyPortalStatus is null && developerPortalStatus is null && releaseChannel is null && zoneRedundant is null && legacyApi is null && minApiVersion is null && publisherEmail is null && publisherName is null ? default : new ApiManagementServiceUpdateProperties(
+                notificationSenderEmail is null && provisioningState is null && targetProvisioningState is null && createdAtUtc is null && gatewayUri is null && gatewayRegionalUri is null && portalUri is null && managementApiUri is null && scmUri is null && developerPortalUri is null && hostnameConfigurations is null && publicIPAddresses is null && privateIPAddresses is null && publicIPAddressId is null && publicNetworkAccess is null && virtualNetworkConfiguration is null && additionalLocations is null && customProperties is null && certificates is null && enableClientCertificate is null && natGatewayState is null && outboundPublicIPAddresses is null && disableGateway is null && virtualNetworkType is null && restore is null && privateEndpointConnections is null && platformVersion is null && legacyPortalStatus is null && developerPortalStatus is null && releaseChannel is null && zoneRedundant is null && legacyApi is null && minApiVersion is null && publisherEmail is null && publisherName is null ? default : new ApiManagementServiceUpdateProperties(
                     notificationSenderEmail,
                     provisioningState,
                     targetProvisioningState,
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     (hostnameConfigurations ?? new ChangeTrackingList<HostnameConfiguration>()).ToList(),
                     (publicIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
                     (privateIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
-                    publicIpAddressId,
+                    publicIPAddressId,
                     publicNetworkAccess,
                     new ConfigurationApi(legacyApi, null),
                     virtualNetworkConfiguration,
@@ -4660,21 +4660,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                notificationSenderEmail is null && provisioningState is null && targetProvisioningState is null && createdAtUtc is null && gatewayRegionalUri is null && hostnameConfigurations is null && publicIPAddresses is null && privateIPAddresses is null && publicNetworkAccess is null && legacyApi is null && virtualNetworkConfiguration is null && additionalLocations is null && customProperties is null && certificates is null && enableClientCertificate is null && natGatewayState is null && outboundPublicIPAddresses is null && disableGateway is null && virtualNetworkType is null && minApiVersion is null && restore is null && privateEndpointConnections is null && platformVersion is null && legacyPortalStatus is null && developerPortalStatus is null && publisherEmail is null && publisherName is null ? default : new ApiManagementServiceProperties(
+                notificationSenderEmail is null && provisioningState is null && targetProvisioningState is null && createdAtUtc is null && gatewayUri is null && gatewayRegionalUri is null && portalUri is null && managementApiUri is null && scmUri is null && developerPortalUri is null && hostnameConfigurations is null && publicIPAddresses is null && privateIPAddresses is null && publicIPAddressId is null && publicNetworkAccess is null && legacyApi is null && virtualNetworkConfiguration is null && additionalLocations is null && customProperties is null && certificates is null && enableClientCertificate is null && natGatewayState is null && outboundPublicIPAddresses is null && disableGateway is null && virtualNetworkType is null && minApiVersion is null && restore is null && privateEndpointConnections is null && platformVersion is null && legacyPortalStatus is null && developerPortalStatus is null && publisherEmail is null && publisherName is null ? default : new ApiManagementServiceProperties(
                     notificationSenderEmail,
                     provisioningState,
                     targetProvisioningState,
                     createdAtUtc,
-                    default,
+                    gatewayUri,
                     gatewayRegionalUri,
-                    default,
-                    default,
-                    default,
-                    default,
+                    portalUri,
+                    managementApiUri,
+                    scmUri,
+                    developerPortalUri,
                     (hostnameConfigurations ?? new ChangeTrackingList<HostnameConfiguration>()).ToList(),
                     (publicIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
                     (privateIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
-                    default,
+                    publicIPAddressId,
                     publicNetworkAccess,
                     new ConfigurationApi(legacyApi, default),
                     virtualNetworkConfiguration,
@@ -4775,21 +4775,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 default,
                 tags,
                 additionalBinaryDataProperties: null,
-                notificationSenderEmail is null && provisioningState is null && targetProvisioningState is null && createdAtUtc is null && gatewayRegionalUri is null && hostnameConfigurations is null && publicIPAddresses is null && privateIPAddresses is null && publicNetworkAccess is null && legacyApi is null && virtualNetworkConfiguration is null && additionalLocations is null && customProperties is null && certificates is null && enableClientCertificate is null && natGatewayState is null && outboundPublicIPAddresses is null && disableGateway is null && virtualNetworkType is null && minApiVersion is null && restore is null && privateEndpointConnections is null && platformVersion is null && legacyPortalStatus is null && developerPortalStatus is null && publisherEmail is null && publisherName is null ? default : new ApiManagementServiceUpdateProperties(
+                notificationSenderEmail is null && provisioningState is null && targetProvisioningState is null && createdAtUtc is null && gatewayUri is null && gatewayRegionalUri is null && portalUri is null && managementApiUri is null && scmUri is null && developerPortalUri is null && hostnameConfigurations is null && publicIPAddresses is null && privateIPAddresses is null && publicIPAddressId is null && publicNetworkAccess is null && legacyApi is null && virtualNetworkConfiguration is null && additionalLocations is null && customProperties is null && certificates is null && enableClientCertificate is null && natGatewayState is null && outboundPublicIPAddresses is null && disableGateway is null && virtualNetworkType is null && minApiVersion is null && restore is null && privateEndpointConnections is null && platformVersion is null && legacyPortalStatus is null && developerPortalStatus is null && publisherEmail is null && publisherName is null ? default : new ApiManagementServiceUpdateProperties(
                     notificationSenderEmail,
                     provisioningState,
                     targetProvisioningState,
                     createdAtUtc,
-                    default,
+                    gatewayUri,
                     gatewayRegionalUri,
-                    default,
-                    default,
-                    default,
-                    default,
+                    portalUri,
+                    managementApiUri,
+                    scmUri,
+                    developerPortalUri,
                     (hostnameConfigurations ?? new ChangeTrackingList<HostnameConfiguration>()).ToList(),
                     (publicIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
                     (privateIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
-                    default,
+                    publicIPAddressId,
                     publicNetworkAccess,
                     new ConfigurationApi(legacyApi, default),
                     virtualNetworkConfiguration,
@@ -5400,21 +5400,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                notificationSenderEmail is null && provisioningState is null && targetProvisioningState is null && createdAtUtc is null && gatewayRegionalUri is null && hostnameConfigurations is null && publicIPAddresses is null && privateIPAddresses is null && publicNetworkAccess is null && virtualNetworkConfiguration is null && additionalLocations is null && customProperties is null && certificates is null && enableClientCertificate is null && natGatewayState is null && outboundPublicIPAddresses is null && disableGateway is null && virtualNetworkType is null && minApiVersion is null && restore is null && privateEndpointConnections is null && platformVersion is null && publisherEmail is null && publisherName is null ? default : new ApiManagementServiceProperties(
+                notificationSenderEmail is null && provisioningState is null && targetProvisioningState is null && createdAtUtc is null && gatewayUri is null && gatewayRegionalUri is null && portalUri is null && managementApiUri is null && scmUri is null && developerPortalUri is null && hostnameConfigurations is null && publicIPAddresses is null && privateIPAddresses is null && publicIPAddressId is null && publicNetworkAccess is null && virtualNetworkConfiguration is null && additionalLocations is null && customProperties is null && certificates is null && enableClientCertificate is null && natGatewayState is null && outboundPublicIPAddresses is null && disableGateway is null && virtualNetworkType is null && minApiVersion is null && restore is null && privateEndpointConnections is null && platformVersion is null && publisherEmail is null && publisherName is null ? default : new ApiManagementServiceProperties(
                     notificationSenderEmail,
                     provisioningState,
                     targetProvisioningState,
                     createdAtUtc,
-                    default,
+                    gatewayUri,
                     gatewayRegionalUri,
-                    default,
-                    default,
-                    default,
-                    default,
+                    portalUri,
+                    managementApiUri,
+                    scmUri,
+                    developerPortalUri,
                     (hostnameConfigurations ?? new ChangeTrackingList<HostnameConfiguration>()).ToList(),
                     (publicIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
                     (privateIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
-                    default,
+                    publicIPAddressId,
                     publicNetworkAccess,
                     default,
                     virtualNetworkConfiguration,
@@ -5496,21 +5496,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 default,
                 tags,
                 additionalBinaryDataProperties: null,
-                notificationSenderEmail is null && provisioningState is null && targetProvisioningState is null && createdAtUtc is null && gatewayRegionalUri is null && hostnameConfigurations is null && publicIPAddresses is null && privateIPAddresses is null && publicNetworkAccess is null && virtualNetworkConfiguration is null && additionalLocations is null && customProperties is null && certificates is null && enableClientCertificate is null && natGatewayState is null && outboundPublicIPAddresses is null && disableGateway is null && virtualNetworkType is null && minApiVersion is null && restore is null && privateEndpointConnections is null && platformVersion is null && publisherEmail is null && publisherName is null ? default : new ApiManagementServiceUpdateProperties(
+                notificationSenderEmail is null && provisioningState is null && targetProvisioningState is null && createdAtUtc is null && gatewayUri is null && gatewayRegionalUri is null && portalUri is null && managementApiUri is null && scmUri is null && developerPortalUri is null && hostnameConfigurations is null && publicIPAddresses is null && privateIPAddresses is null && publicIPAddressId is null && publicNetworkAccess is null && virtualNetworkConfiguration is null && additionalLocations is null && customProperties is null && certificates is null && enableClientCertificate is null && natGatewayState is null && outboundPublicIPAddresses is null && disableGateway is null && virtualNetworkType is null && minApiVersion is null && restore is null && privateEndpointConnections is null && platformVersion is null && publisherEmail is null && publisherName is null ? default : new ApiManagementServiceUpdateProperties(
                     notificationSenderEmail,
                     provisioningState,
                     targetProvisioningState,
                     createdAtUtc,
-                    default,
+                    gatewayUri,
                     gatewayRegionalUri,
-                    default,
-                    default,
-                    default,
-                    default,
+                    portalUri,
+                    managementApiUri,
+                    scmUri,
+                    developerPortalUri,
                     (hostnameConfigurations ?? new ChangeTrackingList<HostnameConfiguration>()).ToList(),
                     (publicIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
                     (privateIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
-                    default,
+                    publicIPAddressId,
                     publicNetworkAccess,
                     default,
                     virtualNetworkConfiguration,
@@ -5715,21 +5715,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                notificationSenderEmail is null && provisioningState is null && targetProvisioningState is null && createdAtUtc is null && gatewayRegionalUri is null && hostnameConfigurations is null && publicIPAddresses is null && privateIPAddresses is null && publicNetworkAccess is null && virtualNetworkConfiguration is null && additionalLocations is null && customProperties is null && certificates is null && enableClientCertificate is null && disableGateway is null && virtualNetworkType is null && minApiVersion is null && restore is null && privateEndpointConnections is null && platformVersion is null && publisherEmail is null && publisherName is null ? default : new ApiManagementServiceProperties(
+                notificationSenderEmail is null && provisioningState is null && targetProvisioningState is null && createdAtUtc is null && gatewayUri is null && gatewayRegionalUri is null && portalUri is null && managementApiUri is null && scmUri is null && developerPortalUri is null && hostnameConfigurations is null && publicIPAddresses is null && privateIPAddresses is null && publicIPAddressId is null && publicNetworkAccess is null && virtualNetworkConfiguration is null && additionalLocations is null && customProperties is null && certificates is null && enableClientCertificate is null && disableGateway is null && virtualNetworkType is null && minApiVersion is null && restore is null && privateEndpointConnections is null && platformVersion is null && publisherEmail is null && publisherName is null ? default : new ApiManagementServiceProperties(
                     notificationSenderEmail,
                     provisioningState,
                     targetProvisioningState,
                     createdAtUtc,
-                    default,
+                    gatewayUri,
                     gatewayRegionalUri,
-                    default,
-                    default,
-                    default,
-                    default,
+                    portalUri,
+                    managementApiUri,
+                    scmUri,
+                    developerPortalUri,
                     (hostnameConfigurations ?? new ChangeTrackingList<HostnameConfiguration>()).ToList(),
                     (publicIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
                     (privateIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
-                    default,
+                    publicIPAddressId,
                     publicNetworkAccess,
                     default,
                     virtualNetworkConfiguration,
@@ -5827,21 +5827,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 default,
                 tags,
                 additionalBinaryDataProperties: null,
-                notificationSenderEmail is null && provisioningState is null && targetProvisioningState is null && createdAtUtc is null && gatewayRegionalUri is null && hostnameConfigurations is null && publicIPAddresses is null && privateIPAddresses is null && publicNetworkAccess is null && virtualNetworkConfiguration is null && additionalLocations is null && customProperties is null && certificates is null && enableClientCertificate is null && disableGateway is null && virtualNetworkType is null && minApiVersion is null && restore is null && privateEndpointConnections is null && platformVersion is null && publisherEmail is null && publisherName is null ? default : new ApiManagementServiceUpdateProperties(
+                notificationSenderEmail is null && provisioningState is null && targetProvisioningState is null && createdAtUtc is null && gatewayUri is null && gatewayRegionalUri is null && portalUri is null && managementApiUri is null && scmUri is null && developerPortalUri is null && hostnameConfigurations is null && publicIPAddresses is null && privateIPAddresses is null && publicIPAddressId is null && publicNetworkAccess is null && virtualNetworkConfiguration is null && additionalLocations is null && customProperties is null && certificates is null && enableClientCertificate is null && disableGateway is null && virtualNetworkType is null && minApiVersion is null && restore is null && privateEndpointConnections is null && platformVersion is null && publisherEmail is null && publisherName is null ? default : new ApiManagementServiceUpdateProperties(
                     notificationSenderEmail,
                     provisioningState,
                     targetProvisioningState,
                     createdAtUtc,
-                    default,
+                    gatewayUri,
                     gatewayRegionalUri,
-                    default,
-                    default,
-                    default,
-                    default,
+                    portalUri,
+                    managementApiUri,
+                    scmUri,
+                    developerPortalUri,
                     (hostnameConfigurations ?? new ChangeTrackingList<HostnameConfiguration>()).ToList(),
                     (publicIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
                     (privateIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
-                    default,
+                    publicIPAddressId,
                     publicNetworkAccess,
                     default,
                     virtualNetworkConfiguration,
