@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct MultiVmSyncPointOption : IEquatable<MultiVmSyncPointOption>
     {
         private readonly string _value;
+        /// <summary> UseMultiVmSyncRecoveryPoint. </summary>
+        private const string UseMultiVmSyncRecoveryPointValue = "UseMultiVmSyncRecoveryPoint";
+        /// <summary> UsePerVmRecoveryPoint. </summary>
+        private const string UsePerVmRecoveryPointValue = "UsePerVmRecoveryPoint";
 
         /// <summary> Initializes a new instance of <see cref="MultiVmSyncPointOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MultiVmSyncPointOption(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UseMultiVmSyncRecoveryPointValue = "UseMultiVmSyncRecoveryPoint";
-        private const string UsePerVmRecoveryPointValue = "UsePerVmRecoveryPoint";
+            _value = value;
+        }
 
         /// <summary> UseMultiVmSyncRecoveryPoint. </summary>
         public static MultiVmSyncPointOption UseMultiVmSyncRecoveryPoint { get; } = new MultiVmSyncPointOption(UseMultiVmSyncRecoveryPointValue);
+
         /// <summary> UsePerVmRecoveryPoint. </summary>
         public static MultiVmSyncPointOption UsePerVmRecoveryPoint { get; } = new MultiVmSyncPointOption(UsePerVmRecoveryPointValue);
+
         /// <summary> Determines if two <see cref="MultiVmSyncPointOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MultiVmSyncPointOption left, MultiVmSyncPointOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MultiVmSyncPointOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MultiVmSyncPointOption left, MultiVmSyncPointOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MultiVmSyncPointOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MultiVmSyncPointOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MultiVmSyncPointOption(string value) => new MultiVmSyncPointOption(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MultiVmSyncPointOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MultiVmSyncPointOption?(string value) => value == null ? null : new MultiVmSyncPointOption(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MultiVmSyncPointOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MultiVmSyncPointOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

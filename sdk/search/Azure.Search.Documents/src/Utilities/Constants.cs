@@ -112,6 +112,11 @@ namespace Azure.Search.Documents
         public static readonly JsonEncodedText SearchDocumentDebugInfoKeyJson = JsonEncodedText.Encode("@search.documentDebugInfo");
 
         /// <summary>
+        /// The @search.debug key — page-level debug envelope containing query rewrites and other diagnostics.
+        /// </summary>
+        public static readonly JsonEncodedText SearchDebugKeyJson = JsonEncodedText.Encode("@search.debug");
+
+        /// <summary>
         /// The @search.action key.
         /// </summary>
         public static readonly JsonEncodedText SearchActionKeyJson = JsonEncodedText.Encode("@search.action");
