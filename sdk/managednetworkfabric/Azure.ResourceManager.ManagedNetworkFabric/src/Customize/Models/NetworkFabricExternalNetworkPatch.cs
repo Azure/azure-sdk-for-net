@@ -3,16 +3,17 @@
 
 #nullable disable
 
+using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    // Backward compatibility shim for the TypeSpec migration. The generated model now exposes
-    // nested ExportRoutePolicy/ImportRoutePolicy objects on the patch model. These shims delegate to
-    // the nested properties to preserve the flat ExportRoutePolicyId/ImportRoutePolicyId surface.
     public partial class NetworkFabricExternalNetworkPatch
     {
+        // Backward compatibility that adds back a previously safe flattened property.
+        // This is no longer flattened because its type has more than one properties now.
         /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public ResourceIdentifier ExportRoutePolicyId
         {
             get => ExportRoutePolicy?.ExportIPv4RoutePolicyId;
@@ -24,7 +25,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
+        // Backward compatibility that adds back a previously safe flattened property.
+        // This is no longer flattened because its type has more than one properties now.
         /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public ResourceIdentifier ImportRoutePolicyId
         {
             get => ImportRoutePolicy?.ImportIPv4RoutePolicyId;

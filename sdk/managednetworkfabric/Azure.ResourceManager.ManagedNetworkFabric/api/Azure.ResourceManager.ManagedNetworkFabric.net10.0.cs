@@ -764,10 +764,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public string Annotation { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState? ConfigurationState { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicy ExportRoutePolicy { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Use ExportRoutePolicy.ExportIPv4RoutePolicyId instead.")]
         public Azure.Core.ResourceIdentifier ExportRoutePolicyId { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicy ImportRoutePolicy { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Use ImportRoutePolicy.ImportIPv4RoutePolicyId instead.")]
         public Azure.Core.ResourceIdentifier ImportRoutePolicyId { get { throw null; } set { } }
         public string LastOperationDetails { get { throw null; } }
         public Azure.Core.ResourceIdentifier NetworkFabricId { get { throw null; } }
@@ -848,11 +846,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.ConnectedSubnet> ConnectedIPv6Subnets { get { throw null; } }
         public Azure.Core.ResourceIdentifier EgressAclId { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicy ExportRoutePolicy { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Use ExportRoutePolicy.ExportIPv4RoutePolicyId instead.")]
         public Azure.Core.ResourceIdentifier ExportRoutePolicyId { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteConfigurationExtension? Extension { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicy ImportRoutePolicy { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Use ImportRoutePolicy.ImportIPv4RoutePolicyId instead.")]
         public Azure.Core.ResourceIdentifier ImportRoutePolicyId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier IngressAclId { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.IsMonitoringEnabled? IsMonitoringEnabled { get { throw null; } set { } }
@@ -5499,10 +5495,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.ConnectedSubnet> ConnectedIPv6Subnets { get { throw null; } }
         public Azure.Core.ResourceIdentifier EgressAclId { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicy ExportRoutePolicy { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Use ExportRoutePolicy.ExportIpv4RoutePolicyId instead.")]
         public Azure.Core.ResourceIdentifier ExportRoutePolicyId { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicy ImportRoutePolicy { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Use ImportRoutePolicy.ImportIpv4RoutePolicyId instead.")]
         public Azure.Core.ResourceIdentifier ImportRoutePolicyId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier IngressAclId { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.IsMonitoringEnabled? IsMonitoringEnabled { get { throw null; } set { } }

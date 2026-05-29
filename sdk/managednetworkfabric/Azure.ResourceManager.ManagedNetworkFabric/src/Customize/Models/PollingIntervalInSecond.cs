@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const int NinetyValue = 90;
         private const int OneHundredTwentyValue = 120;
 
-        /// <summary> 30 PollingIntervalInSeconds. </summary>
+        /// <summary> 30. </summary>
         public static PollingIntervalInSecond Thirty { get; } = new PollingIntervalInSecond(ThirtyValue);
-        /// <summary> 60 PollingIntervalInSeconds. </summary>
+        /// <summary> 60. </summary>
         public static PollingIntervalInSecond Sixty { get; } = new PollingIntervalInSecond(SixtyValue);
-        /// <summary> 90 PollingIntervalInSeconds. </summary>
+        /// <summary> 90. </summary>
         public static PollingIntervalInSecond Ninety { get; } = new PollingIntervalInSecond(NinetyValue);
-        /// <summary> 120 PollingIntervalInSeconds. </summary>
+        /// <summary> 120. </summary>
         public static PollingIntervalInSecond OneHundredTwenty { get; } = new PollingIntervalInSecond(OneHundredTwentyValue);
 
         internal int ToSerialInt32() => _value;
