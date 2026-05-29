@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             writer.WritePropertyName("fabricASN"u8);
             writer.WriteNumberValue(FabricAsn);
             writer.WritePropertyName("terminalServerConfiguration"u8);
-            writer.WriteObjectValue(TerminalServerConfiguration, options);
+            writer.WriteObjectValue(TerminalServerSettings, options);
             writer.WritePropertyName("managementNetworkConfiguration"u8);
             writer.WriteObjectValue(ManagementNetworkConfiguration, options);
             if (options.Format != "W" && Optional.IsCollectionDefined(Racks))
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string iPv4Prefix = default;
             string iPv6Prefix = default;
             long fabricAsn = default;
-            TerminalServerConfiguration terminalServerConfiguration = default;
+            NetworkFabricTerminalServerConfiguration terminalServerSettings = default;
             ManagementNetworkConfigurationProperties managementNetworkConfiguration = default;
             IReadOnlyList<string> racks = default;
             IReadOnlyList<string> l2IsolationDomains = default;
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (prop.NameEquals("terminalServerConfiguration"u8))
                 {
-                    terminalServerConfiguration = TerminalServerConfiguration.DeserializeTerminalServerConfiguration(prop.Value, options);
+                    terminalServerSettings = NetworkFabricTerminalServerConfiguration.DeserializeNetworkFabricTerminalServerConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("managementNetworkConfiguration"u8))
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 iPv4Prefix,
                 iPv6Prefix,
                 fabricAsn,
-                terminalServerConfiguration,
+                terminalServerSettings,
                 managementNetworkConfiguration,
                 racks ?? new ChangeTrackingList<string>(),
                 l2IsolationDomains ?? new ChangeTrackingList<string>(),

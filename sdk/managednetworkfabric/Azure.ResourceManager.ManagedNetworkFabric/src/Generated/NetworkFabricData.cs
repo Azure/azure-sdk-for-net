@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="serverCountPerRack"> Number of servers.Possible values are from 1-16. </param>
         /// <param name="iPv4Prefix"> IPv4Prefix for Management Network. Example: 10.1.0.0/19. </param>
         /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
-        /// <param name="terminalServerConfiguration"> Network and credentials configuration currently applied to terminal server. </param>
+        /// <param name="terminalServerSettings"> Network and credentials configuration currently applied to terminal server. </param>
         /// <param name="managementNetworkConfiguration"> Configuration to be used to setup the management network. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricSku"/>, <paramref name="networkFabricControllerId"/>, <paramref name="iPv4Prefix"/>, <paramref name="terminalServerConfiguration"/> or <paramref name="managementNetworkConfiguration"/> is null. </exception>
-        public NetworkFabricData(AzureLocation location, string networkFabricSku, ResourceIdentifier networkFabricControllerId, int serverCountPerRack, string iPv4Prefix, long fabricAsn, TerminalServerConfiguration terminalServerConfiguration, ManagementNetworkConfigurationProperties managementNetworkConfiguration) : base(location)
+        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricSku"/>, <paramref name="networkFabricControllerId"/>, <paramref name="iPv4Prefix"/>, <paramref name="terminalServerSettings"/> or <paramref name="managementNetworkConfiguration"/> is null. </exception>
+        public NetworkFabricData(AzureLocation location, string networkFabricSku, ResourceIdentifier networkFabricControllerId, int serverCountPerRack, string iPv4Prefix, long fabricAsn, NetworkFabricTerminalServerConfiguration terminalServerSettings, ManagementNetworkConfigurationProperties managementNetworkConfiguration) : base(location)
         {
             Argument.AssertNotNull(networkFabricSku, nameof(networkFabricSku));
             Argument.AssertNotNull(networkFabricControllerId, nameof(networkFabricControllerId));
             Argument.AssertNotNull(iPv4Prefix, nameof(iPv4Prefix));
-            Argument.AssertNotNull(terminalServerConfiguration, nameof(terminalServerConfiguration));
+            Argument.AssertNotNull(terminalServerSettings, nameof(terminalServerSettings));
             Argument.AssertNotNull(managementNetworkConfiguration, nameof(managementNetworkConfiguration));
 
             Properties = new NetworkFabricProperties(
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 serverCountPerRack,
                 iPv4Prefix,
                 fabricAsn,
-                terminalServerConfiguration,
+                terminalServerSettings,
                 managementNetworkConfiguration);
         }
 
@@ -267,11 +267,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Network and credentials configuration currently applied to terminal server. </summary>
-        public TerminalServerConfiguration TerminalServerConfiguration
+        public NetworkFabricTerminalServerConfiguration TerminalServerSettings
         {
             get
             {
-                return Properties is null ? default : Properties.TerminalServerConfiguration;
+                return Properties is null ? default : Properties.TerminalServerSettings;
             }
             set
             {
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     Properties = new NetworkFabricProperties();
                 }
-                Properties.TerminalServerConfiguration = value;
+                Properties.TerminalServerSettings = value;
             }
         }
 
