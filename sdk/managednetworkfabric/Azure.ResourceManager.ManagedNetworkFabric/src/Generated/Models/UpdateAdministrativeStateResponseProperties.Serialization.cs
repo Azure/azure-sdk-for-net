@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 throw new FormatException($"The model {nameof(UpdateAdministrativeStateResponseProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SuccessfulResources))
+            if (Optional.IsCollectionDefined(SuccessfulResources))
             {
                 writer.WritePropertyName("successfulResources"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FailedResources))
+            if (Optional.IsCollectionDefined(FailedResources))
             {
                 writer.WritePropertyName("failedResources"u8);
                 writer.WriteStartArray();
@@ -147,8 +147,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            IReadOnlyList<ResourceIdentifier> successfulResources = default;
-            IReadOnlyList<ResourceIdentifier> failedResources = default;
+            IList<ResourceIdentifier> successfulResources = default;
+            IList<ResourceIdentifier> failedResources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

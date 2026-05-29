@@ -7636,8 +7636,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public partial class UpdateAdministrativeStateResponseProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateAdministrativeStateResponseProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateAdministrativeStateResponseProperties>
     {
         internal UpdateAdministrativeStateResponseProperties() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> FailedResources { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> SuccessfulResources { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> FailedResources { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> SuccessfulResources { get { throw null; } }
         protected virtual Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateAdministrativeStateResponseProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateAdministrativeStateResponseProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
