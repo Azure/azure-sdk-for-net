@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> Initializes a new instance of <see cref="ChaosScenarioRunSummaryAction"/>. </summary>
         internal ChaosScenarioRunSummaryAction()
         {
-            Resources = new ChangeTrackingList<ChaosScenarioRunResource>();
+            Resources = new ChangeTrackingList<ChaosScenarioRunResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosScenarioRunSummaryAction"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="startedOn"> When the action was started. </param>
         /// <param name="completedOn"> When the action was completed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosScenarioRunSummaryAction(IReadOnlyList<ChaosScenarioRunResource> resources, string actionUrn, ChaosScenarioSummaryState state, DateTimeOffset? startedOn, DateTimeOffset? completedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChaosScenarioRunSummaryAction(IReadOnlyList<ChaosScenarioRunResourceInfo> resources, string actionUrn, ChaosScenarioSummaryState state, DateTimeOffset? startedOn, DateTimeOffset? completedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Resources = resources;
             ActionUrn = actionUrn;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> The resources associated with the specified action. </summary>
-        public IReadOnlyList<ChaosScenarioRunResource> Resources { get; }
+        public IReadOnlyList<ChaosScenarioRunResourceInfo> Resources { get; }
 
         /// <summary> The urn for the given chaos action. </summary>
         public string ActionUrn { get; }

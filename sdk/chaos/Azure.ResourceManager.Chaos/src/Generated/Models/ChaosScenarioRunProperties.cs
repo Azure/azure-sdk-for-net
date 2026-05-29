@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> Initializes a new instance of <see cref="ChaosScenarioRunProperties"/>. </summary>
         internal ChaosScenarioRunProperties()
         {
-            Resources = new ChangeTrackingList<ChaosScenarioRunResource>();
+            Resources = new ChangeTrackingList<ChaosScenarioRunResourceInfo>();
             Errors = new ChangeTrackingList<ChaosOperationError>();
             ScenarioRunSummary = new ChangeTrackingList<ChaosScenarioRunSummaryAction>();
         }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// requested physical zones, and per-subscription logical zone mappings.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosScenarioRunProperties(string workspaceName, string scenarioName, string scenarioConfigurationName, Guid managedIdentityPrincipalId, ChaosScenarioRunState status, IReadOnlyList<ChaosScenarioRunResource> resources, IReadOnlyList<ChaosOperationError> errors, ChaosScenarioErrors executionErrors, string scenarioRunJson, IReadOnlyList<ChaosScenarioRunSummaryAction> scenarioRunSummary, DateTimeOffset startOn, DateTimeOffset? endOn, ChaosZoneResolutionInfo zoneResolution, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChaosScenarioRunProperties(string workspaceName, string scenarioName, string scenarioConfigurationName, Guid managedIdentityPrincipalId, ChaosScenarioRunState status, IReadOnlyList<ChaosScenarioRunResourceInfo> resources, IReadOnlyList<ChaosOperationError> errors, ChaosScenarioErrors executionErrors, string scenarioRunJson, IReadOnlyList<ChaosScenarioRunSummaryAction> scenarioRunSummary, DateTimeOffset startOn, DateTimeOffset? endOn, ChaosZoneResolutionInfo zoneResolution, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WorkspaceName = workspaceName;
             ScenarioName = scenarioName;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Chaos.Models
         public ChaosScenarioRunState Status { get; }
 
         /// <summary> All resources discovered for the scenario run. </summary>
-        public IReadOnlyList<ChaosScenarioRunResource> Resources { get; }
+        public IReadOnlyList<ChaosScenarioRunResourceInfo> Resources { get; }
 
         /// <summary> System or infrastructure errors encountered during the scenario run. </summary>
         public IReadOnlyList<ChaosOperationError> Errors { get; }

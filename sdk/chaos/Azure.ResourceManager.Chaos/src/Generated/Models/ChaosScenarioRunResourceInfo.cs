@@ -12,20 +12,20 @@ using Azure.Core;
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary> Model that represents the scenario run resource. </summary>
-    public partial class ChaosScenarioRunResource
+    public partial class ChaosScenarioRunResourceInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ChaosScenarioRunResource"/>. </summary>
-        internal ChaosScenarioRunResource()
+        /// <summary> Initializes a new instance of <see cref="ChaosScenarioRunResourceInfo"/>. </summary>
+        internal ChaosScenarioRunResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChaosScenarioRunResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChaosScenarioRunResourceInfo"/>. </summary>
         /// <param name="id"> The resource id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosScenarioRunResource(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChaosScenarioRunResourceInfo(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

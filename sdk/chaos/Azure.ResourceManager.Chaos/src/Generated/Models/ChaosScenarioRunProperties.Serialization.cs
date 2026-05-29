@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
-                foreach (ChaosScenarioRunResource item in Resources)
+                foreach (ChaosScenarioRunResourceInfo item in Resources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Chaos.Models
             string scenarioConfigurationName = default;
             Guid managedIdentityPrincipalId = default;
             ChaosScenarioRunState status = default;
-            IReadOnlyList<ChaosScenarioRunResource> resources = default;
+            IReadOnlyList<ChaosScenarioRunResourceInfo> resources = default;
             IReadOnlyList<ChaosOperationError> errors = default;
             ChaosScenarioErrors executionErrors = default;
             string scenarioRunJson = default;
@@ -239,10 +239,10 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 if (prop.NameEquals("resources"u8))
                 {
-                    List<ChaosScenarioRunResource> array = new List<ChaosScenarioRunResource>();
+                    List<ChaosScenarioRunResourceInfo> array = new List<ChaosScenarioRunResourceInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ChaosScenarioRunResource.DeserializeChaosScenarioRunResource(item, options));
+                        array.Add(ChaosScenarioRunResourceInfo.DeserializeChaosScenarioRunResourceInfo(item, options));
                     }
                     resources = array;
                     continue;

@@ -968,9 +968,9 @@ namespace Azure.ResourceManager.Chaos.Models
         /// requested physical zones, and per-subscription logical zone mappings.
         /// </param>
         /// <returns> A new <see cref="Models.ChaosScenarioRunProperties"/> instance for mocking. </returns>
-        public static ChaosScenarioRunProperties ChaosScenarioRunProperties(string workspaceName = default, string scenarioName = default, string scenarioConfigurationName = default, Guid managedIdentityPrincipalId = default, ChaosScenarioRunState status = default, IEnumerable<ChaosScenarioRunResource> resources = default, IEnumerable<ChaosOperationError> errors = default, ChaosScenarioErrors executionErrors = default, string scenarioRunJson = default, IEnumerable<ChaosScenarioRunSummaryAction> scenarioRunSummary = default, DateTimeOffset startOn = default, DateTimeOffset? endOn = default, ChaosZoneResolutionInfo zoneResolution = default)
+        public static ChaosScenarioRunProperties ChaosScenarioRunProperties(string workspaceName = default, string scenarioName = default, string scenarioConfigurationName = default, Guid managedIdentityPrincipalId = default, ChaosScenarioRunState status = default, IEnumerable<ChaosScenarioRunResourceInfo> resources = default, IEnumerable<ChaosOperationError> errors = default, ChaosScenarioErrors executionErrors = default, string scenarioRunJson = default, IEnumerable<ChaosScenarioRunSummaryAction> scenarioRunSummary = default, DateTimeOffset startOn = default, DateTimeOffset? endOn = default, ChaosZoneResolutionInfo zoneResolution = default)
         {
-            resources ??= new ChangeTrackingList<ChaosScenarioRunResource>();
+            resources ??= new ChangeTrackingList<ChaosScenarioRunResourceInfo>();
             errors ??= new ChangeTrackingList<ChaosOperationError>();
             scenarioRunSummary ??= new ChangeTrackingList<ChaosScenarioRunSummaryAction>();
 
@@ -993,10 +993,10 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Model that represents the scenario run resource. </summary>
         /// <param name="id"> The resource id. </param>
-        /// <returns> A new <see cref="Models.ChaosScenarioRunResource"/> instance for mocking. </returns>
-        public static ChaosScenarioRunResource ChaosScenarioRunResource(ResourceIdentifier id = default)
+        /// <returns> A new <see cref="Models.ChaosScenarioRunResourceInfo"/> instance for mocking. </returns>
+        public static ChaosScenarioRunResourceInfo ChaosScenarioRunResourceInfo(ResourceIdentifier id = default)
         {
-            return new ChaosScenarioRunResource(id, additionalBinaryDataProperties: null);
+            return new ChaosScenarioRunResourceInfo(id, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Model that represents the scenario run errors. </summary>
@@ -1062,9 +1062,9 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="startedOn"> When the action was started. </param>
         /// <param name="completedOn"> When the action was completed. </param>
         /// <returns> A new <see cref="Models.ChaosScenarioRunSummaryAction"/> instance for mocking. </returns>
-        public static ChaosScenarioRunSummaryAction ChaosScenarioRunSummaryAction(IEnumerable<ChaosScenarioRunResource> resources = default, string actionUrn = default, ChaosScenarioSummaryState state = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default)
+        public static ChaosScenarioRunSummaryAction ChaosScenarioRunSummaryAction(IEnumerable<ChaosScenarioRunResourceInfo> resources = default, string actionUrn = default, ChaosScenarioSummaryState state = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default)
         {
-            resources ??= new ChangeTrackingList<ChaosScenarioRunResource>();
+            resources ??= new ChangeTrackingList<ChaosScenarioRunResourceInfo>();
 
             return new ChaosScenarioRunSummaryAction(
                 resources.ToList(),
