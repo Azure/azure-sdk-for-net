@@ -41,33 +41,6 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(ProfilesClientDiagnostics, Pipeline, Endpoint, "2024-04-01-preview");
 
         /// <summary>
-        /// Get the subscription-level key used for Real User Metrics collection.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficManagerUserMetricsKeys/default. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> UserMetricsModels_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="TrafficManagerUserMetricsResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <returns> Returns a <see cref="TrafficManagerUserMetricsResource"/> object. </returns>
-        public virtual TrafficManagerUserMetricsResource GetTrafficManagerUserMetric()
-        {
-            return new TrafficManagerUserMetricsResource(Client, Id.AppendProviderResource("Microsoft.Network", "trafficManagerUserMetricsKeys", "default"));
-        }
-
-        /// <summary>
         /// Lists all Traffic Manager profiles within a subscription.
         /// <list type="bullet">
         /// <item>
