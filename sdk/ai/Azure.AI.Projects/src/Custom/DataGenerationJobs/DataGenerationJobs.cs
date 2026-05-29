@@ -66,11 +66,9 @@ public partial class DataGenerationJobs
     /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
     /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
     /// </param>
-    /// <param name="scenario"> Filter data generation jobs by their scenario. </param>
-    /// <param name="kind"> Filter data generation jobs by their type. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<DataGenerationJob> GetGenerationJobs(int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, DataGenerationJobScenario? scenario = default, IEnumerable<DataGenerationJobKind> kind = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<DataGenerationJob> GetGenerationJobs(int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         return new InternalOpenAICollectionResultOfT<DataGenerationJob>(
             Pipeline,
@@ -81,11 +79,9 @@ public partial class DataGenerationJobs
                     order: localCollectionOptions.Order,
                     after: localCollectionOptions.AfterId,
                     before: localCollectionOptions.BeforeId,
-                    scenario: localCollectionOptions.Filters.Count > 0 ? localCollectionOptions.Filters[0] : null,
-                    type: kind,
                     options: localRequestOptions),
             dataItemDeserializer: DataGenerationJob.DeserializeDataGenerationJob,
-            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [scenario?.ToString(), kind.ToString()]),
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before),
             cancellationToken.ToRequestOptions());
     }
 
@@ -108,11 +104,9 @@ public partial class DataGenerationJobs
     /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
     /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
     /// </param>
-    /// <param name="scenario"> Filter data generation jobs by their scenario. </param>
-    /// <param name="kind"> Filter data generation jobs by their type. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<DataGenerationJob> GetGenerationJobsAsync(int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, DataGenerationJobScenario? scenario = default, IEnumerable<DataGenerationJobKind> kind = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<DataGenerationJob> GetGenerationJobsAsync(int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         return new InternalOpenAIAsyncCollectionResultOfT<DataGenerationJob>(
             Pipeline,
@@ -123,11 +117,9 @@ public partial class DataGenerationJobs
                     order: localCollectionOptions.Order,
                     after: localCollectionOptions.AfterId,
                     before: localCollectionOptions.BeforeId,
-                    scenario: localCollectionOptions.Filters.Count > 0 ? localCollectionOptions.Filters[0] : null,
-                    type: kind,
                     options: localRequestOptions),
             dataItemDeserializer: DataGenerationJob.DeserializeDataGenerationJob,
-            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [scenario?.ToString()]),
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before),
             cancellationToken.ToRequestOptions());
     }
 

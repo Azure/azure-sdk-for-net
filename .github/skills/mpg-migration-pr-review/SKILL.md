@@ -349,9 +349,11 @@ If the PR uses `[CodeGenType]` without evidence that `@@access` was tried first,
 
 ## Output Format
 
+When this migration skill is run from a GitHub Agentic Workflow, follow the **Agentic workflow mode** output rules in `.github/skills/azure-sdk-mgmt-pr-review/SKILL.md`: use safe-output review tools, do not perform direct GitHub write calls, and do not execute untrusted PR code from `pull_request_target` runs.
+
 ### Posting Inline Review Comments
 
-All findings **must** be posted as inline review comments directly on the PR using the GitHub API. Use the `gh api` CLI or GitHub MCP tools to create a pull request review with inline comments:
+All findings **must** be posted as inline review comments directly on the PR. Outside Agentic Workflow mode, use the `gh api` CLI or GitHub MCP tools to create a pull request review with inline comments:
 
 ```
 POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews

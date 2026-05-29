@@ -500,6 +500,29 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
+        internal PipelineMessage CreateStopSessionRequest(string agentName, string sessionId, string foundryFeatures, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/agents/", false);
+            uri.AppendPath(agentName, true);
+            uri.AppendPath("/endpoint/sessions/", false);
+            uri.AppendPath(sessionId, true);
+            uri.AppendPath(":stop", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier204);
+            PipelineRequest request = message.Request;
+            if (foundryFeatures != null)
+            {
+                request.Headers.Set("Foundry-Features", foundryFeatures);
+            }
+            message.Apply(options);
+            return message;
+        }
+
         internal PipelineMessage CreateGetSessionsRequest(string agentName, string foundryFeatures, string userIsolationKey, int? limit, string order, string after, string before, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
