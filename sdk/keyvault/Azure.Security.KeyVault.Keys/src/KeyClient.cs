@@ -330,6 +330,76 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
+        /// Registers a Managed HSM key that points at material managed by an external HSM.
+        /// This operation requires the keys/create permission. Only available with service version
+        /// <see cref="KeyClientOptions.ServiceVersion.V2026_01_01_Preview"/> and newer, and only supported on Managed HSM.
+        /// </summary>
+        /// <param name="name">The name for the new key.</param>
+        /// <param name="externalKey">A reference identifying the external key material.</param>
+        /// <param name="keyOptions">Optional attributes to apply to the key. <see cref="CreateKeyOptions.Exportable"/> and <see cref="CreateKeyOptions.KeyOperations"/> are ignored for external keys.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="externalKey"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
+        public virtual Response<KeyVaultKey> CreateExternalKey(string name, ExternalKey externalKey, CreateKeyOptions keyOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(externalKey, nameof(externalKey));
+
+            var parameters = new KeyRequestParameters(externalKey, keyOptions);
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateExternalKey)}");
+            scope.AddAttribute(OTelKeyNameKey, name);
+            scope.Start();
+
+            try
+            {
+                return _pipeline.SendRequest(RequestMethod.Post, parameters, () => new KeyVaultKey(name), cancellationToken, KeysPath, name, "/create");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Registers a Managed HSM key that points at material managed by an external HSM.
+        /// This operation requires the keys/create permission. Only available with service version
+        /// <see cref="KeyClientOptions.ServiceVersion.V2026_01_01_Preview"/> and newer, and only supported on Managed HSM.
+        /// </summary>
+        /// <param name="name">The name for the new key.</param>
+        /// <param name="externalKey">A reference identifying the external key material.</param>
+        /// <param name="keyOptions">Optional attributes to apply to the key. <see cref="CreateKeyOptions.Exportable"/> and <see cref="CreateKeyOptions.KeyOperations"/> are ignored for external keys.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="externalKey"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
+        public virtual async Task<Response<KeyVaultKey>> CreateExternalKeyAsync(string name, ExternalKey externalKey, CreateKeyOptions keyOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(externalKey, nameof(externalKey));
+
+            var parameters = new KeyRequestParameters(externalKey, keyOptions);
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateExternalKey)}");
+            scope.AddAttribute(OTelKeyNameKey, name);
+            scope.Start();
+
+            try
+            {
+                return await _pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new KeyVaultKey(name), cancellationToken, KeysPath, name, "/create").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// The update key operation changes specified attributes of a stored key and
         /// can be applied to any key type and key version stored in Azure Key Vault.
         /// </summary>

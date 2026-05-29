@@ -132,6 +132,33 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
+        internal KeyRequestParameters(ExternalKey externalKey, CreateKeyOptions options)
+        {
+            _attributes.ExternalKey = externalKey;
+
+            if (options != null)
+            {
+                if (options.Enabled.HasValue)
+                {
+                    Enabled = options.Enabled.Value;
+                }
+                if (options.ExpiresOn.HasValue)
+                {
+                    Expires = options.ExpiresOn.Value;
+                }
+                if (options.NotBefore.HasValue)
+                {
+                    NotBefore = options.NotBefore.Value;
+                }
+                if (options.Tags != null && options.Tags.Count > 0)
+                {
+                    Tags = new Dictionary<string, string>(options.Tags);
+                }
+
+                ReleasePolicy = options.ReleasePolicy;
+            }
+        }
+
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
             if (KeyType != default)
