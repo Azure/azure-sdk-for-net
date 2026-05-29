@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> The IPCommunityAddOperationProperties. </summary>
+    /// <summary> IP community add operation properties. </summary>
     public partial class IPCommunityAddOperationProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IPCommunityAddOperationProperties"/>. </summary>
-        /// <param name="add"></param>
+        /// <param name="add"> List of IP community resource IDs to add. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal IPCommunityAddOperationProperties(IPCommunityIdList @add, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the Add. </summary>
+        /// <summary> List of IP community resource IDs to add. </summary>
         internal IPCommunityIdList Add { get; set; }
 
         /// <summary> List of IP Community resource IDs. </summary>

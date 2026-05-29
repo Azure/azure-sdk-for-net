@@ -2337,6 +2337,66 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new Layer2Configuration(mtu, interfaces.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
+        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
+        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
+        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        /// <param name="peerAsn"> ASN of PE devices for CE/PE connectivity.Example : 28. </param>
+        /// <param name="vlanId"> VLAN for CE/PE Layer 3 connectivity.Example : 501. </param>
+        /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
+        /// <param name="peLoopbackIPAddress"> Provider Edge (PE) Loopback IP Address. </param>
+        /// <param name="bmpConfigurationState"> BGP Monitoring Protocol (BMP) Configuration State. </param>
+        /// <param name="prefixLimits"> OptionB Layer3 prefix limit configuration. </param>
+        /// <returns> A new <see cref="Models.NetworkToNetworkInterconnectOptionBLayer3Configuration"/> instance for mocking. </returns>
+        public static NetworkToNetworkInterconnectOptionBLayer3Configuration NetworkToNetworkInterconnectOptionBLayer3Configuration(string primaryIPv4Prefix = default, string primaryIPv6Prefix = default, string secondaryIPv4Prefix = default, string secondaryIPv6Prefix = default, long? peerAsn = default, int? vlanId = default, long? fabricAsn = default, IEnumerable<string> peLoopbackIPAddress = default, BmpConfigurationState? bmpConfigurationState = default, IEnumerable<OptionBLayer3PrefixLimitProperties> prefixLimits = default)
+        {
+            peLoopbackIPAddress ??= new ChangeTrackingList<string>();
+            prefixLimits ??= new ChangeTrackingList<OptionBLayer3PrefixLimitProperties>();
+
+            return new NetworkToNetworkInterconnectOptionBLayer3Configuration(
+                primaryIPv4Prefix,
+                primaryIPv6Prefix,
+                secondaryIPv4Prefix,
+                secondaryIPv6Prefix,
+                additionalBinaryDataProperties: null,
+                peerAsn,
+                vlanId,
+                fabricAsn,
+                peLoopbackIPAddress.ToList(),
+                bmpConfigurationState is null ? default : new NniBmpProperties(bmpConfigurationState.GetValueOrDefault(), null),
+                prefixLimits.ToList());
+        }
+
+        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
+        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
+        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
+        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        /// <param name="peerAsn"> ASN of PE devices for CE/PE connectivity.Example : 28. </param>
+        /// <param name="vlanId"> VLAN for CE/PE Layer 3 connectivity.Example : 501. </param>
+        /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
+        /// <param name="peLoopbackIPAddress"> Provider Edge (PE) Loopback IP Address. </param>
+        /// <param name="bmpConfigurationState"> BGP Monitoring Protocol (BMP) Configuration State. </param>
+        /// <param name="prefixLimits"> OptionB Layer3 prefix limit configuration. </param>
+        /// <returns> A new <see cref="Models.OptionBLayer3Configuration"/> instance for mocking. </returns>
+        public static OptionBLayer3Configuration OptionBLayer3Configuration(string primaryIPv4Prefix = default, string primaryIPv6Prefix = default, string secondaryIPv4Prefix = default, string secondaryIPv6Prefix = default, long? peerAsn = default, int? vlanId = default, long? fabricAsn = default, IEnumerable<string> peLoopbackIPAddress = default, BmpConfigurationState? bmpConfigurationState = default, IEnumerable<OptionBLayer3PrefixLimitProperties> prefixLimits = default)
+        {
+            peLoopbackIPAddress ??= new ChangeTrackingList<string>();
+            prefixLimits ??= new ChangeTrackingList<OptionBLayer3PrefixLimitProperties>();
+
+            return new OptionBLayer3Configuration(
+                primaryIPv4Prefix,
+                primaryIPv6Prefix,
+                secondaryIPv4Prefix,
+                secondaryIPv6Prefix,
+                additionalBinaryDataProperties: null,
+                peerAsn,
+                vlanId,
+                fabricAsn,
+                peLoopbackIPAddress.ToList(),
+                bmpConfigurationState is null ? default : new NniBmpProperties(bmpConfigurationState.GetValueOrDefault(), null),
+                prefixLimits.ToList());
+        }
+
         /// <summary> NPB Static Route Configuration properties. </summary>
         /// <param name="bfdConfiguration"> BFD Configuration properties. </param>
         /// <param name="iPv4Routes"> List of IPv4 Routes. </param>
@@ -3606,18 +3666,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static OptionBLayer3Configuration OptionBLayer3Configuration(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, long? peerAsn, int? vlanId, long? fabricAsn)
         {
-            return new OptionBLayer3Configuration(
-                primaryIPv4Prefix,
-                primaryIPv6Prefix,
-                secondaryIPv4Prefix,
-                secondaryIPv6Prefix,
-                additionalBinaryDataProperties: null,
-                peerAsn,
-                vlanId,
-                fabricAsn,
-                default,
-                default,
-                default);
+            return OptionBLayer3Configuration(primaryIPv4Prefix: primaryIPv4Prefix, primaryIPv6Prefix: primaryIPv6Prefix, secondaryIPv4Prefix: secondaryIPv4Prefix, secondaryIPv6Prefix: secondaryIPv6Prefix, peerAsn: peerAsn, vlanId: vlanId, fabricAsn: fabricAsn, peLoopbackIPAddress: default, bmpConfigurationState: default, prefixLimits: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkToNetworkInterconnectPatch"/>. </summary>

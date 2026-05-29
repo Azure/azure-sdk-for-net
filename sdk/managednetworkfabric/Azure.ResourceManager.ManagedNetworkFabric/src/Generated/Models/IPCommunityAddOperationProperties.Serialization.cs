@@ -13,7 +13,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> The IPCommunityAddOperationProperties. </summary>
+    /// <summary> IP community add operation properties. </summary>
     public partial class IPCommunityAddOperationProperties : IJsonModel<IPCommunityAddOperationProperties>
     {
         /// <param name="data"> The data to parse. </param>
