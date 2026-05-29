@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Visitors;
+using Azure.Generator.Management.Providers;
 using Azure.ResourceManager;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
@@ -55,6 +56,11 @@ namespace Azure.Generator.Management
                 // This keeps both current factory bodies and EBV overloads aligned with the final constructors.
                 ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
                 ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+            }
+            else if (provider is ModelProvider modelProvider)
+            {
+                ResourceVisitor.PreserveReadOnlyDictionaryPropertiesFromModelFactoryLastContract(modelProvider);
+                ModelFactoryBackwardCompatHelper.FixConstructorCalls(provider.Methods);
             }
             else
             {

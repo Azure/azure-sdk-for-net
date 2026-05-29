@@ -145,10 +145,16 @@ namespace Azure.Generator.Management.Visitors
                         bodyUpdated = true;
                     }
                     else if (statement is ExpressionStatement { Expression: KeywordExpression { Expression: NewInstanceExpression newInstanceExpression } }
-                        && TryUpdateNewInstanceArguments(method, newInstanceExpression, out var updatedArguments, out var matchedParameters))
+                        && TryRebuildNewInstanceFromMethodSignature(method, newInstanceExpression, out var rebuiltArguments))
                     {
-                        updatedBodyStatements.RemoveAll(s => IsNullCoalescingAssignmentToMatchedParameter(s, matchedParameters, newInstanceExpression.Parameters));
-                        updatedBodyStatements.Add(Return(New.Instance(newInstanceExpression.Type!, updatedArguments)));
+                        updatedBodyStatements.Add(Return(New.Instance(newInstanceExpression.Type!, rebuiltArguments)));
+                        bodyUpdated = true;
+                    }
+                    else if (statement is ExpressionStatement { Expression: KeywordExpression { Expression: NewInstanceExpression fallbackNewInstanceExpression } }
+                        && TryUpdateNewInstanceArguments(method, fallbackNewInstanceExpression, out var updatedArguments, out var matchedParameters))
+                    {
+                        updatedBodyStatements.RemoveAll(s => IsNullCoalescingAssignmentToMatchedParameter(s, matchedParameters, fallbackNewInstanceExpression.Parameters));
+                        updatedBodyStatements.Add(Return(New.Instance(fallbackNewInstanceExpression.Type!, updatedArguments)));
                         bodyUpdated = true;
                     }
                     else
@@ -186,9 +192,10 @@ namespace Azure.Generator.Management.Visitors
 
             var arguments = new List<ValueExpression>(constructorParameters.Count);
             var changed = constructorParameters.Count != newInstanceExpression.Parameters.Count;
+            var unavailableDirectParameterNames = GetUnavailableDirectParameterNames(method, constructorParameters, newInstanceExpression.Parameters);
             foreach (var constructorParameter in constructorParameters)
             {
-                if (TryBuildCompatibilityArgument(method, constructorParameter, new HashSet<string>(StringComparer.OrdinalIgnoreCase), out var argument))
+                if (TryBuildCompatibilityArgument(method, constructorParameter, unavailableDirectParameterNames, out var argument))
                 {
                     arguments.Add(argument.Argument);
                     var index = arguments.Count - 1;
@@ -858,6 +865,31 @@ namespace Azure.Generator.Management.Visitors
             {
                 modelProvider = model;
                 return true;
+            }
+            foreach (var mappedProvider in ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.Values)
+            {
+                if (mappedProvider is ModelProvider mappedModel && mappedModel.Type.AreNamesEqual(type))
+                {
+                    modelProvider = mappedModel;
+                    return true;
+                }
+            }
+            foreach (var inputModel in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
+            {
+                if (ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel) is { } inputModelProvider
+                    && inputModelProvider.Type.AreNamesEqual(type))
+                {
+                    modelProvider = inputModelProvider;
+                    return true;
+                }
+            }
+            foreach (var outputModel in ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ModelProvider>())
+            {
+                if (outputModel.Type.AreNamesEqual(type))
+                {
+                    modelProvider = outputModel;
+                    return true;
+                }
             }
             modelProvider = null;
             return false;

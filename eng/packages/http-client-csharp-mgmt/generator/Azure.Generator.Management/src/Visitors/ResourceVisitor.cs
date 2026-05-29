@@ -16,18 +16,100 @@ namespace Azure.Generator.Management.Visitors;
 
 internal class ResourceVisitor : ScmLibraryVisitor
 {
+    internal static void PreserveReadOnlyDictionaryPropertiesFromModelFactoryLastContract(ModelProvider model)
+    {
+        var modelFactory = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().SingleOrDefault();
+        _ = modelFactory?.Methods;
+        var previousMethods = modelFactory?.LastContractView?.Methods;
+        if (previousMethods is null || previousMethods.Count == 0)
+        {
+            return;
+        }
+
+        foreach (var previousMethod in previousMethods)
+        {
+            if (previousMethod.Signature.ReturnType is not { } returnType
+                || !returnType.WithNullable(false).AreNamesEqual(model.Type.WithNullable(false)))
+            {
+                continue;
+            }
+
+            foreach (var parameter in previousMethod.Signature.Parameters)
+            {
+                if (!IsReadOnlyDictionary(parameter.Type))
+                {
+                    continue;
+                }
+
+                var matchingProperty = model.Properties.FirstOrDefault(property =>
+                    IsDictionary(property.Type)
+                    && string.Equals(property.Name, parameter.Name, StringComparison.OrdinalIgnoreCase));
+                if (matchingProperty is null)
+                {
+                    continue;
+                }
+
+                UpdateDictionaryPropertyAndConstructorParameters(model, matchingProperty, new CSharpType(typeof(IReadOnlyDictionary<,>), matchingProperty.Type.Arguments));
+            }
+        }
+    }
+
     protected override PropertyProvider? PreVisitProperty(InputProperty inputProperty, PropertyProvider? propertyProvider)
     {
-        if (propertyProvider?.EnclosingType is ResourceDataModelProvider { InputModel: var inputModel }
-            && !inputModel.Usage.HasFlag(InputModelTypeUsage.Input)
-            && propertyProvider.Type.IsList)
+        if (propertyProvider?.EnclosingType is ModelProvider modelProvider)
         {
-            // Output-only resource data models represent service responses. Keep list properties read-only in
-            // the public API for GA compatibility, even when the TypeSpec property itself is not marked readonly.
-            propertyProvider.Update(type: new CSharpType(typeof(IReadOnlyList<>), propertyProvider.Type.Arguments));
+            var resourceDataModel = modelProvider as ResourceDataModelProvider;
+            var isResourceDataModel = resourceDataModel is not null || modelProvider.Name.EndsWith("Data", StringComparison.Ordinal);
+            // Output-only resource data models represent service responses. Keep collection properties read-only
+            // for GA compatibility, even when the TypeSpec property itself is not marked readonly.
+            var shouldUseReadOnlyCollection = resourceDataModel is not null
+                && (!resourceDataModel.InputModel.Usage.HasFlag(InputModelTypeUsage.Input) || inputProperty.IsReadOnly);
+            if (propertyProvider.Type.IsList && shouldUseReadOnlyCollection)
+            {
+                propertyProvider.Update(type: new CSharpType(typeof(IReadOnlyList<>), propertyProvider.Type.Arguments));
+            }
+            else if (IsDictionary(propertyProvider.Type)
+                && (shouldUseReadOnlyCollection
+                    || (resourceDataModel is not null && HasExistingReadOnlyDictionaryProperty(resourceDataModel, propertyProvider))))
+            {
+                propertyProvider.Update(type: new CSharpType(typeof(IReadOnlyDictionary<,>), propertyProvider.Type.Arguments));
+            }
         }
 
         return base.PreVisitProperty(inputProperty, propertyProvider);
+    }
+
+    private static bool HasExistingReadOnlyDictionaryProperty(ResourceDataModelProvider model, PropertyProvider property)
+    {
+        return HasMatchingReadOnlyDictionaryProperty(model.CustomCodeView?.Properties, property)
+            || HasMatchingReadOnlyDictionaryProperty(model.LastContractView?.Properties, property);
+    }
+
+    private static bool HasMatchingReadOnlyDictionaryProperty(IReadOnlyList<PropertyProvider>? properties, PropertyProvider property)
+    {
+        return properties?.Any(p => p.Name == property.Name && IsReadOnlyDictionary(p.Type)) == true;
+    }
+
+    private static bool IsReadOnlyDictionary(CSharpType type)
+        => IsDictionary(type, typeof(IReadOnlyDictionary<,>));
+
+    private static bool IsDictionary(CSharpType type)
+        => type.IsDictionary || IsDictionary(type, typeof(IDictionary<,>)) || IsDictionary(type, typeof(IReadOnlyDictionary<,>));
+
+    private static bool IsDictionary(CSharpType type, Type dictionaryTypeDefinition)
+    {
+        if (type is not { IsFrameworkType: true, FrameworkType: not null })
+        {
+            return false;
+        }
+
+        var frameworkType = type.FrameworkType;
+        if (frameworkType.IsGenericType && !frameworkType.IsGenericTypeDefinition)
+        {
+            frameworkType = frameworkType.GetGenericTypeDefinition();
+        }
+
+        return frameworkType == dictionaryTypeDefinition;
     }
 
     // Re-assert the namespace and fix serialization providers' file paths after Azure.Generator's
@@ -45,6 +127,13 @@ internal class ResourceVisitor : ScmLibraryVisitor
 
     protected override PropertyProvider? VisitProperty(PropertyProvider property)
     {
+        if (property.EnclosingType is ResourceDataModelProvider resourceDataModel
+            && IsDictionary(property.Type)
+            && HasExistingReadOnlyDictionaryProperty(resourceDataModel, property))
+        {
+            UpdateDictionaryPropertyAndConstructorParameters(resourceDataModel, property, new CSharpType(typeof(IReadOnlyDictionary<,>), property.Type.Arguments));
+        }
+
         if (TryGetResourceDataType(property.Type, out var resourceDataType))
         {
             property.Update(type: resourceDataType);
@@ -61,6 +150,22 @@ internal class ResourceVisitor : ScmLibraryVisitor
         }
 
         return base.VisitConstructor(constructor);
+    }
+
+    private static void UpdateDictionaryPropertyAndConstructorParameters(ModelProvider model, PropertyProvider property, CSharpType readOnlyDictionaryType)
+    {
+        property.Update(type: readOnlyDictionaryType);
+        foreach (var constructor in model.Constructors)
+        {
+            foreach (var constructorParameter in constructor.Signature.Parameters)
+            {
+                if (IsDictionary(constructorParameter.Type)
+                    && string.Equals(constructorParameter.Name, property.Name, StringComparison.OrdinalIgnoreCase))
+                {
+                    constructorParameter.Update(type: readOnlyDictionaryType);
+                }
+            }
+        }
     }
 
     protected override MethodProvider? VisitMethod(MethodProvider method)
@@ -92,12 +197,40 @@ internal class ResourceVisitor : ScmLibraryVisitor
 
     protected override VariableExpression VisitVariableExpression(VariableExpression variable, MethodProvider method)
     {
+        if (IsDictionary(variable.Type)
+            && TryGetReadOnlyDictionaryPropertyType(method.Signature.ReturnType, variable.Declaration.RequestedName, out var readOnlyDictionaryType))
+        {
+            variable.Update(type: readOnlyDictionaryType);
+        }
+
         if (TryGetResourceDataType(variable.Type, out var resourceDataType))
         {
             variable.Update(type: resourceDataType);
         }
 
         return base.VisitVariableExpression(variable, method);
+    }
+
+    private static bool TryGetReadOnlyDictionaryPropertyType(CSharpType? modelType, string propertyName, out CSharpType readOnlyDictionaryType)
+    {
+        if (modelType is not null)
+        {
+            foreach (var resource in ManagementClientGenerator.Instance.OutputLibrary.ResourceProviders)
+            {
+                var model = resource.ResourceData;
+                if (model.Type.AreNamesEqual(modelType)
+                    && model.Properties.FirstOrDefault(property =>
+                        string.Equals(property.Name, propertyName, StringComparison.OrdinalIgnoreCase)
+                        && IsReadOnlyDictionary(property.Type)) is { } property)
+                {
+                    readOnlyDictionaryType = property.Type;
+                    return true;
+                }
+            }
+        }
+
+        readOnlyDictionaryType = null!;
+        return false;
     }
 
     protected override ValueExpression? VisitInvokeMethodExpression(InvokeMethodExpression expression, MethodProvider method)

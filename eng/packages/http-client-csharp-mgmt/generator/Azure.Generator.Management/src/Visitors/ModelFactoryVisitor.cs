@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -17,11 +18,14 @@ namespace Azure.Generator.Management.Visitors
     {
         private HashSet<CSharpType>? _modelTypes;
         private HashSet<CSharpType>? _modelFactoryModelTypes;
+        private Dictionary<CSharpType, ModelProvider>? _modelProvidersByType;
 
         protected override TypeProvider? VisitType(TypeProvider type)
         {
             if (type is ModelFactoryProvider modelFactory)
             {
+                PreserveReadOnlyDictionaryPropertiesFromLastContract(modelFactory);
+
                 var updatedMethods = new List<MethodProvider>();
                 foreach (var method in modelFactory.Methods)
                 {
@@ -56,6 +60,38 @@ namespace Azure.Generator.Management.Visitors
             return base.VisitType(type);
         }
 
+        private void PreserveReadOnlyDictionaryPropertiesFromLastContract(ModelFactoryProvider modelFactory)
+        {
+            var previousMethods = modelFactory.LastContractView?.Methods;
+            if (previousMethods is null || previousMethods.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var previousMethod in previousMethods)
+            {
+                if (previousMethod.Signature.ReturnType is not { } returnType
+                    || ManagementClientGenerator.Instance.OutputLibrary.ResourceProviders.FirstOrDefault(resource =>
+                        resource.ResourceData.Type.WithNullable(false).AreNamesEqual(returnType.WithNullable(false)))?.ResourceData is not ResourceDataModelProvider model)
+                {
+                    continue;
+                }
+
+                foreach (var parameter in previousMethod.Signature.Parameters)
+                {
+                    if (!IsReadOnlyDictionary(parameter.Type))
+                    {
+                        continue;
+                    }
+
+                    var matchingProperty = model.Properties.FirstOrDefault(property =>
+                        IsDictionary(property.Type)
+                        && string.Equals(property.Name, parameter.Name, StringComparison.OrdinalIgnoreCase));
+                    matchingProperty?.Update(type: new CSharpType(typeof(IReadOnlyDictionary<,>), matchingProperty.Type.Arguments));
+                }
+            }
+        }
+
         private void AddMissingLastContractModelMethods(ModelFactoryProvider modelFactory, List<MethodProvider> updatedMethods)
         {
             var previousMethods = modelFactory.LastContractView?.Methods;
@@ -70,7 +106,6 @@ namespace Azure.Generator.Management.Visitors
                 var returnType = previousMethod.Signature.ReturnType;
                 if (returnType is null
                     || KnownManagementTypes.IsKnownManagementType(returnType)
-                    || !IsModelType(returnType)
                     || updatedMethods.Any(method => HasSameCSharpSignature(method.Signature, previousMethod.Signature))
                     || customMethods.Any(method => HasSameCSharpSignature(method.Signature, previousMethod.Signature))
                     || !ModelFactoryBackwardCompatHelper.TryCreateBackwardCompatMethod(previousMethod, modelFactory, out var restoredMethod))
@@ -82,9 +117,12 @@ namespace Azure.Generator.Management.Visitors
             }
         }
 
-        private bool IsModelType(CSharpType type) => ModelTypes.Contains(type.WithNullable(false));
+        private bool IsModelType(CSharpType type) => ContainsModelType(ModelTypes, type.WithNullable(false));
 
-        private bool IsModelFactoryModelType(CSharpType type) => ModelFactoryModelTypes.Contains(type.WithNullable(false));
+        private bool IsModelFactoryModelType(CSharpType type) => ContainsModelType(ModelFactoryModelTypes, type.WithNullable(false));
+
+        private static bool ContainsModelType(HashSet<CSharpType> modelTypes, CSharpType type)
+            => modelTypes.Contains(type) || modelTypes.Any(modelType => modelType.AreNamesEqual(type));
 
         private HashSet<CSharpType> ModelTypes
         {
@@ -104,15 +142,25 @@ namespace Azure.Generator.Management.Visitors
             }
         }
 
+        private Dictionary<CSharpType, ModelProvider> ModelProvidersByType
+        {
+            get
+            {
+                BuildModelTypes();
+                return _modelProvidersByType!;
+            }
+        }
+
         private void BuildModelTypes()
         {
-            if (_modelTypes is not null && _modelFactoryModelTypes is not null)
+            if (_modelTypes is not null && _modelFactoryModelTypes is not null && _modelProvidersByType is not null)
             {
                 return;
             }
 
             var modelTypes = new HashSet<CSharpType>();
             var modelFactoryModelTypes = new HashSet<CSharpType>();
+            var modelProvidersByType = new Dictionary<CSharpType, ModelProvider>();
 
             foreach (var inputModel in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
             {
@@ -122,16 +170,54 @@ namespace Azure.Generator.Management.Visitors
                     continue;
                 }
 
-                var type = model.Type.WithNullable(false);
-                modelTypes.Add(type);
-                if (IsModelFactoryModel(model))
-                {
-                    modelFactoryModelTypes.Add(type);
-                }
+                AddModelProvider(model, modelTypes, modelFactoryModelTypes, modelProvidersByType);
+            }
+
+            foreach (var model in ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ModelProvider>())
+            {
+                AddModelProvider(model, modelTypes, modelFactoryModelTypes, modelProvidersByType);
             }
 
             _modelTypes = modelTypes;
             _modelFactoryModelTypes = modelFactoryModelTypes;
+            _modelProvidersByType = modelProvidersByType;
+        }
+
+        private static void AddModelProvider(
+            ModelProvider model,
+            HashSet<CSharpType> modelTypes,
+            HashSet<CSharpType> modelFactoryModelTypes,
+            Dictionary<CSharpType, ModelProvider> modelProvidersByType)
+        {
+            var type = model.Type.WithNullable(false);
+            modelTypes.Add(type);
+            modelProvidersByType[type] = model;
+            if (IsModelFactoryModel(model))
+            {
+                modelFactoryModelTypes.Add(type);
+            }
+        }
+
+        private static bool IsReadOnlyDictionary(CSharpType type)
+            => IsDictionary(type, typeof(IReadOnlyDictionary<,>));
+
+        private static bool IsDictionary(CSharpType type)
+            => type.IsDictionary || IsDictionary(type, typeof(IDictionary<,>)) || IsDictionary(type, typeof(IReadOnlyDictionary<,>));
+
+        private static bool IsDictionary(CSharpType type, Type dictionaryTypeDefinition)
+        {
+            if (type is not { IsFrameworkType: true, FrameworkType: not null })
+            {
+                return false;
+            }
+
+            var frameworkType = type.FrameworkType;
+            if (frameworkType.IsGenericType && !frameworkType.IsGenericTypeDefinition)
+            {
+                frameworkType = frameworkType.GetGenericTypeDefinition();
+            }
+
+            return frameworkType == dictionaryTypeDefinition;
         }
 
         private static bool IsModelFactoryModel(ModelProvider model)

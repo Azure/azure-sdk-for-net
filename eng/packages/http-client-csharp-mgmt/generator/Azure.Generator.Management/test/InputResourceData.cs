@@ -10,7 +10,7 @@ namespace Azure.Generator.Management.Tests.Common
 {
     internal static class InputResourceData
     {
-        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResource(bool includeCheckExistence = false, string resourceName = "ResponseType", bool includeZonesList = false)
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResource(bool includeCheckExistence = false, string resourceName = "ResponseType", bool includeZonesList = false, bool isInputModel = false, bool isTagsReadOnly = false)
         {
             const string TestClientName = "TestClient";
             const string ResourceModelName = "ResponseType";
@@ -19,15 +19,21 @@ namespace Azure.Generator.Management.Tests.Common
                 InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
                 InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
                 InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
-                InputFactory.Property("tags", new InputDictionaryType("dict", InputPrimitiveType.String, InputPrimitiveType.String), isReadOnly: false),
+                InputFactory.Property("tags", new InputDictionaryType("dict", InputPrimitiveType.String, InputPrimitiveType.String), isReadOnly: isTagsReadOnly),
             ];
             if (includeZonesList)
             {
                 properties.Add(InputFactory.Property("zones", InputFactory.Array(InputPrimitiveType.String), isReadOnly: false));
             }
 
+            var usage = InputModelTypeUsage.Output | InputModelTypeUsage.Json;
+            if (isInputModel)
+            {
+                usage |= InputModelTypeUsage.Input;
+            }
+
             var responseModel = InputFactory.Model(ResourceModelName,
-                        usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                        usage: usage,
                         properties: properties,
                         decorators: []);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
