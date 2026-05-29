@@ -22,14 +22,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         /// and does not require authentication; the placeholder instrumentation key in the
         /// connection string satisfies the connection-string parser but is ignored server-side.
         /// </remarks>
-        internal const string SdkStats_ConnectionString_Distro_NonEU = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://us.stats.monitor.azure.com/";
+        internal const string SdkStats_ConnectionString_Distro_NonEU = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://stats.monitor.azure.com/";
 
         /// <summary>
         /// Distro-owned SDK statistics ingestion endpoint, EU data boundary. Used when the
         /// <see cref="RouteSdkStatsToDistroEndpointSwitchName"/> AppContext switch is enabled
         /// and the customer's connection string maps to an EU region.
         /// </summary>
-        internal const string SdkStats_ConnectionString_Distro_EU = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://eudb.stats.monitor.azure.com/";
+        internal const string SdkStats_ConnectionString_Distro_EU = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://eu.stats.monitor.azure.com/";
 
         /// <summary>
         /// Process-wide <see cref="System.AppContext"/> switch name. When set to <c>true</c>,
