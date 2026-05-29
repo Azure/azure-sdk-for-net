@@ -75,11 +75,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(ActionIPCommunityProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Add))
-            {
-                writer.WritePropertyName("add"u8);
-                writer.WriteObjectValue(Add, options);
-            }
             if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
@@ -117,8 +112,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IPCommunityIdList @add = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IPCommunityIdList delete = default;
             IPCommunityIdList @set = default;
             foreach (var prop in element.EnumerateObject())
@@ -155,7 +150,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ActionIPCommunityProperties(additionalBinaryDataProperties, @add, delete, @set);
+            return new ActionIPCommunityProperties(@add, additionalBinaryDataProperties, delete, @set);
         }
     }
 }

@@ -20,19 +20,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ActionIPCommunityProperties"/>. </summary>
+        /// <param name="add"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="add"> List of IP Community IDs. </param>
         /// <param name="delete"> List of IP Community IDs. </param>
         /// <param name="set"> List of IP Community IDs. </param>
-        internal ActionIPCommunityProperties(IDictionary<string, BinaryData> additionalBinaryDataProperties, IPCommunityIdList @add, IPCommunityIdList delete, IPCommunityIdList @set) : base(additionalBinaryDataProperties)
+        internal ActionIPCommunityProperties(IPCommunityIdList @add, IDictionary<string, BinaryData> additionalBinaryDataProperties, IPCommunityIdList delete, IPCommunityIdList @set) : base(@add, additionalBinaryDataProperties)
         {
-            Add = @add;
             Delete = delete;
             Set = @set;
         }
-
-        /// <summary> List of IP Community IDs. </summary>
-        internal IPCommunityIdList Add { get; set; }
 
         /// <summary> List of IP Community IDs. </summary>
         internal IPCommunityIdList Delete { get; set; }

@@ -9,8 +9,9 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    // The new model no longer needs addressList in this constructor, but the previous SDK exposed it.
-    // Keeping this obsolete overload preserves source/binary compatibility; removing it would break callers.
+    // Backward compatibility shim for the swagger upgrade from package-2023-06-15 to package-2025-07-15.
+    // The new API version removed the addressList constructor parameter.
+    // This preserves the old constructor signature from v1.1.2.
     public partial class InternetGatewayRules
     {
         /// <summary> Initializes a new instance of <see cref="InternetGatewayRules"/>. </summary>

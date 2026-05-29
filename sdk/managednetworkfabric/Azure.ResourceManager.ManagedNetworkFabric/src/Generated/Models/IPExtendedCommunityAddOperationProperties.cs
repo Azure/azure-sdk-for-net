@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -17,10 +18,33 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IPExtendedCommunityAddOperationProperties"/>. </summary>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IPExtendedCommunityAddOperationProperties(IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        public IPExtendedCommunityAddOperationProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IPExtendedCommunityAddOperationProperties"/>. </summary>
+        /// <param name="add"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IPExtendedCommunityAddOperationProperties(IPExtendedCommunityIdList @add, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Add = @add;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Gets or sets the Add. </summary>
+        internal IPExtendedCommunityIdList Add { get; set; }
+
+        /// <summary> List of IP Extended Community resource IDs. </summary>
+        public IList<ResourceIdentifier> AddIPExtendedCommunityIds
+        {
+            get
+            {
+                if (Add is null)
+                {
+                    Add = new IPExtendedCommunityIdList();
+                }
+                return Add.IPExtendedCommunityIds;
+            }
         }
     }
 }

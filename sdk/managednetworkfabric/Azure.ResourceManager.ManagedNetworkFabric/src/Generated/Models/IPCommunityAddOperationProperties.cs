@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -17,10 +18,33 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IPCommunityAddOperationProperties"/>. </summary>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IPCommunityAddOperationProperties(IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        public IPCommunityAddOperationProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IPCommunityAddOperationProperties"/>. </summary>
+        /// <param name="add"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IPCommunityAddOperationProperties(IPCommunityIdList @add, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Add = @add;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Gets or sets the Add. </summary>
+        internal IPCommunityIdList Add { get; set; }
+
+        /// <summary> List of IP Community resource IDs. </summary>
+        public IList<ResourceIdentifier> AddIPCommunityIds
+        {
+            get
+            {
+                if (Add is null)
+                {
+                    Add = new IPCommunityIdList();
+                }
+                return Add.IPCommunityIds;
+            }
         }
     }
 }
