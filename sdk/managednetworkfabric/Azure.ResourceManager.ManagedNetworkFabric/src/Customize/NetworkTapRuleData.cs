@@ -41,10 +41,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        /// <summary> The ARM resource Id of the NetworkTap. </summary>
-        [CodeGenMember("NetworkTapId")]
-        public ResourceIdentifier NetworkTapId => Properties?.NetworkTapId is null ? default : new ResourceIdentifier(Properties.NetworkTapId);
-
         /// <summary> Polling interval in seconds. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is obsolete and will be removed in a future version. Use PollingIntervalInSecond instead.")]

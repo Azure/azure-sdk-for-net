@@ -2498,7 +2498,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkTapRuleData"/> instance for mocking. </returns>
-        public static NetworkTapRuleData NetworkTapRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, NetworkFabricConfigurationType configurationType = default, Uri tapRulesUri = default, NetworkFabricIdentitySelector identitySelector = default, IEnumerable<NetworkTapRuleMatchConfiguration> matchConfigurations = default, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default, string networkTapId = default, IEnumerable<ResourceIdentifier> networkTapIds = default, int? pollingIntervalInSecond = default, DateTimeOffset? lastSyncedOn = default, GlobalNetworkTapRuleActionProperties globalNetworkTapRuleActions = default, IEnumerable<ResourceIdentifier> networkFabricIds = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, string lastOperationDetails = default, ManagedServiceIdentity identity = default)
+        public static NetworkTapRuleData NetworkTapRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, NetworkFabricConfigurationType configurationType = default, Uri tapRulesUri = default, NetworkFabricIdentitySelector identitySelector = default, IEnumerable<NetworkTapRuleMatchConfiguration> matchConfigurations = default, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default, ResourceIdentifier networkTapId = default, IEnumerable<ResourceIdentifier> networkTapIds = default, int? pollingIntervalInSecond = default, DateTimeOffset? lastSyncedOn = default, GlobalNetworkTapRuleActionProperties globalNetworkTapRuleActions = default, IEnumerable<ResourceIdentifier> networkFabricIds = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, string lastOperationDetails = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3651,14 +3651,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                annotation is null && configurationType is null && tapRulesUri is null && matchConfigurations is null && dynamicMatchConfigurations is null && lastSyncedOn is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new NetworkTapRuleProperties(
+                annotation is null && configurationType is null && tapRulesUri is null && matchConfigurations is null && dynamicMatchConfigurations is null && networkTapId is null && lastSyncedOn is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new NetworkTapRuleProperties(
                     annotation,
                     configurationType.GetValueOrDefault(),
                     tapRulesUri,
                     default,
                     (matchConfigurations ?? new ChangeTrackingList<NetworkTapRuleMatchConfiguration>()).ToList(),
                     (dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>()).ToList(),
-                    default,
+                    networkTapId,
                     default,
                     default,
                     lastSyncedOn,

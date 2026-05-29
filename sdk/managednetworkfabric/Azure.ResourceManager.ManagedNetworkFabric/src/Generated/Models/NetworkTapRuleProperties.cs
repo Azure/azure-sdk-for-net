@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkTapRuleProperties(string annotation, NetworkFabricConfigurationType configurationType, Uri tapRulesUri, NetworkFabricIdentitySelector identitySelector, IList<NetworkTapRuleMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, string networkTapId, IReadOnlyList<ResourceIdentifier> networkTapIds, int? pollingIntervalInSecond, DateTimeOffset? lastSyncedOn, GlobalNetworkTapRuleActionProperties globalNetworkTapRuleActions, LastOperationProperties lastOperation, IReadOnlyList<ResourceIdentifier> networkFabricIds, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkTapRuleProperties(string annotation, NetworkFabricConfigurationType configurationType, Uri tapRulesUri, NetworkFabricIdentitySelector identitySelector, IList<NetworkTapRuleMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, ResourceIdentifier networkTapId, IReadOnlyList<ResourceIdentifier> networkTapIds, int? pollingIntervalInSecond, DateTimeOffset? lastSyncedOn, GlobalNetworkTapRuleActionProperties globalNetworkTapRuleActions, LastOperationProperties lastOperation, IReadOnlyList<ResourceIdentifier> networkFabricIds, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             ConfigurationType = configurationType;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public IList<CommonDynamicMatchConfiguration> DynamicMatchConfigurations { get; } = new ChangeTrackingList<CommonDynamicMatchConfiguration>();
 
         /// <summary> The ARM resource Id of the NetworkTap. </summary>
-        public string NetworkTapId { get; }
+        public ResourceIdentifier NetworkTapId { get; }
 
         /// <summary> The ARM resource Id of the NetworkTap Rules. </summary>
         public IReadOnlyList<ResourceIdentifier> NetworkTapIds { get; } = new ChangeTrackingList<ResourceIdentifier>();

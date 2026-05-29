@@ -128,6 +128,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
+        /// <summary> The ARM resource Id of the NetworkTap. </summary>
+        public ResourceIdentifier NetworkTapId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkTapId;
+            }
+        }
+
         /// <summary> The ARM resource Id of the NetworkTap Rules. </summary>
         public IReadOnlyList<ResourceIdentifier> NetworkTapIds
         {

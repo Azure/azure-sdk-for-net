@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             NetworkFabricIdentitySelector identitySelector = default;
             IList<NetworkTapRuleMatchConfiguration> matchConfigurations = default;
             IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default;
-            string networkTapId = default;
+            ResourceIdentifier networkTapId = default;
             IReadOnlyList<ResourceIdentifier> networkTapIds = default;
             int? pollingIntervalInSecond = default;
             DateTimeOffset? lastSyncedOn = default;
@@ -306,7 +306,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (prop.NameEquals("networkTapId"u8))
                 {
-                    networkTapId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkTapId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("networkTapIds"u8))
