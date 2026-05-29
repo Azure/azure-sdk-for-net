@@ -41,15 +41,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (Optional.IsDefined(ImportRoutePolicyId))
+            if (Optional.IsDefined(NetworkToNetworkInterconnectId))
             {
-                writer.WritePropertyName("importRoutePolicyId"u8);
-                writer.WriteStringValue(ImportRoutePolicyId);
-            }
-            if (Optional.IsDefined(ExportRoutePolicyId))
-            {
-                writer.WritePropertyName("exportRoutePolicyId"u8);
-                writer.WriteStringValue(ExportRoutePolicyId);
+                writer.WritePropertyName("networkToNetworkInterconnectId"u8);
+                writer.WriteStringValue(NetworkToNetworkInterconnectId);
             }
             if (Optional.IsDefined(ImportRoutePolicy))
             {
@@ -75,6 +70,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("optionAProperties"u8);
                 writer.WriteObjectValue(OptionAProperties, options);
+            }
+            if (Optional.IsDefined(StaticRouteConfiguration))
+            {
+                writer.WritePropertyName("staticRouteConfiguration"u8);
+                writer.WriteObjectValue(StaticRouteConfiguration, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -115,13 +115,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             string annotation = default;
-            ResourceIdentifier importRoutePolicyId = default;
-            ResourceIdentifier exportRoutePolicyId = default;
+            ResourceIdentifier networkToNetworkInterconnectId = default;
             ImportRoutePolicy importRoutePolicy = default;
             ExportRoutePolicy exportRoutePolicy = default;
             PeeringOption? peeringOption = default;
             L3OptionBProperties optionBProperties = default;
             ExternalNetworkPatchOptionAProperties optionAProperties = default;
+            ExternalNetworkStaticRoutePatchConfiguration staticRouteConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,22 +140,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             annotation = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("importRoutePolicyId"u8))
+                        if (property0.NameEquals("networkToNetworkInterconnectId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            importRoutePolicyId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("exportRoutePolicyId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            exportRoutePolicyId = new ResourceIdentifier(property0.Value.GetString());
+                            networkToNetworkInterconnectId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("importRoutePolicy"u8))
@@ -203,6 +194,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             optionAProperties = ExternalNetworkPatchOptionAProperties.DeserializeExternalNetworkPatchOptionAProperties(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("staticRouteConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            staticRouteConfiguration = ExternalNetworkStaticRoutePatchConfiguration.DeserializeExternalNetworkStaticRoutePatchConfiguration(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -214,13 +214,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new NetworkFabricExternalNetworkPatch(
                 annotation,
-                importRoutePolicyId,
-                exportRoutePolicyId,
+                networkToNetworkInterconnectId,
                 importRoutePolicy,
                 exportRoutePolicy,
                 peeringOption,
                 optionBProperties,
                 optionAProperties,
+                staticRouteConfiguration,
                 serializedAdditionalRawData);
         }
 

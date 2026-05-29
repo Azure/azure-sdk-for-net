@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Base tracked resource type for PATCH updates. </summary>
+    /// <summary> Network Rack patch resource definition. </summary>
     public partial class NetworkRackPatch
     {
         /// <summary>

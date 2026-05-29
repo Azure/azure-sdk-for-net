@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct RcmComponentStatus : IEquatable<RcmComponentStatus>
     {
         private readonly string _value;
+        /// <summary> Healthy. </summary>
+        private const string HealthyValue = "Healthy";
+        /// <summary> Warning. </summary>
+        private const string WarningValue = "Warning";
+        /// <summary> Critical. </summary>
+        private const string CriticalValue = "Critical";
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "Unknown";
 
         /// <summary> Initializes a new instance of <see cref="RcmComponentStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RcmComponentStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HealthyValue = "Healthy";
-        private const string WarningValue = "Warning";
-        private const string CriticalValue = "Critical";
-        private const string UnknownValue = "Unknown";
+            _value = value;
+        }
 
         /// <summary> Healthy. </summary>
         public static RcmComponentStatus Healthy { get; } = new RcmComponentStatus(HealthyValue);
+
         /// <summary> Warning. </summary>
         public static RcmComponentStatus Warning { get; } = new RcmComponentStatus(WarningValue);
+
         /// <summary> Critical. </summary>
         public static RcmComponentStatus Critical { get; } = new RcmComponentStatus(CriticalValue);
+
         /// <summary> Unknown. </summary>
         public static RcmComponentStatus Unknown { get; } = new RcmComponentStatus(UnknownValue);
+
         /// <summary> Determines if two <see cref="RcmComponentStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RcmComponentStatus left, RcmComponentStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RcmComponentStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RcmComponentStatus left, RcmComponentStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RcmComponentStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RcmComponentStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RcmComponentStatus(string value) => new RcmComponentStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RcmComponentStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RcmComponentStatus?(string value) => value == null ? null : new RcmComponentStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RcmComponentStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RcmComponentStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

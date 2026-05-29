@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppContainers
 {
@@ -24,75 +25,80 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppHttpRouteConfigCollection : ArmCollection, IEnumerable<ContainerAppHttpRouteConfigResource>, IAsyncEnumerable<ContainerAppHttpRouteConfigResource>
     {
-        private readonly ClientDiagnostics _containerAppHttpRouteConfigHttpRouteConfigClientDiagnostics;
-        private readonly HttpRouteConfigRestOperations _containerAppHttpRouteConfigHttpRouteConfigRestClient;
+        private readonly ClientDiagnostics _httpRouteConfigClientDiagnostics;
+        private readonly HttpRouteConfig _httpRouteConfigRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerAppHttpRouteConfigCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ContainerAppHttpRouteConfigCollection for mocking. </summary>
         protected ContainerAppHttpRouteConfigCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerAppHttpRouteConfigCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppHttpRouteConfigCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerAppHttpRouteConfigCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _containerAppHttpRouteConfigHttpRouteConfigClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppHttpRouteConfigResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ContainerAppHttpRouteConfigResource.ResourceType, out string containerAppHttpRouteConfigHttpRouteConfigApiVersion);
-            _containerAppHttpRouteConfigHttpRouteConfigRestClient = new HttpRouteConfigRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppHttpRouteConfigHttpRouteConfigApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ContainerAppHttpRouteConfigResource.ResourceType, out string containerAppHttpRouteConfigApiVersion);
+            _httpRouteConfigClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppHttpRouteConfigResource.ResourceType.Namespace, Diagnostics);
+            _httpRouteConfigRestClient = new HttpRouteConfig(_httpRouteConfigClientDiagnostics, Pipeline, Endpoint, containerAppHttpRouteConfigApiVersion ?? "2025-10-02-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ContainerAppManagedEnvironmentResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ContainerAppManagedEnvironmentResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerAppManagedEnvironmentResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create or Update a Http Route Config.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs/{httpRouteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs/{httpRouteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HttpRouteConfig_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> HttpRouteConfigs_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppHttpRouteConfigResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="httpRouteName"> Name of the Http Route Config Resource. </param>
-        /// <param name="data"> Http Route Config to be created or updated. </param>
+        /// <param name="httpRouteName"> Name of the Http Route Config. </param>
+        /// <param name="data"> Http Route config to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="httpRouteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="httpRouteName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ContainerAppHttpRouteConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string httpRouteName, ContainerAppHttpRouteConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(httpRouteName, nameof(httpRouteName));
-            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _containerAppHttpRouteConfigHttpRouteConfigClientDiagnostics.CreateScope("ContainerAppHttpRouteConfigCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _httpRouteConfigClientDiagnostics.CreateScope("ContainerAppHttpRouteConfigCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _containerAppHttpRouteConfigHttpRouteConfigRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, httpRouteName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _containerAppHttpRouteConfigHttpRouteConfigRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, httpRouteName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppContainersArmOperation<ContainerAppHttpRouteConfigResource>(Response.FromValue(new ContainerAppHttpRouteConfigResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _httpRouteConfigRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, httpRouteName, ContainerAppHttpRouteConfigData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ContainerAppHttpRouteConfigData> response = Response.FromValue(ContainerAppHttpRouteConfigData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppContainersArmOperation<ContainerAppHttpRouteConfigResource> operation = new AppContainersArmOperation<ContainerAppHttpRouteConfigResource>(Response.FromValue(new ContainerAppHttpRouteConfigResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,44 +112,47 @@ namespace Azure.ResourceManager.AppContainers
         /// Create or Update a Http Route Config.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs/{httpRouteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs/{httpRouteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HttpRouteConfig_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> HttpRouteConfigs_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppHttpRouteConfigResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="httpRouteName"> Name of the Http Route Config Resource. </param>
-        /// <param name="data"> Http Route Config to be created or updated. </param>
+        /// <param name="httpRouteName"> Name of the Http Route Config. </param>
+        /// <param name="data"> Http Route config to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="httpRouteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="httpRouteName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ContainerAppHttpRouteConfigResource> CreateOrUpdate(WaitUntil waitUntil, string httpRouteName, ContainerAppHttpRouteConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(httpRouteName, nameof(httpRouteName));
-            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _containerAppHttpRouteConfigHttpRouteConfigClientDiagnostics.CreateScope("ContainerAppHttpRouteConfigCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _httpRouteConfigClientDiagnostics.CreateScope("ContainerAppHttpRouteConfigCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _containerAppHttpRouteConfigHttpRouteConfigRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, httpRouteName, data, cancellationToken);
-                var uri = _containerAppHttpRouteConfigHttpRouteConfigRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, httpRouteName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppContainersArmOperation<ContainerAppHttpRouteConfigResource>(Response.FromValue(new ContainerAppHttpRouteConfigResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _httpRouteConfigRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, httpRouteName, ContainerAppHttpRouteConfigData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ContainerAppHttpRouteConfigData> response = Response.FromValue(ContainerAppHttpRouteConfigData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppContainersArmOperation<ContainerAppHttpRouteConfigResource> operation = new AppContainersArmOperation<ContainerAppHttpRouteConfigResource>(Response.FromValue(new ContainerAppHttpRouteConfigResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,41 +163,45 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the specified Http Route Config.
+        /// Get the specified Managed Http Route Config.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs/{httpRouteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs/{httpRouteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HttpRouteConfig_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> HttpRouteConfigs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppHttpRouteConfigResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="httpRouteName"> Name of the Http Route Config Resource. </param>
+        /// <param name="httpRouteName"> Name of the Http Route Config. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="httpRouteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ContainerAppHttpRouteConfigResource>> GetAsync(string httpRouteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(httpRouteName, nameof(httpRouteName));
 
-            using var scope = _containerAppHttpRouteConfigHttpRouteConfigClientDiagnostics.CreateScope("ContainerAppHttpRouteConfigCollection.Get");
+            using DiagnosticScope scope = _httpRouteConfigClientDiagnostics.CreateScope("ContainerAppHttpRouteConfigCollection.Get");
             scope.Start();
             try
             {
-                var response = await _containerAppHttpRouteConfigHttpRouteConfigRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, httpRouteName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _httpRouteConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, httpRouteName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ContainerAppHttpRouteConfigData> response = Response.FromValue(ContainerAppHttpRouteConfigData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerAppHttpRouteConfigResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,41 +212,45 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the specified Http Route Config.
+        /// Get the specified Managed Http Route Config.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs/{httpRouteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs/{httpRouteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HttpRouteConfig_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> HttpRouteConfigs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppHttpRouteConfigResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="httpRouteName"> Name of the Http Route Config Resource. </param>
+        /// <param name="httpRouteName"> Name of the Http Route Config. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="httpRouteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ContainerAppHttpRouteConfigResource> Get(string httpRouteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(httpRouteName, nameof(httpRouteName));
 
-            using var scope = _containerAppHttpRouteConfigHttpRouteConfigClientDiagnostics.CreateScope("ContainerAppHttpRouteConfigCollection.Get");
+            using DiagnosticScope scope = _httpRouteConfigClientDiagnostics.CreateScope("ContainerAppHttpRouteConfigCollection.Get");
             scope.Start();
             try
             {
-                var response = _containerAppHttpRouteConfigHttpRouteConfigRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, httpRouteName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _httpRouteConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, httpRouteName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ContainerAppHttpRouteConfigData> response = Response.FromValue(ContainerAppHttpRouteConfigData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerAppHttpRouteConfigResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,53 +261,53 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// List the Http Route Configs in a given managed environment.
+        /// Get the Managed Http Routes in a given managed environment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HttpRouteConfig_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> HttpRouteConfigs_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppHttpRouteConfigResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerAppHttpRouteConfigResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerAppHttpRouteConfigResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppHttpRouteConfigResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppHttpRouteConfigHttpRouteConfigRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppHttpRouteConfigHttpRouteConfigRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppHttpRouteConfigResource(Client, ContainerAppHttpRouteConfigData.DeserializeContainerAppHttpRouteConfigData(e)), _containerAppHttpRouteConfigHttpRouteConfigClientDiagnostics, Pipeline, "ContainerAppHttpRouteConfigCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ContainerAppHttpRouteConfigData, ContainerAppHttpRouteConfigResource>(new HttpRouteConfigGetAllAsyncCollectionResultOfT(
+                _httpRouteConfigRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerAppHttpRouteConfigCollection.GetAll"), data => new ContainerAppHttpRouteConfigResource(Client, data));
         }
 
         /// <summary>
-        /// List the Http Route Configs in a given managed environment.
+        /// Get the Managed Http Routes in a given managed environment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HttpRouteConfig_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> HttpRouteConfigs_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppHttpRouteConfigResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,45 +315,67 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppHttpRouteConfigResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppHttpRouteConfigResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppHttpRouteConfigHttpRouteConfigRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppHttpRouteConfigHttpRouteConfigRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppHttpRouteConfigResource(Client, ContainerAppHttpRouteConfigData.DeserializeContainerAppHttpRouteConfigData(e)), _containerAppHttpRouteConfigHttpRouteConfigClientDiagnostics, Pipeline, "ContainerAppHttpRouteConfigCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ContainerAppHttpRouteConfigData, ContainerAppHttpRouteConfigResource>(new HttpRouteConfigGetAllCollectionResultOfT(
+                _httpRouteConfigRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerAppHttpRouteConfigCollection.GetAll"), data => new ContainerAppHttpRouteConfigResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs/{httpRouteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs/{httpRouteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HttpRouteConfig_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> HttpRouteConfigs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppHttpRouteConfigResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="httpRouteName"> Name of the Http Route Config Resource. </param>
+        /// <param name="httpRouteName"> Name of the Http Route Config. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="httpRouteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string httpRouteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(httpRouteName, nameof(httpRouteName));
 
-            using var scope = _containerAppHttpRouteConfigHttpRouteConfigClientDiagnostics.CreateScope("ContainerAppHttpRouteConfigCollection.Exists");
+            using DiagnosticScope scope = _httpRouteConfigClientDiagnostics.CreateScope("ContainerAppHttpRouteConfigCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _containerAppHttpRouteConfigHttpRouteConfigRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, httpRouteName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _httpRouteConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, httpRouteName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ContainerAppHttpRouteConfigData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerAppHttpRouteConfigData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerAppHttpRouteConfigData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,36 +389,50 @@ namespace Azure.ResourceManager.AppContainers
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs/{httpRouteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs/{httpRouteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HttpRouteConfig_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> HttpRouteConfigs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppHttpRouteConfigResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="httpRouteName"> Name of the Http Route Config Resource. </param>
+        /// <param name="httpRouteName"> Name of the Http Route Config. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="httpRouteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string httpRouteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(httpRouteName, nameof(httpRouteName));
 
-            using var scope = _containerAppHttpRouteConfigHttpRouteConfigClientDiagnostics.CreateScope("ContainerAppHttpRouteConfigCollection.Exists");
+            using DiagnosticScope scope = _httpRouteConfigClientDiagnostics.CreateScope("ContainerAppHttpRouteConfigCollection.Exists");
             scope.Start();
             try
             {
-                var response = _containerAppHttpRouteConfigHttpRouteConfigRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, httpRouteName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _httpRouteConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, httpRouteName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ContainerAppHttpRouteConfigData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerAppHttpRouteConfigData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerAppHttpRouteConfigData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,38 +446,54 @@ namespace Azure.ResourceManager.AppContainers
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs/{httpRouteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs/{httpRouteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HttpRouteConfig_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> HttpRouteConfigs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppHttpRouteConfigResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="httpRouteName"> Name of the Http Route Config Resource. </param>
+        /// <param name="httpRouteName"> Name of the Http Route Config. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="httpRouteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ContainerAppHttpRouteConfigResource>> GetIfExistsAsync(string httpRouteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(httpRouteName, nameof(httpRouteName));
 
-            using var scope = _containerAppHttpRouteConfigHttpRouteConfigClientDiagnostics.CreateScope("ContainerAppHttpRouteConfigCollection.GetIfExists");
+            using DiagnosticScope scope = _httpRouteConfigClientDiagnostics.CreateScope("ContainerAppHttpRouteConfigCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _containerAppHttpRouteConfigHttpRouteConfigRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, httpRouteName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _httpRouteConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, httpRouteName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ContainerAppHttpRouteConfigData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerAppHttpRouteConfigData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerAppHttpRouteConfigData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ContainerAppHttpRouteConfigResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerAppHttpRouteConfigResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -438,38 +507,54 @@ namespace Azure.ResourceManager.AppContainers
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs/{httpRouteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs/{httpRouteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HttpRouteConfig_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> HttpRouteConfigs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppHttpRouteConfigResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="httpRouteName"> Name of the Http Route Config Resource. </param>
+        /// <param name="httpRouteName"> Name of the Http Route Config. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="httpRouteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="httpRouteName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ContainerAppHttpRouteConfigResource> GetIfExists(string httpRouteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(httpRouteName, nameof(httpRouteName));
 
-            using var scope = _containerAppHttpRouteConfigHttpRouteConfigClientDiagnostics.CreateScope("ContainerAppHttpRouteConfigCollection.GetIfExists");
+            using DiagnosticScope scope = _httpRouteConfigClientDiagnostics.CreateScope("ContainerAppHttpRouteConfigCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _containerAppHttpRouteConfigHttpRouteConfigRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, httpRouteName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _httpRouteConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, httpRouteName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ContainerAppHttpRouteConfigData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerAppHttpRouteConfigData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerAppHttpRouteConfigData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ContainerAppHttpRouteConfigResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerAppHttpRouteConfigResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -489,6 +574,7 @@ namespace Azure.ResourceManager.AppContainers
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ContainerAppHttpRouteConfigResource> IAsyncEnumerable<ContainerAppHttpRouteConfigResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

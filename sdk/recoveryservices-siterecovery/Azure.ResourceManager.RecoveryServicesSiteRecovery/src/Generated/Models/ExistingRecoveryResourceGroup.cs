@@ -15,19 +15,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class ExistingRecoveryResourceGroup : RecoveryResourceGroupCustomDetails
     {
         /// <summary> Initializes a new instance of <see cref="ExistingRecoveryResourceGroup"/>. </summary>
-        public ExistingRecoveryResourceGroup()
+        public ExistingRecoveryResourceGroup() : base("Existing")
         {
-            ResourceType = "Existing";
         }
 
         /// <summary> Initializes a new instance of <see cref="ExistingRecoveryResourceGroup"/>. </summary>
         /// <param name="resourceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryResourceGroupId"> The recovery resource group Id. Valid for V2 scenarios. </param>
-        internal ExistingRecoveryResourceGroup(string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier recoveryResourceGroupId) : base(resourceType, serializedAdditionalRawData)
+        internal ExistingRecoveryResourceGroup(string resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier recoveryResourceGroupId) : base(resourceType, additionalBinaryDataProperties)
         {
             RecoveryResourceGroupId = recoveryResourceGroupId;
-            ResourceType = resourceType ?? "Existing";
         }
 
         /// <summary> The recovery resource group Id. Valid for V2 scenarios. </summary>
