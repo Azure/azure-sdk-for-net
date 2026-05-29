@@ -5,15 +5,9 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ResilienceManagement;
 using Azure.ResourceManager.Resources;
 
@@ -40,11 +34,5 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
         private ClientDiagnostics OperationStatusClientDiagnostics => _operationStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResilienceManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private OperationStatus OperationStatusRestClient => _operationStatusRestClient ??= new OperationStatus(OperationStatusClientDiagnostics, Pipeline, Endpoint, "2026-04-01-preview");
-
-        // The Get / GetAsync methods for OperationStatus_Get are implemented in the partial sibling
-        // src/Custom/MockableResilienceManagementTenantResource.cs to use the AOT-safe
-        // ModelReaderWriter.Read<T>(data, options, context) overload. They are suppressed here
-        // via [CodeGenSuppress] on that partial; running `dotnet build /t:GenerateCode` will
-        // regenerate this file with these methods omitted automatically.
     }
 }

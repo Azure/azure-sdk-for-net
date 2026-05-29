@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Initializes a new instance of <see cref="ManagedOnBehalfOfConfiguration"/>. </summary>
         internal ManagedOnBehalfOfConfiguration()
         {
-            MoboBrokerResources = new ChangeTrackingList<MoboBrokerResource>();
+            MoboBrokerResources = new ChangeTrackingList<MoboBrokerTarget>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedOnBehalfOfConfiguration"/>. </summary>
         /// <param name="moboBrokerResources"> Associated MoboBrokerResources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedOnBehalfOfConfiguration(IReadOnlyList<MoboBrokerResource> moboBrokerResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedOnBehalfOfConfiguration(IReadOnlyList<MoboBrokerTarget> moboBrokerResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MoboBrokerResources = moboBrokerResources;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Associated MoboBrokerResources. </summary>
-        public IReadOnlyList<MoboBrokerResource> MoboBrokerResources { get; }
+        public IReadOnlyList<MoboBrokerTarget> MoboBrokerResources { get; }
     }
 }

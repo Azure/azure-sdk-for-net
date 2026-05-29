@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
             GoalTemplateId = goalTemplateId;
             GoalAssignmentType = goalAssignmentType;
-            ServiceLevelResources = new ChangeTrackingList<ServiceLevelResource>();
+            ServiceLevelResources = new ChangeTrackingList<ServiceLevelTarget>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GoalAssignmentProperties"/>. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="errorDetails"> Details of any errors encountered during the operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GoalAssignmentProperties(ResourceIdentifier goalTemplateId, GoalAssignmentType goalAssignmentType, IList<ServiceLevelResource> serviceLevelResources, ProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GoalAssignmentProperties(ResourceIdentifier goalTemplateId, GoalAssignmentType goalAssignmentType, IList<ServiceLevelTarget> serviceLevelResources, ProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GoalTemplateId = goalTemplateId;
             GoalAssignmentType = goalAssignmentType;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public GoalAssignmentType GoalAssignmentType { get; set; }
 
         /// <summary> List of service level resources. </summary>
-        public IList<ServiceLevelResource> ServiceLevelResources { get; }
+        public IList<ServiceLevelTarget> ServiceLevelResources { get; }
 
         /// <summary> Provisioning state. </summary>
         public ProvisioningState? ProvisioningState { get; }

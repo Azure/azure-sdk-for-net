@@ -13,26 +13,26 @@ using Azure.ResourceManager.ResilienceManagement;
 namespace Azure.ResourceManager.ResilienceManagement.Models
 {
     /// <summary> Include or Update resource. </summary>
-    public partial class IncludeOrUpdateResource
+    public partial class IncludeOrUpdateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IncludeOrUpdateResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncludeOrUpdateContent"/>. </summary>
         /// <param name="id"> Id of the DrillResource to be included (NOT the ARM Id of the underlying resource). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public IncludeOrUpdateResource(ResourceIdentifier id)
+        public IncludeOrUpdateContent(ResourceIdentifier id)
         {
             Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IncludeOrUpdateResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncludeOrUpdateContent"/>. </summary>
         /// <param name="id"> Id of the DrillResource to be included (NOT the ARM Id of the underlying resource). </param>
         /// <param name="faultProperties"> Fault properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IncludeOrUpdateResource(ResourceIdentifier id, FaultProperties faultProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IncludeOrUpdateContent(ResourceIdentifier id, FaultProperties faultProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             FaultProperties = faultProperties;

@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ResilienceManagement.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -1081,44 +1080,6 @@ namespace Azure.ResourceManager.ResilienceManagement
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableResilienceManagementSubscriptionResource(subscriptionResource).GetUsagePlans(cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns the current status of an async operation.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementTenantResource.GetAsync(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<Response<OperationStatusResult>> GetAsync(this TenantResource tenantResource, string location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return await GetMockableResilienceManagementTenantResource(tenantResource).GetAsync(location, operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns the current status of an async operation.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResilienceManagementTenantResource.Get(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static Response<OperationStatusResult> Get(this TenantResource tenantResource, string location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableResilienceManagementTenantResource(tenantResource).Get(location, operationId, cancellationToken);
         }
     }
 }

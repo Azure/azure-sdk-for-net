@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 writer.WritePropertyName("serviceLevelResources"u8);
                 writer.WriteStartArray();
-                foreach (ServiceLevelResource item in ServiceLevelResources)
+                foreach (ServiceLevelTarget item in ServiceLevelResources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             }
             ResourceIdentifier goalTemplateId = default;
             GoalAssignmentType goalAssignmentType = default;
-            IList<ServiceLevelResource> serviceLevelResources = default;
+            IList<ServiceLevelTarget> serviceLevelResources = default;
             ProvisioningState? provisioningState = default;
             ResponseError errorDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -172,10 +172,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    List<ServiceLevelResource> array = new List<ServiceLevelResource>();
+                    List<ServiceLevelTarget> array = new List<ServiceLevelTarget>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ServiceLevelResource.DeserializeServiceLevelResource(item, options));
+                        array.Add(ServiceLevelTarget.DeserializeServiceLevelTarget(item, options));
                     }
                     serviceLevelResources = array;
                     continue;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new GoalAssignmentProperties(
                 goalTemplateId,
                 goalAssignmentType,
-                serviceLevelResources ?? new ChangeTrackingList<ServiceLevelResource>(),
+                serviceLevelResources ?? new ChangeTrackingList<ServiceLevelTarget>(),
                 provisioningState,
                 errorDetails,
                 additionalBinaryDataProperties);

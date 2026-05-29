@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="errorDetails"> Details of any errors encountered during the operation. </param>
         /// <returns> A new <see cref="Models.GoalAssignmentProperties"/> instance for mocking. </returns>
-        public static GoalAssignmentProperties GoalAssignmentProperties(ResourceIdentifier goalTemplateId = default, GoalAssignmentType goalAssignmentType = default, IEnumerable<ServiceLevelResource> serviceLevelResources = default, ProvisioningState? provisioningState = default, ResponseError errorDetails = default)
+        public static GoalAssignmentProperties GoalAssignmentProperties(ResourceIdentifier goalTemplateId = default, GoalAssignmentType goalAssignmentType = default, IEnumerable<ServiceLevelTarget> serviceLevelResources = default, ProvisioningState? provisioningState = default, ResponseError errorDetails = default)
         {
-            serviceLevelResources ??= new ChangeTrackingList<ServiceLevelResource>();
+            serviceLevelResources ??= new ChangeTrackingList<ServiceLevelTarget>();
 
             return new GoalAssignmentProperties(
                 goalTemplateId,
@@ -951,7 +951,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="monitoringProperties"> Monitoring properties of the Drill. </param>
         /// <param name="errorDetails"> Error details associated with the resource. </param>
         /// <returns> A new <see cref="Models.DrillProperties"/> instance for mocking. </returns>
-        public static DrillProperties DrillProperties(ProvisioningState? provisioningState = default, ResourceIdentifier serviceGroupId = default, RecoveryPlanPropertiesOfDrill recoveryPlanProperties = default, AssetPropertiesOfDrill drillAssetProperties = default, ChaosResourcePropertiesOfDrill chaosResourceProperties = default, ExecutionState? executionState = default, ExecutionReadinessState? executionReadinessState = default, RBACSetupMode? rbacSetupMode = default, AttentionReason attentionReason = default, SystemMetadata systemMetadata = default, LastRunProperties lastRunProperties = default, DateTimeOffset? lastSyncOn = default, DateTimeOffset? lastResyncReadinessCheckOn = default, IEnumerable<MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = default, string drillType = default, MonitoringPropertiesOfDrill monitoringProperties = default, ResponseError errorDetails = default)
+        public static DrillProperties DrillProperties(ProvisioningState? provisioningState = default, ResourceIdentifier serviceGroupId = default, RecoveryPlanPropertiesOfDrill recoveryPlanProperties = default, AssetPropertiesOfDrill drillAssetProperties = default, ChaosResourcePropertiesOfDrill chaosResourceProperties = default, ExecutionState? executionState = default, ExecutionReadinessState? executionReadinessState = default, RBACSetupMode? rbacSetupMode = default, AttentionReason attentionReason = default, SystemMetadata systemMetadata = default, LastRunProperties lastRunProperties = default, DateTimeOffset? lastSyncOn = default, DateTimeOffset? lastResyncReadinessCheckOn = default, IEnumerable<MoboBrokerTarget> managedOnBehalfOfMoboBrokerResources = default, string drillType = default, MonitoringPropertiesOfDrill monitoringProperties = default, ResponseError errorDetails = default)
         {
             return new UnknownDrillProperties(
                 provisioningState,
@@ -967,7 +967,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 lastRunProperties,
                 lastSyncOn,
                 lastResyncReadinessCheckOn,
-                managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<MoboBrokerResource>()).ToList(), null),
+                managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<MoboBrokerTarget>()).ToList(), null),
                 new DrillType(drillType),
                 monitoringProperties,
                 errorDetails,
@@ -1092,10 +1092,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// The fully qualified resource ID of the MoboBroker resource.
         /// Example: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}`
         /// </param>
-        /// <returns> A new <see cref="Models.MoboBrokerResource"/> instance for mocking. </returns>
-        public static MoboBrokerResource MoboBrokerResource(string id = default)
+        /// <returns> A new <see cref="Models.MoboBrokerTarget"/> instance for mocking. </returns>
+        public static MoboBrokerTarget MoboBrokerTarget(string id = default)
         {
-            return new MoboBrokerResource(id, additionalBinaryDataProperties: null);
+            return new MoboBrokerTarget(id, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Drill monitoring properties. </summary>
@@ -1134,7 +1134,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="errorDetails"> Error details associated with the resource. </param>
         /// <param name="vmsPresent"> An indication whether a VM is included in this Zonal Drill. If not, RO is not needed. </param>
         /// <returns> A new <see cref="Models.ZonalDrillProperties"/> instance for mocking. </returns>
-        public static ZonalDrillProperties ZonalDrillProperties(ProvisioningState? provisioningState = default, ResourceIdentifier serviceGroupId = default, RecoveryPlanPropertiesOfDrill recoveryPlanProperties = default, AssetPropertiesOfDrill drillAssetProperties = default, ChaosResourcePropertiesOfDrill chaosResourceProperties = default, ExecutionState? executionState = default, ExecutionReadinessState? executionReadinessState = default, RBACSetupMode? rbacSetupMode = default, AttentionReason attentionReason = default, SystemMetadata systemMetadata = default, LastRunProperties lastRunProperties = default, DateTimeOffset? lastSyncOn = default, DateTimeOffset? lastResyncReadinessCheckOn = default, IEnumerable<MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = default, MonitoringPropertiesOfDrill monitoringProperties = default, ResponseError errorDetails = default, VMPresent? vmsPresent = default)
+        public static ZonalDrillProperties ZonalDrillProperties(ProvisioningState? provisioningState = default, ResourceIdentifier serviceGroupId = default, RecoveryPlanPropertiesOfDrill recoveryPlanProperties = default, AssetPropertiesOfDrill drillAssetProperties = default, ChaosResourcePropertiesOfDrill chaosResourceProperties = default, ExecutionState? executionState = default, ExecutionReadinessState? executionReadinessState = default, RBACSetupMode? rbacSetupMode = default, AttentionReason attentionReason = default, SystemMetadata systemMetadata = default, LastRunProperties lastRunProperties = default, DateTimeOffset? lastSyncOn = default, DateTimeOffset? lastResyncReadinessCheckOn = default, IEnumerable<MoboBrokerTarget> managedOnBehalfOfMoboBrokerResources = default, MonitoringPropertiesOfDrill monitoringProperties = default, ResponseError errorDetails = default, VMPresent? vmsPresent = default)
         {
             return new ZonalDrillProperties(
                 provisioningState,
@@ -1150,7 +1150,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 lastRunProperties,
                 lastSyncOn,
                 lastResyncReadinessCheckOn,
-                managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<MoboBrokerResource>()).ToList(), null),
+                managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<MoboBrokerTarget>()).ToList(), null),
                 DrillType.Zonal,
                 monitoringProperties,
                 errorDetails,
@@ -1175,7 +1175,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="monitoringProperties"> Monitoring properties of the Drill. </param>
         /// <param name="errorDetails"> Error details associated with the resource. </param>
         /// <returns> A new <see cref="Models.RegionalDrillProperties"/> instance for mocking. </returns>
-        public static RegionalDrillProperties RegionalDrillProperties(ProvisioningState? provisioningState = default, ResourceIdentifier serviceGroupId = default, RecoveryPlanPropertiesOfDrill recoveryPlanProperties = default, AssetPropertiesOfDrill drillAssetProperties = default, ChaosResourcePropertiesOfDrill chaosResourceProperties = default, ExecutionState? executionState = default, ExecutionReadinessState? executionReadinessState = default, RBACSetupMode? rbacSetupMode = default, AttentionReason attentionReason = default, SystemMetadata systemMetadata = default, LastRunProperties lastRunProperties = default, DateTimeOffset? lastSyncOn = default, DateTimeOffset? lastResyncReadinessCheckOn = default, IEnumerable<MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = default, MonitoringPropertiesOfDrill monitoringProperties = default, ResponseError errorDetails = default)
+        public static RegionalDrillProperties RegionalDrillProperties(ProvisioningState? provisioningState = default, ResourceIdentifier serviceGroupId = default, RecoveryPlanPropertiesOfDrill recoveryPlanProperties = default, AssetPropertiesOfDrill drillAssetProperties = default, ChaosResourcePropertiesOfDrill chaosResourceProperties = default, ExecutionState? executionState = default, ExecutionReadinessState? executionReadinessState = default, RBACSetupMode? rbacSetupMode = default, AttentionReason attentionReason = default, SystemMetadata systemMetadata = default, LastRunProperties lastRunProperties = default, DateTimeOffset? lastSyncOn = default, DateTimeOffset? lastResyncReadinessCheckOn = default, IEnumerable<MoboBrokerTarget> managedOnBehalfOfMoboBrokerResources = default, MonitoringPropertiesOfDrill monitoringProperties = default, ResponseError errorDetails = default)
         {
             return new RegionalDrillProperties(
                 provisioningState,
@@ -1191,7 +1191,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 lastRunProperties,
                 lastSyncOn,
                 lastResyncReadinessCheckOn,
-                managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<MoboBrokerResource>()).ToList(), null),
+                managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<MoboBrokerTarget>()).ToList(), null),
                 DrillType.Regional,
                 monitoringProperties,
                 errorDetails,
@@ -1243,11 +1243,11 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="excludeResources"> Excluded resource. </param>
         /// <param name="updateResources"> Update resource. </param>
         /// <returns> A new <see cref="Models.ResourceLists"/> instance for mocking. </returns>
-        public static ResourceLists ResourceLists(IEnumerable<IncludeOrUpdateResource> includeResources = default, IEnumerable<ResourceIdentifier> excludeResources = default, IEnumerable<IncludeOrUpdateResource> updateResources = default)
+        public static ResourceLists ResourceLists(IEnumerable<IncludeOrUpdateContent> includeResources = default, IEnumerable<ResourceIdentifier> excludeResources = default, IEnumerable<IncludeOrUpdateContent> updateResources = default)
         {
-            includeResources ??= new ChangeTrackingList<IncludeOrUpdateResource>();
+            includeResources ??= new ChangeTrackingList<IncludeOrUpdateContent>();
             excludeResources ??= new ChangeTrackingList<ResourceIdentifier>();
-            updateResources ??= new ChangeTrackingList<IncludeOrUpdateResource>();
+            updateResources ??= new ChangeTrackingList<IncludeOrUpdateContent>();
 
             return new ResourceLists(includeResources.ToList(), excludeResources.ToList(), updateResources.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1255,10 +1255,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Include or Update resource. </summary>
         /// <param name="id"> Id of the DrillResource to be included (NOT the ARM Id of the underlying resource). </param>
         /// <param name="faultProperties"> Fault properties. </param>
-        /// <returns> A new <see cref="Models.IncludeOrUpdateResource"/> instance for mocking. </returns>
-        public static IncludeOrUpdateResource IncludeOrUpdateResource(ResourceIdentifier id = default, FaultProperties faultProperties = default)
+        /// <returns> A new <see cref="Models.IncludeOrUpdateContent"/> instance for mocking. </returns>
+        public static IncludeOrUpdateContent IncludeOrUpdateContent(ResourceIdentifier id = default, FaultProperties faultProperties = default)
         {
-            return new IncludeOrUpdateResource(id, faultProperties, additionalBinaryDataProperties: null);
+            return new IncludeOrUpdateContent(id, faultProperties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Drill Resource. </summary>

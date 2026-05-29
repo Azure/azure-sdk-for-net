@@ -14,57 +14,57 @@ using Azure.ResourceManager.ResilienceManagement;
 
 namespace Azure.ResourceManager.ResilienceManagement.Models
 {
-    /// <summary> The Service level resource model. </summary>
-    public partial class ServiceLevelResource : IJsonModel<ServiceLevelResource>
+    /// <summary> Include or Update resource. </summary>
+    public partial class IncludeOrUpdateContent : IJsonModel<IncludeOrUpdateContent>
     {
-        /// <summary> Initializes a new instance of <see cref="ServiceLevelResource"/> for deserialization. </summary>
-        internal ServiceLevelResource()
+        /// <summary> Initializes a new instance of <see cref="IncludeOrUpdateContent"/> for deserialization. </summary>
+        internal IncludeOrUpdateContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ServiceLevelResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual IncludeOrUpdateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ServiceLevelResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IncludeOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeServiceLevelResource(document.RootElement, options);
+                        return DeserializeIncludeOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceLevelResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IncludeOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ServiceLevelResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IncludeOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerResilienceManagementContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceLevelResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IncludeOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ServiceLevelResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<IncludeOrUpdateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ServiceLevelResource IPersistableModel<ServiceLevelResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        IncludeOrUpdateContent IPersistableModel<IncludeOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ServiceLevelResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IncludeOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ServiceLevelResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IncludeOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,15 +75,18 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ServiceLevelResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IncludeOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceLevelResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IncludeOrUpdateContent)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("serviceLevelIndicatorResourceId"u8);
-            writer.WriteStringValue(ServiceLevelIndicatorResourceId);
-            writer.WritePropertyName("serviceLevelObjectiveResourceId"u8);
-            writer.WriteStringValue(ServiceLevelObjectiveResourceId);
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(FaultProperties))
+            {
+                writer.WritePropertyName("faultProperties"u8);
+                writer.WriteObjectValue(FaultProperties, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -103,42 +106,46 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ServiceLevelResource IJsonModel<ServiceLevelResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        IncludeOrUpdateContent IJsonModel<IncludeOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ServiceLevelResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual IncludeOrUpdateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ServiceLevelResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IncludeOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceLevelResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IncludeOrUpdateContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeServiceLevelResource(document.RootElement, options);
+            return DeserializeIncludeOrUpdateContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ServiceLevelResource DeserializeServiceLevelResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static IncludeOrUpdateContent DeserializeIncludeOrUpdateContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceIdentifier serviceLevelIndicatorResourceId = default;
-            ResourceIdentifier serviceLevelObjectiveResourceId = default;
+            ResourceIdentifier id = default;
+            FaultProperties faultProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("serviceLevelIndicatorResourceId"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    serviceLevelIndicatorResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("serviceLevelObjectiveResourceId"u8))
+                if (prop.NameEquals("faultProperties"u8))
                 {
-                    serviceLevelObjectiveResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    faultProperties = FaultProperties.DeserializeFaultProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -146,7 +153,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ServiceLevelResource(serviceLevelIndicatorResourceId, serviceLevelObjectiveResourceId, additionalBinaryDataProperties);
+            return new IncludeOrUpdateContent(id, faultProperties, additionalBinaryDataProperties);
         }
     }
 }

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public ResponseError ErrorDetails { get; }
 
         /// <summary> Associated MoboBrokerResources. </summary>
-        public IReadOnlyList<MoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources
+        public IReadOnlyList<MoboBrokerTarget> ManagedOnBehalfOfMoboBrokerResources
         {
             get
             {

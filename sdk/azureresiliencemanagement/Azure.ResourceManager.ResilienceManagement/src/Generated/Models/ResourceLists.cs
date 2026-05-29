@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Initializes a new instance of <see cref="ResourceLists"/>. </summary>
         public ResourceLists()
         {
-            IncludeResources = new ChangeTrackingList<IncludeOrUpdateResource>();
+            IncludeResources = new ChangeTrackingList<IncludeOrUpdateContent>();
             ExcludeResources = new ChangeTrackingList<ResourceIdentifier>();
-            UpdateResources = new ChangeTrackingList<IncludeOrUpdateResource>();
+            UpdateResources = new ChangeTrackingList<IncludeOrUpdateContent>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceLists"/>. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="excludeResources"> Excluded resource. </param>
         /// <param name="updateResources"> Update resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceLists(IList<IncludeOrUpdateResource> includeResources, IList<ResourceIdentifier> excludeResources, IList<IncludeOrUpdateResource> updateResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceLists(IList<IncludeOrUpdateContent> includeResources, IList<ResourceIdentifier> excludeResources, IList<IncludeOrUpdateContent> updateResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IncludeResources = includeResources;
             ExcludeResources = excludeResources;
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> Include resource. </summary>
-        public IList<IncludeOrUpdateResource> IncludeResources { get; }
+        public IList<IncludeOrUpdateContent> IncludeResources { get; }
 
         /// <summary> Excluded resource. </summary>
         public IList<ResourceIdentifier> ExcludeResources { get; }
 
         /// <summary> Update resource. </summary>
-        public IList<IncludeOrUpdateResource> UpdateResources { get; }
+        public IList<IncludeOrUpdateContent> UpdateResources { get; }
     }
 }

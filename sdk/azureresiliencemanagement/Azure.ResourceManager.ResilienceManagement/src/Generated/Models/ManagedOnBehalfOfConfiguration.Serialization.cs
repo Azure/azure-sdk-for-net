@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 writer.WritePropertyName("moboBrokerResources"u8);
                 writer.WriteStartArray();
-                foreach (MoboBrokerResource item in MoboBrokerResources)
+                foreach (MoboBrokerTarget item in MoboBrokerResources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            IReadOnlyList<MoboBrokerResource> moboBrokerResources = default;
+            IReadOnlyList<MoboBrokerTarget> moboBrokerResources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    List<MoboBrokerResource> array = new List<MoboBrokerResource>();
+                    List<MoboBrokerTarget> array = new List<MoboBrokerTarget>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MoboBrokerResource.DeserializeMoboBrokerResource(item, options));
+                        array.Add(MoboBrokerTarget.DeserializeMoboBrokerTarget(item, options));
                     }
                     moboBrokerResources = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedOnBehalfOfConfiguration(moboBrokerResources ?? new ChangeTrackingList<MoboBrokerResource>(), additionalBinaryDataProperties);
+            return new ManagedOnBehalfOfConfiguration(moboBrokerResources ?? new ChangeTrackingList<MoboBrokerTarget>(), additionalBinaryDataProperties);
         }
     }
 }

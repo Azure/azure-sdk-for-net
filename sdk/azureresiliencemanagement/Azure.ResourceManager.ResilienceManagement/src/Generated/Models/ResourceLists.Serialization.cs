@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 writer.WritePropertyName("includeResources"u8);
                 writer.WriteStartArray();
-                foreach (IncludeOrUpdateResource item in IncludeResources)
+                foreach (IncludeOrUpdateContent item in IncludeResources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 writer.WritePropertyName("updateResources"u8);
                 writer.WriteStartArray();
-                foreach (IncludeOrUpdateResource item in UpdateResources)
+                foreach (IncludeOrUpdateContent item in UpdateResources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            IList<IncludeOrUpdateResource> includeResources = default;
+            IList<IncludeOrUpdateContent> includeResources = default;
             IList<ResourceIdentifier> excludeResources = default;
-            IList<IncludeOrUpdateResource> updateResources = default;
+            IList<IncludeOrUpdateContent> updateResources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -164,10 +164,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    List<IncludeOrUpdateResource> array = new List<IncludeOrUpdateResource>();
+                    List<IncludeOrUpdateContent> array = new List<IncludeOrUpdateContent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IncludeOrUpdateResource.DeserializeIncludeOrUpdateResource(item, options));
+                        array.Add(IncludeOrUpdateContent.DeserializeIncludeOrUpdateContent(item, options));
                     }
                     includeResources = array;
                     continue;
@@ -199,10 +199,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    List<IncludeOrUpdateResource> array = new List<IncludeOrUpdateResource>();
+                    List<IncludeOrUpdateContent> array = new List<IncludeOrUpdateContent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IncludeOrUpdateResource.DeserializeIncludeOrUpdateResource(item, options));
+                        array.Add(IncludeOrUpdateContent.DeserializeIncludeOrUpdateContent(item, options));
                     }
                     updateResources = array;
                     continue;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResourceLists(includeResources ?? new ChangeTrackingList<IncludeOrUpdateResource>(), excludeResources ?? new ChangeTrackingList<ResourceIdentifier>(), updateResources ?? new ChangeTrackingList<IncludeOrUpdateResource>(), additionalBinaryDataProperties);
+            return new ResourceLists(includeResources ?? new ChangeTrackingList<IncludeOrUpdateContent>(), excludeResources ?? new ChangeTrackingList<ResourceIdentifier>(), updateResources ?? new ChangeTrackingList<IncludeOrUpdateContent>(), additionalBinaryDataProperties);
         }
     }
 }
