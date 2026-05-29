@@ -13,9 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Visitors
@@ -65,11 +63,7 @@ namespace Azure.Generator.Management.Visitors
         internal static void AddMissingLastContractModelFactoryMethods(ModelFactoryProvider modelFactory)
         {
             var previousMethods = modelFactory.LastContractView?.Methods;
-            // Some older generated libraries do not populate LastContractView methods, but still have API
-            // baselines checked in. Use the baseline as a last-resort source for method names that must remain
-            // available so existing tests and callers can compile after regeneration.
-            var restoreOnlyMissingMethodNames = previousMethods is null || previousMethods.Count == 0;
-            if (restoreOnlyMissingMethodNames && !TryGetApiModelFactoryMethods(out previousMethods))
+            if (previousMethods is null || previousMethods.Count == 0)
             {
                 return;
             }
@@ -82,11 +76,6 @@ namespace Azure.Generator.Management.Visitors
                 var returnType = previousMethod.Signature.ReturnType;
                 if (returnType is null
                     || KnownManagementTypes.IsKnownManagementType(returnType)
-                    // API-baseline fallback is intentionally conservative: it restores only factory method names
-                    // that disappeared entirely. Signature-level compatibility still relies on LastContractView,
-                    // which has richer type information than the rendered API listing.
-                    || (restoreOnlyMissingMethodNames && methods.Any(method => method.Signature.Name == previousMethod.Signature.Name))
-                    || (restoreOnlyMissingMethodNames && customMethods.Any(method => method.Signature.Name == previousMethod.Signature.Name))
                     || methods.Any(method => HasSameCSharpSignature(method.Signature, previousMethod.Signature))
                     || customMethods.Any(method => HasSameCSharpSignature(method.Signature, previousMethod.Signature))
                     || !TryCreateBackwardCompatMethod(previousMethod, modelFactory, out var restoredMethod))
@@ -102,139 +91,6 @@ namespace Azure.Generator.Management.Visitors
             {
                 modelFactory.Update(methods: methods);
             }
-        }
-
-        private static bool TryGetApiModelFactoryMethods([NotNullWhen(true)] out IReadOnlyList<MethodProvider>? methods)
-        {
-            methods = null;
-            var apiDirectory = Path.Combine(ManagementClientGenerator.Instance.Configuration.OutputDirectory, "api");
-            if (!Directory.Exists(apiDirectory))
-            {
-                return false;
-            }
-
-            var apiFile = Directory.EnumerateFiles(apiDirectory, "*.cs").FirstOrDefault();
-            if (apiFile is null)
-            {
-                return false;
-            }
-
-            var modelProviders = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ModelProvider>().ToArray();
-            var modelProvidersByName = modelProviders.ToDictionary(model => model.Name, StringComparer.Ordinal);
-            var result = new List<MethodProvider>();
-            foreach (var line in File.ReadLines(apiFile))
-            {
-                if (!line.Contains("public static ", StringComparison.Ordinal)
-                    || !line.Contains(") { throw null; }", StringComparison.Ordinal))
-                {
-                    continue;
-                }
-
-                var match = Regex.Match(line, @"public static (?<returnType>[\w\.\?]+) (?<methodName>\w+)\((?<parameters>.*)\) \{ throw null; \}");
-                if (!match.Success
-                    || !modelProvidersByName.TryGetValue(match.Groups["methodName"].Value, out var modelProvider)
-                    || modelProvider.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Abstract))
-                {
-                    continue;
-                }
-
-                // Model factory methods are named after the model they create. Matching by method name lets us
-                // reattach the current model provider and rebuild the body from the current full constructor.
-                var parameterProviders = BuildParametersFromApiSignature(match.Groups["parameters"].Value, modelProvider);
-                var signature = new MethodSignature(
-                    modelProvider.Name,
-                    null,
-                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
-                    modelProvider.Type,
-                    null,
-                    parameterProviders);
-                result.Add(new MethodProvider(signature, MethodBodyStatement.Empty, modelProvider));
-            }
-
-            methods = result;
-            return result.Count > 0;
-        }
-
-        private static IReadOnlyList<ParameterProvider> BuildParametersFromApiSignature(string parameterList, ModelProvider modelProvider)
-        {
-            // The API listing gives us stable parameter names, but not generator PropertyProvider instances.
-            // Reconnect parameters to current public properties by the same name so constructor repair can reuse
-            // the existing property-to-constructor matching logic.
-            var propertiesByParameterName = EnumeratePublicProperties(modelProvider)
-                .GroupBy(property => property.Name.ToVariableName(), StringComparer.OrdinalIgnoreCase)
-                .ToDictionary(group => group.Key, group => group.First(), StringComparer.OrdinalIgnoreCase);
-            var parameters = new List<ParameterProvider>();
-            foreach (var parameter in SplitParameters(parameterList))
-            {
-                var parameterName = GetParameterName(parameter);
-                if (parameterName is null || !propertiesByParameterName.TryGetValue(parameterName, out var property))
-                {
-                    continue;
-                }
-
-                parameters.Add(new ParameterProvider(
-                    parameterName,
-                    $"",
-                    property.Type.InputType,
-                    Default,
-                    property: property));
-            }
-
-            return parameters;
-        }
-
-        private static IEnumerable<PropertyProvider> EnumeratePublicProperties(ModelProvider modelProvider)
-        {
-            var currentModel = modelProvider;
-            do
-            {
-                foreach (var property in currentModel.Properties)
-                {
-                    if (property.Modifiers.HasFlag(MethodSignatureModifiers.Public))
-                    {
-                        yield return property;
-                    }
-                }
-
-                currentModel = currentModel.BaseModelProvider;
-            }
-            while (currentModel is not null);
-        }
-
-        private static IEnumerable<string> SplitParameters(string parameterList)
-        {
-            var start = 0;
-            var depth = 0;
-            for (var i = 0; i < parameterList.Length; i++)
-            {
-                switch (parameterList[i])
-                {
-                    case '<':
-                    case '(':
-                        depth++;
-                        break;
-                    case '>':
-                    case ')':
-                        depth--;
-                        break;
-                    case ',' when depth == 0:
-                        yield return parameterList[start..i].Trim();
-                        start = i + 1;
-                        break;
-                }
-            }
-
-            if (start < parameterList.Length)
-            {
-                yield return parameterList[start..].Trim();
-            }
-        }
-
-        private static string? GetParameterName(string parameter)
-        {
-            var declaration = parameter.Split('=')[0].Trim();
-            var lastSpace = declaration.LastIndexOf(' ');
-            return lastSpace < 0 ? null : declaration[(lastSpace + 1)..].TrimStart('@');
         }
 
         internal static void FixConstructorCalls(IReadOnlyList<MethodProvider> methods)
