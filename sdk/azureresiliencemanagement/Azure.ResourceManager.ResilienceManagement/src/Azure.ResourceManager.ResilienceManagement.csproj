@@ -5,6 +5,5 @@
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Azure.ResourceManager.ResilienceManagement</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 </Project>
