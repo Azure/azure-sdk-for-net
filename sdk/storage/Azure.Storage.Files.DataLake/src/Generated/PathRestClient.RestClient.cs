@@ -14,10 +14,13 @@ namespace Azure.Storage.Files.DataLake
     internal partial class PathRestClient
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
+        private static ResponseClassifier _pipelineMessageClassifier200202;
         private static ResponseClassifier _pipelineMessageClassifier201;
         private static ResponseClassifier _pipelineMessageClassifier202;
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+
+        private static ResponseClassifier PipelineMessageClassifier200202 => _pipelineMessageClassifier200202 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 202 });
 
         private static ResponseClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 ??= new StatusCodeClassifier(stackalloc ushort[] { 201 });
 
@@ -416,7 +419,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 uri.AppendQuery("timeout", TypeFormatters.ConvertToString(timeout), true);
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200202);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;

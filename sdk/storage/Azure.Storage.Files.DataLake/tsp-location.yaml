@@ -1,4 +1,4 @@
 repo: Azure/azure-rest-api-specs
 directory: "specification/storage/data-plane/DataLakeStorage"
-commit: d2765895f8a8ddf6c540fbf1ebfdf2ea7bfe490f
+commit: 6ace746acb1d79c3da7700a767fa2de77883e952
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-emitter-package.json"
