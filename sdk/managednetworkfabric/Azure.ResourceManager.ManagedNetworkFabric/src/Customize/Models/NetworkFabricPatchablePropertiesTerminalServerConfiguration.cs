@@ -6,19 +6,25 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text.Json;
 using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Network and credentials configuration already applied to terminal server. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This type is obsolete and will be removed in a future version. Use NetworkFabricTerminalServerPatchConfiguration instead.")]
     public partial class NetworkFabricPatchablePropertiesTerminalServerConfiguration : TerminalServerPatchableProperties, IJsonModel<NetworkFabricPatchablePropertiesTerminalServerConfiguration>, IPersistableModel<NetworkFabricPatchablePropertiesTerminalServerConfiguration>
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricPatchablePropertiesTerminalServerConfiguration"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This constructor is obsolete and will be removed in a future version. Use NetworkFabricTerminalServerPatchConfiguration instead.")]
         public NetworkFabricPatchablePropertiesTerminalServerConfiguration()
         {
         }
 
+        [Obsolete("This constructor is obsolete and will be removed in a future version. Use NetworkFabricTerminalServerPatchConfiguration instead.")]
         internal NetworkFabricPatchablePropertiesTerminalServerConfiguration(string username, string password, string serialNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix)
             : base(username, password, serialNumber, additionalBinaryDataProperties)
         {

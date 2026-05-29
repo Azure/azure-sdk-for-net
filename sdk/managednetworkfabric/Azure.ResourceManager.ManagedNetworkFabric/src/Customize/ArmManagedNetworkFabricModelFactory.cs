@@ -56,6 +56,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static InternalNetworkBgpConfiguration InternalNetworkBgpConfiguration(string annotation = default, BfdConfiguration bfdConfiguration = default, NetworkFabricBooleanValue? defaultRouteOriginate = default, int? allowAS = default, AllowASOverride? allowASOverride = default, long? fabricAsn = default, long? peerAsn = default, IEnumerable<string> iPv4ListenRangePrefixes = default, IEnumerable<string> iPv6ListenRangePrefixes = default, IEnumerable<NeighborAddress> iPv4NeighborAddress = default, IEnumerable<NeighborAddress> iPv6NeighborAddress = default, InternalNetworkBmpProperties bmpConfiguration = default, NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession = default, NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession = default)
             => new InternalNetworkBgpConfiguration(annotation, additionalBinaryDataProperties: null, bfdConfiguration, defaultRouteOriginate, allowAS, allowASOverride, fabricAsn, peerAsn, (iPv4ListenRangePrefixes ?? new ChangeTrackingList<string>()).ToList(), (iPv6ListenRangePrefixes ?? new ChangeTrackingList<string>()).ToList(), (iPv4NeighborAddress ?? new ChangeTrackingList<NeighborAddress>()).ToList(), (iPv6NeighborAddress ?? new ChangeTrackingList<NeighborAddress>()).ToList(), bmpConfiguration, v4OverV6BgpSession, v6OverV4BgpSession);
 
+        /// <summary> Network and credential configuration currently applied on terminal server. </summary>
+        /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the Network To Network Interconnect. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <param name="peeringOption"> Peering option list. </param>
+        /// <param name="optionBProperties"> option B properties. </param>
+        /// <param name="optionAProperties"> option A properties. </param>
+        /// <returns> A new <see cref="Models.VpnConfigurationProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version. Use the overload with VpnOptionAProperties instead.")]
+        public static VpnConfigurationProperties VpnConfigurationProperties(ResourceIdentifier networkToNetworkInterconnectId = default, NetworkFabricAdministrativeState? administrativeState = default, PeeringOption peeringOption = default, OptionBProperties optionBProperties = default, VpnConfigurationOptionAProperties optionAProperties = default)
+        {
+            return new VpnConfigurationProperties(
+                networkToNetworkInterconnectId,
+                administrativeState,
+                peeringOption,
+                optionBProperties,
+                optionAProperties?.ToVpnOptionAProperties(),
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.InternalNetworkStaticRouteConfiguration"/>. </summary>
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
         /// <param name="iPv4Routes"> List of IPv4 Routes. </param>

@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the Network To Network Interconnect. </param>
         /// <param name="peeringOption"> Peering option list. </param>
         /// <param name="optionBProperties"> option B properties. </param>
-        /// <param name="optionAProperties"> option A properties. </param>
+        /// <param name="optionASettings"> option A properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VpnConfigurationPatchableProperties(ResourceIdentifier networkToNetworkInterconnectId, PeeringOption? peeringOption, OptionBProperties optionBProperties, VpnConfigurationPatchableOptionAProperties optionAProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VpnConfigurationPatchableProperties(ResourceIdentifier networkToNetworkInterconnectId, PeeringOption? peeringOption, OptionBProperties optionBProperties, VpnOptionAPatchProperties optionASettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkToNetworkInterconnectId = networkToNetworkInterconnectId;
             PeeringOption = peeringOption;
             OptionBProperties = optionBProperties;
-            OptionAProperties = optionAProperties;
+            OptionASettings = optionASettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public OptionBProperties OptionBProperties { get; set; }
 
         /// <summary> option A properties. </summary>
-        public VpnConfigurationPatchableOptionAProperties OptionAProperties { get; set; }
+        public VpnOptionAPatchProperties OptionASettings { get; set; }
     }
 }

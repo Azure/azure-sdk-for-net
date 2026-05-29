@@ -143,6 +143,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     [ModelReaderWriterBuildable(typeof(L3UniqueRouteDistinguisherProperties))]
     [ModelReaderWriterBuildable(typeof(LastOperationProperties))]
     [ModelReaderWriterBuildable(typeof(Layer2Configuration))]
+    [ModelReaderWriterBuildable(typeof(Layer3IPPrefixPatchProperties))]
     [ModelReaderWriterBuildable(typeof(Layer3IPPrefixProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedNetworkFabricResourcePatch))]
     [ModelReaderWriterBuildable(typeof(ManagedResourceGroupConfiguration))]
@@ -330,7 +331,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     [ModelReaderWriterBuildable(typeof(NniUpdateBfdAdministrativeStateResult))]
     [ModelReaderWriterBuildable(typeof(NpbStaticRouteConfiguration))]
     [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
-    [ModelReaderWriterBuildable(typeof(OptionAProperties))]
     [ModelReaderWriterBuildable(typeof(OptionBLayer3Configuration))]
     [ModelReaderWriterBuildable(typeof(OptionBLayer3PrefixLimitProperties))]
     [ModelReaderWriterBuildable(typeof(OptionBProperties))]
@@ -379,10 +379,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     [ModelReaderWriterBuildable(typeof(ViewDeviceConfigurationResponseProperties))]
     [ModelReaderWriterBuildable(typeof(VlanGroupProperties))]
     [ModelReaderWriterBuildable(typeof(VlanMatchCondition))]
-    [ModelReaderWriterBuildable(typeof(VpnConfigurationOptionAProperties))]
-    [ModelReaderWriterBuildable(typeof(VpnConfigurationPatchableOptionAProperties))]
     [ModelReaderWriterBuildable(typeof(VpnConfigurationPatchableProperties))]
     [ModelReaderWriterBuildable(typeof(VpnConfigurationProperties))]
+    [ModelReaderWriterBuildable(typeof(VpnOptionAPatchProperties))]
+    [ModelReaderWriterBuildable(typeof(VpnOptionAProperties))]
     public partial class AzureResourceManagerManagedNetworkFabricContext : ModelReaderWriterContext
     {
     }

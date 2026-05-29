@@ -2270,16 +2270,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="peeringOption"> Peering option list. </param>
         /// <param name="optionBProperties"> option B properties. </param>
-        /// <param name="optionAProperties"> option A properties. </param>
+        /// <param name="optionASettings"> option A properties. </param>
         /// <returns> A new <see cref="Models.VpnConfigurationProperties"/> instance for mocking. </returns>
-        public static VpnConfigurationProperties VpnConfigurationProperties(ResourceIdentifier networkToNetworkInterconnectId = default, NetworkFabricAdministrativeState? administrativeState = default, PeeringOption peeringOption = default, OptionBProperties optionBProperties = default, VpnConfigurationOptionAProperties optionAProperties = default)
+        public static VpnConfigurationProperties VpnConfigurationProperties(ResourceIdentifier networkToNetworkInterconnectId = default, NetworkFabricAdministrativeState? administrativeState = default, PeeringOption peeringOption = default, OptionBProperties optionBProperties = default, VpnOptionAProperties optionASettings = default)
         {
             return new VpnConfigurationProperties(
                 networkToNetworkInterconnectId,
                 administrativeState,
                 peeringOption,
                 optionBProperties,
-                optionAProperties,
+                optionASettings,
                 additionalBinaryDataProperties: null);
         }
 

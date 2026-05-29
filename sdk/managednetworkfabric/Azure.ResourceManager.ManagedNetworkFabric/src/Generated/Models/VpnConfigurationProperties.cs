@@ -29,15 +29,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="peeringOption"> Peering option list. </param>
         /// <param name="optionBProperties"> option B properties. </param>
-        /// <param name="optionAProperties"> option A properties. </param>
+        /// <param name="optionASettings"> option A properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VpnConfigurationProperties(ResourceIdentifier networkToNetworkInterconnectId, NetworkFabricAdministrativeState? administrativeState, PeeringOption peeringOption, OptionBProperties optionBProperties, VpnConfigurationOptionAProperties optionAProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VpnConfigurationProperties(ResourceIdentifier networkToNetworkInterconnectId, NetworkFabricAdministrativeState? administrativeState, PeeringOption peeringOption, OptionBProperties optionBProperties, VpnOptionAProperties optionASettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkToNetworkInterconnectId = networkToNetworkInterconnectId;
             AdministrativeState = administrativeState;
             PeeringOption = peeringOption;
             OptionBProperties = optionBProperties;
-            OptionAProperties = optionAProperties;
+            OptionASettings = optionASettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -54,6 +54,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public OptionBProperties OptionBProperties { get; set; }
 
         /// <summary> option A properties. </summary>
-        public VpnConfigurationOptionAProperties OptionAProperties { get; set; }
+        public VpnOptionAProperties OptionASettings { get; set; }
     }
 }

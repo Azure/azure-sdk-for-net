@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("optionBProperties"u8);
                 writer.WriteObjectValue(OptionBProperties, options);
             }
-            if (Optional.IsDefined(OptionAProperties))
+            if (Optional.IsDefined(OptionASettings))
             {
                 writer.WritePropertyName("optionAProperties"u8);
-                writer.WriteObjectValue(OptionAProperties, options);
+                writer.WriteObjectValue(OptionASettings, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ResourceIdentifier networkToNetworkInterconnectId = default;
             PeeringOption? peeringOption = default;
             OptionBProperties optionBProperties = default;
-            VpnConfigurationPatchableOptionAProperties optionAProperties = default;
+            VpnOptionAPatchProperties optionASettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    optionAProperties = VpnConfigurationPatchableOptionAProperties.DeserializeVpnConfigurationPatchableOptionAProperties(prop.Value, options);
+                    optionASettings = VpnOptionAPatchProperties.DeserializeVpnOptionAPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VpnConfigurationPatchableProperties(networkToNetworkInterconnectId, peeringOption, optionBProperties, optionAProperties, additionalBinaryDataProperties);
+            return new VpnConfigurationPatchableProperties(networkToNetworkInterconnectId, peeringOption, optionBProperties, optionASettings, additionalBinaryDataProperties);
         }
     }
 }

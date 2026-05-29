@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public partial class NetworkFabricPatch : NetworkRackPatch, IJsonModel<NetworkFabricPatch>, IPersistableModel<NetworkFabricPatch>
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricPatch"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This constructor is obsolete and will be removed in a future version. Use NetworkFabricPatchContent instead.")]
         public NetworkFabricPatch()
         {
         }
@@ -149,6 +151,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Network and credentials configuration already applied to terminal server. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future version. Use TerminalServerSettings instead.")]
         public NetworkFabricPatchablePropertiesTerminalServerConfiguration TerminalServerConfiguration
         {
             get

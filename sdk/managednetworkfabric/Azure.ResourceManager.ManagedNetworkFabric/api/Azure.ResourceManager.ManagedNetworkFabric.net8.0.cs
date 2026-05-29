@@ -2773,7 +2773,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.ViewDeviceConfigurationOperationResult ViewDeviceConfigurationOperationResult(Azure.Core.ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = default(double?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Models.OperationStatusResult> operations = null, Azure.ResponseError error = null, Azure.Core.ResourceIdentifier resourceId = null, System.Uri deviceConfigurationUri = null) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.VlanGroupProperties VlanGroupProperties(string name = null, System.Collections.Generic.IEnumerable<string> vlans = null) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.VlanMatchCondition VlanMatchCondition(System.Collections.Generic.IEnumerable<string> vlans = null, System.Collections.Generic.IEnumerable<string> innerVlans = null, System.Collections.Generic.IEnumerable<string> vlanGroupNames = null) { throw null; }
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future version. Use the overload with VpnOptionAProperties instead.")]
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationProperties VpnConfigurationProperties(Azure.Core.ResourceIdentifier networkToNetworkInterconnectId = null, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? administrativeState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState?), Azure.ResourceManager.ManagedNetworkFabric.Models.PeeringOption peeringOption = default(Azure.ResourceManager.ManagedNetworkFabric.Models.PeeringOption), Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBProperties optionBProperties = null, Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationOptionAProperties optionAProperties = null) { throw null; }
+        public static Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationProperties VpnConfigurationProperties(Azure.Core.ResourceIdentifier networkToNetworkInterconnectId = null, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? administrativeState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState?), Azure.ResourceManager.ManagedNetworkFabric.Models.PeeringOption peeringOption = default(Azure.ResourceManager.ManagedNetworkFabric.Models.PeeringOption), Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBProperties optionBProperties = null, Azure.ResourceManager.ManagedNetworkFabric.Models.VpnOptionAProperties optionASettings = null) { throw null; }
     }
     public partial class AuthorizedTransceiverPatchProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AuthorizedTransceiverPatchProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AuthorizedTransceiverPatchProperties>
     {
@@ -4409,6 +4411,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         Azure.ResourceManager.ManagedNetworkFabric.Models.Layer2Configuration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.Layer2Configuration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.Layer2Configuration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.Layer2Configuration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class Layer3IPPrefixPatchProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixPatchProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixPatchProperties>
+    {
+        public Layer3IPPrefixPatchProperties() { }
+        public string PrimaryIPv4Prefix { get { throw null; } set { } }
+        public string PrimaryIPv6Prefix { get { throw null; } set { } }
+        public string SecondaryIPv4Prefix { get { throw null; } set { } }
+        public string SecondaryIPv6Prefix { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixPatchProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixPatchProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixPatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixPatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixPatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixPatchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixPatchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixPatchProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixPatchProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class Layer3IPPrefixProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixProperties>
     {
@@ -6084,6 +6103,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     [System.ObsoleteAttribute("This compatibility type is obsolete and will be removed in a future version. Use NetworkFabricPatchContent instead.")]
     public partial class NetworkFabricPatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPatch>
     {
+        [System.ObsoleteAttribute("This constructor is obsolete and will be removed in a future version. Use NetworkFabricPatchContent instead.")]
         public NetworkFabricPatch() { }
         public string Annotation { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.AuthorizedTransceiverPatchProperties AuthorizedTransceiver { get { throw null; } set { } }
@@ -6099,6 +6119,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public int? RackCount { get { throw null; } set { } }
         public int? ServerCountPerRack { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.StorageAccountPatchConfiguration StorageAccountConfiguration { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Use TerminalServerSettings instead.")]
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPatchablePropertiesTerminalServerConfiguration TerminalServerConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> TrustedIPPrefixes { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.UniqueRouteDistinguisherPatchProperties UniqueRdConfiguration { get { throw null; } set { } }
@@ -6112,8 +6133,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future version. Use NetworkFabricTerminalServerPatchConfiguration instead.")]
     public partial class NetworkFabricPatchablePropertiesTerminalServerConfiguration : Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerPatchableProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPatchablePropertiesTerminalServerConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPatchablePropertiesTerminalServerConfiguration>
     {
+        [System.ObsoleteAttribute("This constructor is obsolete and will be removed in a future version. Use NetworkFabricTerminalServerPatchConfiguration instead.")]
         public NetworkFabricPatchablePropertiesTerminalServerConfiguration() { }
         public string PrimaryIPv4Prefix { get { throw null; } set { } }
         public string PrimaryIPv6Prefix { get { throw null; } set { } }
@@ -6146,6 +6169,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public int? RackCount { get { throw null; } set { } }
         public int? ServerCountPerRack { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.StorageAccountPatchConfiguration StorageAccountConfiguration { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Use TerminalServerSettings instead.")]
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPatchablePropertiesTerminalServerConfiguration TerminalServerConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricTerminalServerPatchConfiguration TerminalServerSettings { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> TrustedIPPrefixes { get { throw null; } }
@@ -7306,8 +7330,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NpbStaticRouteConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NpbStaticRouteConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future version. Use VpnOptionAProperties or VpnOptionAPatchProperties instead.")]
     public partial class OptionAProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.OptionAProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.OptionAProperties>
     {
+        [System.ObsoleteAttribute("This constructor is obsolete and will be removed in a future version. Use VpnOptionAProperties or VpnOptionAPatchProperties instead.")]
         public OptionAProperties() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.BfdConfiguration BfdConfiguration { get { throw null; } set { } }
         public int? Mtu { get { throw null; } set { } }
@@ -7867,8 +7893,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future version. Use NetworkFabricTerminalServerPatchConfiguration instead.")]
     public partial class TerminalServerPatchableProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerPatchableProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerPatchableProperties>
     {
+        [System.ObsoleteAttribute("This constructor is obsolete and will be removed in a future version. Use NetworkFabricTerminalServerPatchConfiguration instead.")]
         public TerminalServerPatchableProperties() { }
         public string Password { get { throw null; } set { } }
         public string SerialNumber { get { throw null; } set { } }
@@ -8108,8 +8136,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VlanMatchCondition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VlanMatchCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future version. Use VpnOptionAProperties instead.")]
     public partial class VpnConfigurationOptionAProperties : Azure.ResourceManager.ManagedNetworkFabric.Models.OptionAProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationOptionAProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationOptionAProperties>
     {
+        [System.ObsoleteAttribute("This constructor is obsolete and will be removed in a future version. Use VpnOptionAProperties instead.")]
         public VpnConfigurationOptionAProperties() { }
         public string PrimaryIPv4Prefix { get { throw null; } set { } }
         public string PrimaryIPv6Prefix { get { throw null; } set { } }
@@ -8125,8 +8155,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationOptionAProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationOptionAProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future version. Use VpnOptionAPatchProperties instead.")]
     public partial class VpnConfigurationPatchableOptionAProperties : Azure.ResourceManager.ManagedNetworkFabric.Models.OptionAProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationPatchableOptionAProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationPatchableOptionAProperties>
     {
+        [System.ObsoleteAttribute("This constructor is obsolete and will be removed in a future version. Use VpnOptionAPatchProperties instead.")]
         public VpnConfigurationPatchableOptionAProperties() { }
         public string PrimaryIPv4Prefix { get { throw null; } set { } }
         public string PrimaryIPv6Prefix { get { throw null; } set { } }
@@ -8146,7 +8178,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     {
         public VpnConfigurationPatchableProperties() { }
         public Azure.Core.ResourceIdentifier NetworkToNetworkInterconnectId { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Use OptionASettings instead.")]
         public Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationPatchableOptionAProperties OptionAProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.ManagedNetworkFabric.Models.VpnOptionAPatchProperties OptionASettings { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBProperties OptionBProperties { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.PeeringOption? PeeringOption { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationPatchableProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -8164,7 +8198,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public VpnConfigurationProperties(Azure.ResourceManager.ManagedNetworkFabric.Models.PeeringOption peeringOption) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? AdministrativeState { get { throw null; } }
         public Azure.Core.ResourceIdentifier NetworkToNetworkInterconnectId { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Use OptionASettings instead.")]
         public Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationOptionAProperties OptionAProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.ManagedNetworkFabric.Models.VpnOptionAProperties OptionASettings { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBProperties OptionBProperties { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.PeeringOption PeeringOption { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -8176,6 +8212,40 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VpnOptionAPatchProperties : Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixPatchProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnOptionAPatchProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnOptionAPatchProperties>
+    {
+        public VpnOptionAPatchProperties() { }
+        public Azure.ResourceManager.ManagedNetworkFabric.Models.BfdPatchConfiguration BfdConfiguration { get { throw null; } set { } }
+        public int? Mtu { get { throw null; } set { } }
+        public long? PeerAsn { get { throw null; } set { } }
+        public int? VlanId { get { throw null; } set { } }
+        protected override Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixPatchProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixPatchProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.VpnOptionAPatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnOptionAPatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnOptionAPatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.VpnOptionAPatchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnOptionAPatchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnOptionAPatchProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnOptionAPatchProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VpnOptionAProperties : Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnOptionAProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnOptionAProperties>
+    {
+        public VpnOptionAProperties(int vlanId, long peerAsn) { }
+        public Azure.ResourceManager.ManagedNetworkFabric.Models.BfdConfiguration BfdConfiguration { get { throw null; } set { } }
+        public int? Mtu { get { throw null; } set { } }
+        public long PeerAsn { get { throw null; } set { } }
+        public int VlanId { get { throw null; } set { } }
+        protected override Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.VpnOptionAProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnOptionAProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnOptionAProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.VpnOptionAProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnOptionAProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnOptionAProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnOptionAProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct WellKnownCommunity : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.WellKnownCommunity>

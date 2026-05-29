@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("optionBProperties"u8);
                 writer.WriteObjectValue(OptionBProperties, options);
             }
-            if (Optional.IsDefined(OptionAProperties))
+            if (Optional.IsDefined(OptionASettings))
             {
                 writer.WritePropertyName("optionAProperties"u8);
-                writer.WriteObjectValue(OptionAProperties, options);
+                writer.WriteObjectValue(OptionASettings, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             NetworkFabricAdministrativeState? administrativeState = default;
             PeeringOption peeringOption = default;
             OptionBProperties optionBProperties = default;
-            VpnConfigurationOptionAProperties optionAProperties = default;
+            VpnOptionAProperties optionASettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    optionAProperties = VpnConfigurationOptionAProperties.DeserializeVpnConfigurationOptionAProperties(prop.Value, options);
+                    optionASettings = VpnOptionAProperties.DeserializeVpnOptionAProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 administrativeState,
                 peeringOption,
                 optionBProperties,
-                optionAProperties,
+                optionASettings,
                 additionalBinaryDataProperties);
         }
     }
