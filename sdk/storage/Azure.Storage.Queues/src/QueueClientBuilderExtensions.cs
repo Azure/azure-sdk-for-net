@@ -9,7 +9,6 @@ using Azure.Core;
 using Azure.Core.Extensions;
 using Azure.Storage;
 using Azure.Storage.Queues;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Microsoft.Extensions.Azure
 {
@@ -75,25 +74,6 @@ namespace Microsoft.Extensions.Azure
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<QueueServiceClient, QueueClientOptions>(configuration);
-        }
-
-        /// <summary> Registers a <see cref="QueueClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="queueUri"></param>
-        /// <param name="credential"></param>
-        public static IAzureClientBuilder<QueueClient, QueueClientOptions> AddQueueClient<TBuilder>(this TBuilder builder, Uri queueUri, StorageSharedKeyCredential credential)
-            where TBuilder : IAzureClientFactoryBuilder
-        {
-            return builder.RegisterClientFactory<QueueClient, QueueClientOptions>(options => new QueueClient(queueUri, credential, options));
-        }
-
-        /// <summary> Registers a <see cref="QueueClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="queueUri"></param>
-        public static IAzureClientBuilder<QueueClient, QueueClientOptions> AddQueueClient<TBuilder>(this TBuilder builder, Uri queueUri)
-            where TBuilder : IAzureClientFactoryBuilderWithCredential
-        {
-            return builder.RegisterClientFactory<QueueClient, QueueClientOptions>((options, credential) => new QueueClient(queueUri, credential, options));
         }
     }
 }
