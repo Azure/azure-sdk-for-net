@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The date when the payment was attempted. </summary>
+        [WirePath("date")]
         public DateTimeOffset? On { get; }
 
         /// <summary> The reason that the payment failed. </summary>
+        [WirePath("failedPaymentReason")]
         public BillingInvoiceFailedPaymentReason? FailedPaymentReason { get; }
     }
 }

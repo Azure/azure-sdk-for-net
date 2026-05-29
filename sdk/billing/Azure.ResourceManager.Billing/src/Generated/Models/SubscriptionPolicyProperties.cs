@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The provisioning state of the resource during a long-running operation. </summary>
+        [WirePath("provisioningState")]
         public BillingProvisioningState? ProvisioningState { get; }
 
         /// <summary> List of all policies defined at the billing scope. </summary>
+        [WirePath("policies")]
         public IList<BillingPolicySummary> Policies { get; }
     }
 }

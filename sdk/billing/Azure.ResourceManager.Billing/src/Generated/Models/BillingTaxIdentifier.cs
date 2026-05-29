@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -39,18 +40,23 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The id of the tax identifier. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
 
         /// <summary> The type of the tax identifier. </summary>
+        [WirePath("type")]
         public BillingTaxIdentifierType? IdentifierType { get; set; }
 
         /// <summary> The scope of the tax identifier. </summary>
+        [WirePath("scope")]
         public string Scope { get; set; }
 
         /// <summary> The country of the tax identifier. </summary>
+        [WirePath("country")]
         public string Country { get; set; }
 
         /// <summary> The status of the tax identifier. </summary>
+        [WirePath("status")]
         public BillingTaxIdentifierStatus? Status { get; set; }
     }
 }

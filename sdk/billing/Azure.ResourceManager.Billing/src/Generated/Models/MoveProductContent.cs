@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The destination invoice section id. </summary>
+        [WirePath("destinationInvoiceSectionId")]
         public ResourceIdentifier DestinationInvoiceSectionId { get; }
     }
 }

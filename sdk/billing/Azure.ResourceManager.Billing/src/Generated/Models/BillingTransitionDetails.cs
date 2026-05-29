@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The transition completion date. </summary>
+        [WirePath("transitionDate")]
         public DateTimeOffset? TransitionOn { get; }
 
         /// <summary> The anniversary day of the pre-transitioned account of type Microsoft Online Services Program. </summary>
+        [WirePath("anniversaryDay")]
         public int? AnniversaryDay { get; }
     }
 }

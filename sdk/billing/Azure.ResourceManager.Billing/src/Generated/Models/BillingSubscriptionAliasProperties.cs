@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -72,6 +73,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The ID of the billing subscription with the subscription alias. </summary>
+        [WirePath("billingSubscriptionId")]
         public string SubscriptionAliasSubscriptionId { get; }
     }
 }

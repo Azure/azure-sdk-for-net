@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -43,27 +44,35 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Type of the Applied Scope. </summary>
+        [WirePath("appliedScopeType")]
         public BillingAppliedScopeType? AppliedScopeType { get; set; }
 
         /// <summary> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </summary>
+        [WirePath("appliedScopeProperties")]
         public ReservationAppliedScopeProperties AppliedScopeProperties { get; set; }
 
         /// <summary> Turning this on will apply the reservation discount to other VMs in the same VM size group. Only specify for VirtualMachines reserved resource type. </summary>
+        [WirePath("instanceFlexibility")]
         public InstanceFlexibility? InstanceFlexibility { get; set; }
 
         /// <summary> Display name of the reservation. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
 
         /// <summary> Setting this to true will automatically purchase a new benefit on the expiration date time. </summary>
+        [WirePath("renew")]
         public bool? IsRenewed { get; set; }
 
         /// <summary> Gets or sets the RenewProperties. </summary>
+        [WirePath("renewProperties")]
         internal PatchPropertiesRenewProperties RenewProperties { get; set; }
 
         /// <summary> This is the date-time when the Azure hybrid benefit needs to be reviewed. </summary>
+        [WirePath("reviewDateTime")]
         public DateTimeOffset? ReviewOn { get; set; }
 
         /// <summary> The request for reservation purchase. </summary>
+        [WirePath("renewProperties.purchaseProperties")]
         public ReservationPurchaseRequest PurchaseProperties
         {
             get

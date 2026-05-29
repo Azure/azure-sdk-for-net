@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The policy override for the subscription indicates whether the self-serve cancellation or seat reduction is allowed. </summary>
+        [WirePath("cancellation")]
         public PolicyOverrideCancellation? Cancellation { get; }
 
         /// <summary> The end date in UTC time by when the self-serve cancellation ends. </summary>
+        [WirePath("cancellationAllowedEndDate")]
         public DateTimeOffset? CancellationAllowedEndOn { get; }
     }
 }

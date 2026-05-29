@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -33,12 +34,15 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The SKU to be applied for this resource. </summary>
+        [WirePath("sku")]
         internal BillingSku Sku { get; set; }
 
         /// <summary> Purchase request properties. </summary>
+        [WirePath("properties")]
         internal PurchaseRequestProperties Properties { get; set; }
 
         /// <summary> Name of the SKU to be applied. </summary>
+        [WirePath("sku.name")]
         public string SkuName
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Friendly name of the savings plan. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -73,6 +78,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Subscription that will be charged for purchasing SavingsPlan. </summary>
+        [WirePath("properties.billingScopeId")]
         public string BillingScopeId
         {
             get
@@ -90,6 +96,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Represents the Savings plan term in ISO 8601 format. </summary>
+        [WirePath("properties.term")]
         public BillingSavingsPlanTerm? Term
         {
             get
@@ -107,6 +114,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Represents the billing plan in ISO 8601 format. Required only for monthly purchases. </summary>
+        [WirePath("properties.billingPlan")]
         public BillingPlan? BillingPlan
         {
             get
@@ -124,6 +132,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Type of the Applied Scope. </summary>
+        [WirePath("properties.appliedScopeType")]
         public BillingAppliedScopeType? AppliedScopeType
         {
             get
@@ -141,6 +150,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Commitment towards the benefit. </summary>
+        [WirePath("properties.commitment")]
         public BillingBenefitCommitment Commitment
         {
             get
@@ -158,6 +168,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Setting this to true will automatically purchase a new benefit on the expiration date time. </summary>
+        [WirePath("properties.renew")]
         public bool? IsRenewed
         {
             get
@@ -175,6 +186,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Properties specific to applied scope type. Not required if not applicable. </summary>
+        [WirePath("properties.appliedScopeProperties")]
         public BillingAppliedScopeProperties AppliedScopeProperties
         {
             get

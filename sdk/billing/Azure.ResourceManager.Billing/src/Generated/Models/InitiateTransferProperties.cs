@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The email ID of the recipient to whom the transfer request is sent. </summary>
+        [WirePath("recipientEmailId")]
         public string RecipientEmailId { get; set; }
     }
 }

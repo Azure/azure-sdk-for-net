@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The time in UTC when the download URL will expire. </summary>
+        [WirePath("expiryTime")]
         public DateTimeOffset? ExpireOn { get; }
 
         /// <summary> The URL to the PDF or .zip file. </summary>
+        [WirePath("url")]
         public Uri Uri { get; }
     }
 }

@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The status of validation. </summary>
+        [WirePath("status")]
         public string Status { get; }
 
         /// <summary> The product id for which this result applies. </summary>
+        [WirePath("productId")]
         public string ProductId { get; }
 
         /// <summary> The array of validation results. </summary>
+        [WirePath("results")]
         public IReadOnlyList<BillingTransferValidationResultProperties> Results { get; } = new ChangeTrackingList<BillingTransferValidationResultProperties>();
     }
 }

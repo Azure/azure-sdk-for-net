@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -39,21 +40,27 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Display name. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
 
         /// <summary> Type of the Applied Scope. </summary>
+        [WirePath("appliedScopeType")]
         public BillingAppliedScopeType? AppliedScopeType { get; set; }
 
         /// <summary> Properties specific to applied scope type. Not required if not applicable. </summary>
+        [WirePath("appliedScopeProperties")]
         public BillingAppliedScopeProperties AppliedScopeProperties { get; set; }
 
         /// <summary> Setting this to true will automatically purchase a new benefit on the expiration date time. </summary>
+        [WirePath("renew")]
         public bool? IsRenewed { get; set; }
 
         /// <summary> Properties specific to renew. </summary>
+        [WirePath("renewProperties")]
         internal BillingRenewProperties RenewProperties { get; set; }
 
         /// <summary> Purchase request. </summary>
+        [WirePath("renewProperties.purchaseProperties")]
         public BillingPurchaseProperties RenewPurchaseProperties
         {
             get

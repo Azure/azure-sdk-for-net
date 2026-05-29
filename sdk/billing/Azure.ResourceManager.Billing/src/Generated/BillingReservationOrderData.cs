@@ -43,15 +43,19 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The properties associated to this reservation order. </summary>
+        [WirePath("properties")]
         internal ReservationOrderProperty Properties { get; set; }
 
         /// <summary> Gets or sets the ETag. </summary>
+        [WirePath("etag")]
         public int? ETag { get; set; }
 
         /// <summary> Tags for this reservation. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Friendly name for user to easily identified the reservation order. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -69,6 +73,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Enrollment id of the reservation order. </summary>
+        [WirePath("properties.enrollmentId")]
         public string EnrollmentId
         {
             get
@@ -86,6 +91,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Fully-qualified identifier of the customerId where the benefit is applied. Present only for Enterprise Agreement PartnerLed customers. </summary>
+        [WirePath("properties.customerId")]
         public ResourceIdentifier CustomerId
         {
             get
@@ -103,6 +109,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Billing profile Id associated to this reservation order. </summary>
+        [WirePath("properties.billingProfileId")]
         public ResourceIdentifier BillingProfileId
         {
             get
@@ -120,6 +127,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Billing account Id associated to this reservation order. </summary>
+        [WirePath("properties.billingAccountId")]
         public ResourceIdentifier BillingAccountId
         {
             get
@@ -137,6 +145,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> This is the DateTime when the reservation order was initially requested for purchase. </summary>
+        [WirePath("properties.requestDateTime")]
         public DateTimeOffset? RequestOn
         {
             get
@@ -154,6 +163,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> This is the DateTime when the reservation order was created. </summary>
+        [WirePath("properties.createdDateTime")]
         public DateTimeOffset? CreatedOn
         {
             get
@@ -171,6 +181,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> This is the date when the reservation order will expire. </summary>
+        [WirePath("properties.expiryDate")]
         public DateTimeOffset? ExpireOn
         {
             get
@@ -188,6 +199,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> This is the date-time when the reservation order will expire. </summary>
+        [WirePath("properties.expiryDateTime")]
         public DateTimeOffset? ReservationExpireOn
         {
             get
@@ -205,6 +217,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> This is the DateTime when the reservation benefit started. </summary>
+        [WirePath("properties.benefitStartTime")]
         public DateTimeOffset? BenefitStartOn
         {
             get
@@ -222,6 +235,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Total original quantity of the skus purchased in the reservation order. </summary>
+        [WirePath("properties.originalQuantity")]
         public int? OriginalQuantity
         {
             get
@@ -239,6 +253,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The term of the reservation, e.g. P1Y. </summary>
+        [WirePath("properties.term")]
         public string Term
         {
             get
@@ -248,6 +263,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The provisioning state of the reservation, e.g. Succeeded. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get
@@ -257,6 +273,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Represent the billing plans. </summary>
+        [WirePath("properties.billingPlan")]
         public ReservationBillingPlan? BillingPlan
         {
             get
@@ -274,6 +291,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Information describing the type of billing plan for this reservation order. </summary>
+        [WirePath("properties.planInformation")]
         public ReservationOrderBillingPlanInformation PlanInformation
         {
             get
@@ -291,6 +309,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Gets the Reservations. </summary>
+        [WirePath("properties.reservations")]
         public IList<BillingReservationData> Reservations
         {
             get
@@ -304,6 +323,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> This is the date-time when the Azure Hybrid Benefit needs to be reviewed. </summary>
+        [WirePath("properties.reviewDateTime")]
         public DateTimeOffset? ReviewedOn
         {
             get
@@ -321,6 +341,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Extended status information for the reservation. </summary>
+        [WirePath("properties.extendedStatusInfo")]
         public ReservationExtendedStatusInfo ExtendedStatusInfo
         {
             get
@@ -338,6 +359,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Represents UPN. </summary>
+        [WirePath("properties.productCode")]
         public string ProductCode
         {
             get

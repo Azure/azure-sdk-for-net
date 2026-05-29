@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The link (url) to the next page of results. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
 
         /// <summary> Total number of records. </summary>
+        [WirePath("totalCount")]
         public int? TotalCount { get; }
 
         /// <summary> The list of resources. </summary>
+        [WirePath("value")]
         public IReadOnlyList<BillingSubscriptionData> Value { get; }
     }
 }

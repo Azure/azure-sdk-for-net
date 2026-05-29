@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -40,18 +41,23 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Tenant ID where the savings plan where the benefit is applied. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; set; }
 
         /// <summary> Fully-qualified identifier of the management group where the benefit is applied. </summary>
+        [WirePath("managementGroupId")]
         public ResourceIdentifier ManagementGroupId { get; set; }
 
         /// <summary> Fully-qualified identifier of the subscription where the benefit is applied. </summary>
+        [WirePath("subscriptionId")]
         public string SubscriptionId { get; set; }
 
         /// <summary> Fully-qualified identifier of the resource group where the benefit is applied. </summary>
+        [WirePath("resourceGroupId")]
         public ResourceIdentifier ResourceGroupId { get; set; }
 
         /// <summary> Display name. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
     }
 }

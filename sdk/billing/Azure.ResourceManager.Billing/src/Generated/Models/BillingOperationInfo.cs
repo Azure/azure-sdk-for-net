@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The name of the operation, as per Resource-Based Access Control (RBAC). Examples: "Microsoft.Compute/virtualMachines/write", "Microsoft.Compute/virtualMachines/capture/action". </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for ARM/control-plane operations. </summary>
+        [WirePath("isDataAction")]
         public bool? IsDataAction { get; }
 
         /// <summary> Localized display information for this particular operation. </summary>
+        [WirePath("display")]
         public BillingOperationDisplay Display { get; }
     }
 }

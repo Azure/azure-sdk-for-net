@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The billing account name of the partner or the customer for an indirect motion. </summary>
+        [WirePath("billingAccountName")]
         public string BillingAccountName { get; set; }
 
         /// <summary> The billing profile name of the partner or the customer for an indirect motion. </summary>
+        [WirePath("billingProfileName")]
         public string BillingProfileName { get; set; }
 
         /// <summary> The display name of the partner or customer for an indirect motion. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
     }
 }

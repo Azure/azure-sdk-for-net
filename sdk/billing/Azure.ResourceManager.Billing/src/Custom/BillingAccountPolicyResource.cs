@@ -10,9 +10,17 @@ namespace Azure.ResourceManager.Billing
 {
     public partial class BillingAccountPolicyResource
     {
+        // Back-compat shim — NOT a codegen bug. The MPG generator emits CreateOrUpdate
+        // for PUT operations per ARM resource conventions; the previous GA SDK exposed
+        // the same operation as Update via an AutoRest-side customization. We restore
+        // Update/UpdateAsync as thin EditorBrowsable(Never) wrappers so existing callers
+        // keep compiling. No spec or generator change can resolve this — the Resource
+        // method name is derived from HTTP verb (PUT→CreateOrUpdate, PATCH→Update),
+        // not from operation name; @@clientName affects the rest-client method name
+        // (CreateUpdateRequest) but not the public Resource method name.
+
         /// <summary>
-        /// Update is an alias for CreateOrUpdate, provided to satisfy the auto-generated tag boilerplate
-        /// on resources that only expose a PUT (CreateOrUpdate) operation in the service contract.
+        /// Update is an alias for CreateOrUpdate to preserve the GA 12.4.0 API surface.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<BillingAccountPolicyResource>> UpdateAsync(WaitUntil waitUntil, BillingAccountPolicyData data, CancellationToken cancellationToken = default)
@@ -21,8 +29,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Update is an alias for CreateOrUpdate, provided to satisfy the auto-generated tag boilerplate
-        /// on resources that only expose a PUT (CreateOrUpdate) operation in the service contract.
+        /// Update is an alias for CreateOrUpdate to preserve the GA 12.4.0 API surface.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<BillingAccountPolicyResource> Update(WaitUntil waitUntil, BillingAccountPolicyData data, CancellationToken cancellationToken = default)

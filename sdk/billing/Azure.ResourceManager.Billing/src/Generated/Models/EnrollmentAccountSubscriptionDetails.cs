@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The enrollment Account and the subscription association start date. This field is available only for the Enterprise Agreement Type. </summary>
+        [WirePath("enrollmentAccountStartDate")]
         public DateTimeOffset? EnrollmentAccountStartOn { get; }
 
         /// <summary> The current enrollment account status of the subscription. This field is available only for the Enterprise Agreement Type. </summary>
+        [WirePath("subscriptionEnrollmentAccountStatus")]
         public SubscriptionEnrollmentAccountStatus? SubscriptionEnrollmentAccountStatus { get; }
     }
 }

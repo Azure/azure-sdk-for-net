@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The trend for a savings plan's utilization. </summary>
+        [WirePath("trend")]
         public string Trend { get; }
 
         /// <summary> The array of aggregates of a savings plan's utilization. </summary>
+        [WirePath("aggregates")]
         public IReadOnlyList<SavingsPlanUtilizationAggregates> Aggregates { get; }
     }
 }

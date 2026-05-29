@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Request parameters to initiate partner transfer. </summary>
+        [WirePath("properties")]
         internal PartnerInitiateTransferProperties Properties { get; set; }
 
         /// <summary> The email ID of the recipient to whom the transfer request is sent. </summary>
+        [WirePath("properties.recipientEmailId")]
         public string RecipientEmailId
         {
             get
@@ -51,6 +54,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Optional MPN ID of the reseller for transfer requests that are sent from a Microsoft Partner Agreement billing account. </summary>
+        [WirePath("properties.resellerId")]
         public string ResellerId
         {
             get

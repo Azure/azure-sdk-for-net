@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Details of the transfer. </summary>
+        [WirePath("properties")]
         internal PartnerTransferProperties Properties { get; set; }
 
         /// <summary> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The time at which the transfer request expires. </summary>
+        [WirePath("properties.expirationTime")]
         public DateTimeOffset? ExpireOn
         {
             get
@@ -56,6 +59,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Overall transfer status. </summary>
+        [WirePath("properties.transferStatus")]
         public PartnerTransferStatus? TransferStatus
         {
             get
@@ -65,6 +69,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The email ID of the user to whom the transfer request was sent. </summary>
+        [WirePath("properties.recipientEmailId")]
         public string RecipientEmailId
         {
             get
@@ -74,6 +79,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The type of customer who sent the transfer request. </summary>
+        [WirePath("properties.initiatorCustomerType")]
         public InitiatorCustomerType? InitiatorCustomerType
         {
             get
@@ -83,6 +89,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The email ID of the user who sent the transfer request. </summary>
+        [WirePath("properties.initiatorEmailId")]
         public string InitiatorEmailId
         {
             get
@@ -92,6 +99,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Optional MPN ID of the reseller for transfer requests that are sent from a Microsoft Partner Agreement billing account. </summary>
+        [WirePath("properties.resellerId")]
         public string ResellerId
         {
             get
@@ -101,6 +109,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Optional name of the reseller for transfer requests that are sent from Microsoft Partner Agreement billing account. </summary>
+        [WirePath("properties.resellerName")]
         public string ResellerName
         {
             get
@@ -110,6 +119,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The email ID of the user who canceled the transfer request. </summary>
+        [WirePath("properties.canceledBy")]
         public string CanceledBy
         {
             get
@@ -119,6 +129,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Detailed transfer status. </summary>
+        [WirePath("properties.detailedTransferStatus")]
         public IReadOnlyList<DetailedTransferStatus> DetailedTransferStatus
         {
             get

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -29,6 +30,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Commitment grain. </summary>
+        [WirePath("grain")]
         public BillingBenefitCommitmentGrain? Grain { get; set; }
     }
 }

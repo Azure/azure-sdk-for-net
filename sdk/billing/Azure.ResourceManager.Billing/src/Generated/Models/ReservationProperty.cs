@@ -103,114 +103,151 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The reserved source type of the reservation, e.g. virtual machine. </summary>
+        [WirePath("reservedResourceType")]
         public string ReservedResourceType { get; }
 
         /// <summary> Allows reservation discount to be applied across skus within the same auto fit group. Not all skus support instance size flexibility. </summary>
+        [WirePath("instanceFlexibility")]
         public InstanceFlexibility? InstanceFlexibility { get; set; }
 
         /// <summary> The display name of the reservation. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
 
         /// <summary> The array of applied scopes of a reservation. Will be null if the reservation is in Shared scope. </summary>
+        [WirePath("appliedScopes")]
         public IList<string> AppliedScopes { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The applied scope type of the reservation. </summary>
+        [WirePath("appliedScopeType")]
         public string AppliedScopeType { get; }
 
         /// <summary> Indicates if the reservation is archived. </summary>
+        [WirePath("archived")]
         public bool? IsArchived { get; set; }
 
         /// <summary> Capabilities of the reservation. </summary>
+        [WirePath("capabilities")]
         public string Capabilities { get; set; }
 
         /// <summary> The number of the reservation. </summary>
+        [WirePath("quantity")]
         public float? Quantity { get; }
 
         /// <summary> The provisioning state of the reservation, e.g. Succeeded. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
 
         /// <summary> The effective date time of the reservation. </summary>
+        [WirePath("effectiveDateTime")]
         public DateTimeOffset? EffectiveOn { get; }
 
         /// <summary> This is the DateTime when the reservation benefit started. </summary>
+        [WirePath("benefitStartTime")]
         public DateTimeOffset? BenefitStartOn { get; set; }
 
         /// <summary> DateTime of the last time the reservation was updated. </summary>
+        [WirePath("lastUpdatedDateTime")]
         public DateTimeOffset? LastUpdatedOn { get; }
 
         /// <summary> The expiry date of the reservation. </summary>
+        [WirePath("expiryDate")]
         public DateTimeOffset? ExpireOn { get; }
 
         /// <summary> This is the date-time when the reservation will expire. </summary>
+        [WirePath("expiryDateTime")]
         public DateTimeOffset? ReservationExpireOn { get; set; }
 
         /// <summary> This is the date-time when the Azure Hybrid Benefit needs to be reviewed. </summary>
+        [WirePath("reviewDateTime")]
         public DateTimeOffset? ReviewOn { get; set; }
 
         /// <summary> The sku description of the reservation. </summary>
+        [WirePath("skuDescription")]
         public string SkuDescription { get; }
 
         /// <summary> The message giving detailed information about the status code. </summary>
+        [WirePath("extendedStatusInfo")]
         public ReservationExtendedStatusInfo ExtendedStatusInfo { get; set; }
 
         /// <summary> The billing plan options available for this sku. </summary>
+        [WirePath("billingPlan")]
         public ReservationBillingPlan? BillingPlan { get; set; }
 
         /// <summary> The provisioning state of the reservation for display, e.g. Succeeded. </summary>
+        [WirePath("displayProvisioningState")]
         public string DisplayProvisioningState { get; }
 
         /// <summary> The provisioning state of the reservation, e.g. Succeeded. </summary>
+        [WirePath("provisioningSubState")]
         public string ProvisioningSubState { get; }
 
         /// <summary> This is the date when the reservation was purchased. </summary>
+        [WirePath("purchaseDate")]
         public DateTimeOffset? PurchaseOn { get; set; }
 
         /// <summary> This is the date-time when the reservation was purchased. </summary>
+        [WirePath("purchaseDateTime")]
         public DateTimeOffset? ReservationPurchaseOn { get; set; }
 
         /// <summary> Properties of reservation split. </summary>
+        [WirePath("splitProperties")]
         public ReservationSplitProperties SplitProperties { get; set; }
 
         /// <summary> Properties of reservation merge. </summary>
+        [WirePath("mergeProperties")]
         public ReservationMergeProperties MergeProperties { get; set; }
 
         /// <summary> Properties of reservation swap. </summary>
+        [WirePath("swapProperties")]
         public ReservationSwapProperties SwapProperties { get; set; }
 
         /// <summary> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </summary>
+        [WirePath("appliedScopeProperties")]
         public ReservationAppliedScopeProperties AppliedScopeProperties { get; set; }
 
         /// <summary> Subscription that will be charged for purchasing reservation or savings plan. </summary>
+        [WirePath("billingScopeId")]
         public string BillingScopeId { get; }
 
         /// <summary> The renew state of the reservation. </summary>
+        [WirePath("renew")]
         public bool? IsRenewed { get; }
 
         /// <summary> The renew source of the reservation. </summary>
+        [WirePath("renewSource")]
         public string RenewSource { get; }
 
         /// <summary> Reservation Id of the reservation which is purchased because of renew. Format of the resource Id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </summary>
+        [WirePath("renewDestination")]
         public string RenewDestination { get; set; }
 
         /// <summary> The renew properties for a reservation. </summary>
+        [WirePath("renewProperties")]
         public ReservationRenewProperties RenewProperties { get; set; }
 
         /// <summary> The term of the reservation, e.g. P1Y. </summary>
+        [WirePath("term")]
         public string Term { get; }
 
         /// <summary> The applied scope type of the reservation for display, e.g. Shared. </summary>
+        [WirePath("userFriendlyAppliedScopeType")]
         public string UserFriendlyAppliedScopeType { get; }
 
         /// <summary> The renew state of the reservation for display, e.g. On. </summary>
+        [WirePath("userFriendlyRenewState")]
         public string UserFriendlyRenewState { get; }
 
         /// <summary> Reservation utilization. </summary>
+        [WirePath("utilization")]
         internal ReservationPropertyUtilization Utilization { get; }
 
         /// <summary> Represents UPN. </summary>
+        [WirePath("productCode")]
         public string ProductCode { get; set; }
 
         /// <summary> last 7 day utilization trend for a reservation. </summary>
+        [WirePath("utilization.trend")]
         public string Trend
         {
             get
@@ -220,6 +257,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The array of aggregates of a reservation's utilization. </summary>
+        [WirePath("utilization.aggregates")]
         public IList<ReservationUtilizationAggregates> Aggregates
         {
             get

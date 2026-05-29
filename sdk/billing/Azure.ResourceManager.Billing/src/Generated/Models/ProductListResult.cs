@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The Product items on this page. </summary>
+        [WirePath("value")]
         public IReadOnlyList<BillingProductData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

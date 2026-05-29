@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The ID that uniquely identifies a tenant. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; set; }
 
         /// <summary> The ID that uniquely identifies a user in a tenant. </summary>
+        [WirePath("objectId")]
         public string ObjectId { get; set; }
     }
 }

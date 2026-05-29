@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -35,9 +36,11 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Cancellation reason. </summary>
+        [WirePath("cancellationReason")]
         public CustomerSubscriptionCancellationReason CancellationReason { get; }
 
         /// <summary> The fully qualified ID that uniquely identifies a customer. </summary>
+        [WirePath("customerId")]
         public string CustomerId { get; set; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The short, localized friendly description of the operation; suitable for tool tips and detailed views. </summary>
+        [WirePath("description")]
         public string Description { get; }
 
         /// <summary> The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual Machine", "Restart Virtual Machine". </summary>
+        [WirePath("operation")]
         public string Operation { get; }
 
         /// <summary> The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft Compute". </summary>
+        [WirePath("provider")]
         public string Provider { get; }
 
         /// <summary> The localized friendly name of the resource type related to this operation. E.g. "Virtual Machines" or "Job Schedule Collections". </summary>
+        [WirePath("resource")]
         public string Resource { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -41,21 +42,27 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Type of product that is transferred. </summary>
+        [WirePath("productType")]
         public BillingProductType? ProductType { get; }
 
         /// <summary> The ID of the product that is transferred. </summary>
+        [WirePath("productId")]
         public string ProductId { get; }
 
         /// <summary> The name of the product that is transferred. </summary>
+        [WirePath("productName")]
         public string ProductName { get; }
 
         /// <summary> The SKU of the product that is transferred. </summary>
+        [WirePath("skuDescription")]
         public string SkuDescription { get; }
 
         /// <summary> Transfer status. </summary>
+        [WirePath("transferStatus")]
         public BillingProductTransferStatus? TransferStatus { get; }
 
         /// <summary> Error details for transfer execution. </summary>
+        [WirePath("errorDetails")]
         public BillingTransferError ErrorDetails { get; }
     }
 }

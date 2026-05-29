@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -36,15 +37,19 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The name of sku. </summary>
+        [WirePath("sku")]
         internal BillingSkuName Sku { get; set; }
 
         /// <summary> The Azure region where the reserved resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
 
         /// <summary> Properties of reservation purchase request. </summary>
+        [WirePath("properties")]
         internal ReservationPurchaseRequestProperties Properties { get; set; }
 
         /// <summary> Gets or sets the Name. </summary>
+        [WirePath("sku.name")]
         public string SkuName
         {
             get
@@ -62,6 +67,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The reserved source type of the reservation, e.g. virtual machine. </summary>
+        [WirePath("properties.reservedResourceType")]
         public string ReservedResourceType
         {
             get
@@ -71,6 +77,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Subscription that will be charged for purchasing reservation or savings plan. </summary>
+        [WirePath("properties.billingScopeId")]
         public string BillingScopeId
         {
             get
@@ -80,6 +87,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The term of the reservation, e.g. P1Y. </summary>
+        [WirePath("properties.term")]
         public string Term
         {
             get
@@ -89,6 +97,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Represent the billing plans. </summary>
+        [WirePath("properties.billingPlan")]
         public ReservationBillingPlan? BillingPlan
         {
             get
@@ -106,6 +115,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Quantity of the skus that are part of the reservation. Must be greater than zero. </summary>
+        [WirePath("properties.quantity")]
         public int? Quantity
         {
             get
@@ -123,6 +133,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Friendly name of the reservation. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -140,6 +151,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Type of the Applied Scope. </summary>
+        [WirePath("properties.appliedScopeType")]
         public BillingAppliedScopeType? AppliedScopeType
         {
             get
@@ -157,6 +169,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> List of the subscriptions that the benefit will be applied. Do not specify if AppliedScopeType is Shared. </summary>
+        [WirePath("properties.appliedScopes")]
         public IList<string> AppliedScopes
         {
             get
@@ -170,6 +183,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </summary>
+        [WirePath("properties.appliedScopeProperties")]
         public ReservationAppliedScopeProperties AppliedScopeProperties
         {
             get
@@ -187,6 +201,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Setting this to true will automatically purchase a new benefit on the expiration date time. </summary>
+        [WirePath("properties.renew")]
         public bool? IsRenewed
         {
             get
@@ -204,6 +219,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Allows reservation discount to be applied across skus within the same auto fit group. Not all skus support instance size flexibility. </summary>
+        [WirePath("properties.instanceFlexibility")]
         public InstanceFlexibility? InstanceFlexibility
         {
             get
@@ -221,6 +237,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> This is the date-time when the Azure hybrid benefit needs to be reviewed. </summary>
+        [WirePath("properties.reviewDateTime")]
         public DateTimeOffset? ReviewOn
         {
             get
@@ -238,6 +255,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Turning this on will apply the reservation discount to other VMs in the same VM size group. Only specify for VirtualMachines reserved resource type. </summary>
+        [WirePath("properties.reservedResourceProperties.instanceFlexibility")]
         public InstanceFlexibility? ReservedInstanceFlexibility
         {
             get

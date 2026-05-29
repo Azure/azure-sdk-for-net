@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
     }
 }

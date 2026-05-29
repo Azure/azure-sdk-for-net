@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The ID of the target billing subscription that will be merged with the source subscription provided in the request. </summary>
+        [WirePath("targetBillingSubscriptionName")]
         public string TargetBillingSubscriptionName { get; set; }
 
         /// <summary> The quantity of the source billing subscription that will be merged with the target billing subscription. </summary>
+        [WirePath("quantity")]
         public int? Quantity { get; set; }
     }
 }

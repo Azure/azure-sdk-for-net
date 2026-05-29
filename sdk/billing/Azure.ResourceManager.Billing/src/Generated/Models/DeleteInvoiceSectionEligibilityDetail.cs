@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Code for the delete invoice section validation. </summary>
+        [WirePath("code")]
         public DeleteInvoiceSectionEligibilityCode? Code { get; }
 
         /// <summary> Validation message. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

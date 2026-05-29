@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -47,30 +48,39 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The number of reservation in Cancelled state. </summary>
+        [WirePath("cancelledCount")]
         public float? CancelledCount { get; }
 
         /// <summary> The number of reservation in Expired state. </summary>
+        [WirePath("expiredCount")]
         public float? ExpiredCount { get; }
 
         /// <summary> The number of reservation in Expiring state. </summary>
+        [WirePath("expiringCount")]
         public float? ExpiringCount { get; }
 
         /// <summary> The number of reservation in Failed state. </summary>
+        [WirePath("failedCount")]
         public float? FailedCount { get; }
 
         /// <summary> The number of reservation in Pending state. </summary>
+        [WirePath("pendingCount")]
         public float? PendingCount { get; }
 
         /// <summary> The number of reservation in Succeeded state. </summary>
+        [WirePath("succeededCount")]
         public float? SucceededCount { get; }
 
         /// <summary> The number of reservation in 'No Benefit' state. </summary>
+        [WirePath("noBenefitCount")]
         public float? NoBenefitCount { get; }
 
         /// <summary> The number of reservation in Warning state. </summary>
+        [WirePath("warningCount")]
         public float? WarningCount { get; }
 
         /// <summary> The number of reservation in Processing state. </summary>
+        [WirePath("processingCount")]
         public float? ProcessingCount { get; }
     }
 }

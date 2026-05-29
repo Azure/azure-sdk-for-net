@@ -44,15 +44,19 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Savings plan order properties. </summary>
+        [WirePath("properties")]
         internal SavingsPlanOrderModelProperties Properties { get; set; }
 
         /// <summary> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Savings plan SKU. </summary>
+        [WirePath("sku")]
         internal BillingSku Sku { get; set; }
 
         /// <summary> Display name. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -70,6 +74,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The provisioning state of the savings plan, e.g. Succeeded. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get
@@ -79,6 +84,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Subscription that will be charged for purchasing SavingsPlan. </summary>
+        [WirePath("properties.billingScopeId")]
         public string BillingScopeId
         {
             get
@@ -96,6 +102,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Fully-qualified identifier of the billing profile where the savings plan is applied. Present only for Field-led or Customer-led customers. </summary>
+        [WirePath("properties.billingProfileId")]
         public ResourceIdentifier BillingProfileId
         {
             get
@@ -105,6 +112,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Fully-qualified identifier of the customer where the savings plan is applied. Present only for Partner-led customers. </summary>
+        [WirePath("properties.customerId")]
         public ResourceIdentifier CustomerId
         {
             get
@@ -114,6 +122,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Fully-qualified identifier of the billing account where the savings plan is applied. </summary>
+        [WirePath("properties.billingAccountId")]
         public ResourceIdentifier BillingAccountId
         {
             get
@@ -123,6 +132,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Represents the Savings plan term in ISO 8601 format. </summary>
+        [WirePath("properties.term")]
         public BillingSavingsPlanTerm? Term
         {
             get
@@ -140,6 +150,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Represents the billing plan in ISO 8601 format. Required only for monthly purchases. </summary>
+        [WirePath("properties.billingPlan")]
         public BillingPlan? BillingPlan
         {
             get
@@ -157,6 +168,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> DateTime when the savings plan benefit started. </summary>
+        [WirePath("properties.benefitStartTime")]
         public DateTimeOffset? BenefitStartOn
         {
             get
@@ -166,6 +178,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> DateTime when the savings plan will expire. </summary>
+        [WirePath("properties.expiryDateTime")]
         public DateTimeOffset? ExpiryOn
         {
             get
@@ -175,6 +188,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Information describing the type of billing plan for this savings plan. </summary>
+        [WirePath("properties.planInformation")]
         public BillingPlanInformation PlanInformation
         {
             get
@@ -192,6 +206,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Gets the SavingsPlans. </summary>
+        [WirePath("properties.savingsPlans")]
         public IList<string> SavingsPlans
         {
             get
@@ -205,6 +220,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Extended status information. </summary>
+        [WirePath("properties.extendedStatusInfo")]
         public ExtendedStatusInfo ExtendedStatusInfo
         {
             get
@@ -214,6 +230,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Represents UPN. </summary>
+        [WirePath("properties.productCode")]
         public string ProductCode
         {
             get
@@ -231,6 +248,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Name of the SKU to be applied. </summary>
+        [WirePath("sku.name")]
         public string SkuName
         {
             get

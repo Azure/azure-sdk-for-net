@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The MPN ID of the reseller. </summary>
+        [WirePath("resellerId")]
         public string ResellerId { get; }
 
         /// <summary> The name of the reseller. </summary>
+        [WirePath("description")]
         public string Description { get; }
     }
 }

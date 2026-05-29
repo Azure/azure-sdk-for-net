@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Request parameters to accept transfer. </summary>
+        [WirePath("properties")]
         internal AcceptTransferProperties Properties { get; set; }
 
         /// <summary> Request parameters to accept transfer. </summary>
+        [WirePath("properties.productDetails")]
         public IList<BillingProductDetails> ProductDetails
         {
             get

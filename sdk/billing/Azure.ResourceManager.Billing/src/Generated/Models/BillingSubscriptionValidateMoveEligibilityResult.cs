@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Specifies whether the subscription is eligible to be transferred. </summary>
+        [WirePath("isMoveEligible")]
         public bool? IsMoveEligible { get; }
 
         /// <summary> Error details of the transfer eligibility validation. </summary>
+        [WirePath("errorDetails")]
         public BillingSubscriptionValidateMoveEligibilityError ErrorDetails { get; }
     }
 }

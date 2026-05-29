@@ -57,45 +57,59 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The reserved source type of the reservation, e.g. virtual machine. </summary>
+        [WirePath("reservedResourceType")]
         public string ReservedResourceType { get; }
 
         /// <summary> Subscription that will be charged for purchasing reservation or savings plan. </summary>
+        [WirePath("billingScopeId")]
         public string BillingScopeId { get; }
 
         /// <summary> The term of the reservation, e.g. P1Y. </summary>
+        [WirePath("term")]
         public string Term { get; }
 
         /// <summary> Represent the billing plans. </summary>
+        [WirePath("billingPlan")]
         public ReservationBillingPlan? BillingPlan { get; set; }
 
         /// <summary> Quantity of the skus that are part of the reservation. Must be greater than zero. </summary>
+        [WirePath("quantity")]
         public int? Quantity { get; set; }
 
         /// <summary> Friendly name of the reservation. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
 
         /// <summary> Type of the Applied Scope. </summary>
+        [WirePath("appliedScopeType")]
         public BillingAppliedScopeType? AppliedScopeType { get; set; }
 
         /// <summary> List of the subscriptions that the benefit will be applied. Do not specify if AppliedScopeType is Shared. </summary>
+        [WirePath("appliedScopes")]
         public IList<string> AppliedScopes { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </summary>
+        [WirePath("appliedScopeProperties")]
         public ReservationAppliedScopeProperties AppliedScopeProperties { get; set; }
 
         /// <summary> Setting this to true will automatically purchase a new benefit on the expiration date time. </summary>
+        [WirePath("renew")]
         public bool? IsRenewed { get; set; }
 
         /// <summary> Properties specific to each reserved resource type. Not required if not applicable. </summary>
+        [WirePath("reservedResourceProperties")]
         internal ReservationPurchaseRequestPropertiesReservedResourceProperties ReservedResourceProperties { get; set; }
 
         /// <summary> Allows reservation discount to be applied across skus within the same auto fit group. Not all skus support instance size flexibility. </summary>
+        [WirePath("instanceFlexibility")]
         public InstanceFlexibility? InstanceFlexibility { get; set; }
 
         /// <summary> This is the date-time when the Azure hybrid benefit needs to be reviewed. </summary>
+        [WirePath("reviewDateTime")]
         public DateTimeOffset? ReviewOn { get; set; }
 
         /// <summary> Turning this on will apply the reservation discount to other VMs in the same VM size group. Only specify for VirtualMachines reserved resource type. </summary>
+        [WirePath("reservedResourceProperties.instanceFlexibility")]
         public InstanceFlexibility? ReservedInstanceFlexibility
         {
             get

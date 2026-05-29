@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -35,15 +36,19 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The status of the reservation. </summary>
+        [WirePath("statusCode")]
         public ReservationStatusCode? StatusCode { get; set; }
 
         /// <summary> The message giving detailed information about the status code. </summary>
+        [WirePath("message")]
         public string Message { get; set; }
 
         /// <summary> Properties for extended status information. </summary>
+        [WirePath("properties")]
         internal ExtendedStatusDefinitionProperties Properties { get; set; }
 
         /// <summary> Subscription Id. </summary>
+        [WirePath("properties.subscriptionId")]
         public string ExtendedStatusDefinitionSubscriptionId
         {
             get

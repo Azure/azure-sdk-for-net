@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The currency for the amount value. </summary>
+        [WirePath("currency")]
         public string Currency { get; }
 
         /// <summary> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </summary>
+        [WirePath("value")]
         public float? Value { get; }
     }
 }

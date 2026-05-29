@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The tenant id of the principal who has interacted with a billing entity. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; set; }
 
         /// <summary> The object id of the principal who has interacted with a billing entity. </summary>
+        [WirePath("objectId")]
         public string ObjectId { get; set; }
 
         /// <summary> The user principal name of the principal who has interacted with a billing entity. </summary>
+        [WirePath("upn")]
         public string Upn { get; set; }
     }
 }

@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> List of billing operations supported by the Microsoft.Billing resource provider. </summary>
+        [WirePath("value")]
         public IReadOnlyList<BillingOperationInfo> Value { get; }
 
         /// <summary> URL to get the next set of operation list results if there are any. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

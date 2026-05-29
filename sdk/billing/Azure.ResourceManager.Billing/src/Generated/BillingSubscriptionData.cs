@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The properties of a(n) BillingSubscription. </summary>
+        [WirePath("properties")]
         internal BillingSubscriptionProperties Properties { get; set; }
 
         /// <summary> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Indicates whether auto renewal is turned on or off for a product. </summary>
+        [WirePath("properties.autoRenew")]
         public BillingSubscriptionAutoRenewState? AutoRenew
         {
             get
@@ -64,6 +67,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The provisioning tenant of the subscription. </summary>
+        [WirePath("properties.beneficiaryTenantId")]
         public Guid? SubscriptionBeneficiaryTenantId
         {
             get
@@ -81,6 +85,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The beneficiary of the billing subscription. </summary>
+        [WirePath("properties.beneficiary")]
         public BillingBeneficiary Beneficiary
         {
             get
@@ -98,6 +103,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The billing frequency in ISO8601 format of product in the subscription. Example: P1M, P3M, P1Y. </summary>
+        [WirePath("properties.billingFrequency")]
         public string BillingFrequency
         {
             get
@@ -115,6 +121,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The fully qualified ID that uniquely identifies a billing profile. </summary>
+        [WirePath("properties.billingProfileId")]
         public ResourceIdentifier BillingProfileId
         {
             get
@@ -132,6 +139,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Dictionary of billing policies associated with the subscription. </summary>
+        [WirePath("properties.billingPolicies")]
         public IReadOnlyDictionary<string, string> BillingPolicies
         {
             get
@@ -145,6 +153,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The name of the billing profile. </summary>
+        [WirePath("properties.billingProfileDisplayName")]
         public string BillingProfileDisplayName
         {
             get
@@ -154,6 +163,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The ID that uniquely identifies a billing profile. </summary>
+        [WirePath("properties.billingProfileName")]
         public string BillingProfileName
         {
             get
@@ -163,6 +173,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The cost center applied to the subscription. This field is only available for consumption subscriptions of Microsoft Customer Agreement or Enterprise Agreement Type billing accounts. </summary>
+        [WirePath("properties.consumptionCostCenter")]
         public string ConsumptionCostCenter
         {
             get
@@ -180,6 +191,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The fully qualified ID that uniquely identifies a customer. </summary>
+        [WirePath("properties.customerId")]
         public string SubscriptionCustomerId
         {
             get
@@ -197,6 +209,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The name of the customer. </summary>
+        [WirePath("properties.customerDisplayName")]
         public string CustomerDisplayName
         {
             get
@@ -206,6 +219,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The ID that uniquely identifies a customer. </summary>
+        [WirePath("properties.customerName")]
         public string CustomerName
         {
             get
@@ -215,6 +229,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The name of the billing subscription. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -232,6 +247,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The enrollment Account ID associated with the subscription. This field is available only for the Enterprise Agreement Type billing accounts. </summary>
+        [WirePath("properties.enrollmentAccountId")]
         public string EnrollmentAccountId
         {
             get
@@ -241,6 +257,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The enrollment Account name associated with the subscription. This field is available only for the Enterprise Agreement Type billing accounts. </summary>
+        [WirePath("properties.enrollmentAccountDisplayName")]
         public string EnrollmentAccountDisplayName
         {
             get
@@ -250,6 +267,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The fully qualified ID that uniquely identifies an invoice section. </summary>
+        [WirePath("properties.invoiceSectionId")]
         public ResourceIdentifier InvoiceSectionId
         {
             get
@@ -267,6 +285,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The name of the invoice section. </summary>
+        [WirePath("properties.invoiceSectionDisplayName")]
         public string InvoiceSectionDisplayName
         {
             get
@@ -276,6 +295,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The ID that uniquely identifies an invoice section. </summary>
+        [WirePath("properties.invoiceSectionName")]
         public string InvoiceSectionName
         {
             get
@@ -285,6 +305,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The last month's charges. This field is only available for usage based subscriptions of Microsoft Customer Agreement billing accounts. </summary>
+        [WirePath("properties.lastMonthCharges")]
         public BillingAmount LastMonthCharges
         {
             get
@@ -294,6 +315,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The current month to date charges. This field is only available for usage based subscriptions of Microsoft Customer Agreement billing accounts. </summary>
+        [WirePath("properties.monthToDateCharges")]
         public BillingAmount MonthToDateCharges
         {
             get
@@ -303,6 +325,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The offer ID for the subscription. This field is only available for the Microsoft Online Services Program billing accounts or billing accounts with agreement type Enterprise Agreement. </summary>
+        [WirePath("properties.offerId")]
         public string OfferId
         {
             get
@@ -312,6 +335,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The category of the product for which the subscription is purchased. Possible values include: AzureSupport, Hardware, ReservationOrder, SaaS, SavingsPlanOrder, Software, UsageBased, Other. </summary>
+        [WirePath("properties.productCategory")]
         public string ProductCategory
         {
             get
@@ -321,6 +345,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Type of the product for which the subscription is purchased. </summary>
+        [WirePath("properties.productType")]
         public string ProductType
         {
             get
@@ -330,6 +355,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Id of the product for which the subscription is purchased. </summary>
+        [WirePath("properties.productTypeId")]
         public string ProductTypeId
         {
             get
@@ -347,6 +373,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Purchase date of the product in UTC time. </summary>
+        [WirePath("properties.purchaseDate")]
         public DateTimeOffset? PurchaseOn
         {
             get
@@ -356,6 +383,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The quantity of licenses or fulfillment units for the subscription. </summary>
+        [WirePath("properties.quantity")]
         public long? Quantity
         {
             get
@@ -373,6 +401,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Reseller for this subscription. The fields is not available for Microsoft Partner Agreement billing accounts. </summary>
+        [WirePath("properties.reseller")]
         public CreatedSubscriptionReseller Reseller
         {
             get
@@ -382,6 +411,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Details for the next renewal term of a subscription. </summary>
+        [WirePath("properties.renewalTermDetails")]
         public SubscriptionRenewalTermDetails RenewalTermDetails
         {
             get
@@ -391,6 +421,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The SKU ID of the product for which the subscription is purchased. This field is is only available  for Microsoft Customer Agreement billing accounts. </summary>
+        [WirePath("properties.skuId")]
         public string SkuId
         {
             get
@@ -408,6 +439,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The SKU description of the product for which the subscription is purchased. This field is is only available for billing accounts with agreement type Microsoft Customer Agreement and Microsoft Partner Agreement. </summary>
+        [WirePath("properties.skuDescription")]
         public string SkuDescription
         {
             get
@@ -417,6 +449,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> System imposed policies that regulate behavior of the subscription. </summary>
+        [WirePath("properties.systemOverrides")]
         public BillingSystemOverrides SystemOverrides
         {
             get
@@ -434,6 +467,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Unique identifier of the linked resource. </summary>
+        [WirePath("properties.resourceUri")]
         public Uri ResourceUri
         {
             get
@@ -443,6 +477,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The duration in ISO8601 format for which you can use the subscription. Example: P1M, P3M, P1Y. </summary>
+        [WirePath("properties.termDuration")]
         public TimeSpan? TermDuration
         {
             get
@@ -460,6 +495,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Start date of the term in UTC time. </summary>
+        [WirePath("properties.termStartDate")]
         public DateTimeOffset? TermStartOn
         {
             get
@@ -469,6 +505,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> End date of the term in UTC time. </summary>
+        [WirePath("properties.termEndDate")]
         public DateTimeOffset? TermEndOn
         {
             get
@@ -478,6 +515,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The tenant in which the subscription is provisioned. </summary>
+        [WirePath("properties.provisioningTenantId")]
         public Guid? ProvisioningTenantId
         {
             get
@@ -495,6 +533,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The status of the subscription. This field is not available for Enterprise Agreement billing accounts. </summary>
+        [WirePath("properties.status")]
         public BillingSubscriptionStatus? Status
         {
             get
@@ -504,6 +543,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The status of an operation on the subscription. When None, there is no ongoing operation. When LockedForUpdate, write operations will be blocked on the Billing Subscription. Other is the default value and you may need to refer to the latest API version for more details. </summary>
+        [WirePath("properties.operationStatus")]
         public BillingSubscriptionOperationStatus? OperationStatus
         {
             get
@@ -513,6 +553,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The provisioning state of the resource during a long-running operation. </summary>
+        [WirePath("properties.provisioningState")]
         public BillingProvisioningState? ProvisioningState
         {
             get
@@ -522,6 +563,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The ID of the subscription. </summary>
+        [WirePath("properties.subscriptionId")]
         public string SubscriptionId
         {
             get
@@ -531,6 +573,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The suspension reason for a subscription. This field is not available for Enterprise Agreement billing accounts. </summary>
+        [WirePath("properties.suspensionReasons")]
         public IReadOnlyList<string> SuspensionReasons
         {
             get
@@ -544,6 +587,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The suspension details for a subscription. This field is not available for Enterprise Agreement billing accounts. </summary>
+        [WirePath("properties.suspensionReasonDetails")]
         public IReadOnlyList<BillingSubscriptionStatusDetails> SuspensionReasonDetails
         {
             get
@@ -557,6 +601,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The enrollment Account and the subscription association start date. This field is available only for the Enterprise Agreement Type. </summary>
+        [WirePath("properties.enrollmentAccountSubscriptionDetails.enrollmentAccountStartDate")]
         public DateTimeOffset? EnrollmentAccountStartOn
         {
             get
@@ -566,6 +611,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The current enrollment account status of the subscription. This field is available only for the Enterprise Agreement Type. </summary>
+        [WirePath("properties.enrollmentAccountSubscriptionDetails.subscriptionEnrollmentAccountStatus")]
         public SubscriptionEnrollmentAccountStatus? SubscriptionEnrollmentAccountStatus
         {
             get
@@ -575,6 +621,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Billing frequency of the product under the subscription. </summary>
+        [WirePath("properties.nextBillingCycleDetails.billingFrequency")]
         public string NextBillingCycleBillingFrequency
         {
             get

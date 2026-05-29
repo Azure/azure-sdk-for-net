@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The amount of refund requested. </summary>
+        [WirePath("amountRequested")]
         public BillingAmount AmountRequested { get; set; }
 
         /// <summary> The amount refunded. </summary>
+        [WirePath("amountRefunded")]
         public BillingAmount AmountRefunded { get; set; }
 
         /// <summary> The ID of refund operation. </summary>
+        [WirePath("refundOperationId")]
         public string RefundOperationId { get; set; }
     }
 }

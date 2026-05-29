@@ -44,15 +44,19 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Savings plan properties. </summary>
+        [WirePath("properties")]
         internal SavingsPlanModelProperties Properties { get; set; }
 
         /// <summary> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Savings plan SKU. </summary>
+        [WirePath("sku")]
         internal BillingSku Sku { get; set; }
 
         /// <summary> Display name. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -70,6 +74,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The provisioning state of the resource during a long-running operation. </summary>
+        [WirePath("properties.provisioningState")]
         public BillingProvisioningState? ProvisioningState
         {
             get
@@ -79,6 +84,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The provisioning state of the savings plan for display, e.g. Succeeded. </summary>
+        [WirePath("properties.displayProvisioningState")]
         public string DisplayProvisioningState
         {
             get
@@ -88,6 +94,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The applied scope type of the savings plan for display, e.g. Shared. </summary>
+        [WirePath("properties.userFriendlyAppliedScopeType")]
         public string UserFriendlyAppliedScopeType
         {
             get
@@ -97,6 +104,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Subscription that will be charged for purchasing SavingsPlan. </summary>
+        [WirePath("properties.billingScopeId")]
         public string BillingScopeId
         {
             get
@@ -114,6 +122,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Fully-qualified identifier of the billing profile where the savings plan is applied. Present only for Field-led or Customer-led customers. </summary>
+        [WirePath("properties.billingProfileId")]
         public ResourceIdentifier BillingProfileId
         {
             get
@@ -123,6 +132,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Fully-qualified identifier of the customer where the savings plan is applied. Present only for Partner-led customers. </summary>
+        [WirePath("properties.customerId")]
         public ResourceIdentifier CustomerId
         {
             get
@@ -132,6 +142,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Fully-qualified identifier of the billing account where the savings plan is applied. </summary>
+        [WirePath("properties.billingAccountId")]
         public ResourceIdentifier BillingAccountId
         {
             get
@@ -141,6 +152,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Represents the Savings plan term in ISO 8601 format. </summary>
+        [WirePath("properties.term")]
         public BillingSavingsPlanTerm? Term
         {
             get
@@ -158,6 +170,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Setting this to true will automatically purchase a new benefit on the expiration date time. </summary>
+        [WirePath("properties.renew")]
         public bool? IsRenewed
         {
             get
@@ -175,6 +188,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> SavingsPlan Id of the SavingsPlan from which this SavingsPlan is renewed. </summary>
+        [WirePath("properties.renewSource")]
         public string RenewSource
         {
             get
@@ -192,6 +206,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> SavingsPlan Id of the SavingsPlan which is purchased because of renew. </summary>
+        [WirePath("properties.renewDestination")]
         public string RenewDestination
         {
             get
@@ -209,6 +224,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Represents the billing plan in ISO 8601 format. Required only for monthly purchases. </summary>
+        [WirePath("properties.billingPlan")]
         public BillingPlan? BillingPlan
         {
             get
@@ -226,6 +242,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Type of the Applied Scope. </summary>
+        [WirePath("properties.appliedScopeType")]
         public BillingAppliedScopeType? AppliedScopeType
         {
             get
@@ -243,6 +260,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Properties specific to applied scope type. Not required if not applicable. </summary>
+        [WirePath("properties.appliedScopeProperties")]
         public BillingAppliedScopeProperties AppliedScopeProperties
         {
             get
@@ -260,6 +278,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Commitment towards the benefit. </summary>
+        [WirePath("properties.commitment")]
         public BillingBenefitCommitment Commitment
         {
             get
@@ -277,6 +296,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> DateTime of the savings plan starting when this version is effective from. </summary>
+        [WirePath("properties.effectiveDateTime")]
         public DateTimeOffset? EffectiveOn
         {
             get
@@ -286,6 +306,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> This is the DateTime when the savings plan benefit starts. </summary>
+        [WirePath("properties.benefitStartTime")]
         public DateTimeOffset? BenefitStartOn
         {
             get
@@ -295,6 +316,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> This is the date-time when the savings plan will expire. </summary>
+        [WirePath("properties.expiryDateTime")]
         public DateTimeOffset? ExpiryOn
         {
             get
@@ -304,6 +326,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Date time when the savings plan was purchased. </summary>
+        [WirePath("properties.purchaseDateTime")]
         public DateTimeOffset? PurchaseOn
         {
             get
@@ -313,6 +336,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Savings plan utilization. </summary>
+        [WirePath("properties.utilization")]
         public SavingsPlanUtilization Utilization
         {
             get
@@ -322,6 +346,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Extended status information. </summary>
+        [WirePath("properties.extendedStatusInfo")]
         public ExtendedStatusInfo ExtendedStatusInfo
         {
             get
@@ -331,6 +356,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Represents UPN. </summary>
+        [WirePath("properties.productCode")]
         public string ProductCode
         {
             get
@@ -348,6 +374,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Purchase request. </summary>
+        [WirePath("properties.renewProperties.purchaseProperties")]
         public BillingPurchaseProperties RenewPurchaseProperties
         {
             get
@@ -365,6 +392,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Name of the SKU to be applied. </summary>
+        [WirePath("sku.name")]
         public string SkuName
         {
             get

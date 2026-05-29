@@ -60,45 +60,59 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Display name. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
 
         /// <summary> The provisioning state of the savings plan, e.g. Succeeded. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
 
         /// <summary> Subscription that will be charged for purchasing SavingsPlan. </summary>
+        [WirePath("billingScopeId")]
         public string BillingScopeId { get; set; }
 
         /// <summary> Fully-qualified identifier of the billing profile where the savings plan is applied. Present only for Field-led or Customer-led customers. </summary>
+        [WirePath("billingProfileId")]
         public ResourceIdentifier BillingProfileId { get; }
 
         /// <summary> Fully-qualified identifier of the customer where the savings plan is applied. Present only for Partner-led customers. </summary>
+        [WirePath("customerId")]
         public ResourceIdentifier CustomerId { get; }
 
         /// <summary> Fully-qualified identifier of the billing account where the savings plan is applied. </summary>
+        [WirePath("billingAccountId")]
         public ResourceIdentifier BillingAccountId { get; }
 
         /// <summary> Represents the Savings plan term in ISO 8601 format. </summary>
+        [WirePath("term")]
         public BillingSavingsPlanTerm? Term { get; set; }
 
         /// <summary> Represents the billing plan in ISO 8601 format. Required only for monthly purchases. </summary>
+        [WirePath("billingPlan")]
         public BillingPlan? BillingPlan { get; set; }
 
         /// <summary> DateTime when the savings plan benefit started. </summary>
+        [WirePath("benefitStartTime")]
         public DateTimeOffset? BenefitStartOn { get; }
 
         /// <summary> DateTime when the savings plan will expire. </summary>
+        [WirePath("expiryDateTime")]
         public DateTimeOffset? ExpiryOn { get; }
 
         /// <summary> Information describing the type of billing plan for this savings plan. </summary>
+        [WirePath("planInformation")]
         public BillingPlanInformation PlanInformation { get; set; }
 
         /// <summary> Gets the SavingsPlans. </summary>
+        [WirePath("savingsPlans")]
         public IList<string> SavingsPlans { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Extended status information. </summary>
+        [WirePath("extendedStatusInfo")]
         public ExtendedStatusInfo ExtendedStatusInfo { get; }
 
         /// <summary> Represents UPN. </summary>
+        [WirePath("productCode")]
         public string ProductCode { get; set; }
     }
 }

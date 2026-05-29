@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Indicates if the provided input is valid. </summary>
+        [WirePath("valid")]
         public bool? IsValid { get; }
 
         /// <summary> Failure reason code if the provided input is invalid. </summary>
+        [WirePath("reasonCode")]
         public string ReasonCode { get; }
 
         /// <summary> Failure reason if the provided input is invalid. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
     }
 }

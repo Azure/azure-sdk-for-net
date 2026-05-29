@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The link (url) to the next page of results. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
 
         /// <summary> The roll out count summary of the reservations. </summary>
+        [WirePath("summary")]
         public ReservationSummary Summary { get; }
 
         /// <summary> The list of reservations. </summary>
+        [WirePath("value")]
         public IReadOnlyList<BillingReservationData> Value { get; }
     }
 }

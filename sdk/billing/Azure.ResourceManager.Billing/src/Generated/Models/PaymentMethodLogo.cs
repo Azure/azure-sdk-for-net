@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> MIME type of the logo. </summary>
+        [WirePath("mimeType")]
         public string MimeType { get; }
 
         /// <summary> Public URL of image of the logo. </summary>
+        [WirePath("url")]
         public Uri Uri { get; }
     }
 }

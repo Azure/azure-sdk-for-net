@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Turning this on will apply the reservation discount to other VMs in the same VM size group. Only specify for VirtualMachines reserved resource type. </summary>
+        [WirePath("instanceFlexibility")]
         public InstanceFlexibility? ReservedInstanceFlexibility { get; set; }
     }
 }

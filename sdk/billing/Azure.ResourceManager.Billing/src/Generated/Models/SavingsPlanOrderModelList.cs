@@ -37,9 +37,11 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The SavingsPlanOrderModel items on this page. </summary>
+        [WirePath("value")]
         public IList<SavingsPlanOrderModelData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

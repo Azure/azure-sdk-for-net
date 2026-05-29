@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Status of the address validation. </summary>
+        [WirePath("status")]
         public BillingAddressValidationStatus? Status { get; }
 
         /// <summary> The list of suggested addresses. </summary>
+        [WirePath("suggestedAddresses")]
         public IReadOnlyList<BillingAddressDetails> SuggestedAddresses { get; }
 
         /// <summary> Validation error message. </summary>
+        [WirePath("validationMessage")]
         public string ValidationMessage { get; }
     }
 }

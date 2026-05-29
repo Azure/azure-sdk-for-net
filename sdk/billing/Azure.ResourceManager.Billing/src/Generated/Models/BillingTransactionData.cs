@@ -41,9 +41,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> A transaction. </summary>
+        [WirePath("properties")]
         public BillingTransactionProperties Properties { get; set; }
-
-        /// <summary> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
-        public IDictionary<string, string> Tags { get; }
     }
 }

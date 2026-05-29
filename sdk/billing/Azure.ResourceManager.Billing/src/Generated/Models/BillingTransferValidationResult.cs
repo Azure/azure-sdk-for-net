@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The properties of transfer validation response. </summary>
+        [WirePath("properties")]
         internal ValidateTransferResponseProperties Properties { get; }
 
         /// <summary> The status of validation. </summary>
+        [WirePath("properties.status")]
         public string Status
         {
             get
@@ -43,6 +46,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The product id for which this result applies. </summary>
+        [WirePath("properties.productId")]
         public string ProductId
         {
             get
@@ -52,6 +56,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The array of validation results. </summary>
+        [WirePath("properties.results")]
         public IReadOnlyList<BillingTransferValidationResultProperties> Results
         {
             get

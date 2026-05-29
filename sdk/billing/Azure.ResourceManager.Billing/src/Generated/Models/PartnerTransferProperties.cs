@@ -49,30 +49,39 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The time at which the transfer request expires. </summary>
+        [WirePath("expirationTime")]
         public DateTimeOffset? ExpireOn { get; }
 
         /// <summary> Overall transfer status. </summary>
+        [WirePath("transferStatus")]
         public PartnerTransferStatus? TransferStatus { get; }
 
         /// <summary> The email ID of the user to whom the transfer request was sent. </summary>
+        [WirePath("recipientEmailId")]
         public string RecipientEmailId { get; }
 
         /// <summary> The type of customer who sent the transfer request. </summary>
+        [WirePath("initiatorCustomerType")]
         public InitiatorCustomerType? InitiatorCustomerType { get; }
 
         /// <summary> The email ID of the user who sent the transfer request. </summary>
+        [WirePath("initiatorEmailId")]
         public string InitiatorEmailId { get; }
 
         /// <summary> Optional MPN ID of the reseller for transfer requests that are sent from a Microsoft Partner Agreement billing account. </summary>
+        [WirePath("resellerId")]
         public string ResellerId { get; }
 
         /// <summary> Optional name of the reseller for transfer requests that are sent from Microsoft Partner Agreement billing account. </summary>
+        [WirePath("resellerName")]
         public string ResellerName { get; }
 
         /// <summary> The email ID of the user who canceled the transfer request. </summary>
+        [WirePath("canceledBy")]
         public string CanceledBy { get; }
 
         /// <summary> Detailed transfer status. </summary>
+        [WirePath("detailedTransferStatus")]
         public IReadOnlyList<DetailedTransferStatus> DetailedTransferStatus { get; } = new ChangeTrackingList<DetailedTransferStatus>();
     }
 }

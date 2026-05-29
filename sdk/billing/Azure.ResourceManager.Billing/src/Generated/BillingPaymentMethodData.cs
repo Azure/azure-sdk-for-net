@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Payment method properties. </summary>
+        [WirePath("properties")]
         internal PaymentMethodProjectionProperties Properties { get; set; }
 
         /// <summary> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Id of payment method. </summary>
+        [WirePath("properties.id")]
         public ResourceIdentifier PaymentMethodId
         {
             get
@@ -56,6 +59,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The account holder name for the payment method. This is only supported for payment methods with family CreditCard. </summary>
+        [WirePath("properties.accountHolderName")]
         public string AccountHolderName
         {
             get
@@ -65,6 +69,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The display name of the payment method. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -74,6 +79,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The expiration month and year of the payment method. This is only supported for payment methods with family CreditCard. </summary>
+        [WirePath("properties.expiration")]
         public string Expiration
         {
             get
@@ -83,6 +89,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The family of payment method. </summary>
+        [WirePath("properties.family")]
         public PaymentMethodFamily? Family
         {
             get
@@ -100,6 +107,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Last four digits of payment method. </summary>
+        [WirePath("properties.lastFourDigits")]
         public string LastFourDigits
         {
             get
@@ -109,6 +117,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The list of logos for the payment method. </summary>
+        [WirePath("properties.logos")]
         public IList<PaymentMethodLogo> Logos
         {
             get
@@ -122,6 +131,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> The type of payment method. </summary>
+        [WirePath("properties.paymentMethodType")]
         public string PaymentMethodType
         {
             get
@@ -131,6 +141,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Status of the payment method. </summary>
+        [WirePath("properties.status")]
         public PaymentMethodStatus? Status
         {
             get

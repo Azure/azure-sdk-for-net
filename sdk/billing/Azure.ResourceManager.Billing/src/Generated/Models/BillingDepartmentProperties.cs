@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The cost center associated with the department. </summary>
+        [WirePath("costCenter")]
         public string CostCenter { get; set; }
 
         /// <summary> The name of the department. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
 
         /// <summary> The ID that uniquely identifies the department. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> The status of the department. </summary>
+        [WirePath("status")]
         public string Status { get; }
     }
 }

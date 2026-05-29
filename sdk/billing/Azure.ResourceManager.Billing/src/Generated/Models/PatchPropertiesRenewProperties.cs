@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> The request for reservation purchase. </summary>
+        [WirePath("purchaseProperties")]
         public ReservationPurchaseRequest PurchaseProperties { get; set; }
     }
 }

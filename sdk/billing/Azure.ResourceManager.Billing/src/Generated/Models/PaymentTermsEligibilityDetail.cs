@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Indicates the reason for the ineligibility of the payment terms. </summary>
+        [WirePath("code")]
         public PaymentTermsEligibilityCode? Code { get; }
 
         /// <summary> Indicates the message for the ineligibility of the payment terms. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

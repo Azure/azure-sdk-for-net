@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Represents duration in netXX format. Always in days. </summary>
+        [WirePath("term")]
         public string Term { get; set; }
 
         /// <summary> The date on when the defined 'Payment Term' will be effective from and is always in UTC. </summary>
+        [WirePath("startDate")]
         public DateTimeOffset? StartOn { get; set; }
 
         /// <summary> The date on when the defined 'Payment Term' will end and is always in UTC. </summary>
+        [WirePath("endDate")]
         public DateTimeOffset? EndOn { get; set; }
 
         /// <summary> Indicates payment term is the standard payment term. </summary>
+        [WirePath("isDefault")]
         public bool? IsDefault { get; }
     }
 }

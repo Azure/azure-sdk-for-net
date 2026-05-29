@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> last 7 day utilization trend for a reservation. </summary>
+        [WirePath("trend")]
         public string Trend { get; }
 
         /// <summary> The array of aggregates of a reservation's utilization. </summary>
+        [WirePath("aggregates")]
         public IList<ReservationUtilizationAggregates> Aggregates { get; } = new ChangeTrackingList<ReservationUtilizationAggregates>();
     }
 }
