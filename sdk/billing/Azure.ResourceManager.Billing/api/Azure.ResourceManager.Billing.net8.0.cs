@@ -2053,13 +2053,19 @@ namespace Azure.ResourceManager.Billing
         public BillingSubscriptionAliasData() { }
         public Azure.ResourceManager.Billing.Models.BillingSubscriptionAutoRenewState? AutoRenew { get { throw null; } set { } }
         public Azure.ResourceManager.Billing.Models.BillingBeneficiary Beneficiary { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is now deprecated. Please use the new property `SubscriptionAliasBeneficiaryTenantId` moving forward.")]
+        public string BeneficiaryTenantId { get { throw null; } set { } }
         public string BillingFrequency { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> BillingPolicies { get { throw null; } }
         public string BillingProfileDisplayName { get { throw null; } }
         public Azure.Core.ResourceIdentifier BillingProfileId { get { throw null; } set { } }
         public string BillingProfileName { get { throw null; } }
+        [System.ObsoleteAttribute("This property is now deprecated. Please use the new property `SubscriptionAliasSubscriptionId` moving forward.")]
+        public Azure.Core.ResourceIdentifier BillingSubscriptionId { get { throw null; } }
         public string ConsumptionCostCenter { get { throw null; } set { } }
         public string CustomerDisplayName { get { throw null; } }
+        [System.ObsoleteAttribute("This property is now deprecated. Please use the new property `SubscriptionAliasCustomerId` moving forward.")]
+        public string CustomerId { get { throw null; } set { } }
         public string CustomerName { get { throw null; } }
         public string DisplayName { get { throw null; } set { } }
         public string EnrollmentAccountDisplayName { get { throw null; } }
@@ -2086,6 +2092,8 @@ namespace Azure.ResourceManager.Billing
         public string SkuDescription { get { throw null; } }
         public string SkuId { get { throw null; } set { } }
         public Azure.ResourceManager.Billing.Models.BillingSubscriptionStatus? Status { get { throw null; } }
+        public System.Guid? SubscriptionAliasBeneficiaryTenantId { get { throw null; } set { } }
+        public string SubscriptionAliasCustomerId { get { throw null; } set { } }
         public string SubscriptionAliasSubscriptionId { get { throw null; } }
         public System.Guid? SubscriptionBeneficiaryTenantId { get { throw null; } set { } }
         public string SubscriptionCustomerId { get { throw null; } set { } }
@@ -2153,6 +2161,8 @@ namespace Azure.ResourceManager.Billing
         public BillingSubscriptionData() { }
         public Azure.ResourceManager.Billing.Models.BillingSubscriptionAutoRenewState? AutoRenew { get { throw null; } set { } }
         public Azure.ResourceManager.Billing.Models.BillingBeneficiary Beneficiary { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is now deprecated. Please use the new property `SubscriptionBeneficiaryTenantId` moving forward.")]
+        public string BeneficiaryTenantId { get { throw null; } set { } }
         public string BillingFrequency { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> BillingPolicies { get { throw null; } }
         public string BillingProfileDisplayName { get { throw null; } }
@@ -2160,6 +2170,8 @@ namespace Azure.ResourceManager.Billing
         public string BillingProfileName { get { throw null; } }
         public string ConsumptionCostCenter { get { throw null; } set { } }
         public string CustomerDisplayName { get { throw null; } }
+        [System.ObsoleteAttribute("This property is now deprecated. Please use the new property `SubscriptionCustomerId` moving forward.")]
+        public string CustomerId { get { throw null; } set { } }
         public string CustomerName { get { throw null; } }
         public string DisplayName { get { throw null; } set { } }
         public string EnrollmentAccountDisplayName { get { throw null; } }
@@ -4948,6 +4960,7 @@ namespace Azure.ResourceManager.Billing.Models
         public Azure.ResourceManager.Billing.Models.BillingProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Billing.Models.BillingPrincipal> Recipients { get { throw null; } }
         public string RequestScope { get { throw null; } set { } }
+        public Azure.ResourceManager.Billing.Models.BillingRequestType? RequestType { get { throw null; } set { } }
         public System.DateTimeOffset? ReviewalOn { get { throw null; } }
         public Azure.ResourceManager.Billing.Models.BillingPrincipal ReviewedBy { get { throw null; } set { } }
         public Azure.ResourceManager.Billing.Models.BillingRequestStatus? Status { get { throw null; } set { } }
@@ -5294,6 +5307,7 @@ namespace Azure.ResourceManager.Billing.Models
         public BillingSubscriptionPatch() { }
         public Azure.ResourceManager.Billing.Models.BillingSubscriptionAutoRenewState? AutoRenew { get { throw null; } set { } }
         public Azure.ResourceManager.Billing.Models.BillingBeneficiary Beneficiary { get { throw null; } set { } }
+        public System.Guid? BeneficiaryTenantId { get { throw null; } set { } }
         public string BillingFrequency { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> BillingPolicies { get { throw null; } }
         public string BillingProfileDisplayName { get { throw null; } }
@@ -5301,6 +5315,7 @@ namespace Azure.ResourceManager.Billing.Models
         public string BillingProfileName { get { throw null; } }
         public string ConsumptionCostCenter { get { throw null; } set { } }
         public string CustomerDisplayName { get { throw null; } }
+        public string CustomerId { get { throw null; } set { } }
         public string CustomerName { get { throw null; } }
         public string DisplayName { get { throw null; } set { } }
         public string EnrollmentAccountDisplayName { get { throw null; } }
@@ -6647,6 +6662,7 @@ namespace Azure.ResourceManager.Billing.Models
         public string LastFourDigits { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Billing.Models.PaymentMethodLogo> Logos { get { throw null; } }
         public Azure.Core.ResourceIdentifier PaymentMethodId { get { throw null; } }
+        public string PaymentMethodProjectionPropertiesType { get { throw null; } }
         public string PaymentMethodType { get { throw null; } }
         public Azure.ResourceManager.Billing.Models.PaymentMethodStatus? Status { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Billing.Models.PaymentMethodProjectionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7068,6 +7084,8 @@ namespace Azure.ResourceManager.Billing.Models
         public string BillingScopeId { get { throw null; } }
         public string DisplayName { get { throw null; } set { } }
         public Azure.ResourceManager.Billing.Models.InstanceFlexibility? InstanceFlexibility { get { throw null; } set { } }
+        public Azure.ResourceManager.Billing.Models.InstanceFlexibility? InstanceFlexibilityPropertiesInstanceFlexibility { get { throw null; } set { } }
+        public Azure.ResourceManager.Billing.Models.InstanceFlexibility? InstanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility { get { throw null; } set { } }
         public bool? IsRenewed { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public int? Quantity { get { throw null; } set { } }
