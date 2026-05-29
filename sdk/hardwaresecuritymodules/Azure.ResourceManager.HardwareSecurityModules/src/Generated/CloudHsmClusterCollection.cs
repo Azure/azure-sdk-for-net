@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 HttpMessage message = _cloudHsmClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudHsmClusterName, CloudHsmClusterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HardwareSecurityModulesArmOperation<CloudHsmClusterResource> operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterResource>(
-                    new CloudHsmClusterOperationSource(Client),
+                    new CloudHsmClusterResourceOperationSource(Client),
                     _cloudHsmClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 HttpMessage message = _cloudHsmClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudHsmClusterName, CloudHsmClusterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HardwareSecurityModulesArmOperation<CloudHsmClusterResource> operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterResource>(
-                    new CloudHsmClusterOperationSource(Client),
+                    new CloudHsmClusterResourceOperationSource(Client),
                     _cloudHsmClustersClientDiagnostics,
                     Pipeline,
                     message.Request,

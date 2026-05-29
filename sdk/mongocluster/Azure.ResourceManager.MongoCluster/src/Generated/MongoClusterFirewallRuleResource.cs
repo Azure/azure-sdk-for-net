@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.MongoCluster
                 HttpMessage message = _firewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MongoClusterFirewallRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MongoClusterArmOperation<MongoClusterFirewallRuleResource> operation = new MongoClusterArmOperation<MongoClusterFirewallRuleResource>(
-                    new MongoClusterFirewallRuleOperationSource(Client),
+                    new MongoClusterFirewallRuleResourceOperationSource(Client),
                     _firewallRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.MongoCluster
                 HttpMessage message = _firewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MongoClusterFirewallRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MongoClusterArmOperation<MongoClusterFirewallRuleResource> operation = new MongoClusterArmOperation<MongoClusterFirewallRuleResource>(
-                    new MongoClusterFirewallRuleOperationSource(Client),
+                    new MongoClusterFirewallRuleResourceOperationSource(Client),
                     _firewallRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
