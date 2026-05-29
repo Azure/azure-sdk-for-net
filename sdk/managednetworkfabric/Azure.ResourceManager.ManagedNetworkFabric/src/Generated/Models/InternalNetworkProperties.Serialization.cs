@@ -147,10 +147,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("bgpConfiguration"u8);
                 writer.WriteObjectValue(BgpSettings, options);
             }
-            if (Optional.IsDefined(StaticRouteConfiguration))
+            if (Optional.IsDefined(StaticRouteSettings))
             {
                 writer.WritePropertyName("staticRouteConfiguration"u8);
-                writer.WriteObjectValue(StaticRouteConfiguration, options);
+                writer.WriteObjectValue(StaticRouteSettings, options);
             }
             if (Optional.IsDefined(NativeIPv4PrefixLimit))
             {
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IsMonitoringEnabled? isMonitoringEnabled = default;
             int vlanId = default;
             BgpConfiguration bgpSettings = default;
-            InternalNetworkStaticRouteConfiguration staticRouteConfiguration = default;
+            StaticRouteConfiguration staticRouteSettings = default;
             NativeIpv4PrefixLimitProperties nativeIPv4PrefixLimit = default;
             NativeIpv6PrefixLimitProperties nativeIPv6PrefixLimit = default;
             LastOperationProperties lastOperation = default;
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    staticRouteConfiguration = InternalNetworkStaticRouteConfiguration.DeserializeInternalNetworkStaticRouteConfiguration(prop.Value, options);
+                    staticRouteSettings = StaticRouteConfiguration.DeserializeStaticRouteConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("nativeIpv4PrefixLimit"u8))
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 isMonitoringEnabled,
                 vlanId,
                 bgpSettings,
-                staticRouteConfiguration,
+                staticRouteSettings,
                 nativeIPv4PrefixLimit,
                 nativeIPv6PrefixLimit,
                 lastOperation,

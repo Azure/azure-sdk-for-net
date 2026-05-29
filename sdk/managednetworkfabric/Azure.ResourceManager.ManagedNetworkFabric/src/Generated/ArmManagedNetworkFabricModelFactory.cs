@@ -986,7 +986,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="isMonitoringEnabled"> To check whether monitoring of internal network is enabled or not. </param>
         /// <param name="vlanId"> Vlan identifier. Example: 1001. </param>
         /// <param name="bgpSettings"> BGP configuration properties. </param>
-        /// <param name="staticRouteConfiguration"> Static Route Configuration properties. </param>
+        /// <param name="staticRouteSettings"> Static Route Configuration properties. </param>
         /// <param name="networkFabricId"> Associated Network Fabric Resource ID. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
@@ -995,7 +995,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="nativeIPv6PrefixLimits"> Prefix limits. </param>
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricInternalNetworkData"/> instance for mocking. </returns>
-        public static NetworkFabricInternalNetworkData NetworkFabricInternalNetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string annotation = default, StaticRouteConfigurationExtension? extension = default, int? mtu = default, IEnumerable<ConnectedSubnet> connectedIPv4Subnets = default, IEnumerable<ConnectedSubnet> connectedIPv6Subnets = default, ImportRoutePolicy importRoutePolicy = default, ExportRoutePolicy exportRoutePolicy = default, ResourceIdentifier ingressAclId = default, ResourceIdentifier egressAclId = default, IsMonitoringEnabled? isMonitoringEnabled = default, int vlanId = default, BgpConfiguration bgpSettings = default, InternalNetworkStaticRouteConfiguration staticRouteConfiguration = default, ResourceIdentifier networkFabricId = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, IEnumerable<PrefixLimitProperties> nativeIPv4PrefixLimits = default, IEnumerable<PrefixLimitProperties> nativeIPv6PrefixLimits = default, string lastOperationDetails = default)
+        public static NetworkFabricInternalNetworkData NetworkFabricInternalNetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string annotation = default, StaticRouteConfigurationExtension? extension = default, int? mtu = default, IEnumerable<ConnectedSubnet> connectedIPv4Subnets = default, IEnumerable<ConnectedSubnet> connectedIPv6Subnets = default, ImportRoutePolicy importRoutePolicy = default, ExportRoutePolicy exportRoutePolicy = default, ResourceIdentifier ingressAclId = default, ResourceIdentifier egressAclId = default, IsMonitoringEnabled? isMonitoringEnabled = default, int vlanId = default, BgpConfiguration bgpSettings = default, StaticRouteConfiguration staticRouteSettings = default, ResourceIdentifier networkFabricId = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, IEnumerable<PrefixLimitProperties> nativeIPv4PrefixLimits = default, IEnumerable<PrefixLimitProperties> nativeIPv6PrefixLimits = default, string lastOperationDetails = default)
         {
             return new NetworkFabricInternalNetworkData(
                 id,
@@ -1016,7 +1016,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     isMonitoringEnabled,
                     vlanId,
                     bgpSettings,
-                    staticRouteConfiguration,
+                    staticRouteSettings,
                     new NativeIpv4PrefixLimitProperties((nativeIPv4PrefixLimits ?? new ChangeTrackingList<PrefixLimitProperties>()).ToList(), null),
                     new NativeIpv6PrefixLimitProperties((nativeIPv6PrefixLimits ?? new ChangeTrackingList<PrefixLimitProperties>()).ToList(), null),
                     new LastOperationProperties(lastOperationDetails, null),
@@ -1098,20 +1098,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             neighborIPExclusions ??= new ChangeTrackingList<string>();
 
             return new InternalNetworkBmpProperties(neighborIPExclusions.ToList(), bmpConfigurationState, exportPolicies is null ? default : new BmpExportPolicyProperties((exportPolicies ?? new ChangeTrackingList<BmpExportPolicy>()).ToList(), null), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The InternalNetworkStaticRouteConfiguration. </summary>
-        /// <param name="bfdConfiguration"> BFD configuration properties. </param>
-        /// <param name="iPv4Routes"> List of IPv4 Routes. </param>
-        /// <param name="iPv6Routes"> List of IPv6 Routes. </param>
-        /// <param name="extension"> Extension. Example: NoExtension | NPB. </param>
-        /// <returns> A new <see cref="Models.InternalNetworkStaticRouteConfiguration"/> instance for mocking. </returns>
-        public static InternalNetworkStaticRouteConfiguration InternalNetworkStaticRouteConfiguration(BfdConfiguration bfdConfiguration = default, IEnumerable<StaticRouteProperties> iPv4Routes = default, IEnumerable<StaticRouteProperties> iPv6Routes = default, StaticRouteConfigurationExtension? extension = default)
-        {
-            iPv4Routes ??= new ChangeTrackingList<StaticRouteProperties>();
-            iPv6Routes ??= new ChangeTrackingList<StaticRouteProperties>();
-
-            return new InternalNetworkStaticRouteConfiguration(bfdConfiguration, iPv4Routes.ToList(), iPv6Routes.ToList(), extension, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Static Route Configuration properties. </summary>

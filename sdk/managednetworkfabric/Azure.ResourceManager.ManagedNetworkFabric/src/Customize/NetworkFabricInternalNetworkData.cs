@@ -23,6 +23,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             set => BgpSettings = value;
         }
 
+        // Backward compatibility shim for the TypeSpec migration. The current generated property
+        // is StaticRouteSettings and uses the shared StaticRouteConfiguration model directly.
+        /// <summary> Static Route Configuration properties. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future version. Use StaticRouteSettings instead.")]
+        public InternalNetworkStaticRouteConfiguration StaticRouteConfiguration
+        {
+            get => InternalNetworkStaticRouteConfiguration.FromStaticRouteConfiguration(StaticRouteSettings);
+            set => StaticRouteSettings = value;
+        }
+
         // Backward compatibility that adds back a previously safe flattened property.
         // This is no longer flattened because its type has more than one properties now.
         /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>

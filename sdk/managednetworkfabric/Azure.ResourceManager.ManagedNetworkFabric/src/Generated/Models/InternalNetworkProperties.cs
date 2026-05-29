@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="isMonitoringEnabled"> To check whether monitoring of internal network is enabled or not. </param>
         /// <param name="vlanId"> Vlan identifier. Example: 1001. </param>
         /// <param name="bgpSettings"> BGP configuration properties. </param>
-        /// <param name="staticRouteConfiguration"> Static Route Configuration properties. </param>
+        /// <param name="staticRouteSettings"> Static Route Configuration properties. </param>
         /// <param name="nativeIPv4PrefixLimit"> Native IPv4 Prefix Limit Configuration properties. </param>
         /// <param name="nativeIPv6PrefixLimit"> Native IPv6 Prefix Limit Configuration properties. </param>
         /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalNetworkProperties(string annotation, StaticRouteConfigurationExtension? extension, int? mtu, IList<ConnectedSubnet> connectedIPv4Subnets, IList<ConnectedSubnet> connectedIPv6Subnets, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, int vlanId, BgpConfiguration bgpSettings, InternalNetworkStaticRouteConfiguration staticRouteConfiguration, NativeIpv4PrefixLimitProperties nativeIPv4PrefixLimit, NativeIpv6PrefixLimitProperties nativeIPv6PrefixLimit, LastOperationProperties lastOperation, ResourceIdentifier networkFabricId, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalNetworkProperties(string annotation, StaticRouteConfigurationExtension? extension, int? mtu, IList<ConnectedSubnet> connectedIPv4Subnets, IList<ConnectedSubnet> connectedIPv6Subnets, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, int vlanId, BgpConfiguration bgpSettings, StaticRouteConfiguration staticRouteSettings, NativeIpv4PrefixLimitProperties nativeIPv4PrefixLimit, NativeIpv6PrefixLimitProperties nativeIPv6PrefixLimit, LastOperationProperties lastOperation, ResourceIdentifier networkFabricId, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             Extension = extension;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IsMonitoringEnabled = isMonitoringEnabled;
             VlanId = vlanId;
             BgpSettings = bgpSettings;
-            StaticRouteConfiguration = staticRouteConfiguration;
+            StaticRouteSettings = staticRouteSettings;
             NativeIPv4PrefixLimit = nativeIPv4PrefixLimit;
             NativeIPv6PrefixLimit = nativeIPv6PrefixLimit;
             LastOperation = lastOperation;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public BgpConfiguration BgpSettings { get; set; }
 
         /// <summary> Static Route Configuration properties. </summary>
-        public InternalNetworkStaticRouteConfiguration StaticRouteConfiguration { get; set; }
+        public StaticRouteConfiguration StaticRouteSettings { get; set; }
 
         /// <summary> Native IPv4 Prefix Limit Configuration properties. </summary>
         internal NativeIpv4PrefixLimitProperties NativeIPv4PrefixLimit { get; set; }

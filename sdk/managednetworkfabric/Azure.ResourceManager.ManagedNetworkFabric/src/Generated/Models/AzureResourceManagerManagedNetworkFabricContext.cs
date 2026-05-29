@@ -99,7 +99,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     [ModelReaderWriterBuildable(typeof(InternalNetworkPatchProperties))]
     [ModelReaderWriterBuildable(typeof(InternalNetworkProperties))]
     [ModelReaderWriterBuildable(typeof(InternalNetworksList))]
-    [ModelReaderWriterBuildable(typeof(InternalNetworkStaticRouteConfiguration))]
     [ModelReaderWriterBuildable(typeof(InternalNetworkUpdateBfdAdministrativeStateContent))]
     [ModelReaderWriterBuildable(typeof(InternalNetworkUpdateBfdAdministrativeStateResponseProperties))]
     [ModelReaderWriterBuildable(typeof(InternalNetworkUpdateBfdAdministrativeStateResult))]

@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Static Route Configuration properties. </summary>
-        public InternalNetworkStaticRouteConfiguration StaticRouteConfiguration
+        public StaticRouteConfiguration StaticRouteSettings
         {
             get
             {
-                return Properties is null ? default : Properties.StaticRouteConfiguration;
+                return Properties is null ? default : Properties.StaticRouteSettings;
             }
             set
             {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     Properties = new InternalNetworkProperties();
                 }
-                Properties.StaticRouteConfiguration = value;
+                Properties.StaticRouteSettings = value;
             }
         }
 

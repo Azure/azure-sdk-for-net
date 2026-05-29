@@ -56,6 +56,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static InternalNetworkBgpConfiguration InternalNetworkBgpConfiguration(string annotation = default, BfdConfiguration bfdConfiguration = default, NetworkFabricBooleanValue? defaultRouteOriginate = default, int? allowAS = default, AllowASOverride? allowASOverride = default, long? fabricAsn = default, long? peerAsn = default, IEnumerable<string> iPv4ListenRangePrefixes = default, IEnumerable<string> iPv6ListenRangePrefixes = default, IEnumerable<NeighborAddress> iPv4NeighborAddress = default, IEnumerable<NeighborAddress> iPv6NeighborAddress = default, InternalNetworkBmpProperties bmpConfiguration = default, NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession = default, NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession = default)
             => new InternalNetworkBgpConfiguration(annotation, additionalBinaryDataProperties: null, bfdConfiguration, defaultRouteOriginate, allowAS, allowASOverride, fabricAsn, peerAsn, (iPv4ListenRangePrefixes ?? new ChangeTrackingList<string>()).ToList(), (iPv6ListenRangePrefixes ?? new ChangeTrackingList<string>()).ToList(), (iPv4NeighborAddress ?? new ChangeTrackingList<NeighborAddress>()).ToList(), (iPv6NeighborAddress ?? new ChangeTrackingList<NeighborAddress>()).ToList(), bmpConfiguration, v4OverV6BgpSession, v6OverV4BgpSession);
 
+        /// <summary> Initializes a new instance of <see cref="Models.InternalNetworkStaticRouteConfiguration"/>. </summary>
+        /// <param name="bfdConfiguration"> BFD configuration properties. </param>
+        /// <param name="iPv4Routes"> List of IPv4 Routes. </param>
+        /// <param name="iPv6Routes"> List of IPv6 Routes. </param>
+        /// <param name="extension"> Extension. Example: NoExtension | NPB. </param>
+        /// <returns> A new <see cref="Models.InternalNetworkStaticRouteConfiguration"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version. Use StaticRouteConfiguration instead.")]
+        public static InternalNetworkStaticRouteConfiguration InternalNetworkStaticRouteConfiguration(BfdConfiguration bfdConfiguration = default, IEnumerable<StaticRouteProperties> iPv4Routes = default, IEnumerable<StaticRouteProperties> iPv6Routes = default, StaticRouteConfigurationExtension? extension = default)
+            => new InternalNetworkStaticRouteConfiguration(bfdConfiguration, (iPv4Routes ?? new ChangeTrackingList<StaticRouteProperties>()).ToList(), (iPv6Routes ?? new ChangeTrackingList<StaticRouteProperties>()).ToList(), extension, additionalBinaryDataProperties: null);
+
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricInternalNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -101,7 +112,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 isMonitoringEnabled: isMonitoringEnabled,
                 vlanId: vlanId,
                 bgpSettings: bgpConfiguration,
-                staticRouteConfiguration: staticRouteConfiguration,
+                staticRouteSettings: staticRouteConfiguration,
                 configurationState: configurationState,
                 provisioningState: provisioningState,
                 administrativeState: administrativeState);
