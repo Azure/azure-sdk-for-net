@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _schemaReferencesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), schemaReferenceName, EdgeSchemaReferenceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeSchemaReferenceResource> operation = new WorkloadOrchestrationArmOperation<EdgeSchemaReferenceResource>(
-                    new EdgeSchemaReferenceOperationSource(Client),
+                    new EdgeSchemaReferenceResourceOperationSource(Client),
                     _schemaReferencesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _schemaReferencesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), schemaReferenceName, EdgeSchemaReferenceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeSchemaReferenceResource> operation = new WorkloadOrchestrationArmOperation<EdgeSchemaReferenceResource>(
-                    new EdgeSchemaReferenceOperationSource(Client),
+                    new EdgeSchemaReferenceResourceOperationSource(Client),
                     _schemaReferencesClientDiagnostics,
                     Pipeline,
                     message.Request,
