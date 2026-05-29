@@ -145,6 +145,15 @@ interface Foos {
     ArmResponse<FooDependency[]>
   >;
 
+  @get
+  @action("retrieveCertificateEmailHistoryPathLengthRepro")
+  @clientName("GetPathLengthRepro")
+  microsoftCertificateRegistrationAppServiceCertificateOrdersRetrieveCertificateEmailHistoryPathLengthRepro is ArmResourceActionSync<
+    Foo,
+    void,
+    ArmResponse<FooDependency[]>
+  >;
+
   /** Get the provisioning state of a Foo resource. */
   @get
   @action("getProvisioningState")
