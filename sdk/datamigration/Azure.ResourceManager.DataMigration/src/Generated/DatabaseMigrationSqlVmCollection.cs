@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -40,16 +39,6 @@ namespace Azure.ResourceManager.DataMigration
             _databaseMigrationsSqlVmClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", DatabaseMigrationSqlVmResource.ResourceType.Namespace, Diagnostics);
             _databaseMigrationsSqlVmRestClient = new DatabaseMigrationsSqlVm(_databaseMigrationsSqlVmClientDiagnostics, Pipeline, Endpoint, databaseMigrationSqlVmApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != "Microsoft.SqlVirtualMachine/sqlVirtualMachines")
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.SqlVirtualMachine/sqlVirtualMachines"), nameof(id));
-            }
         }
 
         /// <summary>

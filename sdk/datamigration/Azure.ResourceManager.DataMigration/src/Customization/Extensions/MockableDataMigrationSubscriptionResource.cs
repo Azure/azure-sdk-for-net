@@ -23,10 +23,12 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         public virtual Task<Response<DataMigrationServiceNameAvailabilityResult>> CheckDataMigrationNameAvailabilityAsync(AzureLocation location, DataMigrationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
             => CheckDataMigrationNameAvailabilityAsync(location.ToString(), content, cancellationToken);
 
+        // rename operation from routes.tsp
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<DataMigrationSku> GetSkusResourceSkus(CancellationToken cancellationToken = default)
             => GetSkus(cancellationToken);
 
+        // rename operation from routes.tsp
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<DataMigrationSku> GetSkusResourceSkusAsync(CancellationToken cancellationToken = default)
             => GetSkusAsync(cancellationToken);

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -40,16 +39,6 @@ namespace Azure.ResourceManager.DataMigration
             _databaseMigrationsSqlMiClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", DatabaseMigrationSqlMIResource.ResourceType.Namespace, Diagnostics);
             _databaseMigrationsSqlMiRestClient = new DatabaseMigrationsSqlMi(_databaseMigrationsSqlMiClientDiagnostics, Pipeline, Endpoint, databaseMigrationSqlMIApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != "Microsoft.Sql/managedInstances")
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.Sql/managedInstances"), nameof(id));
-            }
         }
 
         /// <summary>
