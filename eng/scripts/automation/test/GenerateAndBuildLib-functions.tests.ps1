@@ -124,6 +124,58 @@ Describe "Generate and Build SDK" -Tag "Unit" {
     }
 }
 
+Describe "Update-MgmtPackageFolder function" -Tag "UnitTest" {
+    BeforeEach {
+        $script:mgmtTestRootDir = Join-Path ([System.IO.Path]::GetTempPath()) "mgmt-package-folder-test-$(Get-Random)"
+        $script:mgmtSdkRoot = Join-Path $script:mgmtTestRootDir "sdk-root"
+        $script:mgmtServiceDir = Join-Path $script:mgmtSdkRoot "sdk" "resources"
+        $script:mgmtProjectDir = Join-Path $script:mgmtServiceDir "Azure.ResourceManager.Resources"
+        $script:mgmtSrcDir = Join-Path $script:mgmtProjectDir "src"
+
+        New-Item -ItemType Directory -Path $script:mgmtSrcDir -Force | Out-Null
+        foreach ($package in @("Azure.ResourceManager.Resources.Bicep", "Azure.ResourceManager.Resources.Deployments", "Azure.ResourceManager.Resources.Policy")) {
+            New-Item -ItemType Directory -Path (Join-Path $script:mgmtServiceDir $package "src") -Force | Out-Null
+        }
+
+        $autorestContent = @"
+# Generated code configuration
+
+``` yaml
+require: https://github.com/Azure/azure-rest-api-specs/blob/old/specification/resources/resource-manager/readme.md
+```
+"@
+        Set-Content -Path (Join-Path $script:mgmtSrcDir "autorest.md") -Value $autorestContent
+    }
+
+    AfterEach {
+        if (Test-Path $script:mgmtTestRootDir) {
+            Remove-Item -Recurse -Force $script:mgmtTestRootDir
+        }
+    }
+
+    It "should select the swagger package when the service folder has multiple management packages" {
+        $outputJsonFile = Join-Path $script:mgmtTestRootDir "output.json"
+        $readme = "https://github.com/Azure/azure-rest-api-specs/blob/new/specification/resources/resource-manager/Microsoft.Resources/resources/readme.md"
+        $expectedProjectFolder = $script:mgmtProjectDir -replace "\\", "/"
+
+        $projectFolder = Update-MgmtPackageFolder `
+            -service "resources" `
+            -packageName "resources" `
+            -sdkPath $script:mgmtSdkRoot `
+            -readme $readme `
+            -outputJsonFile $outputJsonFile
+
+        $projectFolder | Should -Be $expectedProjectFolder
+
+        $output = Get-Content $outputJsonFile -Raw | ConvertFrom-Json
+        $output.packageName | Should -Be "Azure.ResourceManager.Resources"
+        $output.projectFolder | Should -Be $expectedProjectFolder
+
+        $autorestContent = Get-Content (Join-Path $script:mgmtSrcDir "autorest.md") -Raw
+        $autorestContent | Should -Match ([regex]::Escape("require: $readme"))
+    }
+}
+
 Describe "GetSDKProjectFolder function" -Tag "UnitTest" {
     BeforeAll {
         $testTspConfigDir = Join-Path $PSScriptRoot "test-data"

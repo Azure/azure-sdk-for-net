@@ -282,6 +282,22 @@ function Update-DataPlanePackageFolder() {
   return $projectFolder
 }
 
+function Get-MgmtPackageFolderCandidates() {
+    param(
+        [string]$sdkPath,
+        [string]$packageName,
+        [string]$AUTOREST_CONFIG_FILE = "autorest.md"
+    )
+
+    $serviceFolder = Join-Path $sdkPath "sdk" $packageName
+    if (!(Test-Path -Path $serviceFolder)) {
+        return @()
+    }
+
+    $packageFolders = @(Get-ChildItem -Path $serviceFolder -Directory -Filter "Azure.ResourceManager.*" -ErrorAction SilentlyContinue)
+    return @($packageFolders | Where-Object { Test-Path -Path (Join-Path $_.FullName "src" $AUTOREST_CONFIG_FILE) })
+}
+
 <#
 .SYNOPSIS
 Prepare the SDK pacakge for mangement-plane.
@@ -302,16 +318,17 @@ function Update-MgmtPackageFolder() {
         $packageName = $service
     }
 
-    $projectFolder = (Join-Path $sdkPath "sdk" $packageName "Azure.ResourceManager.*")
-    $mgmtPackageName = ""
-    $projectFolder = $projectFolder -replace "\\", "/"
-    if (Test-Path -Path $projectFolder) {
+    $projectFolders = @(Get-MgmtPackageFolderCandidates -sdkPath $sdkPath -packageName $packageName -AUTOREST_CONFIG_FILE $AUTOREST_CONFIG_FILE)
+    if ($projectFolders.Count -eq 1) {
       Write-Host "Path exists!"
-      $folderinfo = Get-ChildItem -Path $projectFolder
-      $mgmtPackageName = $folderinfo.Name
-      $projectFolder = "$sdkPath/sdk/$packageName/$mgmtPackageName"
+      $projectFolder = $projectFolders[0].FullName -replace "\\", "/"
+      $mgmtPackageName = $projectFolders[0].Name
+    } elseif ($projectFolders.Count -gt 1) {
+      $candidateNames = $projectFolders.Name -join ", "
+      Write-Host "[ERROR] Found multiple management SDK package folders with src/$AUTOREST_CONFIG_FILE under sdk/${packageName}: $candidateNames. Cannot determine which package to generate from swagger."
+      exit 1
     } else {
-      Write-Host "[ERROR] Project directory doesn't exist. It is a new .NET SDK. We will not support onboard a new service SDK from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+      Write-Host "[ERROR] Project directory doesn't exist. It is a new .NET SDK or does not contain a swagger-based $AUTOREST_CONFIG_FILE. We will not support onboard a new service SDK from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
       exit 1
     }
 
@@ -572,8 +589,8 @@ function Invoke-GenerateAndBuildSDK () {
             $package = $packageNameHash[$service]
             Write-Host "rename package name to $package"
         }
-        $projectFolder = (Join-Path $sdkRootPath "sdk" $package "Azure.ResourceManager.*")
-        if (Test-Path -Path $projectFolder) {
+        $serviceFolder = Join-Path $sdkRootPath "sdk" $package
+        if (Test-Path -Path $serviceFolder) {
             Update-MgmtPackageFolder -service $service -packageName $package -sdkPath $sdkRootPath -commitid $commitid -readme $readmeFile -outputJsonFile $newpackageoutput
             if ( !$?) {
                 Write-Host "[ERROR] Failed to create sdk project folder.service:$service,package:$package, sdkPath:$sdkRootPath,readme:$readmeFile.exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
