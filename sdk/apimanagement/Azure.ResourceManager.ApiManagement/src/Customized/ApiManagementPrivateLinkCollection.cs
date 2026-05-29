@@ -1,9 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Workaround for generator bug: GetAll returns Response<T> instead of Pageable<T>.
-// See https://github.com/Azure/azure-sdk-for-net/issues/56502
-
 #nullable disable
 
 using System;
@@ -17,6 +14,10 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ApiManagement
 {
+    // Generator bug https://github.com/Azure/azure-sdk-for-net/issues/56502:
+    // The MPG generator emits the list operation as Response<...ListResult> instead of
+    // Pageable<T>/AsyncPageable<T>. Manual paging shims below suppress the broken generated
+    // GetAll/GetAllAsync; remove this customization when #56502 is fixed.
     [CodeGenSuppress("GetAllAsync", typeof(CancellationToken))]
     [CodeGenSuppress("GetAll", typeof(CancellationToken))]
     public partial class ApiManagementPrivateLinkCollection
