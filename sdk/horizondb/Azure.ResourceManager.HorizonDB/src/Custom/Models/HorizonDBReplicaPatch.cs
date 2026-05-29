@@ -7,6 +7,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
+    [CodeGenType("HorizonDBReplicaForPatchUpdate")]
     public partial class HorizonDBReplicaPatch
     {
         /// <summary> Role of the replica. </summary>
