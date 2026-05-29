@@ -16,7 +16,6 @@ namespace Microsoft.Extensions.Azure
     /// <summary>
     /// Extension methods to add <see cref="QueueClientOptions"/> client to clients builder
     /// </summary>
-    [CodeGenType("QueuesClientBuilderExtensions")]
     public static partial class QueueClientBuilderExtensions
     {
         /// <summary>
