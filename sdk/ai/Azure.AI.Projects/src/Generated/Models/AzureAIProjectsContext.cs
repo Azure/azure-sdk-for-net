@@ -20,7 +20,6 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(AgentDataGenerationJobSource))]
     [ModelReaderWriterBuildable(typeof(AgentEvaluatorGenerationJobSource))]
     [ModelReaderWriterBuildable(typeof(AgenticIdentityPreviewCredentials))]
-    [ModelReaderWriterBuildable(typeof(AgentsPagedResultDataGenerationJob))]
     [ModelReaderWriterBuildable(typeof(AgentsPagedResultMemoryItem))]
     [ModelReaderWriterBuildable(typeof(AgentTaxonomyInput))]
     [ModelReaderWriterBuildable(typeof(AIProjectBlobReference))]
