@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="protocolNeighbors"> Protocol neighbors that need to be matched. </param>
         /// <param name="icmpTypes"> Internet Control Message Protocol (ICMP) types. </param>
         /// <returns> A new <see cref="Models.AccessControlListMatchConditionPatch"/> instance for mocking. </returns>
-        public static AccessControlListMatchConditionPatch AccessControlListMatchConditionPatch(IEnumerable<string> protocolTypes = default, VlanMatchConditionPatch vlanMatchCondition = default, IpMatchConditionPatch ipCondition = default, IEnumerable<string> etherTypes = default, IEnumerable<string> fragments = default, IEnumerable<string> ipLengths = default, IEnumerable<string> ttlValues = default, IEnumerable<string> dscpMarkings = default, AccessControlListPortConditionPatch portCondition = default, IEnumerable<string> protocolNeighbors = default, IEnumerable<string> icmpTypes = default)
+        public static AccessControlListMatchConditionPatch AccessControlListMatchConditionPatch(IEnumerable<string> protocolTypes = default, VlanMatchConditionPatch vlanMatchCondition = default, IPMatchConditionPatch ipCondition = default, IEnumerable<string> etherTypes = default, IEnumerable<string> fragments = default, IEnumerable<string> ipLengths = default, IEnumerable<string> ttlValues = default, IEnumerable<string> dscpMarkings = default, AccessControlListPortConditionPatch portCondition = default, IEnumerable<string> protocolNeighbors = default, IEnumerable<string> icmpTypes = default)
         {
             protocolTypes ??= new ChangeTrackingList<string>();
             etherTypes ??= new ChangeTrackingList<string>();
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="vlanMatchCondition"> Vlan match condition that needs to be matched. </param>
         /// <param name="ipCondition"> IP condition that needs to be matched. </param>
         /// <returns> A new <see cref="Models.CommonMatchConditionsPatch"/> instance for mocking. </returns>
-        public static CommonMatchConditionsPatch CommonMatchConditionsPatch(IEnumerable<string> protocolTypes = default, VlanMatchConditionPatch vlanMatchCondition = default, IpMatchConditionPatch ipCondition = default)
+        public static CommonMatchConditionsPatch CommonMatchConditionsPatch(IEnumerable<string> protocolTypes = default, VlanMatchConditionPatch vlanMatchCondition = default, IPMatchConditionPatch ipCondition = default)
         {
             protocolTypes ??= new ChangeTrackingList<string>();
 
@@ -442,13 +442,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="prefixType"> IP Prefix Type that needs to be matched. </param>
         /// <param name="ipPrefixValues"> The list of IP Prefixes that need to be matched. </param>
         /// <param name="ipGroupNames"> The List of IP Group Names that need to be matched. </param>
-        /// <returns> A new <see cref="Models.IpMatchConditionPatch"/> instance for mocking. </returns>
-        public static IpMatchConditionPatch IpMatchConditionPatch(SourceDestinationType? @type = default, IPMatchConditionPrefixType? prefixType = default, IEnumerable<string> ipPrefixValues = default, IEnumerable<string> ipGroupNames = default)
+        /// <returns> A new <see cref="Models.IPMatchConditionPatch"/> instance for mocking. </returns>
+        public static IPMatchConditionPatch IPMatchConditionPatch(SourceDestinationType? @type = default, IPMatchConditionPrefixType? prefixType = default, IEnumerable<string> ipPrefixValues = default, IEnumerable<string> ipGroupNames = default)
         {
             ipPrefixValues ??= new ChangeTrackingList<string>();
             ipGroupNames ??= new ChangeTrackingList<string>();
 
-            return new IpMatchConditionPatch(@type, prefixType, ipPrefixValues.ToList(), ipGroupNames.ToList(), additionalBinaryDataProperties: null);
+            return new IPMatchConditionPatch(@type, prefixType, ipPrefixValues.ToList(), ipGroupNames.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Dynamic match configuration object. </summary>
@@ -456,9 +456,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="vlanGroups"> List of vlan groups. </param>
         /// <param name="portGroups"> List of the port groups. </param>
         /// <returns> A new <see cref="Models.CommonDynamicMatchConfigurationPatch"/> instance for mocking. </returns>
-        public static CommonDynamicMatchConfigurationPatch CommonDynamicMatchConfigurationPatch(IEnumerable<IpGroupPatchProperties> ipGroups = default, IEnumerable<VlanGroupPatchProperties> vlanGroups = default, IEnumerable<PortGroupPatchProperties> portGroups = default)
+        public static CommonDynamicMatchConfigurationPatch CommonDynamicMatchConfigurationPatch(IEnumerable<IPGroupPatchProperties> ipGroups = default, IEnumerable<VlanGroupPatchProperties> vlanGroups = default, IEnumerable<PortGroupPatchProperties> portGroups = default)
         {
-            ipGroups ??= new ChangeTrackingList<IpGroupPatchProperties>();
+            ipGroups ??= new ChangeTrackingList<IPGroupPatchProperties>();
             vlanGroups ??= new ChangeTrackingList<VlanGroupPatchProperties>();
             portGroups ??= new ChangeTrackingList<PortGroupPatchProperties>();
 
@@ -469,12 +469,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="name"> IP Group name. </param>
         /// <param name="ipAddressType"> IP Address type. </param>
         /// <param name="ipPrefixes"> List of IP Prefixes. </param>
-        /// <returns> A new <see cref="Models.IpGroupPatchProperties"/> instance for mocking. </returns>
-        public static IpGroupPatchProperties IpGroupPatchProperties(string name = default, NetworkFabricIPAddressType? ipAddressType = default, IEnumerable<string> ipPrefixes = default)
+        /// <returns> A new <see cref="Models.IPGroupPatchProperties"/> instance for mocking. </returns>
+        public static IPGroupPatchProperties IPGroupPatchProperties(string name = default, NetworkFabricIPAddressType? ipAddressType = default, IEnumerable<string> ipPrefixes = default)
         {
             ipPrefixes ??= new ChangeTrackingList<string>();
 
-            return new IpGroupPatchProperties(name, ipAddressType, ipPrefixes.ToList(), additionalBinaryDataProperties: null);
+            return new IPGroupPatchProperties(name, ipAddressType, ipPrefixes.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Vlan group properties. </summary>
@@ -3484,7 +3484,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="encapsulationType"> Encapsulation Type that needs to be matched. </param>
         /// <param name="portCondition"> Defines the port condition that needs to be matched. </param>
         /// <returns> A new <see cref="Models.NetworkTapRuleMatchConditionPatch"/> instance for mocking. </returns>
-        public static NetworkTapRuleMatchConditionPatch NetworkTapRuleMatchConditionPatch(IEnumerable<string> protocolTypes = default, VlanMatchConditionPatch vlanMatchCondition = default, IpMatchConditionPatch ipCondition = default, NetworkTapEncapsulationType? encapsulationType = default, PortConditionPatch portCondition = default)
+        public static NetworkTapRuleMatchConditionPatch NetworkTapRuleMatchConditionPatch(IEnumerable<string> protocolTypes = default, VlanMatchConditionPatch vlanMatchCondition = default, IPMatchConditionPatch ipCondition = default, NetworkTapEncapsulationType? encapsulationType = default, PortConditionPatch portCondition = default)
         {
             protocolTypes ??= new ChangeTrackingList<string>();
 
@@ -3742,13 +3742,49 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="tags"> Resource tags. </param>
         /// <param name="defaultAction"> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </param>
-        /// <param name="statements"> Route Policy statements. </param>
+        /// <param name="statementSettings"> Route Policy statements. </param>
         /// <returns> A new <see cref="Models.NetworkFabricRoutePolicyPatchContent"/> instance for mocking. </returns>
-        public static NetworkFabricRoutePolicyPatchContent NetworkFabricRoutePolicyPatchContent(IDictionary<string, string> tags = default, CommunityActionType? defaultAction = default, IEnumerable<RoutePolicyStatementProperties> statements = default)
+        public static NetworkFabricRoutePolicyPatchContent NetworkFabricRoutePolicyPatchContent(IDictionary<string, string> tags = default, CommunityActionType? defaultAction = default, IEnumerable<RoutePolicyStatementPatchProperties> statementSettings = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkFabricRoutePolicyPatchContent(tags, additionalBinaryDataProperties: null, defaultAction is null && statements is null ? default : new RoutePolicyPatchableProperties(defaultAction, (statements ?? new ChangeTrackingList<RoutePolicyStatementProperties>()).ToList(), null));
+            return new NetworkFabricRoutePolicyPatchContent(tags, additionalBinaryDataProperties: null, defaultAction is null && statementSettings is null ? default : new RoutePolicyPatchableProperties(defaultAction, (statementSettings ?? new ChangeTrackingList<RoutePolicyStatementPatchProperties>()).ToList(), null));
+        }
+
+        /// <summary> Route Policy Statement properties. </summary>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="sequenceNumber"> Sequence to insert to/delete from existing route. </param>
+        /// <param name="condition"> Route policy condition properties. </param>
+        /// <param name="action"> Route policy action properties. </param>
+        /// <returns> A new <see cref="Models.RoutePolicyStatementPatchProperties"/> instance for mocking. </returns>
+        public static RoutePolicyStatementPatchProperties RoutePolicyStatementPatchProperties(string annotation = default, long sequenceNumber = default, StatementConditionPatchProperties condition = default, StatementActionPatchProperties action = default)
+        {
+            return new RoutePolicyStatementPatchProperties(annotation, additionalBinaryDataProperties: null, sequenceNumber, condition, action);
+        }
+
+        /// <summary> Route policy statement condition properties. </summary>
+        /// <param name="ipCommunityIds"> List of IP Community resource IDs. </param>
+        /// <param name="ipExtendedCommunityIds"> List of IP Extended Community resource IDs. </param>
+        /// <param name="type"> Type of the condition used. </param>
+        /// <param name="ipPrefixId"> Arm Resource Id of IpPrefix. </param>
+        /// <returns> A new <see cref="Models.StatementConditionPatchProperties"/> instance for mocking. </returns>
+        public static StatementConditionPatchProperties StatementConditionPatchProperties(IEnumerable<string> ipCommunityIds = default, IEnumerable<string> ipExtendedCommunityIds = default, RoutePolicyConditionType? @type = default, string ipPrefixId = default)
+        {
+            ipCommunityIds ??= new ChangeTrackingList<string>();
+            ipExtendedCommunityIds ??= new ChangeTrackingList<string>();
+
+            return new StatementConditionPatchProperties(ipCommunityIds.ToList(), ipExtendedCommunityIds.ToList(), @type, ipPrefixId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Route policy action properties. </summary>
+        /// <param name="localPreference"> Local Preference of the route policy. </param>
+        /// <param name="actionType"> Action type. Example: Permit | Deny | Continue. </param>
+        /// <param name="ipCommunityProperties"> IP Community Properties. </param>
+        /// <param name="ipExtendedCommunityProperties"> IP Extended Community Properties. </param>
+        /// <returns> A new <see cref="Models.StatementActionPatchProperties"/> instance for mocking. </returns>
+        public static StatementActionPatchProperties StatementActionPatchProperties(long? localPreference = default, RoutePolicyActionType actionType = default, ActionIPCommunityPatchProperties ipCommunityProperties = default, ActionIPExtendedCommunityPatchProperties ipExtendedCommunityProperties = default)
+        {
+            return new StatementActionPatchProperties(localPreference, actionType, ipCommunityProperties, ipExtendedCommunityProperties, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

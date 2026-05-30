@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="vlanMatchCondition"> Vlan match condition that needs to be matched. </param>
         /// <param name="ipCondition"> IP condition that needs to be matched. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommonMatchConditionsPatch(IList<string> protocolTypes, VlanMatchConditionPatch vlanMatchCondition, IpMatchConditionPatch ipCondition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommonMatchConditionsPatch(IList<string> protocolTypes, VlanMatchConditionPatch vlanMatchCondition, IPMatchConditionPatch ipCondition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProtocolTypes = protocolTypes;
             VlanMatchCondition = vlanMatchCondition;
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public VlanMatchConditionPatch VlanMatchCondition { get; set; }
 
         /// <summary> IP condition that needs to be matched. </summary>
-        public IpMatchConditionPatch IPCondition { get; set; }
+        public IPMatchConditionPatch IPCondition { get; set; }
     }
 }

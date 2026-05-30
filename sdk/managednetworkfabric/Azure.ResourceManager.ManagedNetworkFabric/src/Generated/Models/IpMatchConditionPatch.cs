@@ -12,25 +12,25 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Defines the condition that can be filtered using the selected IPs. </summary>
-    public partial class IpMatchConditionPatch
+    public partial class IPMatchConditionPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IpMatchConditionPatch"/>. </summary>
-        public IpMatchConditionPatch()
+        /// <summary> Initializes a new instance of <see cref="IPMatchConditionPatch"/>. </summary>
+        public IPMatchConditionPatch()
         {
             IPPrefixValues = new ChangeTrackingList<string>();
             IPGroupNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IpMatchConditionPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPMatchConditionPatch"/>. </summary>
         /// <param name="type"> IP Address type that needs to be matched. </param>
         /// <param name="prefixType"> IP Prefix Type that needs to be matched. </param>
         /// <param name="ipPrefixValues"> The list of IP Prefixes that need to be matched. </param>
         /// <param name="ipGroupNames"> The List of IP Group Names that need to be matched. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IpMatchConditionPatch(SourceDestinationType? @type, IPMatchConditionPrefixType? prefixType, IList<string> ipPrefixValues, IList<string> ipGroupNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IPMatchConditionPatch(SourceDestinationType? @type, IPMatchConditionPrefixType? prefixType, IList<string> ipPrefixValues, IList<string> ipGroupNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             PrefixType = prefixType;

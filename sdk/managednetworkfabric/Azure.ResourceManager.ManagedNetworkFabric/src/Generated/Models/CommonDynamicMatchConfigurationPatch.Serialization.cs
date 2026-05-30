@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("ipGroups"u8);
                 writer.WriteStartArray();
-                foreach (IpGroupPatchProperties item in IPGroups)
+                foreach (IPGroupPatchProperties item in IPGroups)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            IList<IpGroupPatchProperties> ipGroups = default;
+            IList<IPGroupPatchProperties> ipGroups = default;
             IList<VlanGroupPatchProperties> vlanGroups = default;
             IList<PortGroupPatchProperties> portGroups = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<IpGroupPatchProperties> array = new List<IpGroupPatchProperties>();
+                    List<IPGroupPatchProperties> array = new List<IPGroupPatchProperties>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IpGroupPatchProperties.DeserializeIpGroupPatchProperties(item, options));
+                        array.Add(IPGroupPatchProperties.DeserializeIPGroupPatchProperties(item, options));
                     }
                     ipGroups = array;
                     continue;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CommonDynamicMatchConfigurationPatch(ipGroups ?? new ChangeTrackingList<IpGroupPatchProperties>(), vlanGroups ?? new ChangeTrackingList<VlanGroupPatchProperties>(), portGroups ?? new ChangeTrackingList<PortGroupPatchProperties>(), additionalBinaryDataProperties);
+            return new CommonDynamicMatchConfigurationPatch(ipGroups ?? new ChangeTrackingList<IPGroupPatchProperties>(), vlanGroups ?? new ChangeTrackingList<VlanGroupPatchProperties>(), portGroups ?? new ChangeTrackingList<PortGroupPatchProperties>(), additionalBinaryDataProperties);
         }
     }
 }

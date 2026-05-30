@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var result = new AccessControlListMatchConditionPatch
             {
                 VlanMatchCondition = ToVlanMatchConditionPatch(value.VlanMatchCondition),
-                IPCondition = ToIpMatchConditionPatch(value.IPCondition),
+                IPCondition = ToIPMatchConditionPatch(value.IPCondition),
                 PortCondition = ToPortConditionPatch(value.PortCondition)
             };
             Copy(value.ProtocolTypes, result.ProtocolTypes);
@@ -206,14 +206,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return result;
         }
 
-        private static IpMatchConditionPatch ToIpMatchConditionPatch(IPMatchCondition value)
+        private static IPMatchConditionPatch ToIPMatchConditionPatch(IPMatchCondition value)
         {
             if (value is null)
             {
                 return null;
             }
 
-            var result = new IpMatchConditionPatch
+            var result = new IPMatchConditionPatch
             {
                 Type = value.SourceDestinationType,
                 PrefixType = value.PrefixType
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return result;
         }
 
-        private static IPMatchCondition ToIPMatchCondition(IpMatchConditionPatch value)
+        private static IPMatchCondition ToIPMatchCondition(IPMatchConditionPatch value)
         {
             if (value is null)
             {
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             var result = new CommonDynamicMatchConfiguration();
-            foreach (IpGroupPatchProperties item in value.IPGroups)
+            foreach (IPGroupPatchProperties item in value.IPGroups)
             {
                 result.IPGroups.Add(ToIPGroup(item));
             }
@@ -298,14 +298,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return result;
         }
 
-        private static IpGroupPatchProperties ToIPGroupPatch(MatchConfigurationIPGroupProperties value)
+        private static IPGroupPatchProperties ToIPGroupPatch(MatchConfigurationIPGroupProperties value)
         {
             if (value is null)
             {
                 return null;
             }
 
-            var result = new IpGroupPatchProperties
+            var result = new IPGroupPatchProperties
             {
                 Name = value.Name,
                 IPAddressType = value.IPAddressType
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return result;
         }
 
-        private static MatchConfigurationIPGroupProperties ToIPGroup(IpGroupPatchProperties value)
+        private static MatchConfigurationIPGroupProperties ToIPGroup(IPGroupPatchProperties value)
         {
             if (value is null)
             {

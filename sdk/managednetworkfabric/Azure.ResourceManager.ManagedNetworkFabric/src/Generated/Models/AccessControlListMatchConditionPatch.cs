@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="portCondition"> Defines the port condition that needs to be matched. </param>
         /// <param name="protocolNeighbors"> Protocol neighbors that need to be matched. </param>
         /// <param name="icmpConfiguration"> Internet Control Message Protocol (ICMP) configuration. </param>
-        internal AccessControlListMatchConditionPatch(IList<string> protocolTypes, VlanMatchConditionPatch vlanMatchCondition, IpMatchConditionPatch ipCondition, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> etherTypes, IList<string> fragments, IList<string> ipLengths, IList<string> ttlValues, IList<string> dscpMarkings, AccessControlListPortConditionPatch portCondition, IList<string> protocolNeighbors, IcmpConfigurationPatchProperties icmpConfiguration) : base(protocolTypes, vlanMatchCondition, ipCondition, additionalBinaryDataProperties)
+        internal AccessControlListMatchConditionPatch(IList<string> protocolTypes, VlanMatchConditionPatch vlanMatchCondition, IPMatchConditionPatch ipCondition, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> etherTypes, IList<string> fragments, IList<string> ipLengths, IList<string> ttlValues, IList<string> dscpMarkings, AccessControlListPortConditionPatch portCondition, IList<string> protocolNeighbors, IcmpConfigurationPatchProperties icmpConfiguration) : base(protocolTypes, vlanMatchCondition, ipCondition, additionalBinaryDataProperties)
         {
             EtherTypes = etherTypes;
             Fragments = fragments;

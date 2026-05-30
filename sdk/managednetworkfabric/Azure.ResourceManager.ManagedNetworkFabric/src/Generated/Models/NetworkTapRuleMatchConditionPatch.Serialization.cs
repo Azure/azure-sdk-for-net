@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             IList<string> protocolTypes = default;
             VlanMatchConditionPatch vlanMatchCondition = default;
-            IpMatchConditionPatch ipCondition = default;
+            IPMatchConditionPatch ipCondition = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             NetworkTapEncapsulationType? encapsulationType = default;
             PortConditionPatch portCondition = default;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    ipCondition = IpMatchConditionPatch.DeserializeIpMatchConditionPatch(prop.Value, options);
+                    ipCondition = IPMatchConditionPatch.DeserializeIPMatchConditionPatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("encapsulationType"u8))

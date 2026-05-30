@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Route Policy statements. </summary>
-        public IList<RoutePolicyStatementProperties> Statements
+        public IList<RoutePolicyStatementPatchProperties> StatementSettings
         {
             get
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new RoutePolicyPatchableProperties();
                 }
-                return Properties.Statements;
+                return Properties.StatementSettings;
             }
         }
     }

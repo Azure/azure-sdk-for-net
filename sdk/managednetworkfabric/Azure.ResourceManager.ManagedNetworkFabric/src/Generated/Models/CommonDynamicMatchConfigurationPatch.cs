@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="CommonDynamicMatchConfigurationPatch"/>. </summary>
         public CommonDynamicMatchConfigurationPatch()
         {
-            IPGroups = new ChangeTrackingList<IpGroupPatchProperties>();
+            IPGroups = new ChangeTrackingList<IPGroupPatchProperties>();
             VlanGroups = new ChangeTrackingList<VlanGroupPatchProperties>();
             PortGroups = new ChangeTrackingList<PortGroupPatchProperties>();
         }
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="vlanGroups"> List of vlan groups. </param>
         /// <param name="portGroups"> List of the port groups. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommonDynamicMatchConfigurationPatch(IList<IpGroupPatchProperties> ipGroups, IList<VlanGroupPatchProperties> vlanGroups, IList<PortGroupPatchProperties> portGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommonDynamicMatchConfigurationPatch(IList<IPGroupPatchProperties> ipGroups, IList<VlanGroupPatchProperties> vlanGroups, IList<PortGroupPatchProperties> portGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IPGroups = ipGroups;
             VlanGroups = vlanGroups;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> List of IP Groups. </summary>
-        public IList<IpGroupPatchProperties> IPGroups { get; }
+        public IList<IPGroupPatchProperties> IPGroups { get; }
 
         /// <summary> List of vlan groups. </summary>
         public IList<VlanGroupPatchProperties> VlanGroups { get; }

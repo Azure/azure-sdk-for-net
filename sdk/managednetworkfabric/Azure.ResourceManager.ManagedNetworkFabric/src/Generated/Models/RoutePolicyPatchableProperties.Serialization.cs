@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Statements))
+            if (Optional.IsCollectionDefined(StatementSettings))
             {
                 writer.WritePropertyName("statements"u8);
                 writer.WriteStartArray();
-                foreach (RoutePolicyStatementProperties item in Statements)
+                foreach (RoutePolicyStatementPatchProperties item in StatementSettings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             CommunityActionType? defaultAction = default;
-            IList<RoutePolicyStatementProperties> statements = default;
+            IList<RoutePolicyStatementPatchProperties> statementSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -151,12 +151,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<RoutePolicyStatementProperties> array = new List<RoutePolicyStatementProperties>();
+                    List<RoutePolicyStatementPatchProperties> array = new List<RoutePolicyStatementPatchProperties>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RoutePolicyStatementProperties.DeserializeRoutePolicyStatementProperties(item, options));
+                        array.Add(RoutePolicyStatementPatchProperties.DeserializeRoutePolicyStatementPatchProperties(item, options));
                     }
-                    statements = array;
+                    statementSettings = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RoutePolicyPatchableProperties(defaultAction, statements ?? new ChangeTrackingList<RoutePolicyStatementProperties>(), additionalBinaryDataProperties);
+            return new RoutePolicyPatchableProperties(defaultAction, statementSettings ?? new ChangeTrackingList<RoutePolicyStatementPatchProperties>(), additionalBinaryDataProperties);
         }
     }
 }

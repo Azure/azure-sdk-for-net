@@ -13,52 +13,52 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Defines the common match conditions of the ACL and Network Tap Rule. </summary>
-    public partial class CommonMatchConditionsPatch : IJsonModel<CommonMatchConditionsPatch>
+    /// <summary> Route policy statement condition properties. </summary>
+    public partial class StatementConditionPatchProperties : IJsonModel<StatementConditionPatchProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CommonMatchConditionsPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual StatementConditionPatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommonMatchConditionsPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StatementConditionPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCommonMatchConditionsPatch(document.RootElement, options);
+                        return DeserializeStatementConditionPatchProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommonMatchConditionsPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StatementConditionPatchProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommonMatchConditionsPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StatementConditionPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CommonMatchConditionsPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StatementConditionPatchProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CommonMatchConditionsPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<StatementConditionPatchProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CommonMatchConditionsPatch IPersistableModel<CommonMatchConditionsPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        StatementConditionPatchProperties IPersistableModel<StatementConditionPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CommonMatchConditionsPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StatementConditionPatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CommonMatchConditionsPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StatementConditionPatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,16 +69,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommonMatchConditionsPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StatementConditionPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommonMatchConditionsPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StatementConditionPatchProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(ProtocolTypes))
+            if (Optional.IsCollectionDefined(IPCommunityIds))
             {
-                writer.WritePropertyName("protocolTypes"u8);
+                writer.WritePropertyName("ipCommunityIds"u8);
                 writer.WriteStartArray();
-                foreach (string item in ProtocolTypes)
+                foreach (string item in IPCommunityIds)
                 {
                     if (item == null)
                     {
@@ -89,15 +89,30 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(VlanMatchCondition))
+            if (Optional.IsCollectionDefined(IPExtendedCommunityIds))
             {
-                writer.WritePropertyName("vlanMatchCondition"u8);
-                writer.WriteObjectValue(VlanMatchCondition, options);
+                writer.WritePropertyName("ipExtendedCommunityIds"u8);
+                writer.WriteStartArray();
+                foreach (string item in IPExtendedCommunityIds)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IPCondition))
+            if (Optional.IsDefined(Type))
             {
-                writer.WritePropertyName("ipCondition"u8);
-                writer.WriteObjectValue(IPCondition, options);
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type.Value.ToString());
+            }
+            if (Optional.IsDefined(IPPrefixId))
+            {
+                writer.WritePropertyName("ipPrefixId"u8);
+                writer.WriteStringValue(IPPrefixId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -118,36 +133,37 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CommonMatchConditionsPatch IJsonModel<CommonMatchConditionsPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        StatementConditionPatchProperties IJsonModel<StatementConditionPatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CommonMatchConditionsPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual StatementConditionPatchProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommonMatchConditionsPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StatementConditionPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommonMatchConditionsPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StatementConditionPatchProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCommonMatchConditionsPatch(document.RootElement, options);
+            return DeserializeStatementConditionPatchProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CommonMatchConditionsPatch DeserializeCommonMatchConditionsPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static StatementConditionPatchProperties DeserializeStatementConditionPatchProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<string> protocolTypes = default;
-            VlanMatchConditionPatch vlanMatchCondition = default;
-            IPMatchConditionPatch ipCondition = default;
+            IList<string> ipCommunityIds = default;
+            IList<string> ipExtendedCommunityIds = default;
+            RoutePolicyConditionType? @type = default;
+            string ipPrefixId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("protocolTypes"u8))
+                if (prop.NameEquals("ipCommunityIds"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -165,25 +181,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             array.Add(item.GetString());
                         }
                     }
-                    protocolTypes = array;
+                    ipCommunityIds = array;
                     continue;
                 }
-                if (prop.NameEquals("vlanMatchCondition"u8))
+                if (prop.NameEquals("ipExtendedCommunityIds"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vlanMatchCondition = VlanMatchConditionPatch.DeserializeVlanMatchConditionPatch(prop.Value, options);
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    ipExtendedCommunityIds = array;
                     continue;
                 }
-                if (prop.NameEquals("ipCondition"u8))
+                if (prop.NameEquals("type"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ipCondition = IPMatchConditionPatch.DeserializeIPMatchConditionPatch(prop.Value, options);
+                    @type = new RoutePolicyConditionType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("ipPrefixId"u8))
+                {
+                    ipPrefixId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -191,7 +224,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CommonMatchConditionsPatch(protocolTypes ?? new ChangeTrackingList<string>(), vlanMatchCondition, ipCondition, additionalBinaryDataProperties);
+            return new StatementConditionPatchProperties(ipCommunityIds ?? new ChangeTrackingList<string>(), ipExtendedCommunityIds ?? new ChangeTrackingList<string>(), @type, ipPrefixId, additionalBinaryDataProperties);
         }
     }
 }

@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("sequenceNumber"u8);
                 writer.WriteNumberValue(SequenceNumber.Value);
             }
-            if (Optional.IsDefined(IpAddressType))
+            if (Optional.IsDefined(IPAddressType))
             {
                 writer.WritePropertyName("ipAddressType"u8);
-                writer.WriteStringValue(IpAddressType.Value.ToString());
+                writer.WriteStringValue(IPAddressType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(MatchConditions))
             {

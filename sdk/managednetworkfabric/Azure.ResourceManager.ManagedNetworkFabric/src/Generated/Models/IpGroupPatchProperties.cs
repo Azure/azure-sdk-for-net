@@ -12,23 +12,23 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> IP Group properties. </summary>
-    public partial class IpGroupPatchProperties
+    public partial class IPGroupPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IpGroupPatchProperties"/>. </summary>
-        public IpGroupPatchProperties()
+        /// <summary> Initializes a new instance of <see cref="IPGroupPatchProperties"/>. </summary>
+        public IPGroupPatchProperties()
         {
             IPPrefixes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IpGroupPatchProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPGroupPatchProperties"/>. </summary>
         /// <param name="name"> IP Group name. </param>
         /// <param name="ipAddressType"> IP Address type. </param>
         /// <param name="ipPrefixes"> List of IP Prefixes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IpGroupPatchProperties(string name, NetworkFabricIPAddressType? ipAddressType, IList<string> ipPrefixes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IPGroupPatchProperties(string name, NetworkFabricIPAddressType? ipAddressType, IList<string> ipPrefixes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             IPAddressType = ipAddressType;

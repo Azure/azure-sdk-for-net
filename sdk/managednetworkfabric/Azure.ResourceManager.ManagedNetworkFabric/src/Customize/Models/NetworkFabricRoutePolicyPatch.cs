@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new RoutePolicyPatchableProperties();
                 }
-                return Properties.Statements;
+                return NetworkFabricRoutePolicyPatchContent.ToStatements(Properties.StatementSettings);
             }
         }
 
