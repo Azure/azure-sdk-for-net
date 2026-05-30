@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -60,6 +61,16 @@ public partial class ProjectConversationCreationOptions
 
     private static void DeserializeItemsValue(JsonProperty property, ref IList<ResponseItem> items)
         => ResponseItemHelpers.DeserializeItemsValue(property, ref items);
+
+    /// <param name="projectConversationCreationOptions"> The <see cref="ProjectConversationCreationOptions"/> to serialize into <see cref="BinaryContent"/>. </param>
+    public static implicit operator BinaryContent(ProjectConversationCreationOptions projectConversationCreationOptions)
+    {
+        if (projectConversationCreationOptions == null)
+        {
+            return null;
+        }
+        return BinaryContent.Create(projectConversationCreationOptions, ModelSerializationExtensions.WireOptions);
+    }
 
     /// <param name="writer"> The JSON writer. </param>
     /// <param name="options"> The client options for reading and writing models. </param>

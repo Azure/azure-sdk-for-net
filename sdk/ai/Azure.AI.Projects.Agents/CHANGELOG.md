@@ -1,6 +1,6 @@
 # Release History
 
-## 2.1.0-beta.3 (2026-05-14)
+## 2.1.0-beta.3 (2026-05-29)
 
 ### Features Added
 
@@ -11,6 +11,7 @@
 - `CreateSkillFromPackage` and `CreateSkillFromPackageAsync` methods of `ProjectAgentSkills` client were replaced by `CreateSkillVersionFromFiles` and `CreateSkillVersionFromFilesAsync` respectively.
 - `DownloadSkill` and `DownloadSkillAsync`  methods of `ProjectAgentSkills` client were replaced by `GetSkillContent` and `GetSkillContentAsync` respectively.
 - `UpdateSkill` and `UpdateSkillAsync`  methods of `ProjectAgentSkills` now can only set the default version of `AgentsSkill`.
+- `OptimizationTaskResult.Tokens` was changed from `int` to `long`.
 
 ## 2.1.0-beta.2 (2026-05-14)
 

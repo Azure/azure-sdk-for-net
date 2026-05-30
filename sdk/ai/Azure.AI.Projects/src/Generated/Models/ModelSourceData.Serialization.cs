@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Source information for the model. </summary>
-    public partial class ModelSourceData : IJsonModel<ModelSourceData>
+    internal partial class ModelSourceData : IJsonModel<ModelSourceData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
