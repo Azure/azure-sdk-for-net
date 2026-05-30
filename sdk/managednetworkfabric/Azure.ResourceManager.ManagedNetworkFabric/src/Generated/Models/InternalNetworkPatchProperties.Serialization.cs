@@ -85,21 +85,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("mtu"u8);
                 writer.WriteNumberValue(Mtu.Value);
             }
-            if (Optional.IsCollectionDefined(ConnectedIPv4Subnets))
+            if (Optional.IsCollectionDefined(ConnectedIPv4SubnetSettings))
             {
                 writer.WritePropertyName("connectedIPv4Subnets"u8);
                 writer.WriteStartArray();
-                foreach (ConnectedSubnet item in ConnectedIPv4Subnets)
+                foreach (NetworkFabricConnectedSubnetPatch item in ConnectedIPv4SubnetSettings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ConnectedIPv6Subnets))
+            if (Optional.IsCollectionDefined(ConnectedIPv6SubnetSettings))
             {
                 writer.WritePropertyName("connectedIPv6Subnets"u8);
                 writer.WriteStartArray();
-                foreach (ConnectedSubnet item in ConnectedIPv6Subnets)
+                foreach (NetworkFabricConnectedSubnetPatch item in ConnectedIPv6SubnetSettings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -194,8 +194,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             string annotation = default;
             int? mtu = default;
-            IList<ConnectedSubnet> connectedIPv4Subnets = default;
-            IList<ConnectedSubnet> connectedIPv6Subnets = default;
+            IList<NetworkFabricConnectedSubnetPatch> connectedIPv4SubnetSettings = default;
+            IList<NetworkFabricConnectedSubnetPatch> connectedIPv6SubnetSettings = default;
             ImportRoutePolicy importRoutePolicy = default;
             ExportRoutePolicy exportRoutePolicy = default;
             ResourceIdentifier ingressAclId = default;
@@ -228,12 +228,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<ConnectedSubnet> array = new List<ConnectedSubnet>();
+                    List<NetworkFabricConnectedSubnetPatch> array = new List<NetworkFabricConnectedSubnetPatch>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ConnectedSubnet.DeserializeConnectedSubnet(item, options));
+                        array.Add(NetworkFabricConnectedSubnetPatch.DeserializeNetworkFabricConnectedSubnetPatch(item, options));
                     }
-                    connectedIPv4Subnets = array;
+                    connectedIPv4SubnetSettings = array;
                     continue;
                 }
                 if (prop.NameEquals("connectedIPv6Subnets"u8))
@@ -242,12 +242,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<ConnectedSubnet> array = new List<ConnectedSubnet>();
+                    List<NetworkFabricConnectedSubnetPatch> array = new List<NetworkFabricConnectedSubnetPatch>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ConnectedSubnet.DeserializeConnectedSubnet(item, options));
+                        array.Add(NetworkFabricConnectedSubnetPatch.DeserializeNetworkFabricConnectedSubnetPatch(item, options));
                     }
-                    connectedIPv6Subnets = array;
+                    connectedIPv6SubnetSettings = array;
                     continue;
                 }
                 if (prop.NameEquals("importRoutePolicy"u8))
@@ -339,8 +339,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new InternalNetworkPatchProperties(
                 annotation,
                 mtu,
-                connectedIPv4Subnets ?? new ChangeTrackingList<ConnectedSubnet>(),
-                connectedIPv6Subnets ?? new ChangeTrackingList<ConnectedSubnet>(),
+                connectedIPv4SubnetSettings ?? new ChangeTrackingList<NetworkFabricConnectedSubnetPatch>(),
+                connectedIPv6SubnetSettings ?? new ChangeTrackingList<NetworkFabricConnectedSubnetPatch>(),
                 importRoutePolicy,
                 exportRoutePolicy,
                 ingressAclId,

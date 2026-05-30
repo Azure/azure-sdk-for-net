@@ -21,15 +21,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="InternalNetworkPatchProperties"/>. </summary>
         public InternalNetworkPatchProperties()
         {
-            ConnectedIPv4Subnets = new ChangeTrackingList<ConnectedSubnet>();
-            ConnectedIPv6Subnets = new ChangeTrackingList<ConnectedSubnet>();
+            ConnectedIPv4SubnetSettings = new ChangeTrackingList<NetworkFabricConnectedSubnetPatch>();
+            ConnectedIPv6SubnetSettings = new ChangeTrackingList<NetworkFabricConnectedSubnetPatch>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalNetworkPatchProperties"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="mtu"> Maximum transmission unit. Default value is 1500. </param>
-        /// <param name="connectedIPv4Subnets"> List of Connected IPv4 Subnets. </param>
-        /// <param name="connectedIPv6Subnets"> List of connected IPv6 Subnets. </param>
+        /// <param name="connectedIPv4SubnetSettings"> List of Connected IPv4 Subnets. </param>
+        /// <param name="connectedIPv6SubnetSettings"> List of connected IPv6 Subnets. </param>
         /// <param name="importRoutePolicy"> Import Route Policy either IPv4 or IPv6. </param>
         /// <param name="exportRoutePolicy"> Export Route Policy either IPv4 or IPv6. </param>
         /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="nativeIPv4PrefixLimit"> Native IPv4 Prefix Limit Configuration properties. </param>
         /// <param name="nativeIPv6PrefixLimit"> Native IPv6 Prefix Limit Configuration properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalNetworkPatchProperties(string annotation, int? mtu, IList<ConnectedSubnet> connectedIPv4Subnets, IList<ConnectedSubnet> connectedIPv6Subnets, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, BgpPatchConfiguration bgpSettings, StaticRoutePatchConfiguration staticRouteSettings, NativeIpv4PrefixLimitPatchProperties nativeIPv4PrefixLimit, NativeIpv6PrefixLimitPatchProperties nativeIPv6PrefixLimit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalNetworkPatchProperties(string annotation, int? mtu, IList<NetworkFabricConnectedSubnetPatch> connectedIPv4SubnetSettings, IList<NetworkFabricConnectedSubnetPatch> connectedIPv6SubnetSettings, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, BgpPatchConfiguration bgpSettings, StaticRoutePatchConfiguration staticRouteSettings, NativeIpv4PrefixLimitPatchProperties nativeIPv4PrefixLimit, NativeIpv6PrefixLimitPatchProperties nativeIPv6PrefixLimit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             Mtu = mtu;
-            ConnectedIPv4Subnets = connectedIPv4Subnets;
-            ConnectedIPv6Subnets = connectedIPv6Subnets;
+            ConnectedIPv4SubnetSettings = connectedIPv4SubnetSettings;
+            ConnectedIPv6SubnetSettings = connectedIPv6SubnetSettings;
             ImportRoutePolicy = importRoutePolicy;
             ExportRoutePolicy = exportRoutePolicy;
             IngressAclId = ingressAclId;
@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public int? Mtu { get; set; }
 
         /// <summary> List of Connected IPv4 Subnets. </summary>
-        public IList<ConnectedSubnet> ConnectedIPv4Subnets { get; } = new ChangeTrackingList<ConnectedSubnet>();
+        public IList<NetworkFabricConnectedSubnetPatch> ConnectedIPv4SubnetSettings { get; } = new ChangeTrackingList<NetworkFabricConnectedSubnetPatch>();
 
         /// <summary> List of connected IPv6 Subnets. </summary>
-        public IList<ConnectedSubnet> ConnectedIPv6Subnets { get; } = new ChangeTrackingList<ConnectedSubnet>();
+        public IList<NetworkFabricConnectedSubnetPatch> ConnectedIPv6SubnetSettings { get; } = new ChangeTrackingList<NetworkFabricConnectedSubnetPatch>();
 
         /// <summary> Import Route Policy either IPv4 or IPv6. </summary>
         public ImportRoutePolicy ImportRoutePolicy { get; set; }

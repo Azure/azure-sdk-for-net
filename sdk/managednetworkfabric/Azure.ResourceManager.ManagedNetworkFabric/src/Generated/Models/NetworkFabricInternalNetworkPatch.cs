@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> List of Connected IPv4 Subnets. </summary>
-        public IList<ConnectedSubnet> ConnectedIPv4Subnets
+        public IList<NetworkFabricConnectedSubnetPatch> ConnectedIPv4SubnetSettings
         {
             get
             {
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new InternalNetworkPatchProperties();
                 }
-                return Properties.ConnectedIPv4Subnets;
+                return Properties.ConnectedIPv4SubnetSettings;
             }
         }
 
         /// <summary> List of connected IPv6 Subnets. </summary>
-        public IList<ConnectedSubnet> ConnectedIPv6Subnets
+        public IList<NetworkFabricConnectedSubnetPatch> ConnectedIPv6SubnetSettings
         {
             get
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new InternalNetworkPatchProperties();
                 }
-                return Properties.ConnectedIPv6Subnets;
+                return Properties.ConnectedIPv6SubnetSettings;
             }
         }
 

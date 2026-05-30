@@ -1,4 +1,4 @@
 directory: specification/managednetworkfabric/ManagedNetworkFabric.ResourceManager.Management
-commit: 35d09438f701adb44301b3ab4311622f0f444d51
+commit: f1028e759f07ed6326445613e857cb45e6bd85e7
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

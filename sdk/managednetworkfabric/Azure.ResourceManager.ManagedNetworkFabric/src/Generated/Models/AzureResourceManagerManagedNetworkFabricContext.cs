@@ -212,6 +212,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     [ModelReaderWriterBuildable(typeof(NetworkFabricBurstSize))]
     [ModelReaderWriterBuildable(typeof(NetworkFabricCertificateArchiveReference))]
     [ModelReaderWriterBuildable(typeof(NetworkFabricCertificateRotationStatus))]
+    [ModelReaderWriterBuildable(typeof(NetworkFabricConnectedSubnetPatch))]
     [ModelReaderWriterBuildable(typeof(NetworkFabricControllerData))]
     [ModelReaderWriterBuildable(typeof(NetworkFabricControllerPatchContent))]
     [ModelReaderWriterBuildable(typeof(NetworkFabricControllerPatchProperties))]

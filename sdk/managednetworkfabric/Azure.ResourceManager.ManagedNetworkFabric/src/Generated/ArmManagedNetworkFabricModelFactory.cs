@@ -1125,6 +1125,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new StaticRouteProperties(prefix, nextHop.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Connected Subnet properties. </summary>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="prefix"> Prefix of the Connected Subnet. </param>
+        /// <returns> A new <see cref="Models.NetworkFabricConnectedSubnetPatch"/> instance for mocking. </returns>
+        public static NetworkFabricConnectedSubnetPatch NetworkFabricConnectedSubnetPatch(string annotation = default, string prefix = default)
+        {
+            return new NetworkFabricConnectedSubnetPatch(annotation, additionalBinaryDataProperties: null, prefix);
+        }
+
         /// <summary> BGP configuration properties. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
