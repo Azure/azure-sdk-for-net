@@ -945,29 +945,41 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="redistributeConnectedSubnets"> Advertise Connected Subnets. Ex: "True" | "False". </param>
         /// <param name="redistributeStaticRoutes"> Advertise Static Routes. Ex: "True" | "False". </param>
-        /// <param name="aggregateRouteConfiguration"> Aggregate route configurations. </param>
-        /// <param name="connectedSubnetRoutePolicy"> Connected Subnet RoutePolicy. </param>
+        /// <param name="aggregateRouteSettings"> Aggregate route configurations. </param>
         /// <param name="v4RoutePrefixLimit"> IPv4 VRF Limit configuration. </param>
         /// <param name="v6RoutePrefixLimit"> IPv6 VRF Limit configuration. </param>
+        /// <param name="connectedSubnetExportRoutePolicy"> Array of ARM Resource ID of the RoutePolicies. </param>
         /// <param name="staticRouteExportRoutePolicy"> Array of ARM Resource ID of the RoutePolicies. </param>
         /// <param name="exportPolicies"> Export Policy for the BGP Monitoring Protocol (BMP) Configuration. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Models.NetworkFabricL3IsolationDomainPatchContent"/> instance for mocking. </returns>
-        public static NetworkFabricL3IsolationDomainPatchContent NetworkFabricL3IsolationDomainPatchContent(IDictionary<string, string> tags = default, string annotation = default, RedistributeConnectedSubnet? redistributeConnectedSubnets = default, RedistributeStaticRoute? redistributeStaticRoutes = default, AggregateRouteConfiguration aggregateRouteConfiguration = default, ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy = default, RoutePrefixLimitPatchProperties v4RoutePrefixLimit = default, RoutePrefixLimitPatchProperties v6RoutePrefixLimit = default, L3ExportRoutePolicyPatch staticRouteExportRoutePolicy = default, IEnumerable<BmpExportPolicy> exportPolicies = default, NetworkFabricManagedServiceIdentityPatch identity = default)
+        public static NetworkFabricL3IsolationDomainPatchContent NetworkFabricL3IsolationDomainPatchContent(IDictionary<string, string> tags = default, string annotation = default, RedistributeConnectedSubnet? redistributeConnectedSubnets = default, RedistributeStaticRoute? redistributeStaticRoutes = default, AggregateRoutePatchConfiguration aggregateRouteSettings = default, RoutePrefixLimitPatchProperties v4RoutePrefixLimit = default, RoutePrefixLimitPatchProperties v6RoutePrefixLimit = default, L3ExportRoutePolicyPatch connectedSubnetExportRoutePolicy = default, L3ExportRoutePolicyPatch staticRouteExportRoutePolicy = default, IEnumerable<BmpExportPolicy> exportPolicies = default, NetworkFabricManagedServiceIdentityPatch identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkFabricL3IsolationDomainPatchContent(tags, additionalBinaryDataProperties: null, annotation is null && redistributeConnectedSubnets is null && redistributeStaticRoutes is null && aggregateRouteConfiguration is null && connectedSubnetRoutePolicy is null && v4RoutePrefixLimit is null && v6RoutePrefixLimit is null && staticRouteExportRoutePolicy is null && exportPolicies is null ? default : new L3IsolationDomainPatchProperties(
+            return new NetworkFabricL3IsolationDomainPatchContent(tags, additionalBinaryDataProperties: null, annotation is null && redistributeConnectedSubnets is null && redistributeStaticRoutes is null && aggregateRouteSettings is null && v4RoutePrefixLimit is null && v6RoutePrefixLimit is null && connectedSubnetExportRoutePolicy is null && staticRouteExportRoutePolicy is null && exportPolicies is null ? default : new L3IsolationDomainPatchProperties(
                 annotation,
                 redistributeConnectedSubnets,
                 redistributeStaticRoutes,
-                aggregateRouteConfiguration,
-                connectedSubnetRoutePolicy,
+                aggregateRouteSettings,
+                new ConnectedSubnetRoutePolicyPatch(connectedSubnetExportRoutePolicy, null),
                 new StaticRouteRoutePolicyPatch(staticRouteExportRoutePolicy, null),
                 v4RoutePrefixLimit,
                 v6RoutePrefixLimit,
                 new BmpExportPolicyPatchProperties((exportPolicies ?? new ChangeTrackingList<BmpExportPolicy>()).ToList(), null),
                 null), identity);
+        }
+
+        /// <summary> List of IPv4 and IPv6 aggregate routes. </summary>
+        /// <param name="iPv4Routes"> List of IPv4 Route prefixes. </param>
+        /// <param name="iPv6Routes"> List of Ipv6Routes prefixes. </param>
+        /// <returns> A new <see cref="Models.AggregateRoutePatchConfiguration"/> instance for mocking. </returns>
+        public static AggregateRoutePatchConfiguration AggregateRoutePatchConfiguration(IEnumerable<AggregateRoute> iPv4Routes = default, IEnumerable<AggregateRoute> iPv6Routes = default)
+        {
+            iPv4Routes ??= new ChangeTrackingList<AggregateRoute>();
+            iPv6Routes ??= new ChangeTrackingList<AggregateRoute>();
+
+            return new AggregateRoutePatchConfiguration(iPv4Routes.ToList(), iPv6Routes.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

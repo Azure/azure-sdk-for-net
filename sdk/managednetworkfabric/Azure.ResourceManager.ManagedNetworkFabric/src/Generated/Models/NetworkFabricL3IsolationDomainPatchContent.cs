@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Aggregate route configurations. </summary>
-        public AggregateRouteConfiguration AggregateRouteConfiguration
+        public AggregateRoutePatchConfiguration AggregateRouteSettings
         {
             get
             {
-                return Properties is null ? default : Properties.AggregateRouteConfiguration;
+                return Properties is null ? default : Properties.AggregateRouteSettings;
             }
             set
             {
@@ -99,24 +99,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new L3IsolationDomainPatchProperties();
                 }
-                Properties.AggregateRouteConfiguration = value;
-            }
-        }
-
-        /// <summary> Connected Subnet RoutePolicy. </summary>
-        public ConnectedSubnetRoutePolicy ConnectedSubnetRoutePolicy
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ConnectedSubnetRoutePolicy;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new L3IsolationDomainPatchProperties();
-                }
-                Properties.ConnectedSubnetRoutePolicy = value;
+                Properties.AggregateRouteSettings = value;
             }
         }
 
@@ -151,6 +134,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     Properties = new L3IsolationDomainPatchProperties();
                 }
                 Properties.V6RoutePrefixLimit = value;
+            }
+        }
+
+        /// <summary> Array of ARM Resource ID of the RoutePolicies. </summary>
+        public L3ExportRoutePolicyPatch ConnectedSubnetExportRoutePolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectedSubnetExportRoutePolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainPatchProperties();
+                }
+                Properties.ConnectedSubnetExportRoutePolicy = value;
             }
         }
 

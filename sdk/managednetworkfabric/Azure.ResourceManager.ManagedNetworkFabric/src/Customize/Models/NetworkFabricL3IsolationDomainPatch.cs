@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             get
             {
-                return Properties is null ? default : Properties.AggregateRouteConfiguration;
+                return ToAggregateRouteConfiguration(Properties?.AggregateRouteSettings);
             }
             set
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new L3IsolationDomainPatchProperties();
                 }
-                Properties.AggregateRouteConfiguration = value;
+                Properties.AggregateRouteSettings = ToAggregateRoutePatchConfiguration(value);
             }
         }
 
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             get
             {
-                return Properties is null ? default : Properties.ConnectedSubnetRoutePolicy;
+                return ToConnectedSubnetRoutePolicy(Properties?.ConnectedSubnetRoutePolicySettings);
             }
             set
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new L3IsolationDomainPatchProperties();
                 }
-                Properties.ConnectedSubnetRoutePolicy = value;
+                Properties.ConnectedSubnetRoutePolicySettings = ToConnectedSubnetRoutePolicyPatch(value);
             }
         }
 
@@ -193,6 +193,98 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 return Properties.ExportPolicies;
             }
+        }
+
+        private static AggregateRouteConfiguration ToAggregateRouteConfiguration(AggregateRoutePatchConfiguration value)
+        {
+            if (value is null)
+            {
+                return null;
+            }
+
+            var result = new AggregateRouteConfiguration();
+            foreach (var route in value.IPv4Routes)
+            {
+                result.IPv4Routes.Add(route);
+            }
+            foreach (var route in value.IPv6Routes)
+            {
+                result.IPv6Routes.Add(route);
+            }
+            return result;
+        }
+
+        private static AggregateRoutePatchConfiguration ToAggregateRoutePatchConfiguration(AggregateRouteConfiguration value)
+        {
+            if (value is null)
+            {
+                return null;
+            }
+
+            var result = new AggregateRoutePatchConfiguration();
+            foreach (var route in value.IPv4Routes)
+            {
+                result.IPv4Routes.Add(route);
+            }
+            foreach (var route in value.IPv6Routes)
+            {
+                result.IPv6Routes.Add(route);
+            }
+            return result;
+        }
+
+        private static ConnectedSubnetRoutePolicy ToConnectedSubnetRoutePolicy(ConnectedSubnetRoutePolicyPatch value)
+        {
+            if (value is null)
+            {
+                return null;
+            }
+
+            return new ConnectedSubnetRoutePolicy
+            {
+                ExportRoutePolicy = ToL3ExportRoutePolicy(value.ExportRoutePolicy)
+            };
+        }
+
+        private static ConnectedSubnetRoutePolicyPatch ToConnectedSubnetRoutePolicyPatch(ConnectedSubnetRoutePolicy value)
+        {
+            if (value is null)
+            {
+                return null;
+            }
+
+            return new ConnectedSubnetRoutePolicyPatch
+            {
+                ExportRoutePolicy = ToL3ExportRoutePolicyPatch(value.ExportRoutePolicy)
+            };
+        }
+
+        private static L3ExportRoutePolicy ToL3ExportRoutePolicy(L3ExportRoutePolicyPatch value)
+        {
+            if (value is null)
+            {
+                return null;
+            }
+
+            return new L3ExportRoutePolicy
+            {
+                ExportIPv4RoutePolicyId = value.ExportIPv4RoutePolicyId,
+                ExportIPv6RoutePolicyId = value.ExportIPv6RoutePolicyId
+            };
+        }
+
+        private static L3ExportRoutePolicyPatch ToL3ExportRoutePolicyPatch(L3ExportRoutePolicy value)
+        {
+            if (value is null)
+            {
+                return null;
+            }
+
+            return new L3ExportRoutePolicyPatch
+            {
+                ExportIPv4RoutePolicyId = value.ExportIPv4RoutePolicyId,
+                ExportIPv6RoutePolicyId = value.ExportIPv6RoutePolicyId
+            };
         }
 
         /// <param name="data"> The data to parse. </param>
