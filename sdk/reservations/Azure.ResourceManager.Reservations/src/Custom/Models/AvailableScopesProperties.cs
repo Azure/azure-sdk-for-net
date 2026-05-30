@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Reservations.Models
         {
             get
             {
-                return Properties is null ? default : (IReadOnlyList<ScopeProperties>)Properties.Scopes;
+                return Properties?.Scopes as IReadOnlyList<ScopeProperties>;
             }
         }
     }
