@@ -21,19 +21,24 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="keyVersion"> The version of your Azure Key Vault key to be used to encrypt your data at rest. </param>
         /// <param name="accessCredentialsInternal"> Optional Azure Active Directory credentials used for accessing your Azure Key Vault. Not required if using managed identity instead. </param>
         /// <param name="identity"> An explicit managed identity to use for this encryption key. If not specified and the access credentials property is null, the system-assigned managed identity is used. On update to the resource, if the explicit identity is unspecified, it remains unchanged. If "none" is specified, the value of this property is cleared. </param>
+        /// <param name="isServiceLevelKey"> An optional value indicating whether this key is a service-level key. Default is false. </param>
         /// <param name="vaultUri"> The URI of your Azure Key Vault, also referred to as DNS name, that contains the key to be used to encrypt your data at rest. An example URI might be `https://my-keyvault-name.vault.azure.net`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchResourceEncryptionKey(string keyName, string keyVersion, AzureActiveDirectoryApplicationCredentials accessCredentialsInternal, SearchIndexerDataIdentity identity, string vaultUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchResourceEncryptionKey(string keyName, string keyVersion, AzureActiveDirectoryApplicationCredentials accessCredentialsInternal, SearchIndexerDataIdentity identity, bool? isServiceLevelKey, string vaultUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyName = keyName;
             KeyVersion = keyVersion;
             AccessCredentialsInternal = accessCredentialsInternal;
             Identity = identity;
+            IsServiceLevelKey = isServiceLevelKey;
             _vaultUri = vaultUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> An explicit managed identity to use for this encryption key. If not specified and the access credentials property is null, the system-assigned managed identity is used. On update to the resource, if the explicit identity is unspecified, it remains unchanged. If "none" is specified, the value of this property is cleared. </summary>
         public SearchIndexerDataIdentity Identity { get; set; }
+
+        /// <summary> An optional value indicating whether this key is a service-level key. Default is false. </summary>
+        public bool? IsServiceLevelKey { get; set; }
     }
 }

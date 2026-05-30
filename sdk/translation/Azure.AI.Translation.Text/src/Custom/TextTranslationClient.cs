@@ -18,6 +18,11 @@ namespace Azure.AI.Translation.Text
     [CodeGenSuppress("Translate", typeof(TranslateBody), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("TransliterateAsync", typeof(string), typeof(string), typeof(string), typeof(TransliterateBody), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("Transliterate", typeof(string), typeof(string), typeof(string), typeof(TransliterateBody), typeof(string), typeof(CancellationToken))]
+    // Suppress generated auth constructors — custom constructors handle region, AAD, and unauthenticated scenarios
+    [CodeGenSuppress("TextTranslationClient", typeof(Uri), typeof(AzureKeyCredential))]
+    [CodeGenSuppress("TextTranslationClient", typeof(Uri), typeof(AzureKeyCredential), typeof(TextTranslationClientOptions))]
+    [CodeGenSuppress("TextTranslationClient", typeof(Uri), typeof(TokenCredential))]
+    [CodeGenSuppress("TextTranslationClient", typeof(Uri), typeof(TokenCredential), typeof(TextTranslationClientOptions))]
     public partial class TextTranslationClient
     {
         private const string KEY_HEADER_NAME = "Ocp-Apim-Subscription-Key";
