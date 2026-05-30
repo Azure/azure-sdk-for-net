@@ -291,30 +291,212 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="configurationType"> Input method to configure Access Control List. </param>
         /// <param name="aclsUri"> Access Control List file URL. </param>
         /// <param name="defaultAction"> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </param>
-        /// <param name="matchConfigurations"> List of match configurations. </param>
-        /// <param name="dynamicMatchConfigurations"> List of dynamic match configurations. </param>
+        /// <param name="matchConfigurationSettings"> List of match configurations. </param>
+        /// <param name="dynamicMatchConfigurationSettings"> List of dynamic match configurations. </param>
         /// <param name="controlPlaneAclConfiguration"> Access Control List (ACL) configurations. </param>
         /// <param name="aclType"> Access Control List (ACL) Type. </param>
         /// <param name="deviceRole"> Device Role. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="globalAccessControlListActionsEnableCount"> Configuration to enable or disable ACL action count. </param>
         /// <returns> A new <see cref="Models.NetworkFabricAccessControlListPatchContent"/> instance for mocking. </returns>
-        public static NetworkFabricAccessControlListPatchContent NetworkFabricAccessControlListPatchContent(IDictionary<string, string> tags = default, NetworkFabricConfigurationType? configurationType = default, Uri aclsUri = default, CommunityActionType? defaultAction = default, IEnumerable<AccessControlListMatchConfiguration> matchConfigurations = default, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default, IEnumerable<ControlPlaneAclPatchProperties> controlPlaneAclConfiguration = default, NetworkFabricAclType? aclType = default, NetworkFabricDeviceRole? deviceRole = default, string annotation = default, NetworkFabricBooleanValue? globalAccessControlListActionsEnableCount = default)
+        public static NetworkFabricAccessControlListPatchContent NetworkFabricAccessControlListPatchContent(IDictionary<string, string> tags = default, NetworkFabricConfigurationType? configurationType = default, Uri aclsUri = default, CommunityActionType? defaultAction = default, IEnumerable<AccessControlListMatchConfigurationPatch> matchConfigurationSettings = default, IEnumerable<CommonDynamicMatchConfigurationPatch> dynamicMatchConfigurationSettings = default, IEnumerable<ControlPlaneAclPatchProperties> controlPlaneAclConfiguration = default, NetworkFabricAclType? aclType = default, NetworkFabricDeviceRole? deviceRole = default, string annotation = default, NetworkFabricBooleanValue? globalAccessControlListActionsEnableCount = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkFabricAccessControlListPatchContent(tags, additionalBinaryDataProperties: null, configurationType is null && aclsUri is null && defaultAction is null && matchConfigurations is null && dynamicMatchConfigurations is null && controlPlaneAclConfiguration is null && aclType is null && deviceRole is null && annotation is null && globalAccessControlListActionsEnableCount is null ? default : new AccessControlListPatchProperties(
+            return new NetworkFabricAccessControlListPatchContent(tags, additionalBinaryDataProperties: null, configurationType is null && aclsUri is null && defaultAction is null && matchConfigurationSettings is null && dynamicMatchConfigurationSettings is null && controlPlaneAclConfiguration is null && aclType is null && deviceRole is null && annotation is null && globalAccessControlListActionsEnableCount is null ? default : new AccessControlListPatchProperties(
                 configurationType,
                 aclsUri,
                 defaultAction,
-                (matchConfigurations ?? new ChangeTrackingList<AccessControlListMatchConfiguration>()).ToList(),
-                (dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>()).ToList(),
+                (matchConfigurationSettings ?? new ChangeTrackingList<AccessControlListMatchConfigurationPatch>()).ToList(),
+                (dynamicMatchConfigurationSettings ?? new ChangeTrackingList<CommonDynamicMatchConfigurationPatch>()).ToList(),
                 (controlPlaneAclConfiguration ?? new ChangeTrackingList<ControlPlaneAclPatchProperties>()).ToList(),
                 aclType,
                 deviceRole,
                 new GlobalAccessControlListActionPatchProperties(globalAccessControlListActionsEnableCount, null),
                 annotation,
                 null));
+        }
+
+        /// <summary> Defines the match configuration that are supported to filter the traffic. </summary>
+        /// <param name="matchConfigurationName"> The name of the match configuration. </param>
+        /// <param name="sequenceNumber"> Sequence Number of the match configuration. </param>
+        /// <param name="ipAddressType"> Type of IP Address. IPv4 or IPv6. </param>
+        /// <param name="matchConditions"> List of the match conditions. </param>
+        /// <param name="actions"> List of actions that need to be performed for the matched conditions. </param>
+        /// <returns> A new <see cref="Models.AccessControlListMatchConfigurationPatch"/> instance for mocking. </returns>
+        public static AccessControlListMatchConfigurationPatch AccessControlListMatchConfigurationPatch(string matchConfigurationName = default, long? sequenceNumber = default, NetworkFabricIPAddressType? ipAddressType = default, IEnumerable<AccessControlListMatchConditionPatch> matchConditions = default, IEnumerable<AccessControlListActionPatch> actions = default)
+        {
+            matchConditions ??= new ChangeTrackingList<AccessControlListMatchConditionPatch>();
+            actions ??= new ChangeTrackingList<AccessControlListActionPatch>();
+
+            return new AccessControlListMatchConfigurationPatch(
+                matchConfigurationName,
+                sequenceNumber,
+                ipAddressType,
+                matchConditions.ToList(),
+                actions.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="protocolTypes"> List of the protocols that need to be matched. </param>
+        /// <param name="vlanMatchCondition"> Vlan match condition that needs to be matched. </param>
+        /// <param name="ipCondition"> IP condition that needs to be matched. </param>
+        /// <param name="etherTypes"> List of ether type values that need to be matched. </param>
+        /// <param name="fragments"> List of IP fragment packets that need to be matched. </param>
+        /// <param name="ipLengths"> List of IP Lengths that need to be matched. </param>
+        /// <param name="ttlValues"> List of TTL [Time To Live] values that need to be matched. </param>
+        /// <param name="dscpMarkings"> List of DSCP Markings that need to be matched. </param>
+        /// <param name="portCondition"> Defines the port condition that needs to be matched. </param>
+        /// <param name="protocolNeighbors"> Protocol neighbors that need to be matched. </param>
+        /// <param name="icmpTypes"> Internet Control Message Protocol (ICMP) types. </param>
+        /// <returns> A new <see cref="Models.AccessControlListMatchConditionPatch"/> instance for mocking. </returns>
+        public static AccessControlListMatchConditionPatch AccessControlListMatchConditionPatch(IEnumerable<string> protocolTypes = default, VlanMatchConditionPatch vlanMatchCondition = default, IpMatchConditionPatch ipCondition = default, IEnumerable<string> etherTypes = default, IEnumerable<string> fragments = default, IEnumerable<string> ipLengths = default, IEnumerable<string> ttlValues = default, IEnumerable<string> dscpMarkings = default, AccessControlListPortConditionPatch portCondition = default, IEnumerable<string> protocolNeighbors = default, IEnumerable<string> icmpTypes = default)
+        {
+            protocolTypes ??= new ChangeTrackingList<string>();
+            etherTypes ??= new ChangeTrackingList<string>();
+            fragments ??= new ChangeTrackingList<string>();
+            ipLengths ??= new ChangeTrackingList<string>();
+            ttlValues ??= new ChangeTrackingList<string>();
+            dscpMarkings ??= new ChangeTrackingList<string>();
+            protocolNeighbors ??= new ChangeTrackingList<string>();
+
+            return new AccessControlListMatchConditionPatch(
+                protocolTypes.ToList(),
+                vlanMatchCondition,
+                ipCondition,
+                additionalBinaryDataProperties: null,
+                etherTypes.ToList(),
+                fragments.ToList(),
+                ipLengths.ToList(),
+                ttlValues.ToList(),
+                dscpMarkings.ToList(),
+                portCondition,
+                protocolNeighbors.ToList(),
+                icmpTypes is null ? default : new IcmpConfigurationPatchProperties((icmpTypes ?? new ChangeTrackingList<string>()).ToList(), null));
+        }
+
+        /// <summary> Defines the port condition that needs to be matched. </summary>
+        /// <param name="portType"> Port type that needs to be matched. </param>
+        /// <param name="layer4Protocol"> Layer4 protocol type that needs to be matched. </param>
+        /// <param name="ports"> List of the Ports that need to be matched. </param>
+        /// <param name="portGroupNames"> List of the port Group Names that need to be matched. </param>
+        /// <param name="flags"> List of protocol flags that need to be matched. Example: established | initial | &lt;List-of-TCP-flags&gt;. List of eligible TCP Flags are ack, fin, not-ack, not-fin, not-psh, not-rst, not-syn, not-urg, psh, rst, syn, urg. </param>
+        /// <returns> A new <see cref="Models.AccessControlListPortConditionPatch"/> instance for mocking. </returns>
+        public static AccessControlListPortConditionPatch AccessControlListPortConditionPatch(NetworkFabricPortType? portType = default, Layer4Protocol? layer4Protocol = default, IEnumerable<string> ports = default, IEnumerable<string> portGroupNames = default, IEnumerable<string> flags = default)
+        {
+            ports ??= new ChangeTrackingList<string>();
+            portGroupNames ??= new ChangeTrackingList<string>();
+            flags ??= new ChangeTrackingList<string>();
+
+            return new AccessControlListPortConditionPatch(
+                portType,
+                layer4Protocol,
+                ports.ToList(),
+                portGroupNames.ToList(),
+                additionalBinaryDataProperties: null,
+                flags.ToList());
+        }
+
+        /// <summary> Port condition that needs to be matched. </summary>
+        /// <param name="portType"> Port type that needs to be matched. </param>
+        /// <param name="layer4Protocol"> Layer4 protocol type that needs to be matched. </param>
+        /// <param name="ports"> List of the Ports that need to be matched. </param>
+        /// <param name="portGroupNames"> List of the port Group Names that need to be matched. </param>
+        /// <returns> A new <see cref="Models.PortConditionPatch"/> instance for mocking. </returns>
+        public static PortConditionPatch PortConditionPatch(NetworkFabricPortType? portType = default, Layer4Protocol? layer4Protocol = default, IEnumerable<string> ports = default, IEnumerable<string> portGroupNames = default)
+        {
+            ports ??= new ChangeTrackingList<string>();
+            portGroupNames ??= new ChangeTrackingList<string>();
+
+            return new PortConditionPatch(portType, layer4Protocol, ports.ToList(), portGroupNames.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Defines the common match conditions of the ACL and Network Tap Rule. </summary>
+        /// <param name="protocolTypes"> List of the protocols that need to be matched. </param>
+        /// <param name="vlanMatchCondition"> Vlan match condition that needs to be matched. </param>
+        /// <param name="ipCondition"> IP condition that needs to be matched. </param>
+        /// <returns> A new <see cref="Models.CommonMatchConditionsPatch"/> instance for mocking. </returns>
+        public static CommonMatchConditionsPatch CommonMatchConditionsPatch(IEnumerable<string> protocolTypes = default, VlanMatchConditionPatch vlanMatchCondition = default, IpMatchConditionPatch ipCondition = default)
+        {
+            protocolTypes ??= new ChangeTrackingList<string>();
+
+            return new CommonMatchConditionsPatch(protocolTypes.ToList(), vlanMatchCondition, ipCondition, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The vlan match conditions that need to be matched. </summary>
+        /// <param name="vlans"> List of vlans that need to be matched. Inputs can be single vlan or the range of vlans. </param>
+        /// <param name="innerVlans"> List of inner vlans that need to be matched.Inputs can be single vlan or the range of vlans. </param>
+        /// <param name="vlanGroupNames"> List of vlan group names that need to be matched. </param>
+        /// <returns> A new <see cref="Models.VlanMatchConditionPatch"/> instance for mocking. </returns>
+        public static VlanMatchConditionPatch VlanMatchConditionPatch(IEnumerable<string> vlans = default, IEnumerable<string> innerVlans = default, IEnumerable<string> vlanGroupNames = default)
+        {
+            vlans ??= new ChangeTrackingList<string>();
+            innerVlans ??= new ChangeTrackingList<string>();
+            vlanGroupNames ??= new ChangeTrackingList<string>();
+
+            return new VlanMatchConditionPatch(vlans.ToList(), innerVlans.ToList(), vlanGroupNames.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Defines the condition that can be filtered using the selected IPs. </summary>
+        /// <param name="type"> IP Address type that needs to be matched. </param>
+        /// <param name="prefixType"> IP Prefix Type that needs to be matched. </param>
+        /// <param name="ipPrefixValues"> The list of IP Prefixes that need to be matched. </param>
+        /// <param name="ipGroupNames"> The List of IP Group Names that need to be matched. </param>
+        /// <returns> A new <see cref="Models.IpMatchConditionPatch"/> instance for mocking. </returns>
+        public static IpMatchConditionPatch IpMatchConditionPatch(SourceDestinationType? @type = default, IPMatchConditionPrefixType? prefixType = default, IEnumerable<string> ipPrefixValues = default, IEnumerable<string> ipGroupNames = default)
+        {
+            ipPrefixValues ??= new ChangeTrackingList<string>();
+            ipGroupNames ??= new ChangeTrackingList<string>();
+
+            return new IpMatchConditionPatch(@type, prefixType, ipPrefixValues.ToList(), ipGroupNames.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Dynamic match configuration object. </summary>
+        /// <param name="ipGroups"> List of IP Groups. </param>
+        /// <param name="vlanGroups"> List of vlan groups. </param>
+        /// <param name="portGroups"> List of the port groups. </param>
+        /// <returns> A new <see cref="Models.CommonDynamicMatchConfigurationPatch"/> instance for mocking. </returns>
+        public static CommonDynamicMatchConfigurationPatch CommonDynamicMatchConfigurationPatch(IEnumerable<IpGroupPatchProperties> ipGroups = default, IEnumerable<VlanGroupPatchProperties> vlanGroups = default, IEnumerable<PortGroupPatchProperties> portGroups = default)
+        {
+            ipGroups ??= new ChangeTrackingList<IpGroupPatchProperties>();
+            vlanGroups ??= new ChangeTrackingList<VlanGroupPatchProperties>();
+            portGroups ??= new ChangeTrackingList<PortGroupPatchProperties>();
+
+            return new CommonDynamicMatchConfigurationPatch(ipGroups.ToList(), vlanGroups.ToList(), portGroups.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> IP Group properties. </summary>
+        /// <param name="name"> IP Group name. </param>
+        /// <param name="ipAddressType"> IP Address type. </param>
+        /// <param name="ipPrefixes"> List of IP Prefixes. </param>
+        /// <returns> A new <see cref="Models.IpGroupPatchProperties"/> instance for mocking. </returns>
+        public static IpGroupPatchProperties IpGroupPatchProperties(string name = default, NetworkFabricIPAddressType? ipAddressType = default, IEnumerable<string> ipPrefixes = default)
+        {
+            ipPrefixes ??= new ChangeTrackingList<string>();
+
+            return new IpGroupPatchProperties(name, ipAddressType, ipPrefixes.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Vlan group properties. </summary>
+        /// <param name="name"> Vlan group name. </param>
+        /// <param name="vlans"> List of vlans. </param>
+        /// <returns> A new <see cref="Models.VlanGroupPatchProperties"/> instance for mocking. </returns>
+        public static VlanGroupPatchProperties VlanGroupPatchProperties(string name = default, IEnumerable<string> vlans = default)
+        {
+            vlans ??= new ChangeTrackingList<string>();
+
+            return new VlanGroupPatchProperties(name, vlans.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Port Group Properties. </summary>
+        /// <param name="name"> The name of the port group. </param>
+        /// <param name="ports"> List of the ports that need to be matched. </param>
+        /// <returns> A new <see cref="Models.PortGroupPatchProperties"/> instance for mocking. </returns>
+        public static PortGroupPatchProperties PortGroupPatchProperties(string name = default, IEnumerable<string> ports = default)
+        {
+            ports ??= new ChangeTrackingList<string>();
+
+            return new PortGroupPatchProperties(name, ports.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Access Control List (ACL) configurations patch properties. </summary>
@@ -3253,25 +3435,66 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="configurationType"> Input method to configure Network Tap Rule. </param>
         /// <param name="tapRulesUri"> Network Tap Rules file URL. </param>
-        /// <param name="matchConfigurations"> List of match configurations. </param>
-        /// <param name="dynamicMatchConfigurations"> List of dynamic match configurations. </param>
+        /// <param name="matchConfigurationSettings"> List of match configurations. </param>
+        /// <param name="dynamicMatchConfigurationSettings"> List of dynamic match configurations. </param>
         /// <param name="identitySelector"> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </param>
         /// <param name="globalNetworkTapRuleActions"> Global network tap rule actions. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Models.NetworkTapRulePatchContent"/> instance for mocking. </returns>
-        public static NetworkTapRulePatchContent NetworkTapRulePatchContent(IDictionary<string, string> tags = default, string annotation = default, NetworkFabricConfigurationType? configurationType = default, Uri tapRulesUri = default, IEnumerable<NetworkTapRuleMatchConfiguration> matchConfigurations = default, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default, NetworkFabricIdentitySelectorPatch identitySelector = default, GlobalNetworkTapRuleActionPatchProperties globalNetworkTapRuleActions = default, NetworkFabricManagedServiceIdentityPatch identity = default)
+        public static NetworkTapRulePatchContent NetworkTapRulePatchContent(IDictionary<string, string> tags = default, string annotation = default, NetworkFabricConfigurationType? configurationType = default, Uri tapRulesUri = default, IEnumerable<NetworkTapRuleMatchConfigurationPatch> matchConfigurationSettings = default, IEnumerable<CommonDynamicMatchConfigurationPatch> dynamicMatchConfigurationSettings = default, NetworkFabricIdentitySelectorPatch identitySelector = default, GlobalNetworkTapRuleActionPatchProperties globalNetworkTapRuleActions = default, NetworkFabricManagedServiceIdentityPatch identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkTapRulePatchContent(tags, additionalBinaryDataProperties: null, annotation is null && configurationType is null && tapRulesUri is null && matchConfigurations is null && dynamicMatchConfigurations is null && identitySelector is null && globalNetworkTapRuleActions is null ? default : new NetworkTapRulePatchProperties(
+            return new NetworkTapRulePatchContent(tags, additionalBinaryDataProperties: null, annotation is null && configurationType is null && tapRulesUri is null && matchConfigurationSettings is null && dynamicMatchConfigurationSettings is null && identitySelector is null && globalNetworkTapRuleActions is null ? default : new NetworkTapRulePatchProperties(
                 annotation,
                 configurationType,
                 tapRulesUri,
-                (matchConfigurations ?? new ChangeTrackingList<NetworkTapRuleMatchConfiguration>()).ToList(),
-                (dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>()).ToList(),
+                (matchConfigurationSettings ?? new ChangeTrackingList<NetworkTapRuleMatchConfigurationPatch>()).ToList(),
+                (dynamicMatchConfigurationSettings ?? new ChangeTrackingList<CommonDynamicMatchConfigurationPatch>()).ToList(),
                 identitySelector,
                 globalNetworkTapRuleActions,
                 null), identity);
+        }
+
+        /// <summary> Defines the match configuration that are supported to filter the traffic. </summary>
+        /// <param name="matchConfigurationName"> The name of the match configuration. </param>
+        /// <param name="sequenceNumber"> Sequence Number of the match configuration.. </param>
+        /// <param name="ipAddressType"> Type of IP Address. IPv4 or IPv6. </param>
+        /// <param name="matchConditions"> List of the match conditions. </param>
+        /// <param name="actions"> List of actions that need to be performed for the matched conditions. </param>
+        /// <returns> A new <see cref="Models.NetworkTapRuleMatchConfigurationPatch"/> instance for mocking. </returns>
+        public static NetworkTapRuleMatchConfigurationPatch NetworkTapRuleMatchConfigurationPatch(string matchConfigurationName = default, long? sequenceNumber = default, NetworkFabricIPAddressType? ipAddressType = default, IEnumerable<NetworkTapRuleMatchConditionPatch> matchConditions = default, IEnumerable<NetworkTapRuleActionPatch> actions = default)
+        {
+            matchConditions ??= new ChangeTrackingList<NetworkTapRuleMatchConditionPatch>();
+            actions ??= new ChangeTrackingList<NetworkTapRuleActionPatch>();
+
+            return new NetworkTapRuleMatchConfigurationPatch(
+                matchConfigurationName,
+                sequenceNumber,
+                ipAddressType,
+                matchConditions.ToList(),
+                actions.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Defines the match condition that is supported to filter the traffic. </summary>
+        /// <param name="protocolTypes"> List of the protocols that need to be matched. </param>
+        /// <param name="vlanMatchCondition"> Vlan match condition that needs to be matched. </param>
+        /// <param name="ipCondition"> IP condition that needs to be matched. </param>
+        /// <param name="encapsulationType"> Encapsulation Type that needs to be matched. </param>
+        /// <param name="portCondition"> Defines the port condition that needs to be matched. </param>
+        /// <returns> A new <see cref="Models.NetworkTapRuleMatchConditionPatch"/> instance for mocking. </returns>
+        public static NetworkTapRuleMatchConditionPatch NetworkTapRuleMatchConditionPatch(IEnumerable<string> protocolTypes = default, VlanMatchConditionPatch vlanMatchCondition = default, IpMatchConditionPatch ipCondition = default, NetworkTapEncapsulationType? encapsulationType = default, PortConditionPatch portCondition = default)
+        {
+            protocolTypes ??= new ChangeTrackingList<string>();
+
+            return new NetworkTapRuleMatchConditionPatch(
+                protocolTypes.ToList(),
+                vlanMatchCondition,
+                ipCondition,
+                additionalBinaryDataProperties: null,
+                encapsulationType,
+                portCondition);
         }
 
         /// <summary> Response for Network Tap Rule resync operation. </summary>

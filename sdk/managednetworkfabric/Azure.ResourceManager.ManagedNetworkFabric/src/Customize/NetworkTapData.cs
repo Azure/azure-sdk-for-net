@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -40,50 +39,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     Properties = new NetworkTapProperties();
                 }
-                return new NetworkTapPropertiesDestinationsItemList(Properties.DestinationSettings);
+                return new ConvertingList<NetworkTapPropertiesDestinationsItem, NetworkTapDestinationProperties>(
+                    Properties.DestinationSettings,
+                    NetworkTapPropertiesDestinationsItem.FromDestinationProperties,
+                    ToDestinationProperties);
             }
         }
 
-        private sealed class NetworkTapPropertiesDestinationsItemList : IList<NetworkTapPropertiesDestinationsItem>
-        {
-            private readonly IList<NetworkTapDestinationProperties> _inner;
-
-            public NetworkTapPropertiesDestinationsItemList(IList<NetworkTapDestinationProperties> inner)
-            {
-                _inner = inner;
-            }
-
-            public NetworkTapPropertiesDestinationsItem this[int index]
-            {
-                get => NetworkTapPropertiesDestinationsItem.FromDestinationProperties(_inner[index]);
-                set => _inner[index] = value;
-            }
-
-            public int Count => _inner.Count;
-            public bool IsReadOnly => _inner.IsReadOnly;
-            public void Add(NetworkTapPropertiesDestinationsItem item) => _inner.Add(item);
-            public void Clear() => _inner.Clear();
-            public bool Contains(NetworkTapPropertiesDestinationsItem item) => _inner.Contains(item);
-            public void CopyTo(NetworkTapPropertiesDestinationsItem[] array, int arrayIndex)
-            {
-                for (int i = 0; i < _inner.Count; i++)
-                {
-                    array[arrayIndex + i] = NetworkTapPropertiesDestinationsItem.FromDestinationProperties(_inner[i]);
-                }
-            }
-            public IEnumerator<NetworkTapPropertiesDestinationsItem> GetEnumerator()
-            {
-                foreach (NetworkTapDestinationProperties item in _inner)
-                {
-                    yield return NetworkTapPropertiesDestinationsItem.FromDestinationProperties(item);
-                }
-            }
-            public int IndexOf(NetworkTapPropertiesDestinationsItem item) => _inner.IndexOf(item);
-            public void Insert(int index, NetworkTapPropertiesDestinationsItem item) => _inner.Insert(index, item);
-            public bool Remove(NetworkTapPropertiesDestinationsItem item) => _inner.Remove(item);
-            public void RemoveAt(int index) => _inner.RemoveAt(index);
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        }
+        private static NetworkTapDestinationProperties ToDestinationProperties(NetworkTapPropertiesDestinationsItem value)
+            => value;
 #pragma warning restore CS0618
     }
 }

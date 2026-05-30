@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> List of match configurations. </summary>
-        public IList<AccessControlListMatchConfiguration> MatchConfigurations
+        public IList<AccessControlListMatchConfigurationPatch> MatchConfigurationSettings
         {
             get
             {
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new AccessControlListPatchProperties();
                 }
-                return Properties.MatchConfigurations;
+                return Properties.MatchConfigurationSettings;
             }
         }
 
         /// <summary> List of dynamic match configurations. </summary>
-        public IList<CommonDynamicMatchConfiguration> DynamicMatchConfigurations
+        public IList<CommonDynamicMatchConfigurationPatch> DynamicMatchConfigurationSettings
         {
             get
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new AccessControlListPatchProperties();
                 }
-                return Properties.DynamicMatchConfigurations;
+                return Properties.DynamicMatchConfigurationSettings;
             }
         }
 

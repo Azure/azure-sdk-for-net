@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             get
             {
                 Properties ??= new AccessControlListPatchProperties();
-                return Properties.MatchConfigurations;
+                return NetworkFabricAccessControlListPatchContent.ToMatchConfigurations(Properties.MatchConfigurationSettings);
             }
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             get
             {
                 Properties ??= new AccessControlListPatchProperties();
-                return Properties.DynamicMatchConfigurations;
+                return NetworkFabricAccessControlListPatchContent.ToDynamicMatchConfigurations(Properties.DynamicMatchConfigurationSettings);
             }
         }
 
@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             content.DefaultAction = DefaultAction;
             foreach (AccessControlListMatchConfiguration item in MatchConfigurations)
             {
-                content.MatchConfigurations.Add(item);
+                content.MatchConfigurationSettings.Add(NetworkFabricAccessControlListPatchContent.ToMatchConfigurationPatch(item));
             }
             foreach (CommonDynamicMatchConfiguration item in DynamicMatchConfigurations)
             {
-                content.DynamicMatchConfigurations.Add(item);
+                content.DynamicMatchConfigurationSettings.Add(NetworkFabricAccessControlListPatchContent.ToDynamicMatchConfigurationPatch(item));
             }
             foreach (ControlPlaneAclPatchProperties item in ControlPlaneAclConfiguration)
             {

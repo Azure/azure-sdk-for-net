@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new NetworkTapRulePatchProperties();
                 }
-                return Properties.MatchConfigurations;
+                return NetworkTapRulePatchContent.ToMatchConfigurations(Properties.MatchConfigurationSettings);
             }
         }
 
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new NetworkTapRulePatchProperties();
                 }
-                return Properties.DynamicMatchConfigurations;
+                return NetworkTapRulePatchContent.ToDynamicMatchConfigurations(Properties.DynamicMatchConfigurationSettings);
             }
         }
 

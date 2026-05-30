@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new InternalNetworkPatchProperties();
                 }
-                return new ConnectedSubnetList(Properties.ConnectedIPv4SubnetSettings);
+                return new ConvertingList<ConnectedSubnet, NetworkFabricConnectedSubnetPatch>(Properties.ConnectedIPv4SubnetSettings, ToConnectedSubnet, ToConnectedSubnetPatch);
             }
         }
 
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new InternalNetworkPatchProperties();
                 }
-                return new ConnectedSubnetList(Properties.ConnectedIPv6SubnetSettings);
+                return new ConvertingList<ConnectedSubnet, NetworkFabricConnectedSubnetPatch>(Properties.ConnectedIPv6SubnetSettings, ToConnectedSubnet, ToConnectedSubnetPatch);
             }
         }
 
@@ -167,62 +166,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private static StaticRouteProperties ToStaticRouteProperties(StaticRoutePatchProperties value)
             => value is null ? null : new StaticRouteProperties(value.Prefix, value.NextHop, additionalBinaryDataProperties: null);
 
-        private sealed class ConnectedSubnetList : IList<ConnectedSubnet>
-        {
-            private readonly IList<NetworkFabricConnectedSubnetPatch> _inner;
+        private static ConnectedSubnet ToConnectedSubnet(NetworkFabricConnectedSubnetPatch value)
+            => value is null ? null : new ConnectedSubnet(value.Annotation, additionalBinaryDataProperties: null, value.Prefix);
 
-            public ConnectedSubnetList(IList<NetworkFabricConnectedSubnetPatch> inner)
-            {
-                _inner = inner;
-            }
-
-            public ConnectedSubnet this[int index]
-            {
-                get => ToConnectedSubnet(_inner[index]);
-                set => _inner[index] = ToConnectedSubnetPatch(value);
-            }
-
-            public int Count => _inner.Count;
-
-            public bool IsReadOnly => _inner.IsReadOnly;
-
-            public void Add(ConnectedSubnet item) => _inner.Add(ToConnectedSubnetPatch(item));
-
-            public void Clear() => _inner.Clear();
-
-            public bool Contains(ConnectedSubnet item) => _inner.Contains(ToConnectedSubnetPatch(item));
-
-            public void CopyTo(ConnectedSubnet[] array, int arrayIndex)
-            {
-                for (int i = 0; i < _inner.Count; i++)
-                {
-                    array[arrayIndex + i] = ToConnectedSubnet(_inner[i]);
-                }
-            }
-
-            public IEnumerator<ConnectedSubnet> GetEnumerator()
-            {
-                foreach (NetworkFabricConnectedSubnetPatch item in _inner)
-                {
-                    yield return ToConnectedSubnet(item);
-                }
-            }
-
-            public int IndexOf(ConnectedSubnet item) => _inner.IndexOf(ToConnectedSubnetPatch(item));
-
-            public void Insert(int index, ConnectedSubnet item) => _inner.Insert(index, ToConnectedSubnetPatch(item));
-
-            public bool Remove(ConnectedSubnet item) => _inner.Remove(ToConnectedSubnetPatch(item));
-
-            public void RemoveAt(int index) => _inner.RemoveAt(index);
-
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-            private static ConnectedSubnet ToConnectedSubnet(NetworkFabricConnectedSubnetPatch value)
-                => value is null ? null : new ConnectedSubnet(value.Annotation, additionalBinaryDataProperties: null, value.Prefix);
-
-            private static NetworkFabricConnectedSubnetPatch ToConnectedSubnetPatch(ConnectedSubnet value)
-                => value is null ? null : new NetworkFabricConnectedSubnetPatch(value.Annotation, additionalBinaryDataProperties: null, value.Prefix);
-        }
+        private static NetworkFabricConnectedSubnetPatch ToConnectedSubnetPatch(ConnectedSubnet value)
+            => value is null ? null : new NetworkFabricConnectedSubnetPatch(value.Annotation, additionalBinaryDataProperties: null, value.Prefix);
     }
 }

@@ -89,21 +89,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(MatchConfigurations))
+            if (Optional.IsCollectionDefined(MatchConfigurationSettings))
             {
                 writer.WritePropertyName("matchConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (AccessControlListMatchConfiguration item in MatchConfigurations)
+                foreach (AccessControlListMatchConfigurationPatch item in MatchConfigurationSettings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DynamicMatchConfigurations))
+            if (Optional.IsCollectionDefined(DynamicMatchConfigurationSettings))
             {
                 writer.WritePropertyName("dynamicMatchConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (CommonDynamicMatchConfiguration item in DynamicMatchConfigurations)
+                foreach (CommonDynamicMatchConfigurationPatch item in DynamicMatchConfigurationSettings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -184,8 +184,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             NetworkFabricConfigurationType? configurationType = default;
             Uri aclsUri = default;
             CommunityActionType? defaultAction = default;
-            IList<AccessControlListMatchConfiguration> matchConfigurations = default;
-            IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default;
+            IList<AccessControlListMatchConfigurationPatch> matchConfigurationSettings = default;
+            IList<CommonDynamicMatchConfigurationPatch> dynamicMatchConfigurationSettings = default;
             IList<ControlPlaneAclPatchProperties> controlPlaneAclConfiguration = default;
             NetworkFabricAclType? aclType = default;
             NetworkFabricDeviceRole? deviceRole = default;
@@ -227,12 +227,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<AccessControlListMatchConfiguration> array = new List<AccessControlListMatchConfiguration>();
+                    List<AccessControlListMatchConfigurationPatch> array = new List<AccessControlListMatchConfigurationPatch>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AccessControlListMatchConfiguration.DeserializeAccessControlListMatchConfiguration(item, options));
+                        array.Add(AccessControlListMatchConfigurationPatch.DeserializeAccessControlListMatchConfigurationPatch(item, options));
                     }
-                    matchConfigurations = array;
+                    matchConfigurationSettings = array;
                     continue;
                 }
                 if (prop.NameEquals("dynamicMatchConfigurations"u8))
@@ -241,12 +241,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<CommonDynamicMatchConfiguration> array = new List<CommonDynamicMatchConfiguration>();
+                    List<CommonDynamicMatchConfigurationPatch> array = new List<CommonDynamicMatchConfigurationPatch>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CommonDynamicMatchConfiguration.DeserializeCommonDynamicMatchConfiguration(item, options));
+                        array.Add(CommonDynamicMatchConfigurationPatch.DeserializeCommonDynamicMatchConfigurationPatch(item, options));
                     }
-                    dynamicMatchConfigurations = array;
+                    dynamicMatchConfigurationSettings = array;
                     continue;
                 }
                 if (prop.NameEquals("controlPlaneAclConfiguration"u8))
@@ -304,8 +304,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 configurationType,
                 aclsUri,
                 defaultAction,
-                matchConfigurations ?? new ChangeTrackingList<AccessControlListMatchConfiguration>(),
-                dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>(),
+                matchConfigurationSettings ?? new ChangeTrackingList<AccessControlListMatchConfigurationPatch>(),
+                dynamicMatchConfigurationSettings ?? new ChangeTrackingList<CommonDynamicMatchConfigurationPatch>(),
                 controlPlaneAclConfiguration ?? new ChangeTrackingList<ControlPlaneAclPatchProperties>(),
                 aclType,
                 deviceRole,

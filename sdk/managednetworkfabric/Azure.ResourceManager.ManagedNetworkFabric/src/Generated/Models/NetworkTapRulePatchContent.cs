@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> List of match configurations. </summary>
-        public IList<NetworkTapRuleMatchConfiguration> MatchConfigurations
+        public IList<NetworkTapRuleMatchConfigurationPatch> MatchConfigurationSettings
         {
             get
             {
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new NetworkTapRulePatchProperties();
                 }
-                return Properties.MatchConfigurations;
+                return Properties.MatchConfigurationSettings;
             }
         }
 
         /// <summary> List of dynamic match configurations. </summary>
-        public IList<CommonDynamicMatchConfiguration> DynamicMatchConfigurations
+        public IList<CommonDynamicMatchConfigurationPatch> DynamicMatchConfigurationSettings
         {
             get
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new NetworkTapRulePatchProperties();
                 }
-                return Properties.DynamicMatchConfigurations;
+                return Properties.DynamicMatchConfigurationSettings;
             }
         }
 
