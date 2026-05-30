@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         internal NetworkToNetworkInterconnectPatchProperties Properties { get; set; }
 
         /// <summary> Common properties for Layer2Configuration. </summary>
-        public Layer2Configuration Layer2Configuration
+        public Layer2ConfigurationPatch Layer2Settings
         {
             get
             {
-                return Properties is null ? default : Properties.Layer2Configuration;
+                return Properties is null ? default : Properties.Layer2Settings;
             }
             set
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new NetworkToNetworkInterconnectPatchProperties();
                 }
-                Properties.Layer2Configuration = value;
+                Properties.Layer2Settings = value;
             }
         }
 

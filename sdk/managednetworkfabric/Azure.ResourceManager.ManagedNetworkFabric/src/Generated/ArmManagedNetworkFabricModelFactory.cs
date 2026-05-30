@@ -2849,7 +2849,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="layer2Configuration"> Common properties for Layer2Configuration. </param>
+        /// <param name="layer2Settings"> Common properties for Layer2Configuration. </param>
         /// <param name="optionBLayer3Configuration"> Common properties for Layer3Configuration. </param>
         /// <param name="npbStaticRouteConfiguration"> NPB Static Route Configuration properties. </param>
         /// <param name="staticRouteConfiguration"> Static Route Configuration. </param>
@@ -2859,7 +2859,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
         /// <param name="microBfdState"> Micro BFD enabled/disabled state. </param>
         /// <returns> A new <see cref="Models.NetworkToNetworkInterconnectPatch"/> instance for mocking. </returns>
-        public static NetworkToNetworkInterconnectPatch NetworkToNetworkInterconnectPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Layer2Configuration layer2Configuration = default, OptionBLayer3Configuration optionBLayer3Configuration = default, NpbStaticRouteConfiguration npbStaticRouteConfiguration = default, NniStaticRoutePatchConfiguration staticRouteConfiguration = default, ImportRoutePolicyInformation importRoutePolicy = default, ExportRoutePolicyInformation exportRoutePolicy = default, ResourceIdentifier egressAclId = default, ResourceIdentifier ingressAclId = default, NetworkFabricMicroBfdState? microBfdState = default)
+        public static NetworkToNetworkInterconnectPatch NetworkToNetworkInterconnectPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Layer2ConfigurationPatch layer2Settings = default, OptionBLayer3Configuration optionBLayer3Configuration = default, NpbStaticRouteConfiguration npbStaticRouteConfiguration = default, NniStaticRoutePatchConfiguration staticRouteConfiguration = default, ImportRoutePolicyInformation importRoutePolicy = default, ExportRoutePolicyInformation exportRoutePolicy = default, ResourceIdentifier egressAclId = default, ResourceIdentifier ingressAclId = default, NetworkFabricMicroBfdState? microBfdState = default)
         {
             return new NetworkToNetworkInterconnectPatch(
                 id,
@@ -2867,8 +2867,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                layer2Configuration is null && optionBLayer3Configuration is null && npbStaticRouteConfiguration is null && staticRouteConfiguration is null && importRoutePolicy is null && exportRoutePolicy is null && egressAclId is null && ingressAclId is null && microBfdState is null ? default : new NetworkToNetworkInterconnectPatchProperties(
-                    layer2Configuration,
+                layer2Settings is null && optionBLayer3Configuration is null && npbStaticRouteConfiguration is null && staticRouteConfiguration is null && importRoutePolicy is null && exportRoutePolicy is null && egressAclId is null && ingressAclId is null && microBfdState is null ? default : new NetworkToNetworkInterconnectPatchProperties(
+                    layer2Settings,
                     optionBLayer3Configuration,
                     npbStaticRouteConfiguration,
                     staticRouteConfiguration,
@@ -2878,6 +2878,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     ingressAclId,
                     microBfdState,
                     null));
+        }
+
+        /// <summary> Common properties for Layer2 Configuration. </summary>
+        /// <param name="mtu"> MTU of the packets between PE &amp; CE. </param>
+        /// <param name="interfaces"> List of network device interfaces resource IDs. </param>
+        /// <returns> A new <see cref="Models.Layer2ConfigurationPatch"/> instance for mocking. </returns>
+        public static Layer2ConfigurationPatch Layer2ConfigurationPatch(int? mtu = default, IEnumerable<ResourceIdentifier> interfaces = default)
+        {
+            interfaces ??= new ChangeTrackingList<ResourceIdentifier>();
+
+            return new Layer2ConfigurationPatch(mtu, interfaces.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Static Route Configuration properties for NNI. </summary>
@@ -4265,7 +4276,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkToNetworkInterconnectPatch NetworkToNetworkInterconnectPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Layer2Configuration layer2Configuration, OptionBLayer3Configuration optionBLayer3Configuration, NpbStaticRouteConfiguration npbStaticRouteConfiguration, ImportRoutePolicyInformation importRoutePolicy, ExportRoutePolicyInformation exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId)
         {
-            return NetworkToNetworkInterconnectPatch(id: id, name: name, resourceType: resourceType, systemData: systemData, layer2Configuration: layer2Configuration, optionBLayer3Configuration: optionBLayer3Configuration, npbStaticRouteConfiguration: npbStaticRouteConfiguration, staticRouteConfiguration: default, importRoutePolicy: importRoutePolicy, exportRoutePolicy: exportRoutePolicy, egressAclId: egressAclId, ingressAclId: ingressAclId, microBfdState: default);
+            return new NetworkToNetworkInterconnectPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                optionBLayer3Configuration is null && npbStaticRouteConfiguration is null && importRoutePolicy is null && exportRoutePolicy is null && egressAclId is null && ingressAclId is null ? default : new NetworkToNetworkInterconnectPatchProperties(
+                    default,
+                    optionBLayer3Configuration,
+                    npbStaticRouteConfiguration,
+                    default,
+                    importRoutePolicy,
+                    exportRoutePolicy,
+                    egressAclId,
+                    ingressAclId,
+                    default,
+                    default));
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkPacketBrokerData"/>. </summary>

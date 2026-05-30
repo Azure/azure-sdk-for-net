@@ -145,6 +145,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     [ModelReaderWriterBuildable(typeof(L3UniqueRouteDistinguisherProperties))]
     [ModelReaderWriterBuildable(typeof(LastOperationProperties))]
     [ModelReaderWriterBuildable(typeof(Layer2Configuration))]
+    [ModelReaderWriterBuildable(typeof(Layer2ConfigurationPatch))]
     [ModelReaderWriterBuildable(typeof(Layer3IPPrefixPatchProperties))]
     [ModelReaderWriterBuildable(typeof(Layer3IPPrefixProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedNetworkFabricResourcePatch))]

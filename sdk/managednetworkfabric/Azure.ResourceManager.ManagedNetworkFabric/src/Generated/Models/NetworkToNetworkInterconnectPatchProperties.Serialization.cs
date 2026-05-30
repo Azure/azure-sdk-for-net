@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 throw new FormatException($"The model {nameof(NetworkToNetworkInterconnectPatchProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Layer2Configuration))
+            if (Optional.IsDefined(Layer2Settings))
             {
                 writer.WritePropertyName("layer2Configuration"u8);
-                writer.WriteObjectValue(Layer2Configuration, options);
+                writer.WriteObjectValue(Layer2Settings, options);
             }
             if (Optional.IsDefined(OptionBLayer3Configuration))
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Layer2Configuration layer2Configuration = default;
+            Layer2ConfigurationPatch layer2Settings = default;
             OptionBLayer3Configuration optionBLayer3Configuration = default;
             NpbStaticRouteConfiguration npbStaticRouteConfiguration = default;
             NniStaticRoutePatchConfiguration staticRouteConfiguration = default;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    layer2Configuration = Layer2Configuration.DeserializeLayer2Configuration(prop.Value, options);
+                    layer2Settings = Layer2ConfigurationPatch.DeserializeLayer2ConfigurationPatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("optionBLayer3Configuration"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             return new NetworkToNetworkInterconnectPatchProperties(
-                layer2Configuration,
+                layer2Settings,
                 optionBLayer3Configuration,
                 npbStaticRouteConfiguration,
                 staticRouteConfiguration,

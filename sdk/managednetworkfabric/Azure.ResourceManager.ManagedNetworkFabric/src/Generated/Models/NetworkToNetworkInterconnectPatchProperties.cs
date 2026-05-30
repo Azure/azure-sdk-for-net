@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectPatchProperties"/>. </summary>
-        /// <param name="layer2Configuration"> Common properties for Layer2Configuration. </param>
+        /// <param name="layer2Settings"> Common properties for Layer2Configuration. </param>
         /// <param name="optionBLayer3Configuration"> Common properties for Layer3Configuration. </param>
         /// <param name="npbStaticRouteConfiguration"> NPB Static Route Configuration properties. </param>
         /// <param name="staticRouteConfiguration"> Static Route Configuration. </param>
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
         /// <param name="microBfdState"> Micro BFD enabled/disabled state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkToNetworkInterconnectPatchProperties(Layer2Configuration layer2Configuration, OptionBLayer3Configuration optionBLayer3Configuration, NpbStaticRouteConfiguration npbStaticRouteConfiguration, NniStaticRoutePatchConfiguration staticRouteConfiguration, ImportRoutePolicyInformation importRoutePolicy, ExportRoutePolicyInformation exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId, NetworkFabricMicroBfdState? microBfdState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkToNetworkInterconnectPatchProperties(Layer2ConfigurationPatch layer2Settings, OptionBLayer3Configuration optionBLayer3Configuration, NpbStaticRouteConfiguration npbStaticRouteConfiguration, NniStaticRoutePatchConfiguration staticRouteConfiguration, ImportRoutePolicyInformation importRoutePolicy, ExportRoutePolicyInformation exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId, NetworkFabricMicroBfdState? microBfdState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Layer2Configuration = layer2Configuration;
+            Layer2Settings = layer2Settings;
             OptionBLayer3Configuration = optionBLayer3Configuration;
             NpbStaticRouteConfiguration = npbStaticRouteConfiguration;
             StaticRouteConfiguration = staticRouteConfiguration;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Common properties for Layer2Configuration. </summary>
-        public Layer2Configuration Layer2Configuration { get; set; }
+        public Layer2ConfigurationPatch Layer2Settings { get; set; }
 
         /// <summary> Common properties for Layer3Configuration. </summary>
         public OptionBLayer3Configuration OptionBLayer3Configuration { get; set; }
