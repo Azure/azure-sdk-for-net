@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Microsoft.ProgramEnrollment.csproj" />
+  <Project Path="tests/Microsoft.ProgramEnrollment.Tests.csproj" />
+</Solution>
