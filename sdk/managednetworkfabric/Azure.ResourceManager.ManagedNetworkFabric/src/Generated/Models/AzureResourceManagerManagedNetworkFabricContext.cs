@@ -336,6 +336,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     [ModelReaderWriterBuildable(typeof(NniUpdateBfdAdministrativeStateResponseProperties))]
     [ModelReaderWriterBuildable(typeof(NniUpdateBfdAdministrativeStateResult))]
     [ModelReaderWriterBuildable(typeof(NpbStaticRouteConfiguration))]
+    [ModelReaderWriterBuildable(typeof(NpbStaticRouteConfigurationPatch))]
     [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(OptionBLayer3Configuration))]
     [ModelReaderWriterBuildable(typeof(OptionBLayer3ConfigurationPatchProperties))]

@@ -29,6 +29,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             set => OptionBLayer3Settings = ToOptionBLayer3ConfigurationPatchProperties(value);
         }
 
+        /// <summary> NPB Static Route Configuration properties. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future version. Use NpbStaticRouteSettings instead.")]
+        public NpbStaticRouteConfiguration NpbStaticRouteConfiguration
+        {
+            get => ToNpbStaticRouteConfiguration(NpbStaticRouteSettings);
+            set => NpbStaticRouteSettings = ToNpbStaticRouteConfigurationPatch(value);
+        }
+
         private static Layer2Configuration ToLayer2Configuration(Layer2ConfigurationPatch value)
             => value is null ? null : new Layer2Configuration(value.Mtu, value.Interfaces.ToList(), additionalBinaryDataProperties: null);
 
@@ -74,5 +83,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         private static OptionBLayer3PrefixLimitPatchProperties ToOptionBLayer3PrefixLimitPatchProperties(OptionBLayer3PrefixLimitProperties value)
             => value is null ? null : new OptionBLayer3PrefixLimitPatchProperties(value.MaximumRoutes, additionalBinaryDataProperties: null);
+
+        private static NpbStaticRouteConfiguration ToNpbStaticRouteConfiguration(NpbStaticRouteConfigurationPatch value)
+            => value is null ? null : new NpbStaticRouteConfiguration(
+                ToBfdConfiguration(value.BfdConfiguration),
+                value.IPv4Routes.Select(ToStaticRouteProperties).ToList(),
+                value.IPv6Routes.Select(ToStaticRouteProperties).ToList(),
+                additionalBinaryDataProperties: null);
+
+        private static NpbStaticRouteConfigurationPatch ToNpbStaticRouteConfigurationPatch(NpbStaticRouteConfiguration value)
+            => value is null ? null : new NpbStaticRouteConfigurationPatch(
+                ToBfdPatchConfiguration(value.BfdConfiguration),
+                value.IPv4Routes.Select(ToStaticRoutePatchProperties).ToList(),
+                value.IPv6Routes.Select(ToStaticRoutePatchProperties).ToList(),
+                additionalBinaryDataProperties: null);
+
+        private static BfdConfiguration ToBfdConfiguration(BfdPatchConfiguration value)
+            => value is null ? null : new BfdConfiguration(value.AdministrativeState, value.IntervalInMilliSeconds, value.Multiplier, additionalBinaryDataProperties: null);
+
+        private static BfdPatchConfiguration ToBfdPatchConfiguration(BfdConfiguration value)
+            => value is null ? null : new BfdPatchConfiguration(value.AdministrativeState, value.IntervalInMilliSeconds, value.Multiplier, additionalBinaryDataProperties: null);
+
+        private static StaticRouteProperties ToStaticRouteProperties(StaticRoutePatchProperties value)
+            => value is null ? null : new StaticRouteProperties(value.Prefix, value.NextHop, additionalBinaryDataProperties: null);
+
+        private static StaticRoutePatchProperties ToStaticRoutePatchProperties(StaticRouteProperties value)
+            => value is null ? null : new StaticRoutePatchProperties(value.Prefix, value.NextHop, additionalBinaryDataProperties: null);
     }
 }

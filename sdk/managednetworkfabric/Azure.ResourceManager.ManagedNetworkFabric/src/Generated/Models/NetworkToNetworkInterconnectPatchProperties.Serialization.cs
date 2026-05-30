@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("optionBLayer3Configuration"u8);
                 writer.WriteObjectValue(OptionBLayer3Settings, options);
             }
-            if (Optional.IsDefined(NpbStaticRouteConfiguration))
+            if (Optional.IsDefined(NpbStaticRouteSettings))
             {
                 writer.WritePropertyName("npbStaticRouteConfiguration"u8);
-                writer.WriteObjectValue(NpbStaticRouteConfiguration, options);
+                writer.WriteObjectValue(NpbStaticRouteSettings, options);
             }
             if (Optional.IsDefined(StaticRouteConfiguration))
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             Layer2ConfigurationPatch layer2Settings = default;
             OptionBLayer3ConfigurationPatchProperties optionBLayer3Settings = default;
-            NpbStaticRouteConfiguration npbStaticRouteConfiguration = default;
+            NpbStaticRouteConfigurationPatch npbStaticRouteSettings = default;
             NniStaticRoutePatchConfiguration staticRouteConfiguration = default;
             ImportRoutePolicyInformation importRoutePolicy = default;
             ExportRoutePolicyInformation exportRoutePolicy = default;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    npbStaticRouteConfiguration = NpbStaticRouteConfiguration.DeserializeNpbStaticRouteConfiguration(prop.Value, options);
+                    npbStaticRouteSettings = NpbStaticRouteConfigurationPatch.DeserializeNpbStaticRouteConfigurationPatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("staticRouteConfiguration"u8))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkToNetworkInterconnectPatchProperties(
                 layer2Settings,
                 optionBLayer3Settings,
-                npbStaticRouteConfiguration,
+                npbStaticRouteSettings,
                 staticRouteConfiguration,
                 importRoutePolicy,
                 exportRoutePolicy,

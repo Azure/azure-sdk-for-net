@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> NPB Static Route Configuration properties. </summary>
-        public NpbStaticRouteConfiguration NpbStaticRouteConfiguration
+        public NpbStaticRouteConfigurationPatch NpbStaticRouteSettings
         {
             get
             {
-                return Properties is null ? default : Properties.NpbStaticRouteConfiguration;
+                return Properties is null ? default : Properties.NpbStaticRouteSettings;
             }
             set
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new NetworkToNetworkInterconnectPatchProperties();
                 }
-                Properties.NpbStaticRouteConfiguration = value;
+                Properties.NpbStaticRouteSettings = value;
             }
         }
 

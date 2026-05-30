@@ -2851,7 +2851,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="layer2Settings"> Common properties for Layer2Configuration. </param>
         /// <param name="optionBLayer3Settings"> Common properties for Layer3Configuration. </param>
-        /// <param name="npbStaticRouteConfiguration"> NPB Static Route Configuration properties. </param>
+        /// <param name="npbStaticRouteSettings"> NPB Static Route Configuration properties. </param>
         /// <param name="staticRouteConfiguration"> Static Route Configuration. </param>
         /// <param name="importRoutePolicy"> Import Route Policy information. </param>
         /// <param name="exportRoutePolicy"> Export Route Policy information. </param>
@@ -2859,7 +2859,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
         /// <param name="microBfdState"> Micro BFD enabled/disabled state. </param>
         /// <returns> A new <see cref="Models.NetworkToNetworkInterconnectPatch"/> instance for mocking. </returns>
-        public static NetworkToNetworkInterconnectPatch NetworkToNetworkInterconnectPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Layer2ConfigurationPatch layer2Settings = default, OptionBLayer3ConfigurationPatchProperties optionBLayer3Settings = default, NpbStaticRouteConfiguration npbStaticRouteConfiguration = default, NniStaticRoutePatchConfiguration staticRouteConfiguration = default, ImportRoutePolicyInformation importRoutePolicy = default, ExportRoutePolicyInformation exportRoutePolicy = default, ResourceIdentifier egressAclId = default, ResourceIdentifier ingressAclId = default, NetworkFabricMicroBfdState? microBfdState = default)
+        public static NetworkToNetworkInterconnectPatch NetworkToNetworkInterconnectPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Layer2ConfigurationPatch layer2Settings = default, OptionBLayer3ConfigurationPatchProperties optionBLayer3Settings = default, NpbStaticRouteConfigurationPatch npbStaticRouteSettings = default, NniStaticRoutePatchConfiguration staticRouteConfiguration = default, ImportRoutePolicyInformation importRoutePolicy = default, ExportRoutePolicyInformation exportRoutePolicy = default, ResourceIdentifier egressAclId = default, ResourceIdentifier ingressAclId = default, NetworkFabricMicroBfdState? microBfdState = default)
         {
             return new NetworkToNetworkInterconnectPatch(
                 id,
@@ -2867,10 +2867,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                layer2Settings is null && optionBLayer3Settings is null && npbStaticRouteConfiguration is null && staticRouteConfiguration is null && importRoutePolicy is null && exportRoutePolicy is null && egressAclId is null && ingressAclId is null && microBfdState is null ? default : new NetworkToNetworkInterconnectPatchProperties(
+                layer2Settings is null && optionBLayer3Settings is null && npbStaticRouteSettings is null && staticRouteConfiguration is null && importRoutePolicy is null && exportRoutePolicy is null && egressAclId is null && ingressAclId is null && microBfdState is null ? default : new NetworkToNetworkInterconnectPatchProperties(
                     layer2Settings,
                     optionBLayer3Settings,
-                    npbStaticRouteConfiguration,
+                    npbStaticRouteSettings,
                     staticRouteConfiguration,
                     importRoutePolicy,
                     exportRoutePolicy,
@@ -2919,6 +2919,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 peLoopbackIPAddress.ToList(),
                 bmpConfigurationState is null ? default : new NniBmpPatchProperties(bmpConfigurationState, null),
                 prefixLimits.ToList());
+        }
+
+        /// <summary> NPB Static Route Configuration properties. </summary>
+        /// <param name="bfdConfiguration"> BFD Configuration properties. </param>
+        /// <param name="iPv4Routes"> List of IPv4 Routes. </param>
+        /// <param name="iPv6Routes"> List of IPv6 Routes. </param>
+        /// <returns> A new <see cref="Models.NpbStaticRouteConfigurationPatch"/> instance for mocking. </returns>
+        public static NpbStaticRouteConfigurationPatch NpbStaticRouteConfigurationPatch(BfdPatchConfiguration bfdConfiguration = default, IEnumerable<StaticRoutePatchProperties> iPv4Routes = default, IEnumerable<StaticRoutePatchProperties> iPv6Routes = default)
+        {
+            iPv4Routes ??= new ChangeTrackingList<StaticRoutePatchProperties>();
+            iPv6Routes ??= new ChangeTrackingList<StaticRoutePatchProperties>();
+
+            return new NpbStaticRouteConfigurationPatch(bfdConfiguration, iPv4Routes.ToList(), iPv6Routes.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Static Route Configuration properties for NNI. </summary>
@@ -4312,10 +4325,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                npbStaticRouteConfiguration is null && importRoutePolicy is null && exportRoutePolicy is null && egressAclId is null && ingressAclId is null ? default : new NetworkToNetworkInterconnectPatchProperties(
+                importRoutePolicy is null && exportRoutePolicy is null && egressAclId is null && ingressAclId is null ? default : new NetworkToNetworkInterconnectPatchProperties(
                     default,
                     default,
-                    npbStaticRouteConfiguration,
+                    default,
                     default,
                     importRoutePolicy,
                     exportRoutePolicy,
