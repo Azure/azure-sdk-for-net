@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary> Signals detected in the model artifact. </summary>
-    public readonly partial struct FoundryModelArtifactProfileSignal : IEquatable<FoundryModelArtifactProfileSignal>
+    internal readonly partial struct FoundryModelArtifactProfileSignal : IEquatable<FoundryModelArtifactProfileSignal>
     {
         private readonly string _value;
         /// <summary> Pickle deserialization detected. </summary>

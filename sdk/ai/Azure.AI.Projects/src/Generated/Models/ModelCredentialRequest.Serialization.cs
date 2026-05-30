@@ -11,7 +11,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Request to fetch credentials for a model asset. </summary>
-    public partial class ModelCredentialRequest : IJsonModel<ModelCredentialRequest>
+    internal partial class ModelCredentialRequest : IJsonModel<ModelCredentialRequest>
     {
         /// <summary> Initializes a new instance of <see cref="ModelCredentialRequest"/> for deserialization. </summary>
         internal ModelCredentialRequest()
