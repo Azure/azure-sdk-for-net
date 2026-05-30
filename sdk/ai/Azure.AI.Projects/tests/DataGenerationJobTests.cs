@@ -14,7 +14,7 @@ using NUnit.Framework;
 namespace Azure.AI.Projects.Tests;
 
 /// <summary>
-/// Asynchronous recorded tests for OpenAI file operations using test-proxy.
+/// Asynchronous recorded tests for data generation job operations using test-proxy.
 /// </summary>
 public class DataGenerationJobTests : ProjectsClientTestBase
 {

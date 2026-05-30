@@ -7,9 +7,7 @@ In this example we will demonstrate how the data can be generated using `DataGen
 ```C# Snippet:Sample_CreateClients_DataGenerationJob
 string endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 string modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-// Create client with debugging enabled
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-OpenAIFileClient fileClient = projectClient.ProjectOpenAIClient.GetOpenAIFileClient();
 ```
 
 2. In our scenario, we will generate 16 questions and answer pairs based on the provided prompt and will save them into the data set named "dataset-generation-eval-sample".
@@ -181,7 +179,7 @@ if (jobToCancel.Status != JobStatus.Cancelled)
 Console.WriteLine($"The job {jobToCancel.Id} was canceled.");
 ```
 
-7. List data generation jobs.
+6. List data generation jobs.
 
 Synchronous sample:
 ```C# Snippet:Sample_ListJob_DataGenerationJob_Sync
@@ -199,7 +197,7 @@ await foreach (DataGenerationJob oneJob in projectClient.DataGenerationJobs.GetG
 }
 ```
 
-8. Finally, delete the jobs we have created.
+7. Finally, delete the jobs we have created.
 
 Synchronous sample:
 ```C# Snippet:Sample_DeleteJob_DataGenerationJob_Sync

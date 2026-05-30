@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using OpenAI.Files;
 
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;
 
@@ -25,9 +24,7 @@ public class Sample_DataGenerationJob: SamplesBase
         string endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         string modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
-        // Create client with debugging enabled
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        OpenAIFileClient fileClient = projectClient.ProjectOpenAIClient.GetOpenAIFileClient();
         #endregion
         #region Snippet:Sample_UploadFile_DataGenerationJob
         DataGenerationJobOutputOptions outputOptions = new()
@@ -143,7 +140,6 @@ public class Sample_DataGenerationJob: SamplesBase
         AIProjectClientOptions opts = new();
         opts.AddPolicy(GetDumpPolicy(), System.ClientModel.Primitives.PipelinePosition.PerCall);
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential(), options: opts);
-        OpenAIFileClient fileClient = projectClient.ProjectOpenAIClient.GetOpenAIFileClient();
         DataGenerationJobOutputOptions outputOptions = new()
         {
             Name = "dataset-generation-eval-sample",
