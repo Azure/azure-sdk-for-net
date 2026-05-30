@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Reservations.Models
         {
             get
             {
-                return PolicyResult is null ? default : (IReadOnlyList<ExchangePolicyError>)PolicyResult.PolicyErrors;
+                return PolicyResult?.PolicyErrors as IReadOnlyList<ExchangePolicyError>;
             }
         }
     }
