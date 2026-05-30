@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("layer2Configuration"u8);
                 writer.WriteObjectValue(Layer2Settings, options);
             }
-            if (Optional.IsDefined(OptionBLayer3Configuration))
+            if (Optional.IsDefined(OptionBLayer3Settings))
             {
                 writer.WritePropertyName("optionBLayer3Configuration"u8);
-                writer.WriteObjectValue(OptionBLayer3Configuration, options);
+                writer.WriteObjectValue(OptionBLayer3Settings, options);
             }
             if (Optional.IsDefined(NpbStaticRouteConfiguration))
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             Layer2ConfigurationPatch layer2Settings = default;
-            OptionBLayer3Configuration optionBLayer3Configuration = default;
+            OptionBLayer3ConfigurationPatchProperties optionBLayer3Settings = default;
             NpbStaticRouteConfiguration npbStaticRouteConfiguration = default;
             NniStaticRoutePatchConfiguration staticRouteConfiguration = default;
             ImportRoutePolicyInformation importRoutePolicy = default;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    optionBLayer3Configuration = OptionBLayer3Configuration.DeserializeOptionBLayer3Configuration(prop.Value, options);
+                    optionBLayer3Settings = OptionBLayer3ConfigurationPatchProperties.DeserializeOptionBLayer3ConfigurationPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("npbStaticRouteConfiguration"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             return new NetworkToNetworkInterconnectPatchProperties(
                 layer2Settings,
-                optionBLayer3Configuration,
+                optionBLayer3Settings,
                 npbStaticRouteConfiguration,
                 staticRouteConfiguration,
                 importRoutePolicy,

@@ -2850,7 +2850,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="layer2Settings"> Common properties for Layer2Configuration. </param>
-        /// <param name="optionBLayer3Configuration"> Common properties for Layer3Configuration. </param>
+        /// <param name="optionBLayer3Settings"> Common properties for Layer3Configuration. </param>
         /// <param name="npbStaticRouteConfiguration"> NPB Static Route Configuration properties. </param>
         /// <param name="staticRouteConfiguration"> Static Route Configuration. </param>
         /// <param name="importRoutePolicy"> Import Route Policy information. </param>
@@ -2859,7 +2859,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
         /// <param name="microBfdState"> Micro BFD enabled/disabled state. </param>
         /// <returns> A new <see cref="Models.NetworkToNetworkInterconnectPatch"/> instance for mocking. </returns>
-        public static NetworkToNetworkInterconnectPatch NetworkToNetworkInterconnectPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Layer2ConfigurationPatch layer2Settings = default, OptionBLayer3Configuration optionBLayer3Configuration = default, NpbStaticRouteConfiguration npbStaticRouteConfiguration = default, NniStaticRoutePatchConfiguration staticRouteConfiguration = default, ImportRoutePolicyInformation importRoutePolicy = default, ExportRoutePolicyInformation exportRoutePolicy = default, ResourceIdentifier egressAclId = default, ResourceIdentifier ingressAclId = default, NetworkFabricMicroBfdState? microBfdState = default)
+        public static NetworkToNetworkInterconnectPatch NetworkToNetworkInterconnectPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Layer2ConfigurationPatch layer2Settings = default, OptionBLayer3ConfigurationPatchProperties optionBLayer3Settings = default, NpbStaticRouteConfiguration npbStaticRouteConfiguration = default, NniStaticRoutePatchConfiguration staticRouteConfiguration = default, ImportRoutePolicyInformation importRoutePolicy = default, ExportRoutePolicyInformation exportRoutePolicy = default, ResourceIdentifier egressAclId = default, ResourceIdentifier ingressAclId = default, NetworkFabricMicroBfdState? microBfdState = default)
         {
             return new NetworkToNetworkInterconnectPatch(
                 id,
@@ -2867,9 +2867,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                layer2Settings is null && optionBLayer3Configuration is null && npbStaticRouteConfiguration is null && staticRouteConfiguration is null && importRoutePolicy is null && exportRoutePolicy is null && egressAclId is null && ingressAclId is null && microBfdState is null ? default : new NetworkToNetworkInterconnectPatchProperties(
+                layer2Settings is null && optionBLayer3Settings is null && npbStaticRouteConfiguration is null && staticRouteConfiguration is null && importRoutePolicy is null && exportRoutePolicy is null && egressAclId is null && ingressAclId is null && microBfdState is null ? default : new NetworkToNetworkInterconnectPatchProperties(
                     layer2Settings,
-                    optionBLayer3Configuration,
+                    optionBLayer3Settings,
                     npbStaticRouteConfiguration,
                     staticRouteConfiguration,
                     importRoutePolicy,
@@ -2889,6 +2889,36 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             interfaces ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new Layer2ConfigurationPatch(mtu, interfaces.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
+        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
+        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
+        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        /// <param name="peerAsn"> ASN of PE devices for CE/PE connectivity.Example : 28. </param>
+        /// <param name="vlanId"> VLAN for CE/PE Layer 3 connectivity.Example : 501. </param>
+        /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
+        /// <param name="peLoopbackIPAddress"> Provider Edge (PE) Loopback IP Address. </param>
+        /// <param name="bmpConfigurationState"> (BGP Monitoring Protocol (BMP) configuration state. </param>
+        /// <param name="prefixLimits"> OptionB Layer3 prefix limit configuration. </param>
+        /// <returns> A new <see cref="Models.OptionBLayer3ConfigurationPatchProperties"/> instance for mocking. </returns>
+        public static OptionBLayer3ConfigurationPatchProperties OptionBLayer3ConfigurationPatchProperties(string primaryIPv4Prefix = default, string primaryIPv6Prefix = default, string secondaryIPv4Prefix = default, string secondaryIPv6Prefix = default, long? peerAsn = default, int? vlanId = default, long? fabricAsn = default, IEnumerable<string> peLoopbackIPAddress = default, BmpConfigurationState? bmpConfigurationState = default, IEnumerable<OptionBLayer3PrefixLimitPatchProperties> prefixLimits = default)
+        {
+            peLoopbackIPAddress ??= new ChangeTrackingList<string>();
+            prefixLimits ??= new ChangeTrackingList<OptionBLayer3PrefixLimitPatchProperties>();
+
+            return new OptionBLayer3ConfigurationPatchProperties(
+                primaryIPv4Prefix,
+                primaryIPv6Prefix,
+                secondaryIPv4Prefix,
+                secondaryIPv6Prefix,
+                additionalBinaryDataProperties: null,
+                peerAsn,
+                vlanId,
+                fabricAsn,
+                peLoopbackIPAddress.ToList(),
+                bmpConfigurationState is null ? default : new NniBmpPatchProperties(bmpConfigurationState, null),
+                prefixLimits.ToList());
         }
 
         /// <summary> Static Route Configuration properties for NNI. </summary>
@@ -4282,9 +4312,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                optionBLayer3Configuration is null && npbStaticRouteConfiguration is null && importRoutePolicy is null && exportRoutePolicy is null && egressAclId is null && ingressAclId is null ? default : new NetworkToNetworkInterconnectPatchProperties(
+                npbStaticRouteConfiguration is null && importRoutePolicy is null && exportRoutePolicy is null && egressAclId is null && ingressAclId is null ? default : new NetworkToNetworkInterconnectPatchProperties(
                     default,
-                    optionBLayer3Configuration,
+                    default,
                     npbStaticRouteConfiguration,
                     default,
                     importRoutePolicy,
