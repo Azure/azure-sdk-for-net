@@ -12,6 +12,9 @@
 
 ### Other Changes
 
+### Sample Updates
+- Added a sample for Data generation jobs.
+
 ## 2.1.0-beta.2 (2026-05-14)
 
 ### Features Added
