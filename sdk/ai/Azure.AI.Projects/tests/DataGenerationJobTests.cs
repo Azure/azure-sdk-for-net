@@ -61,48 +61,15 @@ public class DataGenerationJobTests : ProjectsClientTestBase
         }
         Assert.That(jobToCancel.Status, Is.EqualTo(JobStatus.Cancelled), $"The job {jobToCancel.Id} has failed.");
         // List
-        DataGenerationJobOutputOptions outputOptions = new()
-        {
-            Name = DATASET_NAME,
-            Description = "Data set created by unit test.",
-        };
-        job = new()
-        {
-            Inputs = new(
-                    name: $"{INPUT_PREFIX}02",
-                    sources: [new TracesDataGenerationJobSource(new DateTimeOffset(year: 2026, month: 3, day: 15, hour: 0, minute: 0, second: 0, offset: new())){
-                        AgentId = "MyAgent:1",
-                        AgentName = "MyAgent",
-                        AgentVersion = "1",
-                        EndTime = new DateTimeOffset(year: 2026, month: 3, day: 15, hour: 15, minute: 0, second: 0, offset: new())
-                    }],
-                    options: new TracesDataGenerationJobOptions(maxSamples: 16),
-                    scenario: DataGenerationJobScenario.Evaluation
-                )
-            {
-                OutputOptions = outputOptions
-            }
-        };
-        DataGenerationJob jobToCancel2 = await projectClient.DataGenerationJobs.CreateGenerationJobAsync(job);
-        jobToCancel2 = await projectClient.DataGenerationJobs.CancelGenerationJobAsync(jobToCancel2.Id);
-        // Use filter
-        // Blocked by the bug 5301232
-        //HashSet<string> jobIDs = [..await projectClient.DataGenerationJobs.GetGenerationJobsAsync(kind: [DataGenerationJobKind.SimpleQna]).Select(x => x.Id).ToListAsync()];
-        //Assert.That(jobIDs, Does.Contain(runningJob.Id));
-        //Assert.That(jobIDs, Does.Contain(jobToCancel.Id));
-        //Assert.That(jobIDs, Does.Not.Contain(jobToCancel2.Id));
-        // No filter
         HashSet<string> jobIDs = [.. await projectClient.DataGenerationJobs.GetGenerationJobsAsync().Select(x => x.Id).ToListAsync()];
         Assert.That(jobIDs, Does.Contain(runningJob.Id));
         Assert.That(jobIDs, Does.Contain(jobToCancel.Id));
-        Assert.That(jobIDs, Does.Contain(jobToCancel2.Id));
         // Delete
         await projectClient.DataGenerationJobs.DeleteGenerationJobAsync(jobId: runningJob.Id);
         await projectClient.DataGenerationJobs.DeleteGenerationJobAsync(jobId: jobToCancel.Id);
         jobIDs = [.. await projectClient.DataGenerationJobs.GetGenerationJobsAsync().Select(x => x.Id).ToListAsync()];
         Assert.That(jobIDs, Does.Not.Contain(runningJob.Id));
         Assert.That(jobIDs, Does.Not.Contain(jobToCancel.Id));
-        Assert.That(jobIDs, Does.Contain(jobToCancel2.Id));
     }
 
     [RecordedTest]
@@ -117,25 +84,25 @@ public class DataGenerationJobTests : ProjectsClientTestBase
             };
             await projectClient.DataGenerationJobs.CreateGenerationJobAsync(job);
         }
-        List<DataGenerationJob> records = await projectClient.DataGenerationJobs.GetGenerationJobsAsync(limit: PAGE_SIZE, order: "asc").ToListAsync();
+        List<DataGenerationJob> records = await projectClient.DataGenerationJobs.GetGenerationJobsAsync(limit: PAGE_SIZE, order: "asc").Where(x => x.Inputs.Name.StartsWith(INPUT_PREFIX)).ToListAsync();
         Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
         // Go forward.
-        List<DataGenerationJob> forward = await projectClient.DataGenerationJobs.GetGenerationJobsAsync(order: "asc", after: records[0].Id, limit: PAGE_SIZE).ToListAsync();
+        List<DataGenerationJob> forward = await projectClient.DataGenerationJobs.GetGenerationJobsAsync(order: "asc", after: records[0].Id, limit: PAGE_SIZE).Where(x => x.Inputs.Name.StartsWith(INPUT_PREFIX)).ToListAsync();
         Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
         Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
         Assert.That(forward[forward.Count - 1].Id, Is.EqualTo(records[records.Count - 1].Id));
         //// Two limits:
-        forward = await projectClient.DataGenerationJobs.GetGenerationJobsAsync( order: "asc", after: records[0].Id, before: records[3].Id, limit: PAGE_SIZE).ToListAsync();
+        forward = await projectClient.DataGenerationJobs.GetGenerationJobsAsync( order: "asc", after: records[0].Id, before: records[3].Id, limit: PAGE_SIZE).Where(x => x.Inputs.Name.StartsWith(INPUT_PREFIX)).ToListAsync();
         Assert.That(forward.Count, Is.EqualTo(2));
         Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
         Assert.That(forward[1].Id, Is.EqualTo(records[2].Id));
         // Go backwards.
-        List<DataGenerationJob> backwards = await projectClient.DataGenerationJobs.GetGenerationJobsAsync(order: "desc", before: records[0].Id, limit: PAGE_SIZE).ToListAsync();
+        List<DataGenerationJob> backwards = await projectClient.DataGenerationJobs.GetGenerationJobsAsync(order: "desc", before: records[0].Id, limit: PAGE_SIZE).Where(x => x.Inputs.Name.StartsWith(INPUT_PREFIX)).ToListAsync();
         Assert.That(backwards.Count, Is.EqualTo(records.Count - 1));
         Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 1].Id));
         Assert.That(backwards[backwards.Count - 1].Id, Is.EqualTo(records[1].Id));
         // Two limits.
-        backwards = await projectClient.DataGenerationJobs.GetGenerationJobsAsync(order: "desc", after: records[records.Count - 1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE).ToListAsync();
+        backwards = await projectClient.DataGenerationJobs.GetGenerationJobsAsync(order: "desc", after: records[records.Count - 1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE).Where(x => x.Inputs.Name.StartsWith(INPUT_PREFIX)).ToListAsync();
         Assert.That(backwards.Count, Is.EqualTo(2));
         Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
         Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));
@@ -179,14 +146,14 @@ public class DataGenerationJobTests : ProjectsClientTestBase
         Uri connectionString = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
         AIProjectClient projectClient = new(connectionString, TestEnvironment.Credential);
         // Delete Jobs
-        //List<DataGenerationJob> dataGenerations = await projectClient.DataGenerationJobs.GetGenerationJobsAsync().ToListAsync();
-        //foreach (DataGenerationJob job in dataGenerations)
-        //{
-        //    if (job.Inputs.Name.StartsWith(INPUT_PREFIX))
-        //    {
-        //        await projectClient.DataGenerationJobs.DeleteGenerationJobAsync(job.Id);
-        //    }
-        //}
+        List<DataGenerationJob> dataGenerations = await projectClient.DataGenerationJobs.GetGenerationJobsAsync().ToListAsync();
+        foreach (DataGenerationJob job in dataGenerations)
+        {
+            if (job.Inputs.Name.StartsWith(INPUT_PREFIX))
+            {
+                await projectClient.DataGenerationJobs.DeleteGenerationJobAsync(job.Id);
+            }
+        }
         // Delete generated data sets.
         // Deletion data sets result in 500 error.
         //List<string> versions = await projectClient.Datasets.GetDatasetVersionsAsync(DATASET_NAME).Select(x => x.Version).ToListAsync();

@@ -14,25 +14,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class HyperVReplicaAzureApplyRecoveryPointContent : SiteRecoveryApplyRecoveryPointProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureApplyRecoveryPointContent"/>. </summary>
-        public HyperVReplicaAzureApplyRecoveryPointContent()
+        public HyperVReplicaAzureApplyRecoveryPointContent() : base("HyperVReplicaAzure")
         {
-            InstanceType = "HyperVReplicaAzure";
         }
 
         /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureApplyRecoveryPointContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="primaryKekCertificatePfx"> The primary kek certificate pfx. </param>
         /// <param name="secondaryKekCertificatePfx"> The secondary kek certificate pfx. </param>
-        internal HyperVReplicaAzureApplyRecoveryPointContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string primaryKekCertificatePfx, string secondaryKekCertificatePfx) : base(instanceType, serializedAdditionalRawData)
+        internal HyperVReplicaAzureApplyRecoveryPointContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string primaryKekCertificatePfx, string secondaryKekCertificatePfx) : base(instanceType, additionalBinaryDataProperties)
         {
             PrimaryKekCertificatePfx = primaryKekCertificatePfx;
             SecondaryKekCertificatePfx = secondaryKekCertificatePfx;
-            InstanceType = instanceType ?? "HyperVReplicaAzure";
         }
 
         /// <summary> The primary kek certificate pfx. </summary>
         public string PrimaryKekCertificatePfx { get; set; }
+
         /// <summary> The secondary kek certificate pfx. </summary>
         public string SecondaryKekCertificatePfx { get; set; }
     }

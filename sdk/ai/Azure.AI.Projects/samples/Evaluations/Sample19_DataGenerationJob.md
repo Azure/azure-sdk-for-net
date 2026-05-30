@@ -185,7 +185,7 @@ Console.WriteLine($"The job {jobToCancel.Id} was canceled.");
 
 Synchronous sample:
 ```C# Snippet:Sample_ListJob_DataGenerationJob_Sync
-foreach (DataGenerationJob oneJob in projectClient.DataGenerationJobs.GetGenerationJobs(kind: [DataGenerationJobKind.SimpleQna]))
+foreach (DataGenerationJob oneJob in projectClient.DataGenerationJobs.GetGenerationJobs())
 {
     Console.WriteLine($"Job ID: {oneJob.Id}, Status: {oneJob.Status}.");
 }
@@ -193,7 +193,7 @@ foreach (DataGenerationJob oneJob in projectClient.DataGenerationJobs.GetGenerat
 
 Asynchronous sample:
 ```C# Snippet:Sample_ListJob_DataGenerationJob_Async
-await foreach (DataGenerationJob oneJob in projectClient.DataGenerationJobs.GetGenerationJobsAsync(kind: [DataGenerationJobKind.SimpleQna]))
+await foreach (DataGenerationJob oneJob in projectClient.DataGenerationJobs.GetGenerationJobsAsync())
 {
     Console.WriteLine($"Job ID: {oneJob.Id}, Status: {oneJob.Status}.");
 }

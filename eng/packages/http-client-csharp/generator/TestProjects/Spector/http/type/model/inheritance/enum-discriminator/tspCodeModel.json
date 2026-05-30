@@ -27,7 +27,8 @@
             "$ref": "1"
           },
           "doc": "Species golden",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "Type.Model.Inheritance.EnumDiscriminator",
@@ -35,7 +36,8 @@
       "isFixed": false,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "4",
@@ -62,7 +64,8 @@
             "$ref": "4"
           },
           "doc": "Species cobra",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "Type.Model.Inheritance.EnumDiscriminator",
@@ -70,7 +73,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
@@ -88,7 +92,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "9",
@@ -104,7 +109,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "11",
@@ -120,7 +126,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "13",
@@ -136,7 +143,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "15",
@@ -152,7 +160,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "17",
@@ -168,7 +177,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "19",
@@ -184,7 +194,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "21",
@@ -200,7 +211,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -218,6 +230,7 @@
           "name": "Dog"
         }
       },
+      "isExactName": false,
       "discriminatorProperty": {
         "$id": "24",
         "kind": "property",
@@ -238,7 +251,8 @@
             "name": "kind"
           }
         },
-        "isHttpMetadata": false
+        "isHttpMetadata": false,
+        "isExactName": false
       },
       "properties": [
         {
@@ -268,7 +282,8 @@
               "name": "weight"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ],
       "discriminatedSubtypes": {
@@ -287,6 +302,7 @@
               "name": "Golden"
             }
           },
+          "isExactName": false,
           "baseModel": {
             "$ref": "23"
           },
@@ -329,6 +345,7 @@
                       "decorators": [],
                       "doc": "Species golden",
                       "name": "Golden",
+                      "isExactName": false,
                       "value": "golden",
                       "valueType": {
                         "$ref": "31"
@@ -349,7 +366,8 @@
                   "__accessSet": true
                 },
                 "doc": "Species golden",
-                "decorators": []
+                "decorators": [],
+                "isExactName": false
               },
               "optional": false,
               "readOnly": false,
@@ -362,7 +380,8 @@
                   "name": "kind"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             }
           ]
         }
@@ -385,6 +404,7 @@
           "name": "Snake"
         }
       },
+      "isExactName": false,
       "discriminatorProperty": {
         "$id": "34",
         "kind": "property",
@@ -405,7 +425,8 @@
             "name": "kind"
           }
         },
-        "isHttpMetadata": false
+        "isHttpMetadata": false,
+        "isExactName": false
       },
       "properties": [
         {
@@ -435,7 +456,8 @@
               "name": "length"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ],
       "discriminatedSubtypes": {
@@ -454,6 +476,7 @@
               "name": "Cobra"
             }
           },
+          "isExactName": false,
           "baseModel": {
             "$ref": "33"
           },
@@ -496,6 +519,7 @@
                       "decorators": [],
                       "doc": "Species cobra",
                       "name": "Cobra",
+                      "isExactName": false,
                       "value": "cobra",
                       "enumType": {
                         "$ref": "40"
@@ -516,7 +540,8 @@
                   "__accessSet": true
                 },
                 "doc": "Species cobra",
-                "decorators": []
+                "decorators": [],
+                "isExactName": false
               },
               "optional": false,
               "readOnly": false,
@@ -529,7 +554,8 @@
                   "name": "kind"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             }
           ]
         }
@@ -544,6 +570,7 @@
       "$id": "43",
       "kind": "client",
       "name": "EnumDiscriminatorClient",
+      "isExactName": false,
       "namespace": "Type.Model.Inheritance.EnumDiscriminator",
       "doc": "Illustrates inheritance with enum discriminator.",
       "methods": [
@@ -551,12 +578,14 @@
           "$id": "44",
           "kind": "basic",
           "name": "getExtensibleModel",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Receive model with extensible enum discriminator type.",
           "operation": {
             "$id": "45",
             "name": "getExtensibleModel",
+            "isExactName": false,
             "resourceName": "EnumDiscriminator",
             "doc": "Receive model with extensible enum discriminator type.",
             "accessibility": "public",
@@ -592,9 +621,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getExtensibleModel.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -646,12 +677,14 @@
           "$id": "48",
           "kind": "basic",
           "name": "putExtensibleModel",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Send model with extensible enum discriminator type.",
           "operation": {
             "$id": "49",
             "name": "putExtensibleModel",
+            "isExactName": false,
             "resourceName": "EnumDiscriminator",
             "doc": "Send model with extensible enum discriminator type.",
             "accessibility": "public",
@@ -689,9 +722,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putExtensibleModel.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "52",
@@ -729,9 +764,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putExtensibleModel.input",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
                 ],
+                "isExactName": false,
                 "serializationOptions": {
                   "json": {
                     "name": "input"
@@ -780,12 +817,14 @@
           "$id": "54",
           "kind": "basic",
           "name": "getExtensibleModelMissingDiscriminator",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Get a model omitting the discriminator.",
           "operation": {
             "$id": "55",
             "name": "getExtensibleModelMissingDiscriminator",
+            "isExactName": false,
             "resourceName": "EnumDiscriminator",
             "doc": "Get a model omitting the discriminator.",
             "accessibility": "public",
@@ -821,9 +860,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getExtensibleModelMissingDiscriminator.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -875,12 +916,14 @@
           "$id": "58",
           "kind": "basic",
           "name": "getExtensibleModelWrongDiscriminator",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Get a model containing discriminator value never defined.",
           "operation": {
             "$id": "59",
             "name": "getExtensibleModelWrongDiscriminator",
+            "isExactName": false,
             "resourceName": "EnumDiscriminator",
             "doc": "Get a model containing discriminator value never defined.",
             "accessibility": "public",
@@ -916,9 +959,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getExtensibleModelWrongDiscriminator.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -970,12 +1015,14 @@
           "$id": "62",
           "kind": "basic",
           "name": "getFixedModel",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Receive model with fixed enum discriminator type.",
           "operation": {
             "$id": "63",
             "name": "getFixedModel",
+            "isExactName": false,
             "resourceName": "EnumDiscriminator",
             "doc": "Receive model with fixed enum discriminator type.",
             "accessibility": "public",
@@ -1011,9 +1058,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getFixedModel.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1065,12 +1114,14 @@
           "$id": "66",
           "kind": "basic",
           "name": "putFixedModel",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Send model with fixed enum discriminator type.",
           "operation": {
             "$id": "67",
             "name": "putFixedModel",
+            "isExactName": false,
             "resourceName": "EnumDiscriminator",
             "doc": "Send model with fixed enum discriminator type.",
             "accessibility": "public",
@@ -1108,9 +1159,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putFixedModel.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "70",
@@ -1148,9 +1201,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putFixedModel.input",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
                 ],
+                "isExactName": false,
                 "serializationOptions": {
                   "json": {
                     "name": "input"
@@ -1199,12 +1254,14 @@
           "$id": "72",
           "kind": "basic",
           "name": "getFixedModelMissingDiscriminator",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Get a model omitting the discriminator.",
           "operation": {
             "$id": "73",
             "name": "getFixedModelMissingDiscriminator",
+            "isExactName": false,
             "resourceName": "EnumDiscriminator",
             "doc": "Get a model omitting the discriminator.",
             "accessibility": "public",
@@ -1240,9 +1297,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getFixedModelMissingDiscriminator.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1294,12 +1353,14 @@
           "$id": "76",
           "kind": "basic",
           "name": "getFixedModelWrongDiscriminator",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Get a model containing discriminator value never defined.",
           "operation": {
             "$id": "77",
             "name": "getFixedModelWrongDiscriminator",
+            "isExactName": false,
             "resourceName": "EnumDiscriminator",
             "doc": "Get a model containing discriminator value never defined.",
             "accessibility": "public",
@@ -1335,9 +1396,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getFixedModelWrongDiscriminator.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1415,7 +1478,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.endpoint"
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

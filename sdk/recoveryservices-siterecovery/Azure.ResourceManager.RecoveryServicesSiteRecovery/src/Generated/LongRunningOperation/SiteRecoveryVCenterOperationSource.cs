@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    internal class SiteRecoveryVCenterOperationSource : IOperationSource<SiteRecoveryVCenterResource>
+    /// <summary></summary>
+    internal partial class SiteRecoveryVCenterOperationSource : IOperationSource<SiteRecoveryVCenterResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal SiteRecoveryVCenterOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         SiteRecoveryVCenterResource IOperationSource<SiteRecoveryVCenterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SiteRecoveryVCenterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            SiteRecoveryVCenterData data = SiteRecoveryVCenterData.DeserializeSiteRecoveryVCenterData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SiteRecoveryVCenterResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<SiteRecoveryVCenterResource> IOperationSource<SiteRecoveryVCenterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SiteRecoveryVCenterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-            return await Task.FromResult(new SiteRecoveryVCenterResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            SiteRecoveryVCenterData data = SiteRecoveryVCenterData.DeserializeSiteRecoveryVCenterData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SiteRecoveryVCenterResource(_client, data);
         }
     }
 }

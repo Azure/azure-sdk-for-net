@@ -17,6 +17,7 @@
           "name": "InvalidAuth"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "2",
@@ -41,7 +42,8 @@
               "name": "error"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -51,6 +53,7 @@
       "$id": "4",
       "kind": "client",
       "name": "ApiKeyClient",
+      "isExactName": false,
       "namespace": "Authentication.ApiKey",
       "doc": "Illustrates clients generated with ApiKey authentication.",
       "methods": [
@@ -58,12 +61,14 @@
           "$id": "5",
           "kind": "basic",
           "name": "valid",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Check whether client is authenticated",
           "operation": {
             "$id": "6",
             "name": "valid",
+            "isExactName": false,
             "resourceName": "ApiKey",
             "doc": "Check whether client is authenticated",
             "accessibility": "public",
@@ -99,12 +104,14 @@
           "$id": "7",
           "kind": "basic",
           "name": "invalid",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Check whether client is authenticated.",
           "operation": {
             "$id": "8",
             "name": "invalid",
+            "isExactName": false,
             "resourceName": "ApiKey",
             "doc": "Check whether client is authenticated.",
             "accessibility": "public",
@@ -166,7 +173,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Authentication.ApiKey.endpoint"
+          "crossLanguageDefinitionId": "Authentication.ApiKey.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

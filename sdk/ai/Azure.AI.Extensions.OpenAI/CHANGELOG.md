@@ -13,7 +13,8 @@
 ### Other Changes
 
 ### Sample Updates
-- Added a sample for Fabric IQ.
+- Added a sample for Fabric IQ Tool (preview).
+- Added a sample for Work IQ Tool (preview).
 - Added a sample for Data generation jobs.
 
 ## 2.1.0-beta.2 (2026-05-14)

@@ -2136,8 +2136,5 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class TextAuthoringClientBuilderExtensions
     {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClient, Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClientOptions> AddTextAnalysisAuthoringClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClient, Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClientOptions> AddTextAnalysisAuthoringClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClient, Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClientOptions> AddTextAnalysisAuthoringClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }
