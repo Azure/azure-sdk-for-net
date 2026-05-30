@@ -69,11 +69,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Import Route Policy either IPv4 or IPv6. </summary>
-        public ImportRoutePolicy ImportRoutePolicy
+        public ImportRoutePolicyPatch ImportRoutePolicySettings
         {
             get
             {
-                return Properties is null ? default : Properties.ImportRoutePolicy;
+                return Properties is null ? default : Properties.ImportRoutePolicySettings;
             }
             set
             {
@@ -81,16 +81,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new ExternalNetworkPatchProperties();
                 }
-                Properties.ImportRoutePolicy = value;
+                Properties.ImportRoutePolicySettings = value;
             }
         }
 
         /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
-        public ExportRoutePolicy ExportRoutePolicy
+        public ExportRoutePolicyPatch ExportRoutePolicySettings
         {
             get
             {
-                return Properties is null ? default : Properties.ExportRoutePolicy;
+                return Properties is null ? default : Properties.ExportRoutePolicySettings;
             }
             set
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new ExternalNetworkPatchProperties();
                 }
-                Properties.ExportRoutePolicy = value;
+                Properties.ExportRoutePolicySettings = value;
             }
         }
 
@@ -120,11 +120,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> option B properties object. </summary>
-        public L3OptionBProperties OptionBProperties
+        public L3OptionBPatchProperties OptionBSettings
         {
             get
             {
-                return Properties is null ? default : Properties.OptionBProperties;
+                return Properties is null ? default : Properties.OptionBSettings;
             }
             set
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new ExternalNetworkPatchProperties();
                 }
-                Properties.OptionBProperties = value;
+                Properties.OptionBSettings = value;
             }
         }
 

@@ -2619,6 +2619,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.IsolationDomainPatchProperties IsolationDomainPatchProperties(Azure.ResourceManager.ManagedNetworkFabric.Models.IsolationDomainEncapsulationType? encapsulation = default(Azure.ResourceManager.ManagedNetworkFabric.Models.IsolationDomainEncapsulationType?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> neighborGroupIds = null) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.IsolationDomainProperties IsolationDomainProperties(Azure.ResourceManager.ManagedNetworkFabric.Models.IsolationDomainEncapsulationType? encapsulation = default(Azure.ResourceManager.ManagedNetworkFabric.Models.IsolationDomainEncapsulationType?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> neighborGroupIds = null) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.L2IsolationDomainProperties L2IsolationDomainProperties(string annotation = null, Azure.Core.ResourceIdentifier networkFabricId = null, int vlanId = 0, int? mtu = default(int?), Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricExtendedVlan? extendedVlan = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricExtendedVlan?), Azure.Core.ResourceIdentifier networkToNetworkInterconnectId = null, string lastOperationDetails = null, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState? configurationState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState?), Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? provisioningState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState?), Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? administrativeState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState?)) { throw null; }
+        public static Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBPatchProperties L3OptionBPatchProperties(System.Collections.Generic.IEnumerable<string> importRouteTargets = null, System.Collections.Generic.IEnumerable<string> exportRouteTargets = null, Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetPatchInformation routeTargets = null) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBProperties L3OptionBProperties(System.Collections.Generic.IEnumerable<string> importRouteTargets = null, System.Collections.Generic.IEnumerable<string> exportRouteTargets = null, Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetInformation routeTargets = null) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.Layer2Configuration Layer2Configuration(int? mtu = default(int?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> interfaces = null) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.Layer2ConfigurationPatch Layer2ConfigurationPatch(int? mtu = default(int?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> interfaces = null) { throw null; }
@@ -2761,6 +2762,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBProperties OptionBProperties(System.Collections.Generic.IEnumerable<string> importRouteTargets = null, System.Collections.Generic.IEnumerable<string> exportRouteTargets = null, Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetInformation routeTargets = null) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.PortGroupProperties PortGroupProperties(string name = null, System.Collections.Generic.IEnumerable<string> ports = null) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetInformation RouteTargetInformation(System.Collections.Generic.IEnumerable<string> importIPv4RouteTargets = null, System.Collections.Generic.IEnumerable<string> importIPv6RouteTargets = null, System.Collections.Generic.IEnumerable<string> exportIPv4RouteTargets = null, System.Collections.Generic.IEnumerable<string> exportIPv6RouteTargets = null) { throw null; }
+        public static Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetPatchInformation RouteTargetPatchInformation(System.Collections.Generic.IEnumerable<string> importIPv4RouteTargets = null, System.Collections.Generic.IEnumerable<string> importIPv6RouteTargets = null, System.Collections.Generic.IEnumerable<string> exportIPv4RouteTargets = null, System.Collections.Generic.IEnumerable<string> exportIPv6RouteTargets = null) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.StatementConditionProperties StatementConditionProperties(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> ipCommunityIds = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> ipExtendedCommunityIds = null, Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyConditionType? routePolicyConditionType = default(Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyConditionType?), Azure.Core.ResourceIdentifier ipPrefixId = null) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.StateUpdateCommonPostActionResult StateUpdateCommonPostActionResult(Azure.ResponseError error = null, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState? configurationState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState?)) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteConfiguration StaticRouteConfiguration(Azure.ResourceManager.ManagedNetworkFabric.Models.BfdConfiguration bfdConfiguration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteProperties> iPv4Routes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteProperties> iPv6Routes = null, Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteConfigurationExtension? extension = default(Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteConfigurationExtension?)) { throw null; }
@@ -3672,6 +3674,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicyInformationPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicyInformationPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ExportRoutePolicyPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicyPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicyPatch>
+    {
+        public ExportRoutePolicyPatch() { }
+        public Azure.Core.ResourceIdentifier ExportIPv4RoutePolicyId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ExportIPv6RoutePolicyId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicyPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicyPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicyPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicyPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicyPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicyPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicyPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicyPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicyPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ExpressRouteConnectionInformation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExpressRouteConnectionInformation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExpressRouteConnectionInformation>
     {
         public ExpressRouteConnectionInformation(Azure.Core.ResourceIdentifier expressRouteCircuitId) { }
@@ -3929,6 +3946,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicyInformationPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicyInformationPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicyInformationPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicyInformationPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ImportRoutePolicyPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicyPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicyPatch>
+    {
+        public ImportRoutePolicyPatch() { }
+        public Azure.Core.ResourceIdentifier ImportIPv4RoutePolicyId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ImportIPv6RoutePolicyId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicyPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicyPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicyPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicyPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicyPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicyPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicyPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicyPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicyPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ObsoleteAttribute("This type is obsolete and will be removed in a future version. Use BgpConfiguration instead.")]
     public partial class InternalNetworkBgpConfiguration : Azure.ResourceManager.ManagedNetworkFabric.Models.BgpConfiguration, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.InternalNetworkBgpConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.InternalNetworkBgpConfiguration>
@@ -4459,6 +4491,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         Azure.ResourceManager.ManagedNetworkFabric.Models.L3ExportRoutePolicyPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.L3ExportRoutePolicyPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.L3ExportRoutePolicyPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.L3ExportRoutePolicyPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class L3OptionBPatchProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBPatchProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBPatchProperties>
+    {
+        public L3OptionBPatchProperties() { }
+        public System.Collections.Generic.IList<string> ExportRouteTargets { get { throw null; } }
+        public System.Collections.Generic.IList<string> ImportRouteTargets { get { throw null; } }
+        public Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetPatchInformation RouteTargets { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBPatchProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBPatchProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBPatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBPatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBPatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBPatchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBPatchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBPatchProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBPatchProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class L3OptionBProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBProperties>
     {
@@ -5707,13 +5755,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     {
         public NetworkFabricExternalNetworkPatch() { }
         public string Annotation { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Use ExportRoutePolicySettings instead.")]
         public Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicy ExportRoutePolicy { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ExportRoutePolicyId { get { throw null; } set { } }
+        public Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicyPatch ExportRoutePolicySettings { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Use ImportRoutePolicySettings instead.")]
         public Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicy ImportRoutePolicy { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ImportRoutePolicyId { get { throw null; } set { } }
+        public Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicyPatch ImportRoutePolicySettings { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier NetworkToNetworkInterconnectId { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkPatchOptionAProperties OptionAProperties { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Use OptionBSettings instead.")]
         public Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBProperties OptionBProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBPatchProperties OptionBSettings { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.PeeringOption? PeeringOption { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkStaticRoutePatchConfiguration StaticRouteConfiguration { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricExternalNetworkPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7818,6 +7872,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetInformation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetInformation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetInformation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetInformation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RouteTargetPatchInformation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetPatchInformation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetPatchInformation>
+    {
+        public RouteTargetPatchInformation() { }
+        public System.Collections.Generic.IList<string> ExportIPv4RouteTargets { get { throw null; } }
+        public System.Collections.Generic.IList<string> ExportIPv6RouteTargets { get { throw null; } }
+        public System.Collections.Generic.IList<string> ImportIPv4RouteTargets { get { throw null; } }
+        public System.Collections.Generic.IList<string> ImportIPv6RouteTargets { get { throw null; } }
+        protected virtual Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetPatchInformation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetPatchInformation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetPatchInformation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetPatchInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetPatchInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetPatchInformation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetPatchInformation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetPatchInformation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetPatchInformation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SourceDestinationType : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.SourceDestinationType>

@@ -25,21 +25,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="ExternalNetworkPatchProperties"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the networkToNetworkInterconnectId of the ExternalNetwork resource. </param>
-        /// <param name="importRoutePolicy"> Import Route Policy either IPv4 or IPv6. </param>
-        /// <param name="exportRoutePolicy"> Export Route Policy either IPv4 or IPv6. </param>
+        /// <param name="importRoutePolicySettings"> Import Route Policy either IPv4 or IPv6. </param>
+        /// <param name="exportRoutePolicySettings"> Export Route Policy either IPv4 or IPv6. </param>
         /// <param name="peeringOption"> Peering option list. </param>
-        /// <param name="optionBProperties"> option B properties object. </param>
+        /// <param name="optionBSettings"> option B properties object. </param>
         /// <param name="optionAProperties"> option A properties object. </param>
         /// <param name="staticRouteConfiguration"> Static Route Configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExternalNetworkPatchProperties(string annotation, ResourceIdentifier networkToNetworkInterconnectId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, PeeringOption? peeringOption, L3OptionBProperties optionBProperties, ExternalNetworkPatchOptionAProperties optionAProperties, ExternalNetworkStaticRoutePatchConfiguration staticRouteConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExternalNetworkPatchProperties(string annotation, ResourceIdentifier networkToNetworkInterconnectId, ImportRoutePolicyPatch importRoutePolicySettings, ExportRoutePolicyPatch exportRoutePolicySettings, PeeringOption? peeringOption, L3OptionBPatchProperties optionBSettings, ExternalNetworkPatchOptionAProperties optionAProperties, ExternalNetworkStaticRoutePatchConfiguration staticRouteConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             NetworkToNetworkInterconnectId = networkToNetworkInterconnectId;
-            ImportRoutePolicy = importRoutePolicy;
-            ExportRoutePolicy = exportRoutePolicy;
+            ImportRoutePolicySettings = importRoutePolicySettings;
+            ExportRoutePolicySettings = exportRoutePolicySettings;
             PeeringOption = peeringOption;
-            OptionBProperties = optionBProperties;
+            OptionBSettings = optionBSettings;
             OptionAProperties = optionAProperties;
             StaticRouteConfiguration = staticRouteConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -52,16 +52,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public ResourceIdentifier NetworkToNetworkInterconnectId { get; set; }
 
         /// <summary> Import Route Policy either IPv4 or IPv6. </summary>
-        public ImportRoutePolicy ImportRoutePolicy { get; set; }
+        public ImportRoutePolicyPatch ImportRoutePolicySettings { get; set; }
 
         /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
-        public ExportRoutePolicy ExportRoutePolicy { get; set; }
+        public ExportRoutePolicyPatch ExportRoutePolicySettings { get; set; }
 
         /// <summary> Peering option list. </summary>
         public PeeringOption? PeeringOption { get; set; }
 
         /// <summary> option B properties object. </summary>
-        public L3OptionBProperties OptionBProperties { get; set; }
+        public L3OptionBPatchProperties OptionBSettings { get; set; }
 
         /// <summary> option A properties object. </summary>
         public ExternalNetworkPatchOptionAProperties OptionAProperties { get; set; }

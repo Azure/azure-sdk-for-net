@@ -1433,6 +1433,35 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ExternalNetworkStaticRouteConfiguration(bfdConfiguration, iPv4Routes.ToList(), iPv6Routes.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Option B configuration. </summary>
+        /// <param name="importRouteTargets"> RouteTargets to be applied. This is used for the backward compatibility. </param>
+        /// <param name="exportRouteTargets"> RouteTargets to be applied. This is used for the backward compatibility. </param>
+        /// <param name="routeTargets"> RouteTargets to be applied. </param>
+        /// <returns> A new <see cref="Models.L3OptionBPatchProperties"/> instance for mocking. </returns>
+        public static L3OptionBPatchProperties L3OptionBPatchProperties(IEnumerable<string> importRouteTargets = default, IEnumerable<string> exportRouteTargets = default, RouteTargetPatchInformation routeTargets = default)
+        {
+            importRouteTargets ??= new ChangeTrackingList<string>();
+            exportRouteTargets ??= new ChangeTrackingList<string>();
+
+            return new L3OptionBPatchProperties(importRouteTargets.ToList(), exportRouteTargets.ToList(), routeTargets, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Route Target Configuration. </summary>
+        /// <param name="importIPv4RouteTargets"> Route Targets to be applied for incoming routes into CE. </param>
+        /// <param name="importIPv6RouteTargets"> Route Targets to be applied for incoming routes from CE. </param>
+        /// <param name="exportIPv4RouteTargets"> Route Targets to be applied for outgoing routes into CE. </param>
+        /// <param name="exportIPv6RouteTargets"> Route Targets to be applied for outgoing routes from CE. </param>
+        /// <returns> A new <see cref="Models.RouteTargetPatchInformation"/> instance for mocking. </returns>
+        public static RouteTargetPatchInformation RouteTargetPatchInformation(IEnumerable<string> importIPv4RouteTargets = default, IEnumerable<string> importIPv6RouteTargets = default, IEnumerable<string> exportIPv4RouteTargets = default, IEnumerable<string> exportIPv6RouteTargets = default)
+        {
+            importIPv4RouteTargets ??= new ChangeTrackingList<string>();
+            importIPv6RouteTargets ??= new ChangeTrackingList<string>();
+            exportIPv4RouteTargets ??= new ChangeTrackingList<string>();
+            exportIPv6RouteTargets ??= new ChangeTrackingList<string>();
+
+            return new RouteTargetPatchInformation(importIPv4RouteTargets.ToList(), importIPv6RouteTargets.ToList(), exportIPv4RouteTargets.ToList(), exportIPv6RouteTargets.ToList(), additionalBinaryDataProperties: null);
+        }
+
         /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>

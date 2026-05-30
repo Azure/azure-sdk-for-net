@@ -85,25 +85,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("networkToNetworkInterconnectId"u8);
                 writer.WriteStringValue(NetworkToNetworkInterconnectId);
             }
-            if (Optional.IsDefined(ImportRoutePolicy))
+            if (Optional.IsDefined(ImportRoutePolicySettings))
             {
                 writer.WritePropertyName("importRoutePolicy"u8);
-                writer.WriteObjectValue(ImportRoutePolicy, options);
+                writer.WriteObjectValue(ImportRoutePolicySettings, options);
             }
-            if (Optional.IsDefined(ExportRoutePolicy))
+            if (Optional.IsDefined(ExportRoutePolicySettings))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
-                writer.WriteObjectValue(ExportRoutePolicy, options);
+                writer.WriteObjectValue(ExportRoutePolicySettings, options);
             }
             if (Optional.IsDefined(PeeringOption))
             {
                 writer.WritePropertyName("peeringOption"u8);
                 writer.WriteStringValue(PeeringOption.Value.ToString());
             }
-            if (Optional.IsDefined(OptionBProperties))
+            if (Optional.IsDefined(OptionBSettings))
             {
                 writer.WritePropertyName("optionBProperties"u8);
-                writer.WriteObjectValue(OptionBProperties, options);
+                writer.WriteObjectValue(OptionBSettings, options);
             }
             if (Optional.IsDefined(OptionAProperties))
             {
@@ -159,10 +159,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             string annotation = default;
             ResourceIdentifier networkToNetworkInterconnectId = default;
-            ImportRoutePolicy importRoutePolicy = default;
-            ExportRoutePolicy exportRoutePolicy = default;
+            ImportRoutePolicyPatch importRoutePolicySettings = default;
+            ExportRoutePolicyPatch exportRoutePolicySettings = default;
             PeeringOption? peeringOption = default;
-            L3OptionBProperties optionBProperties = default;
+            L3OptionBPatchProperties optionBSettings = default;
             ExternalNetworkPatchOptionAProperties optionAProperties = default;
             ExternalNetworkStaticRoutePatchConfiguration staticRouteConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    importRoutePolicy = ImportRoutePolicy.DeserializeImportRoutePolicy(prop.Value, options);
+                    importRoutePolicySettings = ImportRoutePolicyPatch.DeserializeImportRoutePolicyPatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("exportRoutePolicy"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    exportRoutePolicy = ExportRoutePolicy.DeserializeExportRoutePolicy(prop.Value, options);
+                    exportRoutePolicySettings = ExportRoutePolicyPatch.DeserializeExportRoutePolicyPatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("peeringOption"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    optionBProperties = L3OptionBProperties.DeserializeL3OptionBProperties(prop.Value, options);
+                    optionBSettings = L3OptionBPatchProperties.DeserializeL3OptionBPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("optionAProperties"u8))
@@ -244,10 +244,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ExternalNetworkPatchProperties(
                 annotation,
                 networkToNetworkInterconnectId,
-                importRoutePolicy,
-                exportRoutePolicy,
+                importRoutePolicySettings,
+                exportRoutePolicySettings,
                 peeringOption,
-                optionBProperties,
+                optionBSettings,
                 optionAProperties,
                 staticRouteConfiguration,
                 additionalBinaryDataProperties);
