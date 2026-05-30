@@ -52,22 +52,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 {
                     Mtu = 1500
                 },
-                OptionBLayer3Configuration = new NetworkToNetworkInterconnectOptionBLayer3Configuration()
+                OptionBLayer3Settings = new OptionBLayer3Configuration(61234, 1234)
                 {
-                    PeerASN = 61234,
-                    VlanId = 1234,
-                    PrimaryIpv4Prefix = "10.0.0.12/30",
-                    PrimaryIpv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
-                    SecondaryIpv4Prefix = "40.0.0.14/30",
-                    SecondaryIpv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
+                    PrimaryIPv4Prefix = "10.0.0.12/30",
+                    PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
+                    SecondaryIPv4Prefix = "40.0.0.14/30",
+                    SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
                 },
                 ImportRoutePolicy = new ImportRoutePolicyInformation()
                 {
-                    ImportIpv4RoutePolicyId = new ResourceIdentifier(TestEnvironment.ExistingRoutePolicyId),
+                    ImportIPv4RoutePolicyId = new ResourceIdentifier(TestEnvironment.ExistingRoutePolicyId),
                 },
                 ExportRoutePolicy = new ExportRoutePolicyInformation()
                 {
-                    ExportIpv4RoutePolicyId = new ResourceIdentifier(TestEnvironment.ExistingRoutePolicyId),
+                    ExportIPv4RoutePolicyId = new ResourceIdentifier(TestEnvironment.ExistingRoutePolicyId),
                 }
             };
             ArmOperation<NetworkToNetworkInterconnectResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.NetworkToNetworkInterConnectName, data);

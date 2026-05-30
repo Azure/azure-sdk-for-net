@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 RedistributeStaticRoutes = RedistributeStaticRoute.False,
                 AggregateRouteConfiguration = new AggregateRouteConfiguration()
                 {
-                    Ipv4Routes =
+                    IPv4Routes =
                     {
                         new AggregateRoute("10.0.0.0/24")
                     },
-                    Ipv6Routes =
+                    IPv6Routes =
                     {
                         new AggregateRoute("3FFE:FFFF:0:CD30::a0/29")
                     },
@@ -102,13 +102,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             {
                 State = AdministrativeEnableState.Enable,
             };
-            await l3IsolationDomainForPostAction.UpdateAdministrativeStateAsync(WaitUntil.Completed, content);
+            await l3IsolationDomainForPostAction.SetAdministrativeStateAsync(WaitUntil.Completed, content);
 
             content = new UpdateAdministrativeStateContent()
             {
                 State = AdministrativeEnableState.Disable,
             };
-            await l3IsolationDomainForPostAction.UpdateAdministrativeStateAsync(WaitUntil.Completed, content);
+            await l3IsolationDomainForPostAction.SetAdministrativeStateAsync(WaitUntil.Completed, content);
         }
     }
 }

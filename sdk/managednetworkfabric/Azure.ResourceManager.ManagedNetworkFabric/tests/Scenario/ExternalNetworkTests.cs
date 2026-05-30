@@ -45,19 +45,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 {
                     RouteTargets = new RouteTargetInformation()
                     {
-                        ImportIpv4RouteTargets =
+                        ImportIPv4RouteTargets =
                         {
                             "65046:10039"
                         },
-                        ImportIpv6RouteTargets =
+                        ImportIPv6RouteTargets =
                         {
                             "65046:10039"
                         },
-                        ExportIpv4RouteTargets =
+                        ExportIPv4RouteTargets =
                         {
                             "65046:10039"
                         },
-                        ExportIpv6RouteTargets =
+                        ExportIPv6RouteTargets =
                         {
                             "65046:10039"
                         },
@@ -67,16 +67,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 {
                     Mtu = 1500,
                     VlanId = 1001,
-                    PeerASN = 65047,
+                    PeerAsn = 65047,
                     BfdConfiguration = new BfdConfiguration()
                     {
                         IntervalInMilliSeconds = 300,
                         Multiplier = 15,
                     },
-                    PrimaryIpv4Prefix = "10.1.1.0/30",
-                    PrimaryIpv6Prefix = "3FFE:FFFF:0:CD30::a0/127",
-                    SecondaryIpv4Prefix = "10.1.1.4/30",
-                    SecondaryIpv6Prefix = "3FFE:FFFF:0:CD30::a4/127",
+                    PrimaryIPv4Prefix = "10.1.1.0/30",
+                    PrimaryIPv6Prefix = "3FFE:FFFF:0:CD30::a0/127",
+                    SecondaryIPv4Prefix = "10.1.1.4/30",
+                    SecondaryIPv6Prefix = "3FFE:FFFF:0:CD30::a4/127",
                 },
             };
             ArmOperation<NetworkFabricExternalNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.ExternalNetworkName, data);

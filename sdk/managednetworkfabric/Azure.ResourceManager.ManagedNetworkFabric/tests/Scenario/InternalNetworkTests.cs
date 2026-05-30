@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 },
                 IsMonitoringEnabled = IsMonitoringEnabled.True,
                 Extension = StaticRouteConfigurationExtension.NoExtension,
-                BgpConfiguration = new InternalNetworkBgpConfiguration()
+                BgpSettings = new BgpConfiguration(61234)
                 {
                     BfdConfiguration = new BfdConfiguration()
                     {
@@ -61,12 +61,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     DefaultRouteOriginate = NetworkFabricBooleanValue.True,
                     AllowAS = 10,
                     AllowASOverride = AllowASOverride.Enable,
-                    PeerASN = 61234,
-                    Ipv4ListenRangePrefixes =
+                    IPv4ListenRangePrefixes =
                     {
                         "100.0.0.0/25"
                     },
-                    Ipv4NeighborAddress =
+                    IPv4NeighborAddress =
                     {
                         new NeighborAddress()
                         {
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     },
                     Annotation = "annotation",
                 },
-                StaticRouteConfiguration = new InternalNetworkStaticRouteConfiguration()
+                StaticRouteSettings = new StaticRouteConfiguration()
                 {
                     Extension = StaticRouteConfigurationExtension.NoExtension,
                     BfdConfiguration = new BfdConfiguration()
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                         IntervalInMilliSeconds = 300,
                         Multiplier = 15,
                     },
-                    Ipv4Routes =
+                    IPv4Routes =
                     {
                         new StaticRouteProperties("100.0.0.0/24",new string[] { "20.0.0.1" })
                     },

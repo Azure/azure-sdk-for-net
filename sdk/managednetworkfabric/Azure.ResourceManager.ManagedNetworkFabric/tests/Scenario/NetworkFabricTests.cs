@@ -45,89 +45,89 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 7,
                 "10.18.0.0/19",
                 29249,
-                new NetworkFabricPatchablePropertiesTerminalServerConfiguration("username", "xxxx", "10.0.0.12/30", "20.0.0.13/30")
+                new NetworkFabricTerminalServerConfiguration("username", "xxxx", "10.0.0.12/30", "20.0.0.13/30")
                 {
-                    PrimaryIpv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
-                    SecondaryIpv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
+                    PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
+                    SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
                     SerialNumber = "123456",
                 },
-                new ManagementNetworkConfigurationPatchableProperties(
-                    new VpnConfigurationPatchableProperties()
+                new ManagementNetworkConfigurationProperties(
+                    new VpnConfigurationProperties()
                     {
                         PeeringOption = PeeringOption.OptionA,
                         OptionBProperties = new OptionBProperties()
                         {
                             RouteTargets = new RouteTargetInformation()
                             {
-                                ImportIpv4RouteTargets =
+                                ImportIPv4RouteTargets =
                                 {
                                     "65046:10039"
                                 },
-                                ImportIpv6RouteTargets =
+                                ImportIPv6RouteTargets =
                                 {
                                     "65046:10039"
                                 },
-                                ExportIpv4RouteTargets =
+                                ExportIPv4RouteTargets =
                                 {
                                     "65046:10039"
                                 },
-                                ExportIpv6RouteTargets =
+                                ExportIPv6RouteTargets =
                                 {
                                     "65046:10039"
                                 },
                             },
                         },
-                        OptionAProperties = new VpnConfigurationPatchableOptionAProperties()
+                        OptionASettings = new VpnOptionAProperties()
                         {
-                            PrimaryIpv4Prefix = "10.0.0.12/30",
-                            PrimaryIpv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
-                            SecondaryIpv4Prefix = "20.0.0.13/30",
-                            SecondaryIpv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
+                            PrimaryIPv4Prefix = "10.0.0.12/30",
+                            PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
+                            SecondaryIPv4Prefix = "20.0.0.13/30",
+                            SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
                             Mtu = 1501,
                             VlanId = 3001,
-                            PeerASN = 1235,
-                            BfdConfiguration = new BfdPatchConfiguration()
+                            PeerAsn = 1235,
+                            BfdConfiguration = new BfdConfiguration()
                             {
                                 IntervalInMilliSeconds = 300,
                                 Multiplier = 10,
                             },
                         },
                     },
-                    new VpnConfigurationPatchableProperties()
+                    new VpnConfigurationProperties()
                     {
                         PeeringOption = PeeringOption.OptionA,
                         OptionBProperties = new OptionBProperties()
                         {
                             RouteTargets = new RouteTargetInformation()
                             {
-                                ImportIpv4RouteTargets =
+                                ImportIPv4RouteTargets =
                                 {
                                     "65046:10039"
                                 },
-                                ImportIpv6RouteTargets =
+                                ImportIPv6RouteTargets =
                                 {
                                     "65046:10039"
                                 },
-                                ExportIpv4RouteTargets =
+                                ExportIPv4RouteTargets =
                                 {
                                     "65046:10039"
                                 },
-                                ExportIpv6RouteTargets =
+                                ExportIPv6RouteTargets =
                                 {
                                     "65046:10039"
                                 },
                             },
                         },
-                        OptionAProperties = new VpnConfigurationPatchableOptionAProperties()
+                        OptionASettings = new VpnOptionAProperties()
                         {
-                            PrimaryIpv4Prefix = "10.0.0.14/30",
-                            PrimaryIpv6Prefix = "2FFE:FFFF:0:CD30::a7/127",
-                            SecondaryIpv4Prefix = "10.0.0.15/30",
-                            SecondaryIpv6Prefix = "2FFE:FFFF:0:CD30::ac/127",
+                            PrimaryIPv4Prefix = "10.0.0.14/30",
+                            PrimaryIPv6Prefix = "2FFE:FFFF:0:CD30::a7/127",
+                            SecondaryIPv4Prefix = "10.0.0.15/30",
+                            SecondaryIPv6Prefix = "2FFE:FFFF:0:CD30::ac/127",
                             Mtu = 1500,
                             VlanId = 3000,
-                            PeerASN = 61234,
-                            BfdConfiguration = new BfdPatchConfiguration()
+                            PeerAsn = 61234,
+                            BfdConfiguration = new BfdConfiguration()
                             {
                                 IntervalInMilliSeconds = 300,
                                 Multiplier = 5,
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             {
                 Annotation = "annotation",
                 RackCount = 2,
-                Ipv6Prefix = "3FFE:FFFF:0:CD40::/59",
+                IPv6Prefix = "3FFE:FFFF:0:CD40::/59",
                 Tags =
                 {
                     ["keyID"] = "keyValue",
@@ -182,13 +182,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             // provision
             TestContext.Out.WriteLine($"POST - Provision started.....");
-            ArmOperation<OperationStatusResult> triggerProvision = await networkFabric2.ProvisionAsync(WaitUntil.Completed);
+            ArmOperation<OperationStatusResult> triggerProvision = await networkFabric2.ActivateAsync(WaitUntil.Completed);
             OperationStatusResult triggerProvisionResult = triggerProvision.Value;
             TestContext.Out.WriteLine(triggerProvisionResult);
 
             // Deprovision
             TestContext.Out.WriteLine($"POST - Deprovision started.....");
-            ArmOperation<OperationStatusResult> deProvisionResponse = await networkFabric2.DeprovisionAsync(WaitUntil.Completed);
+            ArmOperation<OperationStatusResult> deProvisionResponse = await networkFabric2.DeactivateAsync(WaitUntil.Completed);
             TestContext.Out.WriteLine(deProvisionResponse);
 
             // Delete

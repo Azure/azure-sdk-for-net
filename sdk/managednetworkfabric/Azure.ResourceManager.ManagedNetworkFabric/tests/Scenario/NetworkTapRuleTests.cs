@@ -39,15 +39,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     {
                         new NetworkTapRuleMatchConfiguration()
                         {
-                             MatchConfigurationName = "config1",
+                            MatchConfigurationName = "config1",
                             SequenceNumber = 10,
-                            IpAddressType = NetworkFabricIPAddressType.IPv4,
+                            IPAddressType = NetworkFabricIPAddressType.IPv4,
                             MatchConditions =
                             {
                                 new NetworkTapRuleMatchCondition()
                                 {
                                     EncapsulationType = NetworkTapEncapsulationType.None,
-                                    PortCondition = new NetworkFabricPortCondition(Layer4Protocol.TCP)
+                                    PortCondition = new NetworkFabricPortCondition(Layer4Protocol.Tcp)
                                     {
                                         PortType = NetworkFabricPortType.SourcePort,
                                         Ports =
@@ -78,15 +78,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                                             "exmaple-vlanGroup"
                                             },
                                     },
-                                    IpCondition = new IPMatchCondition()
+                                    IPCondition = new IPMatchCondition()
                                     {
-                                        Type = SourceDestinationType.SourceIP,
+                                        SourceDestinationType = SourceDestinationType.SourceIP,
                                         PrefixType = IPMatchConditionPrefixType.Prefix,
-                                        IpPrefixValues =
+                                        IPPrefixValues =
                                             {
                                             "10.10.10.10/20"
                                             },
-                                        IpGroupNames =
+                                        IPGroupNames =
                                             {
                                             "example-ipGroup"
                                             },
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                             {
                                 new NetworkTapRuleAction()
                                 {
-                                    Type = TapRuleActionType.Drop,
+                                    TapRuleActionType = TapRuleActionType.Drop,
                                     Truncate = "100",
                                     IsTimestampEnabled = NetworkFabricBooleanValue.True,
                                     DestinationId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/neighborGroups/example-neighborGroup"),
@@ -110,13 +110,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     {
                         new CommonDynamicMatchConfiguration()
                         {
-                            IpGroups =
+                            IPGroups =
                             {
                                 new MatchConfigurationIPGroupProperties()
                                 {
                                     Name = "example-ipGroup1",
-                                    IpAddressType = NetworkFabricIPAddressType.IPv4,
-                                    IpPrefixes =
+                                    IPAddressType = NetworkFabricIPAddressType.IPv4,
+                                    IPPrefixes =
                                         {
                                         "10.10.10.10/30"
                                         },
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                             },
                         }
                     },
-                PollingIntervalInSeconds = 30,
+                PollingIntervalInSecond = 30,
                 Tags =
                     {
                         ["keyID"] = "keyValue",

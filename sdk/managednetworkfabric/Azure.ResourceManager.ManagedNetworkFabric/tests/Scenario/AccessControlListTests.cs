@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                         {
                             MatchConfigurationName = "example-match",
                             SequenceNumber = 123,
-                            IpAddressType = NetworkFabricIPAddressType.IPv4,
+                            IPAddressType = NetworkFabricIPAddressType.IPv4,
                             MatchConditions =
                             {
                                 new AccessControlListMatchCondition()
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                                         {
                                         "0xff00-0xffff"
                                         },
-                                    IpLengths =
+                                    IPLengths =
                                         {
                                         "4094-9214"
                                         },
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                                         {
                                         "32"
                                         },
-                                    PortCondition = new AccessControlListPortCondition(Layer4Protocol.TCP)
+                                    PortCondition = new AccessControlListPortCondition(Layer4Protocol.Tcp)
                                     {
                                         Flags =
                                             {
@@ -102,15 +102,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                                             "example-vlanGroup"
                                             },
                                     },
-                                    IpCondition = new IPMatchCondition()
+                                    IPCondition = new IPMatchCondition()
                                     {
-                                        Type = SourceDestinationType.SourceIP,
+                                        SourceDestinationType = SourceDestinationType.SourceIP,
                                         PrefixType = IPMatchConditionPrefixType.Prefix,
-                                        IpPrefixValues =
+                                        IPPrefixValues =
                                             {
                                             "10.20.20.20/12"
                                             },
-                                        IpGroupNames =
+                                        IPGroupNames =
                                             {
                                             "example-ipGroup"
                                             },
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                             {
                                 new AccessControlListAction()
                                 {
-                                    Type = AclActionType.Count,
+                                    AclActionType = AclActionType.Count,
                                     CounterName = "example-counter",
                                 }
                             },
@@ -131,13 +131,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     {
                         new CommonDynamicMatchConfiguration()
                         {
-                            IpGroups =
+                            IPGroups =
                             {
                                 new MatchConfigurationIPGroupProperties()
                                 {
                                     Name = "example-ipGroup",
-                                    IpAddressType = NetworkFabricIPAddressType.IPv4,
-                                    IpPrefixes =
+                                    IPAddressType = NetworkFabricIPAddressType.IPv4,
+                                    IPPrefixes =
                                         {
                                         "10.20.3.1/20"
                                         },
