@@ -108,11 +108,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Import Route Policy information. </summary>
-        public ImportRoutePolicyInformation ImportRoutePolicy
+        public ImportRoutePolicyInformationPatch ImportRoutePolicySettings
         {
             get
             {
-                return Properties is null ? default : Properties.ImportRoutePolicy;
+                return Properties is null ? default : Properties.ImportRoutePolicySettings;
             }
             set
             {
@@ -120,16 +120,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new NetworkToNetworkInterconnectPatchProperties();
                 }
-                Properties.ImportRoutePolicy = value;
+                Properties.ImportRoutePolicySettings = value;
             }
         }
 
         /// <summary> Export Route Policy information. </summary>
-        public ExportRoutePolicyInformation ExportRoutePolicy
+        public ExportRoutePolicyInformationPatch ExportRoutePolicySettings
         {
             get
             {
-                return Properties is null ? default : Properties.ExportRoutePolicy;
+                return Properties is null ? default : Properties.ExportRoutePolicySettings;
             }
             set
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new NetworkToNetworkInterconnectPatchProperties();
                 }
-                Properties.ExportRoutePolicy = value;
+                Properties.ExportRoutePolicySettings = value;
             }
         }
 

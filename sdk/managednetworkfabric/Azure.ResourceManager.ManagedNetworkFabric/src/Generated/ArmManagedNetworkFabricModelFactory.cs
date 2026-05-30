@@ -2853,13 +2853,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="optionBLayer3Settings"> Common properties for Layer3Configuration. </param>
         /// <param name="npbStaticRouteSettings"> NPB Static Route Configuration properties. </param>
         /// <param name="staticRouteConfiguration"> Static Route Configuration. </param>
-        /// <param name="importRoutePolicy"> Import Route Policy information. </param>
-        /// <param name="exportRoutePolicy"> Export Route Policy information. </param>
+        /// <param name="importRoutePolicySettings"> Import Route Policy information. </param>
+        /// <param name="exportRoutePolicySettings"> Export Route Policy information. </param>
         /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
         /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
         /// <param name="microBfdState"> Micro BFD enabled/disabled state. </param>
         /// <returns> A new <see cref="Models.NetworkToNetworkInterconnectPatch"/> instance for mocking. </returns>
-        public static NetworkToNetworkInterconnectPatch NetworkToNetworkInterconnectPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Layer2ConfigurationPatch layer2Settings = default, OptionBLayer3ConfigurationPatchProperties optionBLayer3Settings = default, NpbStaticRouteConfigurationPatch npbStaticRouteSettings = default, NniStaticRoutePatchConfiguration staticRouteConfiguration = default, ImportRoutePolicyInformation importRoutePolicy = default, ExportRoutePolicyInformation exportRoutePolicy = default, ResourceIdentifier egressAclId = default, ResourceIdentifier ingressAclId = default, NetworkFabricMicroBfdState? microBfdState = default)
+        public static NetworkToNetworkInterconnectPatch NetworkToNetworkInterconnectPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Layer2ConfigurationPatch layer2Settings = default, OptionBLayer3ConfigurationPatchProperties optionBLayer3Settings = default, NpbStaticRouteConfigurationPatch npbStaticRouteSettings = default, NniStaticRoutePatchConfiguration staticRouteConfiguration = default, ImportRoutePolicyInformationPatch importRoutePolicySettings = default, ExportRoutePolicyInformationPatch exportRoutePolicySettings = default, ResourceIdentifier egressAclId = default, ResourceIdentifier ingressAclId = default, NetworkFabricMicroBfdState? microBfdState = default)
         {
             return new NetworkToNetworkInterconnectPatch(
                 id,
@@ -2867,13 +2867,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                layer2Settings is null && optionBLayer3Settings is null && npbStaticRouteSettings is null && staticRouteConfiguration is null && importRoutePolicy is null && exportRoutePolicy is null && egressAclId is null && ingressAclId is null && microBfdState is null ? default : new NetworkToNetworkInterconnectPatchProperties(
+                layer2Settings is null && optionBLayer3Settings is null && npbStaticRouteSettings is null && staticRouteConfiguration is null && importRoutePolicySettings is null && exportRoutePolicySettings is null && egressAclId is null && ingressAclId is null && microBfdState is null ? default : new NetworkToNetworkInterconnectPatchProperties(
                     layer2Settings,
                     optionBLayer3Settings,
                     npbStaticRouteSettings,
                     staticRouteConfiguration,
-                    importRoutePolicy,
-                    exportRoutePolicy,
+                    importRoutePolicySettings,
+                    exportRoutePolicySettings,
                     egressAclId,
                     ingressAclId,
                     microBfdState,
@@ -4325,13 +4325,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                importRoutePolicy is null && exportRoutePolicy is null && egressAclId is null && ingressAclId is null ? default : new NetworkToNetworkInterconnectPatchProperties(
+                egressAclId is null && ingressAclId is null ? default : new NetworkToNetworkInterconnectPatchProperties(
                     default,
                     default,
                     default,
                     default,
-                    importRoutePolicy,
-                    exportRoutePolicy,
+                    default,
+                    default,
                     egressAclId,
                     ingressAclId,
                     default,

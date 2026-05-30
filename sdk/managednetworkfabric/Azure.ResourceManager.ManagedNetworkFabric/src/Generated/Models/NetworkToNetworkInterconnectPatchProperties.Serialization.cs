@@ -95,15 +95,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("staticRouteConfiguration"u8);
                 writer.WriteObjectValue(StaticRouteConfiguration, options);
             }
-            if (Optional.IsDefined(ImportRoutePolicy))
+            if (Optional.IsDefined(ImportRoutePolicySettings))
             {
                 writer.WritePropertyName("importRoutePolicy"u8);
-                writer.WriteObjectValue(ImportRoutePolicy, options);
+                writer.WriteObjectValue(ImportRoutePolicySettings, options);
             }
-            if (Optional.IsDefined(ExportRoutePolicy))
+            if (Optional.IsDefined(ExportRoutePolicySettings))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
-                writer.WriteObjectValue(ExportRoutePolicy, options);
+                writer.WriteObjectValue(ExportRoutePolicySettings, options);
             }
             if (Optional.IsDefined(EgressAclId))
             {
@@ -166,8 +166,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             OptionBLayer3ConfigurationPatchProperties optionBLayer3Settings = default;
             NpbStaticRouteConfigurationPatch npbStaticRouteSettings = default;
             NniStaticRoutePatchConfiguration staticRouteConfiguration = default;
-            ImportRoutePolicyInformation importRoutePolicy = default;
-            ExportRoutePolicyInformation exportRoutePolicy = default;
+            ImportRoutePolicyInformationPatch importRoutePolicySettings = default;
+            ExportRoutePolicyInformationPatch exportRoutePolicySettings = default;
             ResourceIdentifier egressAclId = default;
             ResourceIdentifier ingressAclId = default;
             NetworkFabricMicroBfdState? microBfdState = default;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    importRoutePolicy = ImportRoutePolicyInformation.DeserializeImportRoutePolicyInformation(prop.Value, options);
+                    importRoutePolicySettings = ImportRoutePolicyInformationPatch.DeserializeImportRoutePolicyInformationPatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("exportRoutePolicy"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    exportRoutePolicy = ExportRoutePolicyInformation.DeserializeExportRoutePolicyInformation(prop.Value, options);
+                    exportRoutePolicySettings = ExportRoutePolicyInformationPatch.DeserializeExportRoutePolicyInformationPatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("egressAclId"u8))
@@ -265,8 +265,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 optionBLayer3Settings,
                 npbStaticRouteSettings,
                 staticRouteConfiguration,
-                importRoutePolicy,
-                exportRoutePolicy,
+                importRoutePolicySettings,
+                exportRoutePolicySettings,
                 egressAclId,
                 ingressAclId,
                 microBfdState,

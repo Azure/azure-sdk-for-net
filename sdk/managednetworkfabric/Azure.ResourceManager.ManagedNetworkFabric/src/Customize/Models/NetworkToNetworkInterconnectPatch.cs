@@ -38,6 +38,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             set => NpbStaticRouteSettings = ToNpbStaticRouteConfigurationPatch(value);
         }
 
+        /// <summary> Import Route Policy information. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future version. Use ImportRoutePolicySettings instead.")]
+        public ImportRoutePolicyInformation ImportRoutePolicy
+        {
+            get => ToImportRoutePolicyInformation(ImportRoutePolicySettings);
+            set => ImportRoutePolicySettings = ToImportRoutePolicyInformationPatch(value);
+        }
+
+        /// <summary> Export Route Policy information. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future version. Use ExportRoutePolicySettings instead.")]
+        public ExportRoutePolicyInformation ExportRoutePolicy
+        {
+            get => ToExportRoutePolicyInformation(ExportRoutePolicySettings);
+            set => ExportRoutePolicySettings = ToExportRoutePolicyInformationPatch(value);
+        }
+
         private static Layer2Configuration ToLayer2Configuration(Layer2ConfigurationPatch value)
             => value is null ? null : new Layer2Configuration(value.Mtu, value.Interfaces.ToList(), additionalBinaryDataProperties: null);
 
@@ -97,6 +115,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 value.IPv4Routes.Select(ToStaticRoutePatchProperties).ToList(),
                 value.IPv6Routes.Select(ToStaticRoutePatchProperties).ToList(),
                 additionalBinaryDataProperties: null);
+
+        private static ImportRoutePolicyInformation ToImportRoutePolicyInformation(ImportRoutePolicyInformationPatch value)
+            => value is null ? null : new ImportRoutePolicyInformation(value.ImportIPv4RoutePolicyId, value.ImportIPv6RoutePolicyId, additionalBinaryDataProperties: null);
+
+        private static ImportRoutePolicyInformationPatch ToImportRoutePolicyInformationPatch(ImportRoutePolicyInformation value)
+            => value is null ? null : new ImportRoutePolicyInformationPatch(value.ImportIPv4RoutePolicyId, value.ImportIPv6RoutePolicyId, additionalBinaryDataProperties: null);
+
+        private static ExportRoutePolicyInformation ToExportRoutePolicyInformation(ExportRoutePolicyInformationPatch value)
+            => value is null ? null : new ExportRoutePolicyInformation(value.ExportIPv4RoutePolicyId, value.ExportIPv6RoutePolicyId, additionalBinaryDataProperties: null);
+
+        private static ExportRoutePolicyInformationPatch ToExportRoutePolicyInformationPatch(ExportRoutePolicyInformation value)
+            => value is null ? null : new ExportRoutePolicyInformationPatch(value.ExportIPv4RoutePolicyId, value.ExportIPv6RoutePolicyId, additionalBinaryDataProperties: null);
 
         private static BfdConfiguration ToBfdConfiguration(BfdPatchConfiguration value)
             => value is null ? null : new BfdConfiguration(value.AdministrativeState, value.IntervalInMilliSeconds, value.Multiplier, additionalBinaryDataProperties: null);
