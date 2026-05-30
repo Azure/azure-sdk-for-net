@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> An array of destination IPv4 Addresses or IPv6 Addresses. </summary>
-        public NeighborGroupDestination Destination
+        public NeighborGroupDestinationPatch DestinationSettings
         {
             get
             {
-                return Properties is null ? default : Properties.Destination;
+                return Properties is null ? default : Properties.DestinationSettings;
             }
             set
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new NeighborGroupPatchProperties();
                 }
-                Properties.Destination = value;
+                Properties.DestinationSettings = value;
             }
         }
     }

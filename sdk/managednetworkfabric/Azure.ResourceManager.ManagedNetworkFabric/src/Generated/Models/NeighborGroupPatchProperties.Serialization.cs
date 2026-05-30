@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (Optional.IsDefined(Destination))
+            if (Optional.IsDefined(DestinationSettings))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination, options);
+                writer.WriteObjectValue(DestinationSettings, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             string annotation = default;
-            NeighborGroupDestination destination = default;
+            NeighborGroupDestinationPatch destinationSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    destination = NeighborGroupDestination.DeserializeNeighborGroupDestination(prop.Value, options);
+                    destinationSettings = NeighborGroupDestinationPatch.DeserializeNeighborGroupDestinationPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NeighborGroupPatchProperties(annotation, destination, additionalBinaryDataProperties);
+            return new NeighborGroupPatchProperties(annotation, destinationSettings, additionalBinaryDataProperties);
         }
     }
 }

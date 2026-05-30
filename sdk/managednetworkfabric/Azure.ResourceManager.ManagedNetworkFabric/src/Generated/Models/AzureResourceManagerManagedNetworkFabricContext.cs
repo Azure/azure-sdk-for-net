@@ -170,6 +170,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     [ModelReaderWriterBuildable(typeof(NeighborAddressBgpAdministrativeStatus))]
     [ModelReaderWriterBuildable(typeof(NeighborAddressPatch))]
     [ModelReaderWriterBuildable(typeof(NeighborGroupDestination))]
+    [ModelReaderWriterBuildable(typeof(NeighborGroupDestinationPatch))]
     [ModelReaderWriterBuildable(typeof(NeighborGroupPatchProperties))]
     [ModelReaderWriterBuildable(typeof(NeighborGroupProperties))]
     [ModelReaderWriterBuildable(typeof(NeighborGroupResyncResult))]

@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="NeighborGroupPatchProperties"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="destination"> An array of destination IPv4 Addresses or IPv6 Addresses. </param>
+        /// <param name="destinationSettings"> An array of destination IPv4 Addresses or IPv6 Addresses. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NeighborGroupPatchProperties(string annotation, NeighborGroupDestination destination, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NeighborGroupPatchProperties(string annotation, NeighborGroupDestinationPatch destinationSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
-            Destination = destination;
+            DestinationSettings = destinationSettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public string Annotation { get; set; }
 
         /// <summary> An array of destination IPv4 Addresses or IPv6 Addresses. </summary>
-        public NeighborGroupDestination Destination { get; set; }
+        public NeighborGroupDestinationPatch DestinationSettings { get; set; }
     }
 }

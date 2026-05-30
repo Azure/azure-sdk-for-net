@@ -1620,14 +1620,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="tags"> Resource tags. </param>
         /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="destination"> An array of destination IPv4 Addresses or IPv6 Addresses. </param>
+        /// <param name="destinationSettings"> An array of destination IPv4 Addresses or IPv6 Addresses. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Models.NetworkFabricNeighborGroupPatchContent"/> instance for mocking. </returns>
-        public static NetworkFabricNeighborGroupPatchContent NetworkFabricNeighborGroupPatchContent(IDictionary<string, string> tags = default, string annotation = default, NeighborGroupDestination destination = default, NetworkFabricManagedServiceIdentityPatch identity = default)
+        public static NetworkFabricNeighborGroupPatchContent NetworkFabricNeighborGroupPatchContent(IDictionary<string, string> tags = default, string annotation = default, NeighborGroupDestinationPatch destinationSettings = default, NetworkFabricManagedServiceIdentityPatch identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkFabricNeighborGroupPatchContent(tags, additionalBinaryDataProperties: null, annotation is null && destination is null ? default : new NeighborGroupPatchProperties(annotation, destination, null), identity);
+            return new NetworkFabricNeighborGroupPatchContent(tags, additionalBinaryDataProperties: null, annotation is null && destinationSettings is null ? default : new NeighborGroupPatchProperties(annotation, destinationSettings, null), identity);
+        }
+
+        /// <summary> An array of destination IPv4 Addresses or IPv6 Addresses. </summary>
+        /// <param name="iPv4Addresses"> Array of IPv4 Addresses. </param>
+        /// <param name="iPv6Addresses"> Array of IPv6 Addresses. </param>
+        /// <returns> A new <see cref="Models.NeighborGroupDestinationPatch"/> instance for mocking. </returns>
+        public static NeighborGroupDestinationPatch NeighborGroupDestinationPatch(IEnumerable<IPAddress> iPv4Addresses = default, IEnumerable<string> iPv6Addresses = default)
+        {
+            iPv4Addresses ??= new ChangeTrackingList<IPAddress>();
+            iPv6Addresses ??= new ChangeTrackingList<string>();
+
+            return new NeighborGroupDestinationPatch(iPv4Addresses.ToList(), iPv6Addresses.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Response for Neighbor Group Resync operation. </summary>

@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Destination;
+                return ToNeighborGroupDestination(Properties?.DestinationSettings);
             }
             set
             {
@@ -76,8 +76,46 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Properties = new NeighborGroupPatchProperties();
                 }
-                Properties.Destination = value;
+                Properties.DestinationSettings = ToNeighborGroupDestinationPatch(value);
             }
+        }
+
+        private static NeighborGroupDestination ToNeighborGroupDestination(NeighborGroupDestinationPatch value)
+        {
+            if (value is null)
+            {
+                return null;
+            }
+
+            var result = new NeighborGroupDestination();
+            foreach (var address in value.IPv4Addresses)
+            {
+                result.IPv4Addresses.Add(address);
+            }
+            foreach (var address in value.IPv6Addresses)
+            {
+                result.IPv6Addresses.Add(address);
+            }
+            return result;
+        }
+
+        private static NeighborGroupDestinationPatch ToNeighborGroupDestinationPatch(NeighborGroupDestination value)
+        {
+            if (value is null)
+            {
+                return null;
+            }
+
+            var result = new NeighborGroupDestinationPatch();
+            foreach (var address in value.IPv4Addresses)
+            {
+                result.IPv4Addresses.Add(address);
+            }
+            foreach (var address in value.IPv6Addresses)
+            {
+                result.IPv6Addresses.Add(address);
+            }
+            return result;
         }
 
         /// <param name="data"> The data to parse. </param>
