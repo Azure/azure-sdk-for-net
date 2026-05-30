@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Network Fabric resource definition. </summary>
-    public partial class NetworkFabricPatchContent : ManagedNetworkFabricResourcePatch
+    public partial class NetworkFabricPatchContent : NetworkRackPatch
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricPatchContent"/>. </summary>
         public NetworkFabricPatchContent()

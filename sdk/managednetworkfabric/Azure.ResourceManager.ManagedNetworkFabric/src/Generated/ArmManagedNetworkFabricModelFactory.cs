@@ -21,61 +21,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public static partial class ArmManagedNetworkFabricModelFactory
     {
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="configurationType"> Input method to configure Access Control List. </param>
-        /// <param name="aclsUri"> Access Control List file URL. </param>
-        /// <param name="defaultAction"> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </param>
-        /// <param name="matchConfigurations"> List of match configurations. </param>
-        /// <param name="dynamicMatchConfigurations"> List of dynamic match configurations. </param>
-        /// <param name="lastSyncedOn"> The last synced timestamp. </param>
-        /// <param name="aclType"> Access Control List (ACL) Type. </param>
-        /// <param name="deviceRole"> Device Role. </param>
-        /// <param name="networkFabricIds"> Associated Network Fabric Resource IDs. </param>
-        /// <param name="controlPlaneAclConfiguration"> Access Control List (ACL) configurations. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <param name="globalAccessControlListActionsEnableCount"> Configuration to enable or disable ACL action count. </param>
-        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricAccessControlListData"/> instance for mocking. </returns>
-        public static NetworkFabricAccessControlListData NetworkFabricAccessControlListData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, NetworkFabricConfigurationType configurationType = default, Uri aclsUri = default, CommunityActionType? defaultAction = default, IEnumerable<AccessControlListMatchConfiguration> matchConfigurations = default, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default, DateTimeOffset? lastSyncedOn = default, NetworkFabricAclType? aclType = default, NetworkFabricDeviceRole? deviceRole = default, IEnumerable<ResourceIdentifier> networkFabricIds = default, IEnumerable<ControlPlaneAclProperties> controlPlaneAclConfiguration = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, NetworkFabricBooleanValue? globalAccessControlListActionsEnableCount = default, string lastOperationDetails = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetworkFabricAccessControlListData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                new AccessControlListProperties(
-                    annotation,
-                    configurationType,
-                    aclsUri,
-                    defaultAction,
-                    (matchConfigurations ?? new ChangeTrackingList<AccessControlListMatchConfiguration>()).ToList(),
-                    (dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>()).ToList(),
-                    lastSyncedOn,
-                    aclType,
-                    deviceRole,
-                    new GlobalAccessControlListActionProperties(globalAccessControlListActionsEnableCount, null),
-                    new LastOperationProperties(lastOperationDetails, null),
-                    (networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    (controlPlaneAclConfiguration ?? new ChangeTrackingList<ControlPlaneAclProperties>()).ToList(),
-                    configurationState,
-                    provisioningState,
-                    administrativeState,
-                    null));
-        }
-
         /// <summary> Defines the match configuration that are supported to filter the traffic. </summary>
         /// <param name="matchConfigurationName"> The name of the match configuration. </param>
         /// <param name="sequenceNumber"> Sequence Number of the match configuration. </param>
@@ -531,14 +476,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Base tracked resource type for PATCH updates. </summary>
+        /// <summary> Network Rack patch resource definition. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.ManagedNetworkFabricResourcePatch"/> instance for mocking. </returns>
-        public static ManagedNetworkFabricResourcePatch ManagedNetworkFabricResourcePatch(IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.NetworkRackPatch"/> instance for mocking. </returns>
+        public static NetworkRackPatch NetworkRackPatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ManagedNetworkFabricResourcePatch(tags, additionalBinaryDataProperties: null);
+            return new NetworkRackPatch(tags, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Update administrative state on list of resources. </summary>
@@ -574,9 +519,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="properties"> Response properties in case of successful administrative state update. </param>
         /// <returns> A new <see cref="Models.UpdateAdministrativeStateResult"/> instance for mocking. </returns>
-        public static UpdateAdministrativeStateResult UpdateAdministrativeStateResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default, UpdateAdministrativeStateResponseProperties properties = default)
+        public static UpdateAdministrativeStateResult UpdateAdministrativeStateResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<NetworkFabricOperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default, UpdateAdministrativeStateResponseProperties properties = default)
         {
-            operations ??= new ChangeTrackingList<OperationStatusResult>();
+            operations ??= new ChangeTrackingList<NetworkFabricOperationStatusResult>();
 
             return new UpdateAdministrativeStateResult(
                 id,
@@ -729,16 +674,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricInternetGatewayRulePatchContent(tags, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Network Rack patch resource definition. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.NetworkRackPatch"/> instance for mocking. </returns>
-        public static NetworkRackPatch NetworkRackPatch(IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetworkRackPatch(tags, additionalBinaryDataProperties: null);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -790,43 +725,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricInternetGatewayPatchContent(tags, additionalBinaryDataProperties: null, internetGatewayRuleId is null ? default : new InternetGatewayPatchProperties(internetGatewayRuleId, null));
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
-        /// <param name="ipCommunityRules"> List of IP Community Rules. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricIPCommunityData"/> instance for mocking. </returns>
-        public static NetworkFabricIPCommunityData NetworkFabricIPCommunityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, ResourceIdentifier networkFabricId = default, IEnumerable<IPCommunityRule> ipCommunityRules = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, string lastOperationDetails = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetworkFabricIPCommunityData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                new IpCommunityProperties(
-                    annotation,
-                    networkFabricId,
-                    (ipCommunityRules ?? new ChangeTrackingList<IPCommunityRule>()).ToList(),
-                    new LastOperationProperties(lastOperationDetails, null),
-                    configurationState,
-                    provisioningState,
-                    administrativeState,
-                    null));
-        }
-
         /// <summary> IP Community patchable properties. </summary>
         /// <param name="action"> Action to be taken on the configuration. Example: Permit | Deny. </param>
         /// <param name="sequenceNumber"> Sequence to insert to/delete from existing route. Prefix lists are evaluated starting with the lowest sequence number and continue down the list until a match is made. Once a match is made, the permit or deny statement is applied to that network and the rest of the list is ignored. </param>
@@ -849,43 +747,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new NetworkFabricIPCommunityPatchContent(tags, additionalBinaryDataProperties: null, ipCommunityRules is null ? default : new IpCommunityPatchableProperties((ipCommunityRules ?? new ChangeTrackingList<IPCommunityRule>()).ToList(), null));
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="ipExtendedCommunityRules"> List of IP Extended Community Rules. </param>
-        /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricIPExtendedCommunityData"/> instance for mocking. </returns>
-        public static NetworkFabricIPExtendedCommunityData NetworkFabricIPExtendedCommunityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, IEnumerable<IPExtendedCommunityRule> ipExtendedCommunityRules = default, ResourceIdentifier networkFabricId = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, string lastOperationDetails = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetworkFabricIPExtendedCommunityData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                new IpExtendedCommunityProperties(
-                    annotation,
-                    (ipExtendedCommunityRules ?? new ChangeTrackingList<IPExtendedCommunityRule>()).ToList(),
-                    networkFabricId,
-                    new LastOperationProperties(lastOperationDetails, null),
-                    configurationState,
-                    provisioningState,
-                    administrativeState,
-                    null));
         }
 
         /// <summary> List of IP Extended Community Rules. </summary>
@@ -911,43 +772,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricIPExtendedCommunityPatchContent(tags, additionalBinaryDataProperties: null, annotation is null && ipExtendedCommunityRules is null ? default : new IpExtendedCommunityPatchProperties(annotation, (ipExtendedCommunityRules ?? new ChangeTrackingList<IPExtendedCommunityRule>()).ToList(), null));
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
-        /// <param name="ipPrefixRules"> The list of IP Prefix Rules. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricIPPrefixData"/> instance for mocking. </returns>
-        public static NetworkFabricIPPrefixData NetworkFabricIPPrefixData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, ResourceIdentifier networkFabricId = default, IEnumerable<IPPrefixRule> ipPrefixRules = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, string lastOperationDetails = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetworkFabricIPPrefixData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                new IpPrefixProperties(
-                    annotation,
-                    networkFabricId,
-                    (ipPrefixRules ?? new ChangeTrackingList<IPPrefixRule>()).ToList(),
-                    new LastOperationProperties(lastOperationDetails, null),
-                    configurationState,
-                    provisioningState,
-                    administrativeState,
-                    null));
-        }
-
         /// <param name="tags"> Resource tags. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="ipPrefixRules"> The list of IP Prefix Rules. </param>
@@ -957,51 +781,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new NetworkFabricIPPrefixPatchContent(tags, additionalBinaryDataProperties: null, annotation is null && ipPrefixRules is null ? default : new IpPrefixPatchProperties(annotation, (ipPrefixRules ?? new ChangeTrackingList<IPPrefixRule>()).ToList(), null));
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
-        /// <param name="vlanId"> Vlan Identifier of the Network Fabric. Example: 501. </param>
-        /// <param name="mtu"> Maximum transmission unit. Default value is 1500. </param>
-        /// <param name="extendedVlan"> Extended VLAN status, default value is Disabled. </param>
-        /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the networkToNetworkInterconnectId of the L2 ISD resource. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricL2IsolationDomainData"/> instance for mocking. </returns>
-        public static NetworkFabricL2IsolationDomainData NetworkFabricL2IsolationDomainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, ResourceIdentifier networkFabricId = default, int vlanId = default, int? mtu = default, NetworkFabricExtendedVlan? extendedVlan = default, ResourceIdentifier networkToNetworkInterconnectId = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, string lastOperationDetails = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetworkFabricL2IsolationDomainData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                new L2IsolationDomainProperties(
-                    annotation,
-                    null,
-                    networkFabricId,
-                    vlanId,
-                    mtu,
-                    extendedVlan,
-                    networkToNetworkInterconnectId,
-                    new LastOperationProperties(lastOperationDetails, null),
-                    configurationState,
-                    provisioningState,
-                    administrativeState),
-                identity);
         }
 
         /// <param name="annotation"> Switch configuration description. </param>
@@ -1049,66 +828,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="identityType"> The type of managed identity assigned to this resource. </param>
         /// <param name="userAssignedIdentities"> The identities assigned to this resource by the user. </param>
         /// <returns> A new <see cref="Models.NetworkFabricManagedServiceIdentityPatch"/> instance for mocking. </returns>
-        public static NetworkFabricManagedServiceIdentityPatch NetworkFabricManagedServiceIdentityPatch(ManagedServiceIdentityType? identityType = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default)
+        public static NetworkFabricManagedServiceIdentityPatch NetworkFabricManagedServiceIdentityPatch(NetworkFabricManagedServiceIdentityType? identityType = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default)
         {
             userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentity>();
 
             return new NetworkFabricManagedServiceIdentityPatch(identityType, userAssignedIdentities, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="redistributeConnectedSubnets"> Advertise Connected Subnets. Ex: "True" | "False". </param>
-        /// <param name="redistributeStaticRoutes"> Advertise Static Routes. Ex: "True" | "False". </param>
-        /// <param name="aggregateRouteConfiguration"> Aggregate route configurations. </param>
-        /// <param name="connectedSubnetRoutePolicy"> Connected Subnet RoutePolicy. </param>
-        /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
-        /// <param name="v4RoutePrefixLimit"> IPv4 VRF Limit configuration. </param>
-        /// <param name="v6RoutePrefixLimit"> IPv6 VRF Limit configuration. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <param name="staticRouteExportRoutePolicy"> Array of ARM Resource ID of the RoutePolicies. </param>
-        /// <param name="uniqueRds"> List of Unique Route Distinguisher addresses. </param>
-        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
-        /// <param name="exportPolicies"> Export Policy for the BGP Monitoring Protocol (BMP) Configuration. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricL3IsolationDomainData"/> instance for mocking. </returns>
-        public static NetworkFabricL3IsolationDomainData NetworkFabricL3IsolationDomainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, RedistributeConnectedSubnet? redistributeConnectedSubnets = default, RedistributeStaticRoute? redistributeStaticRoutes = default, AggregateRouteConfiguration aggregateRouteConfiguration = default, ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy = default, ResourceIdentifier networkFabricId = default, RoutePrefixLimitProperties v4RoutePrefixLimit = default, RoutePrefixLimitProperties v6RoutePrefixLimit = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, L3ExportRoutePolicy staticRouteExportRoutePolicy = default, IEnumerable<string> uniqueRds = default, string lastOperationDetails = default, IEnumerable<BmpExportPolicy> exportPolicies = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetworkFabricL3IsolationDomainData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                new L3IsolationDomainProperties(
-                    annotation,
-                    redistributeConnectedSubnets,
-                    redistributeStaticRoutes,
-                    aggregateRouteConfiguration,
-                    connectedSubnetRoutePolicy,
-                    networkFabricId,
-                    new StaticRouteRoutePolicy(staticRouteExportRoutePolicy, null),
-                    new L3UniqueRouteDistinguisherProperties((uniqueRds ?? new ChangeTrackingList<string>()).ToList(), null),
-                    v4RoutePrefixLimit,
-                    v6RoutePrefixLimit,
-                    new LastOperationProperties(lastOperationDetails, null),
-                    new BmpExportPolicyProperties((exportPolicies ?? new ChangeTrackingList<BmpExportPolicy>()).ToList(), null),
-                    configurationState,
-                    provisioningState,
-                    administrativeState,
-                    null),
-                identity);
         }
 
         /// <summary> List of IPv4 and IPv6 aggregate routes. </summary>
@@ -1221,7 +945,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     null));
         }
 
-        /// <summary> BGP configuration properties. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
         /// <param name="defaultRouteOriginate"> Originate a defaultRoute. Ex: "True" | "False". </param>
@@ -1229,20 +952,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="allowASOverride"> Enable Or Disable state. </param>
         /// <param name="fabricAsn"> ASN of Network Fabric. Example: 65048. </param>
         /// <param name="peerAsn"> Peer ASN. Example: 65047. </param>
-        /// <param name="iPv4ListenRangePrefixes"> List of BGP IPv4 Listen Range prefixes. </param>
-        /// <param name="iPv6ListenRangePrefixes"> List of BGP IPv6 Listen Ranges prefixes. </param>
-        /// <param name="iPv4NeighborAddress"> List with stringified IPv4 Neighbor Addresses. </param>
-        /// <param name="iPv6NeighborAddress"> List with stringified IPv6 Neighbor Address. </param>
+        /// <param name="ipv4ListenRangePrefixes"> List of BGP IPv4 Listen Range prefixes. </param>
+        /// <param name="ipv6ListenRangePrefixes"> List of BGP IPv6 Listen Ranges prefixes. </param>
+        /// <param name="ipv4NeighborAddress"> List with stringified IPv4 Neighbor Addresses. </param>
+        /// <param name="ipv6NeighborAddress"> List with stringified IPv6 Neighbor Address. </param>
         /// <param name="bmpConfiguration"> InternalNetwork BMP Configuration. </param>
         /// <param name="v4OverV6BgpSession"> V4 over V6 bgp session. </param>
         /// <param name="v6OverV4BgpSession"> v6 over v4 bgp session. </param>
         /// <returns> A new <see cref="Models.BgpConfiguration"/> instance for mocking. </returns>
-        public static BgpConfiguration BgpConfiguration(string annotation = default, BfdConfiguration bfdConfiguration = default, NetworkFabricBooleanValue? defaultRouteOriginate = default, int? allowAS = default, AllowASOverride? allowASOverride = default, long? fabricAsn = default, long? peerAsn = default, IEnumerable<string> iPv4ListenRangePrefixes = default, IEnumerable<string> iPv6ListenRangePrefixes = default, IEnumerable<NeighborAddress> iPv4NeighborAddress = default, IEnumerable<NeighborAddress> iPv6NeighborAddress = default, InternalNetworkBmpProperties bmpConfiguration = default, NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession = default, NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession = default)
+        public static BgpConfiguration BgpConfiguration(string annotation = default, BfdConfiguration bfdConfiguration = default, NetworkFabricBooleanValue? defaultRouteOriginate = default, int? allowAS = default, AllowASOverride? allowASOverride = default, long? fabricAsn = default, long? peerAsn = default, IEnumerable<string> ipv4ListenRangePrefixes = default, IEnumerable<string> ipv6ListenRangePrefixes = default, IEnumerable<NeighborAddress> ipv4NeighborAddress = default, IEnumerable<NeighborAddress> ipv6NeighborAddress = default, InternalNetworkBmpProperties bmpConfiguration = default, NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession = default, NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession = default)
         {
-            iPv4ListenRangePrefixes ??= new ChangeTrackingList<string>();
-            iPv6ListenRangePrefixes ??= new ChangeTrackingList<string>();
-            iPv4NeighborAddress ??= new ChangeTrackingList<NeighborAddress>();
-            iPv6NeighborAddress ??= new ChangeTrackingList<NeighborAddress>();
+            ipv4ListenRangePrefixes ??= new ChangeTrackingList<string>();
+            ipv6ListenRangePrefixes ??= new ChangeTrackingList<string>();
+            ipv4NeighborAddress ??= new ChangeTrackingList<NeighborAddress>();
+            ipv6NeighborAddress ??= new ChangeTrackingList<NeighborAddress>();
 
             return new BgpConfiguration(
                 annotation,
@@ -1253,10 +976,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 allowASOverride,
                 fabricAsn,
                 peerAsn,
-                iPv4ListenRangePrefixes.ToList(),
-                iPv6ListenRangePrefixes.ToList(),
-                iPv4NeighborAddress.ToList(),
-                iPv6NeighborAddress.ToList(),
+                ipv4ListenRangePrefixes.ToList(),
+                ipv6ListenRangePrefixes.ToList(),
+                ipv4NeighborAddress.ToList(),
+                ipv6NeighborAddress.ToList(),
                 bmpConfiguration,
                 v4OverV6BgpSession,
                 v6OverV4BgpSession);
@@ -1436,9 +1159,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="neighborAddressAdministrativeStatus"> NeighborAddress administrative status. </param>
         /// <returns> A new <see cref="Models.InternalNetworkUpdateBgpAdministrativeStateResult"/> instance for mocking. </returns>
-        public static InternalNetworkUpdateBgpAdministrativeStateResult InternalNetworkUpdateBgpAdministrativeStateResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default, IEnumerable<NeighborAddressBgpAdministrativeStatus> neighborAddressAdministrativeStatus = default)
+        public static InternalNetworkUpdateBgpAdministrativeStateResult InternalNetworkUpdateBgpAdministrativeStateResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<NetworkFabricOperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default, IEnumerable<NeighborAddressBgpAdministrativeStatus> neighborAddressAdministrativeStatus = default)
         {
-            operations ??= new ChangeTrackingList<OperationStatusResult>();
+            operations ??= new ChangeTrackingList<NetworkFabricOperationStatusResult>();
 
             return new InternalNetworkUpdateBgpAdministrativeStateResult(
                 id,
@@ -1475,9 +1198,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="neighborAddressAdministrativeStatus"> NeighborAddress administrative status. </param>
         /// <returns> A new <see cref="Models.InternalNetworkUpdateBfdAdministrativeStateResult"/> instance for mocking. </returns>
-        public static InternalNetworkUpdateBfdAdministrativeStateResult InternalNetworkUpdateBfdAdministrativeStateResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default, IEnumerable<NeighborAddressBfdAdministrativeStatus> neighborAddressAdministrativeStatus = default)
+        public static InternalNetworkUpdateBfdAdministrativeStateResult InternalNetworkUpdateBfdAdministrativeStateResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<NetworkFabricOperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default, IEnumerable<NeighborAddressBfdAdministrativeStatus> neighborAddressAdministrativeStatus = default)
         {
-            operations ??= new ChangeTrackingList<OperationStatusResult>();
+            operations ??= new ChangeTrackingList<NetworkFabricOperationStatusResult>();
 
             return new InternalNetworkUpdateBfdAdministrativeStateResult(
                 id,
@@ -1501,49 +1224,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static NeighborAddressBfdAdministrativeStatus NeighborAddressBfdAdministrativeStatus(string neighborAddress = default, BfdAdministrativeState? administrativeState = default, string error = default)
         {
             return new NeighborAddressBfdAdministrativeStatus(neighborAddress, administrativeState, error, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the networkToNetworkInterconnectId of the ExternalNetwork resource. </param>
-        /// <param name="importRoutePolicy"> Import Route Policy either IPv4 or IPv6. </param>
-        /// <param name="exportRoutePolicy"> Export Route Policy either IPv4 or IPv6. </param>
-        /// <param name="peeringOption"> Peering option list. </param>
-        /// <param name="optionBProperties"> option B properties object. </param>
-        /// <param name="optionAProperties"> option A properties object. </param>
-        /// <param name="staticRouteConfiguration"> Static Route Configuration. </param>
-        /// <param name="networkFabricId"> Associated Network Fabric Resource ID. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricExternalNetworkData"/> instance for mocking. </returns>
-        public static NetworkFabricExternalNetworkData NetworkFabricExternalNetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string annotation = default, ResourceIdentifier networkToNetworkInterconnectId = default, ImportRoutePolicy importRoutePolicy = default, ExportRoutePolicy exportRoutePolicy = default, PeeringOption peeringOption = default, L3OptionBProperties optionBProperties = default, ExternalNetworkOptionAProperties optionAProperties = default, ExternalNetworkStaticRouteConfiguration staticRouteConfiguration = default, ResourceIdentifier networkFabricId = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, string lastOperationDetails = default)
-        {
-            return new NetworkFabricExternalNetworkData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                new ExternalNetworkProperties(
-                    annotation,
-                    networkToNetworkInterconnectId,
-                    importRoutePolicy,
-                    exportRoutePolicy,
-                    peeringOption,
-                    optionBProperties,
-                    optionAProperties,
-                    staticRouteConfiguration,
-                    new LastOperationProperties(lastOperationDetails, null),
-                    networkFabricId,
-                    configurationState,
-                    provisioningState,
-                    administrativeState,
-                    null));
         }
 
         /// <summary> Option B configuration. </summary>
@@ -1720,9 +1400,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="properties"> Response properties. </param>
         /// <returns> A new <see cref="Models.ExternalNetworkUpdateBfdAdministrativeStateResult"/> instance for mocking. </returns>
-        public static ExternalNetworkUpdateBfdAdministrativeStateResult ExternalNetworkUpdateBfdAdministrativeStateResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default, ExternalNetworkUpdateBfdAdministrativeStateResponseProperties properties = default)
+        public static ExternalNetworkUpdateBfdAdministrativeStateResult ExternalNetworkUpdateBfdAdministrativeStateResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<NetworkFabricOperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default, ExternalNetworkUpdateBfdAdministrativeStateResponseProperties properties = default)
         {
-            operations ??= new ChangeTrackingList<OperationStatusResult>();
+            operations ??= new ChangeTrackingList<NetworkFabricOperationStatusResult>();
 
             return new ExternalNetworkUpdateBfdAdministrativeStateResult(
                 id,
@@ -1745,47 +1425,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static ExternalNetworkUpdateBfdAdministrativeStateResponseProperties ExternalNetworkUpdateBfdAdministrativeStateResponseProperties(ExternalNetworkRouteType? routeType = default, BfdAdministrativeState? administrativeState = default)
         {
             return new ExternalNetworkUpdateBfdAdministrativeStateResponseProperties(routeType, administrativeState, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="destination"> An array of destination IPv4 Addresses or IPv6 Addresses. </param>
-        /// <param name="networkTapIds"> List of NetworkTap IDs where neighbor group is associated. </param>
-        /// <param name="networkTapRuleIds"> List of Network Tap Rule IDs where neighbor group is associated. </param>
-        /// <param name="networkFabricIds"> Associated Network Fabric Resource IDs. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricNeighborGroupData"/> instance for mocking. </returns>
-        public static NetworkFabricNeighborGroupData NetworkFabricNeighborGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, NeighborGroupDestination destination = default, IEnumerable<ResourceIdentifier> networkTapIds = default, IEnumerable<ResourceIdentifier> networkTapRuleIds = default, IEnumerable<ResourceIdentifier> networkFabricIds = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricConfigurationState? configurationState = default, string lastOperationDetails = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetworkFabricNeighborGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                new NeighborGroupProperties(
-                    annotation,
-                    destination,
-                    (networkTapIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    (networkTapRuleIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    (networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    new LastOperationProperties(lastOperationDetails, null),
-                    provisioningState,
-                    configurationState,
-                    null),
-                identity);
         }
 
         /// <summary> An array of destination IPv4 Addresses or IPv6 Addresses. </summary>
@@ -1835,9 +1474,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NeighborGroupResyncResult"/> instance for mocking. </returns>
-        public static NeighborGroupResyncResult NeighborGroupResyncResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
+        public static NeighborGroupResyncResult NeighborGroupResyncResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<NetworkFabricOperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
         {
-            operations ??= new ChangeTrackingList<OperationStatusResult>();
+            operations ??= new ChangeTrackingList<NetworkFabricOperationStatusResult>();
 
             return new NeighborGroupResyncResult(
                 id,
@@ -1891,67 +1530,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             supportedConnectorTypes ??= new ChangeTrackingList<SupportedConnectorProperties>();
 
             return new NetworkDeviceInterfaceProperties(identifier, interfaceType, supportedConnectorTypes.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="hostName"> The host name of the device. </param>
-        /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
-        /// <param name="identitySelector"> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </param>
-        /// <param name="version"> Current version of the device as defined in SKU. </param>
-        /// <param name="networkDeviceSku"> Network Device SKU name. </param>
-        /// <param name="networkDeviceRole"> NetworkDeviceRole is the device role: Example: CE | ToR. </param>
-        /// <param name="networkRackId"> Reference to network rack resource id. </param>
-        /// <param name="managementIPv4Address"> Management IPv4 Address. </param>
-        /// <param name="managementIPv6Address"> Management IPv6 Address. </param>
-        /// <param name="rwDeviceConfig"> User configured read-write configuration applied on the network devices. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <param name="secretRotationStatus"> Secret rotation status for the device's secrets. </param>
-        /// <param name="certificateRotationStatus"> Certificate rotation status for the device's certificates. </param>
-        /// <param name="networkFabricId"> Associated Network Fabric Resource ID. </param>
-        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkDeviceData"/> instance for mocking. </returns>
-        public static NetworkDeviceData NetworkDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, string hostName = default, string serialNumber = default, NetworkFabricIdentitySelector identitySelector = default, string version = default, string networkDeviceSku = default, NetworkDeviceRole? networkDeviceRole = default, ResourceIdentifier networkRackId = default, IPAddress managementIPv4Address = default, string managementIPv6Address = default, string rwDeviceConfig = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, IEnumerable<NetworkFabricSecretRotationStatus> secretRotationStatus = default, IEnumerable<NetworkFabricCertificateRotationStatus> certificateRotationStatus = default, ResourceIdentifier networkFabricId = default, string lastOperationDetails = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetworkDeviceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                new NetworkDeviceProperties(
-                    annotation,
-                    hostName,
-                    serialNumber,
-                    identitySelector,
-                    version,
-                    networkDeviceSku,
-                    networkDeviceRole,
-                    networkRackId,
-                    managementIPv4Address,
-                    managementIPv6Address,
-                    rwDeviceConfig,
-                    new LastOperationProperties(lastOperationDetails, null),
-                    configurationState,
-                    provisioningState,
-                    administrativeState,
-                    (secretRotationStatus ?? new ChangeTrackingList<NetworkFabricSecretRotationStatus>()).ToList(),
-                    (certificateRotationStatus ?? new ChangeTrackingList<NetworkFabricCertificateRotationStatus>()).ToList(),
-                    networkFabricId,
-                    null),
-                identity);
         }
 
         /// <summary> Status of a secret rotation for a device (Network Device or Terminal Server). </summary>
@@ -2030,9 +1608,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkDeviceRefreshConfigurationResult"/> instance for mocking. </returns>
-        public static NetworkDeviceRefreshConfigurationResult NetworkDeviceRefreshConfigurationResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
+        public static NetworkDeviceRefreshConfigurationResult NetworkDeviceRefreshConfigurationResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<NetworkFabricOperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
         {
-            operations ??= new ChangeTrackingList<OperationStatusResult>();
+            operations ??= new ChangeTrackingList<NetworkFabricOperationStatusResult>();
 
             return new NetworkDeviceRefreshConfigurationResult(
                 id,
@@ -2069,9 +1647,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkDeviceUpdateAdministrativeStateResult"/> instance for mocking. </returns>
-        public static NetworkDeviceUpdateAdministrativeStateResult NetworkDeviceUpdateAdministrativeStateResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
+        public static NetworkDeviceUpdateAdministrativeStateResult NetworkDeviceUpdateAdministrativeStateResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<NetworkFabricOperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
         {
-            operations ??= new ChangeTrackingList<OperationStatusResult>();
+            operations ??= new ChangeTrackingList<NetworkFabricOperationStatusResult>();
 
             return new NetworkDeviceUpdateAdministrativeStateResult(
                 id,
@@ -2106,9 +1684,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkDeviceUpgradeResult"/> instance for mocking. </returns>
-        public static NetworkDeviceUpgradeResult NetworkDeviceUpgradeResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
+        public static NetworkDeviceUpgradeResult NetworkDeviceUpgradeResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<NetworkFabricOperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
         {
-            operations ??= new ChangeTrackingList<OperationStatusResult>();
+            operations ??= new ChangeTrackingList<NetworkFabricOperationStatusResult>();
 
             return new NetworkDeviceUpgradeResult(
                 id,
@@ -2169,9 +1747,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="properties"> Network Device Run Rw Command Response properties. </param>
         /// <returns> A new <see cref="Models.NetworkDeviceRunRwCommandResult"/> instance for mocking. </returns>
-        public static NetworkDeviceRunRwCommandResult NetworkDeviceRunRwCommandResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default, NetworkDeviceRwCommandResponseProperties properties = default)
+        public static NetworkDeviceRunRwCommandResult NetworkDeviceRunRwCommandResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<NetworkFabricOperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default, NetworkDeviceRwCommandResponseProperties properties = default)
         {
-            operations ??= new ChangeTrackingList<OperationStatusResult>();
+            operations ??= new ChangeTrackingList<NetworkFabricOperationStatusResult>();
 
             return new NetworkDeviceRunRwCommandResult(
                 id,
@@ -2207,9 +1785,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkDeviceResyncPasswordsResult"/> instance for mocking. </returns>
-        public static NetworkDeviceResyncPasswordsResult NetworkDeviceResyncPasswordsResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
+        public static NetworkDeviceResyncPasswordsResult NetworkDeviceResyncPasswordsResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<NetworkFabricOperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
         {
-            operations ??= new ChangeTrackingList<OperationStatusResult>();
+            operations ??= new ChangeTrackingList<NetworkFabricOperationStatusResult>();
 
             return new NetworkDeviceResyncPasswordsResult(
                 id,
@@ -2235,9 +1813,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkFabricResyncCertificatesResult"/> instance for mocking. </returns>
-        public static NetworkFabricResyncCertificatesResult NetworkFabricResyncCertificatesResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
+        public static NetworkFabricResyncCertificatesResult NetworkFabricResyncCertificatesResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<NetworkFabricOperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
         {
-            operations ??= new ChangeTrackingList<OperationStatusResult>();
+            operations ??= new ChangeTrackingList<NetworkFabricOperationStatusResult>();
 
             return new NetworkFabricResyncCertificatesResult(
                 id,
@@ -2682,9 +2260,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="getTopologyResponseUri"> Topology JSON string. </param>
         /// <returns> A new <see cref="Models.NetworkFabricTopologyResult"/> instance for mocking. </returns>
-        public static NetworkFabricTopologyResult NetworkFabricTopologyResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default, Uri getTopologyResponseUri = default)
+        public static NetworkFabricTopologyResult NetworkFabricTopologyResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<NetworkFabricOperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default, Uri getTopologyResponseUri = default)
         {
-            operations ??= new ChangeTrackingList<OperationStatusResult>();
+            operations ??= new ChangeTrackingList<NetworkFabricOperationStatusResult>();
 
             return new NetworkFabricTopologyResult(
                 id,
@@ -2723,9 +2301,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.CommitConfigurationResult"/> instance for mocking. </returns>
-        public static CommitConfigurationResult CommitConfigurationResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
+        public static CommitConfigurationResult CommitConfigurationResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<NetworkFabricOperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
         {
-            operations ??= new ChangeTrackingList<OperationStatusResult>();
+            operations ??= new ChangeTrackingList<NetworkFabricOperationStatusResult>();
 
             return new CommitConfigurationResult(
                 id,
@@ -2752,9 +2330,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="properties"> Commit Batch Status Response Properties. </param>
         /// <returns> A new <see cref="Models.CommitBatchStatusOperationResult"/> instance for mocking. </returns>
-        public static CommitBatchStatusOperationResult CommitBatchStatusOperationResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default, CommitBatchStatusResponseProperties properties = default)
+        public static CommitBatchStatusOperationResult CommitBatchStatusOperationResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<NetworkFabricOperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default, CommitBatchStatusResponseProperties properties = default)
         {
-            operations ??= new ChangeTrackingList<OperationStatusResult>();
+            operations ??= new ChangeTrackingList<NetworkFabricOperationStatusResult>();
 
             return new CommitBatchStatusOperationResult(
                 id,
@@ -2790,9 +2368,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="commitBatchId"> Commit Batch Identifier. </param>
         /// <returns> A new <see cref="Models.DiscardCommitBatchOperationResult"/> instance for mocking. </returns>
-        public static DiscardCommitBatchOperationResult DiscardCommitBatchOperationResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default, string commitBatchId = default)
+        public static DiscardCommitBatchOperationResult DiscardCommitBatchOperationResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<NetworkFabricOperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default, string commitBatchId = default)
         {
-            operations ??= new ChangeTrackingList<OperationStatusResult>();
+            operations ??= new ChangeTrackingList<NetworkFabricOperationStatusResult>();
 
             return new DiscardCommitBatchOperationResult(
                 id,
@@ -2819,9 +2397,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="deviceConfigurationUri"> Storage URL to the device configuration file. </param>
         /// <returns> A new <see cref="Models.ViewDeviceConfigurationOperationResult"/> instance for mocking. </returns>
-        public static ViewDeviceConfigurationOperationResult ViewDeviceConfigurationOperationResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default, Uri deviceConfigurationUri = default)
+        public static ViewDeviceConfigurationOperationResult ViewDeviceConfigurationOperationResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<NetworkFabricOperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default, Uri deviceConfigurationUri = default)
         {
-            operations ??= new ChangeTrackingList<OperationStatusResult>();
+            operations ??= new ChangeTrackingList<NetworkFabricOperationStatusResult>();
 
             return new ViewDeviceConfigurationOperationResult(
                 id,
@@ -2848,9 +2426,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="configurationDiffUri"> Storage URL to the diff file. </param>
         /// <returns> A new <see cref="Models.ArmConfigurationDiffOperationResult"/> instance for mocking. </returns>
-        public static ArmConfigurationDiffOperationResult ArmConfigurationDiffOperationResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default, Uri configurationDiffUri = default)
+        public static ArmConfigurationDiffOperationResult ArmConfigurationDiffOperationResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<NetworkFabricOperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default, Uri configurationDiffUri = default)
         {
-            operations ??= new ChangeTrackingList<OperationStatusResult>();
+            operations ??= new ChangeTrackingList<NetworkFabricOperationStatusResult>();
 
             return new ArmConfigurationDiffOperationResult(
                 id,
@@ -2877,9 +2455,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkFabricRotatePasswordsResult"/> instance for mocking. </returns>
-        public static NetworkFabricRotatePasswordsResult NetworkFabricRotatePasswordsResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
+        public static NetworkFabricRotatePasswordsResult NetworkFabricRotatePasswordsResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<NetworkFabricOperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
         {
-            operations ??= new ChangeTrackingList<OperationStatusResult>();
+            operations ??= new ChangeTrackingList<NetworkFabricOperationStatusResult>();
 
             return new NetworkFabricRotatePasswordsResult(
                 id,
@@ -2905,9 +2483,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkFabricResyncPasswordsResult"/> instance for mocking. </returns>
-        public static NetworkFabricResyncPasswordsResult NetworkFabricResyncPasswordsResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
+        public static NetworkFabricResyncPasswordsResult NetworkFabricResyncPasswordsResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<NetworkFabricOperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
         {
-            operations ??= new ChangeTrackingList<OperationStatusResult>();
+            operations ??= new ChangeTrackingList<NetworkFabricOperationStatusResult>();
 
             return new NetworkFabricResyncPasswordsResult(
                 id,
@@ -2933,9 +2511,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkFabricRotateCertificatesResult"/> instance for mocking. </returns>
-        public static NetworkFabricRotateCertificatesResult NetworkFabricRotateCertificatesResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
+        public static NetworkFabricRotateCertificatesResult NetworkFabricRotateCertificatesResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<NetworkFabricOperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
         {
-            operations ??= new ChangeTrackingList<OperationStatusResult>();
+            operations ??= new ChangeTrackingList<NetworkFabricOperationStatusResult>();
 
             return new NetworkFabricRotateCertificatesResult(
                 id,
@@ -3194,9 +2772,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="properties"> Properties of the NNI BFD Administrative State response. </param>
         /// <returns> A new <see cref="Models.NniUpdateBfdAdministrativeStateResult"/> instance for mocking. </returns>
-        public static NniUpdateBfdAdministrativeStateResult NniUpdateBfdAdministrativeStateResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default, NniUpdateBfdAdministrativeStateResponseProperties properties = default)
+        public static NniUpdateBfdAdministrativeStateResult NniUpdateBfdAdministrativeStateResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<NetworkFabricOperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default, NniUpdateBfdAdministrativeStateResponseProperties properties = default)
         {
-            operations ??= new ChangeTrackingList<OperationStatusResult>();
+            operations ??= new ChangeTrackingList<NetworkFabricOperationStatusResult>();
 
             return new NniUpdateBfdAdministrativeStateResult(
                 id,
@@ -3221,47 +2799,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NniUpdateBfdAdministrativeStateResponseProperties(routeType, administrativeState, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="networkFabricId"> ARM resource ID of the Network Fabric. </param>
-        /// <param name="networkDeviceIds"> List of ARM resource IDs of Network Devices [NPB]. </param>
-        /// <param name="sourceInterfaceIds"> List of network interfaces across NPB devices that are used to mirror source traffic. </param>
-        /// <param name="networkTapIds"> List of network Tap IDs configured on NPB. </param>
-        /// <param name="neighborGroupIds"> List of neighbor group IDs configured on NPB. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkPacketBrokerData"/> instance for mocking. </returns>
-        public static NetworkPacketBrokerData NetworkPacketBrokerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceIdentifier networkFabricId = default, IEnumerable<ResourceIdentifier> networkDeviceIds = default, IEnumerable<ResourceIdentifier> sourceInterfaceIds = default, IEnumerable<ResourceIdentifier> networkTapIds = default, IEnumerable<ResourceIdentifier> neighborGroupIds = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricConfigurationState? configurationState = default, string lastOperationDetails = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetworkPacketBrokerData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                new NetworkPacketBrokerProperties(
-                    networkFabricId,
-                    (networkDeviceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    (sourceInterfaceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    (networkTapIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    (neighborGroupIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    new LastOperationProperties(lastOperationDetails, null),
-                    provisioningState,
-                    configurationState,
-                    null),
-                identity);
-        }
-
         /// <summary> The NetworkPacketBroker patch resource definition. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
@@ -3271,43 +2808,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new NetworkPacketBrokerPatchContent(tags, additionalBinaryDataProperties: null, identity);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="networkRackType"> Network Rack SKU name. </param>
-        /// <param name="networkFabricId"> ARM resource ID of the Network Fabric. </param>
-        /// <param name="networkDevices"> List of network device ARM resource IDs. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkRackData"/> instance for mocking. </returns>
-        public static NetworkRackData NetworkRackData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, NetworkRackType? networkRackType = default, ResourceIdentifier networkFabricId = default, IEnumerable<ResourceIdentifier> networkDevices = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricConfigurationState? configurationState = default, string lastOperationDetails = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetworkRackData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                new NetworkRackProperties(
-                    annotation,
-                    null,
-                    networkRackType,
-                    networkFabricId,
-                    (networkDevices ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    new LastOperationProperties(lastOperationDetails, null),
-                    provisioningState,
-                    configurationState));
         }
 
         /// <param name="annotation"> Switch configuration description. </param>
@@ -3508,9 +3008,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkTapRuleResyncResult"/> instance for mocking. </returns>
-        public static NetworkTapRuleResyncResult NetworkTapRuleResyncResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
+        public static NetworkTapRuleResyncResult NetworkTapRuleResyncResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<NetworkFabricOperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
         {
-            operations ??= new ChangeTrackingList<OperationStatusResult>();
+            operations ??= new ChangeTrackingList<NetworkFabricOperationStatusResult>();
 
             return new NetworkTapRuleResyncResult(
                 id,
@@ -3658,9 +3158,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkTapResyncResult"/> instance for mocking. </returns>
-        public static NetworkTapResyncResult NetworkTapResyncResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
+        public static NetworkTapResyncResult NetworkTapResyncResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<NetworkFabricOperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
         {
-            operations ??= new ChangeTrackingList<OperationStatusResult>();
+            operations ??= new ChangeTrackingList<NetworkFabricOperationStatusResult>();
 
             return new NetworkTapResyncResult(
                 id,
@@ -3673,47 +3173,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 error,
                 resourceId,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="defaultAction"> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </param>
-        /// <param name="statements"> Route Policy statements. </param>
-        /// <param name="networkFabricId"> Arm Resource ID of Network Fabric. </param>
-        /// <param name="addressFamilyType"> AddressFamilyType. This parameter decides whether the given ipv4 or ipv6 route policy. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricRoutePolicyData"/> instance for mocking. </returns>
-        public static NetworkFabricRoutePolicyData NetworkFabricRoutePolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, CommunityActionType? defaultAction = default, IEnumerable<RoutePolicyStatementProperties> statements = default, ResourceIdentifier networkFabricId = default, AddressFamilyType? addressFamilyType = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, string lastOperationDetails = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetworkFabricRoutePolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                new RoutePolicyProperties(
-                    annotation,
-                    defaultAction,
-                    (statements ?? new ChangeTrackingList<RoutePolicyStatementProperties>()).ToList(),
-                    networkFabricId,
-                    addressFamilyType,
-                    new LastOperationProperties(lastOperationDetails, null),
-                    configurationState,
-                    provisioningState,
-                    administrativeState,
-                    null));
         }
 
         /// <summary> Route policy statement condition properties. </summary>
@@ -3785,41 +3244,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static StatementActionPatchProperties StatementActionPatchProperties(long? localPreference = default, RoutePolicyActionType actionType = default, ActionIPCommunityPatchProperties ipCommunityProperties = default, ActionIPExtendedCommunityPatchProperties ipExtendedCommunityProperties = default)
         {
             return new StatementActionPatchProperties(localPreference, actionType, ipCommunityProperties, ipExtendedCommunityProperties, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="bmpConfiguration"> BMP Configurations for the Network Fabric. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="provisioningState"> Provides you the latest status of the NetworkMonitor resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkMonitorData"/> instance for mocking. </returns>
-        public static NetworkMonitorData NetworkMonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, BmpConfigurationProperties bmpConfiguration = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, string lastOperationDetails = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetworkMonitorData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                new NetworkMonitorProperties(
-                    annotation,
-                    null,
-                    bmpConfiguration,
-                    new LastOperationProperties(lastOperationDetails, null),
-                    configurationState,
-                    provisioningState,
-                    administrativeState));
         }
 
         /// <param name="annotation"> Switch configuration description. </param>
@@ -3919,6 +3343,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Base tracked resource type for PATCH updates. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.ManagedNetworkFabricResourcePatch"/> instance for mocking. </returns>
+        public static ManagedNetworkFabricResourcePatch ManagedNetworkFabricResourcePatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ManagedNetworkFabricResourcePatch(tags, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Common response for device updates. </summary>
         /// <param name="error"> The error object. </param>
         /// <param name="configurationState"> Gets the configuration state. </param>
@@ -3931,59 +3365,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             failedDevices ??= new ChangeTrackingList<string>();
 
             return new DeviceUpdateCommonPostActionResult(error, additionalBinaryDataProperties: null, configurationState, successfulDevices.ToList(), failedDevices.ToList());
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="hostName"> The host name of the device. </param>
-        /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
-        /// <param name="version"> Current version of the device as defined in SKU. </param>
-        /// <param name="networkDeviceSku"> Network Bootstrap Device SKU name. </param>
-        /// <param name="networkFabricId"> Associated Network Fabric Resource ID. </param>
-        /// <param name="secondaryManagementIPv4Address"> Secondary Management IPv4 Address. </param>
-        /// <param name="dhcpV4ServerIPAddress"> Dhcp server IPv4 Address. </param>
-        /// <param name="primaryManagementIPv6Address"> Primary Management IPv6 Address. </param>
-        /// <param name="secondaryManagementIPv6Address"> Secondary Management IPv6 Address. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="primaryManagementIPv4Address"> Primary Management IPv4 Address. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkBootstrapDeviceData"/> instance for mocking. </returns>
-        public static NetworkBootstrapDeviceData NetworkBootstrapDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, string hostName = default, string serialNumber = default, string version = default, string networkDeviceSku = default, ResourceIdentifier networkFabricId = default, string secondaryManagementIPv4Address = default, string dhcpV4ServerIPAddress = default, string primaryManagementIPv6Address = default, string secondaryManagementIPv6Address = default, NetworkFabricProvisioningState? provisioningState = default, string primaryManagementIPv4Address = default, NetworkFabricAdministrativeState? administrativeState = default, NetworkFabricConfigurationState? configurationState = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetworkBootstrapDeviceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                new NetworkBootstrapDeviceProperties(
-                    annotation,
-                    hostName,
-                    serialNumber,
-                    version,
-                    networkDeviceSku,
-                    networkFabricId,
-                    secondaryManagementIPv4Address,
-                    dhcpV4ServerIPAddress,
-                    primaryManagementIPv6Address,
-                    secondaryManagementIPv6Address,
-                    provisioningState,
-                    primaryManagementIPv4Address,
-                    administrativeState,
-                    configurationState,
-                    null),
-                identity);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -4010,9 +3391,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkBootstrapDeviceRebootResult"/> instance for mocking. </returns>
-        public static NetworkBootstrapDeviceRebootResult NetworkBootstrapDeviceRebootResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
+        public static NetworkBootstrapDeviceRebootResult NetworkBootstrapDeviceRebootResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<NetworkFabricOperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
         {
-            operations ??= new ChangeTrackingList<OperationStatusResult>();
+            operations ??= new ChangeTrackingList<NetworkFabricOperationStatusResult>();
 
             return new NetworkBootstrapDeviceRebootResult(
                 id,
@@ -4038,9 +3419,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkBootstrapDeviceRefreshConfigurationResult"/> instance for mocking. </returns>
-        public static NetworkBootstrapDeviceRefreshConfigurationResult NetworkBootstrapDeviceRefreshConfigurationResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
+        public static NetworkBootstrapDeviceRefreshConfigurationResult NetworkBootstrapDeviceRefreshConfigurationResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<NetworkFabricOperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
         {
-            operations ??= new ChangeTrackingList<OperationStatusResult>();
+            operations ??= new ChangeTrackingList<NetworkFabricOperationStatusResult>();
 
             return new NetworkBootstrapDeviceRefreshConfigurationResult(
                 id,
@@ -4066,9 +3447,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkBootstrapDeviceUpgradeResult"/> instance for mocking. </returns>
-        public static NetworkBootstrapDeviceUpgradeResult NetworkBootstrapDeviceUpgradeResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
+        public static NetworkBootstrapDeviceUpgradeResult NetworkBootstrapDeviceUpgradeResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<NetworkFabricOperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
         {
-            operations ??= new ChangeTrackingList<OperationStatusResult>();
+            operations ??= new ChangeTrackingList<NetworkFabricOperationStatusResult>();
 
             return new NetworkBootstrapDeviceUpgradeResult(
                 id,
@@ -4094,9 +3475,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkBootstrapDeviceUpdateAdministrativeStateResult"/> instance for mocking. </returns>
-        public static NetworkBootstrapDeviceUpdateAdministrativeStateResult NetworkBootstrapDeviceUpdateAdministrativeStateResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
+        public static NetworkBootstrapDeviceUpdateAdministrativeStateResult NetworkBootstrapDeviceUpdateAdministrativeStateResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<NetworkFabricOperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
         {
-            operations ??= new ChangeTrackingList<OperationStatusResult>();
+            operations ??= new ChangeTrackingList<NetworkFabricOperationStatusResult>();
 
             return new NetworkBootstrapDeviceUpdateAdministrativeStateResult(
                 id,
@@ -4122,9 +3503,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.NetworkBootstrapDeviceResyncPasswordsResult"/> instance for mocking. </returns>
-        public static NetworkBootstrapDeviceResyncPasswordsResult NetworkBootstrapDeviceResyncPasswordsResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
+        public static NetworkBootstrapDeviceResyncPasswordsResult NetworkBootstrapDeviceResyncPasswordsResult(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<NetworkFabricOperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default)
         {
-            operations ??= new ChangeTrackingList<OperationStatusResult>();
+            operations ??= new ChangeTrackingList<NetworkFabricOperationStatusResult>();
 
             return new NetworkBootstrapDeviceResyncPasswordsResult(
                 id,
@@ -4152,11 +3533,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="interfaceType"> Type of the interface. </param>
         /// <param name="description"> Description of the interface. </param>
         /// <param name="additionalDescription"> Additional description of the interface. </param>
-        /// <param name="iPv4Address"> IPv4Address of the interface. </param>
-        /// <param name="iPv6Address"> IPv6Address of the interface. </param>
+        /// <param name="ipv4Address"> IPv4Address of the interface. </param>
+        /// <param name="ipv6Address"> IPv6Address of the interface. </param>
         /// <param name="serialNumber"> Serial number of the interface. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkBootstrapInterfaceData"/> instance for mocking. </returns>
-        public static NetworkBootstrapInterfaceData NetworkBootstrapInterfaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string annotation = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, NetworkFabricConfigurationState? configurationState = default, string physicalIdentifier = default, string connectedTo = default, NetworkDeviceInterfaceType? interfaceType = default, string description = default, string additionalDescription = default, string iPv4Address = default, string iPv6Address = default, string serialNumber = default)
+        public static NetworkBootstrapInterfaceData NetworkBootstrapInterfaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string annotation = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, NetworkFabricConfigurationState? configurationState = default, string physicalIdentifier = default, string connectedTo = default, NetworkDeviceInterfaceType? interfaceType = default, string description = default, string additionalDescription = default, string ipv4Address = default, string ipv6Address = default, string serialNumber = default)
         {
             return new NetworkBootstrapInterfaceData(
                 id,
@@ -4175,8 +3556,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     interfaceType,
                     description,
                     additionalDescription,
-                    iPv4Address,
-                    iPv6Address,
+                    ipv4Address,
+                    ipv6Address,
                     serialNumber));
         }
 
@@ -4212,7 +3593,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 serialNumber);
         }
 
-        /// <summary> This constructor is added for the backward compatibility. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmManagedNetworkFabricModelFactory.NetworkFabricInternetGatewayData(ResourceIdentifier,string,ResourceType,SystemData,IDictionary{string,string},AzureLocation,string,ResourceIdentifier,IPAddress,int?,InternetGatewayType,ResourceIdentifier,NetworkFabricProvisioningState?)"/>. </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="resourceType"></param>
@@ -4226,7 +3607,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="typePropertiesType"></param>
         /// <param name="networkFabricControllerId"></param>
         /// <param name="provisioningState"></param>
-        /// <returns></returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkFabricInternetGatewayData NetworkFabricInternetGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier internetGatewayRuleId, IPAddress ipv4Address, int? port, InternetGatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId, NetworkFabricProvisioningState? provisioningState)
         {
@@ -4253,21 +3633,62 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     default));
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricInternetGatewayData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="internetGatewayRuleId"> ARM Resource ID of the Internet Gateway Rule. </param>
-        /// <param name="ipV4Address"> IPv4 Address of Internet Gateway. </param>
-        /// <param name="port"> Port number of Internet Gateway. </param>
-        /// <param name="typePropertiesType"> Gateway Type of the resource. </param>
-        /// <param name="networkFabricControllerId"> ARM Resource ID of the Network Fabric Controller. </param>
-        /// <param name="provisioningState"> Provisioning state of resource. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricInternetGatewayData"/> instance for mocking. </returns>
+        /// <summary> Initializes a new instance of <see cref="ArmManagedNetworkFabricModelFactory.NetworkFabricInternetGatewayData(ResourceIdentifier,string,ResourceType,SystemData,IDictionary{string,string},AzureLocation,string,ResourceIdentifier,IPAddress,int?,InternetGatewayType,ResourceIdentifier,NetworkFabricProvisioningState?)"/>. </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
+        /// <param name="tags"></param>
+        /// <param name="location"></param>
+        /// <param name="annotation"></param>
+        /// <param name="internetGatewayRuleId"></param>
+        /// <param name="iPv4Address"></param>
+        /// <param name="port"></param>
+        /// <param name="typePropertiesType"></param>
+        /// <param name="internetGatewayType"></param>
+        /// <param name="networkFabricControllerId"></param>
+        /// <param name="lastOperationDetails"></param>
+        /// <param name="provisioningState"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricInternetGatewayData NetworkFabricInternetGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier internetGatewayRuleId, IPAddress iPv4Address, int? port, InternetGatewayType typePropertiesType, InternetGatewayType? internetGatewayType, ResourceIdentifier networkFabricControllerId, string lastOperationDetails, NetworkFabricProvisioningState? provisioningState)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NetworkFabricInternetGatewayData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                annotation is null && internetGatewayRuleId is null && port is null && internetGatewayType is null && internetGatewayType is null && networkFabricControllerId is null && lastOperationDetails is null && provisioningState is null ? default : new InternetGatewayProperties(
+                    annotation,
+                    internetGatewayRuleId,
+                    default,
+                    port,
+                    internetGatewayType,
+                    internetGatewayType,
+                    networkFabricControllerId,
+                    new LastOperationProperties(lastOperationDetails, default),
+                    provisioningState,
+                    default));
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArmManagedNetworkFabricModelFactory.NetworkFabricInternetGatewayData(ResourceIdentifier,string,ResourceType,SystemData,IDictionary{string,string},AzureLocation,string,ResourceIdentifier,IPAddress,int?,InternetGatewayType,ResourceIdentifier,NetworkFabricProvisioningState?)"/>. </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
+        /// <param name="tags"></param>
+        /// <param name="location"></param>
+        /// <param name="annotation"></param>
+        /// <param name="internetGatewayRuleId"></param>
+        /// <param name="ipV4Address"></param>
+        /// <param name="port"></param>
+        /// <param name="typePropertiesType"></param>
+        /// <param name="networkFabricControllerId"></param>
+        /// <param name="provisioningState"></param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkFabricInternetGatewayData NetworkFabricInternetGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier internetGatewayRuleId, string ipV4Address, int? port, InternetGatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId, NetworkFabricProvisioningState? provisioningState)
         {
@@ -4294,280 +3715,79 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     default));
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricIPCommunityData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="ipCommunityRules"> List of IP Community Rules. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricIPCommunityData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkFabricIPCommunityData NetworkFabricIPCommunityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IEnumerable<IPCommunityRule> ipCommunityRules, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
-        {
-            return NetworkFabricIPCommunityData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, annotation: annotation, networkFabricId: default, ipCommunityRules: ipCommunityRules, configurationState: configurationState, provisioningState: provisioningState, administrativeState: administrativeState, lastOperationDetails: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricIPExtendedCommunityData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="ipExtendedCommunityRules"> List of IP Extended Community Rules. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricIPExtendedCommunityData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkFabricIPExtendedCommunityData NetworkFabricIPExtendedCommunityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IEnumerable<IPExtendedCommunityRule> ipExtendedCommunityRules, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
-        {
-            return NetworkFabricIPExtendedCommunityData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, annotation: annotation, ipExtendedCommunityRules: ipExtendedCommunityRules, networkFabricId: default, configurationState: configurationState, provisioningState: provisioningState, administrativeState: administrativeState, lastOperationDetails: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricIPPrefixData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="ipPrefixRules"> The list of IP Prefix Rules. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricIPPrefixData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkFabricIPPrefixData NetworkFabricIPPrefixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IEnumerable<IPPrefixRule> ipPrefixRules, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
-        {
-            return NetworkFabricIPPrefixData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, annotation: annotation, networkFabricId: default, ipPrefixRules: ipPrefixRules, configurationState: configurationState, provisioningState: provisioningState, administrativeState: administrativeState, lastOperationDetails: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricL3IsolationDomainData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="redistributeConnectedSubnets"> Advertise Connected Subnets. Ex: "True" | "False". </param>
-        /// <param name="redistributeStaticRoutes"> Advertise Static Routes. Ex: "True" | "False". </param>
-        /// <param name="aggregateRouteConfiguration"> Aggregate route configurations. </param>
-        /// <param name="connectedSubnetRoutePolicy"> Connected Subnet RoutePolicy. </param>
-        /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricL3IsolationDomainData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkFabricL3IsolationDomainData NetworkFabricL3IsolationDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, RedistributeConnectedSubnet? redistributeConnectedSubnets, RedistributeStaticRoute? redistributeStaticRoutes, AggregateRouteConfiguration aggregateRouteConfiguration, ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy, ResourceIdentifier networkFabricId, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
-        {
-            return NetworkFabricL3IsolationDomainData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, annotation: annotation, redistributeConnectedSubnets: redistributeConnectedSubnets, redistributeStaticRoutes: redistributeStaticRoutes, aggregateRouteConfiguration: aggregateRouteConfiguration, connectedSubnetRoutePolicy: connectedSubnetRoutePolicy, networkFabricId: networkFabricId, v4RoutePrefixLimit: default, v6RoutePrefixLimit: default, configurationState: configurationState, provisioningState: provisioningState, administrativeState: administrativeState, staticRouteExportRoutePolicy: default, uniqueRds: default, lastOperationDetails: default, exportPolicies: default, identity: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.BgpConfiguration"/>. </summary>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="bfdConfiguration"> BFD configuration properties. </param>
-        /// <param name="defaultRouteOriginate"> Originate a defaultRoute. Ex: "True" | "False". </param>
-        /// <param name="allowAS"> Allows for routes to be received and processed even if the router detects its own ASN in the AS-Path. 0 is disable, Possible values are 1-10, default is 2. </param>
-        /// <param name="allowASOverride"> Enable Or Disable state. </param>
-        /// <param name="fabricAsn"> ASN of Network Fabric. Example: 65048. </param>
-        /// <param name="peerAsn"> Peer ASN. Example: 65047. </param>
-        /// <param name="ipv4ListenRangePrefixes"> List of BGP IPv4 Listen Range prefixes. </param>
-        /// <param name="ipv6ListenRangePrefixes"> List of BGP IPv6 Listen Ranges prefixes. </param>
-        /// <param name="ipv4NeighborAddress"> List with stringified IPv4 Neighbor Addresses. </param>
-        /// <param name="ipv6NeighborAddress"> List with stringified IPv6 Neighbor Address. </param>
-        /// <returns> A new <see cref="Models.BgpConfiguration"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BgpConfiguration BgpConfiguration(string annotation, BfdConfiguration bfdConfiguration, NetworkFabricBooleanValue? defaultRouteOriginate, int? allowAS, AllowASOverride? allowASOverride, long? fabricAsn, long? peerAsn, IEnumerable<string> ipv4ListenRangePrefixes, IEnumerable<string> ipv6ListenRangePrefixes, IEnumerable<NeighborAddress> ipv4NeighborAddress, IEnumerable<NeighborAddress> ipv6NeighborAddress)
-        {
-
-            return new BgpConfiguration(
-                annotation,
-                additionalBinaryDataProperties: null,
-                bfdConfiguration,
-                defaultRouteOriginate,
-                allowAS,
-                allowASOverride,
-                fabricAsn,
-                peerAsn,
-                (ipv4ListenRangePrefixes ?? new ChangeTrackingList<string>()).ToList(),
-                (ipv6ListenRangePrefixes ?? new ChangeTrackingList<string>()).ToList(),
-                (ipv4NeighborAddress ?? new ChangeTrackingList<NeighborAddress>()).ToList(),
-                (ipv6NeighborAddress ?? new ChangeTrackingList<NeighborAddress>()).ToList(),
-                default,
-                default,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NeighborAddress"/>. </summary>
-        /// <param name="address"> IP Address. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <returns> A new <see cref="Models.NeighborAddress"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NeighborAddress NeighborAddress(string address, NetworkFabricConfigurationState? configurationState)
-        {
-            return NeighborAddress(address: address, bfdAdministrativeState: default, bgpAdministrativeState: default, configurationState: configurationState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricExternalNetworkData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="importRoutePolicyId"> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </param>
-        /// <param name="exportRoutePolicyId"> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </param>
-        /// <param name="importRoutePolicy"> Import Route Policy either IPv4 or IPv6. </param>
-        /// <param name="exportRoutePolicy"> Export Route Policy either IPv4 or IPv6. </param>
-        /// <param name="networkToNetworkInterconnectId"> Gets the networkToNetworkInterconnectId of the resource. </param>
-        /// <param name="peeringOption"> Peering option list. </param>
-        /// <param name="optionBProperties"> option B properties object. </param>
-        /// <param name="optionAProperties"> option A properties object. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricExternalNetworkData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkFabricExternalNetworkData NetworkFabricExternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, ResourceIdentifier importRoutePolicyId, ResourceIdentifier exportRoutePolicyId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier networkToNetworkInterconnectId, PeeringOption peeringOption, L3OptionBProperties optionBProperties, ExternalNetworkOptionAProperties optionAProperties, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
-        {
-            return new NetworkFabricExternalNetworkData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                annotation is null && networkToNetworkInterconnectId is null && importRoutePolicy is null && exportRoutePolicy is null && optionBProperties is null && optionAProperties is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new ExternalNetworkProperties(
-                    annotation,
-                    networkToNetworkInterconnectId,
-                    importRoutePolicy,
-                    exportRoutePolicy,
-                    peeringOption,
-                    optionBProperties,
-                    optionAProperties,
-                    default,
-                    default,
-                    default,
-                    configurationState,
-                    provisioningState,
-                    administrativeState,
-                    default));
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExternalNetworkOptionAProperties"/>. </summary>
-        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
-        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
-        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
-        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
-        /// <param name="mtu"> MTU to use for option A peering. </param>
-        /// <param name="vlanId"> Vlan identifier. Example : 501. </param>
-        /// <param name="fabricAsn"> Fabric ASN number. Example 65001. </param>
-        /// <param name="peerAsn"> Peer ASN number.Example : 28. </param>
-        /// <param name="bfdConfiguration"> BFD configuration properties. </param>
-        /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
-        /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
-        /// <returns> A new <see cref="Models.ExternalNetworkOptionAProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ExternalNetworkOptionAProperties ExternalNetworkOptionAProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, int? mtu, int? vlanId, long? fabricAsn, long? peerAsn, BfdConfiguration bfdConfiguration, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId)
-        {
-            return ExternalNetworkOptionAProperties(primaryIPv4Prefix: primaryIPv4Prefix, primaryIPv6Prefix: primaryIPv6Prefix, secondaryIPv4Prefix: secondaryIPv4Prefix, secondaryIPv6Prefix: secondaryIPv6Prefix, mtu: mtu, vlanId: vlanId, fabricAsn: fabricAsn, peerAsn: peerAsn, bfdConfiguration: bfdConfiguration, ingressAclId: ingressAclId, bmpConfigurationState: default, egressAclId: egressAclId, v4OverV6BgpSession: default, v6OverV4BgpSession: default, nativeIPv4PrefixLimits: default, nativeIPv6PrefixLimits: default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.ExternalNetworkPatchOptionAProperties"/>. </summary>
-        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
-        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
-        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
-        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
-        /// <param name="mtu"> MTU to use for option A peering. </param>
-        /// <param name="vlanId"> Vlan identifier. Example : 501. </param>
-        /// <param name="fabricAsn"> Fabric ASN number. Example 65001. </param>
-        /// <param name="peerAsn"> Peer ASN number.Example : 28. </param>
-        /// <param name="bfdConfiguration"> BFD configuration properties. </param>
-        /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
-        /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
-        /// <returns> A new <see cref="Models.ExternalNetworkPatchOptionAProperties"/> instance for mocking. </returns>
+        /// <param name="primaryIPv4Prefix"></param>
+        /// <param name="primaryIPv6Prefix"></param>
+        /// <param name="secondaryIPv4Prefix"></param>
+        /// <param name="secondaryIPv6Prefix"></param>
+        /// <param name="mtu"></param>
+        /// <param name="vlanId"></param>
+        /// <param name="fabricAsn"></param>
+        /// <param name="peerAsn"></param>
+        /// <param name="bfdConfiguration"></param>
+        /// <param name="ingressAclId"></param>
+        /// <param name="egressAclId"></param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ExternalNetworkPatchOptionAProperties ExternalNetworkPatchOptionAProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, int? mtu, int? vlanId, long? fabricAsn, long? peerAsn, BfdConfiguration bfdConfiguration, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId)
         {
             return ExternalNetworkPatchOptionAProperties(primaryIPv4Prefix: primaryIPv4Prefix, primaryIPv6Prefix: primaryIPv6Prefix, secondaryIPv4Prefix: secondaryIPv4Prefix, secondaryIPv6Prefix: secondaryIPv6Prefix, mtu: mtu, vlanId: vlanId, fabricAsn: fabricAsn, peerAsn: peerAsn, bfdConfiguration: bfdConfiguration, ingressAclId: ingressAclId, egressAclId: egressAclId, bmpConfigurationState: default, v4OverV6BgpSession: default, v6OverV4BgpSession: default, nativeIPv4PrefixLimits: default, nativeIPv6PrefixLimits: default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricNeighborGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="destination"> An array of destination IPv4 Addresses or IPv6 Addresses. </param>
-        /// <param name="networkTapIds"> List of NetworkTap IDs where neighbor group is associated. </param>
-        /// <param name="networkTapRuleIds"> List of Network Tap Rule IDs where neighbor group is associated. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricNeighborGroupData"/> instance for mocking. </returns>
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkToNetworkInterconnectPatch"/>. </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
+        /// <param name="layer2Configuration"></param>
+        /// <param name="optionBLayer3Configuration"></param>
+        /// <param name="npbStaticRouteConfiguration"></param>
+        /// <param name="importRoutePolicy"></param>
+        /// <param name="exportRoutePolicy"></param>
+        /// <param name="egressAclId"></param>
+        /// <param name="ingressAclId"></param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkFabricNeighborGroupData NetworkFabricNeighborGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NeighborGroupDestination destination, IEnumerable<ResourceIdentifier> networkTapIds, IEnumerable<ResourceIdentifier> networkTapRuleIds, NetworkFabricProvisioningState? provisioningState)
+        public static NetworkToNetworkInterconnectPatch NetworkToNetworkInterconnectPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Layer2Configuration layer2Configuration, OptionBLayer3Configuration optionBLayer3Configuration, NpbStaticRouteConfiguration npbStaticRouteConfiguration, ImportRoutePolicyInformation importRoutePolicy, ExportRoutePolicyInformation exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId)
         {
-            return NetworkFabricNeighborGroupData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, annotation: annotation, destination: destination, networkTapIds: networkTapIds, networkTapRuleIds: networkTapRuleIds, networkFabricIds: default, provisioningState: provisioningState, configurationState: default, lastOperationDetails: default, identity: default);
+            return new NetworkToNetworkInterconnectPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                egressAclId is null && ingressAclId is null ? default : new NetworkToNetworkInterconnectPatchProperties(
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    egressAclId,
+                    ingressAclId,
+                    default,
+                    default));
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkDeviceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="hostName"> The host name of the device. </param>
-        /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
-        /// <param name="version"> Current version of the device as defined in SKU. </param>
-        /// <param name="networkDeviceSku"> Network Device SKU name. </param>
-        /// <param name="networkDeviceRole"> NetworkDeviceRole is the device role: Example: CE | ToR. </param>
-        /// <param name="networkRackId"> Reference to network rack resource id. </param>
-        /// <param name="managementIPv4Address"> Management IPv4 Address. </param>
-        /// <param name="managementIPv6Address"> Management IPv6 Address. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkDeviceData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkDeviceData NetworkDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, string hostName, string serialNumber, string version, string networkDeviceSku, NetworkDeviceRole? networkDeviceRole, ResourceIdentifier networkRackId, IPAddress managementIPv4Address, string managementIPv6Address, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
-        {
-            return NetworkDeviceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, annotation: annotation, hostName: hostName, serialNumber: serialNumber, identitySelector: default, version: version, networkDeviceSku: networkDeviceSku, networkDeviceRole: networkDeviceRole, networkRackId: networkRackId, managementIPv4Address: managementIPv4Address, managementIPv6Address: managementIPv6Address, rwDeviceConfig: default, configurationState: configurationState, provisioningState: provisioningState, administrativeState: administrativeState, secretRotationStatus: default, certificateRotationStatus: default, networkFabricId: default, lastOperationDetails: default, identity: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricControllerData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="infrastructureExpressRouteConnections"> As part of an update, the Infrastructure ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Infrastructure services. (This is a Mandatory attribute). </param>
-        /// <param name="workloadExpressRouteConnections"> As part of an update, the workload ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Workload services. (This is a Mandatory attribute). </param>
-        /// <param name="infrastructureServices"> InfrastructureServices IP ranges. </param>
-        /// <param name="workloadServices"> WorkloadServices IP ranges. </param>
-        /// <param name="managedResourceGroupConfiguration"> Managed Resource Group configuration properties. </param>
-        /// <param name="networkFabricIds"> The NF-ID will be an input parameter used by the NF to link and get associated with the parent NFC Service. </param>
-        /// <param name="isWorkloadManagementNetwork"> A workload management network is required for all the tenant (workload) traffic. This traffic is only dedicated for Tenant workloads which are required to access internet or any other MSFT/Public endpoints. This is used for the backward compatibility. </param>
-        /// <param name="isWorkloadManagementNetworkEnabled"> A workload management network is required for all the tenant (workload) traffic. This traffic is only dedicated for Tenant workloads which are required to access internet or any other MSFT/Public endpoints. </param>
-        /// <param name="tenantInternetGatewayIds"> List of tenant InternetGateway resource IDs. </param>
-        /// <param name="ipv4AddressSpace"> IPv4 Network Fabric Controller Address Space. </param>
-        /// <param name="ipv6AddressSpace"> IPv6 Network Fabric Controller Address Space. </param>
-        /// <param name="nfcSku"> Network Fabric Controller SKU. </param>
-        /// <param name="provisioningState"> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of NFC provisioning. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricControllerData"/> instance for mocking. </returns>
+        /// <summary> Initializes a new instance of <see cref="ArmManagedNetworkFabricModelFactory.NetworkFabricControllerData(ResourceIdentifier,string,ResourceType,SystemData,IDictionary{string,string},AzureLocation,string,IEnumerable{ExpressRouteConnectionInformation},IEnumerable{ExpressRouteConnectionInformation},Models.NetworkFabricControllerServices,Models.NetworkFabricControllerServices,ManagedResourceGroupConfiguration,IEnumerable{ResourceIdentifier},bool?,IsWorkloadManagementNetworkEnabled?,IEnumerable{ResourceIdentifier},string,string,NetworkFabricControllerSKU?,NetworkFabricProvisioningState?)"/>. </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
+        /// <param name="tags"></param>
+        /// <param name="location"></param>
+        /// <param name="annotation"></param>
+        /// <param name="infrastructureExpressRouteConnections"></param>
+        /// <param name="workloadExpressRouteConnections"></param>
+        /// <param name="infrastructureServices"></param>
+        /// <param name="workloadServices"></param>
+        /// <param name="managedResourceGroupConfiguration"></param>
+        /// <param name="networkFabricIds"></param>
+        /// <param name="isWorkloadManagementNetwork"></param>
+        /// <param name="isWorkloadManagementNetworkEnabled"></param>
+        /// <param name="tenantInternetGatewayIds"></param>
+        /// <param name="ipv4AddressSpace"></param>
+        /// <param name="ipv6AddressSpace"></param>
+        /// <param name="nfcSku"></param>
+        /// <param name="provisioningState"></param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkFabricControllerData NetworkFabricControllerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IEnumerable<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections, IEnumerable<ExpressRouteConnectionInformation> workloadExpressRouteConnections, NetworkFabricControllerServices infrastructureServices, NetworkFabricControllerServices workloadServices, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, IEnumerable<ResourceIdentifier> networkFabricIds, bool? isWorkloadManagementNetwork, IsWorkloadManagementNetworkEnabled? isWorkloadManagementNetworkEnabled, IEnumerable<ResourceIdentifier> tenantInternetGatewayIds, string ipv4AddressSpace, string ipv6AddressSpace, NetworkFabricControllerSKU? nfcSku, NetworkFabricProvisioningState? provisioningState)
         {
@@ -4600,95 +3820,89 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OptionBLayer3Configuration"/>. </summary>
-        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
-        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
-        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
-        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
-        /// <param name="peerAsn"> ASN of PE devices for CE/PE connectivity.Example : 28. </param>
-        /// <param name="vlanId"> VLAN for CE/PE Layer 3 connectivity.Example : 501. </param>
-        /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
-        /// <returns> A new <see cref="Models.OptionBLayer3Configuration"/> instance for mocking. </returns>
+        /// <summary> Initializes a new instance of <see cref="ArmManagedNetworkFabricModelFactory.NetworkFabricExternalNetworkData(ResourceIdentifier,string,ResourceType,SystemData,string,ResourceIdentifier,ResourceIdentifier,ImportRoutePolicy,ExportRoutePolicy,ResourceIdentifier,PeeringOption,Models.L3OptionBProperties,Models.ExternalNetworkOptionAProperties,NetworkFabricConfigurationState?,NetworkFabricProvisioningState?,NetworkFabricAdministrativeState?)"/>. </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
+        /// <param name="annotation"></param>
+        /// <param name="importRoutePolicyId"></param>
+        /// <param name="exportRoutePolicyId"></param>
+        /// <param name="importRoutePolicy"></param>
+        /// <param name="exportRoutePolicy"></param>
+        /// <param name="networkToNetworkInterconnectId"></param>
+        /// <param name="peeringOption"></param>
+        /// <param name="optionBProperties"></param>
+        /// <param name="optionAProperties"></param>
+        /// <param name="configurationState"></param>
+        /// <param name="provisioningState"></param>
+        /// <param name="administrativeState"></param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static OptionBLayer3Configuration OptionBLayer3Configuration(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, long? peerAsn, int? vlanId, long? fabricAsn)
+        public static NetworkFabricExternalNetworkData NetworkFabricExternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, ResourceIdentifier importRoutePolicyId, ResourceIdentifier exportRoutePolicyId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier networkToNetworkInterconnectId, PeeringOption peeringOption, L3OptionBProperties optionBProperties, ExternalNetworkOptionAProperties optionAProperties, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
         {
-            return OptionBLayer3Configuration(primaryIPv4Prefix: primaryIPv4Prefix, primaryIPv6Prefix: primaryIPv6Prefix, secondaryIPv4Prefix: secondaryIPv4Prefix, secondaryIPv6Prefix: secondaryIPv6Prefix, peerAsn: peerAsn, vlanId: vlanId, fabricAsn: fabricAsn, peLoopbackIPAddress: default, bmpConfigurationState: default, prefixLimits: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkToNetworkInterconnectPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="layer2Configuration"> Common properties for Layer2Configuration. </param>
-        /// <param name="optionBLayer3Configuration"> Common properties for Layer3Configuration. </param>
-        /// <param name="npbStaticRouteConfiguration"> NPB Static Route Configuration properties. </param>
-        /// <param name="importRoutePolicy"> Import Route Policy information. </param>
-        /// <param name="exportRoutePolicy"> Export Route Policy information. </param>
-        /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
-        /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
-        /// <returns> A new <see cref="Models.NetworkToNetworkInterconnectPatch"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkToNetworkInterconnectPatch NetworkToNetworkInterconnectPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Layer2Configuration layer2Configuration, OptionBLayer3Configuration optionBLayer3Configuration, NpbStaticRouteConfiguration npbStaticRouteConfiguration, ImportRoutePolicyInformation importRoutePolicy, ExportRoutePolicyInformation exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId)
-        {
-            return new NetworkToNetworkInterconnectPatch(
+            return new NetworkFabricExternalNetworkData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                egressAclId is null && ingressAclId is null ? default : new NetworkToNetworkInterconnectPatchProperties(
+                annotation is null && networkToNetworkInterconnectId is null && importRoutePolicy is null && exportRoutePolicy is null && optionBProperties is null && optionAProperties is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new ExternalNetworkProperties(
+                    annotation,
+                    networkToNetworkInterconnectId,
+                    importRoutePolicy,
+                    exportRoutePolicy,
+                    peeringOption,
+                    optionBProperties,
+                    optionAProperties,
                     default,
                     default,
                     default,
-                    default,
-                    default,
-                    default,
-                    egressAclId,
-                    ingressAclId,
-                    default,
+                    configurationState,
+                    provisioningState,
+                    administrativeState,
                     default));
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkPacketBrokerData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="networkFabricId"> ARM resource ID of the Network Fabric. </param>
-        /// <param name="networkDeviceIds"> List of ARM resource IDs of Network Devices [NPB]. </param>
-        /// <param name="sourceInterfaceIds"> List of network interfaces across NPB devices that are used to mirror source traffic. </param>
-        /// <param name="networkTapIds"> List of network Tap IDs configured on NPB. </param>
-        /// <param name="neighborGroupIds"> List of neighbor group IDs configured on NPB. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkPacketBrokerData"/> instance for mocking. </returns>
+        /// <summary> Initializes a new instance of <see cref="ArmManagedNetworkFabricModelFactory.NetworkFabricL3IsolationDomainData(ResourceIdentifier,string,ResourceType,SystemData,IDictionary{string,string},AzureLocation,string,RedistributeConnectedSubnet?,RedistributeStaticRoute?,Models.AggregateRouteConfiguration,ConnectedSubnetRoutePolicy,ResourceIdentifier,NetworkFabricConfigurationState?,NetworkFabricProvisioningState?,NetworkFabricAdministrativeState?)"/>. </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
+        /// <param name="tags"></param>
+        /// <param name="location"></param>
+        /// <param name="annotation"></param>
+        /// <param name="redistributeConnectedSubnets"></param>
+        /// <param name="redistributeStaticRoutes"></param>
+        /// <param name="aggregateRouteConfiguration"></param>
+        /// <param name="connectedSubnetRoutePolicy"></param>
+        /// <param name="networkFabricId"></param>
+        /// <param name="configurationState"></param>
+        /// <param name="provisioningState"></param>
+        /// <param name="administrativeState"></param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkPacketBrokerData NetworkPacketBrokerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier networkFabricId, IEnumerable<ResourceIdentifier> networkDeviceIds, IEnumerable<ResourceIdentifier> sourceInterfaceIds, IEnumerable<ResourceIdentifier> networkTapIds, IEnumerable<ResourceIdentifier> neighborGroupIds, NetworkFabricProvisioningState? provisioningState)
+        public static NetworkFabricL3IsolationDomainData NetworkFabricL3IsolationDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, RedistributeConnectedSubnet? redistributeConnectedSubnets, RedistributeStaticRoute? redistributeStaticRoutes, AggregateRouteConfiguration aggregateRouteConfiguration, ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy, ResourceIdentifier networkFabricId, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
         {
-            return NetworkPacketBrokerData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, networkFabricId: networkFabricId, networkDeviceIds: networkDeviceIds, sourceInterfaceIds: sourceInterfaceIds, networkTapIds: networkTapIds, neighborGroupIds: neighborGroupIds, provisioningState: provisioningState, configurationState: default, lastOperationDetails: default, identity: default);
+            return NetworkFabricL3IsolationDomainData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: default, annotation: annotation, redistributeConnectedSubnets: redistributeConnectedSubnets, redistributeStaticRoutes: redistributeStaticRoutes, aggregateRouteConfiguration: aggregateRouteConfiguration, connectedSubnetRoutePolicy: connectedSubnetRoutePolicy, networkFabricId: networkFabricId, staticRouteExportRoutePolicy: default, uniqueRds: default, v4RoutePrefixLimit: default, v6RoutePrefixLimit: default, lastOperationDetails: default, exportPolicies: default, configurationState: configurationState, provisioningState: provisioningState, administrativeState: administrativeState);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkTapRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="configurationType"> Input method to configure Network Tap Rule. </param>
-        /// <param name="tapRulesUri"> Network Tap Rules file URL. </param>
-        /// <param name="matchConfigurations"> List of match configurations. </param>
-        /// <param name="dynamicMatchConfigurations"> List of dynamic match configurations. </param>
-        /// <param name="networkTapId"> The ARM resource Id of the NetworkTap. </param>
-        /// <param name="pollingIntervalInSeconds"> Polling interval in seconds. </param>
-        /// <param name="lastSyncedOn"> The last sync timestamp. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkTapRuleData"/> instance for mocking. </returns>
+        /// <summary> Initializes a new instance of <see cref="ArmManagedNetworkFabricModelFactory.NetworkTapRuleData(ResourceIdentifier,string,ResourceType,SystemData,IDictionary{string,string},AzureLocation,string,NetworkFabricConfigurationType?,Uri,IEnumerable{Models.NetworkTapRuleMatchConfiguration},IEnumerable{Models.CommonDynamicMatchConfiguration},ResourceIdentifier,PollingIntervalInSecond?,DateTimeOffset?,NetworkFabricConfigurationState?,NetworkFabricProvisioningState?,NetworkFabricAdministrativeState?)"/>. </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
+        /// <param name="tags"></param>
+        /// <param name="location"></param>
+        /// <param name="annotation"></param>
+        /// <param name="configurationType"></param>
+        /// <param name="tapRulesUri"></param>
+        /// <param name="matchConfigurations"></param>
+        /// <param name="dynamicMatchConfigurations"></param>
+        /// <param name="networkTapId"></param>
+        /// <param name="pollingIntervalInSeconds"></param>
+        /// <param name="lastSyncedOn"></param>
+        /// <param name="configurationState"></param>
+        /// <param name="provisioningState"></param>
+        /// <param name="administrativeState"></param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkTapRuleData NetworkTapRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkFabricConfigurationType? configurationType, Uri tapRulesUri, IEnumerable<NetworkTapRuleMatchConfiguration> matchConfigurations, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, ResourceIdentifier networkTapId, PollingIntervalInSecond? pollingIntervalInSeconds, DateTimeOffset? lastSyncedOn, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
         {
@@ -4723,6 +3937,961 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricAccessControlListData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="configurationType"> Input method to configure Access Control List. </param>
+        /// <param name="aclsUri"> Access Control List file URL. </param>
+        /// <param name="defaultAction"> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </param>
+        /// <param name="matchConfigurations"> List of match configurations. </param>
+        /// <param name="dynamicMatchConfigurations"> List of dynamic match configurations. </param>
+        /// <param name="lastSyncedOn"> The last synced timestamp. </param>
+        /// <param name="aclType"> Access Control List (ACL) Type. </param>
+        /// <param name="deviceRole"> Device Role. </param>
+        /// <param name="globalAccessControlListActionsEnableCount"> Global Access Control List (ACL) actions. </param>
+        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="networkFabricIds"> Associated Network Fabric Resource IDs. </param>
+        /// <param name="controlPlaneAclConfiguration"> Access Control List (ACL) configurations. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricAccessControlListData"/> instance for mocking. </returns>
+        public static NetworkFabricAccessControlListData NetworkFabricAccessControlListData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, NetworkFabricConfigurationType? configurationType = default, Uri aclsUri = default, CommunityActionType? defaultAction = default, IEnumerable<AccessControlListMatchConfiguration> matchConfigurations = default, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default, DateTimeOffset? lastSyncedOn = default, NetworkFabricAclType? aclType = default, NetworkFabricDeviceRole? deviceRole = default, NetworkFabricBooleanValue? globalAccessControlListActionsEnableCount = default, string lastOperationDetails = default, IEnumerable<ResourceIdentifier> networkFabricIds = default, IEnumerable<ControlPlaneAclProperties> controlPlaneAclConfiguration = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            matchConfigurations ??= new ChangeTrackingList<AccessControlListMatchConfiguration>();
+            dynamicMatchConfigurations ??= new ChangeTrackingList<CommonDynamicMatchConfiguration>();
+            networkFabricIds ??= new ChangeTrackingList<ResourceIdentifier>();
+            controlPlaneAclConfiguration ??= new ChangeTrackingList<ControlPlaneAclProperties>();
+
+            return new NetworkFabricAccessControlListData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricInternetGatewayRuleData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="ruleProperties"> Rules for the InternetGateways. </param>
+        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="internetGatewayIds"> List of Internet Gateway resource Id. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricInternetGatewayRuleData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricInternetGatewayRuleData NetworkFabricInternetGatewayRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, InternetGatewayRules ruleProperties, string lastOperationDetails, NetworkFabricProvisioningState? provisioningState, IEnumerable<ResourceIdentifier> internetGatewayIds)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            internetGatewayIds ??= new ChangeTrackingList<ResourceIdentifier>();
+
+            return new NetworkFabricInternetGatewayRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                annotation is null && ruleProperties is null && lastOperationDetails is null && provisioningState is null ? default : new InternetGatewayRuleProperties(
+                    annotation,
+                    default,
+                    ruleProperties,
+                    new LastOperationProperties(lastOperationDetails, default),
+                    provisioningState,
+                    default));
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricInternetGatewayData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="internetGatewayRuleId"> ARM Resource ID of the Internet Gateway Rule. </param>
+        /// <param name="ipV4Address"> IPv4 Address of Internet Gateway. </param>
+        /// <param name="port"> Port number of Internet Gateway. </param>
+        /// <param name="typePropertiesType"> Gateway Type of the resource. </param>
+        /// <param name="internetGatewayType"> Gateway Type of the resource. </param>
+        /// <param name="networkFabricControllerId"> ARM Resource ID of the Network Fabric Controller. </param>
+        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricInternetGatewayData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricInternetGatewayData NetworkFabricInternetGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier internetGatewayRuleId, string ipV4Address, int? port, InternetGatewayType typePropertiesType, InternetGatewayType? internetGatewayType, ResourceIdentifier networkFabricControllerId, string lastOperationDetails, NetworkFabricProvisioningState? provisioningState)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NetworkFabricInternetGatewayData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                annotation is null && internetGatewayRuleId is null && ipV4Address is null && port is null && internetGatewayType is null && internetGatewayType is null && networkFabricControllerId is null && lastOperationDetails is null && provisioningState is null ? default : new InternetGatewayProperties(
+                    annotation,
+                    internetGatewayRuleId,
+                    ipV4Address,
+                    port,
+                    internetGatewayType,
+                    internetGatewayType,
+                    networkFabricControllerId,
+                    new LastOperationProperties(lastOperationDetails, default),
+                    provisioningState,
+                    default));
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricIPCommunityData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
+        /// <param name="ipCommunityRules"> List of IP Community Rules. </param>
+        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricIPCommunityData"/> instance for mocking. </returns>
+        public static NetworkFabricIPCommunityData NetworkFabricIPCommunityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, ResourceIdentifier networkFabricId = default, IEnumerable<IPCommunityRule> ipCommunityRules = default, string lastOperationDetails = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            ipCommunityRules ??= new ChangeTrackingList<IPCommunityRule>();
+
+            return new NetworkFabricIPCommunityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricIPExtendedCommunityData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="ipExtendedCommunityRules"> List of IP Extended Community Rules. </param>
+        /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
+        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricIPExtendedCommunityData"/> instance for mocking. </returns>
+        public static NetworkFabricIPExtendedCommunityData NetworkFabricIPExtendedCommunityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, IEnumerable<IPExtendedCommunityRule> ipExtendedCommunityRules = default, ResourceIdentifier networkFabricId = default, string lastOperationDetails = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            ipExtendedCommunityRules ??= new ChangeTrackingList<IPExtendedCommunityRule>();
+
+            return new NetworkFabricIPExtendedCommunityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricIPPrefixData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
+        /// <param name="ipPrefixRules"> The list of IP Prefix Rules. </param>
+        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricIPPrefixData"/> instance for mocking. </returns>
+        public static NetworkFabricIPPrefixData NetworkFabricIPPrefixData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, ResourceIdentifier networkFabricId = default, IEnumerable<IPPrefixRule> ipPrefixRules = default, string lastOperationDetails = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            ipPrefixRules ??= new ChangeTrackingList<IPPrefixRule>();
+
+            return new NetworkFabricIPPrefixData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricL2IsolationDomainData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
+        /// <param name="vlanId"> Vlan Identifier of the Network Fabric. Example: 501. </param>
+        /// <param name="mtu"> Maximum transmission unit. Default value is 1500. </param>
+        /// <param name="extendedVlan"> Extended VLAN status, default value is Disabled. </param>
+        /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the networkToNetworkInterconnectId of the L2 ISD resource. </param>
+        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricL2IsolationDomainData"/> instance for mocking. </returns>
+        public static NetworkFabricL2IsolationDomainData NetworkFabricL2IsolationDomainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, string annotation = default, ResourceIdentifier networkFabricId = default, int vlanId = 0, int? mtu = default, NetworkFabricExtendedVlan? extendedVlan = default, ResourceIdentifier networkToNetworkInterconnectId = default, string lastOperationDetails = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NetworkFabricL2IsolationDomainData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                default,
+                identity);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricL3IsolationDomainData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="redistributeConnectedSubnets"> Advertise Connected Subnets. Ex: "True" | "False". </param>
+        /// <param name="redistributeStaticRoutes"> Advertise Static Routes. Ex: "True" | "False". </param>
+        /// <param name="aggregateRouteConfiguration"> Aggregate route configurations. </param>
+        /// <param name="connectedSubnetRoutePolicy"> Connected Subnet RoutePolicy. </param>
+        /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
+        /// <param name="staticRouteExportRoutePolicy"> Static Route - route policy. </param>
+        /// <param name="uniqueRds"> Unique Route Distinguisher configuration. </param>
+        /// <param name="v4RoutePrefixLimit"> IPv4 VRF Limit configuration. </param>
+        /// <param name="v6RoutePrefixLimit"> IPv6 VRF Limit configuration. </param>
+        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="exportPolicies"> BMP Export Policy configuration. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricL3IsolationDomainData"/> instance for mocking. </returns>
+        public static NetworkFabricL3IsolationDomainData NetworkFabricL3IsolationDomainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, string annotation = default, RedistributeConnectedSubnet? redistributeConnectedSubnets = default, RedistributeStaticRoute? redistributeStaticRoutes = default, AggregateRouteConfiguration aggregateRouteConfiguration = default, ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy = default, ResourceIdentifier networkFabricId = default, L3ExportRoutePolicy staticRouteExportRoutePolicy = default, IEnumerable<string> uniqueRds = default, RoutePrefixLimitProperties v4RoutePrefixLimit = default, RoutePrefixLimitProperties v6RoutePrefixLimit = default, string lastOperationDetails = default, IEnumerable<BmpExportPolicy> exportPolicies = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            uniqueRds ??= new ChangeTrackingList<string>();
+            exportPolicies ??= new ChangeTrackingList<BmpExportPolicy>();
+
+            return new NetworkFabricL3IsolationDomainData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                default,
+                identity);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricNeighborGroupData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="destination"> An array of destination IPv4 Addresses or IPv6 Addresses. </param>
+        /// <param name="networkTapIds"> List of NetworkTap IDs where neighbor group is associated. </param>
+        /// <param name="networkTapRuleIds"> List of Network Tap Rule IDs where neighbor group is associated. </param>
+        /// <param name="networkFabricIds"> Associated Network Fabric Resource IDs. </param>
+        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricNeighborGroupData"/> instance for mocking. </returns>
+        public static NetworkFabricNeighborGroupData NetworkFabricNeighborGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, string annotation = default, NeighborGroupDestination destination = default, IEnumerable<ResourceIdentifier> networkTapIds = default, IEnumerable<ResourceIdentifier> networkTapRuleIds = default, IEnumerable<ResourceIdentifier> networkFabricIds = default, string lastOperationDetails = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricConfigurationState? configurationState = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            networkTapIds ??= new ChangeTrackingList<ResourceIdentifier>();
+            networkTapRuleIds ??= new ChangeTrackingList<ResourceIdentifier>();
+            networkFabricIds ??= new ChangeTrackingList<ResourceIdentifier>();
+
+            return new NetworkFabricNeighborGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                default,
+                identity);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkBootstrapDeviceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="hostName"> The host name of the device. </param>
+        /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
+        /// <param name="version"> Current version of the device as defined in SKU. </param>
+        /// <param name="networkDeviceSku"> Network Bootstrap Device SKU name. </param>
+        /// <param name="networkFabricId"> Associated Network Fabric Resource ID. </param>
+        /// <param name="secondaryManagementIPv4Address"> Secondary Management IPv4 Address. </param>
+        /// <param name="dhcpV4ServerIPAddress"> Dhcp server IPv4 Address. </param>
+        /// <param name="primaryManagementIPv6Address"> Primary Management IPv6 Address. </param>
+        /// <param name="secondaryManagementIPv6Address"> Secondary Management IPv6 Address. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="primaryManagementIPv4Address"> Primary Management IPv4 Address. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkBootstrapDeviceData"/> instance for mocking. </returns>
+        public static NetworkBootstrapDeviceData NetworkBootstrapDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, string annotation = default, string hostName = default, string serialNumber = default, string version = default, string networkDeviceSku = default, ResourceIdentifier networkFabricId = default, string secondaryManagementIPv4Address = default, string dhcpV4ServerIPAddress = default, string primaryManagementIPv6Address = default, string secondaryManagementIPv6Address = default, NetworkFabricProvisioningState? provisioningState = default, string primaryManagementIPv4Address = default, NetworkFabricAdministrativeState? administrativeState = default, NetworkFabricConfigurationState? configurationState = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NetworkBootstrapDeviceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                default,
+                identity);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkDeviceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="hostName"> The host name of the device. </param>
+        /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
+        /// <param name="identitySelector"> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </param>
+        /// <param name="version"> Current version of the device as defined in SKU. </param>
+        /// <param name="networkDeviceSku"> Network Device SKU name. </param>
+        /// <param name="networkDeviceRole"> NetworkDeviceRole is the device role: Example: CE | ToR. </param>
+        /// <param name="networkRackId"> Reference to network rack resource id. </param>
+        /// <param name="managementIPv4Address"> Management IPv4 Address. </param>
+        /// <param name="managementIPv6Address"> Management IPv6 Address. </param>
+        /// <param name="rwDeviceConfig"> User configured read-write configuration applied on the network devices. </param>
+        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <param name="secretRotationStatus"> Secret rotation status for the device's secrets. </param>
+        /// <param name="certificateRotationStatus"> Certificate rotation status for the device's certificates. </param>
+        /// <param name="networkFabricId"> Associated Network Fabric Resource ID. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkDeviceData"/> instance for mocking. </returns>
+        public static NetworkDeviceData NetworkDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, string annotation = default, string hostName = default, string serialNumber = default, NetworkFabricIdentitySelector identitySelector = default, string version = default, string networkDeviceSku = default, NetworkDeviceRole? networkDeviceRole = default, ResourceIdentifier networkRackId = default, IPAddress managementIPv4Address = default, string managementIPv6Address = default, string rwDeviceConfig = default, string lastOperationDetails = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, IEnumerable<NetworkFabricSecretRotationStatus> secretRotationStatus = default, IEnumerable<NetworkFabricCertificateRotationStatus> certificateRotationStatus = default, ResourceIdentifier networkFabricId = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            secretRotationStatus ??= new ChangeTrackingList<NetworkFabricSecretRotationStatus>();
+            certificateRotationStatus ??= new ChangeTrackingList<NetworkFabricCertificateRotationStatus>();
+
+            return new NetworkDeviceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                default,
+                identity);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricControllerData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="infrastructureExpressRouteConnections"> As part of an update, the Infrastructure ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Infrastructure services. (This is a Mandatory attribute). </param>
+        /// <param name="workloadExpressRouteConnections"> As part of an update, the workload ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Workload services. (This is a Mandatory attribute). </param>
+        /// <param name="infrastructureServices"> InfrastructureServices IP ranges. </param>
+        /// <param name="workloadServices"> WorkloadServices IP ranges. </param>
+        /// <param name="managedResourceGroupConfiguration"> Managed Resource Group configuration properties. </param>
+        /// <param name="networkFabricIds"> The NF-ID will be an input parameter used by the NF to link and get associated with the parent NFC Service. </param>
+        /// <param name="isWorkloadManagementNetworkEnabled"> A workload management network is required for all the tenant (workload) traffic. This traffic is only dedicated for Tenant workloads which are required to access internet or any other MSFT/Public endpoints. </param>
+        /// <param name="tenantInternetGatewayIds"> List of tenant InternetGateway resource IDs. </param>
+        /// <param name="ipv4AddressSpace"> IPv4 Network Fabric Controller Address Space. </param>
+        /// <param name="ipv6AddressSpace"> IPv6 Network Fabric Controller Address Space. </param>
+        /// <param name="nfcSku"> Network Fabric Controller SKU. </param>
+        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="provisioningState"> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of NFC provisioning. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricControllerData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricControllerData NetworkFabricControllerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string annotation, IEnumerable<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections, IEnumerable<ExpressRouteConnectionInformation> workloadExpressRouteConnections, NetworkFabricControllerServices infrastructureServices, NetworkFabricControllerServices workloadServices, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, IEnumerable<ResourceIdentifier> networkFabricIds, IsWorkloadManagementNetworkEnabled? isWorkloadManagementNetworkEnabled, IEnumerable<ResourceIdentifier> tenantInternetGatewayIds, string ipv4AddressSpace, string ipv6AddressSpace, NetworkFabricControllerSKU? nfcSku, string lastOperationDetails, NetworkFabricProvisioningState? provisioningState)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NetworkFabricControllerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                annotation is null && infrastructureExpressRouteConnections is null && workloadExpressRouteConnections is null && infrastructureServices is null && workloadServices is null && managedResourceGroupConfiguration is null && networkFabricIds is null && isWorkloadManagementNetworkEnabled is null && tenantInternetGatewayIds is null && ipv4AddressSpace is null && ipv6AddressSpace is null && nfcSku is null && lastOperationDetails is null && provisioningState is null ? default : new NetworkFabricControllerProperties(
+                    annotation,
+                    (infrastructureExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>()).ToList(),
+                    (workloadExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>()).ToList(),
+                    infrastructureServices,
+                    workloadServices,
+                    managedResourceGroupConfiguration,
+                    (networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    isWorkloadManagementNetworkEnabled,
+                    (tenantInternetGatewayIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    ipv4AddressSpace,
+                    ipv6AddressSpace,
+                    nfcSku,
+                    new LastOperationProperties(lastOperationDetails, default),
+                    provisioningState,
+                    default),
+                identity);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkMonitorData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="bmpConfiguration"> BMP Configurations for the Network Fabric. </param>
+        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provides you the latest status of the NetworkMonitor resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkMonitorData"/> instance for mocking. </returns>
+        public static NetworkMonitorData NetworkMonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, BmpConfigurationProperties bmpConfiguration = default, string lastOperationDetails = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NetworkMonitorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkPacketBrokerData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="networkFabricId"> ARM resource ID of the Network Fabric. </param>
+        /// <param name="networkDeviceIds"> List of ARM resource IDs of Network Devices [NPB]. </param>
+        /// <param name="sourceInterfaceIds"> List of network interfaces across NPB devices that are used to mirror source traffic. </param>
+        /// <param name="networkTapIds"> List of network Tap IDs configured on NPB. </param>
+        /// <param name="neighborGroupIds"> List of neighbor group IDs configured on NPB. </param>
+        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkPacketBrokerData"/> instance for mocking. </returns>
+        public static NetworkPacketBrokerData NetworkPacketBrokerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, ResourceIdentifier networkFabricId = default, IEnumerable<ResourceIdentifier> networkDeviceIds = default, IEnumerable<ResourceIdentifier> sourceInterfaceIds = default, IEnumerable<ResourceIdentifier> networkTapIds = default, IEnumerable<ResourceIdentifier> neighborGroupIds = default, string lastOperationDetails = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricConfigurationState? configurationState = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            networkDeviceIds ??= new ChangeTrackingList<ResourceIdentifier>();
+            sourceInterfaceIds ??= new ChangeTrackingList<ResourceIdentifier>();
+            networkTapIds ??= new ChangeTrackingList<ResourceIdentifier>();
+            neighborGroupIds ??= new ChangeTrackingList<ResourceIdentifier>();
+
+            return new NetworkPacketBrokerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                default,
+                identity);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkRackData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="networkRackType"> Network Rack SKU name. </param>
+        /// <param name="networkFabricId"> ARM resource ID of the Network Fabric. </param>
+        /// <param name="networkDevices"> List of network device ARM resource IDs. </param>
+        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkRackData"/> instance for mocking. </returns>
+        public static NetworkRackData NetworkRackData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, NetworkRackType? networkRackType = default, ResourceIdentifier networkFabricId = default, IEnumerable<ResourceIdentifier> networkDevices = default, string lastOperationDetails = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricConfigurationState? configurationState = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            networkDevices ??= new ChangeTrackingList<ResourceIdentifier>();
+
+            return new NetworkRackData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkTapRuleData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="configurationType"> Input method to configure Network Tap Rule. </param>
+        /// <param name="tapRulesUri"> Network Tap Rules file URL. </param>
+        /// <param name="identitySelector"> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </param>
+        /// <param name="matchConfigurations"> List of match configurations. </param>
+        /// <param name="dynamicMatchConfigurations"> List of dynamic match configurations. </param>
+        /// <param name="networkTapId"> The ARM resource Id of the NetworkTap. </param>
+        /// <param name="networkTapIds"> The ARM resource Id of the NetworkTap Rules. </param>
+        /// <param name="pollingIntervalInSeconds"> Polling interval in seconds. </param>
+        /// <param name="lastSyncedOn"> The last sync timestamp. </param>
+        /// <param name="globalNetworkTapRuleActions"> Global network tap rule actions. </param>
+        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="networkFabricIds"> Associated Network Fabric Resource IDs. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkTapRuleData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkTapRuleData NetworkTapRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string annotation, NetworkFabricConfigurationType? configurationType, Uri tapRulesUri, NetworkFabricIdentitySelector identitySelector, IEnumerable<NetworkTapRuleMatchConfiguration> matchConfigurations, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, ResourceIdentifier networkTapId, IEnumerable<ResourceIdentifier> networkTapIds, PollingIntervalInSecond? pollingIntervalInSeconds, DateTimeOffset? lastSyncedOn, GlobalNetworkTapRuleActionProperties globalNetworkTapRuleActions, string lastOperationDetails, IEnumerable<ResourceIdentifier> networkFabricIds, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NetworkTapRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                annotation is null && configurationType is null && tapRulesUri is null && identitySelector is null && matchConfigurations is null && dynamicMatchConfigurations is null && networkTapId is null && networkTapIds is null && lastSyncedOn is null && globalNetworkTapRuleActions is null && lastOperationDetails is null && networkFabricIds is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new NetworkTapRuleProperties(
+                    annotation,
+                    configurationType.GetValueOrDefault(),
+                    tapRulesUri,
+                    identitySelector,
+                    (matchConfigurations ?? new ChangeTrackingList<NetworkTapRuleMatchConfiguration>()).ToList(),
+                    (dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>()).ToList(),
+                    networkTapId,
+                    (networkTapIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    default,
+                    lastSyncedOn,
+                    globalNetworkTapRuleActions,
+                    new LastOperationProperties(lastOperationDetails, default),
+                    (networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    configurationState,
+                    provisioningState,
+                    administrativeState,
+                    default),
+                identity);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricRoutePolicyData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="defaultAction"> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </param>
+        /// <param name="statements"> Route Policy statements. </param>
+        /// <param name="networkFabricId"> Arm Resource ID of Network Fabric. </param>
+        /// <param name="addressFamilyType"> AddressFamilyType. This parameter decides whether the given ipv4 or ipv6 route policy. </param>
+        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricRoutePolicyData"/> instance for mocking. </returns>
+        public static NetworkFabricRoutePolicyData NetworkFabricRoutePolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, CommunityActionType? defaultAction = default, IEnumerable<RoutePolicyStatementProperties> statements = default, ResourceIdentifier networkFabricId = default, AddressFamilyType? addressFamilyType = default, string lastOperationDetails = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            statements ??= new ChangeTrackingList<RoutePolicyStatementProperties>();
+
+            return new NetworkFabricRoutePolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricExternalNetworkData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the networkToNetworkInterconnectId of the ExternalNetwork resource. </param>
+        /// <param name="importRoutePolicy"> Import Route Policy either IPv4 or IPv6. </param>
+        /// <param name="exportRoutePolicy"> Export Route Policy either IPv4 or IPv6. </param>
+        /// <param name="peeringOption"> Peering option list. </param>
+        /// <param name="optionBProperties"> option B properties object. </param>
+        /// <param name="optionAProperties"> option A properties object. </param>
+        /// <param name="staticRouteConfiguration"> Static Route Configuration. </param>
+        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="networkFabricId"> Associated Network Fabric Resource ID. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricExternalNetworkData"/> instance for mocking. </returns>
+        public static NetworkFabricExternalNetworkData NetworkFabricExternalNetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string annotation = default, ResourceIdentifier networkToNetworkInterconnectId = default, ImportRoutePolicy importRoutePolicy = default, ExportRoutePolicy exportRoutePolicy = default, PeeringOption peeringOption = default, L3OptionBProperties optionBProperties = default, ExternalNetworkOptionAProperties optionAProperties = default, ExternalNetworkStaticRouteConfiguration staticRouteConfiguration = default, string lastOperationDetails = default, ResourceIdentifier networkFabricId = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default)
+        {
+            return new NetworkFabricExternalNetworkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkDeviceInterfaceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="physicalIdentifier"> Physical Identifier of the network interface. </param>
+        /// <param name="connectedTo"> The ARM resource id of the interface or compute server its connected to. </param>
+        /// <param name="interfaceType"> The Interface Type. Example: Management/Data. </param>
+        /// <param name="ipv4Address"> IPv4Address of the interface. </param>
+        /// <param name="ipv6Address"> IPv6Address of the interface. </param>
+        /// <param name="description"> Description of the interface. </param>
+        /// <param name="additionalDescription"> Additional description of the interface. </param>
+        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="networkFabricId"> Associated Network Fabric Resource ID. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkDeviceInterfaceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkDeviceInterfaceData NetworkDeviceInterfaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string annotation, string physicalIdentifier, string connectedTo, NetworkDeviceInterfaceType? interfaceType, IPAddress ipv4Address, string ipv6Address, string description, string additionalDescription, string lastOperationDetails, ResourceIdentifier networkFabricId, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, NetworkFabricConfigurationState? configurationState)
+        {
+            return new NetworkDeviceInterfaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                annotation is null && physicalIdentifier is null && connectedTo is null && interfaceType is null && ipv4Address is null && ipv6Address is null && description is null && additionalDescription is null && lastOperationDetails is null && networkFabricId is null && provisioningState is null && administrativeState is null && configurationState is null ? default : new NetworkInterfaceProperties(
+                    annotation,
+                    default,
+                    physicalIdentifier,
+                    connectedTo,
+                    interfaceType,
+                    ipv4Address,
+                    ipv6Address,
+                    description,
+                    additionalDescription,
+                    new LastOperationProperties(lastOperationDetails, default),
+                    networkFabricId,
+                    provisioningState,
+                    administrativeState,
+                    configurationState),
+                identity);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkToNetworkInterconnectPatch"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="layer2Configuration"> Common properties for Layer2Configuration. </param>
+        /// <param name="optionBLayer3Configuration"> Common properties for Layer3Configuration. </param>
+        /// <param name="npbStaticRouteConfiguration"> NPB Static Route Configuration properties. </param>
+        /// <param name="staticRouteConfiguration"> Static Route Configuration. </param>
+        /// <param name="importRoutePolicy"> Import Route Policy information. </param>
+        /// <param name="exportRoutePolicy"> Export Route Policy information. </param>
+        /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
+        /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
+        /// <param name="microBfdState"> Micro BFD enabled/disabled state. </param>
+        /// <returns> A new <see cref="Models.NetworkToNetworkInterconnectPatch"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkToNetworkInterconnectPatch NetworkToNetworkInterconnectPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Layer2Configuration layer2Configuration, OptionBLayer3Configuration optionBLayer3Configuration, NpbStaticRouteConfiguration npbStaticRouteConfiguration, NniStaticRoutePatchConfiguration staticRouteConfiguration, ImportRoutePolicyInformation importRoutePolicy, ExportRoutePolicyInformation exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId, NetworkFabricMicroBfdState? microBfdState)
+        {
+            return new NetworkToNetworkInterconnectPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                staticRouteConfiguration is null && egressAclId is null && ingressAclId is null && microBfdState is null ? default : new NetworkToNetworkInterconnectPatchProperties(
+                    default,
+                    default,
+                    default,
+                    staticRouteConfiguration,
+                    default,
+                    default,
+                    egressAclId,
+                    ingressAclId,
+                    microBfdState,
+                    default));
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricIPCommunityData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="ipCommunityRules"> List of IP Community Rules. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricIPCommunityData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricIPCommunityData NetworkFabricIPCommunityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IEnumerable<IPCommunityRule> ipCommunityRules, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return NetworkFabricIPCommunityData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, annotation: annotation, networkFabricId: default, ipCommunityRules: ipCommunityRules, lastOperationDetails: default, configurationState: configurationState, provisioningState: provisioningState, administrativeState: administrativeState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricIPExtendedCommunityData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="ipExtendedCommunityRules"> List of IP Extended Community Rules. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricIPExtendedCommunityData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricIPExtendedCommunityData NetworkFabricIPExtendedCommunityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IEnumerable<IPExtendedCommunityRule> ipExtendedCommunityRules, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return NetworkFabricIPExtendedCommunityData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, annotation: annotation, ipExtendedCommunityRules: ipExtendedCommunityRules, networkFabricId: default, lastOperationDetails: default, configurationState: configurationState, provisioningState: provisioningState, administrativeState: administrativeState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricIPPrefixData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="ipPrefixRules"> The list of IP Prefix Rules. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricIPPrefixData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricIPPrefixData NetworkFabricIPPrefixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IEnumerable<IPPrefixRule> ipPrefixRules, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return NetworkFabricIPPrefixData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, annotation: annotation, networkFabricId: default, ipPrefixRules: ipPrefixRules, lastOperationDetails: default, configurationState: configurationState, provisioningState: provisioningState, administrativeState: administrativeState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BgpConfiguration"/>. </summary>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="bfdConfiguration"> BFD configuration properties. </param>
+        /// <param name="defaultRouteOriginate"> Originate a defaultRoute. Ex: "True" | "False". </param>
+        /// <param name="allowAS"> Allows for routes to be received and processed even if the router detects its own ASN in the AS-Path. 0 is disable, Possible values are 1-10, default is 2. </param>
+        /// <param name="allowASOverride"> Enable Or Disable state. </param>
+        /// <param name="fabricAsn"> ASN of Network Fabric. Example: 65048. </param>
+        /// <param name="peerAsn"> Peer ASN. Example: 65047. </param>
+        /// <param name="ipv4ListenRangePrefixes"> List of BGP IPv4 Listen Range prefixes. </param>
+        /// <param name="ipv6ListenRangePrefixes"> List of BGP IPv6 Listen Ranges prefixes. </param>
+        /// <param name="ipv4NeighborAddress"> List with stringified IPv4 Neighbor Addresses. </param>
+        /// <param name="ipv6NeighborAddress"> List with stringified IPv6 Neighbor Address. </param>
+        /// <returns> A new <see cref="Models.BgpConfiguration"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BgpConfiguration BgpConfiguration(string annotation, BfdConfiguration bfdConfiguration, NetworkFabricBooleanValue? defaultRouteOriginate, int? allowAS, AllowASOverride? allowASOverride, long? fabricAsn, long? peerAsn, IEnumerable<string> ipv4ListenRangePrefixes, IEnumerable<string> ipv6ListenRangePrefixes, IEnumerable<NeighborAddress> ipv4NeighborAddress, IEnumerable<NeighborAddress> ipv6NeighborAddress)
+        {
+            return BgpConfiguration(annotation: annotation, bfdConfiguration: bfdConfiguration, defaultRouteOriginate: defaultRouteOriginate, allowAS: allowAS, allowASOverride: allowASOverride, fabricAsn: fabricAsn, peerAsn: peerAsn, ipv4ListenRangePrefixes: ipv4ListenRangePrefixes, ipv6ListenRangePrefixes: ipv6ListenRangePrefixes, ipv4NeighborAddress: ipv4NeighborAddress, ipv6NeighborAddress: ipv6NeighborAddress, bmpConfiguration: default, v4OverV6BgpSession: default, v6OverV4BgpSession: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NeighborAddress"/>. </summary>
+        /// <param name="address"> IP Address. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <returns> A new <see cref="Models.NeighborAddress"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NeighborAddress NeighborAddress(string address, NetworkFabricConfigurationState? configurationState)
+        {
+            return NeighborAddress(address: address, bfdAdministrativeState: default, bgpAdministrativeState: default, configurationState: configurationState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ExternalNetworkOptionAProperties"/>. </summary>
+        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
+        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
+        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
+        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        /// <param name="mtu"> MTU to use for option A peering. </param>
+        /// <param name="vlanId"> Vlan identifier. Example : 501. </param>
+        /// <param name="fabricAsn"> Fabric ASN number. Example 65001. </param>
+        /// <param name="peerAsn"> Peer ASN number.Example : 28. </param>
+        /// <param name="bfdConfiguration"> BFD configuration properties. </param>
+        /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
+        /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
+        /// <returns> A new <see cref="Models.ExternalNetworkOptionAProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ExternalNetworkOptionAProperties ExternalNetworkOptionAProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, int? mtu, int? vlanId, long? fabricAsn, long? peerAsn, BfdConfiguration bfdConfiguration, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId)
+        {
+            return ExternalNetworkOptionAProperties(primaryIPv4Prefix: primaryIPv4Prefix, primaryIPv6Prefix: primaryIPv6Prefix, secondaryIPv4Prefix: secondaryIPv4Prefix, secondaryIPv6Prefix: secondaryIPv6Prefix, mtu: mtu, vlanId: vlanId, fabricAsn: fabricAsn, peerAsn: peerAsn, bfdConfiguration: bfdConfiguration, ingressAclId: ingressAclId, bmpConfigurationState: default, egressAclId: egressAclId, v4OverV6BgpSession: default, v6OverV4BgpSession: default, nativeIPv4PrefixLimits: default, nativeIPv6PrefixLimits: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricNeighborGroupData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="destination"> An array of destination IPv4 Addresses or IPv6 Addresses. </param>
+        /// <param name="networkTapIds"> List of NetworkTap IDs where neighbor group is associated. </param>
+        /// <param name="networkTapRuleIds"> List of Network Tap Rule IDs where neighbor group is associated. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricNeighborGroupData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricNeighborGroupData NetworkFabricNeighborGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NeighborGroupDestination destination, IEnumerable<ResourceIdentifier> networkTapIds, IEnumerable<ResourceIdentifier> networkTapRuleIds, NetworkFabricProvisioningState? provisioningState)
+        {
+            return NetworkFabricNeighborGroupData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: default, annotation: annotation, destination: destination, networkTapIds: networkTapIds, networkTapRuleIds: networkTapRuleIds, networkFabricIds: default, lastOperationDetails: default, provisioningState: provisioningState, configurationState: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkDeviceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="hostName"> The host name of the device. </param>
+        /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
+        /// <param name="version"> Current version of the device as defined in SKU. </param>
+        /// <param name="networkDeviceSku"> Network Device SKU name. </param>
+        /// <param name="networkDeviceRole"> NetworkDeviceRole is the device role: Example: CE | ToR. </param>
+        /// <param name="networkRackId"> Reference to network rack resource id. </param>
+        /// <param name="managementIPv4Address"> Management IPv4 Address. </param>
+        /// <param name="managementIPv6Address"> Management IPv6 Address. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkDeviceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkDeviceData NetworkDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, string hostName, string serialNumber, string version, string networkDeviceSku, NetworkDeviceRole? networkDeviceRole, ResourceIdentifier networkRackId, IPAddress managementIPv4Address, string managementIPv6Address, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return NetworkDeviceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: default, annotation: annotation, hostName: hostName, serialNumber: serialNumber, identitySelector: default, version: version, networkDeviceSku: networkDeviceSku, networkDeviceRole: networkDeviceRole, networkRackId: networkRackId, managementIPv4Address: managementIPv4Address, managementIPv6Address: managementIPv6Address, rwDeviceConfig: default, lastOperationDetails: default, configurationState: configurationState, provisioningState: provisioningState, administrativeState: administrativeState, secretRotationStatus: default, certificateRotationStatus: default, networkFabricId: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.OptionBLayer3Configuration"/>. </summary>
+        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
+        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
+        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
+        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        /// <param name="peerAsn"> ASN of PE devices for CE/PE connectivity.Example : 28. </param>
+        /// <param name="vlanId"> VLAN for CE/PE Layer 3 connectivity.Example : 501. </param>
+        /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
+        /// <returns> A new <see cref="Models.OptionBLayer3Configuration"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static OptionBLayer3Configuration OptionBLayer3Configuration(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, long? peerAsn, int? vlanId, long? fabricAsn)
+        {
+            return OptionBLayer3Configuration(primaryIPv4Prefix: primaryIPv4Prefix, primaryIPv6Prefix: primaryIPv6Prefix, secondaryIPv4Prefix: secondaryIPv4Prefix, secondaryIPv6Prefix: secondaryIPv6Prefix, peerAsn: peerAsn, vlanId: vlanId, fabricAsn: fabricAsn, peLoopbackIPAddress: default, bmpConfigurationState: default, prefixLimits: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkPacketBrokerData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="networkFabricId"> ARM resource ID of the Network Fabric. </param>
+        /// <param name="networkDeviceIds"> List of ARM resource IDs of Network Devices [NPB]. </param>
+        /// <param name="sourceInterfaceIds"> List of network interfaces across NPB devices that are used to mirror source traffic. </param>
+        /// <param name="networkTapIds"> List of network Tap IDs configured on NPB. </param>
+        /// <param name="neighborGroupIds"> List of neighbor group IDs configured on NPB. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkPacketBrokerData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkPacketBrokerData NetworkPacketBrokerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier networkFabricId, IEnumerable<ResourceIdentifier> networkDeviceIds, IEnumerable<ResourceIdentifier> sourceInterfaceIds, IEnumerable<ResourceIdentifier> networkTapIds, IEnumerable<ResourceIdentifier> neighborGroupIds, NetworkFabricProvisioningState? provisioningState)
+        {
+            return NetworkPacketBrokerData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: default, networkFabricId: networkFabricId, networkDeviceIds: networkDeviceIds, sourceInterfaceIds: sourceInterfaceIds, networkTapIds: networkTapIds, neighborGroupIds: neighborGroupIds, lastOperationDetails: default, provisioningState: provisioningState, configurationState: default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricRoutePolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -4742,7 +4911,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkFabricRoutePolicyData NetworkFabricRoutePolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, CommunityActionType? defaultAction, IEnumerable<RoutePolicyStatementProperties> statements, ResourceIdentifier networkFabricId, AddressFamilyType? addressFamilyType, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
         {
-            return NetworkFabricRoutePolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, annotation: annotation, defaultAction: defaultAction, statements: statements, networkFabricId: networkFabricId, addressFamilyType: addressFamilyType, configurationState: configurationState, provisioningState: provisioningState, administrativeState: administrativeState, lastOperationDetails: default);
+            return NetworkFabricRoutePolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, annotation: annotation, defaultAction: defaultAction, statements: statements, networkFabricId: networkFabricId, addressFamilyType: addressFamilyType, lastOperationDetails: default, configurationState: configurationState, provisioningState: provisioningState, administrativeState: administrativeState);
         }
 
         /// <summary> This constructor is added for the backward compatibility. </summary>
@@ -4763,7 +4932,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkFabricRoutePolicyData NetworkFabricRoutePolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IEnumerable<RoutePolicyStatementProperties> statements, ResourceIdentifier networkFabricId, AddressFamilyType? addressFamilyType, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
         {
-            return NetworkFabricRoutePolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, annotation: annotation, defaultAction: default, statements: statements, networkFabricId: networkFabricId, addressFamilyType: addressFamilyType, configurationState: configurationState, provisioningState: provisioningState, administrativeState: administrativeState, lastOperationDetails: default);
+            return NetworkFabricRoutePolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, annotation: annotation, defaultAction: default, statements: statements, networkFabricId: networkFabricId, addressFamilyType: addressFamilyType, lastOperationDetails: default, configurationState: configurationState, provisioningState: provisioningState, administrativeState: administrativeState);
         }
     }
 }

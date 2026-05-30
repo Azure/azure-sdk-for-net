@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     [ModelReaderWriterBuildable(typeof(NetworkPacketBrokerPatch))]
     [ModelReaderWriterBuildable(typeof(NetworkTapPatch))]
     [ModelReaderWriterBuildable(typeof(NetworkTapRulePatch))]
+    [ModelReaderWriterBuildable(typeof(NetworkFabricOperationStatusResult))]
 #pragma warning restore CS0618
     public partial class AzureResourceManagerManagedNetworkFabricContext
     {

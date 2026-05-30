@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The NetworkPacketBroker patch resource definition. </summary>
-    public partial class NetworkPacketBrokerPatchContent : ManagedNetworkFabricResourcePatch
+    public partial class NetworkPacketBrokerPatchContent : NetworkRackPatch
     {
         /// <summary> Initializes a new instance of <see cref="NetworkPacketBrokerPatchContent"/>. </summary>
         public NetworkPacketBrokerPatchContent()

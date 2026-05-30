@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Network Fabric Controller Patch payload definition. </summary>
-    public partial class NetworkFabricControllerPatchContent : ManagedNetworkFabricResourcePatch
+    public partial class NetworkFabricControllerPatchContent : NetworkRackPatch
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricControllerPatchContent"/>. </summary>
         public NetworkFabricControllerPatchContent()

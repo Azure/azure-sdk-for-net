@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Network Device Patch Parameters defines the patch parameters of the resource. </summary>
-    public partial class NetworkDevicePatchContent : ManagedNetworkFabricResourcePatch
+    public partial class NetworkDevicePatchContent : NetworkRackPatch
     {
         /// <summary> Initializes a new instance of <see cref="NetworkDevicePatchContent"/>. </summary>
         public NetworkDevicePatchContent()

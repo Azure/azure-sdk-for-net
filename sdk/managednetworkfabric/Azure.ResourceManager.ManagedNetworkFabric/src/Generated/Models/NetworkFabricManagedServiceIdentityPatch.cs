@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="identityType"> The type of managed identity assigned to this resource. </param>
         /// <param name="userAssignedIdentities"> The identities assigned to this resource by the user. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricManagedServiceIdentityPatch(ManagedServiceIdentityType? identityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkFabricManagedServiceIdentityPatch(NetworkFabricManagedServiceIdentityType? identityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IdentityType = identityType;
             UserAssignedIdentities = userAssignedIdentities;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> The type of managed identity assigned to this resource. </summary>
-        public ManagedServiceIdentityType? IdentityType { get; set; }
+        public NetworkFabricManagedServiceIdentityType? IdentityType { get; set; }
 
         /// <summary> The identities assigned to this resource by the user. </summary>
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }

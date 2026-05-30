@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The NetworkFabric resource definition. </summary>
-    public partial class NetworkTapPatchContent : ManagedNetworkFabricResourcePatch
+    public partial class NetworkTapPatchContent : NetworkRackPatch
     {
         /// <summary> Initializes a new instance of <see cref="NetworkTapPatchContent"/>. </summary>
         public NetworkTapPatchContent()

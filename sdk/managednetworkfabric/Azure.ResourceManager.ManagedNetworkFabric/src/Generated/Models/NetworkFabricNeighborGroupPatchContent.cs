@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Neighbor Group Patch definition. </summary>
-    public partial class NetworkFabricNeighborGroupPatchContent : ManagedNetworkFabricResourcePatch
+    public partial class NetworkFabricNeighborGroupPatchContent : NetworkRackPatch
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricNeighborGroupPatchContent"/>. </summary>
         public NetworkFabricNeighborGroupPatchContent()

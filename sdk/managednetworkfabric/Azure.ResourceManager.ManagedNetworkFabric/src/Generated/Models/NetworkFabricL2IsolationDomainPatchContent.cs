@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The L2 Isolation Domain patch resource definition. </summary>
-    public partial class NetworkFabricL2IsolationDomainPatchContent : ManagedNetworkFabricResourcePatch
+    public partial class NetworkFabricL2IsolationDomainPatchContent : NetworkRackPatch
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricL2IsolationDomainPatchContent"/>. </summary>
         public NetworkFabricL2IsolationDomainPatchContent()

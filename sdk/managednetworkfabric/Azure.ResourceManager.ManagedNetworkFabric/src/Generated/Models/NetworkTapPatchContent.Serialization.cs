@@ -15,11 +15,11 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The NetworkFabric resource definition. </summary>
-    public partial class NetworkTapPatchContent : ManagedNetworkFabricResourcePatch, IJsonModel<NetworkTapPatchContent>
+    public partial class NetworkTapPatchContent : NetworkRackPatch, IJsonModel<NetworkTapPatchContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ManagedNetworkFabricResourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override NetworkRackPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NetworkTapPatchContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ManagedNetworkFabricResourcePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override NetworkRackPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NetworkTapPatchContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

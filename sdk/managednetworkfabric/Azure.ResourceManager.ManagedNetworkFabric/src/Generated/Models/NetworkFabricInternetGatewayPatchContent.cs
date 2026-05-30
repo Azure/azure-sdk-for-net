@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Internet Gateway patch resource definition. </summary>
-    public partial class NetworkFabricInternetGatewayPatchContent : ManagedNetworkFabricResourcePatch
+    public partial class NetworkFabricInternetGatewayPatchContent : NetworkRackPatch
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayPatchContent"/>. </summary>
         public NetworkFabricInternetGatewayPatchContent()

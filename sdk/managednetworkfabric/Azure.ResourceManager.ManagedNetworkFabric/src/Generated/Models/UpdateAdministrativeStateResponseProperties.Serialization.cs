@@ -147,8 +147,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            IList<ResourceIdentifier> successfulResources = default;
-            IList<ResourceIdentifier> failedResources = default;
+            IReadOnlyList<ResourceIdentifier> successfulResources = default;
+            IReadOnlyList<ResourceIdentifier> failedResources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

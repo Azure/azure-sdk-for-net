@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The L3 Isolation Domain patch resource definition. </summary>
-    public partial class NetworkFabricL3IsolationDomainPatchContent : ManagedNetworkFabricResourcePatch
+    public partial class NetworkFabricL3IsolationDomainPatchContent : NetworkRackPatch
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricL3IsolationDomainPatchContent"/>. </summary>
         public NetworkFabricL3IsolationDomainPatchContent()

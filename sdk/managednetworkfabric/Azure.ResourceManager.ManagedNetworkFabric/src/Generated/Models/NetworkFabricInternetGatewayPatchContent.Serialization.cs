@@ -15,11 +15,11 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Internet Gateway patch resource definition. </summary>
-    public partial class NetworkFabricInternetGatewayPatchContent : ManagedNetworkFabricResourcePatch, IJsonModel<NetworkFabricInternetGatewayPatchContent>
+    public partial class NetworkFabricInternetGatewayPatchContent : NetworkRackPatch, IJsonModel<NetworkFabricInternetGatewayPatchContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ManagedNetworkFabricResourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override NetworkRackPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricInternetGatewayPatchContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ManagedNetworkFabricResourcePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override NetworkRackPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricInternetGatewayPatchContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

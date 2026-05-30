@@ -13,7 +13,6 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -121,14 +120,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("operations"u8);
                 writer.WriteStartArray();
-                foreach (OperationStatusResult item in Operations)
+                foreach (NetworkFabricOperationStatusResult item in Operations)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    ((IJsonModel<OperationStatusResult>)item).Write(writer, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -195,7 +189,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             double? percentComplete = default;
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
-            IList<OperationStatusResult> operations = default;
+            IReadOnlyList<NetworkFabricOperationStatusResult> operations = default;
             ResponseError error = default;
             ResourceIdentifier resourceId = default;
             InternalNetworkUpdateBgpAdministrativeStateResponseProperties properties = default;
@@ -254,17 +248,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<OperationStatusResult> array = new List<OperationStatusResult>();
+                    List<NetworkFabricOperationStatusResult> array = new List<NetworkFabricOperationStatusResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ModelReaderWriter.Read<OperationStatusResult>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerManagedNetworkFabricContext.Default));
-                        }
+                        array.Add(NetworkFabricOperationStatusResult.DeserializeNetworkFabricOperationStatusResult(item, options));
                     }
                     operations = array;
                     continue;
@@ -308,7 +295,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 percentComplete,
                 startOn,
                 endOn,
-                operations ?? new ChangeTrackingList<OperationStatusResult>(),
+                operations ?? new ChangeTrackingList<NetworkFabricOperationStatusResult>(),
                 error,
                 resourceId,
                 properties,

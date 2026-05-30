@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         internal ViewDeviceConfigurationOperationResult(string status)
         {
             Status = status;
-            Operations = new ChangeTrackingList<OperationStatusResult>();
+            Operations = new ChangeTrackingList<NetworkFabricOperationStatusResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ViewDeviceConfigurationOperationResult"/>. </summary>
@@ -40,7 +39,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="properties"> View Device Configuration Response Properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ViewDeviceConfigurationOperationResult(ResourceIdentifier id, string name, string status, double? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IList<OperationStatusResult> operations, ResponseError error, ResourceIdentifier resourceId, ViewDeviceConfigurationResponseProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ViewDeviceConfigurationOperationResult(ResourceIdentifier id, string name, string status, double? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<NetworkFabricOperationStatusResult> operations, ResponseError error, ResourceIdentifier resourceId, ViewDeviceConfigurationResponseProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> The operations list. </summary>
-        public IList<OperationStatusResult> Operations { get; }
+        public IReadOnlyList<NetworkFabricOperationStatusResult> Operations { get; }
 
         /// <summary> If present, details of the operation error. </summary>
         public ResponseError Error { get; }

@@ -15,11 +15,11 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The L2 Isolation Domain patch resource definition. </summary>
-    public partial class NetworkFabricL2IsolationDomainPatchContent : ManagedNetworkFabricResourcePatch, IJsonModel<NetworkFabricL2IsolationDomainPatchContent>
+    public partial class NetworkFabricL2IsolationDomainPatchContent : NetworkRackPatch, IJsonModel<NetworkFabricL2IsolationDomainPatchContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ManagedNetworkFabricResourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override NetworkRackPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricL2IsolationDomainPatchContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ManagedNetworkFabricResourcePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override NetworkRackPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricL2IsolationDomainPatchContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
