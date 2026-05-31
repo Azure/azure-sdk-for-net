@@ -31,7 +31,11 @@
 - Added support for Post-Dial Tones in outbound call scenarios
   - `PostDialTones` property now available in `CreateCallOptions` and `CreateGroupCallOptions`
 
-### Breaking Changes
+### Other Changes
+- Added `MediaWebSocketClient` with a fluent builder API for establishing authenticated WebSocket connections to ACS media streaming reverse proxy.
+  - Use `MediaWebSocketClient.Builder(callAutomationClient)` to configure and connect with HMAC or AAD credentials.
+  - Supports `WithStreamUrl` (required) and `WithCustomHeader` (optional) builder methods.
+  - Authentication is handled internally — no public authenticator exposure required.
 
 ### Bugs Fixed
 - Media streaming with AudioFormat default Pcm24kMono is removed and changed to null if AudioFormat is not passed.

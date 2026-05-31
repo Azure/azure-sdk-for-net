@@ -1193,6 +1193,21 @@ namespace Azure.Communication.CallAutomation
         public string StreamUrl { get { throw null; } }
         public static Azure.Communication.CallAutomation.MediaStreamingUpdated Deserialize(string content) { throw null; }
     }
+    public sealed partial class MediaWebSocketClient : System.IDisposable
+    {
+        internal MediaWebSocketClient() { }
+        public System.Net.WebSockets.ClientWebSocket Socket { get { throw null; } }
+        public static Azure.Communication.CallAutomation.MediaWebSocketClient.MediaWebSocketBuilder Builder(Azure.Communication.CallAutomation.CallAutomationClient client) { throw null; }
+        public void Dispose() { }
+        public sealed partial class MediaWebSocketBuilder
+        {
+            internal MediaWebSocketBuilder() { }
+            public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.MediaWebSocketClient> BuildAndConnectAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+            public Azure.Communication.CallAutomation.MediaWebSocketClient.MediaWebSocketBuilder WithCustomHeader(string name, string value) { throw null; }
+            public Azure.Communication.CallAutomation.MediaWebSocketClient.MediaWebSocketBuilder WithStreamUrl(string streamUrl) { throw null; }
+            public Azure.Communication.CallAutomation.MediaWebSocketClient.MediaWebSocketBuilder WithStreamUrl(System.Uri streamUrl) { throw null; }
+        }
+    }
     public partial class MoveParticipantEventResult
     {
         internal MoveParticipantEventResult() { }
