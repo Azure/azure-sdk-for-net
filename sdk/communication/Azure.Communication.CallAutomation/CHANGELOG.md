@@ -32,8 +32,10 @@
   - `PostDialTones` property now available in `CreateCallOptions` and `CreateGroupCallOptions`
 
 ### Other Changes
-- Added `AcsWebSocketAuthenticator` for authenticating WebSocket connections to ACS media streaming and transcription endpoints.
-  - Use `callAutomationClient.GetWebSocketAuthenticator()` to obtain an authenticator with HMAC or AAD credentials.
+- Added `MediaWebSocketClient` with a fluent builder API for establishing authenticated WebSocket connections to ACS media streaming reverse proxy.
+  - Use `MediaWebSocketClient.Builder(callAutomationClient)` to configure and connect with HMAC or AAD credentials.
+  - Supports `WithStreamUrl` (required) and `WithCustomHeader` (optional) builder methods.
+  - Authentication is handled internally — no public authenticator exposure required.
 
 ### Bugs Fixed
 - Media streaming with AudioFormat default Pcm24kMono is removed and changed to null if AudioFormat is not passed.

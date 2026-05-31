@@ -44,28 +44,21 @@ var client = new CallAutomationClient(endpoint, tokenCredential);
 
 ### WebSocket Connection for Media Streaming and Transcription
 
-Use `MediaWebSocketClient.Builder` to create authenticated WebSocket connections to ACS media streaming and transcription endpoints.
+Use `MediaWebSocketClient.Builder` to create authenticated WebSocket connections to ACS media streaming and transcription endpoints. Authentication (HMAC or AAD) is handled internally based on the `CallAutomationClient` credentials.
 
 ```C#
 var client = new CallAutomationClient(connectionString);
 
 // Minimal usage — only stream URL is required.
-// Connect timeout defaults to no timeout (waits until cancellation).
-// Keep-alive interval defaults to 30 seconds (from ClientWebSocket).
-// Buffer sizes default to 16,384 bytes for both send and receive (from ClientWebSocket).
 var ws = await MediaWebSocketClient
     .Builder(client)
     .WithStreamUrl(callConnectionProperties.MediaStreamingSubscription.StreamUrl)
     .BuildAndConnectAsync(cancellationToken);
 
-// Full usage with all optional settings
+// With custom headers
 var ws = await MediaWebSocketClient
     .Builder(client)
     .WithStreamUrl(callConnectionProperties.MediaStreamingSubscription.StreamUrl)
-    .WithConnectTimeout(TimeSpan.FromSeconds(30))
-    .WithKeepAliveInterval(TimeSpan.FromSeconds(15))
-    .WithBufferSize(receiveBufferSize: 8192, sendBufferSize: 8192)
-    .WithSubProtocol("graphql-ws")
     .WithCustomHeader("X-Correlation-Id", correlationId)
     .BuildAndConnectAsync(cancellationToken);
 ```
