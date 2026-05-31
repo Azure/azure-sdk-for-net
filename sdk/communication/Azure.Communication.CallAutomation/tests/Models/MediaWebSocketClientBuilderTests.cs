@@ -87,11 +87,7 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var builder = MediaWebSocketClient.Builder(client)
                 .WithStreamUrl("wss://contoso.communication.azure.com/stream")
                 .WithCustomHeader("X-App-Name", "MyApp")
-                .WithCustomHeader("X-Correlation-Id", "abc123")
-                .WithConnectTimeout(TimeSpan.FromSeconds(10))
-                .WithKeepAliveInterval(TimeSpan.FromSeconds(30))
-                .WithBufferSize(4096, 4096)
-                .WithSubProtocol("graphql-ws");
+                .WithCustomHeader("X-Correlation-Id", "abc123");
 
             Assert.That(builder, Is.Not.Null);
         }
