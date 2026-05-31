@@ -204,6 +204,16 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 writer.WritePropertyName("advisorHaRecommendationId"u8);
                 writer.WriteStringValue(AdvisorHaRecommendationId);
             }
+            if (options.Format != "W" && Optional.IsDefined(TargetAndCapabilityAssignmentError))
+            {
+                writer.WritePropertyName("targetAndCapabilityAssignmentError"u8);
+                writer.WriteObjectValue(TargetAndCapabilityAssignmentError, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TargetResourceAssignmentError))
+            {
+                writer.WritePropertyName("targetResourceAssignmentError"u8);
+                writer.WriteObjectValue(TargetResourceAssignmentError, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(RbacAssignmentError))
             {
                 writer.WritePropertyName("rbacAssignmentError"u8);
@@ -279,6 +289,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             DrillResourceAttentionReason attentionReason = default;
             string advisorRecommendationTypeId = default;
             ResourceIdentifier advisorHaRecommendationId = default;
+            ErrorDetails targetAndCapabilityAssignmentError = default;
+            ErrorDetails targetResourceAssignmentError = default;
             ErrorDetails rbacAssignmentError = default;
             ErrorDetails monitoringRbacAssignmentError = default;
             ProvisioningState? provisioningState = default;
@@ -483,6 +495,24 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     advisorHaRecommendationId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("targetAndCapabilityAssignmentError"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetAndCapabilityAssignmentError = ErrorDetails.DeserializeErrorDetails(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("targetResourceAssignmentError"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetResourceAssignmentError = ErrorDetails.DeserializeErrorDetails(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("rbacAssignmentError"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -534,6 +564,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 attentionReason,
                 advisorRecommendationTypeId,
                 advisorHaRecommendationId,
+                targetAndCapabilityAssignmentError,
+                targetResourceAssignmentError,
                 rbacAssignmentError,
                 monitoringRbacAssignmentError,
                 provisioningState,

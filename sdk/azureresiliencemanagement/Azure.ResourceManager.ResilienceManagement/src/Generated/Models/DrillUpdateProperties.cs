@@ -22,21 +22,30 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DrillUpdateProperties"/>. </summary>
+        /// <param name="metricsProperties"> Metric properties. </param>
         /// <param name="recoveryPlanProperties"> Recovery Plan properties. </param>
         /// <param name="drillAssetProperties"> Properties for internal resources that are created for the Drill. </param>
+        /// <param name="chaosExperimentProperties"> Chaos Experiment properties. </param>
         /// <param name="chaosResourceProperties"> Chaos Resource properties. </param>
+        /// <param name="healthModelProperties"> HealthModel properties. </param>
         /// <param name="rbacSetupMode"> RBAC setup mode. </param>
         /// <param name="monitoringProperties"> Monitoring properties of the Drill. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DrillUpdateProperties(RecoveryPlanPropertiesOfDrill recoveryPlanProperties, AssetPropertiesOfDrill drillAssetProperties, ChaosResourcePropertiesOfDrill chaosResourceProperties, RBACSetupMode? rbacSetupMode, MonitoringPropertiesOfDrill monitoringProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DrillUpdateProperties(MetricsPropertiesOfDrill metricsProperties, RecoveryPlanPropertiesOfDrill recoveryPlanProperties, AssetPropertiesOfDrill drillAssetProperties, ChaosExperimentPropertiesOfDrill chaosExperimentProperties, ChaosResourcePropertiesOfDrill chaosResourceProperties, HealthModelPropertiesOfDrill healthModelProperties, RBACSetupMode? rbacSetupMode, MonitoringPropertiesOfDrill monitoringProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            MetricsProperties = metricsProperties;
             RecoveryPlanProperties = recoveryPlanProperties;
             DrillAssetProperties = drillAssetProperties;
+            ChaosExperimentProperties = chaosExperimentProperties;
             ChaosResourceProperties = chaosResourceProperties;
+            HealthModelProperties = healthModelProperties;
             RbacSetupMode = rbacSetupMode;
             MonitoringProperties = monitoringProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Metric properties. </summary>
+        public MetricsPropertiesOfDrill MetricsProperties { get; set; }
 
         /// <summary> Recovery Plan properties. </summary>
         public RecoveryPlanPropertiesOfDrill RecoveryPlanProperties { get; set; }
@@ -44,8 +53,14 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Properties for internal resources that are created for the Drill. </summary>
         public AssetPropertiesOfDrill DrillAssetProperties { get; set; }
 
+        /// <summary> Chaos Experiment properties. </summary>
+        public ChaosExperimentPropertiesOfDrill ChaosExperimentProperties { get; set; }
+
         /// <summary> Chaos Resource properties. </summary>
         public ChaosResourcePropertiesOfDrill ChaosResourceProperties { get; set; }
+
+        /// <summary> HealthModel properties. </summary>
+        public HealthModelPropertiesOfDrill HealthModelProperties { get; set; }
 
         /// <summary> RBAC setup mode. </summary>
         public RBACSetupMode? RbacSetupMode { get; set; }

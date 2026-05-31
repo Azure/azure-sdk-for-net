@@ -50,11 +50,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="attentionReason"> Attention reason if the Status is 'NeedsAttention'. </param>
         /// <param name="advisorRecommendationTypeId"> Recommendation Type Id for the recommendation. </param>
         /// <param name="advisorHaRecommendationId"> Associated Advisor Recommendation link, if HA is not enabled on this resource. </param>
+        /// <param name="targetAndCapabilityAssignmentError"> Last Target and Capability assignment error, if any. </param>
+        /// <param name="targetResourceAssignmentError"> Last Target Resource RBAC assignment error, if any. </param>
         /// <param name="rbacAssignmentError"> Last RBAC assignment error, if any. </param>
         /// <param name="monitoringRbacAssignmentError"> Monitoring RBAC assignment error, if any. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DrillResourceProperties(ResourceIdentifier resourceId, string resourceType, IReadOnlyList<string> activeLocations, IReadOnlyList<string> recoveryLocations, IReadOnlyList<string> activePhysicalZones, IReadOnlyList<string> recoveryPhysicalZones, DrillResourceInclusionState? inclusionState, ResourceInclusionState? recoveryPlanInclusionState, RecoveryPlanExclusionReason? recoveryPlanExclusionReason, ResourceProtectionSolutionType? resourceProtectionSolutionType, DrillResourceReadinessState? readinessState, DrillResourceFaultState? faultState, FaultProperties faultProperties, ForceInclusionAndUpdate? forceInclusionState, HAStatus? haStatus, DrillResourceAttentionReason attentionReason, string advisorRecommendationTypeId, ResourceIdentifier advisorHaRecommendationId, ErrorDetails rbacAssignmentError, ErrorDetails monitoringRbacAssignmentError, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DrillResourceProperties(ResourceIdentifier resourceId, string resourceType, IReadOnlyList<string> activeLocations, IReadOnlyList<string> recoveryLocations, IReadOnlyList<string> activePhysicalZones, IReadOnlyList<string> recoveryPhysicalZones, DrillResourceInclusionState? inclusionState, ResourceInclusionState? recoveryPlanInclusionState, RecoveryPlanExclusionReason? recoveryPlanExclusionReason, ResourceProtectionSolutionType? resourceProtectionSolutionType, DrillResourceReadinessState? readinessState, DrillResourceFaultState? faultState, FaultProperties faultProperties, ForceInclusionAndUpdate? forceInclusionState, HAStatus? haStatus, DrillResourceAttentionReason attentionReason, string advisorRecommendationTypeId, ResourceIdentifier advisorHaRecommendationId, ErrorDetails targetAndCapabilityAssignmentError, ErrorDetails targetResourceAssignmentError, ErrorDetails rbacAssignmentError, ErrorDetails monitoringRbacAssignmentError, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             ResourceType = resourceType;
@@ -74,6 +76,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             AttentionReason = attentionReason;
             AdvisorRecommendationTypeId = advisorRecommendationTypeId;
             AdvisorHaRecommendationId = advisorHaRecommendationId;
+            TargetAndCapabilityAssignmentError = targetAndCapabilityAssignmentError;
+            TargetResourceAssignmentError = targetResourceAssignmentError;
             RbacAssignmentError = rbacAssignmentError;
             MonitoringRbacAssignmentError = monitoringRbacAssignmentError;
             ProvisioningState = provisioningState;
@@ -133,6 +137,12 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Associated Advisor Recommendation link, if HA is not enabled on this resource. </summary>
         public ResourceIdentifier AdvisorHaRecommendationId { get; }
+
+        /// <summary> Last Target and Capability assignment error, if any. </summary>
+        public ErrorDetails TargetAndCapabilityAssignmentError { get; }
+
+        /// <summary> Last Target Resource RBAC assignment error, if any. </summary>
+        public ErrorDetails TargetResourceAssignmentError { get; }
 
         /// <summary> Last RBAC assignment error, if any. </summary>
         public ErrorDetails RbacAssignmentError { get; }

@@ -92,6 +92,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             }
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToString());
+            writer.WritePropertyName("recoveryPlanInputs"u8);
+            writer.WriteObjectValue(RecoveryPlanInputs, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -135,6 +137,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 return null;
             }
             DrillMode mode = default;
+            DrillStartRequestRecoveryPlanInputs recoveryPlanInputs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -143,12 +146,17 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     mode = new DrillMode(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("recoveryPlanInputs"u8))
+                {
+                    recoveryPlanInputs = DrillStartRequestRecoveryPlanInputs.DeserializeDrillStartRequestRecoveryPlanInputs(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DrillStartContent(mode, additionalBinaryDataProperties);
+            return new DrillStartContent(mode, recoveryPlanInputs, additionalBinaryDataProperties);
         }
     }
 }

@@ -39,14 +39,18 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="triggeredBy"> Indicates whether the job was triggered by the system or a user. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="drillId"> Parent Drill resource. </param>
+        /// <param name="metricValue"> Measured aggregated Metric value through the drill run. </param>
+        /// <param name="healthStatus"> Measured health status through the drill run. </param>
         /// <param name="drillMode"> Drill mode. </param>
         /// <param name="attestation"> Attestation of this Drill Run. </param>
         /// <param name="notes"> Notes for this Drill. </param>
         /// <param name="supportedVerbsForStage"> Matrix of Actions supported on Operations. </param>
         /// <param name="currentActiveOperationId"> The currently active operationID on this Drill Run. There can be only one active. </param>
-        internal DrillRunProperties(JobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, JobErrorInfo errorDetails, ResourceIdentifier resourceId, string operation, IList<JobRetryDetails> retryDetails, JobExtendedInfo jobExtendedInfo, IReadOnlyList<JobUserComment> userComments, JobType? jobType, ExecutionConfigurations executionConfigurations, JobTriggeredBy? triggeredBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier drillId, DrillMode? drillMode, DrillAttestation? attestation, IReadOnlyList<string> notes, IReadOnlyList<SupportedVerbsForStage> supportedVerbsForStage, string currentActiveOperationId) : base(status, startOn, endOn, duration, errorDetails, resourceId, operation, retryDetails, jobExtendedInfo, userComments, jobType, executionConfigurations, triggeredBy, additionalBinaryDataProperties)
+        internal DrillRunProperties(JobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, JobErrorInfo errorDetails, ResourceIdentifier resourceId, string operation, IList<JobRetryDetails> retryDetails, JobExtendedInfo jobExtendedInfo, IReadOnlyList<JobUserComment> userComments, JobType? jobType, ExecutionConfigurations executionConfigurations, JobTriggeredBy? triggeredBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier drillId, string metricValue, HealthStatus? healthStatus, DrillMode? drillMode, DrillAttestation? attestation, IReadOnlyList<string> notes, IReadOnlyList<SupportedVerbsForStage> supportedVerbsForStage, string currentActiveOperationId) : base(status, startOn, endOn, duration, errorDetails, resourceId, operation, retryDetails, jobExtendedInfo, userComments, jobType, executionConfigurations, triggeredBy, additionalBinaryDataProperties)
         {
             DrillId = drillId;
+            MetricValue = metricValue;
+            HealthStatus = healthStatus;
             DrillMode = drillMode;
             Attestation = attestation;
             Notes = notes;
@@ -56,6 +60,12 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Parent Drill resource. </summary>
         public ResourceIdentifier DrillId { get; }
+
+        /// <summary> Measured aggregated Metric value through the drill run. </summary>
+        public string MetricValue { get; }
+
+        /// <summary> Measured health status through the drill run. </summary>
+        public HealthStatus? HealthStatus { get; }
 
         /// <summary> Drill mode. </summary>
         public DrillMode? DrillMode { get; }

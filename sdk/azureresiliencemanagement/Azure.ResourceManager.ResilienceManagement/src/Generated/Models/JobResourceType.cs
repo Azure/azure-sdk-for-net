@@ -19,8 +19,12 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         private const string InvalidValue = "Invalid";
         /// <summary> Recovery Orchestration Plan created job resource. </summary>
         private const string RecoveryPlanValue = "RecoveryPlan";
+        /// <summary> Recovery Orchestration Plan child created job resource. </summary>
+        private const string RecoveryPlanChildValue = "RecoveryPlanChild";
         /// <summary> Drill Run job resource. </summary>
         private const string DrillRunValue = "DrillRun";
+        /// <summary> Chaos job resource created by Drill to represent a Experiment Run. </summary>
+        private const string ChaosExperimentValue = "ChaosExperiment";
 
         /// <summary> Initializes a new instance of <see cref="JobResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -38,8 +42,14 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Recovery Orchestration Plan created job resource. </summary>
         public static JobResourceType RecoveryPlan { get; } = new JobResourceType(RecoveryPlanValue);
 
+        /// <summary> Recovery Orchestration Plan child created job resource. </summary>
+        public static JobResourceType RecoveryPlanChild { get; } = new JobResourceType(RecoveryPlanChildValue);
+
         /// <summary> Drill Run job resource. </summary>
         public static JobResourceType DrillRun { get; } = new JobResourceType(DrillRunValue);
+
+        /// <summary> Chaos job resource created by Drill to represent a Experiment Run. </summary>
+        public static JobResourceType ChaosExperiment { get; } = new JobResourceType(ChaosExperimentValue);
 
         /// <summary> Determines if two <see cref="JobResourceType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

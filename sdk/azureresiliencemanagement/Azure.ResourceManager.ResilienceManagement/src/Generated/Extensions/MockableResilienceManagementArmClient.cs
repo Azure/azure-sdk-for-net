@@ -300,6 +300,51 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
             return await GetRecoveryJobs(scope).GetAsync(recoveryJobName, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> Gets an object representing a <see cref="RecoveryChildJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RecoveryChildJobResource"/> object. </returns>
+        public virtual RecoveryChildJobResource GetRecoveryChildJobResource(ResourceIdentifier id)
+        {
+            RecoveryChildJobResource.ValidateResourceId(id);
+            return new RecoveryChildJobResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="RecoveryChildJobCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="RecoveryChildJobResource"/> objects. </returns>
+        public virtual RecoveryChildJobCollection GetRecoveryChildJobs(ResourceIdentifier scope)
+        {
+            return new RecoveryChildJobCollection(Client, scope);
+        }
+
+        /// <summary> Get a RecoveryChildJob. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="recoveryChildJobName"> The unique name (Guid) of the recovery child job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recoveryChildJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryChildJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<RecoveryChildJobResource> GetRecoveryChildJob(ResourceIdentifier scope, string recoveryChildJobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(recoveryChildJobName, nameof(recoveryChildJobName));
+
+            return GetRecoveryChildJobs(scope).Get(recoveryChildJobName, cancellationToken);
+        }
+
+        /// <summary> Get a RecoveryChildJob. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="recoveryChildJobName"> The unique name (Guid) of the recovery child job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recoveryChildJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryChildJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<RecoveryChildJobResource>> GetRecoveryChildJobAsync(ResourceIdentifier scope, string recoveryChildJobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(recoveryChildJobName, nameof(recoveryChildJobName));
+
+            return await GetRecoveryChildJobs(scope).GetAsync(recoveryChildJobName, cancellationToken).ConfigureAwait(false);
+        }
+
         /// <summary> Gets an object representing a <see cref="RecoveryJobTargetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RecoveryJobTargetResource"/> object. </returns>
@@ -480,6 +525,51 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
             return await GetDrillRuns(scope).GetAsync(drillRunName, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> Gets an object representing a <see cref="DrillRunChildJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DrillRunChildJobResource"/> object. </returns>
+        public virtual DrillRunChildJobResource GetDrillRunChildJobResource(ResourceIdentifier id)
+        {
+            DrillRunChildJobResource.ValidateResourceId(id);
+            return new DrillRunChildJobResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="DrillRunChildJobCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="DrillRunChildJobResource"/> objects. </returns>
+        public virtual DrillRunChildJobCollection GetDrillRunChildJobs(ResourceIdentifier scope)
+        {
+            return new DrillRunChildJobCollection(Client, scope);
+        }
+
+        /// <summary> Get a DrillRunChildJob. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="drillRunChildJobName"> The unique name (Guid) of the DrillRun child job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="drillRunChildJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="drillRunChildJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DrillRunChildJobResource> GetDrillRunChildJob(ResourceIdentifier scope, string drillRunChildJobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(drillRunChildJobName, nameof(drillRunChildJobName));
+
+            return GetDrillRunChildJobs(scope).Get(drillRunChildJobName, cancellationToken);
+        }
+
+        /// <summary> Get a DrillRunChildJob. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="drillRunChildJobName"> The unique name (Guid) of the DrillRun child job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="drillRunChildJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="drillRunChildJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DrillRunChildJobResource>> GetDrillRunChildJobAsync(ResourceIdentifier scope, string drillRunChildJobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(drillRunChildJobName, nameof(drillRunChildJobName));
+
+            return await GetDrillRunChildJobs(scope).GetAsync(drillRunChildJobName, cancellationToken).ConfigureAwait(false);
+        }
+
         /// <summary> Gets an object representing a <see cref="DrillRunTargetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DrillRunTargetResource"/> object. </returns>
@@ -523,6 +613,141 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
             Argument.AssertNotNullOrEmpty(drillRunResourceName, nameof(drillRunResourceName));
 
             return await GetDrillRunTargets(scope).GetAsync(drillRunResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ChaosJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChaosJobResource"/> object. </returns>
+        public virtual ChaosJobResource GetChaosJobResource(ResourceIdentifier id)
+        {
+            ChaosJobResource.ValidateResourceId(id);
+            return new ChaosJobResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="ChaosJobCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="ChaosJobResource"/> objects. </returns>
+        public virtual ChaosJobCollection GetChaosJobs(ResourceIdentifier scope)
+        {
+            return new ChaosJobCollection(Client, scope);
+        }
+
+        /// <summary> Get a ChaosJob. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="chaosJobName"> The unique name of the chaos job (GUID). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="chaosJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="chaosJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ChaosJobResource> GetChaosJob(ResourceIdentifier scope, string chaosJobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(chaosJobName, nameof(chaosJobName));
+
+            return GetChaosJobs(scope).Get(chaosJobName, cancellationToken);
+        }
+
+        /// <summary> Get a ChaosJob. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="chaosJobName"> The unique name of the chaos job (GUID). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="chaosJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="chaosJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ChaosJobResource>> GetChaosJobAsync(ResourceIdentifier scope, string chaosJobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(chaosJobName, nameof(chaosJobName));
+
+            return await GetChaosJobs(scope).GetAsync(chaosJobName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ChaosJobTargetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChaosJobTargetResource"/> object. </returns>
+        public virtual ChaosJobTargetResource GetChaosJobTargetResource(ResourceIdentifier id)
+        {
+            ChaosJobTargetResource.ValidateResourceId(id);
+            return new ChaosJobTargetResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="ChaosJobTargetCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="ChaosJobTargetResource"/> objects. </returns>
+        public virtual ChaosJobTargetCollection GetChaosJobTargets(ResourceIdentifier scope)
+        {
+            return new ChaosJobTargetCollection(Client, scope);
+        }
+
+        /// <summary> Get a ChaosJobResource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="chaosJobResourceName"> The unique name (GUID) of the chaos job resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="chaosJobResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="chaosJobResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ChaosJobTargetResource> GetChaosJobTarget(ResourceIdentifier scope, string chaosJobResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(chaosJobResourceName, nameof(chaosJobResourceName));
+
+            return GetChaosJobTargets(scope).Get(chaosJobResourceName, cancellationToken);
+        }
+
+        /// <summary> Get a ChaosJobResource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="chaosJobResourceName"> The unique name (GUID) of the chaos job resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="chaosJobResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="chaosJobResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ChaosJobTargetResource>> GetChaosJobTargetAsync(ResourceIdentifier scope, string chaosJobResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(chaosJobResourceName, nameof(chaosJobResourceName));
+
+            return await GetChaosJobTargets(scope).GetAsync(chaosJobResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ChaosJobChildJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChaosJobChildJobResource"/> object. </returns>
+        public virtual ChaosJobChildJobResource GetChaosJobChildJobResource(ResourceIdentifier id)
+        {
+            ChaosJobChildJobResource.ValidateResourceId(id);
+            return new ChaosJobChildJobResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="ChaosJobChildJobCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="ChaosJobChildJobResource"/> objects. </returns>
+        public virtual ChaosJobChildJobCollection GetChaosJobChildJobs(ResourceIdentifier scope)
+        {
+            return new ChaosJobChildJobCollection(Client, scope);
+        }
+
+        /// <summary> Get a ChaosJobChildJob. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="chaosJobChildJobName"> The unique name (Guid) of the Chaos job child job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="chaosJobChildJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="chaosJobChildJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ChaosJobChildJobResource> GetChaosJobChildJob(ResourceIdentifier scope, string chaosJobChildJobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(chaosJobChildJobName, nameof(chaosJobChildJobName));
+
+            return GetChaosJobChildJobs(scope).Get(chaosJobChildJobName, cancellationToken);
+        }
+
+        /// <summary> Get a ChaosJobChildJob. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="chaosJobChildJobName"> The unique name (Guid) of the Chaos job child job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="chaosJobChildJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="chaosJobChildJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ChaosJobChildJobResource>> GetChaosJobChildJobAsync(ResourceIdentifier scope, string chaosJobChildJobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(chaosJobChildJobName, nameof(chaosJobChildJobName));
+
+            return await GetChaosJobChildJobs(scope).GetAsync(chaosJobChildJobName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="UnifiedResilienceItemResource"/> along with the instance operations that can be performed on it but with no data. </summary>

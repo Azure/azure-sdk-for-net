@@ -93,6 +93,16 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 writer.WritePropertyName("serviceGroupId"u8);
                 writer.WriteStringValue(ServiceGroupId);
             }
+            if (Optional.IsDefined(MetricsProperties))
+            {
+                writer.WritePropertyName("metricsProperties"u8);
+                writer.WriteObjectValue(MetricsProperties, options);
+            }
+            if (Optional.IsDefined(HealthModelProperties))
+            {
+                writer.WritePropertyName("healthModelProperties"u8);
+                writer.WriteObjectValue(HealthModelProperties, options);
+            }
             if (Optional.IsDefined(RecoveryPlanProperties))
             {
                 writer.WritePropertyName("recoveryPlanProperties"u8);
@@ -107,6 +117,11 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 writer.WritePropertyName("chaosResourceProperties"u8);
                 writer.WriteObjectValue(ChaosResourceProperties, options);
+            }
+            if (Optional.IsDefined(ChaosExperimentProperties))
+            {
+                writer.WritePropertyName("chaosExperimentProperties"u8);
+                writer.WriteObjectValue(ChaosExperimentProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ExecutionState))
             {

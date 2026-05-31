@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 {
     /// <summary>
     /// Definition of job-resource.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RecoveryJobResourceProperties"/> and <see cref="DrillRunResourceProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RecoveryJobResourceProperties"/>, <see cref="DrillRunResourceProperties"/>, and <see cref="ChaosJobResourceProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownJobResourceProperties))]
     public abstract partial class JobResourceProperties : IJsonModel<JobResourceProperties>
@@ -209,6 +209,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                         return RecoveryJobResourceProperties.DeserializeRecoveryJobResourceProperties(element, options);
                     case "DrillRun":
                         return DrillRunResourceProperties.DeserializeDrillRunResourceProperties(element, options);
+                    case "ChaosExperiment":
+                        return ChaosJobResourceProperties.DeserializeChaosJobResourceProperties(element, options);
                 }
             }
             return UnknownJobResourceProperties.DeserializeUnknownJobResourceProperties(element, options);
