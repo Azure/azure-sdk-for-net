@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Backward-compatible shim for Upgrade. Use Upgrade with UpgradeNetworkFabricProperties instead for richer request type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use UpgradeAsync(WaitUntil, UpgradeNetworkFabricProperties, CancellationToken) instead.")]
+        [Obsolete("This overload uses a parameter type from a previous API version. Use Upgrade with UpgradeNetworkFabricProperties instead.")]
         public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> UpgradeAsync(WaitUntil waitUntil, NetworkFabricUpdateVersionContent content, CancellationToken cancellationToken = default)
         {
             ArmOperation<OperationStatusResult> operation = await UpgradeAsync(waitUntil, ToUpgradeNetworkFabricProperties(content), cancellationToken).ConfigureAwait(false);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Backward-compatible shim for Upgrade. Use Upgrade with UpgradeNetworkFabricProperties instead for richer request type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use Upgrade(WaitUntil, UpgradeNetworkFabricProperties, CancellationToken) instead.")]
+        [Obsolete("This overload uses a parameter type from a previous API version. Use Upgrade with UpgradeNetworkFabricProperties instead.")]
         public virtual ArmOperation<StateUpdateCommonPostActionResult> Upgrade(WaitUntil waitUntil, NetworkFabricUpdateVersionContent content, CancellationToken cancellationToken = default)
         {
             ArmOperation<OperationStatusResult> operation = Upgrade(waitUntil, ToUpgradeNetworkFabricProperties(content), cancellationToken);

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Backward-compatible shim for UpdateBgpAdministrativeState. Use SetBgpAdministrativeState instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use SetBgpAdministrativeStateAsync instead.")]
+        [Obsolete("This overload uses a parameter type from a previous API version. Use SetBgpAdministrativeState with InternalNetworkUpdateBgpAdministrativeStateContent instead.")]
         public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> UpdateBgpAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             ArmOperation<InternalNetworkUpdateBgpAdministrativeStateResult> operation = await SetBgpAdministrativeStateAsync(waitUntil, ToBgpAdministrativeStateContent(content), cancellationToken).ConfigureAwait(false);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Backward-compatible shim for UpdateBgpAdministrativeState. Use SetBgpAdministrativeState instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use SetBgpAdministrativeState instead.")]
+        [Obsolete("This overload uses a parameter type from a previous API version. Use SetBgpAdministrativeState with InternalNetworkUpdateBgpAdministrativeStateContent instead.")]
         public virtual ArmOperation<StateUpdateCommonPostActionResult> UpdateBgpAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             ArmOperation<InternalNetworkUpdateBgpAdministrativeStateResult> operation = SetBgpAdministrativeState(waitUntil, ToBgpAdministrativeStateContent(content), cancellationToken);
