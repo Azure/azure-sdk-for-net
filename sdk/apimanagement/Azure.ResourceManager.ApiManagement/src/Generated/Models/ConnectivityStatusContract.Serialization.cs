@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStringValue(Error);
             }
             writer.WritePropertyName("lastUpdated"u8);
-            writer.WriteStringValue(LastUpdated, "O");
+            writer.WriteStringValue(LastUpdatedOn, "O");
             writer.WritePropertyName("lastStatusChange"u8);
-            writer.WriteStringValue(LastStatusChange, "O");
+            writer.WriteStringValue(LastStatusChangedOn, "O");
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
             writer.WritePropertyName("isOptional"u8);
@@ -141,8 +141,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string name = default;
             ConnectivityStatusType status = default;
             string error = default;
-            DateTimeOffset lastUpdated = default;
-            DateTimeOffset lastStatusChange = default;
+            DateTimeOffset lastUpdatedOn = default;
+            DateTimeOffset lastStatusChangedOn = default;
             string resourceType = default;
             bool isOptional = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -165,12 +165,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("lastUpdated"u8))
                 {
-                    lastUpdated = prop.Value.GetDateTimeOffset("O");
+                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastStatusChange"u8))
                 {
-                    lastStatusChange = prop.Value.GetDateTimeOffset("O");
+                    lastStatusChangedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("resourceType"u8))
@@ -192,8 +192,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 name,
                 status,
                 error,
-                lastUpdated,
-                lastStatusChange,
+                lastUpdatedOn,
+                lastStatusChangedOn,
                 resourceType,
                 isOptional,
                 additionalBinaryDataProperties);

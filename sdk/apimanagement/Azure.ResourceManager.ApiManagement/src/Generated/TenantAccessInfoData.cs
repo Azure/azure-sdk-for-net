@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Determines whether direct access is enabled. </summary>
         [WirePath("properties.enabled")]
-        public bool? Enabled
+        public bool? IsDirectAccessEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.Enabled;
+                return Properties is null ? default : Properties.IsDirectAccessEnabled;
             }
             set
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new AccessInformationContractProperties();
                 }
-                Properties.Enabled = value;
+                Properties.IsDirectAccessEnabled = value;
             }
         }
     }

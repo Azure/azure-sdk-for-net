@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 throw new FormatException($"The model {nameof(IdentityProviderBaseParameters)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(IdentityProviderType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(IdentityProviderType.Value.ToString());
             }
-            if (Optional.IsDefined(SigninTenant))
+            if (Optional.IsDefined(SignInTenant))
             {
                 writer.WritePropertyName("signinTenant"u8);
-                writer.WriteStringValue(SigninTenant);
+                writer.WriteStringValue(SignInTenant);
             }
             if (Optional.IsCollectionDefined(AllowedTenants))
             {
@@ -104,15 +104,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("authority"u8);
                 writer.WriteStringValue(Authority);
             }
-            if (Optional.IsDefined(SignupPolicyName))
+            if (Optional.IsDefined(SignUpPolicyName))
             {
                 writer.WritePropertyName("signupPolicyName"u8);
-                writer.WriteStringValue(SignupPolicyName);
+                writer.WriteStringValue(SignUpPolicyName);
             }
-            if (Optional.IsDefined(SigninPolicyName))
+            if (Optional.IsDefined(SignInPolicyName))
             {
                 writer.WritePropertyName("signinPolicyName"u8);
-                writer.WriteStringValue(SigninPolicyName);
+                writer.WriteStringValue(SignInPolicyName);
             }
             if (Optional.IsDefined(ProfileEditingPolicyName))
             {
@@ -171,12 +171,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            IdentityProviderType? @type = default;
-            string signinTenant = default;
+            IdentityProviderType? identityProviderType = default;
+            string signInTenant = default;
             IList<string> allowedTenants = default;
             string authority = default;
-            string signupPolicyName = default;
-            string signinPolicyName = default;
+            string signUpPolicyName = default;
+            string signInPolicyName = default;
             string profileEditingPolicyName = default;
             string passwordResetPolicyName = default;
             string clientLibrary = default;
@@ -189,12 +189,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    @type = new IdentityProviderType(prop.Value.GetString());
+                    identityProviderType = new IdentityProviderType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("signinTenant"u8))
                 {
-                    signinTenant = prop.Value.GetString();
+                    signInTenant = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("allowedTenants"u8))
@@ -225,12 +225,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("signupPolicyName"u8))
                 {
-                    signupPolicyName = prop.Value.GetString();
+                    signUpPolicyName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("signinPolicyName"u8))
                 {
-                    signinPolicyName = prop.Value.GetString();
+                    signInPolicyName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("profileEditingPolicyName"u8))
@@ -254,12 +254,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new IdentityProviderBaseParameters(
-                @type,
-                signinTenant,
+                identityProviderType,
+                signInTenant,
                 allowedTenants ?? new ChangeTrackingList<string>(),
                 authority,
-                signupPolicyName,
-                signinPolicyName,
+                signUpPolicyName,
+                signInPolicyName,
                 profileEditingPolicyName,
                 passwordResetPolicyName,
                 clientLibrary,

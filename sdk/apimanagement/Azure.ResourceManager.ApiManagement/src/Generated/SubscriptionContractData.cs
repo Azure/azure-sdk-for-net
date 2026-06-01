@@ -182,11 +182,11 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Upcoming subscription expiration notification date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.notificationDate")]
-        public DateTimeOffset? NotificationOn
+        public DateTimeOffset? NotifiesOn
         {
             get
             {
-                return Properties is null ? default : Properties.NotificationOn;
+                return Properties is null ? default : Properties.NotifiesOn;
             }
             set
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new SubscriptionContractProperties();
                 }
-                Properties.NotificationOn = value;
+                Properties.NotifiesOn = value;
             }
         }
 

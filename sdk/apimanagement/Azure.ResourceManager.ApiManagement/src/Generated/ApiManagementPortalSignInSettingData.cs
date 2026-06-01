@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Redirect Anonymous users to the Sign-In page. </summary>
         [WirePath("properties.enabled")]
-        public bool? Enabled
+        public bool? IsRedirectEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.Enabled;
+                return Properties is null ? default : Properties.IsRedirectEnabled;
             }
             set
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new PortalSigninSettingProperties();
                 }
-                Properties.Enabled = value;
+                Properties.IsRedirectEnabled = value;
             }
         }
     }

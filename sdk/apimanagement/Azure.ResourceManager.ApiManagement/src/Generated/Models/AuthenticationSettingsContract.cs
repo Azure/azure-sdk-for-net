@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="AuthenticationSettingsContract"/>. </summary>
         /// <param name="oAuth2"> OAuth2 Authentication settings. </param>
-        /// <param name="openid"> OpenID Connect Authentication Settings. </param>
+        /// <param name="openId"> OpenID Connect Authentication Settings. </param>
         /// <param name="oAuth2AuthenticationSettings"> Collection of OAuth2 authentication settings included into this API. </param>
         /// <param name="openidAuthenticationSettings"> Collection of Open ID Connect authentication settings included into this API. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AuthenticationSettingsContract(OAuth2AuthenticationSettingsContract oAuth2, OpenIdAuthenticationSettingsContract openid, IList<OAuth2AuthenticationSettingsContract> oAuth2AuthenticationSettings, IList<OpenIdAuthenticationSettingsContract> openidAuthenticationSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AuthenticationSettingsContract(OAuth2AuthenticationSettingsContract oAuth2, OpenIdAuthenticationSettingsContract openId, IList<OAuth2AuthenticationSettingsContract> oAuth2AuthenticationSettings, IList<OpenIdAuthenticationSettingsContract> openidAuthenticationSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OAuth2 = oAuth2;
-            Openid = openid;
+            OpenId = openId;
             OAuth2AuthenticationSettings = oAuth2AuthenticationSettings;
             OpenidAuthenticationSettings = openidAuthenticationSettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> OpenID Connect Authentication Settings. </summary>
         [WirePath("openid")]
-        public OpenIdAuthenticationSettingsContract Openid { get; set; }
+        public OpenIdAuthenticationSettingsContract OpenId { get; set; }
 
         /// <summary> Collection of OAuth2 authentication settings included into this API. </summary>
         [WirePath("oAuth2AuthenticationSettings")]

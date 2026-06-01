@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 throw new FormatException($"The model {nameof(ConnectivityHop)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(ConnectivityHopType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(ConnectivityHopType);
             }
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            string @type = default;
+            string connectivityHopType = default;
             string id = default;
             IPAddress address = default;
             ResourceIdentifier resourceId = default;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    connectivityHopType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("id"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new ConnectivityHop(
-                @type,
+                connectivityHopType,
                 id,
                 address,
                 resourceId,

@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("largeLanguageModel"u8);
                 writer.WriteObjectValue(LargeLanguageModel, options);
             }
-            if (Optional.IsDefined(LogClientIp))
+            if (Optional.IsDefined(IsLogClientIPEnabled))
             {
                 writer.WritePropertyName("logClientIp"u8);
-                writer.WriteBooleanValue(LogClientIp.Value);
+                writer.WriteBooleanValue(IsLogClientIPEnabled.Value);
             }
             if (Optional.IsDefined(HttpCorrelationProtocol))
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             PipelineDiagnosticSettings frontend = default;
             PipelineDiagnosticSettings backend = default;
             LargeLanguageModelDiagnosticSettings largeLanguageModel = default;
-            bool? logClientIp = default;
+            bool? isLogClientIPEnabled = default;
             HttpCorrelationProtocol? httpCorrelationProtocol = default;
             TraceVerbosityLevel? verbosity = default;
             OperationNameFormat? operationNameFormat = default;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    logClientIp = prop.Value.GetBoolean();
+                    isLogClientIPEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("httpCorrelationProtocol"u8))
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 frontend,
                 backend,
                 largeLanguageModel,
-                logClientIp,
+                isLogClientIPEnabled,
                 httpCorrelationProtocol,
                 verbosity,
                 operationNameFormat,

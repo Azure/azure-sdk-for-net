@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PortalSignupSettingsProperties"/>. </summary>
-        /// <param name="enabled"> Allow users to sign up on a developer portal. </param>
+        /// <param name="isSignUpDeveloperPortalEnabled"> Allow users to sign up on a developer portal. </param>
         /// <param name="termsOfService"> Terms of service contract properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PortalSignupSettingsProperties(bool? enabled, TermsOfServiceProperties termsOfService, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PortalSignupSettingsProperties(bool? isSignUpDeveloperPortalEnabled, TermsOfServiceProperties termsOfService, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsSignUpDeveloperPortalEnabled = isSignUpDeveloperPortalEnabled;
             TermsOfService = termsOfService;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Allow users to sign up on a developer portal. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsSignUpDeveloperPortalEnabled { get; set; }
 
         /// <summary> Terms of service contract properties. </summary>
         [WirePath("termsOfService")]

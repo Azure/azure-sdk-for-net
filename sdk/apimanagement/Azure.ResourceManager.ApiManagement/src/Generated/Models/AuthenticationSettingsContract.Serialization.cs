@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("oAuth2"u8);
                 writer.WriteObjectValue(OAuth2, options);
             }
-            if (Optional.IsDefined(Openid))
+            if (Optional.IsDefined(OpenId))
             {
                 writer.WritePropertyName("openid"u8);
-                writer.WriteObjectValue(Openid, options);
+                writer.WriteObjectValue(OpenId, options);
             }
             if (Optional.IsCollectionDefined(OAuth2AuthenticationSettings))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             OAuth2AuthenticationSettingsContract oAuth2 = default;
-            OpenIdAuthenticationSettingsContract openid = default;
+            OpenIdAuthenticationSettingsContract openId = default;
             IList<OAuth2AuthenticationSettingsContract> oAuth2AuthenticationSettings = default;
             IList<OpenIdAuthenticationSettingsContract> openidAuthenticationSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    openid = OpenIdAuthenticationSettingsContract.DeserializeOpenIdAuthenticationSettingsContract(prop.Value, options);
+                    openId = OpenIdAuthenticationSettingsContract.DeserializeOpenIdAuthenticationSettingsContract(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("oAuth2AuthenticationSettings"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AuthenticationSettingsContract(oAuth2, openid, oAuth2AuthenticationSettings ?? new ChangeTrackingList<OAuth2AuthenticationSettingsContract>(), openidAuthenticationSettings ?? new ChangeTrackingList<OpenIdAuthenticationSettingsContract>(), additionalBinaryDataProperties);
+            return new AuthenticationSettingsContract(oAuth2, openId, oAuth2AuthenticationSettings ?? new ChangeTrackingList<OAuth2AuthenticationSettingsContract>(), openidAuthenticationSettings ?? new ChangeTrackingList<OpenIdAuthenticationSettingsContract>(), additionalBinaryDataProperties);
         }
     }
 }

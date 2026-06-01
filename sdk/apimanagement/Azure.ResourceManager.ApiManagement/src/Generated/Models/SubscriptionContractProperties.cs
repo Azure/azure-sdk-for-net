@@ -38,13 +38,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="startOn"> Subscription activation date. The setting is for audit purposes only and the subscription is not automatically activated. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
         /// <param name="expireOn"> Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
         /// <param name="endOn"> Date when subscription was cancelled or expired. The setting is for audit purposes only and the subscription is not automatically cancelled. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
-        /// <param name="notificationOn"> Upcoming subscription expiration notification date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="notifiesOn"> Upcoming subscription expiration notification date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
         /// <param name="primaryKey"> Subscription primary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
         /// <param name="secondaryKey"> Subscription secondary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
         /// <param name="stateComment"> Optional subscription comment added by an administrator when the state is changed to the 'rejected'. </param>
         /// <param name="allowTracing"> Determines whether tracing is enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionContractProperties(string ownerId, string scope, string displayName, SubscriptionState state, DateTimeOffset? createdOn, DateTimeOffset? startOn, DateTimeOffset? expireOn, DateTimeOffset? endOn, DateTimeOffset? notificationOn, string primaryKey, string secondaryKey, string stateComment, bool? allowTracing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubscriptionContractProperties(string ownerId, string scope, string displayName, SubscriptionState state, DateTimeOffset? createdOn, DateTimeOffset? startOn, DateTimeOffset? expireOn, DateTimeOffset? endOn, DateTimeOffset? notifiesOn, string primaryKey, string secondaryKey, string stateComment, bool? allowTracing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OwnerId = ownerId;
             Scope = scope;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             StartOn = startOn;
             ExpireOn = expireOn;
             EndOn = endOn;
-            NotificationOn = notificationOn;
+            NotifiesOn = notifiesOn;
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
             StateComment = stateComment;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Upcoming subscription expiration notification date. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("notificationDate")]
-        public DateTimeOffset? NotificationOn { get; set; }
+        public DateTimeOffset? NotifiesOn { get; set; }
 
         /// <summary> Subscription primary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
         [WirePath("primaryKey")]

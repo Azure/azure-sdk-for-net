@@ -25,18 +25,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="TenantConfigurationSyncStateContractProperties"/>. </summary>
         /// <param name="branch"> The name of Git branch. </param>
         /// <param name="commitId"> The latest commit Id. </param>
-        /// <param name="isExport"> value indicating if last sync was save (true) or deploy (false) operation. </param>
+        /// <param name="isExported"> value indicating if last sync was save (true) or deploy (false) operation. </param>
         /// <param name="isSynced"> value indicating if last synchronization was later than the configuration change. </param>
         /// <param name="isGitEnabled"> value indicating whether Git configuration access is enabled. </param>
         /// <param name="syncOn"> The date of the latest synchronization. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
         /// <param name="configurationChangeOn"> The date of the latest configuration change. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
         /// <param name="lastOperationId"> Most recent tenant configuration operation identifier. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TenantConfigurationSyncStateContractProperties(string branch, string commitId, bool? isExport, bool? isSynced, bool? isGitEnabled, DateTimeOffset? syncOn, DateTimeOffset? configurationChangeOn, string lastOperationId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TenantConfigurationSyncStateContractProperties(string branch, string commitId, bool? isExported, bool? isSynced, bool? isGitEnabled, DateTimeOffset? syncOn, DateTimeOffset? configurationChangeOn, string lastOperationId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Branch = branch;
             CommitId = commitId;
-            IsExport = isExport;
+            IsExported = isExported;
             IsSynced = isSynced;
             IsGitEnabled = isGitEnabled;
             SyncOn = syncOn;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> value indicating if last sync was save (true) or deploy (false) operation. </summary>
         [WirePath("isExport")]
-        public bool? IsExport { get; set; }
+        public bool? IsExported { get; set; }
 
         /// <summary> value indicating if last synchronization was later than the configuration change. </summary>
         [WirePath("isSynced")]

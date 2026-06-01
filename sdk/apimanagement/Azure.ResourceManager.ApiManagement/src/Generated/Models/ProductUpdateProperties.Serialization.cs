@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             string description = default;
             string terms = default;
-            bool? subscriptionRequired = default;
-            bool? approvalRequired = default;
+            bool? isSubscriptionRequired = default;
+            bool? isApprovalRequired = default;
             int? subscriptionsLimit = default;
             IList<ProductAuthType> authenticationType = default;
             ProductEntityBaseParametersApplication application = default;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    subscriptionRequired = prop.Value.GetBoolean();
+                    isSubscriptionRequired = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("approvalRequired"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    approvalRequired = prop.Value.GetBoolean();
+                    isApprovalRequired = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("subscriptionsLimit"u8))
@@ -201,8 +201,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new ProductUpdateProperties(
                 description,
                 terms,
-                subscriptionRequired,
-                approvalRequired,
+                isSubscriptionRequired,
+                isApprovalRequired,
                 subscriptionsLimit,
                 authenticationType ?? new ChangeTrackingList<ProductAuthType>(),
                 application,

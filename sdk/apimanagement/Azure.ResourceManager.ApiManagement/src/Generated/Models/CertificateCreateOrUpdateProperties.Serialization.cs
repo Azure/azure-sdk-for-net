@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(KeyVault))
+            if (Optional.IsDefined(KeyVaultDetails))
             {
                 writer.WritePropertyName("keyVault"u8);
-                writer.WriteObjectValue(KeyVault, options);
+                writer.WriteObjectValue(KeyVaultDetails, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             string data = default;
             string password = default;
-            KeyVaultContractCreateProperties keyVault = default;
+            KeyVaultContractCreateProperties keyVaultDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    keyVault = KeyVaultContractCreateProperties.DeserializeKeyVaultContractCreateProperties(prop.Value, options);
+                    keyVaultDetails = KeyVaultContractCreateProperties.DeserializeKeyVaultContractCreateProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CertificateCreateOrUpdateProperties(data, password, keyVault, additionalBinaryDataProperties);
+            return new CertificateCreateOrUpdateProperties(data, password, keyVaultDetails, additionalBinaryDataProperties);
         }
     }
 }

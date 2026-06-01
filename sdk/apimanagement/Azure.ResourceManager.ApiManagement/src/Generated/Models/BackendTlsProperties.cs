@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BackendTlsProperties"/>. </summary>
-        /// <param name="validateCertificateChain"> Flag indicating whether SSL certificate chain validation should be done when using self-signed certificates for this backend host. </param>
-        /// <param name="validateCertificateName"> Flag indicating whether SSL certificate name validation should be done when using self-signed certificates for this backend host. </param>
+        /// <param name="shouldValidateCertificateChain"> Flag indicating whether SSL certificate chain validation should be done when using self-signed certificates for this backend host. </param>
+        /// <param name="shouldValidateCertificateName"> Flag indicating whether SSL certificate name validation should be done when using self-signed certificates for this backend host. </param>
         /// <param name="serverCertificateThumbprints"> Thumbprints of certificates used by the backend host for TLS communication. </param>
         /// <param name="serverX509Names"> Server X509 Certificate Names of the Backend Host. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackendTlsProperties(bool? validateCertificateChain, bool? validateCertificateName, IList<string> serverCertificateThumbprints, IList<X509CertificateName> serverX509Names, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackendTlsProperties(bool? shouldValidateCertificateChain, bool? shouldValidateCertificateName, IList<string> serverCertificateThumbprints, IList<X509CertificateName> serverX509Names, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ValidateCertificateChain = validateCertificateChain;
-            ValidateCertificateName = validateCertificateName;
+            ShouldValidateCertificateChain = shouldValidateCertificateChain;
+            ShouldValidateCertificateName = shouldValidateCertificateName;
             ServerCertificateThumbprints = serverCertificateThumbprints;
             ServerX509Names = serverX509Names;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Flag indicating whether SSL certificate chain validation should be done when using self-signed certificates for this backend host. </summary>
         [WirePath("validateCertificateChain")]
-        public bool? ValidateCertificateChain { get; set; }
+        public bool? ShouldValidateCertificateChain { get; set; }
 
         /// <summary> Flag indicating whether SSL certificate name validation should be done when using self-signed certificates for this backend host. </summary>
         [WirePath("validateCertificateName")]
-        public bool? ValidateCertificateName { get; set; }
+        public bool? ShouldValidateCertificateName { get; set; }
 
         /// <summary> Thumbprints of certificates used by the backend host for TLS communication. </summary>
         [WirePath("serverCertificateThumbprints")]

@@ -386,17 +386,17 @@ namespace Azure.ResourceManager.ApiManagement
         public string AuthorizationEndpoint { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.AuthorizationMethod> AuthorizationMethods { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.BearerTokenSendingMethod> BearerTokenSendingMethods { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.ClientAuthenticationMethod> ClientAuthenticationMethod { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.ClientAuthenticationMethod> ClientAuthenticationMethods { get { throw null; } }
         public string ClientId { get { throw null; } set { } }
         public string ClientRegistrationEndpoint { get { throw null; } set { } }
         public string ClientSecret { get { throw null; } set { } }
         public string DefaultScope { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
+        public bool? DoesSupportState { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.GrantType> GrantTypes { get { throw null; } }
         public string ResourceOwnerPassword { get { throw null; } set { } }
         public string ResourceOwnerUsername { get { throw null; } set { } }
-        public bool? SupportState { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.TokenBodyParameterContract> TokenBodyParameters { get { throw null; } }
         public string TokenEndpoint { get { throw null; } set { } }
         public bool? UseInApiDocumentation { get { throw null; } set { } }
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.ApiManagement
         public string ResourceId { get { throw null; } set { } }
         public string Title { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.BackendTlsProperties Tls { get { throw null; } set { } }
-        public Azure.ResourceManager.ApiManagement.Models.BackendType? Type { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiManagement.Models.BackendType? TypePropertiesType { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.ApiManagement
     {
         public ApiManagementCertificateData() { }
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
-        public Azure.ResourceManager.ApiManagement.Models.KeyVaultContractProperties KeyVault { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiManagement.Models.KeyVaultContractProperties KeyVaultDetails { get { throw null; } set { } }
         public string Subject { get { throw null; } set { } }
         public string Thumbprint { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1170,10 +1170,10 @@ namespace Azure.ResourceManager.ApiManagement
         public ApiManagementGatewayHostnameConfigurationData() { }
         public string CertificateId { get { throw null; } set { } }
         public string Hostname { get { throw null; } set { } }
+        public bool? IsClientCertificateRequired { get { throw null; } set { } }
         public bool? IsHttp2_0Enabled { get { throw null; } set { } }
         public bool? IsTls1_0Enabled { get { throw null; } set { } }
         public bool? IsTls1_1Enabled { get { throw null; } set { } }
-        public bool? NegotiateClientCertificate { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1298,11 +1298,11 @@ namespace Azure.ResourceManager.ApiManagement
     public partial class ApiManagementGroupData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiManagement.ApiManagementGroupData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiManagement.ApiManagementGroupData>
     {
         public ApiManagementGroupData() { }
-        public bool? BuiltIn { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public string ExternalId { get { throw null; } set { } }
-        public Azure.ResourceManager.ApiManagement.Models.ApiManagementGroupType? Type { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiManagement.Models.ApiManagementGroupType? GroupType { get { throw null; } set { } }
+        public bool? IsBuiltIn { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1365,12 +1365,12 @@ namespace Azure.ResourceManager.ApiManagement
         public string ClientId { get { throw null; } set { } }
         public string ClientLibrary { get { throw null; } set { } }
         public string ClientSecret { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiManagement.Models.IdentityProviderType? IdentityProviderType { get { throw null; } set { } }
         public string PasswordResetPolicyName { get { throw null; } set { } }
         public string ProfileEditingPolicyName { get { throw null; } set { } }
-        public string SigninPolicyName { get { throw null; } set { } }
-        public string SigninTenant { get { throw null; } set { } }
-        public string SignupPolicyName { get { throw null; } set { } }
-        public Azure.ResourceManager.ApiManagement.Models.IdentityProviderType? Type { get { throw null; } set { } }
+        public string SignInPolicyName { get { throw null; } set { } }
+        public string SignInTenant { get { throw null; } set { } }
+        public string SignUpPolicyName { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1496,9 +1496,9 @@ namespace Azure.ResourceManager.ApiManagement
     {
         public ApiManagementNamedValueData() { }
         public string DisplayName { get { throw null; } set { } }
-        public Azure.ResourceManager.ApiManagement.Models.KeyVaultContractProperties KeyVault { get { throw null; } set { } }
+        public bool? IsSecret { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiManagement.Models.KeyVaultContractProperties KeyVaultDetails { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
-        public bool? Secret { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Tags { get { throw null; } }
         public string Value { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1700,9 +1700,9 @@ namespace Azure.ResourceManager.ApiManagement
     public partial class ApiManagementPortalDelegationSettingData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiManagement.ApiManagementPortalDelegationSettingData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiManagement.ApiManagementPortalDelegationSettingData>
     {
         public ApiManagementPortalDelegationSettingData() { }
-        public bool? SubscriptionsEnabled { get { throw null; } set { } }
-        public string Uri { get { throw null; } set { } }
-        public bool? UserRegistrationEnabled { get { throw null; } set { } }
+        public bool? IsSubscriptionDelegationEnabled { get { throw null; } set { } }
+        public bool? IsUserRegistrationDelegationEnabled { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
         public string ValidationKey { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1799,7 +1799,7 @@ namespace Azure.ResourceManager.ApiManagement
     public partial class ApiManagementPortalSignInSettingData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiManagement.ApiManagementPortalSignInSettingData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiManagement.ApiManagementPortalSignInSettingData>
     {
         public ApiManagementPortalSignInSettingData() { }
-        public bool? Enabled { get { throw null; } set { } }
+        public bool? IsRedirectEnabled { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1842,7 +1842,7 @@ namespace Azure.ResourceManager.ApiManagement
     public partial class ApiManagementPortalSignUpSettingData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiManagement.ApiManagementPortalSignUpSettingData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiManagement.ApiManagementPortalSignUpSettingData>
     {
         public ApiManagementPortalSignUpSettingData() { }
-        public bool? Enabled { get { throw null; } set { } }
+        public bool? IsSignUpDeveloperPortalEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.TermsOfServiceProperties TermsOfService { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1974,12 +1974,12 @@ namespace Azure.ResourceManager.ApiManagement
     {
         public ApiManagementProductData() { }
         public Azure.ResourceManager.ApiManagement.Models.ProductApplicationContractEntra ApplicationEntra { get { throw null; } set { } }
-        public bool? ApprovalRequired { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.ProductAuthType> AuthenticationType { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
+        public bool? IsApprovalRequired { get { throw null; } set { } }
+        public bool? IsSubscriptionRequired { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState? State { get { throw null; } set { } }
-        public bool? SubscriptionRequired { get { throw null; } set { } }
         public int? SubscriptionsLimit { get { throw null; } set { } }
         public string Terms { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3477,8 +3477,8 @@ namespace Azure.ResourceManager.ApiManagement
         public Azure.ResourceManager.ApiManagement.Models.PipelineDiagnosticSettings Backend { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.PipelineDiagnosticSettings Frontend { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.HttpCorrelationProtocol? HttpCorrelationProtocol { get { throw null; } set { } }
+        public bool? IsLogClientIPEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.LargeLanguageModelDiagnosticSettings LargeLanguageModel { get { throw null; } set { } }
-        public bool? LogClientIp { get { throw null; } set { } }
         public string LoggerId { get { throw null; } set { } }
         public bool? Metrics { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.OperationNameFormat? OperationNameFormat { get { throw null; } set { } }
@@ -5228,7 +5228,7 @@ namespace Azure.ResourceManager.ApiManagement
         public string DisplayName { get { throw null; } set { } }
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
-        public System.DateTimeOffset? NotificationOn { get { throw null; } set { } }
+        public System.DateTimeOffset? NotifiesOn { get { throw null; } set { } }
         public string OwnerId { get { throw null; } set { } }
         public string PrimaryKey { get { throw null; } set { } }
         public string Scope { get { throw null; } set { } }
@@ -5318,7 +5318,7 @@ namespace Azure.ResourceManager.ApiManagement
     {
         public TenantAccessInfoData() { }
         public string AccessInfoType { get { throw null; } set { } }
-        public bool? Enabled { get { throw null; } set { } }
+        public bool? IsDirectAccessEnabled { get { throw null; } set { } }
         public string PrincipalId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -5426,7 +5426,7 @@ namespace Azure.ResourceManager.ApiManagement
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.UserIdentityContract> Identities { get { throw null; } }
         public string LastName { get { throw null; } set { } }
         public string Note { get { throw null; } set { } }
-        public System.DateTimeOffset? RegistrationOn { get { throw null; } set { } }
+        public System.DateTimeOffset? RegistriesOn { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.ApiManagementUserState? State { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -6259,17 +6259,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string AuthorizationEndpoint { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.AuthorizationMethod> AuthorizationMethods { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.BearerTokenSendingMethod> BearerTokenSendingMethods { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.ClientAuthenticationMethod> ClientAuthenticationMethod { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.ClientAuthenticationMethod> ClientAuthenticationMethods { get { throw null; } }
         public string ClientId { get { throw null; } set { } }
         public string ClientRegistrationEndpoint { get { throw null; } set { } }
         public string ClientSecret { get { throw null; } set { } }
         public string DefaultScope { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
+        public bool? DoesSupportState { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.GrantType> GrantTypes { get { throw null; } }
         public string ResourceOwnerPassword { get { throw null; } set { } }
         public string ResourceOwnerUsername { get { throw null; } set { } }
-        public bool? SupportState { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.TokenBodyParameterContract> TokenBodyParameters { get { throw null; } }
         public string TokenEndpoint { get { throw null; } set { } }
         public bool? UseInApiDocumentation { get { throw null; } set { } }
@@ -6314,7 +6314,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string ResourceId { get { throw null; } set { } }
         public string Title { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.BackendTlsProperties Tls { get { throw null; } set { } }
-        public Azure.ResourceManager.ApiManagement.Models.BackendType? Type { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiManagement.Models.BackendType? TypePropertiesType { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.ApiManagementBackendPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -6347,7 +6347,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         public ApiManagementCertificateCreateOrUpdateContent() { }
         public string Data { get { throw null; } set { } }
-        public Azure.ResourceManager.ApiManagement.Models.KeyVaultContractCreateProperties KeyVault { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiManagement.Models.KeyVaultContractCreateProperties KeyVaultDetails { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.ApiManagementCertificateCreateOrUpdateContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -6410,10 +6410,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class ApiManagementGroupCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiManagement.Models.ApiManagementGroupCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiManagement.Models.ApiManagementGroupCreateOrUpdateContent>
     {
         public ApiManagementGroupCreateOrUpdateContent() { }
+        public Azure.ResourceManager.ApiManagement.Models.ApiManagementGroupType? ApiManagementGroupType { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } }
         public string ExternalId { get { throw null; } set { } }
-        public Azure.ResourceManager.ApiManagement.Models.ApiManagementGroupType? Type { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.ApiManagementGroupCreateOrUpdateContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ApiManagement.Models.ApiManagementGroupCreateOrUpdateContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6427,10 +6427,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class ApiManagementGroupPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiManagement.Models.ApiManagementGroupPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiManagement.Models.ApiManagementGroupPatch>
     {
         public ApiManagementGroupPatch() { }
+        public Azure.ResourceManager.ApiManagement.Models.ApiManagementGroupType? ApiManagementGroupType { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public string ExternalId { get { throw null; } set { } }
-        public Azure.ResourceManager.ApiManagement.Models.ApiManagementGroupType? Type { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.ApiManagementGroupPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ApiManagement.Models.ApiManagementGroupPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6456,12 +6456,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string ClientId { get { throw null; } }
         public string ClientLibrary { get { throw null; } set { } }
         public string ClientSecret { get { throw null; } }
+        public Azure.ResourceManager.ApiManagement.Models.IdentityProviderType? IdentityProviderType { get { throw null; } set { } }
         public string PasswordResetPolicyName { get { throw null; } set { } }
         public string ProfileEditingPolicyName { get { throw null; } set { } }
-        public string SigninPolicyName { get { throw null; } set { } }
-        public string SigninTenant { get { throw null; } set { } }
-        public string SignupPolicyName { get { throw null; } set { } }
-        public Azure.ResourceManager.ApiManagement.Models.IdentityProviderType? Type { get { throw null; } set { } }
+        public string SignInPolicyName { get { throw null; } set { } }
+        public string SignInTenant { get { throw null; } set { } }
+        public string SignUpPolicyName { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6481,12 +6481,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string ClientId { get { throw null; } set { } }
         public string ClientLibrary { get { throw null; } set { } }
         public string ClientSecret { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiManagement.Models.IdentityProviderType? IdentityProviderType { get { throw null; } set { } }
         public string PasswordResetPolicyName { get { throw null; } set { } }
         public string ProfileEditingPolicyName { get { throw null; } set { } }
-        public string SigninPolicyName { get { throw null; } set { } }
-        public string SigninTenant { get { throw null; } set { } }
-        public string SignupPolicyName { get { throw null; } set { } }
-        public Azure.ResourceManager.ApiManagement.Models.IdentityProviderType? Type { get { throw null; } set { } }
+        public string SignInPolicyName { get { throw null; } set { } }
+        public string SignInTenant { get { throw null; } set { } }
+        public string SignUpPolicyName { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.ApiManagementIdentityProviderPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ApiManagement.Models.ApiManagementIdentityProviderPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6518,8 +6518,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         public ApiManagementNamedValueCreateOrUpdateContent() { }
         public string DisplayName { get { throw null; } }
+        public bool? IsSecret { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.KeyVaultContractCreateProperties KeyVault { get { throw null; } set { } }
-        public bool? Secret { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Tags { get { throw null; } }
         public string Value { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6536,8 +6536,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         public ApiManagementNamedValuePatch() { }
         public string DisplayName { get { throw null; } set { } }
+        public bool? IsSecret { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.KeyVaultContractCreateProperties KeyVault { get { throw null; } set { } }
-        public bool? Secret { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Tags { get { throw null; } }
         public string Value { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.ApiManagementNamedValuePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6659,12 +6659,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         public ApiManagementProductPatch() { }
         public Azure.ResourceManager.ApiManagement.Models.ProductApplicationContractEntra ApplicationEntra { get { throw null; } set { } }
-        public bool? ApprovalRequired { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.ProductAuthType> AuthenticationType { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
+        public bool? IsApprovalRequired { get { throw null; } set { } }
+        public bool? IsSubscriptionRequired { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState? State { get { throw null; } set { } }
-        public bool? SubscriptionRequired { get { throw null; } set { } }
         public int? SubscriptionsLimit { get { throw null; } set { } }
         public string Terms { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.ApiManagementProductPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6795,8 +6795,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class ApiManagementServiceNameAvailabilityResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceNameAvailabilityResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceNameAvailabilityResult>
     {
         internal ApiManagementServiceNameAvailabilityResult() { }
+        public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
-        public bool? NameAvailable { get { throw null; } }
         public Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceNameUnavailableReason? Reason { get { throw null; } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceNameAvailabilityResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -6973,7 +6973,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal ApiManagementSkuCosts() { }
         public string ExtendedUnit { get { throw null; } }
-        public string MeterID { get { throw null; } }
+        public string MeterId { get { throw null; } }
         public long? Quantity { get { throw null; } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.ApiManagementSkuCosts JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -7021,7 +7021,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         internal ApiManagementSkuRestrictions() { }
         public Azure.ResourceManager.ApiManagement.Models.ApiManagementSkuRestrictionsReasonCode? ReasonCode { get { throw null; } }
         public Azure.ResourceManager.ApiManagement.Models.ApiManagementSkuRestrictionInfo RestrictionInfo { get { throw null; } }
-        public Azure.ResourceManager.ApiManagement.Models.ApiManagementSkuRestrictionsType? Type { get { throw null; } }
+        public Azure.ResourceManager.ApiManagement.Models.ApiManagementSkuRestrictionsType? RestrictionsType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Values { get { throw null; } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.ApiManagementSkuRestrictions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -7221,7 +7221,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public Azure.ResourceManager.ApiManagement.Models.RequestContract Request { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.ResponseContract> Responses { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.ParameterContract> TemplateParameters { get { throw null; } }
-        public string UrlTemplate { get { throw null; } set { } }
+        public string UriTemplate { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.ApiOperationPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ApiManagement.Models.ApiOperationPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7426,7 +7426,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.ApiManagementAuthorizationServerData ApiManagementAuthorizationServerData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string description, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.AuthorizationMethod> authorizationMethods, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ClientAuthenticationMethod> clientAuthenticationMethods, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.TokenBodyParameterContract> tokenBodyParameters, string tokenEndpoint, bool? doesSupportState, string defaultScope, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.BearerTokenSendingMethod> bearerTokenSendingMethods, string resourceOwnerUsername, string resourceOwnerPassword, string displayName, string clientRegistrationEndpoint, string authorizationEndpoint, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.GrantType> grantTypes, string clientId, string clientSecret) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementAuthorizationServerPatch ApiManagementAuthorizationServerPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.AuthorizationMethod> authorizationMethods = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ClientAuthenticationMethod> clientAuthenticationMethods = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.TokenBodyParameterContract> tokenBodyParameters = null, string tokenEndpoint = null, bool? doesSupportState = default(bool?), string defaultScope = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.BearerTokenSendingMethod> bearerTokenSendingMethods = null, string resourceOwnerUsername = null, string resourceOwnerPassword = null, string displayName = null, bool? useInTestConsole = default(bool?), bool? useInApiDocumentation = default(bool?), string clientRegistrationEndpoint = null, string authorizationEndpoint = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.GrantType> grantTypes = null, string clientId = null, string clientSecret = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementAuthorizationServerPatch ApiManagementAuthorizationServerPatch(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string description, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.AuthorizationMethod> authorizationMethods, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ClientAuthenticationMethod> clientAuthenticationMethods, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.TokenBodyParameterContract> tokenBodyParameters, string tokenEndpoint, bool? doesSupportState, string defaultScope, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.BearerTokenSendingMethod> bearerTokenSendingMethods, string resourceOwnerUsername, string resourceOwnerPassword, string displayName, string clientRegistrationEndpoint, string authorizationEndpoint, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.GrantType> grantTypes, string clientId, string clientSecret) { throw null; }
-        public static Azure.ResourceManager.ApiManagement.ApiManagementBackendData ApiManagementBackendData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string title = null, string description = null, string resourceId = null, Azure.ResourceManager.ApiManagement.Models.BackendCredentialsContract credentials = null, Azure.ResourceManager.ApiManagement.Models.BackendProxyContract proxy = null, Azure.ResourceManager.ApiManagement.Models.BackendTlsProperties tls = null, string azureRegion = null, Azure.ResourceManager.ApiManagement.Models.BackendBaseParametersPool pool = null, Azure.ResourceManager.ApiManagement.Models.BackendType? type = default(Azure.ResourceManager.ApiManagement.Models.BackendType?), Azure.ResourceManager.ApiManagement.Models.BackendServiceFabricClusterProperties backendServiceFabricCluster = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.CircuitBreakerRule> circuitBreakerRules = null, System.Uri uri = null, Azure.ResourceManager.ApiManagement.Models.BackendProtocol? protocol = default(Azure.ResourceManager.ApiManagement.Models.BackendProtocol?)) { throw null; }
+        public static Azure.ResourceManager.ApiManagement.ApiManagementBackendData ApiManagementBackendData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string title = null, string description = null, string resourceId = null, Azure.ResourceManager.ApiManagement.Models.BackendCredentialsContract credentials = null, Azure.ResourceManager.ApiManagement.Models.BackendProxyContract proxy = null, Azure.ResourceManager.ApiManagement.Models.BackendTlsProperties tls = null, string azureRegion = null, Azure.ResourceManager.ApiManagement.Models.BackendBaseParametersPool pool = null, Azure.ResourceManager.ApiManagement.Models.BackendType? typePropertiesType = default(Azure.ResourceManager.ApiManagement.Models.BackendType?), Azure.ResourceManager.ApiManagement.Models.BackendServiceFabricClusterProperties backendServiceFabricCluster = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.CircuitBreakerRule> circuitBreakerRules = null, System.Uri uri = null, Azure.ResourceManager.ApiManagement.Models.BackendProtocol? protocol = default(Azure.ResourceManager.ApiManagement.Models.BackendProtocol?)) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementBackendData ApiManagementBackendData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string title, string description, System.Uri resourceUri, Azure.ResourceManager.ApiManagement.Models.BackendServiceFabricClusterProperties backendServiceFabricCluster, Azure.ResourceManager.ApiManagement.Models.BackendCredentialsContract credentials, Azure.ResourceManager.ApiManagement.Models.BackendProxyContract proxy, Azure.ResourceManager.ApiManagement.Models.BackendTlsProperties tls, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.CircuitBreakerRule> circuitBreakerRules, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.BackendPoolItem> poolServices, Azure.ResourceManager.ApiManagement.Models.BackendType? typePropertiesType, System.Uri uri, Azure.ResourceManager.ApiManagement.Models.BackendProtocol? protocol) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementBackendData ApiManagementBackendData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string title, string description, System.Uri resourceUri, Azure.ResourceManager.ApiManagement.Models.BackendServiceFabricClusterProperties backendServiceFabricCluster, Azure.ResourceManager.ApiManagement.Models.BackendCredentialsContract credentials, Azure.ResourceManager.ApiManagement.Models.BackendProxyContract proxy, Azure.ResourceManager.ApiManagement.Models.BackendTlsProperties tls, System.Uri uri, Azure.ResourceManager.ApiManagement.Models.BackendProtocol? protocol) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementCacheData ApiManagementCacheData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string connectionString = null, string useFromLocation = null, string resourceId = null) { throw null; }
@@ -7443,10 +7443,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.ApiManagementGroupData ApiManagementGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string description = null, bool? isBuiltIn = default(bool?), Azure.ResourceManager.ApiManagement.Models.ApiManagementGroupType? groupType = default(Azure.ResourceManager.ApiManagement.Models.ApiManagementGroupType?), string externalId = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementIdentityProviderCreateOrUpdateContent ApiManagementIdentityProviderCreateOrUpdateContent(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.ApiManagement.Models.IdentityProviderType? identityProviderType, string signInTenant, System.Collections.Generic.IEnumerable<string> allowedTenants, string authority, string signUpPolicyName, string signInPolicyName, string profileEditingPolicyName, string passwordResetPolicyName, string clientId, string clientSecret) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementIdentityProviderCreateOrUpdateContent ApiManagementIdentityProviderCreateOrUpdateContent(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.ApiManagement.Models.IdentityProviderType? identityProviderType, string signInTenant, System.Collections.Generic.IEnumerable<string> allowedTenants, string authority, string signUpPolicyName, string signInPolicyName, string profileEditingPolicyName, string passwordResetPolicyName, string clientLibrary, string clientId, string clientSecret) { throw null; }
-        public static Azure.ResourceManager.ApiManagement.Models.ApiManagementIdentityProviderCreateOrUpdateContent ApiManagementIdentityProviderCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiManagement.Models.IdentityProviderType? type = default(Azure.ResourceManager.ApiManagement.Models.IdentityProviderType?), string signinTenant = null, System.Collections.Generic.IEnumerable<string> allowedTenants = null, string authority = null, string signupPolicyName = null, string signinPolicyName = null, string profileEditingPolicyName = null, string passwordResetPolicyName = null, string clientLibrary = null, string clientId = null, string clientSecret = null, Azure.Core.ResourceIdentifier certificateId = null) { throw null; }
+        public static Azure.ResourceManager.ApiManagement.Models.ApiManagementIdentityProviderCreateOrUpdateContent ApiManagementIdentityProviderCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiManagement.Models.IdentityProviderType? identityProviderType = default(Azure.ResourceManager.ApiManagement.Models.IdentityProviderType?), string signInTenant = null, System.Collections.Generic.IEnumerable<string> allowedTenants = null, string authority = null, string signUpPolicyName = null, string signInPolicyName = null, string profileEditingPolicyName = null, string passwordResetPolicyName = null, string clientLibrary = null, string clientId = null, string clientSecret = null, Azure.Core.ResourceIdentifier certificateId = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementIdentityProviderData ApiManagementIdentityProviderData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.ApiManagement.Models.IdentityProviderType? identityProviderType, string signInTenant, System.Collections.Generic.IEnumerable<string> allowedTenants, string authority, string signUpPolicyName, string signInPolicyName, string profileEditingPolicyName, string passwordResetPolicyName, string clientId, string clientSecret) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementIdentityProviderData ApiManagementIdentityProviderData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.ApiManagement.Models.IdentityProviderType? identityProviderType, string signInTenant, System.Collections.Generic.IEnumerable<string> allowedTenants, string authority, string signUpPolicyName, string signInPolicyName, string profileEditingPolicyName, string passwordResetPolicyName, string clientLibrary, string clientId, string clientSecret) { throw null; }
-        public static Azure.ResourceManager.ApiManagement.ApiManagementIdentityProviderData ApiManagementIdentityProviderData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiManagement.Models.IdentityProviderType? type = default(Azure.ResourceManager.ApiManagement.Models.IdentityProviderType?), string signinTenant = null, System.Collections.Generic.IEnumerable<string> allowedTenants = null, string authority = null, string signupPolicyName = null, string signinPolicyName = null, string profileEditingPolicyName = null, string passwordResetPolicyName = null, string clientLibrary = null, string clientId = null, string clientSecret = null, Azure.Core.ResourceIdentifier certificateId = null) { throw null; }
+        public static Azure.ResourceManager.ApiManagement.ApiManagementIdentityProviderData ApiManagementIdentityProviderData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiManagement.Models.IdentityProviderType? identityProviderType = default(Azure.ResourceManager.ApiManagement.Models.IdentityProviderType?), string signInTenant = null, System.Collections.Generic.IEnumerable<string> allowedTenants = null, string authority = null, string signUpPolicyName = null, string signInPolicyName = null, string profileEditingPolicyName = null, string passwordResetPolicyName = null, string clientLibrary = null, string clientId = null, string clientSecret = null, Azure.Core.ResourceIdentifier certificateId = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementLoggerData ApiManagementLoggerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiManagement.Models.LoggerType? loggerType = default(Azure.ResourceManager.ApiManagement.Models.LoggerType?), string description = null, System.Collections.Generic.IDictionary<string, string> credentials = null, bool? isBuffered = default(bool?), Azure.Core.ResourceIdentifier resourceId = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementNamedValueCreateOrUpdateContent ApiManagementNamedValueCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> tags = null, bool? isSecret = default(bool?), string displayName = null, string value = null, Azure.ResourceManager.ApiManagement.Models.KeyVaultContractCreateProperties keyVault = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementNamedValueData ApiManagementNamedValueData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IEnumerable<string> tags, bool? isSecret, string displayName, string value, Azure.ResourceManager.ApiManagement.Models.KeyVaultContractProperties keyVaultDetails) { throw null; }
@@ -7454,8 +7454,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.ApiManagementNotificationData ApiManagementNotificationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string title = null, string description = null, Azure.ResourceManager.ApiManagement.Models.RecipientsContractProperties recipients = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementOpenIdConnectProviderData ApiManagementOpenIdConnectProviderData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string displayName, string description, string metadataEndpoint, string clientId, string clientSecret) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementOpenIdConnectProviderData ApiManagementOpenIdConnectProviderData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string description = null, string metadataEndpoint = null, string clientId = null, string clientSecret = null, bool? useInTestConsole = default(bool?), bool? useInApiDocumentation = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.ApiManagement.ApiManagementPortalDelegationSettingData ApiManagementPortalDelegationSettingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string uri = null, string validationKey = null, bool? subscriptionsEnabled = default(bool?), bool? userRegistrationEnabled = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.ApiManagement.ApiManagementPortalDelegationSettingData ApiManagementPortalDelegationSettingData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Uri uri, string validationKey, bool? isSubscriptionDelegationEnabled, bool? isUserRegistrationDelegationEnabled) { throw null; }
+        public static Azure.ResourceManager.ApiManagement.ApiManagementPortalDelegationSettingData ApiManagementPortalDelegationSettingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Uri uri = null, string validationKey = null, bool? isSubscriptionDelegationEnabled = default(bool?), bool? isUserRegistrationDelegationEnabled = default(bool?)) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementPortalRevisionData ApiManagementPortalRevisionData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string description, string statusDetails, Azure.ResourceManager.ApiManagement.Models.PortalRevisionStatus? status, bool? isCurrent, System.DateTimeOffset? createdOn, System.DateTimeOffset? updatedOn) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementPortalRevisionData ApiManagementPortalRevisionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string statusDetails = null, Azure.ResourceManager.ApiManagement.Models.PortalRevisionStatus? status = default(Azure.ResourceManager.ApiManagement.Models.PortalRevisionStatus?), bool? isCurrent = default(bool?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string provisioningState = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementPortalSignInSettingData ApiManagementPortalSignInSettingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? isRedirectEnabled = default(bool?)) { throw null; }
@@ -7464,7 +7463,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.ApiManagementPrivateEndpointConnectionData ApiManagementPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.ResourceManager.ApiManagement.Models.ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, Azure.ResourceManager.ApiManagement.Models.ApiManagementPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.ApiManagement.Models.ApiManagementPrivateEndpointConnectionProvisioningState?), Azure.Core.ResourceIdentifier privateEndpointId = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementPrivateLinkResourceData ApiManagementPrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementPrivateLinkResourceListResult ApiManagementPrivateLinkResourceListResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.ApiManagementPrivateLinkResourceData> value = null, System.Uri nextLink = null) { throw null; }
-        public static Azure.ResourceManager.ApiManagement.ApiManagementProductData ApiManagementProductData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string terms = null, bool? subscriptionRequired = default(bool?), bool? approvalRequired = default(bool?), int? subscriptionsLimit = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ProductAuthType> authenticationType = null, Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState? state = default(Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState?), Azure.ResourceManager.ApiManagement.Models.ProductApplicationContractEntra applicationEntra = null, string displayName = null) { throw null; }
+        public static Azure.ResourceManager.ApiManagement.ApiManagementProductData ApiManagementProductData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string terms = null, bool? isSubscriptionRequired = default(bool?), bool? isApprovalRequired = default(bool?), int? subscriptionsLimit = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ProductAuthType> authenticationType = null, Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState? state = default(Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState?), Azure.ResourceManager.ApiManagement.Models.ProductApplicationContractEntra applicationEntra = null, string displayName = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ApiManagementProductData ApiManagementProductData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string description, string terms, bool? isSubscriptionRequired, bool? isApprovalRequired, int? subscriptionsLimit, Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState? state, string displayName) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacity ApiManagementResourceSkuCapacity(int? minimum = default(int?), int? maximum = default(int?), int? @default = default(int?), Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacityScaleType? scaleType = default(Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacityScaleType?)) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceBackupRestoreContent ApiManagementServiceBackupRestoreContent(string storageAccount = null, string containerName = null, string backupName = null, Azure.ResourceManager.ApiManagement.Models.StorageAccountAccessType? accessType = default(Azure.ResourceManager.ApiManagement.Models.StorageAccountAccessType?), string accessKey = null, string clientId = null) { throw null; }
@@ -7506,11 +7505,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.AssociatedApiProperties AssociatedApiProperties(string description, Azure.ResourceManager.ApiManagement.Models.AuthenticationSettingsContract authenticationSettings, Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, Azure.ResourceManager.ApiManagement.Models.ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, Azure.Core.ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, Azure.ResourceManager.ApiManagement.Models.ApiContactInformation contact, Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation license, string id, string name, System.Uri serviceUri, string path, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> protocols) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.AssociatedApiProperties AssociatedApiProperties(string description, Azure.ResourceManager.ApiManagement.Models.AuthenticationSettingsContract authenticationSettings, Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, Azure.ResourceManager.ApiManagement.Models.ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, Azure.Core.ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, System.Uri termsOfServiceUri, Azure.ResourceManager.ApiManagement.Models.ApiContactInformation contact, Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation license, string id, string name, System.Uri serviceUri, string path, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> protocols) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.AssociatedOperationProperties AssociatedOperationProperties(string id = null, string name = null, string apiName = null, string apiRevision = null, string apiVersion = null, string description = null, string method = null, string uriTemplate = null) { throw null; }
-        public static Azure.ResourceManager.ApiManagement.Models.AssociatedProductProperties AssociatedProductProperties(string description = null, string terms = null, bool? subscriptionRequired = default(bool?), bool? approvalRequired = default(bool?), int? subscriptionsLimit = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ProductAuthType> authenticationType = null, Azure.ResourceManager.ApiManagement.Models.ProductApplicationContractEntra applicationEntra = null, Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState? state = default(Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState?), string id = null, string name = null) { throw null; }
+        public static Azure.ResourceManager.ApiManagement.Models.AssociatedProductProperties AssociatedProductProperties(string description = null, string terms = null, bool? isSubscriptionRequired = default(bool?), bool? isApprovalRequired = default(bool?), int? subscriptionsLimit = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ProductAuthType> authenticationType = null, Azure.ResourceManager.ApiManagement.Models.ProductApplicationContractEntra applicationEntra = null, Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState? state = default(Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState?), string id = null, string name = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.AssociatedProductProperties AssociatedProductProperties(string description, string terms, bool? isSubscriptionRequired, bool? isApprovalRequired, int? subscriptionsLimit, Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState? state, string id, string name) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.AssociatedTagProperties AssociatedTagProperties(string id = null, string name = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.AssociationContract AssociationContract(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiManagement.Models.AssociationContractPropertiesProvisioningState? provisioningState = default(Azure.ResourceManager.ApiManagement.Models.AssociationContractPropertiesProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.ApiManagement.Models.AuthenticationSettingsContract AuthenticationSettingsContract(Azure.ResourceManager.ApiManagement.Models.OAuth2AuthenticationSettingsContract oAuth2 = null, Azure.ResourceManager.ApiManagement.Models.OpenIdAuthenticationSettingsContract openid = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.OAuth2AuthenticationSettingsContract> oAuth2AuthenticationSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.OpenIdAuthenticationSettingsContract> openidAuthenticationSettings = null) { throw null; }
+        public static Azure.ResourceManager.ApiManagement.Models.AuthenticationSettingsContract AuthenticationSettingsContract(Azure.ResourceManager.ApiManagement.Models.OAuth2AuthenticationSettingsContract oAuth2 = null, Azure.ResourceManager.ApiManagement.Models.OpenIdAuthenticationSettingsContract openId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.OAuth2AuthenticationSettingsContract> oAuth2AuthenticationSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.OpenIdAuthenticationSettingsContract> openidAuthenticationSettings = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.AuthorizationAccessPolicyContractData AuthorizationAccessPolicyContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> appIds = null, System.Guid? tenantId = default(System.Guid?), string objectId = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.AuthorizationAccessPolicyContractData AuthorizationAccessPolicyContractData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Guid? tenantId, string objectId) { throw null; }
         public static Azure.ResourceManager.ApiManagement.AuthorizationContractData AuthorizationContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiManagement.Models.ApiManagementAuthorizationType? authorizationType = default(Azure.ResourceManager.ApiManagement.Models.ApiManagementAuthorizationType?), Azure.ResourceManager.ApiManagement.Models.OAuth2GrantType? oAuth2GrantType = default(Azure.ResourceManager.ApiManagement.Models.OAuth2GrantType?), System.Collections.Generic.IDictionary<string, string> parameters = null, Azure.ResourceManager.ApiManagement.Models.ApiManagementAuthorizationError error = null, string status = null) { throw null; }
@@ -7528,7 +7527,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.BackendPool BackendPool(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.BackendPoolItem> services = null, int? failureResponseStatusCode = default(int?), Azure.ResourceManager.ApiManagement.Models.BackendSessionId sessionId = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.BackendReconnectContract BackendReconnectContract(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.TimeSpan? after = default(System.TimeSpan?)) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.BackendServiceFabricClusterProperties BackendServiceFabricClusterProperties(string clientCertificateId = null, string clientCertificatethumbprint = null, int? maxPartitionResolutionRetries = default(int?), System.Collections.Generic.IEnumerable<string> managementEndpoints = null, System.Collections.Generic.IEnumerable<string> serverCertificateThumbprints = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.X509CertificateName> serverX509Names = null) { throw null; }
-        public static Azure.ResourceManager.ApiManagement.Models.BackendTlsProperties BackendTlsProperties(bool? validateCertificateChain = default(bool?), bool? validateCertificateName = default(bool?), System.Collections.Generic.IEnumerable<string> serverCertificateThumbprints = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.X509CertificateName> serverX509Names = null) { throw null; }
+        public static Azure.ResourceManager.ApiManagement.Models.BackendTlsProperties BackendTlsProperties(bool? shouldValidateCertificateChain = default(bool?), bool? shouldValidateCertificateName = default(bool?), System.Collections.Generic.IEnumerable<string> serverCertificateThumbprints = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.X509CertificateName> serverX509Names = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.CircuitBreakerFailureCondition CircuitBreakerFailureCondition(long? count = default(long?), long? percentage = default(long?), System.TimeSpan? interval = default(System.TimeSpan?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.FailureStatusCodeRange> statusCodeRanges = null, System.Collections.Generic.IEnumerable<string> errorReasons = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ClientApplicationContractData ClientApplicationContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string description = null, string ownerId = null, string entraApplicationId = null, string entraTenantId = null, Azure.ResourceManager.ApiManagement.Models.ClientApplicationState? state = default(Azure.ResourceManager.ApiManagement.Models.ClientApplicationState?)) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ClientApplicationProductLinkContractData ClientApplicationProductLinkContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string productId = null) { throw null; }
@@ -7546,7 +7545,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.ContentItemContractData ContentItemContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, System.BinaryData> properties = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ContentTypeContractData ContentTypeContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string contentTypeIdentifier = null, string contentTypeName = null, string description = null, System.BinaryData schema = null, string version = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.DataMasking DataMasking(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.DataMaskingEntity> queryParams = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.DataMaskingEntity> headers = null) { throw null; }
-        public static Azure.ResourceManager.ApiManagement.DiagnosticContractData DiagnosticContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiManagement.Models.AlwaysLog? alwaysLog = default(Azure.ResourceManager.ApiManagement.Models.AlwaysLog?), string loggerId = null, Azure.ResourceManager.ApiManagement.Models.SamplingSettings sampling = null, Azure.ResourceManager.ApiManagement.Models.PipelineDiagnosticSettings frontend = null, Azure.ResourceManager.ApiManagement.Models.PipelineDiagnosticSettings backend = null, Azure.ResourceManager.ApiManagement.Models.LargeLanguageModelDiagnosticSettings largeLanguageModel = null, bool? logClientIp = default(bool?), Azure.ResourceManager.ApiManagement.Models.HttpCorrelationProtocol? httpCorrelationProtocol = default(Azure.ResourceManager.ApiManagement.Models.HttpCorrelationProtocol?), Azure.ResourceManager.ApiManagement.Models.TraceVerbosityLevel? verbosity = default(Azure.ResourceManager.ApiManagement.Models.TraceVerbosityLevel?), Azure.ResourceManager.ApiManagement.Models.OperationNameFormat? operationNameFormat = default(Azure.ResourceManager.ApiManagement.Models.OperationNameFormat?), bool? metrics = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.ApiManagement.DiagnosticContractData DiagnosticContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiManagement.Models.AlwaysLog? alwaysLog = default(Azure.ResourceManager.ApiManagement.Models.AlwaysLog?), string loggerId = null, Azure.ResourceManager.ApiManagement.Models.SamplingSettings sampling = null, Azure.ResourceManager.ApiManagement.Models.PipelineDiagnosticSettings frontend = null, Azure.ResourceManager.ApiManagement.Models.PipelineDiagnosticSettings backend = null, Azure.ResourceManager.ApiManagement.Models.LargeLanguageModelDiagnosticSettings largeLanguageModel = null, bool? isLogClientIPEnabled = default(bool?), Azure.ResourceManager.ApiManagement.Models.HttpCorrelationProtocol? httpCorrelationProtocol = default(Azure.ResourceManager.ApiManagement.Models.HttpCorrelationProtocol?), Azure.ResourceManager.ApiManagement.Models.TraceVerbosityLevel? verbosity = default(Azure.ResourceManager.ApiManagement.Models.TraceVerbosityLevel?), Azure.ResourceManager.ApiManagement.Models.OperationNameFormat? operationNameFormat = default(Azure.ResourceManager.ApiManagement.Models.OperationNameFormat?), bool? metrics = default(bool?)) { throw null; }
         public static Azure.ResourceManager.ApiManagement.DiagnosticContractData DiagnosticContractData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.ApiManagement.Models.AlwaysLog? alwaysLog, string loggerId, Azure.ResourceManager.ApiManagement.Models.SamplingSettings sampling, Azure.ResourceManager.ApiManagement.Models.PipelineDiagnosticSettings frontend, Azure.ResourceManager.ApiManagement.Models.PipelineDiagnosticSettings backend, bool? isLogClientIPEnabled, Azure.ResourceManager.ApiManagement.Models.HttpCorrelationProtocol? httpCorrelationProtocol, Azure.ResourceManager.ApiManagement.Models.TraceVerbosityLevel? verbosity, Azure.ResourceManager.ApiManagement.Models.OperationNameFormat? operationNameFormat, bool? metrics) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.DiagnosticUpdateContract DiagnosticUpdateContract(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiManagement.Models.AlwaysLog? alwaysLog = default(Azure.ResourceManager.ApiManagement.Models.AlwaysLog?), string loggerId = null, Azure.ResourceManager.ApiManagement.Models.SamplingSettings sampling = null, Azure.ResourceManager.ApiManagement.Models.PipelineDiagnosticSettings frontend = null, Azure.ResourceManager.ApiManagement.Models.PipelineDiagnosticSettings backend = null, bool? isLogClientIPEnabled = default(bool?), Azure.ResourceManager.ApiManagement.Models.HttpCorrelationProtocol? httpCorrelationProtocol = default(Azure.ResourceManager.ApiManagement.Models.HttpCorrelationProtocol?), Azure.ResourceManager.ApiManagement.Models.TraceVerbosityLevel? verbosity = default(Azure.ResourceManager.ApiManagement.Models.TraceVerbosityLevel?), Azure.ResourceManager.ApiManagement.Models.OperationNameFormat? operationNameFormat = default(Azure.ResourceManager.ApiManagement.Models.OperationNameFormat?), bool? metrics = default(bool?)) { throw null; }
         public static Azure.ResourceManager.ApiManagement.DocumentationContractData DocumentationContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string title = null, string content = null) { throw null; }
@@ -7574,11 +7573,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.NamedValueSecretContract NamedValueSecretContract(string value = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.NetworkStatusContract NetworkStatusContract(System.Collections.Generic.IEnumerable<string> dnsServers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ConnectivityStatusContract> connectivityStatus = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.NetworkStatusContractWithLocation NetworkStatusContractWithLocation(Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.ApiManagement.Models.NetworkStatusContract networkStatus = null) { throw null; }
-        public static Azure.ResourceManager.ApiManagement.Models.OpenIdAuthenticationSettingsContract OpenIdAuthenticationSettingsContract(string openidProviderId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.BearerTokenSendingMethod> bearerTokenSendingMethods = null) { throw null; }
+        public static Azure.ResourceManager.ApiManagement.Models.OpenIdAuthenticationSettingsContract OpenIdAuthenticationSettingsContract(string openIdProviderId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.BearerTokenSendingMethod> bearerTokenSendingMethods = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.OperationResultLogItemContract OperationResultLogItemContract(string objectType = null, string action = null, string objectKey = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.OutboundEnvironmentEndpoint OutboundEnvironmentEndpoint(string category = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.EndpointDependency> endpoints = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.OutboundEnvironmentEndpointList OutboundEnvironmentEndpointList(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.OutboundEnvironmentEndpoint> value = null, string nextLink = null) { throw null; }
-        public static Azure.ResourceManager.ApiManagement.Models.ParameterContract ParameterContract(string name = null, string description = null, string type = null, string defaultValue = null, bool? required = default(bool?), System.Collections.Generic.IEnumerable<string> values = null, string schemaId = null, string typeName = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ApiManagement.Models.ParameterExampleContract> examples = null) { throw null; }
+        public static Azure.ResourceManager.ApiManagement.Models.ParameterContract ParameterContract(string name = null, string description = null, string parameterContractType = null, string defaultValue = null, bool? isRequired = default(bool?), System.Collections.Generic.IEnumerable<string> values = null, string schemaId = null, string typeName = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ApiManagement.Models.ParameterExampleContract> examples = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.PolicyContractData PolicyContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string value = null, Azure.ResourceManager.ApiManagement.Models.PolicyContentFormat? format = default(Azure.ResourceManager.ApiManagement.Models.PolicyContentFormat?)) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.PolicyDescriptionContractData PolicyDescriptionContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, long? scope = default(long?)) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.PolicyDescriptionListResult PolicyDescriptionListResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.PolicyDescriptionContractData> value = null, long? count = default(long?)) { throw null; }
@@ -7587,16 +7586,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.PolicyRestrictionContractData PolicyRestrictionContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string scope = null, Azure.ResourceManager.ApiManagement.Models.PolicyRestrictionRequireBase? requireBase = default(Azure.ResourceManager.ApiManagement.Models.PolicyRestrictionRequireBase?)) { throw null; }
         public static Azure.ResourceManager.ApiManagement.PortalConfigContractData PortalConfigContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? enableBasicAuth = default(bool?), bool? require = default(bool?), Azure.ResourceManager.ApiManagement.Models.PortalConfigTermsOfServiceProperties signupTermsOfService = null, Azure.ResourceManager.ApiManagement.Models.PortalConfigDelegationProperties delegation = null, System.Collections.Generic.IEnumerable<string> corsAllowedOrigins = null, Azure.ResourceManager.ApiManagement.Models.PortalConfigCspProperties csp = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.PortalConfigCspProperties PortalConfigCspProperties(Azure.ResourceManager.ApiManagement.Models.PortalSettingsCspMode? mode = default(Azure.ResourceManager.ApiManagement.Models.PortalSettingsCspMode?), System.Collections.Generic.IEnumerable<System.Uri> reportUri = null, System.Collections.Generic.IEnumerable<string> allowedSources = null) { throw null; }
-        public static Azure.ResourceManager.ApiManagement.Models.PortalSettingsContractData PortalSettingsContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Uri uri = null, string validationKey = null, bool? enabled = default(bool?), Azure.ResourceManager.ApiManagement.Models.TermsOfServiceProperties termsOfService = null, bool? subscriptionsEnabled = default(bool?), bool? userRegistrationEnabled = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.ApiManagement.Models.PortalSettingsContractData PortalSettingsContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Uri uri = null, string validationKey = null, bool? enabled = default(bool?), Azure.ResourceManager.ApiManagement.Models.TermsOfServiceProperties termsOfService = null, bool? isSubscriptionDelegationEnabled = default(bool?), bool? isUserRegistrationDelegationEnabled = default(bool?)) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.PortalSettingsContractData PortalSettingsContractData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Uri uri, string validationKey, bool? isSubscriptionDelegationEnabled, bool? isUserRegistrationDelegationEnabled, bool? isRedirectEnabled, Azure.ResourceManager.ApiManagement.Models.TermsOfServiceProperties termsOfService) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.PortalSettingsListResult PortalSettingsListResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.PortalSettingsContractData> value = null, long? count = default(long?)) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.PortalSettingValidationKeyContract PortalSettingValidationKeyContract(string validationKey = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ProductApiLinkContractData ProductApiLinkContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string apiId = null) { throw null; }
-        public static Azure.ResourceManager.ApiManagement.Models.ProductContractProperties ProductContractProperties(string description = null, string terms = null, bool? subscriptionRequired = default(bool?), bool? approvalRequired = default(bool?), int? subscriptionsLimit = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ProductAuthType> authenticationType = null, Azure.ResourceManager.ApiManagement.Models.ProductApplicationContractEntra applicationEntra = null, Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState? state = default(Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState?), string displayName = null) { throw null; }
-        public static Azure.ResourceManager.ApiManagement.Models.ProductEntityBaseProperties ProductEntityBaseProperties(string description = null, string terms = null, bool? subscriptionRequired = default(bool?), bool? approvalRequired = default(bool?), int? subscriptionsLimit = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ProductAuthType> authenticationType = null, Azure.ResourceManager.ApiManagement.Models.ProductApplicationContractEntra applicationEntra = null, Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState? state = default(Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState?)) { throw null; }
+        public static Azure.ResourceManager.ApiManagement.Models.ProductContractProperties ProductContractProperties(string description = null, string terms = null, bool? isSubscriptionRequired = default(bool?), bool? isApprovalRequired = default(bool?), int? subscriptionsLimit = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ProductAuthType> authenticationType = null, Azure.ResourceManager.ApiManagement.Models.ProductApplicationContractEntra applicationEntra = null, Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState? state = default(Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState?), string displayName = null) { throw null; }
+        public static Azure.ResourceManager.ApiManagement.Models.ProductEntityBaseProperties ProductEntityBaseProperties(string description = null, string terms = null, bool? isSubscriptionRequired = default(bool?), bool? isApprovalRequired = default(bool?), int? subscriptionsLimit = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ProductAuthType> authenticationType = null, Azure.ResourceManager.ApiManagement.Models.ProductApplicationContractEntra applicationEntra = null, Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState? state = default(Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState?)) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ProductEntityBaseProperties ProductEntityBaseProperties(string description, string terms, bool? isSubscriptionRequired, bool? isApprovalRequired, int? subscriptionsLimit, Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState? state) { throw null; }
         public static Azure.ResourceManager.ApiManagement.ProductGroupLinkContractData ProductGroupLinkContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string groupId = null) { throw null; }
-        public static Azure.ResourceManager.ApiManagement.Models.ProductUpdateProperties ProductUpdateProperties(string description = null, string terms = null, bool? subscriptionRequired = default(bool?), bool? approvalRequired = default(bool?), int? subscriptionsLimit = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ProductAuthType> authenticationType = null, Azure.ResourceManager.ApiManagement.Models.ProductApplicationContractEntra applicationEntra = null, Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState? state = default(Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState?), string displayName = null) { throw null; }
+        public static Azure.ResourceManager.ApiManagement.Models.ProductUpdateProperties ProductUpdateProperties(string description = null, string terms = null, bool? isSubscriptionRequired = default(bool?), bool? isApprovalRequired = default(bool?), int? subscriptionsLimit = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ProductAuthType> authenticationType = null, Azure.ResourceManager.ApiManagement.Models.ProductApplicationContractEntra applicationEntra = null, Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState? state = default(Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState?), string displayName = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.QuotaCounterContract QuotaCounterContract(string counterKey = null, string periodKey = null, System.DateTimeOffset periodStartOn = default(System.DateTimeOffset), System.DateTimeOffset periodEndOn = default(System.DateTimeOffset), Azure.ResourceManager.ApiManagement.Models.QuotaCounterValueContractProperties value = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.QuotaCounterListResult QuotaCounterListResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.QuotaCounterContract> value = null, long? count = default(long?), string nextLink = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.QuotaCounterValueContractProperties QuotaCounterValueContractProperties(int? callsCount, double? kbTransferred) { throw null; }
@@ -7663,7 +7662,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string Id { get { throw null; } }
         public string Method { get { throw null; } }
         public string Name { get { throw null; } }
-        public string UrlTemplate { get { throw null; } }
+        public string UriTemplate { get { throw null; } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.AssociatedOperationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ApiManagement.Models.AssociatedOperationProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7746,7 +7745,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public AuthenticationSettingsContract() { }
         public Azure.ResourceManager.ApiManagement.Models.OAuth2AuthenticationSettingsContract OAuth2 { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.OAuth2AuthenticationSettingsContract> OAuth2AuthenticationSettings { get { throw null; } }
-        public Azure.ResourceManager.ApiManagement.Models.OpenIdAuthenticationSettingsContract Openid { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiManagement.Models.OpenIdAuthenticationSettingsContract OpenId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.OpenIdAuthenticationSettingsContract> OpenidAuthenticationSettings { get { throw null; } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.AuthenticationSettingsContract JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -8119,8 +8118,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public BackendTlsProperties() { }
         public System.Collections.Generic.IList<string> ServerCertificateThumbprints { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.X509CertificateName> ServerX509Names { get { throw null; } }
-        public bool? ValidateCertificateChain { get { throw null; } set { } }
-        public bool? ValidateCertificateName { get { throw null; } set { } }
+        public bool? ShouldValidateCertificateChain { get { throw null; } set { } }
+        public bool? ShouldValidateCertificateName { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.BackendTlsProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ApiManagement.Models.BackendTlsProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -8221,8 +8220,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
     }
     public partial class CertificateInformation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiManagement.Models.CertificateInformation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiManagement.Models.CertificateInformation>
     {
-        public CertificateInformation(System.DateTimeOffset expiry, string thumbprint, string subject) { }
-        public System.DateTimeOffset Expiry { get { throw null; } set { } }
+        public CertificateInformation(System.DateTimeOffset expireOn, string thumbprint, string subject) { }
+        public System.DateTimeOffset ExpireOn { get { throw null; } set { } }
         public string Subject { get { throw null; } set { } }
         public string Thumbprint { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.CertificateInformation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -8391,7 +8390,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         public ConfigurationDeployContent() { }
         public string Branch { get { throw null; } }
-        public bool? Force { get { throw null; } set { } }
+        public bool? ForceDelete { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.ConfigurationDeployContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ApiManagement.Models.ConfigurationDeployContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -8406,7 +8405,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         public ConfigurationSaveContent() { }
         public string Branch { get { throw null; } }
-        public bool? Force { get { throw null; } set { } }
+        public bool? ForceUpdate { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.ConfigurationSaveContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ApiManagement.Models.ConfigurationSaveContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -8559,11 +8558,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal ConnectivityHop() { }
         public System.Net.IPAddress Address { get { throw null; } }
+        public string ConnectivityHopType { get { throw null; } }
         public string Id { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ApiManagement.Models.ConnectivityIssue> Issues { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> NextHopIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
-        public string Type { get { throw null; } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.ConnectivityHop JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ApiManagement.Models.ConnectivityHop PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -8578,9 +8577,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal ConnectivityIssue() { }
         public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IDictionary<string, string>> Context { get { throw null; } }
+        public Azure.ResourceManager.ApiManagement.Models.IssueType? IssueType { get { throw null; } }
         public Azure.ResourceManager.ApiManagement.Models.IssueOrigin? Origin { get { throw null; } }
         public Azure.ResourceManager.ApiManagement.Models.IssueSeverity? Severity { get { throw null; } }
-        public Azure.ResourceManager.ApiManagement.Models.IssueType? Type { get { throw null; } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.ConnectivityIssue JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ApiManagement.Models.ConnectivityIssue PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -8596,8 +8595,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         internal ConnectivityStatusContract() { }
         public string Error { get { throw null; } }
         public bool IsOptional { get { throw null; } }
-        public System.DateTimeOffset LastStatusChange { get { throw null; } }
-        public System.DateTimeOffset LastUpdated { get { throw null; } }
+        public System.DateTimeOffset LastStatusChangedOn { get { throw null; } }
+        public System.DateTimeOffset LastUpdatedOn { get { throw null; } }
         public string Name { get { throw null; } }
         public string ResourceType { get { throw null; } }
         public Azure.ResourceManager.ApiManagement.Models.ConnectivityStatusType Status { get { throw null; } }
@@ -8730,7 +8729,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public Azure.ResourceManager.ApiManagement.Models.PipelineDiagnosticSettings Backend { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.PipelineDiagnosticSettings Frontend { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.HttpCorrelationProtocol? HttpCorrelationProtocol { get { throw null; } set { } }
-        public bool? LogClientIp { get { throw null; } set { } }
+        public bool? IsLogClientIPEnabled { get { throw null; } set { } }
         public string LoggerId { get { throw null; } set { } }
         public bool? Metrics { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.OperationNameFormat? OperationNameFormat { get { throw null; } set { } }
@@ -9147,9 +9146,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public Azure.ResourceManager.ApiManagement.Models.ErrorResponseBody Error { get { throw null; } set { } }
         public string OperationResultIdentifier { get { throw null; } set { } }
         public string ResultInfo { get { throw null; } set { } }
-        public System.DateTimeOffset? Started { get { throw null; } set { } }
+        public System.DateTimeOffset? StartedOn { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.AsyncOperationStatus? Status { get { throw null; } set { } }
-        public System.DateTimeOffset? Updated { get { throw null; } set { } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -9182,11 +9181,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class GroupContractProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiManagement.Models.GroupContractProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiManagement.Models.GroupContractProperties>
     {
         public GroupContractProperties(string displayName) { }
-        public bool? BuiltIn { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public string ExternalId { get { throw null; } set { } }
-        public Azure.ResourceManager.ApiManagement.Models.ApiManagementGroupType? Type { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiManagement.Models.ApiManagementGroupType? GroupType { get { throw null; } set { } }
+        public bool? IsBuiltIn { get { throw null; } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.GroupContractProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ApiManagement.Models.GroupContractProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -9199,7 +9198,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     }
     public partial class HostnameConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiManagement.Models.HostnameConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiManagement.Models.HostnameConfiguration>
     {
-        public HostnameConfiguration(Azure.ResourceManager.ApiManagement.Models.HostnameType type, string hostName) { }
+        public HostnameConfiguration(Azure.ResourceManager.ApiManagement.Models.HostnameType hostnameType, string hostName) { }
         public Azure.ResourceManager.ApiManagement.Models.CertificateInformation Certificate { get { throw null; } set { } }
         public string CertificatePassword { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.CertificateSource? CertificateSource { get { throw null; } set { } }
@@ -9207,10 +9206,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public bool? DefaultSslBinding { get { throw null; } set { } }
         public string EncodedCertificate { get { throw null; } set { } }
         public string HostName { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiManagement.Models.HostnameType HostnameType { get { throw null; } set { } }
         public string IdentityClientId { get { throw null; } set { } }
         public string KeyVaultId { get { throw null; } set { } }
         public bool? NegotiateClientCertificate { get { throw null; } set { } }
-        public Azure.ResourceManager.ApiManagement.Models.HostnameType Type { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.HostnameConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ApiManagement.Models.HostnameConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -9771,7 +9770,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         public OpenIdAuthenticationSettingsContract() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.BearerTokenSendingMethod> BearerTokenSendingMethods { get { throw null; } }
-        public string OpenidProviderId { get { throw null; } set { } }
+        public string OpenIdProviderId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.OpenIdAuthenticationSettingsContract JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ApiManagement.Models.OpenIdAuthenticationSettingsContract PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -9847,14 +9846,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
     }
     public partial class ParameterContract : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiManagement.Models.ParameterContract>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiManagement.Models.ParameterContract>
     {
-        public ParameterContract(string name, string type) { }
+        public ParameterContract(string name, string parameterContractType) { }
         public string DefaultValue { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ApiManagement.Models.ParameterExampleContract> Examples { get { throw null; } }
+        public bool? IsRequired { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public bool? Required { get { throw null; } set { } }
+        public string ParameterContractType { get { throw null; } set { } }
         public string SchemaId { get { throw null; } set { } }
-        public string Type { get { throw null; } set { } }
         public string TypeName { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.ParameterContract JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10147,10 +10146,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         public PortalSettingsContractData() { }
         public bool? Enabled { get { throw null; } set { } }
-        public bool? SubscriptionsEnabled { get { throw null; } set { } }
+        public bool? IsSubscriptionDelegationEnabled { get { throw null; } set { } }
+        public bool? IsUserRegistrationDelegationEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.TermsOfServiceProperties TermsOfService { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
-        public bool? UserRegistrationEnabled { get { throw null; } set { } }
         public string ValidationKey { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -10275,11 +10274,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         public ProductEntityBaseProperties() { }
         public Azure.ResourceManager.ApiManagement.Models.ProductApplicationContractEntra ApplicationEntra { get { throw null; } set { } }
-        public bool? ApprovalRequired { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.ProductAuthType> AuthenticationType { get { throw null; } }
         public string Description { get { throw null; } set { } }
+        public bool? IsApprovalRequired { get { throw null; } set { } }
+        public bool? IsSubscriptionRequired { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.ApiManagementProductState? State { get { throw null; } set { } }
-        public bool? SubscriptionRequired { get { throw null; } set { } }
         public int? SubscriptionsLimit { get { throw null; } set { } }
         public string Terms { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.ProductEntityBaseProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10499,11 +10498,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class RemotePrivateEndpointConnectionWrapper : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiManagement.Models.RemotePrivateEndpointConnectionWrapper>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiManagement.Models.RemotePrivateEndpointConnectionWrapper>
     {
         public RemotePrivateEndpointConnectionWrapper() { }
+        public Azure.ResourceManager.ApiManagement.Models.ApiManagementPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> GroupIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
-        public Azure.ResourceManager.ApiManagement.Models.ApiManagementPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public string Type { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.RemotePrivateEndpointConnectionWrapper JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10598,7 +10597,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public double? ApiTime { get { throw null; } }
         public string BackendResponseCode { get { throw null; } }
         public string Cache { get { throw null; } }
-        public System.Net.IPAddress IpAddress { get { throw null; } }
+        public System.Net.IPAddress IPAddress { get { throw null; } }
         public Azure.Core.RequestMethod? Method { get { throw null; } }
         public string OperationId { get { throw null; } }
         public string ProductId { get { throw null; } }
@@ -10875,7 +10874,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class TenantAccessInfoCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiManagement.Models.TenantAccessInfoCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiManagement.Models.TenantAccessInfoCreateOrUpdateContent>
     {
         public TenantAccessInfoCreateOrUpdateContent() { }
-        public bool? Enabled { get { throw null; } set { } }
+        public bool? IsDirectAccessEnabled { get { throw null; } set { } }
         public string PrimaryKey { get { throw null; } set { } }
         public string PrincipalId { get { throw null; } set { } }
         public string SecondaryKey { get { throw null; } set { } }
@@ -10892,7 +10891,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class TenantAccessInfoPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiManagement.Models.TenantAccessInfoPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiManagement.Models.TenantAccessInfoPatch>
     {
         public TenantAccessInfoPatch() { }
-        public bool? Enabled { get { throw null; } set { } }
+        public bool? IsDirectAccessEnabled { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.TenantAccessInfoPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ApiManagement.Models.TenantAccessInfoPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10906,8 +10905,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class TenantAccessInfoSecretsDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiManagement.Models.TenantAccessInfoSecretsDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiManagement.Models.TenantAccessInfoSecretsDetails>
     {
         internal TenantAccessInfoSecretsDetails() { }
-        public bool? Enabled { get { throw null; } }
         public string Id { get { throw null; } }
+        public bool? IsDirectAccessEnabled { get { throw null; } }
         public string PrimaryKey { get { throw null; } }
         public string PrincipalId { get { throw null; } }
         public string SecondaryKey { get { throw null; } }
@@ -10927,7 +10926,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string Branch { get { throw null; } set { } }
         public string CommitId { get { throw null; } set { } }
         public System.DateTimeOffset? ConfigurationChangeOn { get { throw null; } set { } }
-        public bool? IsExport { get { throw null; } set { } }
+        public bool? IsExported { get { throw null; } set { } }
         public bool? IsGitEnabled { get { throw null; } set { } }
         public bool? IsSynced { get { throw null; } set { } }
         public string LastOperationId { get { throw null; } set { } }
@@ -10945,8 +10944,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class TermsOfServiceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiManagement.Models.TermsOfServiceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiManagement.Models.TermsOfServiceProperties>
     {
         public TermsOfServiceProperties() { }
-        public bool? ConsentRequired { get { throw null; } set { } }
-        public bool? Enabled { get { throw null; } set { } }
+        public bool? IsConsentRequired { get { throw null; } set { } }
+        public bool? IsDisplayEnabled { get { throw null; } set { } }
         public string Text { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.TermsOfServiceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -11031,7 +11030,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class UserTokenContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiManagement.Models.UserTokenContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiManagement.Models.UserTokenContent>
     {
         public UserTokenContent() { }
-        public System.DateTimeOffset? Expiry { get { throw null; } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public Azure.ResourceManager.ApiManagement.Models.TokenGenerationUsedKeyType? KeyType { get { throw null; } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.UserTokenContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

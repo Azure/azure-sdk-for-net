@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("text"u8);
                 writer.WriteStringValue(Text);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsDisplayEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsDisplayEnabled.Value);
             }
-            if (Optional.IsDefined(ConsentRequired))
+            if (Optional.IsDefined(IsConsentRequired))
             {
                 writer.WritePropertyName("consentRequired"u8);
-                writer.WriteBooleanValue(ConsentRequired.Value);
+                writer.WriteBooleanValue(IsConsentRequired.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             string text = default;
-            bool? enabled = default;
-            bool? consentRequired = default;
+            bool? isDisplayEnabled = default;
+            bool? isConsentRequired = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isDisplayEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("consentRequired"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    consentRequired = prop.Value.GetBoolean();
+                    isConsentRequired = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TermsOfServiceProperties(text, enabled, consentRequired, additionalBinaryDataProperties);
+            return new TermsOfServiceProperties(text, isDisplayEnabled, isConsentRequired, additionalBinaryDataProperties);
         }
     }
 }

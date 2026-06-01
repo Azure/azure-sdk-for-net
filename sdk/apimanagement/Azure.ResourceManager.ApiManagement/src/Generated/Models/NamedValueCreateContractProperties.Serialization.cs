@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             IList<string> tags = default;
-            bool? secret = default;
+            bool? isSecret = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string displayName = default;
             string value = default;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    secret = prop.Value.GetBoolean();
+                    isSecret = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("displayName"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             return new NamedValueCreateContractProperties(
                 tags ?? new ChangeTrackingList<string>(),
-                secret,
+                isSecret,
                 additionalBinaryDataProperties,
                 displayName,
                 value,

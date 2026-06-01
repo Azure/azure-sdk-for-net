@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementSkuCosts"/>. </summary>
-        /// <param name="meterID"> Used for querying price from commerce. </param>
+        /// <param name="meterId"> Used for querying price from commerce. </param>
         /// <param name="quantity"> The multiplier is needed to extend the base metered cost. </param>
         /// <param name="extendedUnit"> An invariant to show the extended unit. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementSkuCosts(string meterID, long? quantity, string extendedUnit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiManagementSkuCosts(string meterId, long? quantity, string extendedUnit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            MeterID = meterID;
+            MeterId = meterId;
             Quantity = quantity;
             ExtendedUnit = extendedUnit;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Used for querying price from commerce. </summary>
         [WirePath("meterID")]
-        public string MeterID { get; }
+        public string MeterId { get; }
 
         /// <summary> The multiplier is needed to extend the base metered cost. </summary>
         [WirePath("quantity")]

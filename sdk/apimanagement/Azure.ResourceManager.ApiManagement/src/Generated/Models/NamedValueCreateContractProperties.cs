@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="NamedValueCreateContractProperties"/>. </summary>
         /// <param name="tags"> Optional tags that when provided can be used to filter the NamedValue list. </param>
-        /// <param name="secret"> Determines whether the value is a secret and should be encrypted or not. Default value is false. </param>
+        /// <param name="isSecret"> Determines whether the value is a secret and should be encrypted or not. Default value is false. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="displayName"> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </param>
         /// <param name="value"> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
         /// <param name="keyVault"> KeyVault location details of the namedValue. </param>
-        internal NamedValueCreateContractProperties(IList<string> tags, bool? secret, IDictionary<string, BinaryData> additionalBinaryDataProperties, string displayName, string value, KeyVaultContractCreateProperties keyVault) : base(tags, secret, additionalBinaryDataProperties)
+        internal NamedValueCreateContractProperties(IList<string> tags, bool? isSecret, IDictionary<string, BinaryData> additionalBinaryDataProperties, string displayName, string value, KeyVaultContractCreateProperties keyVault) : base(tags, isSecret, additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Value = value;

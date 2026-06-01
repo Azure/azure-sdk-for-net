@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 throw new FormatException($"The model {nameof(BackendTlsProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ValidateCertificateChain))
+            if (Optional.IsDefined(ShouldValidateCertificateChain))
             {
                 writer.WritePropertyName("validateCertificateChain"u8);
-                writer.WriteBooleanValue(ValidateCertificateChain.Value);
+                writer.WriteBooleanValue(ShouldValidateCertificateChain.Value);
             }
-            if (Optional.IsDefined(ValidateCertificateName))
+            if (Optional.IsDefined(ShouldValidateCertificateName))
             {
                 writer.WritePropertyName("validateCertificateName"u8);
-                writer.WriteBooleanValue(ValidateCertificateName.Value);
+                writer.WriteBooleanValue(ShouldValidateCertificateName.Value);
             }
             if (Optional.IsCollectionDefined(ServerCertificateThumbprints))
             {
@@ -151,8 +151,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            bool? validateCertificateChain = default;
-            bool? validateCertificateName = default;
+            bool? shouldValidateCertificateChain = default;
+            bool? shouldValidateCertificateName = default;
             IList<string> serverCertificateThumbprints = default;
             IList<X509CertificateName> serverX509Names = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    validateCertificateChain = prop.Value.GetBoolean();
+                    shouldValidateCertificateChain = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("validateCertificateName"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    validateCertificateName = prop.Value.GetBoolean();
+                    shouldValidateCertificateName = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("serverCertificateThumbprints"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BackendTlsProperties(validateCertificateChain, validateCertificateName, serverCertificateThumbprints ?? new ChangeTrackingList<string>(), serverX509Names ?? new ChangeTrackingList<X509CertificateName>(), additionalBinaryDataProperties);
+            return new BackendTlsProperties(shouldValidateCertificateChain, shouldValidateCertificateName, serverCertificateThumbprints ?? new ChangeTrackingList<string>(), serverX509Names ?? new ChangeTrackingList<X509CertificateName>(), additionalBinaryDataProperties);
         }
     }
 }

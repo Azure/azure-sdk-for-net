@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 throw new FormatException($"The model {nameof(ApiManagementSkuRestrictions)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(RestrictionsType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToSerialString());
+                writer.WriteStringValue(RestrictionsType.Value.ToSerialString());
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Values))
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            ApiManagementSkuRestrictionsType? @type = default;
+            ApiManagementSkuRestrictionsType? restrictionsType = default;
             IReadOnlyList<string> values = default;
             ApiManagementSkuRestrictionInfo restrictionInfo = default;
             ApiManagementSkuRestrictionsReasonCode? reasonCode = default;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    @type = prop.Value.GetString().ToApiManagementSkuRestrictionsType();
+                    restrictionsType = prop.Value.GetString().ToApiManagementSkuRestrictionsType();
                     continue;
                 }
                 if (prop.NameEquals("values"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApiManagementSkuRestrictions(@type, values ?? new ChangeTrackingList<string>(), restrictionInfo, reasonCode, additionalBinaryDataProperties);
+            return new ApiManagementSkuRestrictions(restrictionsType, values ?? new ChangeTrackingList<string>(), restrictionInfo, reasonCode, additionalBinaryDataProperties);
         }
     }
 }

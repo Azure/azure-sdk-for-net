@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 throw new FormatException($"The model {nameof(ApiManagementServiceNameAvailabilityResult)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(NameAvailable))
+            if (options.Format != "W" && Optional.IsDefined(IsNameAvailable))
             {
                 writer.WritePropertyName("nameAvailable"u8);
-                writer.WriteBooleanValue(NameAvailable.Value);
+                writer.WriteBooleanValue(IsNameAvailable.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Message))
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            bool? nameAvailable = default;
+            bool? isNameAvailable = default;
             string message = default;
             ApiManagementServiceNameUnavailableReason? reason = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    nameAvailable = prop.Value.GetBoolean();
+                    isNameAvailable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("message"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApiManagementServiceNameAvailabilityResult(nameAvailable, message, reason, additionalBinaryDataProperties);
+            return new ApiManagementServiceNameAvailabilityResult(isNameAvailable, message, reason, additionalBinaryDataProperties);
         }
     }
 }

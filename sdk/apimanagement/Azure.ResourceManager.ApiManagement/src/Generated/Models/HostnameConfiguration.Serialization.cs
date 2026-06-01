@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 throw new FormatException($"The model {nameof(HostnameConfiguration)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(HostnameType.ToString());
             writer.WritePropertyName("hostName"u8);
             writer.WriteStringValue(HostName);
             if (Optional.IsDefined(KeyVaultId))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            HostnameType @type = default;
+            HostnameType hostnameType = default;
             string hostName = default;
             string keyVaultId = default;
             string identityClientId = default;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new HostnameType(prop.Value.GetString());
+                    hostnameType = new HostnameType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("hostName"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             return new HostnameConfiguration(
-                @type,
+                hostnameType,
                 hostName,
                 keyVaultId,
                 identityClientId,

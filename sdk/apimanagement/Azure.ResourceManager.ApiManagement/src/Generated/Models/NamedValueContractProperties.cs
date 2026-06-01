@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="NamedValueContractProperties"/>. </summary>
         /// <param name="tags"> Optional tags that when provided can be used to filter the NamedValue list. </param>
-        /// <param name="secret"> Determines whether the value is a secret and should be encrypted or not. Default value is false. </param>
+        /// <param name="isSecret"> Determines whether the value is a secret and should be encrypted or not. Default value is false. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="displayName"> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </param>
         /// <param name="value"> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
-        /// <param name="keyVault"> KeyVault location details of the namedValue. </param>
+        /// <param name="keyVaultDetails"> KeyVault location details of the namedValue. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
-        internal NamedValueContractProperties(IList<string> tags, bool? secret, IDictionary<string, BinaryData> additionalBinaryDataProperties, string displayName, string value, KeyVaultContractProperties keyVault, string provisioningState) : base(tags, secret, additionalBinaryDataProperties)
+        internal NamedValueContractProperties(IList<string> tags, bool? isSecret, IDictionary<string, BinaryData> additionalBinaryDataProperties, string displayName, string value, KeyVaultContractProperties keyVaultDetails, string provisioningState) : base(tags, isSecret, additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Value = value;
-            KeyVault = keyVault;
+            KeyVaultDetails = keyVaultDetails;
             ProvisioningState = provisioningState;
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> KeyVault location details of the namedValue. </summary>
         [WirePath("keyVault")]
-        public KeyVaultContractProperties KeyVault { get; set; }
+        public KeyVaultContractProperties KeyVaultDetails { get; set; }
 
         /// <summary> The provisioning state. </summary>
         [WirePath("provisioningState")]

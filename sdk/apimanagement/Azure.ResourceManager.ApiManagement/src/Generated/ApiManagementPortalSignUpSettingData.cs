@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Allow users to sign up on a developer portal. </summary>
         [WirePath("properties.enabled")]
-        public bool? Enabled
+        public bool? IsSignUpDeveloperPortalEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.Enabled;
+                return Properties is null ? default : Properties.IsSignUpDeveloperPortalEnabled;
             }
             set
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new PortalSignupSettingsProperties();
                 }
-                Properties.Enabled = value;
+                Properties.IsSignUpDeveloperPortalEnabled = value;
             }
         }
 

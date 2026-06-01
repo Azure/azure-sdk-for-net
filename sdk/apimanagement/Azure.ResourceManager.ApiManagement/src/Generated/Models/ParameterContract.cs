@@ -19,15 +19,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="ParameterContract"/>. </summary>
         /// <param name="name"> Parameter name. </param>
-        /// <param name="type"> Parameter type. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="type"/> is null. </exception>
-        public ParameterContract(string name, string @type)
+        /// <param name="parameterContractType"> Parameter type. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameterContractType"/> is null. </exception>
+        public ParameterContract(string name, string parameterContractType)
         {
             Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(@type, nameof(@type));
+            Argument.AssertNotNull(parameterContractType, nameof(parameterContractType));
 
             Name = name;
-            Type = @type;
+            ParameterContractType = parameterContractType;
             Values = new ChangeTrackingList<string>();
             Examples = new ChangeTrackingDictionary<string, ParameterExampleContract>();
         }
@@ -35,21 +35,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="ParameterContract"/>. </summary>
         /// <param name="name"> Parameter name. </param>
         /// <param name="description"> Parameter description. </param>
-        /// <param name="type"> Parameter type. </param>
+        /// <param name="parameterContractType"> Parameter type. </param>
         /// <param name="defaultValue"> Default parameter value. </param>
-        /// <param name="required"> Specifies whether parameter is required or not. </param>
+        /// <param name="isRequired"> Specifies whether parameter is required or not. </param>
         /// <param name="values"> Parameter values. </param>
         /// <param name="schemaId"> Schema identifier. </param>
         /// <param name="typeName"> Type name defined by the schema. </param>
         /// <param name="examples"> Exampled defined for the parameter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ParameterContract(string name, string description, string @type, string defaultValue, bool? @required, IList<string> values, string schemaId, string typeName, IDictionary<string, ParameterExampleContract> examples, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ParameterContract(string name, string description, string parameterContractType, string defaultValue, bool? isRequired, IList<string> values, string schemaId, string typeName, IDictionary<string, ParameterExampleContract> examples, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
-            Type = @type;
+            ParameterContractType = parameterContractType;
             DefaultValue = defaultValue;
-            Required = @required;
+            IsRequired = isRequired;
             Values = values;
             SchemaId = schemaId;
             TypeName = typeName;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Parameter type. </summary>
         [WirePath("type")]
-        public string Type { get; set; }
+        public string ParameterContractType { get; set; }
 
         /// <summary> Default parameter value. </summary>
         [WirePath("defaultValue")]
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Specifies whether parameter is required or not. </summary>
         [WirePath("required")]
-        public bool? Required { get; set; }
+        public bool? IsRequired { get; set; }
 
         /// <summary> Parameter values. </summary>
         [WirePath("values")]

@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true. </summary>
         [WirePath("properties.subscriptionRequired")]
-        public bool? SubscriptionRequired
+        public bool? IsSubscriptionRequired
         {
             get
             {
-                return Properties is null ? default : Properties.SubscriptionRequired;
+                return Properties is null ? default : Properties.IsSubscriptionRequired;
             }
             set
             {
@@ -91,17 +91,17 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new ProductContractProperties();
                 }
-                Properties.SubscriptionRequired = value;
+                Properties.IsSubscriptionRequired = value;
             }
         }
 
         /// <summary> whether subscription approval is required. If false, new subscriptions will be approved automatically enabling developers to call the product’s APIs immediately after subscribing. If true, administrators must manually approve the subscription before the developer can any of the product’s APIs. Can be present only if subscriptionRequired property is present and has a value of false. </summary>
         [WirePath("properties.approvalRequired")]
-        public bool? ApprovalRequired
+        public bool? IsApprovalRequired
         {
             get
             {
-                return Properties is null ? default : Properties.ApprovalRequired;
+                return Properties is null ? default : Properties.IsApprovalRequired;
             }
             set
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new ProductContractProperties();
                 }
-                Properties.ApprovalRequired = value;
+                Properties.IsApprovalRequired = value;
             }
         }
 

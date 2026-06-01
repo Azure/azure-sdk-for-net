@@ -182,27 +182,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> API Authentication Settings. </summary>
         /// <param name="oAuth2"> OAuth2 Authentication settings. </param>
-        /// <param name="openid"> OpenID Connect Authentication Settings. </param>
+        /// <param name="openId"> OpenID Connect Authentication Settings. </param>
         /// <param name="oAuth2AuthenticationSettings"> Collection of OAuth2 authentication settings included into this API. </param>
         /// <param name="openidAuthenticationSettings"> Collection of Open ID Connect authentication settings included into this API. </param>
         /// <returns> A new <see cref="Models.AuthenticationSettingsContract"/> instance for mocking. </returns>
-        public static AuthenticationSettingsContract AuthenticationSettingsContract(OAuth2AuthenticationSettingsContract oAuth2 = default, OpenIdAuthenticationSettingsContract openid = default, IEnumerable<OAuth2AuthenticationSettingsContract> oAuth2AuthenticationSettings = default, IEnumerable<OpenIdAuthenticationSettingsContract> openidAuthenticationSettings = default)
+        public static AuthenticationSettingsContract AuthenticationSettingsContract(OAuth2AuthenticationSettingsContract oAuth2 = default, OpenIdAuthenticationSettingsContract openId = default, IEnumerable<OAuth2AuthenticationSettingsContract> oAuth2AuthenticationSettings = default, IEnumerable<OpenIdAuthenticationSettingsContract> openidAuthenticationSettings = default)
         {
             oAuth2AuthenticationSettings ??= new ChangeTrackingList<OAuth2AuthenticationSettingsContract>();
             openidAuthenticationSettings ??= new ChangeTrackingList<OpenIdAuthenticationSettingsContract>();
 
-            return new AuthenticationSettingsContract(oAuth2, openid, oAuth2AuthenticationSettings.ToList(), openidAuthenticationSettings.ToList(), additionalBinaryDataProperties: null);
+            return new AuthenticationSettingsContract(oAuth2, openId, oAuth2AuthenticationSettings.ToList(), openidAuthenticationSettings.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> API OAuth2 Authentication settings details. </summary>
-        /// <param name="openidProviderId"> OAuth authorization server identifier. </param>
+        /// <param name="openIdProviderId"> OAuth authorization server identifier. </param>
         /// <param name="bearerTokenSendingMethods"> How to send token to the server. </param>
         /// <returns> A new <see cref="Models.OpenIdAuthenticationSettingsContract"/> instance for mocking. </returns>
-        public static OpenIdAuthenticationSettingsContract OpenIdAuthenticationSettingsContract(string openidProviderId = default, IEnumerable<BearerTokenSendingMethod> bearerTokenSendingMethods = default)
+        public static OpenIdAuthenticationSettingsContract OpenIdAuthenticationSettingsContract(string openIdProviderId = default, IEnumerable<BearerTokenSendingMethod> bearerTokenSendingMethods = default)
         {
             bearerTokenSendingMethods ??= new ChangeTrackingList<BearerTokenSendingMethod>();
 
-            return new OpenIdAuthenticationSettingsContract(openidProviderId, bearerTokenSendingMethods.ToList(), additionalBinaryDataProperties: null);
+            return new OpenIdAuthenticationSettingsContract(openIdProviderId, bearerTokenSendingMethods.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Properties specific to MCP API type. </summary>
@@ -680,6 +680,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Information about a hop between the source and the destination. </summary>
         /// <param name="connectivityHopType"> The type of the hop. </param>
         /// <param name="id"> The ID of the hop. </param>
         /// <param name="address"> The IP address of the hop. </param>
@@ -702,6 +703,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Information about an issue encountered in the process of checking for connectivity. </summary>
         /// <param name="origin"> The origin of the issue. </param>
         /// <param name="severity"> The severity of the issue. </param>
         /// <param name="issueType"> The type of issue. </param>
@@ -750,6 +752,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new ApiManagementServiceNameAvailabilityContent(name, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Response of the CheckNameAvailability operation. </summary>
         /// <param name="isNameAvailable"> True if the name is available and can be used to create a new API Management service; otherwise false. </param>
         /// <param name="message"> If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that &lt;resourceName&gt; is already in use, and direct them to select a different name. </param>
         /// <param name="reason"> Invalid indicates the name provided does not match the resource provider’s naming requirements (incorrect length, unsupported characters, etc.)  AlreadyExists indicates that the name is already in use and is therefore unavailable. </param>
@@ -823,15 +826,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Operation parameters details. </summary>
         /// <param name="name"> Parameter name. </param>
         /// <param name="description"> Parameter description. </param>
-        /// <param name="type"> Parameter type. </param>
+        /// <param name="parameterContractType"> Parameter type. </param>
         /// <param name="defaultValue"> Default parameter value. </param>
-        /// <param name="required"> Specifies whether parameter is required or not. </param>
+        /// <param name="isRequired"> Specifies whether parameter is required or not. </param>
         /// <param name="values"> Parameter values. </param>
         /// <param name="schemaId"> Schema identifier. </param>
         /// <param name="typeName"> Type name defined by the schema. </param>
         /// <param name="examples"> Exampled defined for the parameter. </param>
         /// <returns> A new <see cref="Models.ParameterContract"/> instance for mocking. </returns>
-        public static ParameterContract ParameterContract(string name = default, string description = default, string @type = default, string defaultValue = default, bool? @required = default, IEnumerable<string> values = default, string schemaId = default, string typeName = default, IDictionary<string, ParameterExampleContract> examples = default)
+        public static ParameterContract ParameterContract(string name = default, string description = default, string parameterContractType = default, string defaultValue = default, bool? isRequired = default, IEnumerable<string> values = default, string schemaId = default, string typeName = default, IDictionary<string, ParameterExampleContract> examples = default)
         {
             values ??= new ChangeTrackingList<string>();
             examples ??= new ChangeTrackingDictionary<string, ParameterExampleContract>();
@@ -839,9 +842,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new ParameterContract(
                 name,
                 description,
-                @type,
+                parameterContractType,
                 defaultValue,
-                @required,
+                isRequired,
                 values.ToList(),
                 schemaId,
                 typeName,
@@ -965,13 +968,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="frontend"> Diagnostic settings for incoming/outgoing HTTP messages to the Gateway. </param>
         /// <param name="backend"> Diagnostic settings for incoming/outgoing HTTP messages to the Backend. </param>
         /// <param name="largeLanguageModel"> Large Language Models diagnostic settings. </param>
-        /// <param name="logClientIp"> Log the ClientIP. Default is false. </param>
+        /// <param name="isLogClientIPEnabled"> Log the ClientIP. Default is false. </param>
         /// <param name="httpCorrelationProtocol"> Sets correlation protocol to use for Application Insights diagnostics. </param>
         /// <param name="verbosity"> The verbosity level applied to traces emitted by trace policies. </param>
         /// <param name="operationNameFormat"> The format of the Operation Name for Application Insights telemetries. Default is Name. </param>
         /// <param name="metrics"> Emit custom metrics via emit-metric policy. Applicable only to Application Insights diagnostic settings. </param>
         /// <returns> A new <see cref="ApiManagement.DiagnosticContractData"/> instance for mocking. </returns>
-        public static DiagnosticContractData DiagnosticContractData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AlwaysLog? alwaysLog = default, string loggerId = default, SamplingSettings sampling = default, PipelineDiagnosticSettings frontend = default, PipelineDiagnosticSettings backend = default, LargeLanguageModelDiagnosticSettings largeLanguageModel = default, bool? logClientIp = default, HttpCorrelationProtocol? httpCorrelationProtocol = default, TraceVerbosityLevel? verbosity = default, OperationNameFormat? operationNameFormat = default, bool? metrics = default)
+        public static DiagnosticContractData DiagnosticContractData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AlwaysLog? alwaysLog = default, string loggerId = default, SamplingSettings sampling = default, PipelineDiagnosticSettings frontend = default, PipelineDiagnosticSettings backend = default, LargeLanguageModelDiagnosticSettings largeLanguageModel = default, bool? isLogClientIPEnabled = default, HttpCorrelationProtocol? httpCorrelationProtocol = default, TraceVerbosityLevel? verbosity = default, OperationNameFormat? operationNameFormat = default, bool? metrics = default)
         {
             return new DiagnosticContractData(
                 id,
@@ -979,14 +982,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                alwaysLog is null && loggerId is null && sampling is null && frontend is null && backend is null && largeLanguageModel is null && logClientIp is null && httpCorrelationProtocol is null && verbosity is null && operationNameFormat is null && metrics is null ? default : new DiagnosticContractProperties(
+                alwaysLog is null && loggerId is null && sampling is null && frontend is null && backend is null && largeLanguageModel is null && isLogClientIPEnabled is null && httpCorrelationProtocol is null && verbosity is null && operationNameFormat is null && metrics is null ? default : new DiagnosticContractProperties(
                     alwaysLog,
                     loggerId,
                     sampling,
                     frontend,
                     backend,
                     largeLanguageModel,
-                    logClientIp,
+                    isLogClientIPEnabled,
                     httpCorrelationProtocol,
                     verbosity,
                     operationNameFormat,
@@ -1139,13 +1142,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="tls"> Backend TLS Properties. </param>
         /// <param name="azureRegion"> Azure region in which the backend is deployed. Can be optionally specified to use features such as carbon-optimized load balancer. </param>
         /// <param name="pool"> Backend Pool Properties. </param>
-        /// <param name="type"> Type of the backend. A backend can be either Single or Pool. </param>
+        /// <param name="typePropertiesType"> Type of the backend. A backend can be either Single or Pool. </param>
         /// <param name="backendServiceFabricCluster"> Backend Service Fabric Cluster Properties. </param>
         /// <param name="circuitBreakerRules"> The rules for tripping the backend. </param>
         /// <param name="uri"> Runtime Url of the Backend. Required when backend type is 'Single'. </param>
         /// <param name="protocol"> Backend communication protocol. Required when backend type is 'Single'. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementBackendData"/> instance for mocking. </returns>
-        public static ApiManagementBackendData ApiManagementBackendData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string title = default, string description = default, string resourceId = default, BackendCredentialsContract credentials = default, BackendProxyContract proxy = default, BackendTlsProperties tls = default, string azureRegion = default, BackendBaseParametersPool pool = default, BackendType? @type = default, BackendServiceFabricClusterProperties backendServiceFabricCluster = default, IEnumerable<CircuitBreakerRule> circuitBreakerRules = default, Uri uri = default, BackendProtocol? protocol = default)
+        public static ApiManagementBackendData ApiManagementBackendData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string title = default, string description = default, string resourceId = default, BackendCredentialsContract credentials = default, BackendProxyContract proxy = default, BackendTlsProperties tls = default, string azureRegion = default, BackendBaseParametersPool pool = default, BackendType? typePropertiesType = default, BackendServiceFabricClusterProperties backendServiceFabricCluster = default, IEnumerable<CircuitBreakerRule> circuitBreakerRules = default, Uri uri = default, BackendProtocol? protocol = default)
         {
             return new ApiManagementBackendData(
                 id,
@@ -1153,7 +1156,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                title is null && description is null && resourceId is null && credentials is null && proxy is null && tls is null && azureRegion is null && pool is null && @type is null && backendServiceFabricCluster is null && circuitBreakerRules is null && uri is null && protocol is null ? default : new BackendContractProperties(
+                title is null && description is null && resourceId is null && credentials is null && proxy is null && tls is null && azureRegion is null && pool is null && typePropertiesType is null && backendServiceFabricCluster is null && circuitBreakerRules is null && uri is null && protocol is null ? default : new BackendContractProperties(
                     title,
                     description,
                     resourceId,
@@ -1164,7 +1167,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     new BackendCircuitBreaker((circuitBreakerRules ?? new ChangeTrackingList<CircuitBreakerRule>()).ToList(), null),
                     azureRegion,
                     pool,
-                    @type,
+                    typePropertiesType,
                     null,
                     uri,
                     protocol));
@@ -1218,17 +1221,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Properties controlling TLS Certificate Validation. </summary>
-        /// <param name="validateCertificateChain"> Flag indicating whether SSL certificate chain validation should be done when using self-signed certificates for this backend host. </param>
-        /// <param name="validateCertificateName"> Flag indicating whether SSL certificate name validation should be done when using self-signed certificates for this backend host. </param>
+        /// <param name="shouldValidateCertificateChain"> Flag indicating whether SSL certificate chain validation should be done when using self-signed certificates for this backend host. </param>
+        /// <param name="shouldValidateCertificateName"> Flag indicating whether SSL certificate name validation should be done when using self-signed certificates for this backend host. </param>
         /// <param name="serverCertificateThumbprints"> Thumbprints of certificates used by the backend host for TLS communication. </param>
         /// <param name="serverX509Names"> Server X509 Certificate Names of the Backend Host. </param>
         /// <returns> A new <see cref="Models.BackendTlsProperties"/> instance for mocking. </returns>
-        public static BackendTlsProperties BackendTlsProperties(bool? validateCertificateChain = default, bool? validateCertificateName = default, IEnumerable<string> serverCertificateThumbprints = default, IEnumerable<X509CertificateName> serverX509Names = default)
+        public static BackendTlsProperties BackendTlsProperties(bool? shouldValidateCertificateChain = default, bool? shouldValidateCertificateName = default, IEnumerable<string> serverCertificateThumbprints = default, IEnumerable<X509CertificateName> serverX509Names = default)
         {
             serverCertificateThumbprints ??= new ChangeTrackingList<string>();
             serverX509Names ??= new ChangeTrackingList<X509CertificateName>();
 
-            return new BackendTlsProperties(validateCertificateChain, validateCertificateName, serverCertificateThumbprints.ToList(), serverX509Names.ToList(), additionalBinaryDataProperties: null);
+            return new BackendTlsProperties(shouldValidateCertificateChain, shouldValidateCertificateName, serverCertificateThumbprints.ToList(), serverX509Names.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The trip conditions of the circuit breaker. </summary>
@@ -1569,10 +1572,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="uri"> A delegation Url. </param>
         /// <param name="validationKey"> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </param>
-        /// <param name="subscriptionsEnabled"> Enable or disable delegation for subscriptions. </param>
-        /// <param name="userRegistrationEnabled"> Enable or disable delegation for user registration. </param>
+        /// <param name="isSubscriptionDelegationEnabled"> Enable or disable delegation for subscriptions. </param>
+        /// <param name="isUserRegistrationDelegationEnabled"> Enable or disable delegation for user registration. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementPortalDelegationSettingData"/> instance for mocking. </returns>
-        public static ApiManagementPortalDelegationSettingData ApiManagementPortalDelegationSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string uri = default, string validationKey = default, bool? subscriptionsEnabled = default, bool? userRegistrationEnabled = default)
+        public static ApiManagementPortalDelegationSettingData ApiManagementPortalDelegationSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri uri = default, string validationKey = default, bool? isSubscriptionDelegationEnabled = default, bool? isUserRegistrationDelegationEnabled = default)
         {
             return new ApiManagementPortalDelegationSettingData(
                 id,
@@ -1580,7 +1583,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                uri is null && validationKey is null && subscriptionsEnabled is null && userRegistrationEnabled is null ? default : new PortalDelegationSettingsProperties(uri, validationKey, new SubscriptionsDelegationSettingsProperties(subscriptionsEnabled, null), new RegistrationDelegationSettingsProperties(userRegistrationEnabled, null), null));
+                uri is null && validationKey is null && isSubscriptionDelegationEnabled is null && isUserRegistrationDelegationEnabled is null ? default : new PortalDelegationSettingsProperties(uri, validationKey, new SubscriptionsDelegationSettingsProperties(isSubscriptionDelegationEnabled, null), new RegistrationDelegationSettingsProperties(isUserRegistrationDelegationEnabled, null), null));
         }
 
         /// <summary> Client or app secret used in IdentityProviders, Aad, OpenID or OAuth. </summary>
@@ -1597,15 +1600,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="description"> Product description. May include HTML formatting tags. </param>
         /// <param name="terms"> Product terms of use. Developers trying to subscribe to the product will be presented and required to accept these terms before they can complete the subscription process. </param>
-        /// <param name="subscriptionRequired"> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true. </param>
-        /// <param name="approvalRequired"> whether subscription approval is required. If false, new subscriptions will be approved automatically enabling developers to call the product’s APIs immediately after subscribing. If true, administrators must manually approve the subscription before the developer can any of the product’s APIs. Can be present only if subscriptionRequired property is present and has a value of false. </param>
+        /// <param name="isSubscriptionRequired"> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true. </param>
+        /// <param name="isApprovalRequired"> whether subscription approval is required. If false, new subscriptions will be approved automatically enabling developers to call the product’s APIs immediately after subscribing. If true, administrators must manually approve the subscription before the developer can any of the product’s APIs. Can be present only if subscriptionRequired property is present and has a value of false. </param>
         /// <param name="subscriptionsLimit"> Whether the number of subscriptions a user can have to this product at the same time. Set to null or omit to allow unlimited per user subscriptions. Can be present only if subscriptionRequired property is present and has a value of false. </param>
         /// <param name="authenticationType"> Type of supported authentication for the product. The application configuration is required for application-token authentication type. The subscription-key authentication type is used by default. If the property is omitted, the subscription-key authentication type is used. </param>
         /// <param name="state"> whether product is published or not. Published products are discoverable by users of developer portal. Non published products are visible only to administrators. Default state of Product is notPublished. </param>
         /// <param name="applicationEntra"> Specifies Microsoft Entra settings needed to authorize product API calls using client application with Microsoft Entra OAuth token. </param>
         /// <param name="displayName"> Product name. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementProductData"/> instance for mocking. </returns>
-        public static ApiManagementProductData ApiManagementProductData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, string terms = default, bool? subscriptionRequired = default, bool? approvalRequired = default, int? subscriptionsLimit = default, IEnumerable<ProductAuthType> authenticationType = default, ApiManagementProductState? state = default, ProductApplicationContractEntra applicationEntra = default, string displayName = default)
+        public static ApiManagementProductData ApiManagementProductData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, string terms = default, bool? isSubscriptionRequired = default, bool? isApprovalRequired = default, int? subscriptionsLimit = default, IEnumerable<ProductAuthType> authenticationType = default, ApiManagementProductState? state = default, ProductApplicationContractEntra applicationEntra = default, string displayName = default)
         {
             return new ApiManagementProductData(
                 id,
@@ -1613,11 +1616,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                description is null && terms is null && subscriptionRequired is null && approvalRequired is null && subscriptionsLimit is null && authenticationType is null && state is null && applicationEntra is null && displayName is null ? default : new ProductContractProperties(
+                description is null && terms is null && isSubscriptionRequired is null && isApprovalRequired is null && subscriptionsLimit is null && authenticationType is null && state is null && applicationEntra is null && displayName is null ? default : new ProductContractProperties(
                     description,
                     terms,
-                    subscriptionRequired,
-                    approvalRequired,
+                    isSubscriptionRequired,
+                    isApprovalRequired,
                     subscriptionsLimit,
                     (authenticationType ?? new ChangeTrackingList<ProductAuthType>()).ToList(),
                     new ProductEntityBaseParametersApplication(applicationEntra, null),
@@ -1628,23 +1631,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <param name="description"> Product description. May include HTML formatting tags. </param>
         /// <param name="terms"> Product terms of use. Developers trying to subscribe to the product will be presented and required to accept these terms before they can complete the subscription process. </param>
-        /// <param name="subscriptionRequired"> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true. </param>
-        /// <param name="approvalRequired"> whether subscription approval is required. If false, new subscriptions will be approved automatically enabling developers to call the product’s APIs immediately after subscribing. If true, administrators must manually approve the subscription before the developer can any of the product’s APIs. Can be present only if subscriptionRequired property is present and has a value of false. </param>
+        /// <param name="isSubscriptionRequired"> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true. </param>
+        /// <param name="isApprovalRequired"> whether subscription approval is required. If false, new subscriptions will be approved automatically enabling developers to call the product’s APIs immediately after subscribing. If true, administrators must manually approve the subscription before the developer can any of the product’s APIs. Can be present only if subscriptionRequired property is present and has a value of false. </param>
         /// <param name="subscriptionsLimit"> Whether the number of subscriptions a user can have to this product at the same time. Set to null or omit to allow unlimited per user subscriptions. Can be present only if subscriptionRequired property is present and has a value of false. </param>
         /// <param name="authenticationType"> Type of supported authentication for the product. The application configuration is required for application-token authentication type. The subscription-key authentication type is used by default. If the property is omitted, the subscription-key authentication type is used. </param>
         /// <param name="applicationEntra"> Specifies Microsoft Entra settings needed to authorize product API calls using client application with Microsoft Entra OAuth token. </param>
         /// <param name="state"> whether product is published or not. Published products are discoverable by users of developer portal. Non published products are visible only to administrators. Default state of Product is notPublished. </param>
         /// <param name="displayName"> Product name. </param>
         /// <returns> A new <see cref="Models.ProductContractProperties"/> instance for mocking. </returns>
-        public static ProductContractProperties ProductContractProperties(string description = default, string terms = default, bool? subscriptionRequired = default, bool? approvalRequired = default, int? subscriptionsLimit = default, IEnumerable<ProductAuthType> authenticationType = default, ProductApplicationContractEntra applicationEntra = default, ApiManagementProductState? state = default, string displayName = default)
+        public static ProductContractProperties ProductContractProperties(string description = default, string terms = default, bool? isSubscriptionRequired = default, bool? isApprovalRequired = default, int? subscriptionsLimit = default, IEnumerable<ProductAuthType> authenticationType = default, ProductApplicationContractEntra applicationEntra = default, ApiManagementProductState? state = default, string displayName = default)
         {
             authenticationType ??= new ChangeTrackingList<ProductAuthType>();
 
             return new ProductContractProperties(
                 description,
                 terms,
-                subscriptionRequired,
-                approvalRequired,
+                isSubscriptionRequired,
+                isApprovalRequired,
                 subscriptionsLimit,
                 authenticationType.ToList(),
                 applicationEntra is null ? default : new ProductEntityBaseParametersApplication(applicationEntra, null),
@@ -1655,22 +1658,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <param name="description"> Product description. May include HTML formatting tags. </param>
         /// <param name="terms"> Product terms of use. Developers trying to subscribe to the product will be presented and required to accept these terms before they can complete the subscription process. </param>
-        /// <param name="subscriptionRequired"> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true. </param>
-        /// <param name="approvalRequired"> whether subscription approval is required. If false, new subscriptions will be approved automatically enabling developers to call the product’s APIs immediately after subscribing. If true, administrators must manually approve the subscription before the developer can any of the product’s APIs. Can be present only if subscriptionRequired property is present and has a value of false. </param>
+        /// <param name="isSubscriptionRequired"> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true. </param>
+        /// <param name="isApprovalRequired"> whether subscription approval is required. If false, new subscriptions will be approved automatically enabling developers to call the product’s APIs immediately after subscribing. If true, administrators must manually approve the subscription before the developer can any of the product’s APIs. Can be present only if subscriptionRequired property is present and has a value of false. </param>
         /// <param name="subscriptionsLimit"> Whether the number of subscriptions a user can have to this product at the same time. Set to null or omit to allow unlimited per user subscriptions. Can be present only if subscriptionRequired property is present and has a value of false. </param>
         /// <param name="authenticationType"> Type of supported authentication for the product. The application configuration is required for application-token authentication type. The subscription-key authentication type is used by default. If the property is omitted, the subscription-key authentication type is used. </param>
         /// <param name="applicationEntra"> Specifies Microsoft Entra settings needed to authorize product API calls using client application with Microsoft Entra OAuth token. </param>
         /// <param name="state"> whether product is published or not. Published products are discoverable by users of developer portal. Non published products are visible only to administrators. Default state of Product is notPublished. </param>
         /// <returns> A new <see cref="Models.ProductEntityBaseProperties"/> instance for mocking. </returns>
-        public static ProductEntityBaseProperties ProductEntityBaseProperties(string description = default, string terms = default, bool? subscriptionRequired = default, bool? approvalRequired = default, int? subscriptionsLimit = default, IEnumerable<ProductAuthType> authenticationType = default, ProductApplicationContractEntra applicationEntra = default, ApiManagementProductState? state = default)
+        public static ProductEntityBaseProperties ProductEntityBaseProperties(string description = default, string terms = default, bool? isSubscriptionRequired = default, bool? isApprovalRequired = default, int? subscriptionsLimit = default, IEnumerable<ProductAuthType> authenticationType = default, ProductApplicationContractEntra applicationEntra = default, ApiManagementProductState? state = default)
         {
             authenticationType ??= new ChangeTrackingList<ProductAuthType>();
 
             return new ProductEntityBaseProperties(
                 description,
                 terms,
-                subscriptionRequired,
-                approvalRequired,
+                isSubscriptionRequired,
+                isApprovalRequired,
                 subscriptionsLimit,
                 authenticationType.ToList(),
                 applicationEntra is null ? default : new ProductEntityBaseParametersApplication(applicationEntra, null),
@@ -1680,23 +1683,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <param name="description"> Product description. May include HTML formatting tags. </param>
         /// <param name="terms"> Product terms of use. Developers trying to subscribe to the product will be presented and required to accept these terms before they can complete the subscription process. </param>
-        /// <param name="subscriptionRequired"> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true. </param>
-        /// <param name="approvalRequired"> whether subscription approval is required. If false, new subscriptions will be approved automatically enabling developers to call the product’s APIs immediately after subscribing. If true, administrators must manually approve the subscription before the developer can any of the product’s APIs. Can be present only if subscriptionRequired property is present and has a value of false. </param>
+        /// <param name="isSubscriptionRequired"> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true. </param>
+        /// <param name="isApprovalRequired"> whether subscription approval is required. If false, new subscriptions will be approved automatically enabling developers to call the product’s APIs immediately after subscribing. If true, administrators must manually approve the subscription before the developer can any of the product’s APIs. Can be present only if subscriptionRequired property is present and has a value of false. </param>
         /// <param name="subscriptionsLimit"> Whether the number of subscriptions a user can have to this product at the same time. Set to null or omit to allow unlimited per user subscriptions. Can be present only if subscriptionRequired property is present and has a value of false. </param>
         /// <param name="authenticationType"> Type of supported authentication for the product. The application configuration is required for application-token authentication type. The subscription-key authentication type is used by default. If the property is omitted, the subscription-key authentication type is used. </param>
         /// <param name="applicationEntra"> Specifies Microsoft Entra settings needed to authorize product API calls using client application with Microsoft Entra OAuth token. </param>
         /// <param name="state"> whether product is published or not. Published products are discoverable by users of developer portal. Non published products are visible only to administrators. Default state of Product is notPublished. </param>
         /// <param name="displayName"> Product name. </param>
         /// <returns> A new <see cref="Models.ProductUpdateProperties"/> instance for mocking. </returns>
-        public static ProductUpdateProperties ProductUpdateProperties(string description = default, string terms = default, bool? subscriptionRequired = default, bool? approvalRequired = default, int? subscriptionsLimit = default, IEnumerable<ProductAuthType> authenticationType = default, ProductApplicationContractEntra applicationEntra = default, ApiManagementProductState? state = default, string displayName = default)
+        public static ProductUpdateProperties ProductUpdateProperties(string description = default, string terms = default, bool? isSubscriptionRequired = default, bool? isApprovalRequired = default, int? subscriptionsLimit = default, IEnumerable<ProductAuthType> authenticationType = default, ProductApplicationContractEntra applicationEntra = default, ApiManagementProductState? state = default, string displayName = default)
         {
             authenticationType ??= new ChangeTrackingList<ProductAuthType>();
 
             return new ProductUpdateProperties(
                 description,
                 terms,
-                subscriptionRequired,
-                approvalRequired,
+                isSubscriptionRequired,
+                isApprovalRequired,
                 subscriptionsLimit,
                 authenticationType.ToList(),
                 applicationEntra is null ? default : new ProductEntityBaseParametersApplication(applicationEntra, null),
@@ -2067,6 +2070,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 protocols.ToList());
         }
 
+        /// <summary> Operation Entity contract Properties. </summary>
         /// <param name="id"> Identifier of the operation in form /operations/{operationId}. </param>
         /// <param name="name"> Operation name. </param>
         /// <param name="apiName"> API Name. </param>
@@ -2092,8 +2096,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <param name="description"> Product description. May include HTML formatting tags. </param>
         /// <param name="terms"> Product terms of use. Developers trying to subscribe to the product will be presented and required to accept these terms before they can complete the subscription process. </param>
-        /// <param name="subscriptionRequired"> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true. </param>
-        /// <param name="approvalRequired"> whether subscription approval is required. If false, new subscriptions will be approved automatically enabling developers to call the product’s APIs immediately after subscribing. If true, administrators must manually approve the subscription before the developer can any of the product’s APIs. Can be present only if subscriptionRequired property is present and has a value of false. </param>
+        /// <param name="isSubscriptionRequired"> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true. </param>
+        /// <param name="isApprovalRequired"> whether subscription approval is required. If false, new subscriptions will be approved automatically enabling developers to call the product’s APIs immediately after subscribing. If true, administrators must manually approve the subscription before the developer can any of the product’s APIs. Can be present only if subscriptionRequired property is present and has a value of false. </param>
         /// <param name="subscriptionsLimit"> Whether the number of subscriptions a user can have to this product at the same time. Set to null or omit to allow unlimited per user subscriptions. Can be present only if subscriptionRequired property is present and has a value of false. </param>
         /// <param name="authenticationType"> Type of supported authentication for the product. The application configuration is required for application-token authentication type. The subscription-key authentication type is used by default. If the property is omitted, the subscription-key authentication type is used. </param>
         /// <param name="applicationEntra"> Specifies Microsoft Entra settings needed to authorize product API calls using client application with Microsoft Entra OAuth token. </param>
@@ -2101,15 +2105,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="id"> Identifier of the product in the form of /products/{productId}. </param>
         /// <param name="name"> Product name. </param>
         /// <returns> A new <see cref="Models.AssociatedProductProperties"/> instance for mocking. </returns>
-        public static AssociatedProductProperties AssociatedProductProperties(string description = default, string terms = default, bool? subscriptionRequired = default, bool? approvalRequired = default, int? subscriptionsLimit = default, IEnumerable<ProductAuthType> authenticationType = default, ProductApplicationContractEntra applicationEntra = default, ApiManagementProductState? state = default, string id = default, string name = default)
+        public static AssociatedProductProperties AssociatedProductProperties(string description = default, string terms = default, bool? isSubscriptionRequired = default, bool? isApprovalRequired = default, int? subscriptionsLimit = default, IEnumerable<ProductAuthType> authenticationType = default, ProductApplicationContractEntra applicationEntra = default, ApiManagementProductState? state = default, string id = default, string name = default)
         {
             authenticationType ??= new ChangeTrackingList<ProductAuthType>();
 
             return new AssociatedProductProperties(
                 description,
                 terms,
-                subscriptionRequired,
-                approvalRequired,
+                isSubscriptionRequired,
+                isApprovalRequired,
                 subscriptionsLimit,
                 authenticationType.ToList(),
                 applicationEntra is null ? default : new ProductEntityBaseParametersApplication(applicationEntra, null),
@@ -2202,6 +2206,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new NetworkStatusContract(dnsServers.ToList(), connectivityStatus.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Details about connectivity to a resource. </summary>
         /// <param name="name"> The hostname of the resource which the service depends on. This can be the database, storage or any other azure resource on which the service depends upon. </param>
         /// <param name="status"> Resource Connectivity Status Type identifier. </param>
         /// <param name="error"> Error details of the connectivity to the resource. </param>
@@ -2366,10 +2371,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="validationKey"> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </param>
         /// <param name="enabled"> Redirect Anonymous users to the Sign-In page. </param>
         /// <param name="termsOfService"> Terms of service contract properties. </param>
-        /// <param name="subscriptionsEnabled"> Enable or disable delegation for subscriptions. </param>
-        /// <param name="userRegistrationEnabled"> Enable or disable delegation for user registration. </param>
+        /// <param name="isSubscriptionDelegationEnabled"> Enable or disable delegation for subscriptions. </param>
+        /// <param name="isUserRegistrationDelegationEnabled"> Enable or disable delegation for user registration. </param>
         /// <returns> A new <see cref="Models.PortalSettingsContractData"/> instance for mocking. </returns>
-        public static PortalSettingsContractData PortalSettingsContractData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri uri = default, string validationKey = default, bool? enabled = default, TermsOfServiceProperties termsOfService = default, bool? subscriptionsEnabled = default, bool? userRegistrationEnabled = default)
+        public static PortalSettingsContractData PortalSettingsContractData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri uri = default, string validationKey = default, bool? enabled = default, TermsOfServiceProperties termsOfService = default, bool? isSubscriptionDelegationEnabled = default, bool? isUserRegistrationDelegationEnabled = default)
         {
             return new PortalSettingsContractData(
                 id,
@@ -2377,11 +2382,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                uri is null && validationKey is null && enabled is null && termsOfService is null && subscriptionsEnabled is null && userRegistrationEnabled is null ? default : new PortalSettingsContractProperties(
+                uri is null && validationKey is null && enabled is null && termsOfService is null && isSubscriptionDelegationEnabled is null && isUserRegistrationDelegationEnabled is null ? default : new PortalSettingsContractProperties(
                     uri,
                     validationKey,
-                    new SubscriptionsDelegationSettingsProperties(subscriptionsEnabled, null),
-                    new RegistrationDelegationSettingsProperties(userRegistrationEnabled, null),
+                    new SubscriptionsDelegationSettingsProperties(isSubscriptionDelegationEnabled, null),
+                    new RegistrationDelegationSettingsProperties(isUserRegistrationDelegationEnabled, null),
                     enabled,
                     termsOfService,
                     null));
@@ -3225,12 +3230,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="type"> Identity Provider Type identifier. </param>
-        /// <param name="signinTenant"> The TenantId to use instead of Common when logging into Active Directory. </param>
+        /// <param name="identityProviderType"> Identity Provider Type identifier. </param>
+        /// <param name="signInTenant"> The TenantId to use instead of Common when logging into Active Directory. </param>
         /// <param name="allowedTenants"> List of Allowed Tenants when configuring Azure Active Directory login. </param>
         /// <param name="authority"> OpenID Connect discovery endpoint hostname for AAD or AAD B2C. </param>
-        /// <param name="signupPolicyName"> Signup Policy Name. Only applies to AAD B2C Identity Provider. </param>
-        /// <param name="signinPolicyName"> Signin Policy Name. Only applies to AAD B2C Identity Provider. </param>
+        /// <param name="signUpPolicyName"> Signup Policy Name. Only applies to AAD B2C Identity Provider. </param>
+        /// <param name="signInPolicyName"> Signin Policy Name. Only applies to AAD B2C Identity Provider. </param>
         /// <param name="profileEditingPolicyName"> Profile Editing Policy Name. Only applies to AAD B2C Identity Provider. </param>
         /// <param name="passwordResetPolicyName"> Password Reset Policy Name. Only applies to AAD B2C Identity Provider. </param>
         /// <param name="clientLibrary"> The client library to be used in the developer portal. Only applies to AAD and AAD B2C Identity Provider. </param>
@@ -3238,7 +3243,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="clientSecret"> Client secret of the Application in external Identity Provider, used to authenticate login request. For example, it is App Secret for Facebook login, API Key for Google login, Public Key for Microsoft. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
         /// <param name="certificateId"> Certificate full resource ID used in external Identity Provider. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementIdentityProviderData"/> instance for mocking. </returns>
-        public static ApiManagementIdentityProviderData ApiManagementIdentityProviderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IdentityProviderType? @type = default, string signinTenant = default, IEnumerable<string> allowedTenants = default, string authority = default, string signupPolicyName = default, string signinPolicyName = default, string profileEditingPolicyName = default, string passwordResetPolicyName = default, string clientLibrary = default, string clientId = default, string clientSecret = default, ResourceIdentifier certificateId = default)
+        public static ApiManagementIdentityProviderData ApiManagementIdentityProviderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IdentityProviderType? identityProviderType = default, string signInTenant = default, IEnumerable<string> allowedTenants = default, string authority = default, string signUpPolicyName = default, string signInPolicyName = default, string profileEditingPolicyName = default, string passwordResetPolicyName = default, string clientLibrary = default, string clientId = default, string clientSecret = default, ResourceIdentifier certificateId = default)
         {
             return new ApiManagementIdentityProviderData(
                 id,
@@ -3246,13 +3251,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                @type is null && signinTenant is null && allowedTenants is null && authority is null && signupPolicyName is null && signinPolicyName is null && profileEditingPolicyName is null && passwordResetPolicyName is null && clientLibrary is null && clientId is null && clientSecret is null && certificateId is null ? default : new IdentityProviderContractProperties(
-                    @type,
-                    signinTenant,
+                identityProviderType is null && signInTenant is null && allowedTenants is null && authority is null && signUpPolicyName is null && signInPolicyName is null && profileEditingPolicyName is null && passwordResetPolicyName is null && clientLibrary is null && clientId is null && clientSecret is null && certificateId is null ? default : new IdentityProviderContractProperties(
+                    identityProviderType,
+                    signInTenant,
                     (allowedTenants ?? new ChangeTrackingList<string>()).ToList(),
                     authority,
-                    signupPolicyName,
-                    signinPolicyName,
+                    signUpPolicyName,
+                    signInPolicyName,
                     profileEditingPolicyName,
                     passwordResetPolicyName,
                     clientLibrary,
@@ -3266,12 +3271,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="type"> Identity Provider Type identifier. </param>
-        /// <param name="signinTenant"> The TenantId to use instead of Common when logging into Active Directory. </param>
+        /// <param name="identityProviderType"> Identity Provider Type identifier. </param>
+        /// <param name="signInTenant"> The TenantId to use instead of Common when logging into Active Directory. </param>
         /// <param name="allowedTenants"> List of Allowed Tenants when configuring Azure Active Directory login. </param>
         /// <param name="authority"> OpenID Connect discovery endpoint hostname for AAD or AAD B2C. </param>
-        /// <param name="signupPolicyName"> Signup Policy Name. Only applies to AAD B2C Identity Provider. </param>
-        /// <param name="signinPolicyName"> Signin Policy Name. Only applies to AAD B2C Identity Provider. </param>
+        /// <param name="signUpPolicyName"> Signup Policy Name. Only applies to AAD B2C Identity Provider. </param>
+        /// <param name="signInPolicyName"> Signin Policy Name. Only applies to AAD B2C Identity Provider. </param>
         /// <param name="profileEditingPolicyName"> Profile Editing Policy Name. Only applies to AAD B2C Identity Provider. </param>
         /// <param name="passwordResetPolicyName"> Password Reset Policy Name. Only applies to AAD B2C Identity Provider. </param>
         /// <param name="clientLibrary"> The client library to be used in the developer portal. Only applies to AAD and AAD B2C Identity Provider. </param>
@@ -3279,7 +3284,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="clientSecret"> Client secret of the Application in external Identity Provider, used to authenticate login request. For example, it is App Secret for Facebook login, API Key for Google login, Public Key for Microsoft. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
         /// <param name="certificateId"> Certificate full resource ID used in external Identity Provider. </param>
         /// <returns> A new <see cref="Models.ApiManagementIdentityProviderCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static ApiManagementIdentityProviderCreateOrUpdateContent ApiManagementIdentityProviderCreateOrUpdateContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IdentityProviderType? @type = default, string signinTenant = default, IEnumerable<string> allowedTenants = default, string authority = default, string signupPolicyName = default, string signinPolicyName = default, string profileEditingPolicyName = default, string passwordResetPolicyName = default, string clientLibrary = default, string clientId = default, string clientSecret = default, ResourceIdentifier certificateId = default)
+        public static ApiManagementIdentityProviderCreateOrUpdateContent ApiManagementIdentityProviderCreateOrUpdateContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IdentityProviderType? identityProviderType = default, string signInTenant = default, IEnumerable<string> allowedTenants = default, string authority = default, string signUpPolicyName = default, string signInPolicyName = default, string profileEditingPolicyName = default, string passwordResetPolicyName = default, string clientLibrary = default, string clientId = default, string clientSecret = default, ResourceIdentifier certificateId = default)
         {
             return new ApiManagementIdentityProviderCreateOrUpdateContent(
                 id,
@@ -3287,13 +3292,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                @type is null && signinTenant is null && allowedTenants is null && authority is null && signupPolicyName is null && signinPolicyName is null && profileEditingPolicyName is null && passwordResetPolicyName is null && clientLibrary is null && clientId is null && clientSecret is null && certificateId is null ? default : new IdentityProviderCreateContractProperties(
-                    @type,
-                    signinTenant,
+                identityProviderType is null && signInTenant is null && allowedTenants is null && authority is null && signUpPolicyName is null && signInPolicyName is null && profileEditingPolicyName is null && passwordResetPolicyName is null && clientLibrary is null && clientId is null && clientSecret is null && certificateId is null ? default : new IdentityProviderCreateContractProperties(
+                    identityProviderType,
+                    signInTenant,
                     (allowedTenants ?? new ChangeTrackingList<string>()).ToList(),
                     authority,
-                    signupPolicyName,
-                    signinPolicyName,
+                    signUpPolicyName,
+                    signInPolicyName,
                     profileEditingPolicyName,
                     passwordResetPolicyName,
                     clientLibrary,
@@ -3790,6 +3795,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new ApiManagementSkuCapabilities(name, value, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Describes metadata for retrieving price info. </summary>
         /// <param name="meterId"> Used for querying price from commerce. </param>
         /// <param name="quantity"> The multiplier is needed to extend the base metered cost. </param>
         /// <param name="extendedUnit"> An invariant to show the extended unit. </param>
@@ -3799,6 +3805,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new ApiManagementSkuCosts(meterId, quantity, extendedUnit, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Describes scaling information of a SKU. </summary>
         /// <param name="restrictionsType"> The type of restrictions. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="restrictionInfo"> The information about the restriction where the SKU cannot be used. </param>
@@ -4386,23 +4393,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ApiManagementProductData ApiManagementProductData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string terms, bool? isSubscriptionRequired, bool? isApprovalRequired, int? subscriptionsLimit, ApiManagementProductState? state, string displayName)
         {
-            return new ApiManagementProductData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                description is null && terms is null && subscriptionsLimit is null && state is null && displayName is null ? default : new ProductContractProperties(
-                    description,
-                    terms,
-                    default,
-                    default,
-                    subscriptionsLimit,
-                    default,
-                    default,
-                    state,
-                    default,
-                    displayName));
+            return ApiManagementProductData(id: id, name: name, resourceType: resourceType, systemData: systemData, description: description, terms: terms, isSubscriptionRequired: isSubscriptionRequired, isApprovalRequired: isApprovalRequired, subscriptionsLimit: subscriptionsLimit, authenticationType: default, state: state, applicationEntra: default, displayName: displayName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProductEntityBaseProperties"/>. </summary>
@@ -4416,16 +4407,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProductEntityBaseProperties ProductEntityBaseProperties(string description, string terms, bool? isSubscriptionRequired, bool? isApprovalRequired, int? subscriptionsLimit, ApiManagementProductState? state)
         {
-            return new ProductEntityBaseProperties(
-                description,
-                terms,
-                default,
-                default,
-                subscriptionsLimit,
-                new ChangeTrackingList<ProductAuthType>(),
-                default,
-                state,
-                additionalBinaryDataProperties: null);
+            return ProductEntityBaseProperties(description: description, terms: terms, isSubscriptionRequired: isSubscriptionRequired, isApprovalRequired: isApprovalRequired, subscriptionsLimit: subscriptionsLimit, authenticationType: default, applicationEntra: default, state: state);
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagement.DiagnosticContractData"/>. </summary>
@@ -4447,25 +4429,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DiagnosticContractData DiagnosticContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlwaysLog? alwaysLog, string loggerId, SamplingSettings sampling, PipelineDiagnosticSettings frontend, PipelineDiagnosticSettings backend, bool? isLogClientIPEnabled, HttpCorrelationProtocol? httpCorrelationProtocol, TraceVerbosityLevel? verbosity, OperationNameFormat? operationNameFormat, bool? metrics)
         {
-            return new DiagnosticContractData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                alwaysLog is null && loggerId is null && sampling is null && frontend is null && backend is null && httpCorrelationProtocol is null && verbosity is null && operationNameFormat is null && metrics is null ? default : new DiagnosticContractProperties(
-                    alwaysLog,
-                    loggerId,
-                    sampling,
-                    frontend,
-                    backend,
-                    default,
-                    default,
-                    httpCorrelationProtocol,
-                    verbosity,
-                    operationNameFormat,
-                    metrics,
-                    default));
+            return DiagnosticContractData(id: id, name: name, resourceType: resourceType, systemData: systemData, alwaysLog: alwaysLog, loggerId: loggerId, sampling: sampling, frontend: frontend, backend: backend, largeLanguageModel: default, isLogClientIPEnabled: isLogClientIPEnabled, httpCorrelationProtocol: httpCorrelationProtocol, verbosity: verbosity, operationNameFormat: operationNameFormat, metrics: metrics);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AssociatedApiProperties"/>. </summary>
@@ -4509,18 +4473,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AssociatedProductProperties AssociatedProductProperties(string description, string terms, bool? isSubscriptionRequired, bool? isApprovalRequired, int? subscriptionsLimit, ApiManagementProductState? state, string id, string name)
         {
-            return new AssociatedProductProperties(
-                description,
-                terms,
-                default,
-                default,
-                subscriptionsLimit,
-                new ChangeTrackingList<ProductAuthType>(),
-                default,
-                state,
-                additionalBinaryDataProperties: null,
-                id,
-                name);
+            return AssociatedProductProperties(description: description, terms: terms, isSubscriptionRequired: isSubscriptionRequired, isApprovalRequired: isApprovalRequired, subscriptionsLimit: subscriptionsLimit, authenticationType: default, applicationEntra: default, state: state, id: id, name: name);
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementBackendData"/>. </summary>
@@ -4727,7 +4680,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static RemotePrivateEndpointConnectionWrapper RemotePrivateEndpointConnectionWrapper(ResourceIdentifier id, string name, ResourceType? resourceType, ResourceIdentifier privateEndpointId, ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState, string provisioningState, IEnumerable<string> groupIds)
         {
 
-            return new RemotePrivateEndpointConnectionWrapper(id, name, default, privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null && groupIds is null ? default : new PrivateEndpointConnectionWrapperProperties(new ArmIdWrapper(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, (groupIds ?? new ChangeTrackingList<string>()).ToList(), default), additionalBinaryDataProperties: null);
+            return new RemotePrivateEndpointConnectionWrapper(id, name, default, privateEndpointId is null && provisioningState is null && groupIds is null ? default : new PrivateEndpointConnectionWrapperProperties(new ArmIdWrapper(privateEndpointId, default), default, provisioningState, (groupIds ?? new ChangeTrackingList<string>()).ToList(), default), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ApiManagementServicePatch"/>. </summary>
@@ -4898,27 +4851,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ApiManagementIdentityProviderData ApiManagementIdentityProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IdentityProviderType? identityProviderType, string signInTenant, IEnumerable<string> allowedTenants, string authority, string signUpPolicyName, string signInPolicyName, string profileEditingPolicyName, string passwordResetPolicyName, string clientLibrary, string clientId, string clientSecret)
         {
-
-            return new ApiManagementIdentityProviderData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                signInTenant is null && allowedTenants is null && authority is null && signUpPolicyName is null && signInPolicyName is null && profileEditingPolicyName is null && passwordResetPolicyName is null && clientLibrary is null && clientId is null && clientSecret is null ? default : new IdentityProviderContractProperties(
-                    default,
-                    signInTenant,
-                    (allowedTenants ?? new ChangeTrackingList<string>()).ToList(),
-                    authority,
-                    signUpPolicyName,
-                    signInPolicyName,
-                    profileEditingPolicyName,
-                    passwordResetPolicyName,
-                    clientLibrary,
-                    default,
-                    clientId,
-                    clientSecret,
-                    default));
+            return ApiManagementIdentityProviderData(id: id, name: name, resourceType: resourceType, systemData: systemData, identityProviderType: identityProviderType, signInTenant: signInTenant, allowedTenants: allowedTenants, authority: authority, signUpPolicyName: signUpPolicyName, signInPolicyName: signInPolicyName, profileEditingPolicyName: profileEditingPolicyName, passwordResetPolicyName: passwordResetPolicyName, clientLibrary: clientLibrary, clientId: clientId, clientSecret: clientSecret, certificateId: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ApiManagementIdentityProviderCreateOrUpdateContent"/>. </summary>
@@ -4941,27 +4874,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ApiManagementIdentityProviderCreateOrUpdateContent ApiManagementIdentityProviderCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IdentityProviderType? identityProviderType, string signInTenant, IEnumerable<string> allowedTenants, string authority, string signUpPolicyName, string signInPolicyName, string profileEditingPolicyName, string passwordResetPolicyName, string clientLibrary, string clientId, string clientSecret)
         {
-
-            return new ApiManagementIdentityProviderCreateOrUpdateContent(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                signInTenant is null && allowedTenants is null && authority is null && signUpPolicyName is null && signInPolicyName is null && profileEditingPolicyName is null && passwordResetPolicyName is null && clientLibrary is null && clientId is null && clientSecret is null ? default : new IdentityProviderCreateContractProperties(
-                    default,
-                    signInTenant,
-                    (allowedTenants ?? new ChangeTrackingList<string>()).ToList(),
-                    authority,
-                    signUpPolicyName,
-                    signInPolicyName,
-                    profileEditingPolicyName,
-                    passwordResetPolicyName,
-                    clientLibrary,
-                    default,
-                    clientId,
-                    clientSecret,
-                    default));
+            return ApiManagementIdentityProviderCreateOrUpdateContent(id: id, name: name, resourceType: resourceType, systemData: systemData, identityProviderType: identityProviderType, signInTenant: signInTenant, allowedTenants: allowedTenants, authority: authority, signUpPolicyName: signUpPolicyName, signInPolicyName: signInPolicyName, profileEditingPolicyName: profileEditingPolicyName, passwordResetPolicyName: passwordResetPolicyName, clientLibrary: clientLibrary, clientId: clientId, clientSecret: clientSecret, certificateId: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagement.PortalConfigContractData"/>. </summary>
@@ -5010,36 +4923,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                uri is null && validationKey is null && isUserRegistrationDelegationEnabled is null && termsOfService is null ? default : new PortalSettingsContractProperties(
+                uri is null && validationKey is null && isSubscriptionDelegationEnabled is null && isUserRegistrationDelegationEnabled is null && termsOfService is null ? default : new PortalSettingsContractProperties(
                     uri,
                     validationKey,
-                    default,
+                    new SubscriptionsDelegationSettingsProperties(isSubscriptionDelegationEnabled, default),
                     new RegistrationDelegationSettingsProperties(isUserRegistrationDelegationEnabled, default),
                     default,
                     termsOfService,
                     default));
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementPortalDelegationSettingData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="uri"> A delegation Url. </param>
-        /// <param name="validationKey"> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </param>
-        /// <param name="isSubscriptionDelegationEnabled"> Subscriptions delegation settings. </param>
-        /// <param name="isUserRegistrationDelegationEnabled"> User registration delegation settings. </param>
-        /// <returns> A new <see cref="ApiManagement.ApiManagementPortalDelegationSettingData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApiManagementPortalDelegationSettingData ApiManagementPortalDelegationSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri uri, string validationKey, bool? isSubscriptionDelegationEnabled, bool? isUserRegistrationDelegationEnabled)
-        {
-            return new ApiManagementPortalDelegationSettingData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                validationKey is null && isUserRegistrationDelegationEnabled is null ? default : new PortalDelegationSettingsProperties(default, validationKey, default, new RegistrationDelegationSettingsProperties(isUserRegistrationDelegationEnabled, default), default));
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementPrivateEndpointConnectionData"/>. </summary>
@@ -5922,27 +5813,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ApiManagementIdentityProviderData ApiManagementIdentityProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IdentityProviderType? identityProviderType, string signInTenant, IEnumerable<string> allowedTenants, string authority, string signUpPolicyName, string signInPolicyName, string profileEditingPolicyName, string passwordResetPolicyName, string clientId, string clientSecret)
         {
-
-            return new ApiManagementIdentityProviderData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                signInTenant is null && allowedTenants is null && authority is null && signUpPolicyName is null && signInPolicyName is null && profileEditingPolicyName is null && passwordResetPolicyName is null && clientId is null && clientSecret is null ? default : new IdentityProviderContractProperties(
-                    default,
-                    signInTenant,
-                    (allowedTenants ?? new ChangeTrackingList<string>()).ToList(),
-                    authority,
-                    signUpPolicyName,
-                    signInPolicyName,
-                    profileEditingPolicyName,
-                    passwordResetPolicyName,
-                    default,
-                    default,
-                    clientId,
-                    clientSecret,
-                    default));
+            return ApiManagementIdentityProviderData(id: id, name: name, resourceType: resourceType, systemData: systemData, identityProviderType: identityProviderType, signInTenant: signInTenant, allowedTenants: allowedTenants, authority: authority, signUpPolicyName: signUpPolicyName, signInPolicyName: signInPolicyName, profileEditingPolicyName: profileEditingPolicyName, passwordResetPolicyName: passwordResetPolicyName, clientLibrary: default, clientId: clientId, clientSecret: clientSecret, certificateId: default);
         }
 
         /// <summary> Initializes a new instance of ApiManagementIdentityProviderCreateOrUpdateContent. </summary>
@@ -5964,27 +5835,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ApiManagementIdentityProviderCreateOrUpdateContent ApiManagementIdentityProviderCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IdentityProviderType? identityProviderType, string signInTenant, IEnumerable<string> allowedTenants, string authority, string signUpPolicyName, string signInPolicyName, string profileEditingPolicyName, string passwordResetPolicyName, string clientId, string clientSecret)
         {
-
-            return new ApiManagementIdentityProviderCreateOrUpdateContent(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                signInTenant is null && allowedTenants is null && authority is null && signUpPolicyName is null && signInPolicyName is null && profileEditingPolicyName is null && passwordResetPolicyName is null && clientId is null && clientSecret is null ? default : new IdentityProviderCreateContractProperties(
-                    default,
-                    signInTenant,
-                    (allowedTenants ?? new ChangeTrackingList<string>()).ToList(),
-                    authority,
-                    signUpPolicyName,
-                    signInPolicyName,
-                    profileEditingPolicyName,
-                    passwordResetPolicyName,
-                    default,
-                    default,
-                    clientId,
-                    clientSecret,
-                    default));
+            return ApiManagementIdentityProviderCreateOrUpdateContent(id: id, name: name, resourceType: resourceType, systemData: systemData, identityProviderType: identityProviderType, signInTenant: signInTenant, allowedTenants: allowedTenants, authority: authority, signUpPolicyName: signUpPolicyName, signInPolicyName: signInPolicyName, profileEditingPolicyName: profileEditingPolicyName, passwordResetPolicyName: passwordResetPolicyName, clientLibrary: default, clientId: clientId, clientSecret: clientSecret, certificateId: default);
         }
 
         /// <summary> Initializes a new instance of ApiManagementOpenIdConnectProviderData. </summary>

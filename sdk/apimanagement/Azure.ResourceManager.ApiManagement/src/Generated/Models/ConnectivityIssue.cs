@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="ConnectivityIssue"/>. </summary>
         /// <param name="origin"> The origin of the issue. </param>
         /// <param name="severity"> The severity of the issue. </param>
-        /// <param name="type"> The type of issue. </param>
+        /// <param name="issueType"> The type of issue. </param>
         /// <param name="context"> Provides additional context on the issue. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectivityIssue(IssueOrigin? origin, IssueSeverity? severity, IssueType? @type, IReadOnlyList<IDictionary<string, string>> context, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectivityIssue(IssueOrigin? origin, IssueSeverity? severity, IssueType? issueType, IReadOnlyList<IDictionary<string, string>> context, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Origin = origin;
             Severity = severity;
-            Type = @type;
+            IssueType = issueType;
             Context = context;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> The type of issue. </summary>
         [WirePath("type")]
-        public IssueType? Type { get; }
+        public IssueType? IssueType { get; }
 
         /// <summary> Provides additional context on the issue. </summary>
         [WirePath("context")]

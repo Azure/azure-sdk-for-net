@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Uri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(ValidationKey))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            string uri = default;
+            Uri uri = default;
             string validationKey = default;
             SubscriptionsDelegationSettingsProperties subscriptions = default;
             RegistrationDelegationSettingsProperties userRegistration = default;
@@ -145,7 +145,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 if (prop.NameEquals("url"u8))
                 {
-                    uri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("validationKey"u8))

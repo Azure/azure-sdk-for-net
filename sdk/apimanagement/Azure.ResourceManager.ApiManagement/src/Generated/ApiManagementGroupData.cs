@@ -79,21 +79,21 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false. </summary>
         [WirePath("properties.builtIn")]
-        public bool? BuiltIn
+        public bool? IsBuiltIn
         {
             get
             {
-                return Properties is null ? default : Properties.BuiltIn;
+                return Properties is null ? default : Properties.IsBuiltIn;
             }
         }
 
         /// <summary> Group type. </summary>
         [WirePath("properties.type")]
-        public ApiManagementGroupType? Type
+        public ApiManagementGroupType? GroupType
         {
             get
             {
-                return Properties is null ? default : Properties.Type;
+                return Properties is null ? default : Properties.GroupType;
             }
             set
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new GroupContractProperties();
                 }
-                Properties.Type = value;
+                Properties.GroupType = value;
             }
         }
 

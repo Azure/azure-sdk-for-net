@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> KeyVault location details of the certificate. </summary>
         [WirePath("properties.keyVault")]
-        public KeyVaultContractProperties KeyVault
+        public KeyVaultContractProperties KeyVaultDetails
         {
             get
             {
-                return Properties is null ? default : Properties.KeyVault;
+                return Properties is null ? default : Properties.KeyVaultDetails;
             }
             set
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new CertificateContractProperties();
                 }
-                Properties.KeyVault = value;
+                Properties.KeyVaultDetails = value;
             }
         }
     }

@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Type of the backend. A backend can be either Single or Pool. </summary>
         [WirePath("properties.type")]
-        public BackendType? Type
+        public BackendType? TypePropertiesType
         {
             get
             {
-                return Properties is null ? default : Properties.Type;
+                return Properties is null ? default : Properties.TypePropertiesType;
             }
             set
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new BackendUpdateParameterProperties();
                 }
-                Properties.Type = value;
+                Properties.TypePropertiesType = value;
             }
         }
 

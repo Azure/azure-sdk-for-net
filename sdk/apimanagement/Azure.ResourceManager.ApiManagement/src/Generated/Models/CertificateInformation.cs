@@ -18,28 +18,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CertificateInformation"/>. </summary>
-        /// <param name="expiry"> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="expireOn"> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
         /// <param name="thumbprint"> Thumbprint of the certificate. </param>
         /// <param name="subject"> Subject of the certificate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="thumbprint"/> or <paramref name="subject"/> is null. </exception>
-        public CertificateInformation(DateTimeOffset expiry, string thumbprint, string subject)
+        public CertificateInformation(DateTimeOffset expireOn, string thumbprint, string subject)
         {
             Argument.AssertNotNull(thumbprint, nameof(thumbprint));
             Argument.AssertNotNull(subject, nameof(subject));
 
-            Expiry = expiry;
+            ExpireOn = expireOn;
             Thumbprint = thumbprint;
             Subject = subject;
         }
 
         /// <summary> Initializes a new instance of <see cref="CertificateInformation"/>. </summary>
-        /// <param name="expiry"> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="expireOn"> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
         /// <param name="thumbprint"> Thumbprint of the certificate. </param>
         /// <param name="subject"> Subject of the certificate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CertificateInformation(DateTimeOffset expiry, string thumbprint, string subject, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CertificateInformation(DateTimeOffset expireOn, string thumbprint, string subject, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Expiry = expiry;
+            ExpireOn = expireOn;
             Thumbprint = thumbprint;
             Subject = subject;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("expiry")]
-        public DateTimeOffset Expiry { get; set; }
+        public DateTimeOffset ExpireOn { get; set; }
 
         /// <summary> Thumbprint of the certificate. </summary>
         [WirePath("thumbprint")]

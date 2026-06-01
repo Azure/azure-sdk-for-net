@@ -30,16 +30,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="GroupContractProperties"/>. </summary>
         /// <param name="displayName"> Group name. </param>
         /// <param name="description"> Group description. Can contain HTML formatting tags. </param>
-        /// <param name="builtIn"> true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false. </param>
-        /// <param name="type"> Group type. </param>
+        /// <param name="isBuiltIn"> true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false. </param>
+        /// <param name="groupType"> Group type. </param>
         /// <param name="externalId"> For external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GroupContractProperties(string displayName, string description, bool? builtIn, ApiManagementGroupType? @type, string externalId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GroupContractProperties(string displayName, string description, bool? isBuiltIn, ApiManagementGroupType? groupType, string externalId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Description = description;
-            BuiltIn = builtIn;
-            Type = @type;
+            IsBuiltIn = isBuiltIn;
+            GroupType = groupType;
             ExternalId = externalId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false. </summary>
         [WirePath("builtIn")]
-        public bool? BuiltIn { get; }
+        public bool? IsBuiltIn { get; }
 
         /// <summary> Group type. </summary>
         [WirePath("type")]
-        public ApiManagementGroupType? Type { get; set; }
+        public ApiManagementGroupType? GroupType { get; set; }
 
         /// <summary> For external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null. </summary>
         [WirePath("externalId")]

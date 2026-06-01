@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PortalSigninSettingProperties"/>. </summary>
-        /// <param name="enabled"> Redirect Anonymous users to the Sign-In page. </param>
+        /// <param name="isRedirectEnabled"> Redirect Anonymous users to the Sign-In page. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PortalSigninSettingProperties(bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PortalSigninSettingProperties(bool? isRedirectEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsRedirectEnabled = isRedirectEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Redirect Anonymous users to the Sign-In page. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsRedirectEnabled { get; set; }
     }
 }

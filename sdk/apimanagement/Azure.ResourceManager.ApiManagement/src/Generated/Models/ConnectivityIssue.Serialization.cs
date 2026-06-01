@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(IssueType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(IssueType.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Context))
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             IssueOrigin? origin = default;
             IssueSeverity? severity = default;
-            IssueType? @type = default;
+            IssueType? issueType = default;
             IReadOnlyList<IDictionary<string, string>> context = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    @type = new IssueType(prop.Value.GetString());
+                    issueType = new IssueType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("context"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ConnectivityIssue(origin, severity, @type, context ?? new ChangeTrackingList<IDictionary<string, string>>(), additionalBinaryDataProperties);
+            return new ConnectivityIssue(origin, severity, issueType, context ?? new ChangeTrackingList<IDictionary<string, string>>(), additionalBinaryDataProperties);
         }
     }
 }

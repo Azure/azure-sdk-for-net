@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ApiManagementGroupType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToSerialString());
+                writer.WriteStringValue(ApiManagementGroupType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ExternalId))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             string displayName = default;
             string description = default;
-            ApiManagementGroupType? @type = default;
+            ApiManagementGroupType? apiManagementGroupType = default;
             string externalId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    @type = prop.Value.GetString().ToApiManagementGroupType();
+                    apiManagementGroupType = prop.Value.GetString().ToApiManagementGroupType();
                     continue;
                 }
                 if (prop.NameEquals("externalId"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GroupUpdateParametersProperties(displayName, description, @type, externalId, additionalBinaryDataProperties);
+            return new GroupUpdateParametersProperties(displayName, description, apiManagementGroupType, externalId, additionalBinaryDataProperties);
         }
     }
 }

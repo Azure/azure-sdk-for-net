@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="firstName"> First name. </param>
         /// <param name="lastName"> Last name. </param>
         /// <param name="email"> Email address. </param>
-        /// <param name="registrationOn"> Date of user registration. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="registriesOn"> Date of user registration. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
         /// <param name="groups"> Collection of groups user is part of. </param>
-        internal UserContractProperties(ApiManagementUserState? state, string note, IList<UserIdentityContract> identities, IDictionary<string, BinaryData> additionalBinaryDataProperties, string firstName, string lastName, string email, DateTimeOffset? registrationOn, IReadOnlyList<GroupContractProperties> groups) : base(state, note, identities, additionalBinaryDataProperties)
+        internal UserContractProperties(ApiManagementUserState? state, string note, IList<UserIdentityContract> identities, IDictionary<string, BinaryData> additionalBinaryDataProperties, string firstName, string lastName, string email, DateTimeOffset? registriesOn, IReadOnlyList<GroupContractProperties> groups) : base(state, note, identities, additionalBinaryDataProperties)
         {
             FirstName = firstName;
             LastName = lastName;
             Email = email;
-            RegistrationOn = registrationOn;
+            RegistriesOn = registriesOn;
             Groups = groups;
         }
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Date of user registration. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("registrationDate")]
-        public DateTimeOffset? RegistrationOn { get; set; }
+        public DateTimeOffset? RegistriesOn { get; set; }
 
         /// <summary> Collection of groups user is part of. </summary>
         [WirePath("groups")]

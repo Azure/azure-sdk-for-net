@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementServiceNameAvailabilityResult"/>. </summary>
-        /// <param name="nameAvailable"> True if the name is available and can be used to create a new API Management service; otherwise false. </param>
+        /// <param name="isNameAvailable"> True if the name is available and can be used to create a new API Management service; otherwise false. </param>
         /// <param name="message"> If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that &lt;resourceName&gt; is already in use, and direct them to select a different name. </param>
         /// <param name="reason"> Invalid indicates the name provided does not match the resource provider’s naming requirements (incorrect length, unsupported characters, etc.)  AlreadyExists indicates that the name is already in use and is therefore unavailable. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementServiceNameAvailabilityResult(bool? nameAvailable, string message, ApiManagementServiceNameUnavailableReason? reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiManagementServiceNameAvailabilityResult(bool? isNameAvailable, string message, ApiManagementServiceNameUnavailableReason? reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            NameAvailable = nameAvailable;
+            IsNameAvailable = isNameAvailable;
             Message = message;
             Reason = reason;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> True if the name is available and can be used to create a new API Management service; otherwise false. </summary>
         [WirePath("nameAvailable")]
-        public bool? NameAvailable { get; }
+        public bool? IsNameAvailable { get; }
 
         /// <summary> If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that &lt;resourceName&gt; is already in use, and direct them to select a different name. </summary>
         [WirePath("message")]

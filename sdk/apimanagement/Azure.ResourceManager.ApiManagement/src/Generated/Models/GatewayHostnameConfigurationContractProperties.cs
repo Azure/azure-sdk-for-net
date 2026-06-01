@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="GatewayHostnameConfigurationContractProperties"/>. </summary>
         /// <param name="hostname"> Hostname value. Supports valid domain name, partial or full wildcard. </param>
         /// <param name="certificateId"> Identifier of Certificate entity that will be used for TLS connection establishment. </param>
-        /// <param name="negotiateClientCertificate"> Determines whether gateway requests client certificate. </param>
+        /// <param name="isClientCertificateRequired"> Determines whether gateway requests client certificate. </param>
         /// <param name="tls10Enabled"> Specifies if TLS 1.0 is supported. </param>
         /// <param name="tls11Enabled"> Specifies if TLS 1.1 is supported. </param>
         /// <param name="http2Enabled"> Specifies if HTTP/2.0 is supported. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GatewayHostnameConfigurationContractProperties(string hostname, string certificateId, bool? negotiateClientCertificate, bool? tls10Enabled, bool? tls11Enabled, bool? http2Enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GatewayHostnameConfigurationContractProperties(string hostname, string certificateId, bool? isClientCertificateRequired, bool? tls10Enabled, bool? tls11Enabled, bool? http2Enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Hostname = hostname;
             CertificateId = certificateId;
-            NegotiateClientCertificate = negotiateClientCertificate;
+            IsClientCertificateRequired = isClientCertificateRequired;
             Tls10Enabled = tls10Enabled;
             Tls11Enabled = tls11Enabled;
             Http2Enabled = http2Enabled;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Determines whether gateway requests client certificate. </summary>
         [WirePath("negotiateClientCertificate")]
-        public bool? NegotiateClientCertificate { get; set; }
+        public bool? IsClientCertificateRequired { get; set; }
 
         /// <summary> Specifies if TLS 1.0 is supported. </summary>
         [WirePath("tls10Enabled")]

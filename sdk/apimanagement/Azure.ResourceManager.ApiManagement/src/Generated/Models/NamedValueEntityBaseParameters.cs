@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="NamedValueEntityBaseParameters"/>. </summary>
         /// <param name="tags"> Optional tags that when provided can be used to filter the NamedValue list. </param>
-        /// <param name="secret"> Determines whether the value is a secret and should be encrypted or not. Default value is false. </param>
+        /// <param name="isSecret"> Determines whether the value is a secret and should be encrypted or not. Default value is false. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NamedValueEntityBaseParameters(IList<string> tags, bool? secret, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NamedValueEntityBaseParameters(IList<string> tags, bool? isSecret, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
-            Secret = secret;
+            IsSecret = isSecret;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Determines whether the value is a secret and should be encrypted or not. Default value is false. </summary>
         [WirePath("secret")]
-        public bool? Secret { get; set; }
+        public bool? IsSecret { get; set; }
     }
 }

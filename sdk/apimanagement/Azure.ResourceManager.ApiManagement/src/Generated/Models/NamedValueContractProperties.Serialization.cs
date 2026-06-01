@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(KeyVault))
+            if (Optional.IsDefined(KeyVaultDetails))
             {
                 writer.WritePropertyName("keyVault"u8);
-                writer.WriteObjectValue(KeyVault, options);
+                writer.WriteObjectValue(KeyVaultDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             IList<string> tags = default;
-            bool? secret = default;
+            bool? isSecret = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string displayName = default;
             string value = default;
-            KeyVaultContractProperties keyVault = default;
+            KeyVaultContractProperties keyVaultDetails = default;
             string provisioningState = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    secret = prop.Value.GetBoolean();
+                    isSecret = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("displayName"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    keyVault = KeyVaultContractProperties.DeserializeKeyVaultContractProperties(prop.Value, options);
+                    keyVaultDetails = KeyVaultContractProperties.DeserializeKeyVaultContractProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -194,11 +194,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             return new NamedValueContractProperties(
                 tags ?? new ChangeTrackingList<string>(),
-                secret,
+                isSecret,
                 additionalBinaryDataProperties,
                 displayName,
                 value,
-                keyVault,
+                keyVaultDetails,
                 provisioningState);
         }
     }

@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("commitId"u8);
                 writer.WriteStringValue(CommitId);
             }
-            if (Optional.IsDefined(IsExport))
+            if (Optional.IsDefined(IsExported))
             {
                 writer.WritePropertyName("isExport"u8);
-                writer.WriteBooleanValue(IsExport.Value);
+                writer.WriteBooleanValue(IsExported.Value);
             }
             if (Optional.IsDefined(IsSynced))
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             string branch = default;
             string commitId = default;
-            bool? isExport = default;
+            bool? isExported = default;
             bool? isSynced = default;
             bool? isGitEnabled = default;
             DateTimeOffset? syncOn = default;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    isExport = prop.Value.GetBoolean();
+                    isExported = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("isSynced"u8))
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new TenantConfigurationSyncStateContractProperties(
                 branch,
                 commitId,
-                isExport,
+                isExported,
                 isSynced,
                 isGitEnabled,
                 syncOn,

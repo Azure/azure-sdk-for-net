@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(IpAddress))
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteStringValue(IpAddress.ToString());
+                writer.WriteStringValue(IPAddress.ToString());
             }
             if (Optional.IsDefined(BackendResponseCode))
             {

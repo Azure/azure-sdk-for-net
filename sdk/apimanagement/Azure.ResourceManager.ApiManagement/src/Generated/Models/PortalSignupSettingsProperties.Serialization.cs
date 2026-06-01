@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 throw new FormatException($"The model {nameof(PortalSignupSettingsProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsSignUpDeveloperPortalEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsSignUpDeveloperPortalEnabled.Value);
             }
             if (Optional.IsDefined(TermsOfService))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            bool? enabled = default;
+            bool? isSignUpDeveloperPortalEnabled = default;
             TermsOfServiceProperties termsOfService = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isSignUpDeveloperPortalEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("termsOfService"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PortalSignupSettingsProperties(enabled, termsOfService, additionalBinaryDataProperties);
+            return new PortalSignupSettingsProperties(isSignUpDeveloperPortalEnabled, termsOfService, additionalBinaryDataProperties);
         }
     }
 }

@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="SaveConfigurationParameterProperties"/>. </summary>
         /// <param name="branch"> The name of the Git branch in which to commit the current configuration snapshot. </param>
-        /// <param name="force"> The value if true, the current configuration database is committed to the Git repository, even if the Git repository has newer changes that would be overwritten. </param>
+        /// <param name="forceUpdate"> The value if true, the current configuration database is committed to the Git repository, even if the Git repository has newer changes that would be overwritten. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SaveConfigurationParameterProperties(string branch, bool? force, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SaveConfigurationParameterProperties(string branch, bool? forceUpdate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Branch = branch;
-            Force = force;
+            ForceUpdate = forceUpdate;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> The value if true, the current configuration database is committed to the Git repository, even if the Git repository has newer changes that would be overwritten. </summary>
         [WirePath("force")]
-        public bool? Force { get; set; }
+        public bool? ForceUpdate { get; set; }
     }
 }

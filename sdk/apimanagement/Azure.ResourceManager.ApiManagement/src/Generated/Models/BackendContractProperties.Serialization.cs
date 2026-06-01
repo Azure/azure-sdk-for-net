@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             BackendCircuitBreaker circuitBreaker = default;
             string azureRegion = default;
             BackendBaseParametersPool pool = default;
-            BackendType? @type = default;
+            BackendType? typePropertiesType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             Uri uri = default;
             BackendProtocol? protocol = default;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    @type = new BackendType(prop.Value.GetString());
+                    typePropertiesType = new BackendType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("url"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 circuitBreaker,
                 azureRegion,
                 pool,
-                @type,
+                typePropertiesType,
                 additionalBinaryDataProperties,
                 uri,
                 protocol);

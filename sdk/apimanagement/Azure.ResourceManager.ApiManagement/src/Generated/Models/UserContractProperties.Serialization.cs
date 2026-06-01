@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (Optional.IsDefined(RegistrationOn))
+            if (Optional.IsDefined(RegistriesOn))
             {
                 writer.WritePropertyName("registrationDate"u8);
-                writer.WriteStringValue(RegistrationOn.Value, "O");
+                writer.WriteStringValue(RegistriesOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Groups))
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string firstName = default;
             string lastName = default;
             string email = default;
-            DateTimeOffset? registrationOn = default;
+            DateTimeOffset? registriesOn = default;
             IReadOnlyList<GroupContractProperties> groups = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    registrationOn = prop.Value.GetDateTimeOffset("O");
+                    registriesOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("groups"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 firstName,
                 lastName,
                 email,
-                registrationOn,
+                registriesOn,
                 groups ?? new ChangeTrackingList<GroupContractProperties>());
         }
     }

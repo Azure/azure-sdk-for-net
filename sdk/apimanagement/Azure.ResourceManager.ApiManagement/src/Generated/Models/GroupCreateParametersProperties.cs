@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="GroupCreateParametersProperties"/>. </summary>
         /// <param name="displayName"> Group name. </param>
         /// <param name="description"> Group description. </param>
-        /// <param name="type"> Group type. </param>
+        /// <param name="apiManagementGroupType"> Group type. </param>
         /// <param name="externalId"> Identifier of the external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GroupCreateParametersProperties(string displayName, string description, ApiManagementGroupType? @type, string externalId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GroupCreateParametersProperties(string displayName, string description, ApiManagementGroupType? apiManagementGroupType, string externalId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Description = description;
-            Type = @type;
+            ApiManagementGroupType = apiManagementGroupType;
             ExternalId = externalId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Group type. </summary>
         [WirePath("type")]
-        public ApiManagementGroupType? Type { get; set; }
+        public ApiManagementGroupType? ApiManagementGroupType { get; set; }
 
         /// <summary> Identifier of the external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null. </summary>
         [WirePath("externalId")]

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 throw new FormatException($"The model {nameof(OpenIdAuthenticationSettingsContract)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(OpenidProviderId))
+            if (Optional.IsDefined(OpenIdProviderId))
             {
                 writer.WritePropertyName("openidProviderId"u8);
-                writer.WriteStringValue(OpenidProviderId);
+                writer.WriteStringValue(OpenIdProviderId);
             }
             if (Optional.IsCollectionDefined(BearerTokenSendingMethods))
             {
@@ -131,14 +131,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            string openidProviderId = default;
+            string openIdProviderId = default;
             IList<BearerTokenSendingMethod> bearerTokenSendingMethods = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("openidProviderId"u8))
                 {
-                    openidProviderId = prop.Value.GetString();
+                    openIdProviderId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("bearerTokenSendingMethods"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OpenIdAuthenticationSettingsContract(openidProviderId, bearerTokenSendingMethods ?? new ChangeTrackingList<BearerTokenSendingMethod>(), additionalBinaryDataProperties);
+            return new OpenIdAuthenticationSettingsContract(openIdProviderId, bearerTokenSendingMethods ?? new ChangeTrackingList<BearerTokenSendingMethod>(), additionalBinaryDataProperties);
         }
     }
 }

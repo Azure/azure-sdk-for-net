@@ -151,11 +151,11 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Log the ClientIP. Default is false. </summary>
         [WirePath("properties.logClientIp")]
-        public bool? LogClientIp
+        public bool? IsLogClientIPEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.LogClientIp;
+                return Properties is null ? default : Properties.IsLogClientIPEnabled;
             }
             set
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new DiagnosticContractProperties();
                 }
-                Properties.LogClientIp = value;
+                Properties.IsLogClientIPEnabled = value;
             }
         }
 

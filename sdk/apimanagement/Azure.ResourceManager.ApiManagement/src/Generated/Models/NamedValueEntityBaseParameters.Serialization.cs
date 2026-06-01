@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Secret))
+            if (Optional.IsDefined(IsSecret))
             {
                 writer.WritePropertyName("secret"u8);
-                writer.WriteBooleanValue(Secret.Value);
+                writer.WriteBooleanValue(IsSecret.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             IList<string> tags = default;
-            bool? secret = default;
+            bool? isSecret = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    secret = prop.Value.GetBoolean();
+                    isSecret = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NamedValueEntityBaseParameters(tags ?? new ChangeTrackingList<string>(), secret, additionalBinaryDataProperties);
+            return new NamedValueEntityBaseParameters(tags ?? new ChangeTrackingList<string>(), isSecret, additionalBinaryDataProperties);
         }
     }
 }

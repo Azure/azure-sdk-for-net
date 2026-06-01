@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Identity Provider Type identifier. </summary>
         [WirePath("properties.type")]
-        public IdentityProviderType? Type
+        public IdentityProviderType? IdentityProviderType
         {
             get
             {
-                return Properties is null ? default : Properties.Type;
+                return Properties is null ? default : Properties.IdentityProviderType;
             }
             set
             {
@@ -55,17 +55,17 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new IdentityProviderContractProperties();
                 }
-                Properties.Type = value;
+                Properties.IdentityProviderType = value;
             }
         }
 
         /// <summary> The TenantId to use instead of Common when logging into Active Directory. </summary>
         [WirePath("properties.signinTenant")]
-        public string SigninTenant
+        public string SignInTenant
         {
             get
             {
-                return Properties is null ? default : Properties.SigninTenant;
+                return Properties is null ? default : Properties.SignInTenant;
             }
             set
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new IdentityProviderContractProperties();
                 }
-                Properties.SigninTenant = value;
+                Properties.SignInTenant = value;
             }
         }
 
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Signup Policy Name. Only applies to AAD B2C Identity Provider. </summary>
         [WirePath("properties.signupPolicyName")]
-        public string SignupPolicyName
+        public string SignUpPolicyName
         {
             get
             {
-                return Properties is null ? default : Properties.SignupPolicyName;
+                return Properties is null ? default : Properties.SignUpPolicyName;
             }
             set
             {
@@ -123,17 +123,17 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new IdentityProviderContractProperties();
                 }
-                Properties.SignupPolicyName = value;
+                Properties.SignUpPolicyName = value;
             }
         }
 
         /// <summary> Signin Policy Name. Only applies to AAD B2C Identity Provider. </summary>
         [WirePath("properties.signinPolicyName")]
-        public string SigninPolicyName
+        public string SignInPolicyName
         {
             get
             {
-                return Properties is null ? default : Properties.SigninPolicyName;
+                return Properties is null ? default : Properties.SignInPolicyName;
             }
             set
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new IdentityProviderContractProperties();
                 }
-                Properties.SigninPolicyName = value;
+                Properties.SignInPolicyName = value;
             }
         }
 

@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             writer.WritePropertyName("branch"u8);
             writer.WriteStringValue(Branch);
-            if (Optional.IsDefined(Force))
+            if (Optional.IsDefined(ForceDelete))
             {
                 writer.WritePropertyName("force"u8);
-                writer.WriteBooleanValue(Force.Value);
+                writer.WriteBooleanValue(ForceDelete.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             string branch = default;
-            bool? force = default;
+            bool? forceDelete = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    force = prop.Value.GetBoolean();
+                    forceDelete = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeployConfigurationParameterProperties(branch, force, additionalBinaryDataProperties);
+            return new DeployConfigurationParameterProperties(branch, forceDelete, additionalBinaryDataProperties);
         }
     }
 }

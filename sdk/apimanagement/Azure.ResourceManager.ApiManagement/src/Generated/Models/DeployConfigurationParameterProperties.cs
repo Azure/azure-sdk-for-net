@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="DeployConfigurationParameterProperties"/>. </summary>
         /// <param name="branch"> The name of the Git branch from which the configuration is to be deployed to the configuration database. </param>
-        /// <param name="force"> The value enforcing deleting subscriptions to products that are deleted in this update. </param>
+        /// <param name="forceDelete"> The value enforcing deleting subscriptions to products that are deleted in this update. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeployConfigurationParameterProperties(string branch, bool? force, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeployConfigurationParameterProperties(string branch, bool? forceDelete, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Branch = branch;
-            Force = force;
+            ForceDelete = forceDelete;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> The value enforcing deleting subscriptions to products that are deleted in this update. </summary>
         [WirePath("force")]
-        public bool? Force { get; set; }
+        public bool? ForceDelete { get; set; }
     }
 }

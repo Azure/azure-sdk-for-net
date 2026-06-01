@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="circuitBreaker"> Backend Circuit Breaker Configuration. </param>
         /// <param name="azureRegion"> Azure region in which the backend is deployed. Can be optionally specified to use features such as carbon-optimized load balancer. </param>
         /// <param name="pool"> Backend Pool Properties. </param>
-        /// <param name="type"> Type of the backend. A backend can be either Single or Pool. </param>
+        /// <param name="typePropertiesType"> Type of the backend. A backend can be either Single or Pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="uri"> Runtime Url of the Backend. Required when backend type is 'Single'. </param>
         /// <param name="protocol"> Backend communication protocol. Required when backend type is 'Single'. </param>
-        internal BackendContractProperties(string title, string description, string resourceId, BackendProperties properties, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, BackendCircuitBreaker circuitBreaker, string azureRegion, BackendBaseParametersPool pool, BackendType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri uri, BackendProtocol? protocol) : base(title, description, resourceId, properties, credentials, proxy, tls, circuitBreaker, azureRegion, pool, @type, additionalBinaryDataProperties)
+        internal BackendContractProperties(string title, string description, string resourceId, BackendProperties properties, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, BackendCircuitBreaker circuitBreaker, string azureRegion, BackendBaseParametersPool pool, BackendType? typePropertiesType, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri uri, BackendProtocol? protocol) : base(title, description, resourceId, properties, credentials, proxy, tls, circuitBreaker, azureRegion, pool, typePropertiesType, additionalBinaryDataProperties)
         {
             Uri = uri;
             Protocol = protocol;

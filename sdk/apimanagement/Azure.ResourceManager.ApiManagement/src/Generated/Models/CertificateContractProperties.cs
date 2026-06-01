@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="subject"> Subject attribute of the certificate. </param>
         /// <param name="thumbprint"> Thumbprint of the certificate. </param>
         /// <param name="expireOn"> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
-        /// <param name="keyVault"> KeyVault location details of the certificate. </param>
+        /// <param name="keyVaultDetails"> KeyVault location details of the certificate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CertificateContractProperties(string subject, string thumbprint, DateTimeOffset expireOn, KeyVaultContractProperties keyVault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CertificateContractProperties(string subject, string thumbprint, DateTimeOffset expireOn, KeyVaultContractProperties keyVaultDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Subject = subject;
             Thumbprint = thumbprint;
             ExpireOn = expireOn;
-            KeyVault = keyVault;
+            KeyVaultDetails = keyVaultDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -61,6 +61,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> KeyVault location details of the certificate. </summary>
         [WirePath("keyVault")]
-        public KeyVaultContractProperties KeyVault { get; set; }
+        public KeyVaultContractProperties KeyVaultDetails { get; set; }
     }
 }

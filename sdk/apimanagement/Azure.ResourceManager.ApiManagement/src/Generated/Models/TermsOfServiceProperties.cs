@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="TermsOfServiceProperties"/>. </summary>
         /// <param name="text"> A terms of service text. </param>
-        /// <param name="enabled"> Display terms of service during a sign-up process. </param>
-        /// <param name="consentRequired"> Ask user for consent to the terms of service. </param>
+        /// <param name="isDisplayEnabled"> Display terms of service during a sign-up process. </param>
+        /// <param name="isConsentRequired"> Ask user for consent to the terms of service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TermsOfServiceProperties(string text, bool? enabled, bool? consentRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TermsOfServiceProperties(string text, bool? isDisplayEnabled, bool? isConsentRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
-            Enabled = enabled;
-            ConsentRequired = consentRequired;
+            IsDisplayEnabled = isDisplayEnabled;
+            IsConsentRequired = isConsentRequired;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Display terms of service during a sign-up process. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsDisplayEnabled { get; set; }
 
         /// <summary> Ask user for consent to the terms of service. </summary>
         [WirePath("consentRequired")]
-        public bool? ConsentRequired { get; set; }
+        public bool? IsConsentRequired { get; set; }
     }
 }

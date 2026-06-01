@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 throw new FormatException($"The model {nameof(CertificateInformation)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("expiry"u8);
-            writer.WriteStringValue(Expiry, "O");
+            writer.WriteStringValue(ExpireOn, "O");
             writer.WritePropertyName("thumbprint"u8);
             writer.WriteStringValue(Thumbprint);
             writer.WritePropertyName("subject"u8);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            DateTimeOffset expiry = default;
+            DateTimeOffset expireOn = default;
             string thumbprint = default;
             string subject = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 if (prop.NameEquals("expiry"u8))
                 {
-                    expiry = prop.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("thumbprint"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CertificateInformation(expiry, thumbprint, subject, additionalBinaryDataProperties);
+            return new CertificateInformation(expireOn, thumbprint, subject, additionalBinaryDataProperties);
         }
     }
 }

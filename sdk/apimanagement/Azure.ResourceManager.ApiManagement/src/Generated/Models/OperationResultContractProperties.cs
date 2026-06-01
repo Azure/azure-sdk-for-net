@@ -26,18 +26,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="OperationResultContractProperties"/>. </summary>
         /// <param name="operationResultIdentifier"> Operation result identifier. </param>
         /// <param name="status"> Status of an async operation. </param>
-        /// <param name="started"> Start time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
-        /// <param name="updated"> Last update time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="startedOn"> Start time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="updatedOn"> Last update time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
         /// <param name="resultInfo"> Optional result info. </param>
         /// <param name="error"> Error Body Contract. </param>
         /// <param name="actionLog"> This property if only provided as part of the TenantConfiguration_Validate operation. It contains the log the entities which will be updated/created/deleted as part of the TenantConfiguration_Deploy operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationResultContractProperties(string operationResultIdentifier, AsyncOperationStatus? status, DateTimeOffset? started, DateTimeOffset? updated, string resultInfo, ErrorResponseBody error, IReadOnlyList<OperationResultLogItemContract> actionLog, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationResultContractProperties(string operationResultIdentifier, AsyncOperationStatus? status, DateTimeOffset? startedOn, DateTimeOffset? updatedOn, string resultInfo, ErrorResponseBody error, IReadOnlyList<OperationResultLogItemContract> actionLog, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationResultIdentifier = operationResultIdentifier;
             Status = status;
-            Started = started;
-            Updated = updated;
+            StartedOn = startedOn;
+            UpdatedOn = updatedOn;
             ResultInfo = resultInfo;
             Error = error;
             ActionLog = actionLog;
@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Start time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("started")]
-        public DateTimeOffset? Started { get; set; }
+        public DateTimeOffset? StartedOn { get; set; }
 
         /// <summary> Last update time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("updated")]
-        public DateTimeOffset? Updated { get; set; }
+        public DateTimeOffset? UpdatedOn { get; set; }
 
         /// <summary> Optional result info. </summary>
         [WirePath("resultInfo")]

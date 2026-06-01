@@ -147,11 +147,11 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Date of user registration. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.registrationDate")]
-        public DateTimeOffset? RegistrationOn
+        public DateTimeOffset? RegistriesOn
         {
             get
             {
-                return Properties is null ? default : Properties.RegistrationOn;
+                return Properties is null ? default : Properties.RegistriesOn;
             }
             set
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new UserContractProperties();
                 }
-                Properties.RegistrationOn = value;
+                Properties.RegistriesOn = value;
             }
         }
 

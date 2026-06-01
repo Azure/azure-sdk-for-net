@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Start time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.started")]
-        public DateTimeOffset? Started
+        public DateTimeOffset? StartedOn
         {
             get
             {
-                return Properties is null ? default : Properties.Started;
+                return Properties is null ? default : Properties.StartedOn;
             }
             set
             {
@@ -91,17 +91,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new OperationResultContractProperties();
                 }
-                Properties.Started = value;
+                Properties.StartedOn = value;
             }
         }
 
         /// <summary> Last update time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.updated")]
-        public DateTimeOffset? Updated
+        public DateTimeOffset? UpdatedOn
         {
             get
             {
-                return Properties is null ? default : Properties.Updated;
+                return Properties is null ? default : Properties.UpdatedOn;
             }
             set
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new OperationResultContractProperties();
                 }
-                Properties.Updated = value;
+                Properties.UpdatedOn = value;
             }
         }
 

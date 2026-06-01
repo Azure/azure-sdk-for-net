@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="principalId"> Principal (User) Identifier. </param>
         /// <param name="primaryKey"> Primary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
         /// <param name="secondaryKey"> Secondary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
-        /// <param name="enabled"> Determines whether direct access is enabled. </param>
+        /// <param name="isDirectAccessEnabled"> Determines whether direct access is enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TenantAccessInfoSecretsDetails(string id, string principalId, string primaryKey, string secondaryKey, bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TenantAccessInfoSecretsDetails(string id, string principalId, string primaryKey, string secondaryKey, bool? isDirectAccessEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             PrincipalId = principalId;
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
-            Enabled = enabled;
+            IsDirectAccessEnabled = isDirectAccessEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -57,6 +57,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Determines whether direct access is enabled. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; }
+        public bool? IsDirectAccessEnabled { get; }
     }
 }

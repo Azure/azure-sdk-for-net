@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AccessInformationUpdateParameterProperties"/>. </summary>
-        /// <param name="enabled"> Determines whether direct access is enabled. </param>
+        /// <param name="isDirectAccessEnabled"> Determines whether direct access is enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessInformationUpdateParameterProperties(bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccessInformationUpdateParameterProperties(bool? isDirectAccessEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsDirectAccessEnabled = isDirectAccessEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Determines whether direct access is enabled. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsDirectAccessEnabled { get; set; }
     }
 }

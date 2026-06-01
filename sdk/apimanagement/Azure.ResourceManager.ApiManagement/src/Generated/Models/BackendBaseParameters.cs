@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="circuitBreaker"> Backend Circuit Breaker Configuration. </param>
         /// <param name="azureRegion"> Azure region in which the backend is deployed. Can be optionally specified to use features such as carbon-optimized load balancer. </param>
         /// <param name="pool"> Backend Pool Properties. </param>
-        /// <param name="type"> Type of the backend. A backend can be either Single or Pool. </param>
+        /// <param name="typePropertiesType"> Type of the backend. A backend can be either Single or Pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackendBaseParameters(string title, string description, string resourceId, BackendProperties properties, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, BackendCircuitBreaker circuitBreaker, string azureRegion, BackendBaseParametersPool pool, BackendType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackendBaseParameters(string title, string description, string resourceId, BackendProperties properties, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, BackendCircuitBreaker circuitBreaker, string azureRegion, BackendBaseParametersPool pool, BackendType? typePropertiesType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Title = title;
             Description = description;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             CircuitBreaker = circuitBreaker;
             AzureRegion = azureRegion;
             Pool = pool;
-            Type = @type;
+            TypePropertiesType = typePropertiesType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Type of the backend. A backend can be either Single or Pool. </summary>
         [WirePath("type")]
-        public BackendType? Type { get; set; }
+        public BackendType? TypePropertiesType { get; set; }
 
         /// <summary> Backend Service Fabric Cluster Properties. </summary>
         [WirePath("properties.serviceFabricCluster")]

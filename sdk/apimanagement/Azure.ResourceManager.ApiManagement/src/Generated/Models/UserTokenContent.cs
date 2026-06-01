@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> The Expiry time of the Token. Maximum token expiry time is set to 30 days. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.expiry")]
-        public DateTimeOffset? Expiry
+        public DateTimeOffset? ExpireOn
         {
             get
             {
-                return Properties is null ? default : Properties.Expiry;
+                return Properties is null ? default : Properties.ExpireOn;
             }
         }
     }

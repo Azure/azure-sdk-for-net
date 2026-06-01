@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectivityHop"/>. </summary>
-        /// <param name="type"> The type of the hop. </param>
+        /// <param name="connectivityHopType"> The type of the hop. </param>
         /// <param name="id"> The ID of the hop. </param>
         /// <param name="address"> The IP address of the hop. </param>
         /// <param name="resourceId"> The ID of the resource corresponding to this hop. </param>
         /// <param name="nextHopIds"> List of next hop identifiers. </param>
         /// <param name="issues"> List of issues. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectivityHop(string @type, string id, IPAddress address, ResourceIdentifier resourceId, IReadOnlyList<string> nextHopIds, IReadOnlyList<ConnectivityIssue> issues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectivityHop(string connectivityHopType, string id, IPAddress address, ResourceIdentifier resourceId, IReadOnlyList<string> nextHopIds, IReadOnlyList<ConnectivityIssue> issues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            ConnectivityHopType = connectivityHopType;
             Id = id;
             Address = address;
             ResourceId = resourceId;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> The type of the hop. </summary>
         [WirePath("type")]
-        public string Type { get; }
+        public string ConnectivityHopType { get; }
 
         /// <summary> The ID of the hop. </summary>
         [WirePath("id")]

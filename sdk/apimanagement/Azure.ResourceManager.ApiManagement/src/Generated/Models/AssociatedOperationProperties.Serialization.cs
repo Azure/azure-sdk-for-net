@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method);
             }
-            if (options.Format != "W" && Optional.IsDefined(UrlTemplate))
+            if (options.Format != "W" && Optional.IsDefined(UriTemplate))
             {
                 writer.WritePropertyName("urlTemplate"u8);
-                writer.WriteStringValue(UrlTemplate);
+                writer.WriteStringValue(UriTemplate);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string apiVersion = default;
             string description = default;
             string @method = default;
-            string urlTemplate = default;
+            string uriTemplate = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("urlTemplate"u8))
                 {
-                    urlTemplate = prop.Value.GetString();
+                    uriTemplate = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 apiVersion,
                 description,
                 @method,
-                urlTemplate,
+                uriTemplate,
                 additionalBinaryDataProperties);
         }
     }

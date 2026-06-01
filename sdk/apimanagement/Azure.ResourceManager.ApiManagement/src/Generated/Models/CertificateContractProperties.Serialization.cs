@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStringValue(Thumbprint);
             writer.WritePropertyName("expirationDate"u8);
             writer.WriteStringValue(ExpireOn, "O");
-            if (Optional.IsDefined(KeyVault))
+            if (Optional.IsDefined(KeyVaultDetails))
             {
                 writer.WritePropertyName("keyVault"u8);
-                writer.WriteObjectValue(KeyVault, options);
+                writer.WriteObjectValue(KeyVaultDetails, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string subject = default;
             string thumbprint = default;
             DateTimeOffset expireOn = default;
-            KeyVaultContractProperties keyVault = default;
+            KeyVaultContractProperties keyVaultDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    keyVault = KeyVaultContractProperties.DeserializeKeyVaultContractProperties(prop.Value, options);
+                    keyVaultDetails = KeyVaultContractProperties.DeserializeKeyVaultContractProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CertificateContractProperties(subject, thumbprint, expireOn, keyVault, additionalBinaryDataProperties);
+            return new CertificateContractProperties(subject, thumbprint, expireOn, keyVaultDetails, additionalBinaryDataProperties);
         }
     }
 }

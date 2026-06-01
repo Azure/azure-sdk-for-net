@@ -155,11 +155,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </summary>
         [WirePath("properties.urlTemplate")]
-        public string UrlTemplate
+        public string UriTemplate
         {
             get
             {
-                return Properties is null ? default : Properties.UrlTemplate;
+                return Properties is null ? default : Properties.UriTemplate;
             }
             set
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new OperationUpdateContractProperties();
                 }
-                Properties.UrlTemplate = value;
+                Properties.UriTemplate = value;
             }
         }
     }

@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="AccessInformationContractProperties"/>. </summary>
         /// <param name="accessInfoType"> Access Information type ('access' or 'gitAccess'). </param>
         /// <param name="principalId"> Principal (User) Identifier. </param>
-        /// <param name="enabled"> Determines whether direct access is enabled. </param>
+        /// <param name="isDirectAccessEnabled"> Determines whether direct access is enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessInformationContractProperties(string accessInfoType, string principalId, bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccessInformationContractProperties(string accessInfoType, string principalId, bool? isDirectAccessEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccessInfoType = accessInfoType;
             PrincipalId = principalId;
-            Enabled = enabled;
+            IsDirectAccessEnabled = isDirectAccessEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Determines whether direct access is enabled. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsDirectAccessEnabled { get; set; }
     }
 }

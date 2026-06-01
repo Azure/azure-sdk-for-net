@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("pool"u8);
                 writer.WriteObjectValue(Pool, options);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(TypePropertiesType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(TypePropertiesType.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             BackendCircuitBreaker circuitBreaker = default;
             string azureRegion = default;
             BackendBaseParametersPool pool = default;
-            BackendType? @type = default;
+            BackendType? typePropertiesType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    @type = new BackendType(prop.Value.GetString());
+                    typePropertiesType = new BackendType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 circuitBreaker,
                 azureRegion,
                 pool,
-                @type,
+                typePropertiesType,
                 additionalBinaryDataProperties);
         }
     }

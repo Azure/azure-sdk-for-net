@@ -113,10 +113,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("endDate"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(NotificationOn))
+            if (Optional.IsDefined(NotifiesOn))
             {
                 writer.WritePropertyName("notificationDate"u8);
-                writer.WriteStringValue(NotificationOn.Value, "O");
+                writer.WriteStringValue(NotifiesOn.Value, "O");
             }
             if (Optional.IsDefined(PrimaryKey))
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             DateTimeOffset? startOn = default;
             DateTimeOffset? expireOn = default;
             DateTimeOffset? endOn = default;
-            DateTimeOffset? notificationOn = default;
+            DateTimeOffset? notifiesOn = default;
             string primaryKey = default;
             string secondaryKey = default;
             string stateComment = default;
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    notificationOn = prop.Value.GetDateTimeOffset("O");
+                    notifiesOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("primaryKey"u8))
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 startOn,
                 expireOn,
                 endOn,
-                notificationOn,
+                notifiesOn,
                 primaryKey,
                 secondaryKey,
                 stateComment,

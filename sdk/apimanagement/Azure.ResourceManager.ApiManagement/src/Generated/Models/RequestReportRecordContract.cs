@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             UserId = userId;
             Method = @method;
             Uri = uri;
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
             BackendResponseCode = backendResponseCode;
             ResponseCode = responseCode;
             ResponseSize = responseSize;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> The client IP address associated with this request. </summary>
         [WirePath("ipAddress")]
-        public IPAddress IpAddress { get; }
+        public IPAddress IPAddress { get; }
 
         /// <summary> The HTTP status code received by the gateway as a result of forwarding this request to the backend. </summary>
         [WirePath("backendResponseCode")]

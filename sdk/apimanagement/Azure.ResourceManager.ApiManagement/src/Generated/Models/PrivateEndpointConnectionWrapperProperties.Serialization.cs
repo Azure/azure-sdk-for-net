@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteObjectValue(PrivateEndpoint, options);
             }
             writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-            writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
+            writer.WriteObjectValue(ConnectionState, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             ArmIdWrapper privateEndpoint = default;
-            ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            ApiManagementPrivateLinkServiceConnectionState connectionState = default;
             string provisioningState = default;
             IReadOnlyList<string> groupIds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("privateLinkServiceConnectionState"u8))
                 {
-                    privateLinkServiceConnectionState = ApiManagementPrivateLinkServiceConnectionState.DeserializeApiManagementPrivateLinkServiceConnectionState(prop.Value, options);
+                    connectionState = ApiManagementPrivateLinkServiceConnectionState.DeserializeApiManagementPrivateLinkServiceConnectionState(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PrivateEndpointConnectionWrapperProperties(privateEndpoint, privateLinkServiceConnectionState, provisioningState, groupIds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new PrivateEndpointConnectionWrapperProperties(privateEndpoint, connectionState, provisioningState, groupIds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

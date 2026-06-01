@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public AuthorizationServerContractBaseProperties()
         {
             AuthorizationMethods = new ChangeTrackingList<AuthorizationMethod>();
-            ClientAuthenticationMethod = new ChangeTrackingList<ClientAuthenticationMethod>();
+            ClientAuthenticationMethods = new ChangeTrackingList<ClientAuthenticationMethod>();
             TokenBodyParameters = new ChangeTrackingList<TokenBodyParameterContract>();
             BearerTokenSendingMethods = new ChangeTrackingList<BearerTokenSendingMethod>();
         }
@@ -29,23 +29,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="AuthorizationServerContractBaseProperties"/>. </summary>
         /// <param name="description"> Description of the authorization server. Can contain HTML formatting tags. </param>
         /// <param name="authorizationMethods"> HTTP verbs supported by the authorization endpoint. GET must be always present. POST is optional. </param>
-        /// <param name="clientAuthenticationMethod"> Method of authentication supported by the token endpoint of this authorization server. Possible values are Basic and/or Body. When Body is specified, client credentials and other parameters are passed within the request body in the application/x-www-form-urlencoded format. </param>
+        /// <param name="clientAuthenticationMethods"> Method of authentication supported by the token endpoint of this authorization server. Possible values are Basic and/or Body. When Body is specified, client credentials and other parameters are passed within the request body in the application/x-www-form-urlencoded format. </param>
         /// <param name="tokenBodyParameters"> Additional parameters required by the token endpoint of this authorization server represented as an array of JSON objects with name and value string properties, i.e. {"name" : "name value", "value": "a value"}. </param>
         /// <param name="tokenEndpoint"> OAuth token endpoint. Contains absolute URI to entity being referenced. </param>
-        /// <param name="supportState"> If true, authorization server will include state parameter from the authorization request to its response. Client may use state parameter to raise protocol security. </param>
+        /// <param name="doesSupportState"> If true, authorization server will include state parameter from the authorization request to its response. Client may use state parameter to raise protocol security. </param>
         /// <param name="defaultScope"> Access token scope that is going to be requested by default. Can be overridden at the API level. Should be provided in the form of a string containing space-delimited values. </param>
         /// <param name="bearerTokenSendingMethods"> Specifies the mechanism by which access token is passed to the API. </param>
         /// <param name="resourceOwnerUsername"> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner username. </param>
         /// <param name="resourceOwnerPassword"> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner password. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AuthorizationServerContractBaseProperties(string description, IList<AuthorizationMethod> authorizationMethods, IList<ClientAuthenticationMethod> clientAuthenticationMethod, IList<TokenBodyParameterContract> tokenBodyParameters, string tokenEndpoint, bool? supportState, string defaultScope, IList<BearerTokenSendingMethod> bearerTokenSendingMethods, string resourceOwnerUsername, string resourceOwnerPassword, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AuthorizationServerContractBaseProperties(string description, IList<AuthorizationMethod> authorizationMethods, IList<ClientAuthenticationMethod> clientAuthenticationMethods, IList<TokenBodyParameterContract> tokenBodyParameters, string tokenEndpoint, bool? doesSupportState, string defaultScope, IList<BearerTokenSendingMethod> bearerTokenSendingMethods, string resourceOwnerUsername, string resourceOwnerPassword, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             AuthorizationMethods = authorizationMethods;
-            ClientAuthenticationMethod = clientAuthenticationMethod;
+            ClientAuthenticationMethods = clientAuthenticationMethods;
             TokenBodyParameters = tokenBodyParameters;
             TokenEndpoint = tokenEndpoint;
-            SupportState = supportState;
+            DoesSupportState = doesSupportState;
             DefaultScope = defaultScope;
             BearerTokenSendingMethods = bearerTokenSendingMethods;
             ResourceOwnerUsername = resourceOwnerUsername;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Method of authentication supported by the token endpoint of this authorization server. Possible values are Basic and/or Body. When Body is specified, client credentials and other parameters are passed within the request body in the application/x-www-form-urlencoded format. </summary>
         [WirePath("clientAuthenticationMethod")]
-        public IList<ClientAuthenticationMethod> ClientAuthenticationMethod { get; } = new ChangeTrackingList<ClientAuthenticationMethod>();
+        public IList<ClientAuthenticationMethod> ClientAuthenticationMethods { get; } = new ChangeTrackingList<ClientAuthenticationMethod>();
 
         /// <summary> Additional parameters required by the token endpoint of this authorization server represented as an array of JSON objects with name and value string properties, i.e. {"name" : "name value", "value": "a value"}. </summary>
         [WirePath("tokenBodyParameters")]
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> If true, authorization server will include state parameter from the authorization request to its response. Client may use state parameter to raise protocol security. </summary>
         [WirePath("supportState")]
-        public bool? SupportState { get; set; }
+        public bool? DoesSupportState { get; set; }
 
         /// <summary> Access token scope that is going to be requested by default. Can be overridden at the API level. Should be provided in the form of a string containing space-delimited values. </summary>
         [WirePath("defaultScope")]

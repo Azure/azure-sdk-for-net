@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsDirectAccessEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsDirectAccessEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string principalId = default;
             string primaryKey = default;
             string secondaryKey = default;
-            bool? enabled = default;
+            bool? isDirectAccessEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isDirectAccessEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 principalId,
                 primaryKey,
                 secondaryKey,
-                enabled,
+                isDirectAccessEnabled,
                 additionalBinaryDataProperties);
         }
     }

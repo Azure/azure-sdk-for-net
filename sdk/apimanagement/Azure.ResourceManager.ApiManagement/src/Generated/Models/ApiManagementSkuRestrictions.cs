@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementSkuRestrictions"/>. </summary>
-        /// <param name="type"> The type of restrictions. </param>
+        /// <param name="restrictionsType"> The type of restrictions. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="restrictionInfo"> The information about the restriction where the SKU cannot be used. </param>
         /// <param name="reasonCode"> The reason for restriction. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementSkuRestrictions(ApiManagementSkuRestrictionsType? @type, IReadOnlyList<string> values, ApiManagementSkuRestrictionInfo restrictionInfo, ApiManagementSkuRestrictionsReasonCode? reasonCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiManagementSkuRestrictions(ApiManagementSkuRestrictionsType? restrictionsType, IReadOnlyList<string> values, ApiManagementSkuRestrictionInfo restrictionInfo, ApiManagementSkuRestrictionsReasonCode? reasonCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            RestrictionsType = restrictionsType;
             Values = values;
             RestrictionInfo = restrictionInfo;
             ReasonCode = reasonCode;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> The type of restrictions. </summary>
         [WirePath("type")]
-        public ApiManagementSkuRestrictionsType? Type { get; }
+        public ApiManagementSkuRestrictionsType? RestrictionsType { get; }
 
         /// <summary> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </summary>
         [WirePath("values")]

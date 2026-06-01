@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Determines whether the value is a secret and should be encrypted or not. Default value is false. </summary>
         [WirePath("properties.secret")]
-        public bool? Secret
+        public bool? IsSecret
         {
             get
             {
-                return Properties is null ? default : Properties.Secret;
+                return Properties is null ? default : Properties.IsSecret;
             }
             set
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new NamedValueUpdateParameterProperties();
                 }
-                Properties.Secret = value;
+                Properties.IsSecret = value;
             }
         }
 

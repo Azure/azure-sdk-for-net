@@ -24,19 +24,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenIdAuthenticationSettingsContract"/>. </summary>
-        /// <param name="openidProviderId"> OAuth authorization server identifier. </param>
+        /// <param name="openIdProviderId"> OAuth authorization server identifier. </param>
         /// <param name="bearerTokenSendingMethods"> How to send token to the server. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OpenIdAuthenticationSettingsContract(string openidProviderId, IList<BearerTokenSendingMethod> bearerTokenSendingMethods, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OpenIdAuthenticationSettingsContract(string openIdProviderId, IList<BearerTokenSendingMethod> bearerTokenSendingMethods, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OpenidProviderId = openidProviderId;
+            OpenIdProviderId = openIdProviderId;
             BearerTokenSendingMethods = bearerTokenSendingMethods;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> OAuth authorization server identifier. </summary>
         [WirePath("openidProviderId")]
-        public string OpenidProviderId { get; set; }
+        public string OpenIdProviderId { get; set; }
 
         /// <summary> How to send token to the server. </summary>
         [WirePath("bearerTokenSendingMethods")]

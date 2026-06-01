@@ -19,21 +19,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="UserTokenParameterProperties"/>. </summary>
         /// <param name="keyType"> The Key to be used to generate token for user. </param>
-        /// <param name="expiry"> The Expiry time of the Token. Maximum token expiry time is set to 30 days. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
-        public UserTokenParameterProperties(TokenGenerationUsedKeyType keyType, DateTimeOffset expiry)
+        /// <param name="expireOn"> The Expiry time of the Token. Maximum token expiry time is set to 30 days. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        public UserTokenParameterProperties(TokenGenerationUsedKeyType keyType, DateTimeOffset expireOn)
         {
             KeyType = keyType;
-            Expiry = expiry;
+            ExpireOn = expireOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="UserTokenParameterProperties"/>. </summary>
         /// <param name="keyType"> The Key to be used to generate token for user. </param>
-        /// <param name="expiry"> The Expiry time of the Token. Maximum token expiry time is set to 30 days. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="expireOn"> The Expiry time of the Token. Maximum token expiry time is set to 30 days. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UserTokenParameterProperties(TokenGenerationUsedKeyType keyType, DateTimeOffset expiry, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UserTokenParameterProperties(TokenGenerationUsedKeyType keyType, DateTimeOffset expireOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyType = keyType;
-            Expiry = expiry;
+            ExpireOn = expireOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> The Expiry time of the Token. Maximum token expiry time is set to 30 days. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("expiry")]
-        public DateTimeOffset Expiry { get; }
+        public DateTimeOffset ExpireOn { get; }
     }
 }

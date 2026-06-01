@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Method of authentication supported by the token endpoint of this authorization server. Possible values are Basic and/or Body. When Body is specified, client credentials and other parameters are passed within the request body in the application/x-www-form-urlencoded format. </summary>
         [WirePath("properties.clientAuthenticationMethod")]
-        public IList<ClientAuthenticationMethod> ClientAuthenticationMethod
+        public IList<ClientAuthenticationMethod> ClientAuthenticationMethods
         {
             get
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new AuthorizationServerUpdateContractProperties();
                 }
-                return Properties.ClientAuthenticationMethod;
+                return Properties.ClientAuthenticationMethods;
             }
         }
 
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> If true, authorization server will include state parameter from the authorization request to its response. Client may use state parameter to raise protocol security. </summary>
         [WirePath("properties.supportState")]
-        public bool? SupportState
+        public bool? DoesSupportState
         {
             get
             {
-                return Properties is null ? default : Properties.SupportState;
+                return Properties is null ? default : Properties.DoesSupportState;
             }
             set
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new AuthorizationServerUpdateContractProperties();
                 }
-                Properties.SupportState = value;
+                Properties.DoesSupportState = value;
             }
         }
 

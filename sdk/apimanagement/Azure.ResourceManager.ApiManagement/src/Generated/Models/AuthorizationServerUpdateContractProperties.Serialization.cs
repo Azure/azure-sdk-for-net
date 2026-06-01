@@ -149,10 +149,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             string description = default;
             IList<AuthorizationMethod> authorizationMethods = default;
-            IList<ClientAuthenticationMethod> clientAuthenticationMethod = default;
+            IList<ClientAuthenticationMethod> clientAuthenticationMethods = default;
             IList<TokenBodyParameterContract> tokenBodyParameters = default;
             string tokenEndpoint = default;
-            bool? supportState = default;
+            bool? doesSupportState = default;
             string defaultScope = default;
             IList<BearerTokenSendingMethod> bearerTokenSendingMethods = default;
             string resourceOwnerUsername = default;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         array.Add(new ClientAuthenticationMethod(item.GetString()));
                     }
-                    clientAuthenticationMethod = array;
+                    clientAuthenticationMethods = array;
                     continue;
                 }
                 if (prop.NameEquals("tokenBodyParameters"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    supportState = prop.Value.GetBoolean();
+                    doesSupportState = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("defaultScope"u8))
@@ -323,10 +323,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new AuthorizationServerUpdateContractProperties(
                 description,
                 authorizationMethods ?? new ChangeTrackingList<AuthorizationMethod>(),
-                clientAuthenticationMethod ?? new ChangeTrackingList<ClientAuthenticationMethod>(),
+                clientAuthenticationMethods ?? new ChangeTrackingList<ClientAuthenticationMethod>(),
                 tokenBodyParameters ?? new ChangeTrackingList<TokenBodyParameterContract>(),
                 tokenEndpoint,
-                supportState,
+                doesSupportState,
                 defaultScope,
                 bearerTokenSendingMethods ?? new ChangeTrackingList<BearerTokenSendingMethod>(),
                 resourceOwnerUsername,

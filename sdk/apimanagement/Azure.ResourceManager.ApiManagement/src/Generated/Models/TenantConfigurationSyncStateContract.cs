@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> value indicating if last sync was save (true) or deploy (false) operation. </summary>
         [WirePath("properties.isExport")]
-        public bool? IsExport
+        public bool? IsExported
         {
             get
             {
-                return Properties is null ? default : Properties.IsExport;
+                return Properties is null ? default : Properties.IsExported;
             }
             set
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new TenantConfigurationSyncStateContractProperties();
                 }
-                Properties.IsExport = value;
+                Properties.IsExported = value;
             }
         }
 

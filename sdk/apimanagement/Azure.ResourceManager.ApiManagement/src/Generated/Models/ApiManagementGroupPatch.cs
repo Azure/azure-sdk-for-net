@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Group type. </summary>
         [WirePath("properties.type")]
-        public ApiManagementGroupType? Type
+        public ApiManagementGroupType? ApiManagementGroupType
         {
             get
             {
-                return Properties is null ? default : Properties.Type;
+                return Properties is null ? default : Properties.ApiManagementGroupType;
             }
             set
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new GroupUpdateParametersProperties();
                 }
-                Properties.Type = value;
+                Properties.ApiManagementGroupType = value;
             }
         }
 

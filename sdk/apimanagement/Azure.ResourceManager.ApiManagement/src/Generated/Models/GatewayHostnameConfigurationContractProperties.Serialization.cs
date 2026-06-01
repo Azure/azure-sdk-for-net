@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("certificateId"u8);
                 writer.WriteStringValue(CertificateId);
             }
-            if (Optional.IsDefined(NegotiateClientCertificate))
+            if (Optional.IsDefined(IsClientCertificateRequired))
             {
                 writer.WritePropertyName("negotiateClientCertificate"u8);
-                writer.WriteBooleanValue(NegotiateClientCertificate.Value);
+                writer.WriteBooleanValue(IsClientCertificateRequired.Value);
             }
             if (Optional.IsDefined(Tls10Enabled))
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             string hostname = default;
             string certificateId = default;
-            bool? negotiateClientCertificate = default;
+            bool? isClientCertificateRequired = default;
             bool? tls10Enabled = default;
             bool? tls11Enabled = default;
             bool? http2Enabled = default;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    negotiateClientCertificate = prop.Value.GetBoolean();
+                    isClientCertificateRequired = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("tls10Enabled"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new GatewayHostnameConfigurationContractProperties(
                 hostname,
                 certificateId,
-                negotiateClientCertificate,
+                isClientCertificateRequired,
                 tls10Enabled,
                 tls11Enabled,
                 http2Enabled,

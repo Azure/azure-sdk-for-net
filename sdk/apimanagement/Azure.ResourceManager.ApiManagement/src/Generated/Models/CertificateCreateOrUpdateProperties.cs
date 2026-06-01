@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="CertificateCreateOrUpdateProperties"/>. </summary>
         /// <param name="data"> Base 64 encoded certificate using the application/x-pkcs12 representation. </param>
         /// <param name="password"> Password for the Certificate. </param>
-        /// <param name="keyVault"> KeyVault location details of the certificate. </param>
+        /// <param name="keyVaultDetails"> KeyVault location details of the certificate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CertificateCreateOrUpdateProperties(string data, string password, KeyVaultContractCreateProperties keyVault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CertificateCreateOrUpdateProperties(string data, string password, KeyVaultContractCreateProperties keyVaultDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Data = data;
             Password = password;
-            KeyVault = keyVault;
+            KeyVaultDetails = keyVaultDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> KeyVault location details of the certificate. </summary>
         [WirePath("keyVault")]
-        public KeyVaultContractCreateProperties KeyVault { get; set; }
+        public KeyVaultContractCreateProperties KeyVaultDetails { get; set; }
     }
 }

@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Determines whether the value is a secret and should be encrypted or not. Default value is false. </summary>
         [WirePath("properties.secret")]
-        public bool? Secret
+        public bool? IsSecret
         {
             get
             {
-                return Properties is null ? default : Properties.Secret;
+                return Properties is null ? default : Properties.IsSecret;
             }
             set
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new NamedValueContractProperties();
                 }
-                Properties.Secret = value;
+                Properties.IsSecret = value;
             }
         }
 
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> KeyVault location details of the namedValue. </summary>
         [WirePath("properties.keyVault")]
-        public KeyVaultContractProperties KeyVault
+        public KeyVaultContractProperties KeyVaultDetails
         {
             get
             {
-                return Properties is null ? default : Properties.KeyVault;
+                return Properties is null ? default : Properties.KeyVaultDetails;
             }
             set
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new NamedValueContractProperties();
                 }
-                Properties.KeyVault = value;
+                Properties.KeyVaultDetails = value;
             }
         }
 

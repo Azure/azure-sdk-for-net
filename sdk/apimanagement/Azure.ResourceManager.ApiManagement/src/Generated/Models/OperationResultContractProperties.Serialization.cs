@@ -84,15 +84,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Started))
+            if (Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("started"u8);
-                writer.WriteStringValue(Started.Value, "O");
+                writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (Optional.IsDefined(Updated))
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated"u8);
-                writer.WriteStringValue(Updated.Value, "O");
+                writer.WriteStringValue(UpdatedOn.Value, "O");
             }
             if (Optional.IsDefined(ResultInfo))
             {
@@ -158,8 +158,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             string operationResultIdentifier = default;
             AsyncOperationStatus? status = default;
-            DateTimeOffset? started = default;
-            DateTimeOffset? updated = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? updatedOn = default;
             string resultInfo = default;
             ErrorResponseBody error = default;
             IReadOnlyList<OperationResultLogItemContract> actionLog = default;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    started = prop.Value.GetDateTimeOffset("O");
+                    startedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("updated"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    updated = prop.Value.GetDateTimeOffset("O");
+                    updatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("resultInfo"u8))
@@ -234,8 +234,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new OperationResultContractProperties(
                 operationResultIdentifier,
                 status,
-                started,
-                updated,
+                startedOn,
+                updatedOn,
                 resultInfo,
                 error,
                 actionLog ?? new ChangeTrackingList<OperationResultLogItemContract>(),

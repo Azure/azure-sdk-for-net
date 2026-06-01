@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Determines whether gateway requests client certificate. </summary>
         [WirePath("properties.negotiateClientCertificate")]
-        public bool? NegotiateClientCertificate
+        public bool? IsClientCertificateRequired
         {
             get
             {
-                return Properties is null ? default : Properties.NegotiateClientCertificate;
+                return Properties is null ? default : Properties.IsClientCertificateRequired;
             }
             set
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new GatewayHostnameConfigurationContractProperties();
                 }
-                Properties.NegotiateClientCertificate = value;
+                Properties.IsClientCertificateRequired = value;
             }
         }
     }
