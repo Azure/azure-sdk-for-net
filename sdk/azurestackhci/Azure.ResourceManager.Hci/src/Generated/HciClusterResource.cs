@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _clustersRestClient.CreateChangeRingRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChangeRingContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
-                    new HciClusterOperationSource(Client),
+                    new HciClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _clustersRestClient.CreateChangeRingRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChangeRingContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
-                    new HciClusterOperationSource(Client),
+                    new HciClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _clustersRestClient.CreateConfigureRemoteSupportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RemoteSupportContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
-                    new HciClusterOperationSource(Client),
+                    new HciClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _clustersRestClient.CreateConfigureRemoteSupportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RemoteSupportContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
-                    new HciClusterOperationSource(Client),
+                    new HciClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -781,7 +781,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _clustersRestClient.CreateExtendSoftwareAssuranceBenefitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SoftwareAssuranceChangeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
-                    new HciClusterOperationSource(Client),
+                    new HciClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -840,7 +840,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _clustersRestClient.CreateExtendSoftwareAssuranceBenefitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SoftwareAssuranceChangeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
-                    new HciClusterOperationSource(Client),
+                    new HciClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -979,7 +979,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _clustersRestClient.CreateTriggerLogCollectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LogCollectionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
-                    new HciClusterOperationSource(Client),
+                    new HciClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1038,7 +1038,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _clustersRestClient.CreateTriggerLogCollectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LogCollectionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
-                    new HciClusterOperationSource(Client),
+                    new HciClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1097,7 +1097,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _clustersRestClient.CreateUpdateSecretsLocationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecretsLocationsChangeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
-                    new HciClusterOperationSource(Client),
+                    new HciClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1156,7 +1156,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _clustersRestClient.CreateUpdateSecretsLocationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecretsLocationsChangeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
-                    new HciClusterOperationSource(Client),
+                    new HciClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,

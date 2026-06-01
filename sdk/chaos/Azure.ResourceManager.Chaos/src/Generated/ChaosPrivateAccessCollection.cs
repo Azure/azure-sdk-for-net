@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Chaos
                 HttpMessage message = _privateAccessesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateAccessName, ChaosPrivateAccessData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ChaosArmOperation<ChaosPrivateAccessResource> operation = new ChaosArmOperation<ChaosPrivateAccessResource>(
-                    new ChaosPrivateAccessOperationSource(Client),
+                    new ChaosPrivateAccessResourceOperationSource(Client),
                     _privateAccessesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Chaos
                 HttpMessage message = _privateAccessesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateAccessName, ChaosPrivateAccessData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ChaosArmOperation<ChaosPrivateAccessResource> operation = new ChaosArmOperation<ChaosPrivateAccessResource>(
-                    new ChaosPrivateAccessOperationSource(Client),
+                    new ChaosPrivateAccessResourceOperationSource(Client),
                     _privateAccessesClientDiagnostics,
                     Pipeline,
                     message.Request,
