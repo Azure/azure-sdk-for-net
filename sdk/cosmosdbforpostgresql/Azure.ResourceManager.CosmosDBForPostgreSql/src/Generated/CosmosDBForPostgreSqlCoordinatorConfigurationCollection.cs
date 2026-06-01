@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 HttpMessage message = _cosmosDBForPostgreSqlCoordinatorConfigurationsRestClient.CreateUpdateOnCoordinatorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, CosmosDBForPostgreSqlServerConfigurationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlCoordinatorConfigurationResource> operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlCoordinatorConfigurationResource>(
-                    new CosmosDBForPostgreSqlCoordinatorConfigurationOperationSource(Client),
+                    new CosmosDBForPostgreSqlCoordinatorConfigurationResourceOperationSource(Client),
                     _cosmosDBForPostgreSqlCoordinatorConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 HttpMessage message = _cosmosDBForPostgreSqlCoordinatorConfigurationsRestClient.CreateUpdateOnCoordinatorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, CosmosDBForPostgreSqlServerConfigurationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlCoordinatorConfigurationResource> operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlCoordinatorConfigurationResource>(
-                    new CosmosDBForPostgreSqlCoordinatorConfigurationOperationSource(Client),
+                    new CosmosDBForPostgreSqlCoordinatorConfigurationResourceOperationSource(Client),
                     _cosmosDBForPostgreSqlCoordinatorConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,

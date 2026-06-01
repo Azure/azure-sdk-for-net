@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _diagnosticSettingsRestClient.CreateUpdateDiagnosticRemoteSupportSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, DiagnosticRemoteSupportSettingData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxEdgeArmOperation<DiagnosticRemoteSupportSettingResource> operation = new DataBoxEdgeArmOperation<DiagnosticRemoteSupportSettingResource>(
-                    new DiagnosticRemoteSupportSettingOperationSource(Client),
+                    new DiagnosticRemoteSupportSettingResourceOperationSource(Client),
                     _diagnosticSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _diagnosticSettingsRestClient.CreateUpdateDiagnosticRemoteSupportSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, DiagnosticRemoteSupportSettingData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxEdgeArmOperation<DiagnosticRemoteSupportSettingResource> operation = new DataBoxEdgeArmOperation<DiagnosticRemoteSupportSettingResource>(
-                    new DiagnosticRemoteSupportSettingOperationSource(Client),
+                    new DiagnosticRemoteSupportSettingResourceOperationSource(Client),
                     _diagnosticSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,

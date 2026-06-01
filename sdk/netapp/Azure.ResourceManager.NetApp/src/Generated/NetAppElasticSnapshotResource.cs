@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _elasticSnapshotsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NetAppElasticSnapshotData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppElasticSnapshotResource> operation = new NetAppArmOperation<NetAppElasticSnapshotResource>(
-                    new NetAppElasticSnapshotOperationSource(Client),
+                    new NetAppElasticSnapshotResourceOperationSource(Client),
                     _elasticSnapshotsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _elasticSnapshotsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NetAppElasticSnapshotData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppElasticSnapshotResource> operation = new NetAppArmOperation<NetAppElasticSnapshotResource>(
-                    new NetAppElasticSnapshotOperationSource(Client),
+                    new NetAppElasticSnapshotResourceOperationSource(Client),
                     _elasticSnapshotsClientDiagnostics,
                     Pipeline,
                     message.Request,

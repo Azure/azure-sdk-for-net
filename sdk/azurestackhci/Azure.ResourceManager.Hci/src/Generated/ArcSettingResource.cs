@@ -830,7 +830,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _arcSettingsRestClient.CreateReconcileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ReconcileArcSettingsContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<ArcSettingResource> operation = new HciArmOperation<ArcSettingResource>(
-                    new ArcSettingOperationSource(Client),
+                    new ArcSettingResourceOperationSource(Client),
                     _arcSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -889,7 +889,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _arcSettingsRestClient.CreateReconcileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ReconcileArcSettingsContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<ArcSettingResource> operation = new HciArmOperation<ArcSettingResource>(
-                    new ArcSettingOperationSource(Client),
+                    new ArcSettingResourceOperationSource(Client),
                     _arcSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,

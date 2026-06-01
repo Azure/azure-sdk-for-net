@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 HttpMessage message = _avsVmVolumesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PureStorageAvsVmVolumePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PureStorageBlockArmOperation<PureStorageAvsVmVolumeResource> operation = new PureStorageBlockArmOperation<PureStorageAvsVmVolumeResource>(
-                    new PureStorageAvsVmVolumeOperationSource(Client),
+                    new PureStorageAvsVmVolumeResourceOperationSource(Client),
                     _avsVmVolumesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 HttpMessage message = _avsVmVolumesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PureStorageAvsVmVolumePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PureStorageBlockArmOperation<PureStorageAvsVmVolumeResource> operation = new PureStorageBlockArmOperation<PureStorageAvsVmVolumeResource>(
-                    new PureStorageAvsVmVolumeOperationSource(Client),
+                    new PureStorageAvsVmVolumeResourceOperationSource(Client),
                     _avsVmVolumesClientDiagnostics,
                     Pipeline,
                     message.Request,

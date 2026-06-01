@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 HttpMessage message = _collectorPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, collectorPolicyName, CollectorPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkFunctionArmOperation<CollectorPolicyResource> operation = new NetworkFunctionArmOperation<CollectorPolicyResource>(
-                    new CollectorPolicyOperationSource(Client),
+                    new CollectorPolicyResourceOperationSource(Client),
                     _collectorPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 HttpMessage message = _collectorPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, collectorPolicyName, CollectorPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkFunctionArmOperation<CollectorPolicyResource> operation = new NetworkFunctionArmOperation<CollectorPolicyResource>(
-                    new CollectorPolicyOperationSource(Client),
+                    new CollectorPolicyResourceOperationSource(Client),
                     _collectorPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,

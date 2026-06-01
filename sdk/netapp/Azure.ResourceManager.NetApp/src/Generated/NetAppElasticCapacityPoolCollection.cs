@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _elasticCapacityPoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, poolName, NetAppElasticCapacityPoolData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppElasticCapacityPoolResource> operation = new NetAppArmOperation<NetAppElasticCapacityPoolResource>(
-                    new NetAppElasticCapacityPoolOperationSource(Client),
+                    new NetAppElasticCapacityPoolResourceOperationSource(Client),
                     _elasticCapacityPoolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _elasticCapacityPoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, poolName, NetAppElasticCapacityPoolData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppElasticCapacityPoolResource> operation = new NetAppArmOperation<NetAppElasticCapacityPoolResource>(
-                    new NetAppElasticCapacityPoolOperationSource(Client),
+                    new NetAppElasticCapacityPoolResourceOperationSource(Client),
                     _elasticCapacityPoolsClientDiagnostics,
                     Pipeline,
                     message.Request,

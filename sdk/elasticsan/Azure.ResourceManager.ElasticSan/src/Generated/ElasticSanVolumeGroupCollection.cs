@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ElasticSan
                 HttpMessage message = _volumeGroupsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, volumeGroupName, ElasticSanVolumeGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ElasticSanArmOperation<ElasticSanVolumeGroupResource> operation = new ElasticSanArmOperation<ElasticSanVolumeGroupResource>(
-                    new ElasticSanVolumeGroupOperationSource(Client),
+                    new ElasticSanVolumeGroupResourceOperationSource(Client),
                     _volumeGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ElasticSan
                 HttpMessage message = _volumeGroupsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, volumeGroupName, ElasticSanVolumeGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ElasticSanArmOperation<ElasticSanVolumeGroupResource> operation = new ElasticSanArmOperation<ElasticSanVolumeGroupResource>(
-                    new ElasticSanVolumeGroupOperationSource(Client),
+                    new ElasticSanVolumeGroupResourceOperationSource(Client),
                     _volumeGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,
