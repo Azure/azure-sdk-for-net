@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _devicePoolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DevicePoolPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<DevicePoolResource> operation = new HciArmOperation<DevicePoolResource>(
-                    new DevicePoolOperationSource(Client),
+                    new DevicePoolResourceOperationSource(Client),
                     _devicePoolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _devicePoolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DevicePoolPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<DevicePoolResource> operation = new HciArmOperation<DevicePoolResource>(
-                    new DevicePoolOperationSource(Client),
+                    new DevicePoolResourceOperationSource(Client),
                     _devicePoolsClientDiagnostics,
                     Pipeline,
                     message.Request,

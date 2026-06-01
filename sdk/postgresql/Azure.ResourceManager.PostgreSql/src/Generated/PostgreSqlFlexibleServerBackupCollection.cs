@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 HttpMessage message = _backupsAutomaticAndOnDemandRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<PostgreSqlFlexibleServerBackupResource> operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerBackupResource>(
-                    new PostgreSqlFlexibleServerBackupOperationSource(Client),
+                    new PostgreSqlFlexibleServerBackupResourceOperationSource(Client),
                     _backupsAutomaticAndOnDemandClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 HttpMessage message = _backupsAutomaticAndOnDemandRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<PostgreSqlFlexibleServerBackupResource> operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerBackupResource>(
-                    new PostgreSqlFlexibleServerBackupOperationSource(Client),
+                    new PostgreSqlFlexibleServerBackupResourceOperationSource(Client),
                     _backupsAutomaticAndOnDemandClientDiagnostics,
                     Pipeline,
                     message.Request,

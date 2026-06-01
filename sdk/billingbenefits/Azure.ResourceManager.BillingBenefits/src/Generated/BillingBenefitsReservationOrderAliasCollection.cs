@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _reservationOrderAliasRestClient.CreateCreateRequest(reservationOrderAliasName, BillingBenefitsReservationOrderAliasCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<BillingBenefitsReservationOrderAliasResource> operation = new BillingBenefitsArmOperation<BillingBenefitsReservationOrderAliasResource>(
-                    new BillingBenefitsReservationOrderAliasOperationSource(Client),
+                    new BillingBenefitsReservationOrderAliasResourceOperationSource(Client),
                     _reservationOrderAliasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _reservationOrderAliasRestClient.CreateCreateRequest(reservationOrderAliasName, BillingBenefitsReservationOrderAliasCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<BillingBenefitsReservationOrderAliasResource> operation = new BillingBenefitsArmOperation<BillingBenefitsReservationOrderAliasResource>(
-                    new BillingBenefitsReservationOrderAliasOperationSource(Client),
+                    new BillingBenefitsReservationOrderAliasResourceOperationSource(Client),
                     _reservationOrderAliasClientDiagnostics,
                     Pipeline,
                     message.Request,

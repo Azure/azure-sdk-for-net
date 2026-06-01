@@ -49,7 +49,7 @@ private static CreateAgentVersionFromCodeMetadata GetAgentMetadata()
         memory: "1Gi"
     )
     {
-        ProtocolVersions = { new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0") },
+        Versions = { new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0") },
         CodeConfiguration = new(
             runtime: "python_3_14",
             entryPoint: ["python", "main.py"],

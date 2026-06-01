@@ -13,6 +13,11 @@ namespace Azure.AI.Projects.Agents
     /// <summary> The UpdateSkillRequest. </summary>
     internal partial class UpdateSkillRequest : IJsonModel<UpdateSkillRequest>
     {
+        /// <summary> Initializes a new instance of <see cref="UpdateSkillRequest"/> for deserialization. </summary>
+        internal UpdateSkillRequest()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual UpdateSkillRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -81,32 +86,8 @@ namespace Azure.AI.Projects.Agents
             {
                 throw new FormatException($"The model {nameof(UpdateSkillRequest)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(Instructions))
-            {
-                writer.WritePropertyName("instructions"u8);
-                writer.WriteStringValue(Instructions);
-            }
-            if (Optional.IsCollectionDefined(Metadata))
-            {
-                writer.WritePropertyName("metadata"u8);
-                writer.WriteStartObject();
-                foreach (var item in Metadata)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
+            writer.WritePropertyName("default_version"u8);
+            writer.WriteStringValue(DefaultVersion);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -149,41 +130,13 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            string description = default;
-            string instructions = default;
-            IDictionary<string, string> metadata = default;
+            string defaultVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("description"u8))
+                if (prop.NameEquals("default_version"u8))
                 {
-                    description = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("instructions"u8))
-                {
-                    instructions = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("metadata"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
-                    }
-                    metadata = dictionary;
+                    defaultVersion = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -191,7 +144,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UpdateSkillRequest(description, instructions, metadata ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new UpdateSkillRequest(defaultVersion, additionalBinaryDataProperties);
         }
     }
 }
