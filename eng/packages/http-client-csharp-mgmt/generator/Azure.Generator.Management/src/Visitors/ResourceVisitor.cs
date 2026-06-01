@@ -21,7 +21,6 @@ internal class ResourceVisitor : ScmLibraryVisitor
         if (propertyProvider?.EnclosingType is ModelProvider modelProvider)
         {
             var resourceDataModel = modelProvider as ResourceDataModelProvider;
-            var isResourceDataModel = resourceDataModel is not null || modelProvider.Name.EndsWith("Data", StringComparison.Ordinal);
             // Output-only resource data models represent service responses. Keep collection properties read-only
             // for GA compatibility, even when the TypeSpec property itself is not marked readonly.
             var shouldUseReadOnlyCollection = resourceDataModel is not null
