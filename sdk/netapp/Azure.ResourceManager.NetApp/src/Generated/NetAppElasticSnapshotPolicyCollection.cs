@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _elasticSnapshotPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, snapshotPolicyName, NetAppElasticSnapshotPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppElasticSnapshotPolicyResource> operation = new NetAppArmOperation<NetAppElasticSnapshotPolicyResource>(
-                    new NetAppElasticSnapshotPolicyOperationSource(Client),
+                    new NetAppElasticSnapshotPolicyResourceOperationSource(Client),
                     _elasticSnapshotPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _elasticSnapshotPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, snapshotPolicyName, NetAppElasticSnapshotPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppElasticSnapshotPolicyResource> operation = new NetAppArmOperation<NetAppElasticSnapshotPolicyResource>(
-                    new NetAppElasticSnapshotPolicyOperationSource(Client),
+                    new NetAppElasticSnapshotPolicyResourceOperationSource(Client),
                     _elasticSnapshotPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
