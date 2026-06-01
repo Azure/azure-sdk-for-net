@@ -20,6 +20,37 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     public static partial class ArmContainerServiceFleetModelFactory
     {
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> The provisioning state of the cluster mesh profile. </param>
+        /// <param name="status"> The cluster mesh profile status. </param>
+        /// <param name="memberSelectorByLabel"> Kubernetes-style label selector for selecting Fleet members, e.g. `env=production`. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <returns> A new <see cref="ContainerServiceFleet.ClusterMeshProfileData"/> instance for mocking. </returns>
+        public static ClusterMeshProfileData ClusterMeshProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ClusterMeshProfileProvisioningState? provisioningState = default, ClusterMeshProfileStatus status = default, string memberSelectorByLabel = default, ETag? eTag = default)
+        {
+            return new ClusterMeshProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                provisioningState is null && status is null && memberSelectorByLabel is null ? default : new ClusterMeshProfileProperties(provisioningState, new MemberSelector(memberSelectorByLabel, null), status, null),
+                eTag);
+        }
+
+        /// <param name="state"> The state of the cluster mesh. </param>
+        /// <param name="lastAppliedMemberSelectorByLabel"> Kubernetes-style label selector for selecting Fleet members, e.g. `env=production`. </param>
+        /// <param name="lastOperationId"> The last operation ID for the cluster mesh profile. </param>
+        /// <param name="lastOperationError"> The last operation error of the cluster mesh profile. </param>
+        /// <returns> A new <see cref="Models.ClusterMeshProfileStatus"/> instance for mocking. </returns>
+        public static ClusterMeshProfileStatus ClusterMeshProfileStatus(ClusterMeshState state = default, string lastAppliedMemberSelectorByLabel = default, string lastOperationId = default, ResponseError lastOperationError = default)
+        {
+            return new ClusterMeshProfileStatus(state, lastAppliedMemberSelectorByLabel is null ? default : new MemberSelector(lastAppliedMemberSelectorByLabel, null), lastOperationId, lastOperationError, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The FleetHubProfile configures the fleet hub. </summary>
         /// <param name="dnsPrefix"> DNS prefix used to create the FQDN for the Fleet hub. </param>
         /// <param name="apiServerAccessProfile"> The access profile for the Fleet hub API server. </param>
@@ -88,9 +119,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="labels"> The labels for the fleet member. </param>
         /// <param name="status"> Status information of the last operation for fleet member. </param>
+        /// <param name="meshProperties"> The Mesh Member Properties associated with this Fleet Member. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <returns> A new <see cref="ContainerServiceFleet.ContainerServiceFleetMemberData"/> instance for mocking. </returns>
-        public static ContainerServiceFleetMemberData ContainerServiceFleetMemberData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier clusterResourceId = default, string @group = default, FleetMemberProvisioningState? provisioningState = default, IDictionary<string, string> labels = default, ContainerServiceFleetMemberStatus status = default, ETag? eTag = default)
+        public static ContainerServiceFleetMemberData ContainerServiceFleetMemberData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier clusterResourceId = default, string @group = default, FleetMemberProvisioningState? provisioningState = default, IDictionary<string, string> labels = default, ContainerServiceFleetMemberStatus status = default, MeshProperties meshProperties = default, ETag? eTag = default)
         {
             return new ContainerServiceFleetMemberData(
                 id,
@@ -98,12 +130,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                clusterResourceId is null && @group is null && provisioningState is null && labels is null && status is null ? default : new FleetMemberProperties(
+                clusterResourceId is null && @group is null && provisioningState is null && labels is null && status is null && meshProperties is null ? default : new FleetMemberProperties(
                     clusterResourceId,
                     @group,
                     provisioningState,
                     labels,
                     status,
+                    meshProperties,
                     null),
                 eTag);
         }
@@ -115,6 +148,36 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static ContainerServiceFleetMemberStatus ContainerServiceFleetMemberStatus(string lastOperationId = default, ResponseError lastOperationError = default)
         {
             return new ContainerServiceFleetMemberStatus(lastOperationId, lastOperationError, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The Mesh Member data for a Fleet Member resource. </summary>
+        /// <param name="ciliumProperties"> The Cilium cluster properties. </param>
+        /// <param name="status"> The status of the mesh member. </param>
+        /// <param name="clusterMeshProfileResourceId"> Resource id of the cluster mesh profile associated with this mesh member. </param>
+        /// <returns> A new <see cref="Models.MeshProperties"/> instance for mocking. </returns>
+        public static MeshProperties MeshProperties(CiliumProperties ciliumProperties = default, MeshMemberStatus status = default, ResourceIdentifier clusterMeshProfileResourceId = default)
+        {
+            return new MeshProperties(ciliumProperties, status, clusterMeshProfileResourceId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The Cilium specific properties of the member cluster. </summary>
+        /// <param name="id"> Cilium requires each cluster to be assigned a unique numeric cluster id from 1 - 255. The id is managed by Fleet and cannot be set by the user. </param>
+        /// <param name="name"> Cilium requires each cluster to be assigned a unique human-readable name. The name is managed by Fleet, based on the Fleet Member name, and cannot be set by the user. </param>
+        /// <returns> A new <see cref="Models.CiliumProperties"/> instance for mocking. </returns>
+        public static CiliumProperties CiliumProperties(int id = default, string name = default)
+        {
+            return new CiliumProperties(id, name, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Status of the mesh member. </summary>
+        /// <param name="state"> The mesh member state. </param>
+        /// <param name="lastUpdatedOn"> When the status was last updated. </param>
+        /// <param name="lastOperationId"> The last operation ID that affected the mesh properties of the fleet member. </param>
+        /// <param name="error"> The error affecting this member. </param>
+        /// <returns> A new <see cref="Models.MeshMemberStatus"/> instance for mocking. </returns>
+        public static MeshMemberStatus MeshMemberStatus(MeshMemberState state = default, DateTimeOffset? lastUpdatedOn = default, string lastOperationId = default, ResponseError error = default)
+        {
+            return new MeshMemberStatus(state, lastUpdatedOn, lastOperationId, error, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -569,7 +632,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerServiceFleetMemberData ContainerServiceFleetMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, ResourceIdentifier clusterResourceId, string @group, FleetMemberProvisioningState? provisioningState, ContainerServiceFleetMemberStatus status)
         {
-            return ContainerServiceFleetMemberData(id: id, name: name, resourceType: resourceType, systemData: systemData, clusterResourceId: clusterResourceId, @group: @group, provisioningState: provisioningState, labels: default, status: status, eTag: eTag);
+            return ContainerServiceFleetMemberData(id: id, name: name, resourceType: resourceType, systemData: systemData, clusterResourceId: clusterResourceId, @group: @group, provisioningState: provisioningState, labels: default, status: status, meshProperties: default, eTag: eTag);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleet.ContainerServiceFleetUpdateRunData"/>. </summary>
@@ -692,7 +755,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerServiceFleetMemberData ContainerServiceFleetMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, ResourceIdentifier clusterResourceId, string @group, FleetMemberProvisioningState? provisioningState)
         {
-            return ContainerServiceFleetMemberData(id: id, name: name, resourceType: resourceType, systemData: systemData, clusterResourceId: clusterResourceId, @group: @group, provisioningState: provisioningState, labels: default, status: default, eTag: eTag);
+            return ContainerServiceFleetMemberData(id: id, name: name, resourceType: resourceType, systemData: systemData, clusterResourceId: clusterResourceId, @group: @group, provisioningState: provisioningState, labels: default, status: default, meshProperties: default, eTag: eTag);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleet.ContainerServiceFleetUpdateRunData"/>. </summary>

@@ -13,49 +13,44 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.ContainerServiceFleet.Models;
 
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
     /// <summary>
-    /// A class representing a AutoUpgradeProfile along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AutoUpgradeProfileResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceFleetResource"/> using the GetAutoUpgradeProfiles method.
+    /// A class representing a ClusterMeshProfile along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ClusterMeshProfileResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceFleetResource"/> using the GetClusterMeshProfiles method.
     /// </summary>
-    public partial class AutoUpgradeProfileResource : ArmResource
+    public partial class ClusterMeshProfileResource : ArmResource
     {
-        private readonly ClientDiagnostics _autoUpgradeProfilesClientDiagnostics;
-        private readonly AutoUpgradeProfiles _autoUpgradeProfilesRestClient;
-        private readonly ClientDiagnostics _autoUpgradeProfileOperationsClientDiagnostics;
-        private readonly AutoUpgradeProfileOperations _autoUpgradeProfileOperationsRestClient;
-        private readonly AutoUpgradeProfileData _data;
+        private readonly ClientDiagnostics _clusterMeshProfilesClientDiagnostics;
+        private readonly ClusterMeshProfiles _clusterMeshProfilesRestClient;
+        private readonly ClusterMeshProfileData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/fleets/autoUpgradeProfiles";
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/fleets/clusterMeshProfiles";
 
-        /// <summary> Initializes a new instance of AutoUpgradeProfileResource for mocking. </summary>
-        protected AutoUpgradeProfileResource()
+        /// <summary> Initializes a new instance of ClusterMeshProfileResource for mocking. </summary>
+        protected ClusterMeshProfileResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutoUpgradeProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterMeshProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AutoUpgradeProfileResource(ArmClient client, AutoUpgradeProfileData data) : this(client, data.Id)
+        internal ClusterMeshProfileResource(ArmClient client, ClusterMeshProfileData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutoUpgradeProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterMeshProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AutoUpgradeProfileResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ClusterMeshProfileResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string autoUpgradeProfileApiVersion);
-            _autoUpgradeProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ResourceType.Namespace, Diagnostics);
-            _autoUpgradeProfilesRestClient = new AutoUpgradeProfiles(_autoUpgradeProfilesClientDiagnostics, Pipeline, Endpoint, autoUpgradeProfileApiVersion ?? "2026-03-02-preview");
-            _autoUpgradeProfileOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ResourceType.Namespace, Diagnostics);
-            _autoUpgradeProfileOperationsRestClient = new AutoUpgradeProfileOperations(_autoUpgradeProfileOperationsClientDiagnostics, Pipeline, Endpoint, autoUpgradeProfileApiVersion ?? "2026-03-02-preview");
+            TryGetApiVersion(ResourceType, out string clusterMeshProfileApiVersion);
+            _clusterMeshProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ResourceType.Namespace, Diagnostics);
+            _clusterMeshProfilesRestClient = new ClusterMeshProfiles(_clusterMeshProfilesClientDiagnostics, Pipeline, Endpoint, clusterMeshProfileApiVersion ?? "2026-03-02-preview");
             ValidateResourceId(id);
         }
 
@@ -63,7 +58,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual AutoUpgradeProfileData Data
+        public virtual ClusterMeshProfileData Data
         {
             get
             {
@@ -79,10 +74,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="fleetName"> The fleetName. </param>
-        /// <param name="autoUpgradeProfileName"> The autoUpgradeProfileName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string fleetName, string autoUpgradeProfileName)
+        /// <param name="clusterMeshProfileName"> The clusterMeshProfileName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string fleetName, string clusterMeshProfileName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/autoUpgradeProfiles/{autoUpgradeProfileName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/clusterMeshProfiles/{clusterMeshProfileName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -97,15 +92,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary>
-        /// Get a AutoUpgradeProfile
+        /// Get a ClusterMeshProfile
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/autoUpgradeProfiles/{autoUpgradeProfileName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/clusterMeshProfiles/{clusterMeshProfileName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AutoUpgradeProfiles_Get. </description>
+        /// <description> ClusterMeshProfiles_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -113,14 +108,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AutoUpgradeProfileResource"/>. </description>
+        /// <description> <see cref="ClusterMeshProfileResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AutoUpgradeProfileResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ClusterMeshProfileResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _autoUpgradeProfilesClientDiagnostics.CreateScope("AutoUpgradeProfileResource.Get");
+            using DiagnosticScope scope = _clusterMeshProfilesClientDiagnostics.CreateScope("ClusterMeshProfileResource.Get");
             scope.Start();
             try
             {
@@ -128,14 +123,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoUpgradeProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _clusterMeshProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AutoUpgradeProfileData> response = Response.FromValue(AutoUpgradeProfileData.FromResponse(result), result);
+                Response<ClusterMeshProfileData> response = Response.FromValue(ClusterMeshProfileData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AutoUpgradeProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ClusterMeshProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,15 +140,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary>
-        /// Get a AutoUpgradeProfile
+        /// Get a ClusterMeshProfile
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/autoUpgradeProfiles/{autoUpgradeProfileName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/clusterMeshProfiles/{clusterMeshProfileName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AutoUpgradeProfiles_Get. </description>
+        /// <description> ClusterMeshProfiles_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -161,14 +156,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AutoUpgradeProfileResource"/>. </description>
+        /// <description> <see cref="ClusterMeshProfileResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AutoUpgradeProfileResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ClusterMeshProfileResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _autoUpgradeProfilesClientDiagnostics.CreateScope("AutoUpgradeProfileResource.Get");
+            using DiagnosticScope scope = _clusterMeshProfilesClientDiagnostics.CreateScope("ClusterMeshProfileResource.Get");
             scope.Start();
             try
             {
@@ -176,14 +171,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoUpgradeProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _clusterMeshProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AutoUpgradeProfileData> response = Response.FromValue(AutoUpgradeProfileData.FromResponse(result), result);
+                Response<ClusterMeshProfileData> response = Response.FromValue(ClusterMeshProfileData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AutoUpgradeProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ClusterMeshProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -193,15 +188,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary>
-        /// Delete a AutoUpgradeProfile
+        /// Delete a ClusterMeshProfile
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/autoUpgradeProfiles/{autoUpgradeProfileName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/clusterMeshProfiles/{clusterMeshProfileName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AutoUpgradeProfiles_Delete. </description>
+        /// <description> ClusterMeshProfiles_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -209,7 +204,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AutoUpgradeProfileResource"/>. </description>
+        /// <description> <see cref="ClusterMeshProfileResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,7 +213,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _autoUpgradeProfilesClientDiagnostics.CreateScope("AutoUpgradeProfileResource.Delete");
+            using DiagnosticScope scope = _clusterMeshProfilesClientDiagnostics.CreateScope("ClusterMeshProfileResource.Delete");
             scope.Start();
             try
             {
@@ -226,10 +221,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoUpgradeProfilesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                HttpMessage message = _clusterMeshProfilesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceFleetArmOperation operation = new ContainerServiceFleetArmOperation(
-                    _autoUpgradeProfilesClientDiagnostics,
+                    _clusterMeshProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -249,15 +244,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary>
-        /// Delete a AutoUpgradeProfile
+        /// Delete a ClusterMeshProfile
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/autoUpgradeProfiles/{autoUpgradeProfileName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/clusterMeshProfiles/{clusterMeshProfileName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AutoUpgradeProfiles_Delete. </description>
+        /// <description> ClusterMeshProfiles_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -265,7 +260,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AutoUpgradeProfileResource"/>. </description>
+        /// <description> <see cref="ClusterMeshProfileResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -274,7 +269,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _autoUpgradeProfilesClientDiagnostics.CreateScope("AutoUpgradeProfileResource.Delete");
+            using DiagnosticScope scope = _clusterMeshProfilesClientDiagnostics.CreateScope("ClusterMeshProfileResource.Delete");
             scope.Start();
             try
             {
@@ -282,10 +277,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoUpgradeProfilesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                HttpMessage message = _clusterMeshProfilesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceFleetArmOperation operation = new ContainerServiceFleetArmOperation(
-                    _autoUpgradeProfilesClientDiagnostics,
+                    _clusterMeshProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -305,15 +300,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary>
-        /// Generates an update run for a given auto upgrade profile.
+        /// Applies the cluster mesh profile to selected fleet members.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/autoUpgradeProfiles/{autoUpgradeProfileName}/generateUpdateRun. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/clusterMeshProfiles/{clusterMeshProfileName}/apply. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AutoUpgradeProfileOperations_GenerateUpdateRun. </description>
+        /// <description> ClusterMeshProfiles_Apply. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -321,15 +316,16 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AutoUpgradeProfileResource"/>. </description>
+        /// <description> <see cref="ClusterMeshProfileResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<AutoUpgradeProfileGenerateResult>> GenerateUpdateRunAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ClusterMeshProfileResource>> ApplyAsync(WaitUntil waitUntil, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _autoUpgradeProfileOperationsClientDiagnostics.CreateScope("AutoUpgradeProfileResource.GenerateUpdateRun");
+            using DiagnosticScope scope = _clusterMeshProfilesClientDiagnostics.CreateScope("ClusterMeshProfileResource.Apply");
             scope.Start();
             try
             {
@@ -337,15 +333,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoUpgradeProfileOperationsRestClient.CreateGenerateUpdateRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _clusterMeshProfilesRestClient.CreateApplyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ContainerServiceFleetArmOperation<AutoUpgradeProfileGenerateResult> operation = new ContainerServiceFleetArmOperation<AutoUpgradeProfileGenerateResult>(
-                    new AutoUpgradeProfileGenerateResultOperationSource(),
-                    _autoUpgradeProfileOperationsClientDiagnostics,
+                ContainerServiceFleetArmOperation<ClusterMeshProfileResource> operation = new ContainerServiceFleetArmOperation<ClusterMeshProfileResource>(
+                    new ClusterMeshProfileOperationSource(Client),
+                    _clusterMeshProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation,
+                    OperationFinalStateVia.Location,
                     true);
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -361,15 +357,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary>
-        /// Generates an update run for a given auto upgrade profile.
+        /// Applies the cluster mesh profile to selected fleet members.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/autoUpgradeProfiles/{autoUpgradeProfileName}/generateUpdateRun. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/clusterMeshProfiles/{clusterMeshProfileName}/apply. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AutoUpgradeProfileOperations_GenerateUpdateRun. </description>
+        /// <description> ClusterMeshProfiles_Apply. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -377,15 +373,16 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AutoUpgradeProfileResource"/>. </description>
+        /// <description> <see cref="ClusterMeshProfileResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<AutoUpgradeProfileGenerateResult> GenerateUpdateRun(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ClusterMeshProfileResource> Apply(WaitUntil waitUntil, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _autoUpgradeProfileOperationsClientDiagnostics.CreateScope("AutoUpgradeProfileResource.GenerateUpdateRun");
+            using DiagnosticScope scope = _clusterMeshProfilesClientDiagnostics.CreateScope("ClusterMeshProfileResource.Apply");
             scope.Start();
             try
             {
@@ -393,15 +390,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoUpgradeProfileOperationsRestClient.CreateGenerateUpdateRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _clusterMeshProfilesRestClient.CreateApplyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ContainerServiceFleetArmOperation<AutoUpgradeProfileGenerateResult> operation = new ContainerServiceFleetArmOperation<AutoUpgradeProfileGenerateResult>(
-                    new AutoUpgradeProfileGenerateResultOperationSource(),
-                    _autoUpgradeProfileOperationsClientDiagnostics,
+                ContainerServiceFleetArmOperation<ClusterMeshProfileResource> operation = new ContainerServiceFleetArmOperation<ClusterMeshProfileResource>(
+                    new ClusterMeshProfileOperationSource(Client),
+                    _clusterMeshProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation,
+                    OperationFinalStateVia.Location,
                     true);
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -417,15 +414,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary>
-        /// Update a AutoUpgradeProfile.
+        /// Update a ClusterMeshProfile.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/autoUpgradeProfiles/{autoUpgradeProfileName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/clusterMeshProfiles/{clusterMeshProfileName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AutoUpgradeProfiles_CreateOrUpdate. </description>
+        /// <description> ClusterMeshProfiles_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -433,7 +430,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AutoUpgradeProfileResource"/>. </description>
+        /// <description> <see cref="ClusterMeshProfileResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -442,11 +439,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<AutoUpgradeProfileResource>> UpdateAsync(WaitUntil waitUntil, AutoUpgradeProfileData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ClusterMeshProfileResource>> UpdateAsync(WaitUntil waitUntil, ClusterMeshProfileData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _autoUpgradeProfilesClientDiagnostics.CreateScope("AutoUpgradeProfileResource.Update");
+            using DiagnosticScope scope = _clusterMeshProfilesClientDiagnostics.CreateScope("ClusterMeshProfileResource.Update");
             scope.Start();
             try
             {
@@ -454,15 +451,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoUpgradeProfilesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AutoUpgradeProfileData.ToRequestContent(data), matchConditions, context);
+                HttpMessage message = _clusterMeshProfilesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ClusterMeshProfileData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ContainerServiceFleetArmOperation<AutoUpgradeProfileResource> operation = new ContainerServiceFleetArmOperation<AutoUpgradeProfileResource>(
-                    new AutoUpgradeProfileOperationSource(Client),
-                    _autoUpgradeProfilesClientDiagnostics,
+                ContainerServiceFleetArmOperation<ClusterMeshProfileResource> operation = new ContainerServiceFleetArmOperation<ClusterMeshProfileResource>(
+                    new ClusterMeshProfileOperationSource(Client),
+                    _clusterMeshProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation,
+                    OperationFinalStateVia.OriginalUri,
                     true);
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -478,15 +475,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary>
-        /// Update a AutoUpgradeProfile.
+        /// Update a ClusterMeshProfile.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/autoUpgradeProfiles/{autoUpgradeProfileName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/clusterMeshProfiles/{clusterMeshProfileName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AutoUpgradeProfiles_CreateOrUpdate. </description>
+        /// <description> ClusterMeshProfiles_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -494,7 +491,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AutoUpgradeProfileResource"/>. </description>
+        /// <description> <see cref="ClusterMeshProfileResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -503,11 +500,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<AutoUpgradeProfileResource> Update(WaitUntil waitUntil, AutoUpgradeProfileData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ClusterMeshProfileResource> Update(WaitUntil waitUntil, ClusterMeshProfileData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _autoUpgradeProfilesClientDiagnostics.CreateScope("AutoUpgradeProfileResource.Update");
+            using DiagnosticScope scope = _clusterMeshProfilesClientDiagnostics.CreateScope("ClusterMeshProfileResource.Update");
             scope.Start();
             try
             {
@@ -515,15 +512,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoUpgradeProfilesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AutoUpgradeProfileData.ToRequestContent(data), matchConditions, context);
+                HttpMessage message = _clusterMeshProfilesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ClusterMeshProfileData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ContainerServiceFleetArmOperation<AutoUpgradeProfileResource> operation = new ContainerServiceFleetArmOperation<AutoUpgradeProfileResource>(
-                    new AutoUpgradeProfileOperationSource(Client),
-                    _autoUpgradeProfilesClientDiagnostics,
+                ContainerServiceFleetArmOperation<ClusterMeshProfileResource> operation = new ContainerServiceFleetArmOperation<ClusterMeshProfileResource>(
+                    new ClusterMeshProfileOperationSource(Client),
+                    _clusterMeshProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation,
+                    OperationFinalStateVia.OriginalUri,
                     true);
                 if (waitUntil == WaitUntil.Completed)
                 {
