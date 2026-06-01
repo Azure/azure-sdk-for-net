@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <summary> Gets a collection of DatabaseMigrationSqlDBResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of DatabaseMigrationSqlDBResources and their operations over a DatabaseMigrationSqlDBResource. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete.")]
         public virtual DatabaseMigrationSqlDBCollection GetDatabaseMigrationSqlDBs()
             => Client.GetDatabaseMigrationSqlDBs(Id);
 
@@ -48,6 +49,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete.")]
         [ForwardsClientCalls]
         public virtual Response<DatabaseMigrationSqlDBResource> GetDatabaseMigrationSqlDB(string sqlDBInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
             => GetDatabaseMigrationSqlDBs().Get(sqlDBInstanceName, targetDBName, migrationOperationId, expand, cancellationToken);
@@ -81,6 +83,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete.")]
         [ForwardsClientCalls]
         public virtual Task<Response<DatabaseMigrationSqlDBResource>> GetDatabaseMigrationSqlDBAsync(string sqlDBInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
             => GetDatabaseMigrationSqlDBs().GetAsync(sqlDBInstanceName, targetDBName, migrationOperationId, expand, cancellationToken);
@@ -88,6 +91,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <summary> Gets a collection of DatabaseMigrationSqlMIResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of DatabaseMigrationSqlMIResources and their operations over a DatabaseMigrationSqlMIResource. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete.")]
         public virtual DatabaseMigrationSqlMICollection GetDatabaseMigrationSqlMIs()
             => Client.GetDatabaseMigrationSqlMIs(Id);
 
@@ -120,6 +124,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete.")]
         [ForwardsClientCalls]
         public virtual Response<DatabaseMigrationSqlMIResource> GetDatabaseMigrationSqlMI(string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
             => GetDatabaseMigrationSqlMIs().Get(managedInstanceName, targetDBName, migrationOperationId, expand, cancellationToken);
@@ -153,6 +158,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete.")]
         [ForwardsClientCalls]
         public virtual Task<Response<DatabaseMigrationSqlMIResource>> GetDatabaseMigrationSqlMIAsync(string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
             => GetDatabaseMigrationSqlMIs().GetAsync(managedInstanceName, targetDBName, migrationOperationId, expand, cancellationToken);
@@ -160,6 +166,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <summary> Gets a collection of DatabaseMigrationSqlVmResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of DatabaseMigrationSqlVmResources and their operations over a DatabaseMigrationSqlVmResource. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete.")]
         public virtual DatabaseMigrationSqlVmCollection GetDatabaseMigrationSqlVms()
             => Client.GetDatabaseMigrationSqlVms(Id);
 
@@ -192,6 +199,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDBName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete.")]
         [ForwardsClientCalls]
         public virtual Response<DatabaseMigrationSqlVmResource> GetDatabaseMigrationSqlVm(string sqlVirtualMachineName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
             => GetDatabaseMigrationSqlVms().Get(sqlVirtualMachineName, targetDBName, migrationOperationId, expand, cancellationToken);
@@ -225,6 +233,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDBName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete.")]
         [ForwardsClientCalls]
         public virtual Task<Response<DatabaseMigrationSqlVmResource>> GetDatabaseMigrationSqlVmAsync(string sqlVirtualMachineName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
             => GetDatabaseMigrationSqlVms().GetAsync(sqlVirtualMachineName, targetDBName, migrationOperationId, expand, cancellationToken);

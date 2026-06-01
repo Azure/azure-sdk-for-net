@@ -13,6 +13,6 @@ namespace Azure.ResourceManager.DataMigration.Models
     // but the generator now emits IList. Override to preserve the GA return type.
     public partial class MigrateMISyncCompleteCommandProperties
     {
-        public IReadOnlyList<DataMigrationReportableException> OutputErrors => Output is null ? default : (IReadOnlyList<DataMigrationReportableException>)Output.Errors;
+        public IReadOnlyList<DataMigrationReportableException> OutputErrors => Output?.Errors as IReadOnlyList<DataMigrationReportableException>;
     }
 }

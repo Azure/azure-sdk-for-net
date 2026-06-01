@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataMigration
     public partial class DatabaseMigrationSqlMICollection
     {
         private DatabaseMigrationSqlMICollection GetCompatCollection(string managedInstanceName)
-            => Id.Name == managedInstanceName && Id.ResourceType == "Microsoft.Sql/managedInstances" ? this : new DatabaseMigrationSqlMICollection(Client, new ResourceIdentifier($"/subscriptions/{Id.SubscriptionId}/resourceGroups/{Id.ResourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}"));
+            => Id.ResourceType == "Microsoft.Sql/managedInstances" ? this : new DatabaseMigrationSqlMICollection(Client, new ResourceIdentifier($"/subscriptions/{Id.SubscriptionId}/resourceGroups/{Id.ResourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}"));
 
         /// <param name="id"></param>
         [System.Diagnostics.Conditional("DEBUG")]
@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/>, <paramref name="targetDBName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete.")]
         public virtual Task<ArmOperation<DatabaseMigrationSqlMIResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string managedInstanceName, string targetDBName, DatabaseMigrationSqlMIData data, CancellationToken cancellationToken = default)
             => GetCompatCollection(managedInstanceName).CreateOrUpdateAsync(waitUntil, targetDBName, data, cancellationToken);
 
@@ -91,6 +92,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/>, <paramref name="targetDBName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete.")]
         public virtual ArmOperation<DatabaseMigrationSqlMIResource> CreateOrUpdate(WaitUntil waitUntil, string managedInstanceName, string targetDBName, DatabaseMigrationSqlMIData data, CancellationToken cancellationToken = default)
             => GetCompatCollection(managedInstanceName).CreateOrUpdate(waitUntil, targetDBName, data, cancellationToken);
 
@@ -123,6 +125,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete.")]
         public virtual Task<Response<bool>> ExistsAsync(string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
             => GetCompatCollection(managedInstanceName).ExistsAsync(targetDBName, migrationOperationId, expand, cancellationToken);
 
@@ -155,6 +158,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete.")]
         public virtual Response<bool> Exists(string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
             => GetCompatCollection(managedInstanceName).Exists(targetDBName, migrationOperationId, expand, cancellationToken);
 
@@ -187,6 +191,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete.")]
         public virtual Task<Response<DatabaseMigrationSqlMIResource>> GetAsync(string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
             => GetCompatCollection(managedInstanceName).GetAsync(targetDBName, migrationOperationId, expand, cancellationToken);
 
@@ -219,6 +224,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete.")]
         public virtual Response<DatabaseMigrationSqlMIResource> Get(string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
             => GetCompatCollection(managedInstanceName).Get(targetDBName, migrationOperationId, expand, cancellationToken);
 
@@ -251,6 +257,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete.")]
         public virtual Task<NullableResponse<DatabaseMigrationSqlMIResource>> GetIfExistsAsync(string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
             => GetCompatCollection(managedInstanceName).GetIfExistsAsync(targetDBName, migrationOperationId, expand, cancellationToken);
 
@@ -283,6 +290,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete.")]
         public virtual NullableResponse<DatabaseMigrationSqlMIResource> GetIfExists(string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
             => GetCompatCollection(managedInstanceName).GetIfExists(targetDBName, migrationOperationId, expand, cancellationToken);
     }
