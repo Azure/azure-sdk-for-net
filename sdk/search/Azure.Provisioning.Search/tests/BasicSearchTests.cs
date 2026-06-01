@@ -42,13 +42,13 @@ public class BasicSearchTests
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource search 'Microsoft.Search/searchServices@2023-11-01' = {
-              name: take('search-${uniqueString(resourceGroup().id)}', 60)
+            resource search 'Microsoft.Search/searchServices@2025-05-01' = {
+              name: take('search${uniqueString(resourceGroup().id)}', 24)
               location: location
               properties: {
-                hostingMode: 'default'
-                partitionCount: 1
                 replicaCount: 1
+                partitionCount: 1
+                hostingMode: 'default'
               }
               sku: {
                 name: 'standard'
