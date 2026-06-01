@@ -58,11 +58,6 @@ namespace Azure.Generator.Management
                 ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
                 ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
             }
-            else if (provider is ModelProvider modelProvider)
-            {
-                ResourceVisitor.PreserveReadOnlyDictionaryPropertiesFromModelFactoryLastContract(modelProvider);
-                ModelFactoryBackwardCompatHelper.FixConstructorCalls(provider.Methods);
-            }
             else
             {
                 ModelFactoryBackwardCompatHelper.FixConstructorCalls(provider.Methods);

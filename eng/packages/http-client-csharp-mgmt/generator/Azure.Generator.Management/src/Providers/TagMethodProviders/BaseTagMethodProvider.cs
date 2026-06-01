@@ -266,9 +266,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             }
             else
             {
-                // Some resource data types preserve Tags as IReadOnlyDictionary for API compatibility, while
-                // tag helper methods need to mutate the generated runtime instance before sending Update.
-                statements.Add(tagOperation(resourceDataVar.Property("Tags").CastTo(typeof(IDictionary<string, string>))));
+                statements.Add(tagOperation(resourceDataVar.Property("Tags")));
                 statements.Add(UpdateResourceStatement(resourceDataVar, cancellationTokenParam, _updateMethodProvider, out resultVar));
             }
 

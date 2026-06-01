@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Primitives;
-using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -24,8 +23,6 @@ namespace Azure.Generator.Management.Visitors
         {
             if (type is ModelFactoryProvider modelFactory)
             {
-                PreserveReadOnlyDictionaryPropertiesFromLastContract(modelFactory);
-
                 var updatedMethods = new List<MethodProvider>();
                 foreach (var method in modelFactory.Methods)
                 {
@@ -58,38 +55,6 @@ namespace Azure.Generator.Management.Visitors
                 return modelFactory;
             }
             return base.VisitType(type);
-        }
-
-        private void PreserveReadOnlyDictionaryPropertiesFromLastContract(ModelFactoryProvider modelFactory)
-        {
-            var previousMethods = modelFactory.LastContractView?.Methods;
-            if (previousMethods is null || previousMethods.Count == 0)
-            {
-                return;
-            }
-
-            foreach (var previousMethod in previousMethods)
-            {
-                if (previousMethod.Signature.ReturnType is not { } returnType
-                    || ManagementClientGenerator.Instance.OutputLibrary.ResourceProviders.FirstOrDefault(resource =>
-                        resource.ResourceData.Type.WithNullable(false).AreNamesEqual(returnType.WithNullable(false)))?.ResourceData is not ResourceDataModelProvider model)
-                {
-                    continue;
-                }
-
-                foreach (var parameter in previousMethod.Signature.Parameters)
-                {
-                    if (!IsReadOnlyDictionary(parameter.Type))
-                    {
-                        continue;
-                    }
-
-                    var matchingProperty = model.Properties.FirstOrDefault(property =>
-                        IsDictionary(property.Type)
-                        && string.Equals(property.Name, parameter.Name, StringComparison.OrdinalIgnoreCase));
-                    matchingProperty?.Update(type: new CSharpType(typeof(IReadOnlyDictionary<,>), matchingProperty.Type.Arguments));
-                }
-            }
         }
 
         private void AddMissingLastContractModelMethods(ModelFactoryProvider modelFactory, List<MethodProvider> updatedMethods)
@@ -196,28 +161,6 @@ namespace Azure.Generator.Management.Visitors
             {
                 modelFactoryModelTypes.Add(type);
             }
-        }
-
-        private static bool IsReadOnlyDictionary(CSharpType type)
-            => IsDictionary(type, typeof(IReadOnlyDictionary<,>));
-
-        private static bool IsDictionary(CSharpType type)
-            => type.IsDictionary || IsDictionary(type, typeof(IDictionary<,>)) || IsDictionary(type, typeof(IReadOnlyDictionary<,>));
-
-        private static bool IsDictionary(CSharpType type, Type dictionaryTypeDefinition)
-        {
-            if (type is not { IsFrameworkType: true, FrameworkType: not null })
-            {
-                return false;
-            }
-
-            var frameworkType = type.FrameworkType;
-            if (frameworkType.IsGenericType && !frameworkType.IsGenericTypeDefinition)
-            {
-                frameworkType = frameworkType.GetGenericTypeDefinition();
-            }
-
-            return frameworkType == dictionaryTypeDefinition;
         }
 
         private static bool IsModelFactoryModel(ModelProvider model)
