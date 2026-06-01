@@ -18,6 +18,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of <see cref="DialogStateResponseInternal"/>. </summary>
         /// <param name="dialogId"> The dialog ID. </param>
         /// <param name="dialog">
+        /// Defines dialog.
         /// Please note <see cref="BaseDialog"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="PowerVirtualAgentsDialog"/>.
         /// </param>
@@ -32,7 +33,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> The dialog ID. </summary>
         public string DialogId { get; }
         /// <summary>
-        /// Gets the dialog
+        /// Defines dialog.
         /// Please note <see cref="BaseDialog"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="PowerVirtualAgentsDialog"/>.
         /// </summary>

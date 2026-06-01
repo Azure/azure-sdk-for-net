@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Transport type for Transcription. </summary>
+    /// <summary> The type of transport to be used for live transcription, eg. Websocket. </summary>
     public readonly partial struct TranscriptionTransport : IEquatable<TranscriptionTransport>
     {
         private readonly string _value;

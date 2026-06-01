@@ -16,7 +16,10 @@ namespace Azure.Communication.CallAutomation
     {
         /// <summary> Initializes a new instance of <see cref="InterruptAudioAndAnnounceRequestInternal"/>. </summary>
         /// <param name="playSources"> The source of the audio to be played. </param>
-        /// <param name="playTo"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
+        /// <param name="playTo">
+        /// The list of call participants play provided audio to.
+        /// Plays to everyone in the call when not provided.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="playSources"/> or <paramref name="playTo"/> is null. </exception>
         public InterruptAudioAndAnnounceRequestInternal(IEnumerable<PlaySourceInternal> playSources, CommunicationIdentifierModel playTo)
         {
@@ -29,7 +32,10 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Initializes a new instance of <see cref="InterruptAudioAndAnnounceRequestInternal"/>. </summary>
         /// <param name="playSources"> The source of the audio to be played. </param>
-        /// <param name="playTo"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
+        /// <param name="playTo">
+        /// The list of call participants play provided audio to.
+        /// Plays to everyone in the call when not provided.
+        /// </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
         internal InterruptAudioAndAnnounceRequestInternal(IList<PlaySourceInternal> playSources, CommunicationIdentifierModel playTo, string operationContext)
         {
@@ -40,7 +46,10 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> The source of the audio to be played. </summary>
         public IList<PlaySourceInternal> PlaySources { get; }
-        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </summary>
+        /// <summary>
+        /// The list of call participants play provided audio to.
+        /// Plays to everyone in the call when not provided.
+        /// </summary>
         public CommunicationIdentifierModel PlayTo { get; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }

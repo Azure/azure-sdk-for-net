@@ -37,6 +37,8 @@ namespace Azure.Communication.CallAutomation
         private const string ForbiddenValue = "forbidden";
         private const string ServiceTimeoutValue = "serviceTimeout";
         private const string TranscriptionLocaleUpdatedValue = "transcriptionLocaleUpdated";
+        private const string CallSummarySuccessValue = "callSummarySuccess";
+        private const string CallSummaryFailureValue = "callSummaryFailure";
 
         /// <summary> subscriptionStarted. </summary>
         public static TranscriptionStatusDetails SubscriptionStarted { get; } = new TranscriptionStatusDetails(SubscriptionStartedValue);
@@ -68,6 +70,10 @@ namespace Azure.Communication.CallAutomation
         public static TranscriptionStatusDetails ServiceTimeout { get; } = new TranscriptionStatusDetails(ServiceTimeoutValue);
         /// <summary> transcriptionLocaleUpdated. </summary>
         public static TranscriptionStatusDetails TranscriptionLocaleUpdated { get; } = new TranscriptionStatusDetails(TranscriptionLocaleUpdatedValue);
+        /// <summary> callSummarySuccess. </summary>
+        public static TranscriptionStatusDetails CallSummarySuccess { get; } = new TranscriptionStatusDetails(CallSummarySuccessValue);
+        /// <summary> callSummaryFailure. </summary>
+        public static TranscriptionStatusDetails CallSummaryFailure { get; } = new TranscriptionStatusDetails(CallSummaryFailureValue);
         /// <summary> Determines if two <see cref="TranscriptionStatusDetails"/> values are the same. </summary>
         public static bool operator ==(TranscriptionStatusDetails left, TranscriptionStatusDetails right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TranscriptionStatusDetails"/> values are not the same. </summary>

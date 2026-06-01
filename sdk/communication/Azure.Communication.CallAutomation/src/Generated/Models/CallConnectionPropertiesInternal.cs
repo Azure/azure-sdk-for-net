@@ -22,16 +22,19 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="serverCallId"> The server call id. </param>
         /// <param name="targets"> The targets of the call. </param>
-        /// <param name="callConnectionState"> The states of a call connection. </param>
+        /// <param name="callConnectionState"> The state of the call connection. </param>
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="dataSubscriptionId"> SubscriptionId for transcription. </param>
-        /// <param name="sourceCallerIdNumber"> A phone number. </param>
+        /// <param name="sourceCallerIdNumber">
+        /// The source caller Id, a phone number, that's shown to the PSTN participant being invited.
+        /// Required only when calling a PSTN callee.
+        /// </param>
         /// <param name="sourceDisplayName"> Display name of the call if dialing out to a pstn number. </param>
-        /// <param name="source"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
+        /// <param name="source"> Source identity. </param>
         /// <param name="correlationId"> The correlation ID. </param>
-        /// <param name="answeredBy"> A user that got created with an Azure Communication Services resource. </param>
-        /// <param name="mediaStreamingSubscription"> Media streaming Subscription Object. </param>
-        /// <param name="dtmfConfigurationOptions"> Represents the configuration for DTMF functionality in calls. </param>
+        /// <param name="answeredBy"> Identity of the answering entity. Only populated when identity is provided in the request. </param>
+        /// <param name="mediaStreamingSubscription"> The state of media streaming subscription for the call. </param>
+        /// <param name="dtmfConfigurationOptions"> The state of DTMF configuration for the call. </param>
         internal CallConnectionPropertiesInternal(string callConnectionId, string serverCallId, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string callbackUri, string dataSubscriptionId, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel source, string correlationId, CommunicationUserIdentifierModel answeredBy, MediaStreamingSubscriptionInternal mediaStreamingSubscription, DtmfConfigurationOptionsInternal dtmfConfigurationOptions)
         {
             CallConnectionId = callConnectionId;
@@ -55,25 +58,28 @@ namespace Azure.Communication.CallAutomation
         public string ServerCallId { get; }
         /// <summary> The targets of the call. </summary>
         public IReadOnlyList<CommunicationIdentifierModel> Targets { get; }
-        /// <summary> The states of a call connection. </summary>
+        /// <summary> The state of the call connection. </summary>
         public CallConnectionState? CallConnectionState { get; }
         /// <summary> The callback URI. </summary>
         public string CallbackUri { get; }
         /// <summary> SubscriptionId for transcription. </summary>
         public string DataSubscriptionId { get; }
-        /// <summary> A phone number. </summary>
+        /// <summary>
+        /// The source caller Id, a phone number, that's shown to the PSTN participant being invited.
+        /// Required only when calling a PSTN callee.
+        /// </summary>
         public PhoneNumberIdentifierModel SourceCallerIdNumber { get; }
         /// <summary> Display name of the call if dialing out to a pstn number. </summary>
         public string SourceDisplayName { get; }
-        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </summary>
+        /// <summary> Source identity. </summary>
         public CommunicationIdentifierModel Source { get; }
         /// <summary> The correlation ID. </summary>
         public string CorrelationId { get; }
-        /// <summary> A user that got created with an Azure Communication Services resource. </summary>
+        /// <summary> Identity of the answering entity. Only populated when identity is provided in the request. </summary>
         public CommunicationUserIdentifierModel AnsweredBy { get; }
-        /// <summary> Media streaming Subscription Object. </summary>
+        /// <summary> The state of media streaming subscription for the call. </summary>
         public MediaStreamingSubscriptionInternal MediaStreamingSubscription { get; }
-        /// <summary> Represents the configuration for DTMF functionality in calls. </summary>
+        /// <summary> The state of DTMF configuration for the call. </summary>
         public DtmfConfigurationOptionsInternal DtmfConfigurationOptions { get; }
     }
 }
