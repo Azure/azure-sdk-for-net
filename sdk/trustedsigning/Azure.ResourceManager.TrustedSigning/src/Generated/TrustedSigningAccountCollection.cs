@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.TrustedSigning
                 HttpMessage message = _codeSigningAccountsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, TrustedSigningAccountData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TrustedSigningArmOperation<TrustedSigningAccountResource> operation = new TrustedSigningArmOperation<TrustedSigningAccountResource>(
-                    new TrustedSigningAccountOperationSource(Client),
+                    new TrustedSigningAccountResourceOperationSource(Client),
                     _codeSigningAccountsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.TrustedSigning
                 HttpMessage message = _codeSigningAccountsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, TrustedSigningAccountData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TrustedSigningArmOperation<TrustedSigningAccountResource> operation = new TrustedSigningArmOperation<TrustedSigningAccountResource>(
-                    new TrustedSigningAccountOperationSource(Client),
+                    new TrustedSigningAccountResourceOperationSource(Client),
                     _codeSigningAccountsClientDiagnostics,
                     Pipeline,
                     message.Request,
