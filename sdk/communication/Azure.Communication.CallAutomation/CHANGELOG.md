@@ -6,7 +6,7 @@
 - The StartRecording function now accepts the PauseOnStart parameter.
 - Added support for CreateCallFailed and AnswerCallFailed events.
 - Enabled audio streaming support for various APIs such as CreateCall, AnswerCall, CreateGroupCall, and ConnectCall.
-  - Receive events for audio streaming, including MediaStreamStarted, MediaStreamStopped, and MediaStreamFailed.
+  - Receive events for audio streaming, including MediaStreamStarted, MediaStreamStopped, MediaStreamUpdated, and MediaStreamFailed.
 - Enhanced media streaming with bidirectional capabilities, supporting audio formats in both directions. Currently, it supports sample rates of 24kHz and 16kHz.
 - Added support to manage rooms, server calls, and group calls using the ConnectAPI.
   - Receive events for CallConnected and ConnectFailed.
@@ -30,6 +30,8 @@
   - Enhanced Media Streaming configuration to allow empty or null stream URLs.`TransportUrl` in `MediaStreamingOptions` can now be null or empty.
 - Added support for Post-Dial Tones in outbound call scenarios
   - `PostDialTones` property now available in `CreateCallOptions` and `CreateGroupCallOptions`
+- Added optional CNAME override for dialog connection host
+  - `DialogCnameOverride` property now available in `StartDialog` for custom dialog connection routing
 
 ### Other Changes
 - Added `MediaWebSocketClient` with a fluent builder API for establishing authenticated WebSocket connections to ACS media streaming reverse proxy.
