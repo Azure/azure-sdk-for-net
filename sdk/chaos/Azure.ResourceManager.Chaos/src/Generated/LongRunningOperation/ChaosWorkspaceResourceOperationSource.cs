@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Chaos
 {
     /// <summary></summary>
-    internal partial class ChaosScenarioConfigurationOperationSource : IOperationSource<ChaosScenarioConfigurationResource>
+    internal partial class ChaosWorkspaceResourceOperationSource : IOperationSource<ChaosWorkspaceResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal ChaosScenarioConfigurationOperationSource(ArmClient client)
+        internal ChaosWorkspaceResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        ChaosScenarioConfigurationResource IOperationSource<ChaosScenarioConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ChaosWorkspaceResource IOperationSource<ChaosWorkspaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ChaosScenarioConfigurationData data = ChaosScenarioConfigurationData.DeserializeChaosScenarioConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ChaosScenarioConfigurationResource(_client, data);
+            ChaosWorkspaceData data = ChaosWorkspaceData.DeserializeChaosWorkspaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ChaosWorkspaceResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<ChaosScenarioConfigurationResource> IOperationSource<ChaosScenarioConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ChaosWorkspaceResource> IOperationSource<ChaosWorkspaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ChaosScenarioConfigurationData data = ChaosScenarioConfigurationData.DeserializeChaosScenarioConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ChaosScenarioConfigurationResource(_client, data);
+            ChaosWorkspaceData data = ChaosWorkspaceData.DeserializeChaosWorkspaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ChaosWorkspaceResource(_client, data);
         }
     }
 }

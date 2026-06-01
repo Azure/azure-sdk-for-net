@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Chaos
 {
     /// <summary></summary>
-    internal partial class ChaosPrivateAccessOperationSource : IOperationSource<ChaosPrivateAccessResource>
+    internal partial class ChaosPrivateAccessResourceOperationSource : IOperationSource<ChaosPrivateAccessResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal ChaosPrivateAccessOperationSource(ArmClient client)
+        internal ChaosPrivateAccessResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
