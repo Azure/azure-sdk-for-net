@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary> The artifact profile category. </summary>
-    public readonly partial struct FoundryModelArtifactProfileCategory : IEquatable<FoundryModelArtifactProfileCategory>
+    internal readonly partial struct FoundryModelArtifactProfileCategory : IEquatable<FoundryModelArtifactProfileCategory>
     {
         private readonly string _value;
         /// <summary> Data only artifacts. </summary>

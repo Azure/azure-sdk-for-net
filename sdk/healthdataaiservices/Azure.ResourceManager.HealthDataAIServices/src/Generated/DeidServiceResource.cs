@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 HttpMessage message = _deidServicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeidServicePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HealthDataAIServicesArmOperation<DeidServiceResource> operation = new HealthDataAIServicesArmOperation<DeidServiceResource>(
-                    new DeidServiceOperationSource(Client),
+                    new DeidServiceResourceOperationSource(Client),
                     _deidServicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 HttpMessage message = _deidServicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeidServicePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HealthDataAIServicesArmOperation<DeidServiceResource> operation = new HealthDataAIServicesArmOperation<DeidServiceResource>(
-                    new DeidServiceOperationSource(Client),
+                    new DeidServiceResourceOperationSource(Client),
                     _deidServicesClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -127,6 +127,78 @@ namespace Azure.Generator.Management.Tests.Common
         }
 
         /// <summary>
+        /// Creates a client with a resource that has a long-running action whose response is an array
+        /// of a non-resource model (modeled without @list). The generated action should be surfaced as
+        /// ArmOperation&lt;IReadOnlyList&lt;T&gt;&gt; rather than a pageable.
+        /// </summary>
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResourceLroArrayAction()
+        {
+            const string TestClientName = "TestClient";
+            const string ResourceModelName = "ResponseType";
+            const string DependencyModelName = "DependencyType";
+
+            var responseModel = InputFactory.Model(ResourceModelName,
+                        usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                        properties:
+                        [
+                            InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                            InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                            InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                        ],
+                        decorators: []);
+            var dependencyModel = InputFactory.Model(DependencyModelName,
+                        usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                        properties:
+                        [
+                            InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                        ],
+                        decorators: []);
+            var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
+            var dependencyArrayType = InputFactory.Array(dependencyModel);
+            var arrayResponseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: dependencyArrayType);
+            var uuidType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "uuid", "Azure.Core.uuid");
+
+            var resourcePath = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}";
+            var actionPath = resourcePath + "/splitDependencies";
+
+            // the http operation parameters
+            var subsIdOpParameter = InputFactory.PathParameter("subscriptionId", uuidType, isRequired: true);
+            var rgOpParameter = InputFactory.PathParameter("resourceGroupName", InputPrimitiveType.String, isRequired: true);
+            var testNameOpParameter = InputFactory.PathParameter("testName", InputPrimitiveType.String, isRequired: true);
+            var dataOpParameter = InputFactory.BodyParameter("data", responseModel, isRequired: true);
+            var getOperation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter], path: resourcePath);
+            var createOperation = InputFactory.Operation(name: "createTest", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter, dataOpParameter], path: resourcePath, httpMethod: "PUT");
+            var actionOperation = InputFactory.Operation(name: "splitDependencies", responses: [arrayResponseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter], path: actionPath, httpMethod: "POST");
+
+            // the method parameters
+            var subscriptionIdParameter = InputFactory.MethodParameter("subscriptionId", uuidType, location: InputRequestLocation.Path);
+            var resourceGroupParameter = InputFactory.MethodParameter("resourceGroupName", InputPrimitiveType.String, location: InputRequestLocation.Path);
+            var testNameParameter = InputFactory.MethodParameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
+            var dataParameter = InputFactory.MethodParameter("data", responseModel, location: InputRequestLocation.Body, isRequired: true);
+
+            var getMethod = InputFactory.BasicServiceMethod("get", getOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
+            var createMethod = InputFactory.BasicServiceMethod("createTest", createOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
+            // The action is a long-running operation whose final result is an array of DependencyType.
+            var actionLroMetadata = InputFactory.LongRunningServiceMetadata(1, arrayResponseType, null);
+            var actionMethod = InputFactory.LongRunningServiceMethod("splitDependencies", actionOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], longRunningServiceMetadata: actionLroMetadata, crossLanguageDefinitionId: Guid.NewGuid().ToString());
+
+            var resourceIdPattern = new RequestPathPattern(resourcePath);
+            var armProviderDecorator = BuildArmProviderSchema(responseModel, [
+                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
+                new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
+                new ResourceMethod(ResourceOperationKind.Action, actionMethod, new RequestPathPattern(actionMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!)
+            ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
+
+            var client = InputFactory.Client(
+                TestClientName,
+                methods: [getMethod, createMethod, actionMethod],
+                decorators: [armProviderDecorator],
+                crossLanguageDefinitionId: $"Test.{TestClientName}");
+
+            return (client, [responseModel, dependencyModel]);
+        }
+
+        /// <summary>
         /// Creates a client with a resource where PUT/PATCH body parameters are marked as optional in the spec.
         /// This tests that the generator still emits them as required.
         /// </summary>

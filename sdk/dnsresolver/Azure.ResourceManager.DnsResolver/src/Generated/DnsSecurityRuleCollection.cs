@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _dnsSecurityRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsSecurityRuleName, DnsSecurityRuleData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DnsResolverArmOperation<DnsSecurityRuleResource> operation = new DnsResolverArmOperation<DnsSecurityRuleResource>(
-                    new DnsSecurityRuleOperationSource(Client),
+                    new DnsSecurityRuleResourceOperationSource(Client),
                     _dnsSecurityRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _dnsSecurityRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsSecurityRuleName, DnsSecurityRuleData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DnsResolverArmOperation<DnsSecurityRuleResource> operation = new DnsResolverArmOperation<DnsSecurityRuleResource>(
-                    new DnsSecurityRuleOperationSource(Client),
+                    new DnsSecurityRuleResourceOperationSource(Client),
                     _dnsSecurityRulesClientDiagnostics,
                     Pipeline,
                     message.Request,

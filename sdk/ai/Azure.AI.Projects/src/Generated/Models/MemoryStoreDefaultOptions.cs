@@ -26,7 +26,7 @@ namespace Azure.AI.Projects.Memory
         /// <param name="isUserProfileEnabled"> Whether to enable user profile extraction and storage. Default is true. </param>
         /// <param name="userProfileDetails"> Specific categories or types of user profile information to extract and store. </param>
         /// <param name="isChatSummaryEnabled"> Whether to enable chat summary extraction and storage. Defaults to `true`. </param>
-        /// <param name="proceduralMemoryEnabled"> Whether to enable procedural memory extraction and storage. Defaults to `true`. </param>
+        /// <param name="proceduralMemoryEnabled"> Whether to enable procedural memory extraction and storage. The service defaults to `true` if a value is not specified by the caller. </param>
         /// <param name="defaultTtlSeconds"> The default time-to-live for memories in seconds. A value of `0` indicates that memories do not expire. Defaults to `0`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MemoryStoreDefaultOptions(bool isUserProfileEnabled, string userProfileDetails, bool isChatSummaryEnabled, bool? proceduralMemoryEnabled, TimeSpan? defaultTtlSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -48,7 +48,7 @@ namespace Azure.AI.Projects.Memory
         /// <summary> Whether to enable chat summary extraction and storage. Defaults to `true`. </summary>
         public bool IsChatSummaryEnabled { get; set; }
 
-        /// <summary> Whether to enable procedural memory extraction and storage. Defaults to `true`. </summary>
+        /// <summary> Whether to enable procedural memory extraction and storage. The service defaults to `true` if a value is not specified by the caller. </summary>
         public bool? ProceduralMemoryEnabled { get; set; }
 
         /// <summary> The default time-to-live for memories in seconds. A value of `0` indicates that memories do not expire. Defaults to `0`. </summary>
