@@ -165,10 +165,7 @@ internal class ResourceVisitor : ScmLibraryVisitor
 
     private void TransformNamespaceForResource(TypeProvider type)
     {
-        if (type is ModelProvider model &&
-            (model is ResourceDataModelProvider
-                || IsOutputResourceDataModel(model)
-                || ManagementClientGenerator.Instance.OutputLibrary.IsResourceModelType(model.Type)))
+        if (type is ModelProvider model && ManagementClientGenerator.Instance.OutputLibrary.IsResourceModelType(model.Type))
         {
             type.Update(@namespace: ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace);
 
@@ -180,12 +177,6 @@ internal class ResourceVisitor : ScmLibraryVisitor
             }
         }
     }
-
-    // Some customized plain models intentionally inherit ResourceData. Only actual
-    // resource data providers should be moved to the root namespace; checking the
-    // base type here would incorrectly move those plain models out of .Models.
-    private static bool IsOutputResourceDataModel(ModelProvider model)
-        => ManagementClientGenerator.Instance.OutputLibrary.ResourceProviders.Any(resource => ReferenceEquals(resource.ResourceData, model));
 
     private static void UpdateResourceDataParameterType(ParameterProvider parameter)
     {
