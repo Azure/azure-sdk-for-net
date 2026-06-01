@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<BulkActionsReimageResourceOperationResponseResult>> BulkReimageOperationAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, BulkActionsExecuteReimageRequestContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<BulkActionsReimageResourceOperationResult>> BulkReimageOperationAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, BulkActionsExecuteReimageRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<BulkActionsReimageResourceOperationResponseResult> BulkReimageOperation(this ResourceGroupResource resourceGroupResource, AzureLocation location, BulkActionsExecuteReimageRequestContent content, CancellationToken cancellationToken = default)
+        public static Response<BulkActionsReimageResourceOperationResult> BulkReimageOperation(this ResourceGroupResource resourceGroupResource, AzureLocation location, BulkActionsExecuteReimageRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 

@@ -15,7 +15,7 @@ using Azure.ResourceManager.Compute.BulkActions.Models;
 
 namespace Azure.ResourceManager.Compute.BulkActions
 {
-    internal partial class LaunchBulkInstancesOperationGetVirtualMachinesAsyncCollectionResultOfT : AsyncPageable<VirtualMachine>
+    internal partial class LaunchBulkInstancesOperationGetVirtualMachinesAsyncCollectionResultOfT : AsyncPageable<BulkActionsVirtualMachineInfo>
     {
         private readonly LaunchBulkInstancesOperation _client;
         private readonly Guid _subscriptionId;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of LaunchBulkInstancesOperationGetVirtualMachinesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<VirtualMachine>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<BulkActionsVirtualMachineInfo>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                     yield break;
                 }
                 VirtualMachineListResult result = VirtualMachineListResult.FromResponse(response);
-                yield return Page<VirtualMachine>.FromValues((IReadOnlyList<VirtualMachine>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<BulkActionsVirtualMachineInfo>.FromValues((IReadOnlyList<BulkActionsVirtualMachineInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

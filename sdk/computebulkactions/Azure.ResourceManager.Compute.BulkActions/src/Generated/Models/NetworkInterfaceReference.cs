@@ -11,20 +11,23 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> Describes a network interface reference. </summary>
-    public partial class NetworkInterfaceReference : SubResource
+    public partial class NetworkInterfaceReference
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="NetworkInterfaceReference"/>. </summary>
         public NetworkInterfaceReference()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkInterfaceReference"/>. </summary>
-        /// <param name="id"> The ID of the sub-resource. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Describes a network interface reference properties. </param>
-        internal NetworkInterfaceReference(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkInterfaceReferenceProperties properties) : base(id, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkInterfaceReference(NetworkInterfaceReferenceProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Describes a network interface reference properties. </summary>

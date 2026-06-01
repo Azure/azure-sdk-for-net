@@ -22,20 +22,20 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BulkActionsVirtualMachineReimageParametersContent"/>. </summary>
-        /// <param name="tempDisk"> Specifies whether to reimage temp disk. Default value: false. Note: This temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS disk. </param>
+        /// <param name="isTempDisk"> Specifies whether to reimage temp disk. Default value: false. Note: This temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS disk. </param>
         /// <param name="exactVersion"> Specifies in decimal number, the version the OS disk should be reimaged to. If exact version is not provided, the OS disk is reimaged to the existing version of OS Disk. </param>
         /// <param name="osProfile"> Specifies information required for reimaging the non-ephemeral OS disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkActionsVirtualMachineReimageParametersContent(bool? tempDisk, string exactVersion, BulkActionsOsProfileProvisioningContent osProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkActionsVirtualMachineReimageParametersContent(bool? isTempDisk, string exactVersion, BulkActionsOsProfileProvisioningContent osProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            TempDisk = tempDisk;
+            IsTempDisk = isTempDisk;
             ExactVersion = exactVersion;
             OsProfile = osProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies whether to reimage temp disk. Default value: false. Note: This temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS disk. </summary>
-        public bool? TempDisk { get; set; }
+        public bool? IsTempDisk { get; set; }
 
         /// <summary> Specifies in decimal number, the version the OS disk should be reimaged to. If exact version is not provided, the OS disk is reimaged to the existing version of OS Disk. </summary>
         public string ExactVersion { get; set; }

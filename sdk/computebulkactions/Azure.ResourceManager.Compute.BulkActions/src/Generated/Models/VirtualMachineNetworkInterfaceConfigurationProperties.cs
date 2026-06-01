@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.ResourceManager.Compute.BulkActions;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineNetworkInterfaceConfigurationProperties"/>. </summary>
-        /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
+        /// <param name="isPrimary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
         /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
         /// <param name="enableAcceleratedNetworking"> Specifies whether the network interface is accelerated networking-enabled. </param>
         /// <param name="disableTcpStateTracking"> Specifies whether the network interface is disabled for tcp state tracking. </param>
@@ -42,9 +43,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="auxiliaryMode"> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </param>
         /// <param name="auxiliarySku"> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineNetworkInterfaceConfigurationProperties(bool? primary, DeleteOptions? deleteOption, bool? enableAcceleratedNetworking, bool? disableTcpStateTracking, bool? enableFpga, bool? enableIPForwarding, SubResource networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, SubResource dscpConfiguration, NetworkInterfaceAuxiliaryMode? auxiliaryMode, NetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineNetworkInterfaceConfigurationProperties(bool? isPrimary, NetworkInterfaceDeleteBehavior? deleteOption, bool? enableAcceleratedNetworking, bool? disableTcpStateTracking, bool? enableFpga, bool? enableIPForwarding, WritableSubResource networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, WritableSubResource dscpConfiguration, NetworkInterfaceAuxiliaryMode? auxiliaryMode, NetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Primary = primary;
+            IsPrimary = isPrimary;
             DeleteOption = deleteOption;
             EnableAcceleratedNetworking = enableAcceleratedNetworking;
             DisableTcpStateTracking = disableTcpStateTracking;
@@ -60,10 +61,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </summary>
-        public bool? Primary { get; set; }
+        public bool? IsPrimary { get; set; }
 
         /// <summary> Specify what happens to the network interface when the VM is deleted. </summary>
-        public DeleteOptions? DeleteOption { get; set; }
+        public NetworkInterfaceDeleteBehavior? DeleteOption { get; set; }
 
         /// <summary> Specifies whether the network interface is accelerated networking-enabled. </summary>
         public bool? EnableAcceleratedNetworking { get; set; }
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public bool? EnableIPForwarding { get; set; }
 
         /// <summary> The network security group. </summary>
-        internal SubResource NetworkSecurityGroup { get; set; }
+        public WritableSubResource NetworkSecurityGroup { get; set; }
 
         /// <summary> The dns settings to be applied on the network interfaces. </summary>
         internal VirtualMachineNetworkInterfaceDnsSettingsConfiguration DnsSettings { get; set; }
@@ -87,30 +88,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public IList<VirtualMachineNetworkInterfaceIPConfiguration> IpConfigurations { get; }
 
         /// <summary> The DSCP configuration for the network interface. </summary>
-        internal SubResource DscpConfiguration { get; set; }
+        public WritableSubResource DscpConfiguration { get; set; }
 
         /// <summary> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </summary>
         public NetworkInterfaceAuxiliaryMode? AuxiliaryMode { get; set; }
 
         /// <summary> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </summary>
         public NetworkInterfaceAuxiliarySku? AuxiliarySku { get; set; }
-
-        /// <summary> The ID of the sub-resource. </summary>
-        public string NetworkSecurityGroupId
-        {
-            get
-            {
-                return NetworkSecurityGroup is null ? default : NetworkSecurityGroup.Id;
-            }
-            set
-            {
-                if (NetworkSecurityGroup is null)
-                {
-                    NetworkSecurityGroup = new SubResource();
-                }
-                NetworkSecurityGroup.Id = value;
-            }
-        }
 
         /// <summary> List of DNS servers IP addresses. </summary>
         public IList<string> DnsServers
@@ -122,23 +106,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     DnsSettings = new VirtualMachineNetworkInterfaceDnsSettingsConfiguration();
                 }
                 return DnsSettings.DnsServers;
-            }
-        }
-
-        /// <summary> The ID of the sub-resource. </summary>
-        public string DscpConfigurationId
-        {
-            get
-            {
-                return DscpConfiguration is null ? default : DscpConfiguration.Id;
-            }
-            set
-            {
-                if (DscpConfiguration is null)
-                {
-                    DscpConfiguration = new SubResource();
-                }
-                DscpConfiguration.Id = value;
             }
         }
     }

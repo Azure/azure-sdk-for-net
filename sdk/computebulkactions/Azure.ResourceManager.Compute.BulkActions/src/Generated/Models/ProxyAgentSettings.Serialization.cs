@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 return null;
             }
             bool? enabled = default;
-            Mode? mode = default;
+            ProxyAgentMode? mode = default;
             int? keyIncarnationId = default;
             HostEndpointSettings wireServer = default;
             HostEndpointSettings imds = default;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    mode = new Mode(prop.Value.GetString());
+                    mode = new ProxyAgentMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("keyIncarnationId"u8))

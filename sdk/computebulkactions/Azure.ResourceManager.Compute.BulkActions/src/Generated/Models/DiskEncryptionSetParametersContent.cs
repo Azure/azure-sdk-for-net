@@ -11,18 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> Describes the parameter of customer managed disk encryption set resource id that can be specified for disk. <b>Note:</b> The disk encryption set resource id can only be specified for managed disk. Please refer https://aka.ms/mdssewithcmkoverview for more details. </summary>
-    public partial class DiskEncryptionSetParametersContent : SubResource
+    public partial class DiskEncryptionSetParametersContent
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="DiskEncryptionSetParametersContent"/>. </summary>
         public DiskEncryptionSetParametersContent()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="DiskEncryptionSetParametersContent"/>. </summary>
-        /// <param name="id"> The ID of the sub-resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskEncryptionSetParametersContent(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, additionalBinaryDataProperties)
+        internal DiskEncryptionSetParametersContent(IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
     }
 }

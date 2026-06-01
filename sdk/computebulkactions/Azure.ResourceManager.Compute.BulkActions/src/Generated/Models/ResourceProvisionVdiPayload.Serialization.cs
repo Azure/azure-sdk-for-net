@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             IList<BulkVMConfiguration> resourceOverrides = default;
             int resourceCount = default;
             string resourcePrefix = default;
-            FlexProperties flexProperties = default;
+            BulkActionsVdiFlexProperties flexProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (prop.NameEquals("flexProperties"u8))
                 {
-                    flexProperties = FlexProperties.DeserializeFlexProperties(prop.Value, options);
+                    flexProperties = BulkActionsVdiFlexProperties.DeserializeBulkActionsVdiFlexProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="zoneAllocationPolicy"> Zone Allocation Policy for launching instances. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LaunchBulkInstancesOperationProperties(DateTimeOffset? createdOn, ProvisioningState? provisioningState, int capacity, CapacityType? capacityType, PriorityProfile priorityProfile, IList<VmSizeProfile> vmSizesProfile, VMAttributes vmAttributes, ComputeProfile computeProfile, ZoneAllocationPolicy zoneAllocationPolicy, UserRequestRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LaunchBulkInstancesOperationProperties(DateTimeOffset? createdOn, LaunchBulkInstancesOperationProvisioningState? provisioningState, int capacity, CapacityType? capacityType, PriorityProfile priorityProfile, IList<VmSizeProfile> vmSizesProfile, VMAttributes vmAttributes, ComputeProfile computeProfile, ZoneAllocationPolicy zoneAllocationPolicy, UserRequestRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public LaunchBulkInstancesOperationProvisioningState? ProvisioningState { get; }
 
         /// <summary> Total capacity to achieve. It can be in terms of VMs or vCPUs. </summary>
         public int Capacity { get; set; }

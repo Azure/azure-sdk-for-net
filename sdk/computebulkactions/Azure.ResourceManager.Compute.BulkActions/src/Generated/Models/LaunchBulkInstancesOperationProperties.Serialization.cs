@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 return null;
             }
             DateTimeOffset? createdOn = default;
-            ProvisioningState? provisioningState = default;
+            LaunchBulkInstancesOperationProvisioningState? provisioningState = default;
             int capacity = default;
             CapacityType? capacityType = default;
             PriorityProfile priorityProfile = default;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new LaunchBulkInstancesOperationProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("capacity"u8))

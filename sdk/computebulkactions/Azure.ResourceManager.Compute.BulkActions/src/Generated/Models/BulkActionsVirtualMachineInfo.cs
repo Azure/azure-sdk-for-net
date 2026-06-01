@@ -12,24 +12,24 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> A virtual machine launched by a LaunchBulkInstancesOperation. </summary>
-    public partial class VirtualMachine
+    public partial class BulkActionsVirtualMachineInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachine"/>. </summary>
-        internal VirtualMachine()
+        /// <summary> Initializes a new instance of <see cref="BulkActionsVirtualMachineInfo"/>. </summary>
+        internal BulkActionsVirtualMachineInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachine"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkActionsVirtualMachineInfo"/>. </summary>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="id"> The compute RP resource id of the virtual machine. subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}. </param>
         /// <param name="type"> Type of the virtual machine. </param>
         /// <param name="operationStatus"> Represents the operationStatus of the virtual machine in response to the last operation performed on it by the LaunchBulkInstancesOperation. </param>
         /// <param name="error"> Error information when operationStatus is Failed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachine(string name, ResourceIdentifier id, string @type, VMOperationStatus operationStatus, ApiError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkActionsVirtualMachineInfo(string name, ResourceIdentifier id, string @type, VMOperationStatus operationStatus, ApiError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Id = id;

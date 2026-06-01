@@ -8,22 +8,23 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Compute.BulkActions;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> Describes the properties of a Virtual Machine for bulk create. </summary>
-    public partial class BulkactionVMProperties
+    public partial class BulkActionVMProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BulkactionVMProperties"/>. </summary>
-        public BulkactionVMProperties()
+        /// <summary> Initializes a new instance of <see cref="BulkActionVMProperties"/>. </summary>
+        public BulkActionVMProperties()
         {
-            VmExtensions = new ChangeTrackingList<BulkactionVMExtension>();
+            VmExtensions = new ChangeTrackingList<BulkActionVMExtension>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BulkactionVMProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkActionVMProperties"/>. </summary>
         /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the virtual machine. </param>
         /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
         /// <param name="hardwareProfile"> Specifies the hardware profile for the virtual machine. </param>
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="applicationProfile"> Specifies the gallery applications that should be made available to the VM. </param>
         /// <param name="vmExtensions"> Virtual Machine Extensions Array to be applied to the Virtual Machines. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkactionVMProperties(ScheduledEventsPolicy scheduledEventsPolicy, StorageProfile storageProfile, HardwareProfile hardwareProfile, AdditionalCapabilities additionalCapabilities, OSProfile osProfile, NetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string extensionsTimeBudget, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, IList<BulkactionVMExtension> vmExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkActionVMProperties(ScheduledEventsPolicy scheduledEventsPolicy, StorageProfile storageProfile, HardwareProfile hardwareProfile, AdditionalCapabilities additionalCapabilities, OSProfile osProfile, NetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string extensionsTimeBudget, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, IList<BulkActionVMExtension> vmExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ScheduledEventsPolicy = scheduledEventsPolicy;
             StorageProfile = storageProfile;
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         internal ApplicationProfile ApplicationProfile { get; set; }
 
         /// <summary> Virtual Machine Extensions Array to be applied to the Virtual Machines. </summary>
-        public IList<BulkactionVMExtension> VmExtensions { get; }
+        public IList<BulkActionVMExtension> VmExtensions { get; }
 
         /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. <b>NOTE</b>: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
         public BootDiagnostics BootDiagnostics
@@ -122,12 +123,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
         }
 
-        /// <summary> The ID of the sub-resource. </summary>
-        public string CapacityReservationGroupId
+        /// <summary> Specifies the capacity reservation group resource id that should be used for allocating the virtual machine provided enough capacity has been reserved. Please refer to https://aka.ms/CapacityReservation for more details. </summary>
+        public WritableSubResource CapacityReservationGroup
         {
             get
             {
-                return CapacityReservation is null ? default : CapacityReservation.CapacityReservationGroupId;
+                return CapacityReservation is null ? default : CapacityReservation.CapacityReservationGroup;
             }
             set
             {
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 {
                     CapacityReservation = new CapacityReservationProfile();
                 }
-                CapacityReservation.CapacityReservationGroupId = value;
+                CapacityReservation.CapacityReservationGroup = value;
             }
         }
 

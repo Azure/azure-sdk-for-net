@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="option"> Specifies the ephemeral disk settings for operating system disk. </param>
         /// <param name="placement"> Specifies the ephemeral disk placement for operating system disk. Possible values are: CacheDisk, ResourceDisk, NvmeDisk. The defaulting behavior is: CacheDisk if one is configured for the VM size otherwise ResourceDisk or NvmeDisk is used. Minimum api-version for NvmeDisk: 2024-03-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiffDiskSettings(DiffDiskOptions? option, DiffDiskPlacement? placement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiffDiskSettings(DiffDiskOption? option, DiffDiskPlacement? placement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Option = option;
             Placement = placement;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Specifies the ephemeral disk settings for operating system disk. </summary>
-        public DiffDiskOptions? Option { get; set; }
+        public DiffDiskOption? Option { get; set; }
 
         /// <summary> Specifies the ephemeral disk placement for operating system disk. Possible values are: CacheDisk, ResourceDisk, NvmeDisk. The defaulting behavior is: CacheDisk if one is configured for the VM size otherwise ResourceDisk or NvmeDisk is used. Minimum api-version for NvmeDisk: 2024-03-01. </summary>
         public DiffDiskPlacement? Placement { get; set; }

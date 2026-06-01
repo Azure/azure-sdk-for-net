@@ -13,16 +13,16 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> The response from a reimage request. </summary>
-    public partial class BulkActionsReimageResourceOperationResponseResult
+    public partial class BulkActionsReimageResourceOperationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BulkActionsReimageResourceOperationResponseResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkActionsReimageResourceOperationResult"/>. </summary>
         /// <param name="description"> The description of the operation response. </param>
         /// <param name="type"> The type of resources used in the reimage request eg virtual machines. </param>
         /// <param name="location"> The location of the reimage request eg westus. </param>
-        internal BulkActionsReimageResourceOperationResponseResult(string description, string @type, AzureLocation location)
+        internal BulkActionsReimageResourceOperationResult(string description, string @type, AzureLocation location)
         {
             Description = description;
             Type = @type;
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             Results = new ChangeTrackingList<ResourceOperationResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BulkActionsReimageResourceOperationResponseResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkActionsReimageResourceOperationResult"/>. </summary>
         /// <param name="description"> The description of the operation response. </param>
         /// <param name="type"> The type of resources used in the reimage request eg virtual machines. </param>
         /// <param name="location"> The location of the reimage request eg westus. </param>
         /// <param name="results"> The results from the reimage request if no errors exist. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkActionsReimageResourceOperationResponseResult(string description, string @type, AzureLocation location, IList<ResourceOperationResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkActionsReimageResourceOperationResult(string description, string @type, AzureLocation location, IList<ResourceOperationResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Type = @type;

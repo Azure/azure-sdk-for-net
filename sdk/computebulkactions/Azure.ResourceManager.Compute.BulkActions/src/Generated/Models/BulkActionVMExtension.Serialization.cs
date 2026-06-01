@@ -13,52 +13,57 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The UserAssignedIdentitiesValue. </summary>
-    public partial class UserAssignedIdentitiesValue : IJsonModel<UserAssignedIdentitiesValue>
+    /// <summary> Defines a virtual machine extension. </summary>
+    public partial class BulkActionVMExtension : IJsonModel<BulkActionVMExtension>
     {
+        /// <summary> Initializes a new instance of <see cref="BulkActionVMExtension"/> for deserialization. </summary>
+        internal BulkActionVMExtension()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UserAssignedIdentitiesValue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BulkActionVMExtension PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentitiesValue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionVMExtension>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeUserAssignedIdentitiesValue(document.RootElement, options);
+                        return DeserializeBulkActionVMExtension(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UserAssignedIdentitiesValue)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BulkActionVMExtension)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentitiesValue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionVMExtension>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeBulkActionsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(UserAssignedIdentitiesValue)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BulkActionVMExtension)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UserAssignedIdentitiesValue>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BulkActionVMExtension>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UserAssignedIdentitiesValue IPersistableModel<UserAssignedIdentitiesValue>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BulkActionVMExtension IPersistableModel<BulkActionVMExtension>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UserAssignedIdentitiesValue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BulkActionVMExtension>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<UserAssignedIdentitiesValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BulkActionVMExtension>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,21 +74,15 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentitiesValue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionVMExtension>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserAssignedIdentitiesValue)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BulkActionVMExtension)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(PrincipalId))
-            {
-                writer.WritePropertyName("principalId"u8);
-                writer.WriteStringValue(PrincipalId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ClientId))
-            {
-                writer.WritePropertyName("clientId"u8);
-                writer.WriteStringValue(ClientId);
-            }
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -103,42 +102,42 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UserAssignedIdentitiesValue IJsonModel<UserAssignedIdentitiesValue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BulkActionVMExtension IJsonModel<BulkActionVMExtension>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UserAssignedIdentitiesValue JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BulkActionVMExtension JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentitiesValue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionVMExtension>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserAssignedIdentitiesValue)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BulkActionVMExtension)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUserAssignedIdentitiesValue(document.RootElement, options);
+            return DeserializeBulkActionVMExtension(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UserAssignedIdentitiesValue DeserializeUserAssignedIdentitiesValue(JsonElement element, ModelReaderWriterOptions options)
+        internal static BulkActionVMExtension DeserializeBulkActionVMExtension(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string principalId = default;
-            string clientId = default;
+            string name = default;
+            BulkActionVmExtensionProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("principalId"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    principalId = prop.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("clientId"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    clientId = prop.Value.GetString();
+                    properties = BulkActionVmExtensionProperties.DeserializeBulkActionVmExtensionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -146,7 +145,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UserAssignedIdentitiesValue(principalId, clientId, additionalBinaryDataProperties);
+            return new BulkActionVMExtension(name, properties, additionalBinaryDataProperties);
         }
     }
 }

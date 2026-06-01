@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="imds"> Specifies the IMDS endpoint settings while creating the virtual machine or virtual machine scale set. Minimum api-version: 2024-03-01. </param>
         /// <param name="addProxyAgentExtension"> Specify whether to implicitly install the ProxyAgent Extension. This option is currently applicable only for Linux Os. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProxyAgentSettings(bool? enabled, Mode? mode, int? keyIncarnationId, HostEndpointSettings wireServer, HostEndpointSettings imds, bool? addProxyAgentExtension, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProxyAgentSettings(bool? enabled, ProxyAgentMode? mode, int? keyIncarnationId, HostEndpointSettings wireServer, HostEndpointSettings imds, bool? addProxyAgentExtension, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             Mode = mode;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public bool? Enabled { get; set; }
 
         /// <summary> Specifies the mode that ProxyAgent will execute on. Warning: this property has been deprecated, please specify 'mode' under particular hostendpoint setting. </summary>
-        public Mode? Mode { get; set; }
+        public ProxyAgentMode? Mode { get; set; }
 
         /// <summary> Increase the value of this property allows users to reset the key used for securing communication channel between guest and host. </summary>
         public int? KeyIncarnationId { get; set; }

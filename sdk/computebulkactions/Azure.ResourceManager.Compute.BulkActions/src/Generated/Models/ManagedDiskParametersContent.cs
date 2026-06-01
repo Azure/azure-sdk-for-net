@@ -11,50 +11,36 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> The parameters of a managed disk. </summary>
-    public partial class ManagedDiskParametersContent : SubResource
+    public partial class ManagedDiskParametersContent
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ManagedDiskParametersContent"/>. </summary>
         public ManagedDiskParametersContent()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedDiskParametersContent"/>. </summary>
-        /// <param name="id"> The ID of the sub-resource. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="storageAccountType"> Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </param>
         /// <param name="diskEncryptionSet"> Specifies the customer managed disk encryption set resource id for the managed disk. </param>
         /// <param name="securityProfile"> Specifies the security profile for the managed disk. </param>
-        internal ManagedDiskParametersContent(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, StorageAccountTypes? storageAccountType, DiskEncryptionSetParametersContent diskEncryptionSet, VMDiskSecurityProfile securityProfile) : base(id, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedDiskParametersContent(StorageAccountTypes? storageAccountType, DiskEncryptionSetParametersContent diskEncryptionSet, VMDiskSecurityProfile securityProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageAccountType = storageAccountType;
             DiskEncryptionSet = diskEncryptionSet;
             SecurityProfile = securityProfile;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </summary>
         public StorageAccountTypes? StorageAccountType { get; set; }
 
         /// <summary> Specifies the customer managed disk encryption set resource id for the managed disk. </summary>
-        internal DiskEncryptionSetParametersContent DiskEncryptionSet { get; set; }
+        public DiskEncryptionSetParametersContent DiskEncryptionSet { get; set; }
 
         /// <summary> Specifies the security profile for the managed disk. </summary>
         public VMDiskSecurityProfile SecurityProfile { get; set; }
-
-        /// <summary> The ID of the sub-resource. </summary>
-        public string DiskEncryptionSetId
-        {
-            get
-            {
-                return DiskEncryptionSet is null ? default : DiskEncryptionSet.Id;
-            }
-            set
-            {
-                if (DiskEncryptionSet is null)
-                {
-                    DiskEncryptionSet = new DiskEncryptionSetParametersContent();
-                }
-                DiskEncryptionSet.Id = value;
-            }
-        }
     }
 }

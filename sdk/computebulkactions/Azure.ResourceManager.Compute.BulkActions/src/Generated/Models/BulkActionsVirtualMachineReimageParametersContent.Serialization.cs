@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 throw new FormatException($"The model {nameof(BulkActionsVirtualMachineReimageParametersContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(TempDisk))
+            if (Optional.IsDefined(IsTempDisk))
             {
                 writer.WritePropertyName("tempDisk"u8);
-                writer.WriteBooleanValue(TempDisk.Value);
+                writer.WriteBooleanValue(IsTempDisk.Value);
             }
             if (Optional.IsDefined(ExactVersion))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 return null;
             }
-            bool? tempDisk = default;
+            bool? isTempDisk = default;
             string exactVersion = default;
             BulkActionsOsProfileProvisioningContent osProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    tempDisk = prop.Value.GetBoolean();
+                    isTempDisk = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("exactVersion"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BulkActionsVirtualMachineReimageParametersContent(tempDisk, exactVersion, osProfile, additionalBinaryDataProperties);
+            return new BulkActionsVirtualMachineReimageParametersContent(isTempDisk, exactVersion, osProfile, additionalBinaryDataProperties);
         }
     }
 }

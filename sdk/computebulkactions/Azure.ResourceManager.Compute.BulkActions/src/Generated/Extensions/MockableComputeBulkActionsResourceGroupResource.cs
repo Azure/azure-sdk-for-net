@@ -913,7 +913,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<BulkActionsReimageResourceOperationResponseResult>> BulkReimageOperationAsync(AzureLocation location, BulkActionsExecuteReimageRequestContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BulkActionsReimageResourceOperationResult>> BulkReimageOperationAsync(AzureLocation location, BulkActionsExecuteReimageRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -927,7 +927,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
                 };
                 HttpMessage message = VirtualMachineBulkOperationsRestClient.CreateBulkReimageOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, BulkActionsExecuteReimageRequestContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BulkActionsReimageResourceOperationResponseResult> response = Response.FromValue(BulkActionsReimageResourceOperationResponseResult.FromResponse(result), result);
+                Response<BulkActionsReimageResourceOperationResult> response = Response.FromValue(BulkActionsReimageResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -962,7 +962,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<BulkActionsReimageResourceOperationResponseResult> BulkReimageOperation(AzureLocation location, BulkActionsExecuteReimageRequestContent content, CancellationToken cancellationToken = default)
+        public virtual Response<BulkActionsReimageResourceOperationResult> BulkReimageOperation(AzureLocation location, BulkActionsExecuteReimageRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -976,7 +976,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
                 };
                 HttpMessage message = VirtualMachineBulkOperationsRestClient.CreateBulkReimageOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, BulkActionsExecuteReimageRequestContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<BulkActionsReimageResourceOperationResponseResult> response = Response.FromValue(BulkActionsReimageResourceOperationResponseResult.FromResponse(result), result);
+                Response<BulkActionsReimageResourceOperationResult> response = Response.FromValue(BulkActionsReimageResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

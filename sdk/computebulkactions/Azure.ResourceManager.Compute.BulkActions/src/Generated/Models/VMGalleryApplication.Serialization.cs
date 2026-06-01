@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("configurationReference"u8);
                 writer.WriteStringValue(ConfigurationReference);
             }
-            if (Optional.IsDefined(TreatFailureAsDeploymentFailure))
+            if (Optional.IsDefined(ShouldTreatFailureAsDeploymentFailure))
             {
                 writer.WritePropertyName("treatFailureAsDeploymentFailure"u8);
-                writer.WriteBooleanValue(TreatFailureAsDeploymentFailure.Value);
+                writer.WriteBooleanValue(ShouldTreatFailureAsDeploymentFailure.Value);
             }
             if (Optional.IsDefined(EnableAutomaticUpgrade))
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             int? order = default;
             string packageReferenceId = default;
             string configurationReference = default;
-            bool? treatFailureAsDeploymentFailure = default;
+            bool? shouldTreatFailureAsDeploymentFailure = default;
             bool? enableAutomaticUpgrade = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    treatFailureAsDeploymentFailure = prop.Value.GetBoolean();
+                    shouldTreatFailureAsDeploymentFailure = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableAutomaticUpgrade"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 order,
                 packageReferenceId,
                 configurationReference,
-                treatFailureAsDeploymentFailure,
+                shouldTreatFailureAsDeploymentFailure,
                 enableAutomaticUpgrade,
                 additionalBinaryDataProperties);
         }

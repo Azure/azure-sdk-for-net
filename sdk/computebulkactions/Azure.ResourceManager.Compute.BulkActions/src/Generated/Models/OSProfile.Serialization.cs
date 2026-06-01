@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("allowExtensionOperations"u8);
                 writer.WriteBooleanValue(AllowExtensionOperations.Value);
             }
-            if (Optional.IsDefined(RequireGuestProvisionSignal))
+            if (Optional.IsDefined(IsGuestProvisionSignalRequired))
             {
                 writer.WritePropertyName("requireGuestProvisionSignal"u8);
-                writer.WriteBooleanValue(RequireGuestProvisionSignal.Value);
+                writer.WriteBooleanValue(IsGuestProvisionSignalRequired.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             LinuxConfiguration linuxConfiguration = default;
             IList<VaultSecretGroup> secrets = default;
             bool? allowExtensionOperations = default;
-            bool? requireGuestProvisionSignal = default;
+            bool? isGuestProvisionSignalRequired = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    requireGuestProvisionSignal = prop.Value.GetBoolean();
+                    isGuestProvisionSignalRequired = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 linuxConfiguration,
                 secrets ?? new ChangeTrackingList<VaultSecretGroup>(),
                 allowExtensionOperations,
-                requireGuestProvisionSignal,
+                isGuestProvisionSignalRequired,
                 additionalBinaryDataProperties);
         }
     }

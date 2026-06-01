@@ -412,8 +412,8 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="filter"> Filter expression to filter the virtual machines. </param>
         /// <param name="skiptoken"> Skip token for pagination. Uses the token from a previous response to fetch the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachine"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachine> GetVirtualMachinesAsync(string filter = default, string skiptoken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BulkActionsVirtualMachineInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BulkActionsVirtualMachineInfo> GetVirtualMachinesAsync(string filter = default, string skiptoken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -455,8 +455,8 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="filter"> Filter expression to filter the virtual machines. </param>
         /// <param name="skiptoken"> Skip token for pagination. Uses the token from a previous response to fetch the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachine"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachine> GetVirtualMachines(string filter = default, string skiptoken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BulkActionsVirtualMachineInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BulkActionsVirtualMachineInfo> GetVirtualMachines(string filter = default, string skiptoken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

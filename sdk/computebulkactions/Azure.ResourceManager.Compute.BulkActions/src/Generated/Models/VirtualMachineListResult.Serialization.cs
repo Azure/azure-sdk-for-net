@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (VirtualMachine item in Value)
+            foreach (BulkActionsVirtualMachineInfo item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 return null;
             }
-            IList<VirtualMachine> value = default;
+            IList<BulkActionsVirtualMachineInfo> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<VirtualMachine> array = new List<VirtualMachine>();
+                    List<BulkActionsVirtualMachineInfo> array = new List<BulkActionsVirtualMachineInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachine.DeserializeVirtualMachine(item, options));
+                        array.Add(BulkActionsVirtualMachineInfo.DeserializeBulkActionsVirtualMachineInfo(item, options));
                     }
                     value = array;
                     continue;

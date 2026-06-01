@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="resourceCount"> Number of VMs to be created. </param>
         /// <param name="flexProperties"> Flex properties used for VDI resource creation scenarios. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="flexProperties"/> is null. </exception>
-        public ResourceProvisionVdiPayload(int resourceCount, FlexProperties flexProperties)
+        public ResourceProvisionVdiPayload(int resourceCount, BulkActionsVdiFlexProperties flexProperties)
         {
             Argument.AssertNotNull(flexProperties, nameof(flexProperties));
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="resourcePrefix"> If resourceOverrides doesn't contain "name", the service will create a name based on the prefix and ResourceCount, e.g., resourceprefix-0, resourceprefix-1.. </param>
         /// <param name="flexProperties"> Flex properties used for VDI resource creation scenarios. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProvisionVdiPayload(BulkVMConfiguration baseProfile, IList<BulkVMConfiguration> resourceOverrides, int resourceCount, string resourcePrefix, FlexProperties flexProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceProvisionVdiPayload(BulkVMConfiguration baseProfile, IList<BulkVMConfiguration> resourceOverrides, int resourceCount, string resourcePrefix, BulkActionsVdiFlexProperties flexProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BaseProfile = baseProfile;
             ResourceOverrides = resourceOverrides;
@@ -60,6 +60,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public string ResourcePrefix { get; set; }
 
         /// <summary> Flex properties used for VDI resource creation scenarios. </summary>
-        public FlexProperties FlexProperties { get; }
+        public BulkActionsVdiFlexProperties FlexProperties { get; }
     }
 }

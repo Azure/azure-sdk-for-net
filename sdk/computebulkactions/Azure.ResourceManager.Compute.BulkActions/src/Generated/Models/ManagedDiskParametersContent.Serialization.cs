@@ -14,11 +14,11 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> The parameters of a managed disk. </summary>
-    public partial class ManagedDiskParametersContent : SubResource, IJsonModel<ManagedDiskParametersContent>
+    public partial class ManagedDiskParametersContent : IJsonModel<ManagedDiskParametersContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SubResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ManagedDiskParametersContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ManagedDiskParametersContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ManagedDiskParametersContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedDiskParametersContent IPersistableModel<ManagedDiskParametersContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (ManagedDiskParametersContent)PersistableModelCreateCore(data, options);
+        ManagedDiskParametersContent IPersistableModel<ManagedDiskParametersContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ManagedDiskParametersContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -67,14 +67,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ManagedDiskParametersContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedDiskParametersContent)} does not support writing '{format}' format.");
             }
-            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType"u8);
@@ -90,15 +89,30 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile, options);
             }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedDiskParametersContent IJsonModel<ManagedDiskParametersContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ManagedDiskParametersContent)JsonModelCreateCore(ref reader, options);
+        ManagedDiskParametersContent IJsonModel<ManagedDiskParametersContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SubResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ManagedDiskParametersContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ManagedDiskParametersContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -117,18 +131,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 return null;
             }
-            string id = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             StorageAccountTypes? storageAccountType = default;
             DiskEncryptionSetParametersContent diskEncryptionSet = default;
             VMDiskSecurityProfile securityProfile = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("storageAccountType"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -161,7 +169,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedDiskParametersContent(id, additionalBinaryDataProperties, storageAccountType, diskEncryptionSet, securityProfile);
+            return new ManagedDiskParametersContent(storageAccountType, diskEncryptionSet, securityProfile, additionalBinaryDataProperties);
         }
     }
 }

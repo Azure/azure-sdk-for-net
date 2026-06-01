@@ -16,63 +16,63 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> The response from a reimage request. </summary>
-    public partial class BulkActionsReimageResourceOperationResponseResult : IJsonModel<BulkActionsReimageResourceOperationResponseResult>
+    public partial class BulkActionsReimageResourceOperationResult : IJsonModel<BulkActionsReimageResourceOperationResult>
     {
-        /// <summary> Initializes a new instance of <see cref="BulkActionsReimageResourceOperationResponseResult"/> for deserialization. </summary>
-        internal BulkActionsReimageResourceOperationResponseResult()
+        /// <summary> Initializes a new instance of <see cref="BulkActionsReimageResourceOperationResult"/> for deserialization. </summary>
+        internal BulkActionsReimageResourceOperationResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BulkActionsReimageResourceOperationResponseResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BulkActionsReimageResourceOperationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BulkActionsReimageResourceOperationResponseResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionsReimageResourceOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBulkActionsReimageResourceOperationResponseResult(document.RootElement, options);
+                        return DeserializeBulkActionsReimageResourceOperationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BulkActionsReimageResourceOperationResponseResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BulkActionsReimageResourceOperationResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BulkActionsReimageResourceOperationResponseResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionsReimageResourceOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeBulkActionsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BulkActionsReimageResourceOperationResponseResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BulkActionsReimageResourceOperationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BulkActionsReimageResourceOperationResponseResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BulkActionsReimageResourceOperationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BulkActionsReimageResourceOperationResponseResult IPersistableModel<BulkActionsReimageResourceOperationResponseResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BulkActionsReimageResourceOperationResult IPersistableModel<BulkActionsReimageResourceOperationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BulkActionsReimageResourceOperationResponseResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BulkActionsReimageResourceOperationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BulkActionsReimageResourceOperationResponseResult"/> from. </param>
-        internal static BulkActionsReimageResourceOperationResponseResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BulkActionsReimageResourceOperationResult"/> from. </param>
+        internal static BulkActionsReimageResourceOperationResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBulkActionsReimageResourceOperationResponseResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeBulkActionsReimageResourceOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BulkActionsReimageResourceOperationResponseResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BulkActionsReimageResourceOperationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -83,10 +83,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BulkActionsReimageResourceOperationResponseResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionsReimageResourceOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BulkActionsReimageResourceOperationResponseResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BulkActionsReimageResourceOperationResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
@@ -123,24 +123,24 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BulkActionsReimageResourceOperationResponseResult IJsonModel<BulkActionsReimageResourceOperationResponseResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BulkActionsReimageResourceOperationResult IJsonModel<BulkActionsReimageResourceOperationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BulkActionsReimageResourceOperationResponseResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BulkActionsReimageResourceOperationResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BulkActionsReimageResourceOperationResponseResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionsReimageResourceOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BulkActionsReimageResourceOperationResponseResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BulkActionsReimageResourceOperationResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBulkActionsReimageResourceOperationResponseResult(document.RootElement, options);
+            return DeserializeBulkActionsReimageResourceOperationResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BulkActionsReimageResourceOperationResponseResult DeserializeBulkActionsReimageResourceOperationResponseResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static BulkActionsReimageResourceOperationResult DeserializeBulkActionsReimageResourceOperationResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BulkActionsReimageResourceOperationResponseResult(description, @type, location, results ?? new ChangeTrackingList<ResourceOperationResult>(), additionalBinaryDataProperties);
+            return new BulkActionsReimageResourceOperationResult(description, @type, location, results ?? new ChangeTrackingList<ResourceOperationResult>(), additionalBinaryDataProperties);
         }
     }
 }

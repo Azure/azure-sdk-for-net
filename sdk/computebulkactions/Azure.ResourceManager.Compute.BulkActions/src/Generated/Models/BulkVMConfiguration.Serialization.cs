@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
@@ -187,11 +187,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             ArmPlan plan = default;
             IList<string> zones = default;
-            VirtualMachineIdentity identity = default;
+            ManagedServiceIdentity identity = default;
             ExtendedLocation extendedLocation = default;
-            Placement placement = default;
+            ComputeBulkActionsPlacement placement = default;
             IDictionary<string, string> tags = default;
-            BulkactionVMProperties properties = default;
+            BulkActionVMProperties properties = default;
             string computeApiVersion = default;
             string name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    identity = VirtualMachineIdentity.DeserializeVirtualMachineIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerComputeBulkActionsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("extendedLocation"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    placement = Placement.DeserializePlacement(prop.Value, options);
+                    placement = ComputeBulkActionsPlacement.DeserializeComputeBulkActionsPlacement(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    properties = BulkactionVMProperties.DeserializeBulkactionVMProperties(prop.Value, options);
+                    properties = BulkActionVMProperties.DeserializeBulkActionVMProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("computeApiVersion"u8))

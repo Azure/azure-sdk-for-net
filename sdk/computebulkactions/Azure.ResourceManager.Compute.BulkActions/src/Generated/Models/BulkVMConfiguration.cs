@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="computeApiVersion"> Specifies the Microsoft.Compute API version to use when creating underlying Virtual Machines. </param>
         /// <param name="name"> Identifier for the created virtual machine. If not provided, a name will be generated based on the resource prefix. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkVMConfiguration(ArmPlan plan, IList<string> zones, VirtualMachineIdentity identity, ExtendedLocation extendedLocation, Placement placement, IDictionary<string, string> tags, BulkactionVMProperties properties, string computeApiVersion, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkVMConfiguration(ArmPlan plan, IList<string> zones, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, ComputeBulkActionsPlacement placement, IDictionary<string, string> tags, BulkActionVMProperties properties, string computeApiVersion, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Plan = plan;
             Zones = zones;
@@ -58,19 +58,19 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public IList<string> Zones { get; }
 
         /// <summary> The identity of the virtual machine, if configured. </summary>
-        public VirtualMachineIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The extended location of the Virtual Machine. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> Placement constraints for virtual machine hardware placement - see specification/compute/Compute.Management/models.tsp#Placement. </summary>
-        public Placement Placement { get; set; }
+        public ComputeBulkActionsPlacement Placement { get; set; }
 
         /// <summary> Resource tags to apply to the virtual machines created by this bulk action. </summary>
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Describes the properties of a Virtual Machine. </summary>
-        public BulkactionVMProperties Properties { get; set; }
+        public BulkActionVMProperties Properties { get; set; }
 
         /// <summary> Specifies the Microsoft.Compute API version to use when creating underlying Virtual Machines. </summary>
         public string ComputeApiVersion { get; set; }

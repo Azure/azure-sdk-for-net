@@ -14,51 +14,51 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> Describes the properties of a Virtual Machine for bulk create. </summary>
-    public partial class BulkactionVMProperties : IJsonModel<BulkactionVMProperties>
+    public partial class BulkActionVMProperties : IJsonModel<BulkActionVMProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BulkactionVMProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BulkActionVMProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BulkactionVMProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionVMProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBulkactionVMProperties(document.RootElement, options);
+                        return DeserializeBulkActionVMProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BulkactionVMProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BulkActionVMProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BulkactionVMProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionVMProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeBulkActionsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BulkactionVMProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BulkActionVMProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BulkactionVMProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BulkActionVMProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BulkactionVMProperties IPersistableModel<BulkactionVMProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BulkActionVMProperties IPersistableModel<BulkActionVMProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BulkactionVMProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BulkActionVMProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BulkactionVMProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BulkActionVMProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BulkactionVMProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionVMProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BulkactionVMProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BulkActionVMProperties)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(ScheduledEventsPolicy))
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 writer.WritePropertyName("vmExtensions"u8);
                 writer.WriteStartArray();
-                foreach (BulkactionVMExtension item in VmExtensions)
+                foreach (BulkActionVMExtension item in VmExtensions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -173,24 +173,24 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BulkactionVMProperties IJsonModel<BulkactionVMProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BulkActionVMProperties IJsonModel<BulkActionVMProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BulkactionVMProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BulkActionVMProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BulkactionVMProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionVMProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BulkactionVMProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BulkActionVMProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBulkactionVMProperties(document.RootElement, options);
+            return DeserializeBulkActionVMProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BulkactionVMProperties DeserializeBulkactionVMProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static BulkActionVMProperties DeserializeBulkActionVMProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             string userData = default;
             CapacityReservationProfile capacityReservation = default;
             ApplicationProfile applicationProfile = default;
-            IList<BulkactionVMExtension> vmExtensions = default;
+            IList<BulkActionVMExtension> vmExtensions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -334,10 +334,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    List<BulkactionVMExtension> array = new List<BulkactionVMExtension>();
+                    List<BulkActionVMExtension> array = new List<BulkActionVMExtension>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BulkactionVMExtension.DeserializeBulkactionVMExtension(item, options));
+                        array.Add(BulkActionVMExtension.DeserializeBulkActionVMExtension(item, options));
                     }
                     vmExtensions = array;
                     continue;
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BulkactionVMProperties(
+            return new BulkActionVMProperties(
                 scheduledEventsPolicy,
                 storageProfile,
                 hardwareProfile,
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 userData,
                 capacityReservation,
                 applicationProfile,
-                vmExtensions ?? new ChangeTrackingList<BulkactionVMExtension>(),
+                vmExtensions ?? new ChangeTrackingList<BulkActionVMExtension>(),
                 additionalBinaryDataProperties);
         }
     }

@@ -12,16 +12,16 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> Specifies the ephemeral disk option for operating system disk. </summary>
-    public readonly partial struct DiffDiskOptions : IEquatable<DiffDiskOptions>
+    public readonly partial struct DiffDiskOption : IEquatable<DiffDiskOption>
     {
         private readonly string _value;
         /// <summary> Local Ephemeral disk option: Local. </summary>
         private const string LocalValue = "Local";
 
-        /// <summary> Initializes a new instance of <see cref="DiffDiskOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiffDiskOption"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DiffDiskOptions(string value)
+        public DiffDiskOption(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Local Ephemeral disk option: Local. </summary>
-        public static DiffDiskOptions Local { get; } = new DiffDiskOptions(LocalValue);
+        public static DiffDiskOption Local { get; } = new DiffDiskOption(LocalValue);
 
-        /// <summary> Determines if two <see cref="DiffDiskOptions"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="DiffDiskOption"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(DiffDiskOptions left, DiffDiskOptions right) => left.Equals(right);
+        public static bool operator ==(DiffDiskOption left, DiffDiskOption right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DiffDiskOptions"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="DiffDiskOption"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(DiffDiskOptions left, DiffDiskOptions right) => !left.Equals(right);
+        public static bool operator !=(DiffDiskOption left, DiffDiskOption right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DiffDiskOptions"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DiffDiskOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiffDiskOptions(string value) => new DiffDiskOptions(value);
+        public static implicit operator DiffDiskOption(string value) => new DiffDiskOption(value);
 
-        /// <summary> Converts a string to a <see cref="DiffDiskOptions"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DiffDiskOption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DiffDiskOptions?(string value) => value == null ? null : new DiffDiskOptions(value);
+        public static implicit operator DiffDiskOption?(string value) => value == null ? null : new DiffDiskOption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DiffDiskOptions other && Equals(other);
+        public override bool Equals(object obj) => obj is DiffDiskOption other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(DiffDiskOptions other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DiffDiskOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

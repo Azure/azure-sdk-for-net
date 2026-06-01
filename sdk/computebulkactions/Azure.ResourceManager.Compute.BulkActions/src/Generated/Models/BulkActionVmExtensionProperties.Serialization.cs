@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(SuppressFailures))
+            if (Optional.IsDefined(ShouldSuppressFailures))
             {
                 writer.WritePropertyName("suppressFailures"u8);
-                writer.WriteBooleanValue(SuppressFailures.Value);
+                writer.WriteBooleanValue(ShouldSuppressFailures.Value);
             }
             if (Optional.IsDefined(ProtectedSettingsFromKeyVault))
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             bool? enableAutomaticUpgrade = default;
             IDictionary<string, BinaryData> settings = default;
             IDictionary<string, BinaryData> protectedSettings = default;
-            bool? suppressFailures = default;
+            bool? shouldSuppressFailures = default;
             KeyVaultSecretReference protectedSettingsFromKeyVault = default;
             IList<string> provisionAfterExtensions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    suppressFailures = prop.Value.GetBoolean();
+                    shouldSuppressFailures = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("protectedSettingsFromKeyVault"u8))
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 enableAutomaticUpgrade,
                 settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 protectedSettings ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                suppressFailures,
+                shouldSuppressFailures,
                 protectedSettingsFromKeyVault,
                 provisionAfterExtensions ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);

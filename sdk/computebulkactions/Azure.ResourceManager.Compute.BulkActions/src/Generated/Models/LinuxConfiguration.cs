@@ -24,15 +24,15 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Initializes a new instance of <see cref="LinuxConfiguration"/>. </summary>
         /// <param name="disablePasswordAuthentication"> Specifies whether password authentication should be disabled. </param>
         /// <param name="ssh"> Specifies the ssh key configuration for a Linux OS. </param>
-        /// <param name="provisionVMAgent"> Indicates whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified in the request body, default behavior is to set it to true. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later. </param>
+        /// <param name="shouldProvisionVmAgent"> Indicates whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified in the request body, default behavior is to set it to true. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later. </param>
         /// <param name="patchSettings"> [Preview Feature] Specifies settings related to VM Guest Patching on Linux. </param>
         /// <param name="enableVMAgentPlatformUpdates"> Indicates whether VMAgent Platform Updates is enabled for the Linux virtual machine. Default value is false. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LinuxConfiguration(bool? disablePasswordAuthentication, SshConfiguration ssh, bool? provisionVMAgent, LinuxPatchSettings patchSettings, bool? enableVMAgentPlatformUpdates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LinuxConfiguration(bool? disablePasswordAuthentication, SshConfiguration ssh, bool? shouldProvisionVmAgent, LinuxPatchSettings patchSettings, bool? enableVMAgentPlatformUpdates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisablePasswordAuthentication = disablePasswordAuthentication;
             Ssh = ssh;
-            ProvisionVMAgent = provisionVMAgent;
+            ShouldProvisionVmAgent = shouldProvisionVmAgent;
             PatchSettings = patchSettings;
             EnableVMAgentPlatformUpdates = enableVMAgentPlatformUpdates;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         internal SshConfiguration Ssh { get; set; }
 
         /// <summary> Indicates whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified in the request body, default behavior is to set it to true. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later. </summary>
-        public bool? ProvisionVMAgent { get; set; }
+        public bool? ShouldProvisionVmAgent { get; set; }
 
         /// <summary> [Preview Feature] Specifies settings related to VM Guest Patching on Linux. </summary>
         public LinuxPatchSettings PatchSettings { get; set; }

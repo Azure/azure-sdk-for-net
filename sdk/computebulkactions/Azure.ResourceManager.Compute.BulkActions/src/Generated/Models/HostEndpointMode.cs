@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> Specifies the execution mode. In Audit mode, the system acts as if it is enforcing the access control policy, including emitting access denial entries in the logs but it does not actually deny any requests to host endpoints. In Enforce mode, the system will enforce the access control and it is the recommended mode of operation. </summary>
-    public readonly partial struct Modes : IEquatable<Modes>
+    public readonly partial struct HostEndpointMode : IEquatable<HostEndpointMode>
     {
         private readonly string _value;
         /// <summary> Audit mode. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Disabled mode. </summary>
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Initializes a new instance of <see cref="Modes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostEndpointMode"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Modes(string value)
+        public HostEndpointMode(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Audit mode. </summary>
-        public static Modes Audit { get; } = new Modes(AuditValue);
+        public static HostEndpointMode Audit { get; } = new HostEndpointMode(AuditValue);
 
         /// <summary> Enforce mode. </summary>
-        public static Modes Enforce { get; } = new Modes(EnforceValue);
+        public static HostEndpointMode Enforce { get; } = new HostEndpointMode(EnforceValue);
 
         /// <summary> Disabled mode. </summary>
-        public static Modes Disabled { get; } = new Modes(DisabledValue);
+        public static HostEndpointMode Disabled { get; } = new HostEndpointMode(DisabledValue);
 
-        /// <summary> Determines if two <see cref="Modes"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="HostEndpointMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(Modes left, Modes right) => left.Equals(right);
+        public static bool operator ==(HostEndpointMode left, HostEndpointMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="Modes"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="HostEndpointMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(Modes left, Modes right) => !left.Equals(right);
+        public static bool operator !=(HostEndpointMode left, HostEndpointMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="Modes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HostEndpointMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Modes(string value) => new Modes(value);
+        public static implicit operator HostEndpointMode(string value) => new HostEndpointMode(value);
 
-        /// <summary> Converts a string to a <see cref="Modes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HostEndpointMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Modes?(string value) => value == null ? null : new Modes(value);
+        public static implicit operator HostEndpointMode?(string value) => value == null ? null : new HostEndpointMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Modes other && Equals(other);
+        public override bool Equals(object obj) => obj is HostEndpointMode other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(Modes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(HostEndpointMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

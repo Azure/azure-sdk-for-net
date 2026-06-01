@@ -13,17 +13,17 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> The flex properties for flexible VM creation. </summary>
-    public partial class FlexProperties
+    public partial class BulkActionsVdiFlexProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FlexProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkActionsVdiFlexProperties"/>. </summary>
         /// <param name="vmSizeProfiles"> The list of VM size profiles to use for flex creation. </param>
         /// <param name="osType"> The operating system type for the VMs. </param>
         /// <param name="priorityProfile"> The priority profile for VM allocation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmSizeProfiles"/> or <paramref name="priorityProfile"/> is null. </exception>
-        public FlexProperties(IEnumerable<VmSizeProfile> vmSizeProfiles, OsType osType, PriorityProfile priorityProfile)
+        public BulkActionsVdiFlexProperties(IEnumerable<VmSizeProfile> vmSizeProfiles, OsType osType, PriorityProfile priorityProfile)
         {
             Argument.AssertNotNull(vmSizeProfiles, nameof(vmSizeProfiles));
             Argument.AssertNotNull(priorityProfile, nameof(priorityProfile));
@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             PriorityProfile = priorityProfile;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FlexProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkActionsVdiFlexProperties"/>. </summary>
         /// <param name="vmSizeProfiles"> The list of VM size profiles to use for flex creation. </param>
         /// <param name="osType"> The operating system type for the VMs. </param>
         /// <param name="priorityProfile"> The priority profile for VM allocation. </param>
         /// <param name="zoneAllocationPolicy"> The zone allocation policy for distributing VMs across availability zones. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FlexProperties(IList<VmSizeProfile> vmSizeProfiles, OsType osType, PriorityProfile priorityProfile, ZoneAllocationPolicy zoneAllocationPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkActionsVdiFlexProperties(IList<VmSizeProfile> vmSizeProfiles, OsType osType, PriorityProfile priorityProfile, ZoneAllocationPolicy zoneAllocationPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSizeProfiles = vmSizeProfiles;
             OsType = osType;

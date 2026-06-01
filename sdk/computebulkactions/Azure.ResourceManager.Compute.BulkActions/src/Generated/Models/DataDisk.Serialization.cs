@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("sourceResource"u8);
                 writer.WriteObjectValue(SourceResource, options);
             }
-            if (Optional.IsDefined(ToBeDetached))
+            if (Optional.IsDefined(IsToBeDetached))
             {
                 writer.WritePropertyName("toBeDetached"u8);
-                writer.WriteBooleanValue(ToBeDetached.Value);
+                writer.WriteBooleanValue(IsToBeDetached.Value);
             }
             if (Optional.IsDefined(DetachOption))
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             int? diskSizeGB = default;
             ManagedDiskParametersContent managedDisk = default;
             ApiEntityReference sourceResource = default;
-            bool? toBeDetached = default;
+            bool? isToBeDetached = default;
             DiskDetachOptionTypes? detachOption = default;
             DiskDeleteOptionTypes? deleteOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    toBeDetached = prop.Value.GetBoolean();
+                    isToBeDetached = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("detachOption"u8))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 diskSizeGB,
                 managedDisk,
                 sourceResource,
-                toBeDetached,
+                isToBeDetached,
                 detachOption,
                 deleteOption,
                 additionalBinaryDataProperties);

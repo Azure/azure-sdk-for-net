@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Compute.BulkActions;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
@@ -19,19 +20,22 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultKeyReference"/>. </summary>
         /// <param name="keyUri"> The URL referencing a key encryption key in Key Vault. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyUri"/> is null. </exception>
-        public KeyVaultKeyReference(string keyUri)
+        /// <param name="sourceVault"> The relative URL of the Key Vault containing the key. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyUri"/> or <paramref name="sourceVault"/> is null. </exception>
+        public KeyVaultKeyReference(string keyUri, WritableSubResource sourceVault)
         {
             Argument.AssertNotNull(keyUri, nameof(keyUri));
+            Argument.AssertNotNull(sourceVault, nameof(sourceVault));
 
             KeyUri = keyUri;
+            SourceVault = sourceVault;
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultKeyReference"/>. </summary>
         /// <param name="keyUri"> The URL referencing a key encryption key in Key Vault. </param>
         /// <param name="sourceVault"> The relative URL of the Key Vault containing the key. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultKeyReference(string keyUri, SubResource sourceVault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultKeyReference(string keyUri, WritableSubResource sourceVault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyUri = keyUri;
             SourceVault = sourceVault;
@@ -42,23 +46,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public string KeyUri { get; set; }
 
         /// <summary> The relative URL of the Key Vault containing the key. </summary>
-        internal SubResource SourceVault { get; set; }
-
-        /// <summary> The ID of the sub-resource. </summary>
-        public string SourceVaultId
-        {
-            get
-            {
-                return SourceVault is null ? default : SourceVault.Id;
-            }
-            set
-            {
-                if (SourceVault is null)
-                {
-                    SourceVault = new SubResource();
-                }
-                SourceVault.Id = value;
-            }
-        }
+        public WritableSubResource SourceVault { get; set; }
     }
 }

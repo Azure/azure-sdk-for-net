@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("ssh"u8);
                 writer.WriteObjectValue(Ssh, options);
             }
-            if (Optional.IsDefined(ProvisionVMAgent))
+            if (Optional.IsDefined(ShouldProvisionVmAgent))
             {
                 writer.WritePropertyName("provisionVMAgent"u8);
-                writer.WriteBooleanValue(ProvisionVMAgent.Value);
+                writer.WriteBooleanValue(ShouldProvisionVmAgent.Value);
             }
             if (Optional.IsDefined(PatchSettings))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             bool? disablePasswordAuthentication = default;
             SshConfiguration ssh = default;
-            bool? provisionVMAgent = default;
+            bool? shouldProvisionVmAgent = default;
             LinuxPatchSettings patchSettings = default;
             bool? enableVMAgentPlatformUpdates = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    provisionVMAgent = prop.Value.GetBoolean();
+                    shouldProvisionVmAgent = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("patchSettings"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             return new LinuxConfiguration(
                 disablePasswordAuthentication,
                 ssh,
-                provisionVMAgent,
+                shouldProvisionVmAgent,
                 patchSettings,
                 enableVMAgentPlatformUpdates,
                 additionalBinaryDataProperties);
