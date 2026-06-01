@@ -41,6 +41,7 @@ namespace Azure.AI.VoiceLive
         public static implicit operator PersonalVoiceModels(PersonalVoiceModel value) => new PersonalVoiceModels(value.ToString());
         public static implicit operator PersonalVoiceModel(PersonalVoiceModels value) => new PersonalVoiceModel(value._value);
         public static implicit operator PersonalVoiceModels(string value) => new PersonalVoiceModels(value);
+        public static implicit operator PersonalVoiceModels?(string value) => value == null ? null : new PersonalVoiceModels(value);
         public static bool operator !=(PersonalVoiceModels left, PersonalVoiceModels right) => !left.Equals(right);
 
         public override string ToString() => _value;
