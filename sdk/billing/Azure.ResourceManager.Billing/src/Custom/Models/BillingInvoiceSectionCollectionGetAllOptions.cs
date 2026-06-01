@@ -1,23 +1,43 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#pragma warning disable CS1591
+// Restored from GA 1.2.2 (sdk/billing/.../src/Generated/Models/BillingInvoiceSectionCollectionGetAllOptions.cs).
+// MPG generator emits OData-style query options as expanded method parameters and does not
+// regenerate this Options class; this Custom partial mirrors the GA shape verbatim,
+// including [WirePath(...)] attributes, to keep ApiCompat green.
+
+#nullable disable
+
 namespace Azure.ResourceManager.Billing.Models
 {
-    // Restored from GA 1.2.2 surface: aggregates the OData-style query options for
-    // Collection.GetAll(...). The new TypeSpec generator emits individual parameters,
-    // so this Options class is provided here only as a Custom partial to preserve the
-    // GA call-site shape.
+    /// <summary> The BillingInvoiceSectionCollectionGetAllOptions. </summary>
     public partial class BillingInvoiceSectionCollectionGetAllOptions
     {
-        public BillingInvoiceSectionCollectionGetAllOptions() { }
+        /// <summary> Initializes a new instance of <see cref="BillingInvoiceSectionCollectionGetAllOptions"/>. </summary>
+        public BillingInvoiceSectionCollectionGetAllOptions()
+        {
+        }
 
-        public bool? Count { get; set; }
-        public string Filter { get; set; }
+        /// <summary> Can be used to get deleted invoice sections. </summary>
+        [WirePath("includeDeleted")]
         public bool? IncludeDeleted { get; set; }
+        /// <summary> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </summary>
+        [WirePath("filter")]
+        public string Filter { get; set; }
+        /// <summary> The orderby query option allows clients to request resources in a particular order. </summary>
+        [WirePath("orderBy")]
         public string OrderBy { get; set; }
-        public string Search { get; set; }
-        public long? Skip { get; set; }
+        /// <summary> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </summary>
+        [WirePath("top")]
         public long? Top { get; set; }
+        /// <summary> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </summary>
+        [WirePath("skip")]
+        public long? Skip { get; set; }
+        /// <summary> The count query option allows clients to request a count of the matching resources included with the resources in the response. </summary>
+        [WirePath("count")]
+        public bool? Count { get; set; }
+        /// <summary> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </summary>
+        [WirePath("search")]
+        public string Search { get; set; }
     }
 }

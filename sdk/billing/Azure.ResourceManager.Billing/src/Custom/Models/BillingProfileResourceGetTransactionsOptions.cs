@@ -1,24 +1,62 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-#pragma warning disable CS1591
+
+// Restored from GA 1.2.2 (sdk/billing/.../src/Generated/Models/BillingProfileResourceGetTransactionsOptions.cs).
+// MPG generator emits OData-style query options as expanded method parameters and does not
+// regenerate this Options class; this Custom partial mirrors the GA shape verbatim,
+// including [WirePath(...)] attributes, to keep ApiCompat green.
+
+#nullable disable
+
+using System;
+
 namespace Azure.ResourceManager.Billing.Models
 {
-    /// <summary>
-    /// Back-compat aggregate restored from GA 1.2.2: groups the query options for the
-    /// corresponding method. The new MPG generator emits individual parameters; this
-    /// type is preserved here only so GA call-sites that pass an aggregate continue to compile.
-    /// </summary>
+    /// <summary> The BillingProfileResourceGetTransactionsOptions. </summary>
     public partial class BillingProfileResourceGetTransactionsOptions
     {
-        public BillingProfileResourceGetTransactionsOptions() { }
-        public bool? Count { get; set; }
+        /// <summary> Initializes a new instance of <see cref="BillingProfileResourceGetTransactionsOptions"/>. </summary>
+        /// <param name="periodStartDate"> The start date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
+        /// <param name="periodEndDate"> The end date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
+        /// <param name="type"> The type of transaction. </param>
+        public BillingProfileResourceGetTransactionsOptions(DateTimeOffset periodStartDate, DateTimeOffset periodEndDate, TransactionType type)
+        {
+            PeriodStartDate = periodStartDate;
+            PeriodEndDate = periodEndDate;
+            Type = type;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BillingProfileResourceGetTransactionsOptions"/> for deserialization. </summary>
+        internal BillingProfileResourceGetTransactionsOptions()
+        {
+        }
+
+        /// <summary> The start date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </summary>
+        [WirePath("periodStartDate")]
+        public DateTimeOffset PeriodStartDate { get; }
+        /// <summary> The end date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </summary>
+        [WirePath("periodEndDate")]
+        public DateTimeOffset PeriodEndDate { get; }
+        /// <summary> The type of transaction. </summary>
+        [WirePath("type")]
+        public TransactionType Type { get; }
+        /// <summary> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </summary>
+        [WirePath("filter")]
         public string Filter { get; set; }
+        /// <summary> The orderby query option allows clients to request resources in a particular order. </summary>
+        [WirePath("orderBy")]
         public string OrderBy { get; set; }
-        public System.DateTimeOffset PeriodEndDate { get; set; }
-        public System.DateTimeOffset PeriodStartDate { get; set; }
-        public string Search { get; set; }
-        public long? Skip { get; set; }
+        /// <summary> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </summary>
+        [WirePath("top")]
         public long? Top { get; set; }
-        public Azure.ResourceManager.Billing.Models.TransactionType Type { get; set; }
+        /// <summary> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </summary>
+        [WirePath("skip")]
+        public long? Skip { get; set; }
+        /// <summary> The count query option allows clients to request a count of the matching resources included with the resources in the response. </summary>
+        [WirePath("count")]
+        public bool? Count { get; set; }
+        /// <summary> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </summary>
+        [WirePath("search")]
+        public string Search { get; set; }
     }
 }

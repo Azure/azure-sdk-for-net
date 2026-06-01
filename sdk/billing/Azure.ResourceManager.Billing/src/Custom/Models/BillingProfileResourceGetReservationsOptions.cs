@@ -1,21 +1,40 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-#pragma warning disable CS1591
+
+// Restored from GA 1.2.2 (sdk/billing/.../src/Generated/Models/BillingProfileResourceGetReservationsOptions.cs).
+// MPG generator emits OData-style query options as expanded method parameters and does not
+// regenerate this Options class; this Custom partial mirrors the GA shape verbatim,
+// including [WirePath(...)] attributes, to keep ApiCompat green.
+
+#nullable disable
+
 namespace Azure.ResourceManager.Billing.Models
 {
-    /// <summary>
-    /// Back-compat aggregate restored from GA 1.2.2: groups the query options for the
-    /// corresponding method. The new MPG generator emits individual parameters; this
-    /// type is preserved here only so GA call-sites that pass an aggregate continue to compile.
-    /// </summary>
+    /// <summary> The BillingProfileResourceGetReservationsOptions. </summary>
     public partial class BillingProfileResourceGetReservationsOptions
     {
-        public BillingProfileResourceGetReservationsOptions() { }
+        /// <summary> Initializes a new instance of <see cref="BillingProfileResourceGetReservationsOptions"/>. </summary>
+        public BillingProfileResourceGetReservationsOptions()
+        {
+        }
+
+        /// <summary> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </summary>
+        [WirePath("filter")]
         public string Filter { get; set; }
+        /// <summary> The orderby query option allows clients to request resources in a particular order. </summary>
+        [WirePath("orderBy")]
         public string OrderBy { get; set; }
-        public string RefreshSummary { get; set; }
-        public string SelectedState { get; set; }
+        /// <summary> The number of reservations to skip from the list before returning results. </summary>
+        [WirePath("skiptoken")]
         public float? Skiptoken { get; set; }
+        /// <summary> To indicate whether to refresh the roll up counts of the reservations group by provisioning states. </summary>
+        [WirePath("refreshSummary")]
+        public string RefreshSummary { get; set; }
+        /// <summary> The selected provisioning state. </summary>
+        [WirePath("selectedState")]
+        public string SelectedState { get; set; }
+        /// <summary> The number of reservations to return in API response. </summary>
+        [WirePath("take")]
         public float? Take { get; set; }
     }
 }

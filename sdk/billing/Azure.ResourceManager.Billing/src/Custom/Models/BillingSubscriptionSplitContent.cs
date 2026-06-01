@@ -15,10 +15,15 @@ namespace Azure.ResourceManager.Billing.Models
     {
         public BillingSubscriptionSplitContent() { }
 
+        [WirePath("billingFrequency")]
         public string BillingFrequency { get; set; }
+        [WirePath("quantity")]
         public int? Quantity { get; set; }
+        [WirePath("targetProductTypeId")]
         public string TargetProductTypeId { get; set; }
+        [WirePath("targetSkuId")]
         public string TargetSkuId { get; set; }
+        [WirePath("termDuration")]
         public TimeSpan? TermDuration { get; set; }
     }
 }

@@ -1,21 +1,40 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-#pragma warning disable CS1591
+
+// Restored from GA 1.2.2 (sdk/billing/.../src/Generated/Models/BillingEnrollmentAccountCollectionGetAllOptions.cs).
+// MPG generator emits OData-style query options as expanded method parameters and does not
+// regenerate this Options class; this Custom partial mirrors the GA shape verbatim,
+// including [WirePath(...)] attributes, to keep ApiCompat green.
+
+#nullable disable
+
 namespace Azure.ResourceManager.Billing.Models
 {
-    /// <summary>
-    /// Back-compat aggregate restored from GA 1.2.2: groups the query options for the
-    /// corresponding method. The new MPG generator emits individual parameters; this
-    /// type is preserved here only so GA call-sites that pass an aggregate continue to compile.
-    /// </summary>
+    /// <summary> The BillingEnrollmentAccountCollectionGetAllOptions. </summary>
     public partial class BillingEnrollmentAccountCollectionGetAllOptions
     {
-        public BillingEnrollmentAccountCollectionGetAllOptions() { }
-        public bool? Count { get; set; }
+        /// <summary> Initializes a new instance of <see cref="BillingEnrollmentAccountCollectionGetAllOptions"/>. </summary>
+        public BillingEnrollmentAccountCollectionGetAllOptions()
+        {
+        }
+
+        /// <summary> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </summary>
+        [WirePath("filter")]
         public string Filter { get; set; }
+        /// <summary> The orderby query option allows clients to request resources in a particular order. </summary>
+        [WirePath("orderBy")]
         public string OrderBy { get; set; }
-        public string Search { get; set; }
-        public long? Skip { get; set; }
+        /// <summary> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </summary>
+        [WirePath("top")]
         public long? Top { get; set; }
+        /// <summary> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </summary>
+        [WirePath("skip")]
+        public long? Skip { get; set; }
+        /// <summary> The count query option allows clients to request a count of the matching resources included with the resources in the response. </summary>
+        [WirePath("count")]
+        public bool? Count { get; set; }
+        /// <summary> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </summary>
+        [WirePath("search")]
+        public string Search { get; set; }
     }
 }

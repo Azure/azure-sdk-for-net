@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Billing.Models
     {
         public SavingsPlanUpdateValidateContent() { }
 
+        [WirePath("benefits")]
         public IList<SavingsPlanUpdateRequestProperties> Benefits { get; } = new List<SavingsPlanUpdateRequestProperties>();
     }
 }

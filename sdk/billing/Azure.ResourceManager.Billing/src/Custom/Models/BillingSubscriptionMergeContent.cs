@@ -13,7 +13,9 @@ namespace Azure.ResourceManager.Billing.Models
     {
         public BillingSubscriptionMergeContent() { }
 
+        [WirePath("quantity")]
         public int? Quantity { get; set; }
+        [WirePath("targetBillingSubscriptionName")]
         public string TargetBillingSubscriptionName { get; set; }
     }
 }

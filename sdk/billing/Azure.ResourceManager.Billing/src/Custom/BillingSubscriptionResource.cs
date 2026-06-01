@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Billing
             return await CancelAsync(waitUntil, request, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Back-compat overload for GA 1.2.2 callers that pass <see cref="CancelSubscriptionContent"/>. </summary>
+        /// <summary> Back-compat overload for GA 1.2.2 callers. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation Cancel(WaitUntil waitUntil, CancelSubscriptionContent content, CancellationToken cancellationToken = default)
         {
@@ -92,6 +92,20 @@ namespace Azure.ResourceManager.Billing
                 CustomerId = content.CustomerId?.ToString(),
             };
             return Cancel(waitUntil, request, cancellationToken);
+        }
+
+        /// <summary> Back-compat parameterless Get for GA 1.2.2 callers. New MPG generator added optional `expand`; explicit overload required for source compat. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<Response<BillingSubscriptionResource>> GetAsync(CancellationToken cancellationToken)
+        {
+            return GetAsync(expand: default, cancellationToken: cancellationToken);
+        }
+
+        /// <summary> Back-compat parameterless Get for GA 1.2.2 callers. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<BillingSubscriptionResource> Get(CancellationToken cancellationToken)
+        {
+            return Get(expand: default, cancellationToken: cancellationToken);
         }
     }
 }

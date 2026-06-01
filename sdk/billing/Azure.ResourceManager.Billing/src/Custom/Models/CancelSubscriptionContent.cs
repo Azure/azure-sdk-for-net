@@ -27,7 +27,9 @@ namespace Azure.ResourceManager.Billing.Models
         {
         }
 
+        [WirePath("cancellationReason")]
         public CustomerSubscriptionCancellationReason CancellationReason { get; }
+        [WirePath("customerId")]
         public ResourceIdentifier CustomerId { get; set; }
     }
 }

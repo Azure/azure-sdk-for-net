@@ -13,7 +13,9 @@ namespace Azure.ResourceManager.Billing.Models
     {
         public PartnerTransferDetailCreateOrUpdateContent() { }
 
+        [WirePath("properties.recipientEmailId")]
         public string RecipientEmailId { get; set; }
+        [WirePath("properties.resellerId")]
         public string ResellerId { get; set; }
     }
 }
