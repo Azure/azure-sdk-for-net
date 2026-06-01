@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
                 HttpMessage message = _geoCatalogsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PlanetaryComputerGeoCatalogPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PlanetaryComputerArmOperation<PlanetaryComputerGeoCatalogResource> operation = new PlanetaryComputerArmOperation<PlanetaryComputerGeoCatalogResource>(
-                    new PlanetaryComputerGeoCatalogOperationSource(Client),
+                    new PlanetaryComputerGeoCatalogResourceOperationSource(Client),
                     _geoCatalogsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
                 HttpMessage message = _geoCatalogsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PlanetaryComputerGeoCatalogPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PlanetaryComputerArmOperation<PlanetaryComputerGeoCatalogResource> operation = new PlanetaryComputerArmOperation<PlanetaryComputerGeoCatalogResource>(
-                    new PlanetaryComputerGeoCatalogOperationSource(Client),
+                    new PlanetaryComputerGeoCatalogResourceOperationSource(Client),
                     _geoCatalogsClientDiagnostics,
                     Pipeline,
                     message.Request,

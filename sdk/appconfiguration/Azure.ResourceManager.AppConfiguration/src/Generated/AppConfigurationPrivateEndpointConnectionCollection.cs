@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 HttpMessage message = _appConfigurationPrivateEndpointConnectionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, AppConfigurationPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppConfigurationArmOperation<AppConfigurationPrivateEndpointConnectionResource> operation = new AppConfigurationArmOperation<AppConfigurationPrivateEndpointConnectionResource>(
-                    new AppConfigurationPrivateEndpointConnectionOperationSource(Client),
+                    new AppConfigurationPrivateEndpointConnectionResourceOperationSource(Client),
                     _appConfigurationPrivateEndpointConnectionClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 HttpMessage message = _appConfigurationPrivateEndpointConnectionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, AppConfigurationPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppConfigurationArmOperation<AppConfigurationPrivateEndpointConnectionResource> operation = new AppConfigurationArmOperation<AppConfigurationPrivateEndpointConnectionResource>(
-                    new AppConfigurationPrivateEndpointConnectionOperationSource(Client),
+                    new AppConfigurationPrivateEndpointConnectionResourceOperationSource(Client),
                     _appConfigurationPrivateEndpointConnectionClientDiagnostics,
                     Pipeline,
                     message.Request,

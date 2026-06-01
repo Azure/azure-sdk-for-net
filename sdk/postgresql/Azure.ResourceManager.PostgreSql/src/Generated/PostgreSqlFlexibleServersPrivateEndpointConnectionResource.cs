@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PostgreSqlFlexibleServersPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<PostgreSqlFlexibleServersPrivateEndpointConnectionResource> operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServersPrivateEndpointConnectionResource>(
-                    new PostgreSqlFlexibleServersPrivateEndpointConnectionOperationSource(Client),
+                    new PostgreSqlFlexibleServersPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PostgreSqlFlexibleServersPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<PostgreSqlFlexibleServersPrivateEndpointConnectionResource> operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServersPrivateEndpointConnectionResource>(
-                    new PostgreSqlFlexibleServersPrivateEndpointConnectionOperationSource(Client),
+                    new PostgreSqlFlexibleServersPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
