@@ -69,6 +69,8 @@ namespace Azure.ResourceManager.StorageCache
             ArmOperation<StorageCacheResource> operation = this.Update(WaitUntil.Completed, data, cancellationToken);
             return Response.FromValue(operation.Value, operation.GetRawResponse());
         }
+
+        //Customization for array as body.
         /// <summary>
         /// Update cache space allocation.
         /// <list type="bullet">
