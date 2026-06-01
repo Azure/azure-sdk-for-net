@@ -957,6 +957,32 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [TestCase]
+        public void PopulateArguments_DictionaryBodyParameter_UsesBinaryContentHelper()
+        {
+            ManagementMockHelpers.LoadMockPlugin();
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            var requestContentParam = new ParameterProvider("content", $"", typeof(RequestContent));
+            requestContentParam.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var bodyParam = new ParameterProvider("body", $"", new CSharpType(typeof(IDictionary<,>), typeof(string), typeof(string)));
+            bodyParam.Update(wireInfo: new WireInformation(default, string.Empty), location: ParameterLocation.Body);
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestContentParam },
+                contextVariable,
+                new List<ParameterProvider> { bodyParam });
+
+            Assert.That(arguments.Count, Is.EqualTo(1));
+            var displayString = arguments[0].ToDisplayString();
+            Assert.That(displayString, Does.Not.Contain("IDictionary<string, string>.ToRequestContent"));
+            Assert.That(displayString, Does.Contain("BinaryContentHelper.FromDictionary"));
+        }
+
+        [TestCase]
         public void PopulateArguments_NonNullableFixedEnumToString_UsesToSerialString()
         {
             // Set up a pass-through parameter mapping (ContextualParameter is null)
