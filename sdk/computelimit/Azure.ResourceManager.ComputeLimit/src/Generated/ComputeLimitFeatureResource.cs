@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<OperationStatusResult>> EnableAsync(WaitUntil waitUntil, ComputeLimitFeatureEnableRequest content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<OperationStatusResult>> EnableAsync(WaitUntil waitUntil, ComputeLimitFeatureEnableContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("ComputeLimitFeatureResource.Enable");
             scope.Start();
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _featuresRestClient.CreateEnableRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ComputeLimitFeatureEnableRequest.ToRequestContent(content), context);
+                HttpMessage message = _featuresRestClient.CreateEnableRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ComputeLimitFeatureEnableContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeLimitArmOperation<OperationStatusResult> operation = new ComputeLimitArmOperation<OperationStatusResult>(
                     new OperationStatusResultOperationSource(),
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<OperationStatusResult> Enable(WaitUntil waitUntil, ComputeLimitFeatureEnableRequest content = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<OperationStatusResult> Enable(WaitUntil waitUntil, ComputeLimitFeatureEnableContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("ComputeLimitFeatureResource.Enable");
             scope.Start();
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _featuresRestClient.CreateEnableRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ComputeLimitFeatureEnableRequest.ToRequestContent(content), context);
+                HttpMessage message = _featuresRestClient.CreateEnableRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ComputeLimitFeatureEnableContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeLimitArmOperation<OperationStatusResult> operation = new ComputeLimitArmOperation<OperationStatusResult>(
                     new OperationStatusResultOperationSource(),

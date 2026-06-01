@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ComputeLimit.Models
 {
     /// <summary> Request body for feature enable action. </summary>
-    public partial class ComputeLimitFeatureEnableRequest
+    public partial class ComputeLimitFeatureEnableContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ComputeLimitFeatureEnableRequest"/>. </summary>
-        public ComputeLimitFeatureEnableRequest()
+        /// <summary> Initializes a new instance of <see cref="ComputeLimitFeatureEnableContent"/>. </summary>
+        public ComputeLimitFeatureEnableContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComputeLimitFeatureEnableRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeLimitFeatureEnableContent"/>. </summary>
         /// <param name="serviceTreeId"> The Service Tree identifier associated with this feature action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeLimitFeatureEnableRequest(string serviceTreeId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeLimitFeatureEnableContent(string serviceTreeId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceTreeId = serviceTreeId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

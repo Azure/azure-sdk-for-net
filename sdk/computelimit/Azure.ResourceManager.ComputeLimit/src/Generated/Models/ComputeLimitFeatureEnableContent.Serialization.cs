@@ -15,61 +15,61 @@ using Azure.ResourceManager.ComputeLimit;
 namespace Azure.ResourceManager.ComputeLimit.Models
 {
     /// <summary> Request body for feature enable action. </summary>
-    public partial class ComputeLimitFeatureEnableRequest : IJsonModel<ComputeLimitFeatureEnableRequest>
+    public partial class ComputeLimitFeatureEnableContent : IJsonModel<ComputeLimitFeatureEnableContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComputeLimitFeatureEnableRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ComputeLimitFeatureEnableContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeLimitFeatureEnableRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeLimitFeatureEnableContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeComputeLimitFeatureEnableRequest(document.RootElement, options);
+                        return DeserializeComputeLimitFeatureEnableContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputeLimitFeatureEnableRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeLimitFeatureEnableContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeLimitFeatureEnableRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeLimitFeatureEnableContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeLimitContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ComputeLimitFeatureEnableRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeLimitFeatureEnableContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ComputeLimitFeatureEnableRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ComputeLimitFeatureEnableContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeLimitFeatureEnableRequest IPersistableModel<ComputeLimitFeatureEnableRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ComputeLimitFeatureEnableContent IPersistableModel<ComputeLimitFeatureEnableContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ComputeLimitFeatureEnableRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeLimitFeatureEnableContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="computeLimitFeatureEnableRequest"> The <see cref="ComputeLimitFeatureEnableRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ComputeLimitFeatureEnableRequest computeLimitFeatureEnableRequest)
+        /// <param name="computeLimitFeatureEnableContent"> The <see cref="ComputeLimitFeatureEnableContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ComputeLimitFeatureEnableContent computeLimitFeatureEnableContent)
         {
-            if (computeLimitFeatureEnableRequest == null)
+            if (computeLimitFeatureEnableContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(computeLimitFeatureEnableRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(computeLimitFeatureEnableContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ComputeLimitFeatureEnableRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeLimitFeatureEnableContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.ComputeLimit.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeLimitFeatureEnableRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeLimitFeatureEnableContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeLimitFeatureEnableRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeLimitFeatureEnableContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(ServiceTreeId))
             {
@@ -109,24 +109,24 @@ namespace Azure.ResourceManager.ComputeLimit.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeLimitFeatureEnableRequest IJsonModel<ComputeLimitFeatureEnableRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ComputeLimitFeatureEnableContent IJsonModel<ComputeLimitFeatureEnableContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComputeLimitFeatureEnableRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ComputeLimitFeatureEnableContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeLimitFeatureEnableRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeLimitFeatureEnableContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeLimitFeatureEnableRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeLimitFeatureEnableContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeComputeLimitFeatureEnableRequest(document.RootElement, options);
+            return DeserializeComputeLimitFeatureEnableContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ComputeLimitFeatureEnableRequest DeserializeComputeLimitFeatureEnableRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeLimitFeatureEnableContent DeserializeComputeLimitFeatureEnableContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ComputeLimit.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputeLimitFeatureEnableRequest(serviceTreeId, additionalBinaryDataProperties);
+            return new ComputeLimitFeatureEnableContent(serviceTreeId, additionalBinaryDataProperties);
         }
     }
 }
