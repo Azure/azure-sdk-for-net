@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="zones"> The availability zones. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvsHostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsHostProperties properties, IList<string> zones, AvsSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal AvsHostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsHostProperties properties, IReadOnlyList<string> zones, AvsSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Zones = zones;
@@ -44,9 +44,6 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> The resource-specific properties for this resource. </summary>
         public AvsHostProperties Properties { get; }
-
-        /// <summary> The availability zones. </summary>
-        public IList<string> Zones { get; }
 
         /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>
         public AvsSku Sku { get; }

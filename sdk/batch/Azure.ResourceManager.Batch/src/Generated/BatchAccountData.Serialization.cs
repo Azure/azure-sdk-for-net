@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Batch
             SystemData systemData = default;
             BatchAccountProperties properties = default;
             ManagedServiceIdentity identity = default;
-            IDictionary<string, string> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             AzureLocation? location = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())

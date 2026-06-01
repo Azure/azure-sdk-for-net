@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Avs
             ResourceType resourceType = default;
             SystemData systemData = default;
             AvsHostProperties properties = default;
-            IList<string> zones = default;
+            IReadOnlyList<string> zones = default;
             AvsSku sku = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
