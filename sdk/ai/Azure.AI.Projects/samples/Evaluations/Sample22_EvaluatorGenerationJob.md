@@ -162,6 +162,8 @@ Console.WriteLine($"The job {jobToCancel.Id} was canceled.");
 
 Synchronous sample:
 ```C# Snippet:Sample_ListJob_EvaluatorGenerationJob_Sync
+// Wait while all jobs are being indexed.
+Thread.Sleep(20000);
 foreach (EvaluatorGenerationJob oneJob in projectClient.EvaluatorGenerationJobs.GetAll())
 {
     Console.WriteLine($"Job ID: {oneJob.Id}, Status: {oneJob.Status}.");
@@ -170,6 +172,8 @@ foreach (EvaluatorGenerationJob oneJob in projectClient.EvaluatorGenerationJobs.
 
 Asynchronous sample:
 ```C# Snippet:Sample_ListJob_EvaluatorGenerationJob_Async
+// Wait while all jobs are being indexed.
+await Task.Delay(20000);
 await foreach (EvaluatorGenerationJob oneJob in projectClient.EvaluatorGenerationJobs.GetAllAsync())
 {
     Console.WriteLine($"Job ID: {oneJob.Id}, Status: {oneJob.Status}.");

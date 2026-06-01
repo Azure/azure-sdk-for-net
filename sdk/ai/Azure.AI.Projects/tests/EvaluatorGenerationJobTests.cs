@@ -82,18 +82,20 @@ public class EvaluationGenerationJobTests : ProjectsClientTestBase
         Assert.That(jobToCancel.Status, Is.EqualTo(JobStatus.Cancelled));
         Assert.That(jobToCancel.Result, Is.Null);
         // List
+        await Delay(20000);
         HashSet<string> jobs = [.. await projectClient.EvaluatorGenerationJobs.GetAllAsync().Select(x => x.Id).ToArrayAsync()];
         Assert.That(jobs, Does.Contain(runningJob.Id));
         Assert.That(jobs, Does.Contain(jobToCancel.Id));
         // Delete
         await projectClient.EvaluatorGenerationJobs.DeleteAsync(jobToCancel.Id);
+        await Delay(20000);
         jobs = [.. await projectClient.EvaluatorGenerationJobs.GetAllAsync().Select(x => x.Id).ToArrayAsync()];
         Assert.That(jobs, Does.Contain(runningJob.Id));
         Assert.That(jobs, Does.Not.Contain(jobToCancel.Id));
     }
 
     [RecordedTest]
-    public async Task TestDataGenerationJobPagination()
+    public async Task TestEvaluatorGenerationJobPagination()
     {
         AIProjectClient projectClient = GetTestProjectClient();
         DeclarativeAgentDefinition agentDefinition = new(model: TestEnvironment.FOUNDRY_MODEL_NAME)
@@ -119,6 +121,7 @@ public class EvaluationGenerationJobTests : ProjectsClientTestBase
             EvaluatorGenerationJob runningJob = await projectClient.EvaluatorGenerationJobs.CreateAsync(job);
             await projectClient.EvaluatorGenerationJobs.CancelAsync(runningJob.Id);
         }
+        await Delay(20000);
         List<EvaluatorGenerationJob> records = await projectClient.EvaluatorGenerationJobs.GetAllAsync(limit: PAGE_SIZE, order: "asc").Where(x => x.Inputs.EvaluatorDisplayName.StartsWith(INPUT_PREFIX)).ToListAsync();
         Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
         // Go forward.
