@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.FileShares
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, FileSharePrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FileSharesArmOperation<FileSharePrivateEndpointConnectionResource> operation = new FileSharesArmOperation<FileSharePrivateEndpointConnectionResource>(
-                    new FileSharePrivateEndpointConnectionOperationSource(Client),
+                    new FileSharePrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.FileShares
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, FileSharePrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FileSharesArmOperation<FileSharePrivateEndpointConnectionResource> operation = new FileSharesArmOperation<FileSharePrivateEndpointConnectionResource>(
-                    new FileSharePrivateEndpointConnectionOperationSource(Client),
+                    new FileSharePrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
