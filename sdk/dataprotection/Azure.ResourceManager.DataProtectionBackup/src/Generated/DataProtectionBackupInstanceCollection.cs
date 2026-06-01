@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 HttpMessage message = _backupInstanceResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupInstanceName, DataProtectionBackupInstanceData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataProtectionBackupArmOperation<DataProtectionBackupInstanceResource> operation = new DataProtectionBackupArmOperation<DataProtectionBackupInstanceResource>(
-                    new DataProtectionBackupInstanceOperationSource(Client),
+                    new DataProtectionBackupInstanceResourceOperationSource(Client),
                     _backupInstanceResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 HttpMessage message = _backupInstanceResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupInstanceName, DataProtectionBackupInstanceData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataProtectionBackupArmOperation<DataProtectionBackupInstanceResource> operation = new DataProtectionBackupArmOperation<DataProtectionBackupInstanceResource>(
-                    new DataProtectionBackupInstanceOperationSource(Client),
+                    new DataProtectionBackupInstanceResourceOperationSource(Client),
                     _backupInstanceResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
