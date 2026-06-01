@@ -459,7 +459,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _zoosRestClient.CreateDeleteZooItemsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RequestContent.Create(BinaryData.FromObjectAsJson(zooItemNames)), context);
+                HttpMessage message = _zoosRestClient.CreateDeleteZooItemsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BinaryContentHelper.FromEnumerable(zooItemNames), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<Models.ZooRecommendation> response = Response.FromValue(Models.ZooRecommendation.FromResponse(result), result);
                 if (response.Value == null)
@@ -511,7 +511,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _zoosRestClient.CreateDeleteZooItemsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RequestContent.Create(BinaryData.FromObjectAsJson(zooItemNames)), context);
+                HttpMessage message = _zoosRestClient.CreateDeleteZooItemsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BinaryContentHelper.FromEnumerable(zooItemNames), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<Models.ZooRecommendation> response = Response.FromValue(Models.ZooRecommendation.FromResponse(result), result);
                 if (response.Value == null)

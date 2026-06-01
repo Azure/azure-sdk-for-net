@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Tests.TestHelpers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -930,8 +931,9 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [TestCase]
-        public void PopulateArguments_CollectionBodyParameter_UsesBinaryDataRequestContent()
+        public void PopulateArguments_CollectionBodyParameter_UsesBinaryContentHelper()
         {
+            ManagementMockHelpers.LoadMockPlugin();
             var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
 
             var requestContentParam = new ParameterProvider("content", $"", typeof(RequestContent));
@@ -951,8 +953,7 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(arguments.Count, Is.EqualTo(1));
             var displayString = arguments[0].ToDisplayString();
             Assert.That(displayString, Does.Not.Contain("IEnumerable<string>.ToRequestContent"));
-            Assert.That(displayString, Does.Contain("RequestContent.Create"));
-            Assert.That(displayString, Does.Contain("BinaryData.FromObjectAsJson"));
+            Assert.That(displayString, Does.Contain("BinaryContentHelper.FromEnumerable"));
         }
 
         [TestCase]
