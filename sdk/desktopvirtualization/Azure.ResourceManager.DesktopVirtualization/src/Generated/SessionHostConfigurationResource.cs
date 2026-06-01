@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 HttpMessage message = _sessionHostConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SessionHostConfigurationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DesktopVirtualizationArmOperation<SessionHostConfigurationResource> operation = new DesktopVirtualizationArmOperation<SessionHostConfigurationResource>(
-                    new SessionHostConfigurationOperationSource(Client),
+                    new SessionHostConfigurationResourceOperationSource(Client),
                     _sessionHostConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 HttpMessage message = _sessionHostConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SessionHostConfigurationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DesktopVirtualizationArmOperation<SessionHostConfigurationResource> operation = new DesktopVirtualizationArmOperation<SessionHostConfigurationResource>(
-                    new SessionHostConfigurationOperationSource(Client),
+                    new SessionHostConfigurationResourceOperationSource(Client),
                     _sessionHostConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 HttpMessage message = _sessionHostConfigurationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SessionHostConfigurationPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DesktopVirtualizationArmOperation<SessionHostConfigurationResource> operation = new DesktopVirtualizationArmOperation<SessionHostConfigurationResource>(
-                    new SessionHostConfigurationOperationSource(Client),
+                    new SessionHostConfigurationResourceOperationSource(Client),
                     _sessionHostConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 HttpMessage message = _sessionHostConfigurationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SessionHostConfigurationPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DesktopVirtualizationArmOperation<SessionHostConfigurationResource> operation = new DesktopVirtualizationArmOperation<SessionHostConfigurationResource>(
-                    new SessionHostConfigurationOperationSource(Client),
+                    new SessionHostConfigurationResourceOperationSource(Client),
                     _sessionHostConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
