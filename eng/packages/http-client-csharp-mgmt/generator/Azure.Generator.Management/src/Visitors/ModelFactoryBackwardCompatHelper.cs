@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
@@ -57,39 +56,6 @@ namespace Azure.Generator.Management.Visitors
                 {
                     method.Update(signature: method.Signature, bodyStatements: updatedBodyStatements);
                 }
-            }
-        }
-
-        internal static void AddMissingLastContractModelFactoryMethods(ModelFactoryProvider modelFactory)
-        {
-            var previousMethods = modelFactory.LastContractView?.Methods;
-            if (previousMethods is null || previousMethods.Count == 0)
-            {
-                return;
-            }
-
-            var methods = modelFactory.Methods.ToList();
-            var customMethods = modelFactory.CustomCodeView?.Methods ?? [];
-            var updated = false;
-            foreach (var previousMethod in previousMethods!)
-            {
-                var returnType = previousMethod.Signature.ReturnType;
-                if (returnType is null
-                    || KnownManagementTypes.IsKnownManagementType(returnType)
-                    || methods.Any(method => HasSameCSharpSignature(method.Signature, previousMethod.Signature))
-                    || customMethods.Any(method => HasSameCSharpSignature(method.Signature, previousMethod.Signature))
-                    || !TryCreateBackwardCompatMethod(previousMethod, modelFactory, out var restoredMethod))
-                {
-                    continue;
-                }
-
-                methods.Add(restoredMethod);
-                updated = true;
-            }
-
-            if (updated)
-            {
-                modelFactory.Update(methods: methods);
             }
         }
 
@@ -463,13 +429,6 @@ namespace Azure.Generator.Management.Visitors
             }
 
             return false;
-        }
-
-        private static bool HasSameCSharpSignature(MethodSignature first, MethodSignature second)
-        {
-            return first.Name == second.Name
-                && first.Parameters.Count == second.Parameters.Count
-                && first.Parameters.Zip(second.Parameters).All(pair => pair.First.Type.AreNamesEqual(pair.Second.Type));
         }
 
         /// <summary>
