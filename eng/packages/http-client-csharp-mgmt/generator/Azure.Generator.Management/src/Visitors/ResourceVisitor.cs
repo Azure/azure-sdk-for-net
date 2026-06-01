@@ -1,13 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -16,47 +14,6 @@ namespace Azure.Generator.Management.Visitors;
 
 internal class ResourceVisitor : ScmLibraryVisitor
 {
-    protected override PropertyProvider? PreVisitProperty(InputProperty inputProperty, PropertyProvider? propertyProvider)
-    {
-        if (propertyProvider?.EnclosingType is ModelProvider modelProvider)
-        {
-            var resourceDataModel = modelProvider as ResourceDataModelProvider;
-            // Output-only resource data models represent service responses. Keep collection properties read-only
-            // for GA compatibility, even when the TypeSpec property itself is not marked readonly.
-            var shouldUseReadOnlyCollection = resourceDataModel is not null
-                && (!resourceDataModel.InputModel.Usage.HasFlag(InputModelTypeUsage.Input) || inputProperty.IsReadOnly);
-            if (propertyProvider.Type.IsList && shouldUseReadOnlyCollection)
-            {
-                propertyProvider.Update(type: new CSharpType(typeof(IReadOnlyList<>), propertyProvider.Type.Arguments));
-            }
-            else if (IsDictionary(propertyProvider.Type) && shouldUseReadOnlyCollection)
-            {
-                propertyProvider.Update(type: new CSharpType(typeof(IReadOnlyDictionary<,>), propertyProvider.Type.Arguments));
-            }
-        }
-
-        return base.PreVisitProperty(inputProperty, propertyProvider);
-    }
-
-    private static bool IsDictionary(CSharpType type)
-        => type.IsDictionary || IsDictionary(type, typeof(IDictionary<,>)) || IsDictionary(type, typeof(IReadOnlyDictionary<,>));
-
-    private static bool IsDictionary(CSharpType type, Type dictionaryTypeDefinition)
-    {
-        if (type is not { IsFrameworkType: true, FrameworkType: not null })
-        {
-            return false;
-        }
-
-        var frameworkType = type.FrameworkType;
-        if (frameworkType.IsGenericType && !frameworkType.IsGenericTypeDefinition)
-        {
-            frameworkType = frameworkType.GetGenericTypeDefinition();
-        }
-
-        return frameworkType == dictionaryTypeDefinition;
-    }
-
     // Re-assert the namespace and fix serialization providers' file paths after Azure.Generator's
     // NamespaceVisitor (which runs in VisitType) has had a chance to override them.
     protected override TypeProvider? VisitType(TypeProvider type)

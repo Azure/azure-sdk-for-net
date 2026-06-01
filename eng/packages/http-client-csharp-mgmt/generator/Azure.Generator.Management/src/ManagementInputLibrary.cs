@@ -304,11 +304,6 @@ namespace Azure.Generator.Management
 
         private IReadOnlyDictionary<string, (string ResourceName, bool IsAlsoUsedInCreate)> ResourceUpdateModelToResourceNameMap => _resourceUpdateModelToResourceNameMap ??= BuildResourceUpdateModelToResourceNameMap();
 
-        // User-supplied @@clientName is respected for PATCH-only payloads. Otherwise,
-        // apply the management-plane convention of naming update payloads {Resource}Patch.
-        internal bool ShouldRenameResourceUpdateModel(InputModelType model)
-            => !ClientNameOverriddenModels.Contains(model);
-
         /// <summary> Gets the ARM provider schema containing all resource metadata and non-resource methods. </summary>
         public ArmProviderSchema ArmProviderSchema => _providerSchema ??= BuildArmProviderSchema();
 

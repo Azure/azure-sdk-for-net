@@ -94,22 +94,15 @@ internal class NameVisitor : ScmLibraryVisitor
                 newName = $"{enclosingResourceName}CreateOrUpdateContent";
                 type.Update(name: newName);
             }
-            else if (inputLibrary.ShouldRenameResourceUpdateModel(model) || IsUpdatePayloadName(type) || HasPreviousPatchContract(type, enclosingResourceName))
+            else if (!inputLibrary.ClientNameOverriddenModels.Contains(model))
             {
-                // PATCH-only payload names are part of the public SDK surface. Centralize the compatibility
-                // decision in ManagementInputLibrary so this visitor does not rely on service-specific names.
+                // PATCH-only payloads use {Resource}Patch unless the service provided an explicit clientName.
                 newName = $"{enclosingResourceName}Patch";
                 type.Update(name: newName);
             }
         }
         return type;
     }
-
-    private static bool HasPreviousPatchContract(TypeProvider type, string enclosingResourceName)
-        => string.Equals(type.LastContractView?.Name, $"{enclosingResourceName}Patch", StringComparison.Ordinal);
-
-    private static bool IsUpdatePayloadName(TypeProvider type)
-        => type.Name.EndsWith("Update", StringComparison.Ordinal);
 
     protected override PropertyProvider? PreVisitProperty(InputProperty property, PropertyProvider? propertyProvider)
     {
