@@ -140,6 +140,23 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
                             arguments.Add(createContent);
                         }
                     }
+                    else if (bodyParameter.Type.IsCollection)
+                    {
+                        var binaryData = Static(typeof(BinaryData)).Invoke(
+                            nameof(BinaryData.FromObjectAsJson),
+                            [bodyParameter]);
+                        var createContent = Static(typeof(RequestContent)).Invoke(
+                            nameof(RequestContent.Create),
+                            [binaryData]);
+                        if (bodyParameter.Type.IsNullable)
+                        {
+                            arguments.Add(new TernaryConditionalExpression(bodyParameter.NotEqual(Null), createContent, Null));
+                        }
+                        else
+                        {
+                            arguments.Add(createContent);
+                        }
+                    }
                     else
                     {
                         arguments.Add(Static(bodyParameter.Type).Invoke(SerializationVisitor.ToRequestContentMethodName, [bodyParameter]));

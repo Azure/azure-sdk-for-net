@@ -904,8 +904,7 @@ namespace Azure.Generator.Mgmt.Tests
         public void PopulateArguments_StringBodyParameter_UsesRequestContentCreate()
         {
             // When the body parameter is a string (framework type), should generate
-            // RequestContent.Create(BinaryData.FromObjectAsJson(body)) instead of
-            // string.ToRequestContent(body) which doesn't exist.
+            // RequestContent.Create(body) instead of string.ToRequestContent(body) which doesn't exist.
             var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
 
             var requestContentParam = new ParameterProvider("content", $"", typeof(RequestContent));
@@ -928,6 +927,32 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(displayString, Does.Not.Contain("string.ToRequestContent"));
             Assert.That(displayString, Does.Contain("RequestContent"));
             Assert.That(displayString, Does.Not.Contain("FromObjectAsJson"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_CollectionBodyParameter_UsesBinaryDataRequestContent()
+        {
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            var requestContentParam = new ParameterProvider("content", $"", typeof(RequestContent));
+            requestContentParam.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var bodyParam = new ParameterProvider("body", $"", new CSharpType(typeof(IEnumerable<>), typeof(string)));
+            bodyParam.Update(wireInfo: new WireInformation(default, string.Empty), location: ParameterLocation.Body);
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestContentParam },
+                contextVariable,
+                new List<ParameterProvider> { bodyParam });
+
+            Assert.That(arguments.Count, Is.EqualTo(1));
+            var displayString = arguments[0].ToDisplayString();
+            Assert.That(displayString, Does.Not.Contain("IEnumerable<string>.ToRequestContent"));
+            Assert.That(displayString, Does.Contain("RequestContent.Create"));
+            Assert.That(displayString, Does.Contain("BinaryData.FromObjectAsJson"));
         }
 
         [TestCase]
