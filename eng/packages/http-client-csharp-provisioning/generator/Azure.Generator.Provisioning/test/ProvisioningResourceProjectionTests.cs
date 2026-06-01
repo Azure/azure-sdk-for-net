@@ -171,6 +171,24 @@ namespace Azure.Generator.Provisioning.Tests
             Assert.That(projection.WritableScopes, Is.EqualTo(new[] { ResourceScope.ResourceGroup, ResourceScope.Subscription }));
         }
 
+        [Test]
+        public void ProjectionIdentifiesWritableExtensionResource()
+        {
+            var model = CreateModel("ExtensionResourceData");
+            var resource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}/providers/Microsoft.Extension/assignments/{assignmentName}",
+                "Microsoft.Extension/assignments",
+                ResourceScope.Extension,
+                ["2024-01-01"],
+                parentResourceId: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                methods: [CreateMethod(ResourceOperationKind.Create, ResourceScope.Extension)]);
+
+            var projection = ProvisioningResourceProjection.Create([resource])[0];
+
+            Assert.That(projection.IsExtensionResource, Is.True);
+        }
+
         private static ArmResourceMetadata CreateMetadata(
             InputModelType model,
             string resourceIdPattern,
@@ -211,7 +229,7 @@ namespace Azure.Generator.Provisioning.Tests
                 null!);
         }
 
-        private static InputModelType CreateModel(string name)
+        private static InputModelType CreateModel(string name, IReadOnlyList<InputModelProperty>? properties = null)
             => new(
                 name,
                 "Sample.Models",
@@ -221,7 +239,7 @@ namespace Azure.Generator.Provisioning.Tests
                 string.Empty,
                 "Test model.",
                 InputModelTypeUsage.Input | InputModelTypeUsage.Output,
-                [],
+                properties ?? [],
                 null,
                 [],
                 null,

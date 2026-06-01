@@ -62,6 +62,8 @@ namespace Azure.Generator.Provisioning.Primitives
 
         internal IReadOnlyList<ResourceScope> WritableScopes { get; }
 
+        internal bool IsExtensionResource => WritableScopes.Contains(ResourceScope.Extension);
+
         internal static IReadOnlyList<ProvisioningResourceProjection> Create(IReadOnlyList<ArmResourceMetadata> metadata)
         {
             var groups = new Dictionary<(string ResourceType, InputModelType ResourceModel), List<ArmResourceMetadata>>();
