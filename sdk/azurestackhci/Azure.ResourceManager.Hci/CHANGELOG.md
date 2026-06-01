@@ -1,14 +1,20 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
+## 1.3.0 (2026-05-15)
 
 ### Features Added
 
+- Upgraded API version to `2026-04-30` (stable).
+
 ### Breaking Changes
 
-### Bugs Fixed
+- Removed preview-only resource types: `ClusterJobResource`, `DevicePoolResource`, `EdgeMachineResource`, `EdgeMachineJobResource`, `OsImageResource`, `PlatformUpdateResource`, `UpdateContentResource`, `HciClusterPublisherResource`.
+- Removed preview-only models and operations related to: ownership voucher validation, Kubernetes versions, SDN integration, confidential VM, and OS provisioning.
+- Removed many model factory overloads that referenced removed resource types.
 
 ### Other Changes
+
+- Updated `tsp-location.yaml` to use the latest stable API commit.
 
 ## 1.3.0-beta.1 (2026-04-23)
 

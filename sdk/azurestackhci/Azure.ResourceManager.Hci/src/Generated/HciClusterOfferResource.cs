@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Hci
     /// <summary>
     /// A class representing a HciClusterOffer along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HciClusterOfferResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HciClusterPublisherResource"/> using the GetHciClusterOffers method.
+    /// Otherwise you can get one from its parent resource <see cref="HciClusterResource"/> using the GetHciClusterOffers method.
     /// </summary>
     public partial class HciClusterOfferResource : ArmResource
     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(ResourceType, out string hciClusterOfferApiVersion);
             _offersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            _offersRestClient = new Offers(_offersClientDiagnostics, Pipeline, Endpoint, hciClusterOfferApiVersion ?? "2026-04-01-preview");
+            _offersRestClient = new Offers(_offersClientDiagnostics, Pipeline, Endpoint, hciClusterOfferApiVersion ?? "2026-04-30");
             ValidateResourceId(id);
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
