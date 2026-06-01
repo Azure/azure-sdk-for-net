@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 HttpMessage message = _formulasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DevTestLabFormulaData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation<DevTestLabFormulaResource> operation = new DevTestLabsArmOperation<DevTestLabFormulaResource>(
-                    new DevTestLabFormulaOperationSource(Client),
+                    new DevTestLabFormulaResourceOperationSource(Client),
                     _formulasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 HttpMessage message = _formulasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DevTestLabFormulaData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation<DevTestLabFormulaResource> operation = new DevTestLabsArmOperation<DevTestLabFormulaResource>(
-                    new DevTestLabFormulaOperationSource(Client),
+                    new DevTestLabFormulaResourceOperationSource(Client),
                     _formulasClientDiagnostics,
                     Pipeline,
                     message.Request,

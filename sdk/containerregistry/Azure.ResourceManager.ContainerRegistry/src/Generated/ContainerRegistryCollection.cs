@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 HttpMessage message = _registriesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, ContainerRegistryData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerRegistryArmOperation<ContainerRegistryResource> operation = new ContainerRegistryArmOperation<ContainerRegistryResource>(
-                    new ContainerRegistryOperationSource(Client),
+                    new ContainerRegistryResourceOperationSource(Client),
                     _registriesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 HttpMessage message = _registriesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, ContainerRegistryData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerRegistryArmOperation<ContainerRegistryResource> operation = new ContainerRegistryArmOperation<ContainerRegistryResource>(
-                    new ContainerRegistryOperationSource(Client),
+                    new ContainerRegistryResourceOperationSource(Client),
                     _registriesClientDiagnostics,
                     Pipeline,
                     message.Request,

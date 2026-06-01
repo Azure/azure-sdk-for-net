@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _containerAppsSourceControlsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerAppSourceControlData.ToRequestContent(data), xMsGithubAuxiliary, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<ContainerAppSourceControlResource> operation = new AppContainersArmOperation<ContainerAppSourceControlResource>(
-                    new ContainerAppSourceControlOperationSource(Client),
+                    new ContainerAppSourceControlResourceOperationSource(Client),
                     _containerAppsSourceControlsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _containerAppsSourceControlsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerAppSourceControlData.ToRequestContent(data), xMsGithubAuxiliary, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<ContainerAppSourceControlResource> operation = new AppContainersArmOperation<ContainerAppSourceControlResource>(
-                    new ContainerAppSourceControlOperationSource(Client),
+                    new ContainerAppSourceControlResourceOperationSource(Client),
                     _containerAppsSourceControlsClientDiagnostics,
                     Pipeline,
                     message.Request,
