@@ -7,21 +7,22 @@ using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.WebPubSub.Common
 {
-    internal class DisconnectedEventRequestJsonConverter : JsonConverter<DisconnectedEventRequest>
+    internal class JoinedGroupEventRequestJsonConverter : JsonConverter<JoinedGroupEventRequest>
     {
-        public override DisconnectedEventRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override JoinedGroupEventRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             using var jsonDocument = JsonDocument.ParseValue(ref reader);
             var element = jsonDocument.RootElement;
 
-            // Tricky part to temp set null to context.
-            return new DisconnectedEventRequest(null, element.GetProperty(DisconnectedEventRequest.ReasonProperty).GetString());
+            return new JoinedGroupEventRequest(
+                null,
+                element.GetProperty(JoinedGroupEventRequest.GroupProperty).GetString());
         }
 
-        public override void Write(Utf8JsonWriter writer, DisconnectedEventRequest value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, JoinedGroupEventRequest value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
-            writer.WriteString(DisconnectedEventRequest.ReasonProperty, value.Reason);
+            writer.WriteString(JoinedGroupEventRequest.GroupProperty, value.Group);
 
             if (value.ConnectionContext != null)
             {
