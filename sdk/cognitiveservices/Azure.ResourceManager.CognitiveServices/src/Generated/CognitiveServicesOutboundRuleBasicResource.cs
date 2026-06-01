@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 HttpMessage message = _outboundRuleBasicResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CognitiveServicesOutboundRuleBasicData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<CognitiveServicesOutboundRuleBasicResource> operation = new CognitiveServicesArmOperation<CognitiveServicesOutboundRuleBasicResource>(
-                    new CognitiveServicesOutboundRuleBasicOperationSource(Client),
+                    new CognitiveServicesOutboundRuleBasicResourceOperationSource(Client),
                     _outboundRuleBasicResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 HttpMessage message = _outboundRuleBasicResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CognitiveServicesOutboundRuleBasicData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<CognitiveServicesOutboundRuleBasicResource> operation = new CognitiveServicesArmOperation<CognitiveServicesOutboundRuleBasicResource>(
-                    new CognitiveServicesOutboundRuleBasicOperationSource(Client),
+                    new CognitiveServicesOutboundRuleBasicResourceOperationSource(Client),
                     _outboundRuleBasicResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

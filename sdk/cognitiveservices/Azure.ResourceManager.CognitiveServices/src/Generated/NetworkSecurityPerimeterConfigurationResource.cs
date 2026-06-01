@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateReconcileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<NetworkSecurityPerimeterConfigurationResource> operation = new CognitiveServicesArmOperation<NetworkSecurityPerimeterConfigurationResource>(
-                    new NetworkSecurityPerimeterConfigurationOperationSource(Client),
+                    new NetworkSecurityPerimeterConfigurationResourceOperationSource(Client),
                     _networkSecurityPerimeterConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateReconcileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<NetworkSecurityPerimeterConfigurationResource> operation = new CognitiveServicesArmOperation<NetworkSecurityPerimeterConfigurationResource>(
-                    new NetworkSecurityPerimeterConfigurationOperationSource(Client),
+                    new NetworkSecurityPerimeterConfigurationResourceOperationSource(Client),
                     _networkSecurityPerimeterConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
