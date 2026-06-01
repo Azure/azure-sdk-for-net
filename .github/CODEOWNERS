@@ -122,10 +122,10 @@
 /sdk/tools/Azure.SdkAnalyzers/    @jsquire @m-nash @m-redding
 
 # PRLabel: %Batch
-/sdk/batch/    @cRui861 @dpwatrous @skapur12 @wanghoppe @wiboris
+/sdk/batch/    @cRui861 @dpwatrous @iwang2 @lilinvictorms @skapur12 @wanghoppe @wiboris @xingwu1
 
 # ServiceLabel: %Batch
-# ServiceOwners: @dpwatrous @wiboris
+# ServiceOwners: @dpwatrous @iwang2 @lilinvictorms @wiboris @xingwu1
 
 # PRLabel: %Cognitive - Anomaly Detector
 /sdk/anomalydetector/    @conhua @juaduan @mengaims @moreOver0
@@ -193,8 +193,11 @@
 # PRLabel: %Cognitive - Translator
 /sdk/translation/    @jrjrguo
 
+# PRLabel: %Cognitive - Translator
+/sdk/translation/Azure.AI.Translation.Text/    @jrjrguo @quentinRobinson
+
 # ServiceLabel: %Cognitive - Translator
-# ServiceOwners: @jrjrguo
+# ServiceOwners: @jrjrguo @quentinRobinson
 
 # PRLabel: %Communication
 /sdk/communication/    @acsdevx-msft
@@ -209,10 +212,10 @@
 /sdk/communication/Azure.Communication.Chat/    @LuChen-Microsoft
 
 # PRLabel: %Communication - Common
-/sdk/communication/Azure.Communication.Common/    @AikoBB @Azure/acs-identity-sdk @maximrytych-ms @mjafferi-msft
+/sdk/communication/Azure.Communication.Common/    @alvinjiang-msft @anjulgarg @Joeleniqs @jorge-beauregard
 
 # PRLabel: %Communication - Identity
-/sdk/communication/Azure.Communication.Identity/    @AikoBB @Azure/acs-identity-sdk @maximrytych-ms @mjafferi-msft
+/sdk/communication/Azure.Communication.Identity/    @alvinjiang-msft @anjulgarg @Joeleniqs @jorge-beauregard
 
 # PRLabel: %Communication - Phone Numbers
 /sdk/communication/Azure.Communication.PhoneNumbers/    @besh2014 @gfeitosa-msft @ihuseynov-msft @ilyapaliakou-msft @kirill-linnik @phermanov-msft
@@ -264,6 +267,9 @@
 
 # PRLabel: %EngSys
 /sdk/template/    @danieljurek @weshaggard
+
+# PRLabel: %EngSys
+/sdk/template/Azure.Template/    @danieljurek
 
 # AzureSdkOwners: @danieljurek @weshaggard
 # ServiceLabel: %EngSys
