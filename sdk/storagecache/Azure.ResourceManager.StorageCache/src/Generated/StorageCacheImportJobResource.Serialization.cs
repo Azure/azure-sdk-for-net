@@ -8,12 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary></summary>
-    public partial class StorageCacheImportJobResource : ArmResource, IJsonModel<StorageCacheImportJobData>
+    public partial class StorageCacheImportJobResource : IJsonModel<StorageCacheImportJobData>
     {
         private static IJsonModel<StorageCacheImportJobData> s_dataDeserializationInstance;
 

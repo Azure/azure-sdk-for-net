@@ -8,12 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary></summary>
-    public partial class ExpansionJobResource : ArmResource, IJsonModel<ExpansionJobData>
+    public partial class ExpansionJobResource : IJsonModel<ExpansionJobData>
     {
         private static IJsonModel<ExpansionJobData> s_dataDeserializationInstance;
 

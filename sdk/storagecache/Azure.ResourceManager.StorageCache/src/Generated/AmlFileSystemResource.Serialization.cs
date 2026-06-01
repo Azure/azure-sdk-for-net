@@ -8,12 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary></summary>
-    public partial class AmlFileSystemResource : ArmResource, IJsonModel<AmlFileSystemData>
+    public partial class AmlFileSystemResource : IJsonModel<AmlFileSystemData>
     {
         private static IJsonModel<AmlFileSystemData> s_dataDeserializationInstance;
 

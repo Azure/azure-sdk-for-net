@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.StorageCache.Tests
             ResourceIdentifier storageCacheResourceId = AmlFileSystemResource.CreateResourceIdentifier(
                 this.DefaultSubscription.Id.SubscriptionId,
                 resourceGroupName: resourceGroupName,
-                amlFileSystemName: amlFSName);
+                 amlFSName);
             var amlFS = this.Client.GetAmlFileSystemResource(storageCacheResourceId);
             var importJobs = amlFS.GetStorageCacheImportJobs().GetAllAsync();
             await foreach (var job in importJobs)
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.StorageCache.Tests
             };
             ArmOperation<AmlFileSystemResource> lro = await amlFSCollectionVar.CreateOrUpdateAsync(
                 waitUntil: WaitUntil.Completed,
-                amlFileSystemName: amlFSName,
+                 amlFSName,
                 data: dataVar);
             this.CleanupActions.Push(async () => await lro.Value.DeleteAsync(WaitUntil.Completed));
             if (verifyResult)
