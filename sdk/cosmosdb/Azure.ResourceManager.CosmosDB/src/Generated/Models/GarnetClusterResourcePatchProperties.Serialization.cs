@@ -94,6 +94,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(AuthenticationMethod))
+            {
+                writer.WritePropertyName("authenticationMethod"u8);
+                writer.WriteStringValue(AuthenticationMethod.Value.ToString());
+            }
+            if (Optional.IsDefined(Persistence))
+            {
+                writer.WritePropertyName("persistence"u8);
+                writer.WriteBooleanValue(Persistence.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -138,6 +148,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             CassandraClusterType? clusterType = default;
             IList<string> extensions = default;
+            GarnetAuthenticationType? authenticationMethod = default;
+            bool? persistence = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -171,12 +183,30 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     extensions = array;
                     continue;
                 }
+                if (prop.NameEquals("authenticationMethod"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    authenticationMethod = new GarnetAuthenticationType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("persistence"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    persistence = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GarnetClusterResourcePatchProperties(clusterType, extensions ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new GarnetClusterResourcePatchProperties(clusterType, extensions ?? new ChangeTrackingList<string>(), authenticationMethod, persistence, additionalBinaryDataProperties);
         }
     }
 }

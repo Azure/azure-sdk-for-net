@@ -26,11 +26,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="GarnetClusterResourcePatchProperties"/>. </summary>
         /// <param name="clusterType"> Type of the cluster. If set to Production, some operations might not be permitted on cluster. </param>
         /// <param name="extensions"> Extensions to be added or updated on cluster. </param>
+        /// <param name="authenticationMethod"> The authentication method used for the Garnet cluster. </param>
+        /// <param name="persistence"> Flag to indicate if persistence is enabled for the Garnet cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GarnetClusterResourcePatchProperties(CassandraClusterType? clusterType, IList<string> extensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GarnetClusterResourcePatchProperties(CassandraClusterType? clusterType, IList<string> extensions, GarnetAuthenticationType? authenticationMethod, bool? persistence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClusterType = clusterType;
             Extensions = extensions;
+            AuthenticationMethod = authenticationMethod;
+            Persistence = persistence;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,5 +45,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Extensions to be added or updated on cluster. </summary>
         [WirePath("extensions")]
         public IList<string> Extensions { get; }
+
+        /// <summary> The authentication method used for the Garnet cluster. </summary>
+        [WirePath("authenticationMethod")]
+        public GarnetAuthenticationType? AuthenticationMethod { get; set; }
+
+        /// <summary> Flag to indicate if persistence is enabled for the Garnet cluster. </summary>
+        [WirePath("persistence")]
+        public bool? Persistence { get; set; }
     }
 }

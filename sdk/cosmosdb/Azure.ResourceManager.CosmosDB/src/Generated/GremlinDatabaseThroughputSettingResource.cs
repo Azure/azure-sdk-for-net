@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(ResourceType, out string gremlinDatabaseThroughputSettingApiVersion);
             _gremlinResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _gremlinResourcesRestClient = new GremlinResources(_gremlinResourcesClientDiagnostics, Pipeline, Endpoint, gremlinDatabaseThroughputSettingApiVersion ?? "2025-11-01-preview");
+            _gremlinResourcesRestClient = new GremlinResources(_gremlinResourcesClientDiagnostics, Pipeline, Endpoint, gremlinDatabaseThroughputSettingApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.CosmosDB
                 HttpMessage message = _gremlinResourcesRestClient.CreateUpdateGremlinDatabaseThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, ThroughputSettingsUpdateData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource> operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(
-                    new GremlinDatabaseThroughputSettingOperationSource(Client),
+                    new GremlinDatabaseThroughputSettingResourceOperationSource(Client),
                     _gremlinResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.CosmosDB
                 HttpMessage message = _gremlinResourcesRestClient.CreateUpdateGremlinDatabaseThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, ThroughputSettingsUpdateData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource> operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(
-                    new GremlinDatabaseThroughputSettingOperationSource(Client),
+                    new GremlinDatabaseThroughputSettingResourceOperationSource(Client),
                     _gremlinResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.CosmosDB
                 HttpMessage message = _gremlinResourcesRestClient.CreateMigrateGremlinDatabaseToAutoscaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource> operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(
-                    new GremlinDatabaseThroughputSettingOperationSource(Client),
+                    new GremlinDatabaseThroughputSettingResourceOperationSource(Client),
                     _gremlinResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.CosmosDB
                 HttpMessage message = _gremlinResourcesRestClient.CreateMigrateGremlinDatabaseToAutoscaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource> operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(
-                    new GremlinDatabaseThroughputSettingOperationSource(Client),
+                    new GremlinDatabaseThroughputSettingResourceOperationSource(Client),
                     _gremlinResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.CosmosDB
                 HttpMessage message = _gremlinResourcesRestClient.CreateMigrateGremlinDatabaseToManualThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource> operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(
-                    new GremlinDatabaseThroughputSettingOperationSource(Client),
+                    new GremlinDatabaseThroughputSettingResourceOperationSource(Client),
                     _gremlinResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.CosmosDB
                 HttpMessage message = _gremlinResourcesRestClient.CreateMigrateGremlinDatabaseToManualThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource> operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(
-                    new GremlinDatabaseThroughputSettingOperationSource(Client),
+                    new GremlinDatabaseThroughputSettingResourceOperationSource(Client),
                     _gremlinResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

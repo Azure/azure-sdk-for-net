@@ -47,27 +47,27 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
 
         private ClientDiagnostics DatabaseAccountsClientDiagnostics => _databaseAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DatabaseAccounts DatabaseAccountsRestClient => _databaseAccountsRestClient ??= new DatabaseAccounts(DatabaseAccountsClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
+        private DatabaseAccounts DatabaseAccountsRestClient => _databaseAccountsRestClient ??= new DatabaseAccounts(DatabaseAccountsClientDiagnostics, Pipeline, Endpoint, "2026-04-01-preview");
 
         private ClientDiagnostics GarnetClustersClientDiagnostics => _garnetClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GarnetClusters GarnetClustersRestClient => _garnetClustersRestClient ??= new GarnetClusters(GarnetClustersClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
+        private GarnetClusters GarnetClustersRestClient => _garnetClustersRestClient ??= new GarnetClusters(GarnetClustersClientDiagnostics, Pipeline, Endpoint, "2026-04-01-preview");
 
         private ClientDiagnostics CassandraClustersClientDiagnostics => _cassandraClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CassandraClusters CassandraClustersRestClient => _cassandraClustersRestClient ??= new CassandraClusters(CassandraClustersClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
+        private CassandraClusters CassandraClustersRestClient => _cassandraClustersRestClient ??= new CassandraClusters(CassandraClustersClientDiagnostics, Pipeline, Endpoint, "2026-04-01-preview");
 
         private ClientDiagnostics ThroughputPoolsClientDiagnostics => _throughputPoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ThroughputPools ThroughputPoolsRestClient => _throughputPoolsRestClient ??= new ThroughputPools(ThroughputPoolsClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
+        private ThroughputPools ThroughputPoolsRestClient => _throughputPoolsRestClient ??= new ThroughputPools(ThroughputPoolsClientDiagnostics, Pipeline, Endpoint, "2026-04-01-preview");
 
         private ClientDiagnostics FleetClientDiagnostics => _fleetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Fleet FleetRestClient => _fleetRestClient ??= new Fleet(FleetClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
+        private Fleet FleetRestClient => _fleetRestClient ??= new Fleet(FleetClientDiagnostics, Pipeline, Endpoint, "2026-04-01-preview");
 
         private ClientDiagnostics RestorableDatabaseAccountsClientDiagnostics => _restorableDatabaseAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RestorableDatabaseAccounts RestorableDatabaseAccountsRestClient => _restorableDatabaseAccountsRestClient ??= new RestorableDatabaseAccounts(RestorableDatabaseAccountsClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
+        private RestorableDatabaseAccounts RestorableDatabaseAccountsRestClient => _restorableDatabaseAccountsRestClient ??= new RestorableDatabaseAccounts(RestorableDatabaseAccountsClientDiagnostics, Pipeline, Endpoint, "2026-04-01-preview");
 
         /// <summary> Gets a collection of CosmosDBLocations in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of CosmosDBLocations and their operations over a CosmosDBLocationResource. </returns>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDB
                 HttpMessage message = _databaseAccountsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, CosmosDBAccountCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CosmosDBAccountResource> operation = new CosmosDBArmOperation<CosmosDBAccountResource>(
-                    new CosmosDBAccountOperationSource(Client),
+                    new CosmosDBAccountResourceOperationSource(Client),
                     _databaseAccountsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CosmosDB
                 HttpMessage message = _databaseAccountsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, CosmosDBAccountCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CosmosDBAccountResource> operation = new CosmosDBArmOperation<CosmosDBAccountResource>(
-                    new CosmosDBAccountOperationSource(Client),
+                    new CosmosDBAccountResourceOperationSource(Client),
                     _databaseAccountsClientDiagnostics,
                     Pipeline,
                     message.Request,

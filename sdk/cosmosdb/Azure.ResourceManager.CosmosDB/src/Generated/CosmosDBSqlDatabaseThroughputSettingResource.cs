@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(ResourceType, out string cosmosDBSqlDatabaseThroughputSettingApiVersion);
             _sqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _sqlResourcesRestClient = new SqlResources(_sqlResourcesClientDiagnostics, Pipeline, Endpoint, cosmosDBSqlDatabaseThroughputSettingApiVersion ?? "2025-11-01-preview");
+            _sqlResourcesRestClient = new SqlResources(_sqlResourcesClientDiagnostics, Pipeline, Endpoint, cosmosDBSqlDatabaseThroughputSettingApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.CosmosDB
                 HttpMessage message = _sqlResourcesRestClient.CreateUpdateSqlDatabaseThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, ThroughputSettingsUpdateData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CosmosDBSqlDatabaseThroughputSettingResource> operation = new CosmosDBArmOperation<CosmosDBSqlDatabaseThroughputSettingResource>(
-                    new CosmosDBSqlDatabaseThroughputSettingOperationSource(Client),
+                    new CosmosDBSqlDatabaseThroughputSettingResourceOperationSource(Client),
                     _sqlResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.CosmosDB
                 HttpMessage message = _sqlResourcesRestClient.CreateUpdateSqlDatabaseThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, ThroughputSettingsUpdateData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CosmosDBSqlDatabaseThroughputSettingResource> operation = new CosmosDBArmOperation<CosmosDBSqlDatabaseThroughputSettingResource>(
-                    new CosmosDBSqlDatabaseThroughputSettingOperationSource(Client),
+                    new CosmosDBSqlDatabaseThroughputSettingResourceOperationSource(Client),
                     _sqlResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.CosmosDB
                 HttpMessage message = _sqlResourcesRestClient.CreateMigrateSqlDatabaseToAutoscaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CosmosDBSqlDatabaseThroughputSettingResource> operation = new CosmosDBArmOperation<CosmosDBSqlDatabaseThroughputSettingResource>(
-                    new CosmosDBSqlDatabaseThroughputSettingOperationSource(Client),
+                    new CosmosDBSqlDatabaseThroughputSettingResourceOperationSource(Client),
                     _sqlResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.CosmosDB
                 HttpMessage message = _sqlResourcesRestClient.CreateMigrateSqlDatabaseToAutoscaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CosmosDBSqlDatabaseThroughputSettingResource> operation = new CosmosDBArmOperation<CosmosDBSqlDatabaseThroughputSettingResource>(
-                    new CosmosDBSqlDatabaseThroughputSettingOperationSource(Client),
+                    new CosmosDBSqlDatabaseThroughputSettingResourceOperationSource(Client),
                     _sqlResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.CosmosDB
                 HttpMessage message = _sqlResourcesRestClient.CreateMigrateSqlDatabaseToManualThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CosmosDBSqlDatabaseThroughputSettingResource> operation = new CosmosDBArmOperation<CosmosDBSqlDatabaseThroughputSettingResource>(
-                    new CosmosDBSqlDatabaseThroughputSettingOperationSource(Client),
+                    new CosmosDBSqlDatabaseThroughputSettingResourceOperationSource(Client),
                     _sqlResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.CosmosDB
                 HttpMessage message = _sqlResourcesRestClient.CreateMigrateSqlDatabaseToManualThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CosmosDBSqlDatabaseThroughputSettingResource> operation = new CosmosDBArmOperation<CosmosDBSqlDatabaseThroughputSettingResource>(
-                    new CosmosDBSqlDatabaseThroughputSettingOperationSource(Client),
+                    new CosmosDBSqlDatabaseThroughputSettingResourceOperationSource(Client),
                     _sqlResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

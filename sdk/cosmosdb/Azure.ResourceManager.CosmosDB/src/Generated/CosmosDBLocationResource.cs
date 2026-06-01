@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB
@@ -26,6 +27,8 @@ namespace Azure.ResourceManager.CosmosDB
     {
         private readonly ClientDiagnostics _locationsClientDiagnostics;
         private readonly Locations _locationsRestClient;
+        private readonly ClientDiagnostics _softDeletedDatabaseAccountsClientDiagnostics;
+        private readonly SoftDeletedDatabaseAccounts _softDeletedDatabaseAccountsRestClient;
         private readonly CosmosDBLocationData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/locations";
@@ -51,7 +54,9 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(ResourceType, out string cosmosDBLocationApiVersion);
             _locationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _locationsRestClient = new Locations(_locationsClientDiagnostics, Pipeline, Endpoint, cosmosDBLocationApiVersion ?? "2025-11-01-preview");
+            _locationsRestClient = new Locations(_locationsClientDiagnostics, Pipeline, Endpoint, cosmosDBLocationApiVersion ?? "2026-04-01-preview");
+            _softDeletedDatabaseAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
+            _softDeletedDatabaseAccountsRestClient = new SoftDeletedDatabaseAccounts(_softDeletedDatabaseAccountsClientDiagnostics, Pipeline, Endpoint, cosmosDBLocationApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -103,7 +108,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -151,7 +156,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -178,6 +183,102 @@ namespace Azure.ResourceManager.CosmosDB
                     throw new RequestFailedException(response.GetRawResponse());
                 }
                 return Response.FromValue(new CosmosDBLocationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists all the soft-deleted Azure Cosmos DB database accounts available under the subscription and in a region. This call requires 'Microsoft.DocumentDB/locations/softDeletedDatabaseAccounts/read' permission.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/softDeletedDatabaseAccounts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SoftDeletedDatabaseAccounts_ListByLocation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBLocationResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SoftDeletedDatabaseAccountsListResult>> GetByLocationAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _softDeletedDatabaseAccountsClientDiagnostics.CreateScope("CosmosDBLocationResource.GetByLocation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _softDeletedDatabaseAccountsRestClient.CreateGetByLocationRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SoftDeletedDatabaseAccountsListResult> response = Response.FromValue(SoftDeletedDatabaseAccountsListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists all the soft-deleted Azure Cosmos DB database accounts available under the subscription and in a region. This call requires 'Microsoft.DocumentDB/locations/softDeletedDatabaseAccounts/read' permission.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/softDeletedDatabaseAccounts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SoftDeletedDatabaseAccounts_ListByLocation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBLocationResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SoftDeletedDatabaseAccountsListResult> GetByLocation(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _softDeletedDatabaseAccountsClientDiagnostics.CreateScope("CosmosDBLocationResource.GetByLocation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _softDeletedDatabaseAccountsRestClient.CreateGetByLocationRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SoftDeletedDatabaseAccountsListResult> response = Response.FromValue(SoftDeletedDatabaseAccountsListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
             }
             catch (Exception e)
             {

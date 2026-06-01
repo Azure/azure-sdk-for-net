@@ -413,6 +413,33 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             return new CosmosDBPrivateLinkResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="SoftDeletedDatabaseAccountGetResultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SoftDeletedDatabaseAccountGetResultResource"/> object. </returns>
+        public virtual SoftDeletedDatabaseAccountGetResultResource GetSoftDeletedDatabaseAccountGetResultResource(ResourceIdentifier id)
+        {
+            SoftDeletedDatabaseAccountGetResultResource.ValidateResourceId(id);
+            return new SoftDeletedDatabaseAccountGetResultResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SoftDeletedSqlDatabaseGetResultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SoftDeletedSqlDatabaseGetResultResource"/> object. </returns>
+        public virtual SoftDeletedSqlDatabaseGetResultResource GetSoftDeletedSqlDatabaseGetResultResource(ResourceIdentifier id)
+        {
+            SoftDeletedSqlDatabaseGetResultResource.ValidateResourceId(id);
+            return new SoftDeletedSqlDatabaseGetResultResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SoftDeletedSqlContainerGetResultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SoftDeletedSqlContainerGetResultResource"/> object. </returns>
+        public virtual SoftDeletedSqlContainerGetResultResource GetSoftDeletedSqlContainerGetResultResource(ResourceIdentifier id)
+        {
+            SoftDeletedSqlContainerGetResultResource.ValidateResourceId(id);
+            return new SoftDeletedSqlContainerGetResultResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ChaosFaultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ChaosFaultResource"/> object. </returns>

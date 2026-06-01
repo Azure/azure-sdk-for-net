@@ -760,6 +760,24 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        /// <summary> The configuration for soft delete on the Cosmos DB account. </summary>
+        [WirePath("properties.softDeleteConfiguration")]
+        public SoftDeleteConfiguration SoftDeleteConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SoftDeleteConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.SoftDeleteConfiguration = value;
+            }
+        }
+
         /// <summary> Total dedicated throughput (RU/s) for database account. Represents the sum of all manual provisioned throughput and all autoscale max RU/s across all shared throughput databases and dedicated throughput containers in the account for 1 region. READ ONLY. </summary>
         [WirePath("properties.throughputPoolDedicatedRUs")]
         public long? ThroughputPoolDedicatedRUs
@@ -793,6 +811,24 @@ namespace Azure.ResourceManager.CosmosDB
                     Properties = new CosmosDBAccountProperties();
                 }
                 Properties.ThroughputPoolMaxConsumableRUs = value;
+            }
+        }
+
+        /// <summary> Flag to indicate enabling/disabling of hierarchical partition key ID last level enforcement on the account. </summary>
+        [WirePath("properties.enforceHierarchicalPartitionKeyIdLastLevel")]
+        public bool? EnforceHierarchicalPartitionKeyIdLastLevel
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnforceHierarchicalPartitionKeyIdLastLevel;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.EnforceHierarchicalPartitionKeyIdLastLevel = value;
             }
         }
 

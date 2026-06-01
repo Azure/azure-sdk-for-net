@@ -162,6 +162,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
+        /// <summary> The configuration for soft delete on the Cosmos DB account. </summary>
+        [WirePath("properties.softDeleteConfiguration")]
+        public SoftDeleteConfiguration SoftDeleteConfiguration
+        {
+            get
+            {
+                return Properties.SoftDeleteConfiguration;
+            }
+        }
+
+        /// <summary> Flag to indicate enabling/disabling of hierarchical partition key ID last level enforcement on the account. </summary>
+        [WirePath("properties.enforceHierarchicalPartitionKeyIdLastLevel")]
+        public bool? EnforceHierarchicalPartitionKeyIdLastLevel
+        {
+            get
+            {
+                return Properties.EnforceHierarchicalPartitionKeyIdLastLevel;
+            }
+        }
+
         /// <summary> Describe the level of detail with which queries are to be logged. </summary>
         [WirePath("properties.diagnosticLogSettings.enableFullTextQuery")]
         public CosmosDBFullTextQueryState? DiagnosticLogEnableFullTextQuery

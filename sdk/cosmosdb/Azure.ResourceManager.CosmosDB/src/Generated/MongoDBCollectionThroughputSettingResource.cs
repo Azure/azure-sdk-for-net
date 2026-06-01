@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(ResourceType, out string mongoDBCollectionThroughputSettingApiVersion);
             _mongoDBResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _mongoDBResourcesRestClient = new MongoDBResources(_mongoDBResourcesClientDiagnostics, Pipeline, Endpoint, mongoDBCollectionThroughputSettingApiVersion ?? "2025-11-01-preview");
+            _mongoDBResourcesRestClient = new MongoDBResources(_mongoDBResourcesClientDiagnostics, Pipeline, Endpoint, mongoDBCollectionThroughputSettingApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.CosmosDB
                 HttpMessage message = _mongoDBResourcesRestClient.CreateUpdateMongoDBCollectionThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, ThroughputSettingsUpdateData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<MongoDBCollectionThroughputSettingResource> operation = new CosmosDBArmOperation<MongoDBCollectionThroughputSettingResource>(
-                    new MongoDBCollectionThroughputSettingOperationSource(Client),
+                    new MongoDBCollectionThroughputSettingResourceOperationSource(Client),
                     _mongoDBResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.CosmosDB
                 HttpMessage message = _mongoDBResourcesRestClient.CreateUpdateMongoDBCollectionThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, ThroughputSettingsUpdateData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<MongoDBCollectionThroughputSettingResource> operation = new CosmosDBArmOperation<MongoDBCollectionThroughputSettingResource>(
-                    new MongoDBCollectionThroughputSettingOperationSource(Client),
+                    new MongoDBCollectionThroughputSettingResourceOperationSource(Client),
                     _mongoDBResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.CosmosDB
                 HttpMessage message = _mongoDBResourcesRestClient.CreateMigrateMongoDBCollectionToAutoscaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<MongoDBCollectionThroughputSettingResource> operation = new CosmosDBArmOperation<MongoDBCollectionThroughputSettingResource>(
-                    new MongoDBCollectionThroughputSettingOperationSource(Client),
+                    new MongoDBCollectionThroughputSettingResourceOperationSource(Client),
                     _mongoDBResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.CosmosDB
                 HttpMessage message = _mongoDBResourcesRestClient.CreateMigrateMongoDBCollectionToAutoscaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<MongoDBCollectionThroughputSettingResource> operation = new CosmosDBArmOperation<MongoDBCollectionThroughputSettingResource>(
-                    new MongoDBCollectionThroughputSettingOperationSource(Client),
+                    new MongoDBCollectionThroughputSettingResourceOperationSource(Client),
                     _mongoDBResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.CosmosDB
                 HttpMessage message = _mongoDBResourcesRestClient.CreateMigrateMongoDBCollectionToManualThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<MongoDBCollectionThroughputSettingResource> operation = new CosmosDBArmOperation<MongoDBCollectionThroughputSettingResource>(
-                    new MongoDBCollectionThroughputSettingOperationSource(Client),
+                    new MongoDBCollectionThroughputSettingResourceOperationSource(Client),
                     _mongoDBResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.CosmosDB
                 HttpMessage message = _mongoDBResourcesRestClient.CreateMigrateMongoDBCollectionToManualThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<MongoDBCollectionThroughputSettingResource> operation = new CosmosDBArmOperation<MongoDBCollectionThroughputSettingResource>(
-                    new MongoDBCollectionThroughputSettingOperationSource(Client),
+                    new MongoDBCollectionThroughputSettingResourceOperationSource(Client),
                     _mongoDBResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

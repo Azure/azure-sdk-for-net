@@ -290,6 +290,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("enableAllVersionsAndDeletesChangeFeed"u8);
                 writer.WriteBooleanValue(EnableAllVersionsAndDeletesChangeFeed.Value);
             }
+            if (Optional.IsDefined(SoftDeleteConfiguration))
+            {
+                writer.WritePropertyName("softDeleteConfiguration"u8);
+                writer.WriteObjectValue(SoftDeleteConfiguration, options);
+            }
+            if (Optional.IsDefined(EnforceHierarchicalPartitionKeyIdLastLevel))
+            {
+                writer.WritePropertyName("enforceHierarchicalPartitionKeyIdLastLevel"u8);
+                writer.WriteBooleanValue(EnforceHierarchicalPartitionKeyIdLastLevel.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -368,6 +378,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             DefaultPriorityLevel? defaultPriorityLevel = default;
             bool? enablePerRegionPerPartitionAutoscale = default;
             bool? enableAllVersionsAndDeletesChangeFeed = default;
+            SoftDeleteConfiguration softDeleteConfiguration = default;
+            bool? enforceHierarchicalPartitionKeyIdLastLevel = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -724,6 +736,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     enableAllVersionsAndDeletesChangeFeed = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("softDeleteConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    softDeleteConfiguration = SoftDeleteConfiguration.DeserializeSoftDeleteConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("enforceHierarchicalPartitionKeyIdLastLevel"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enforceHierarchicalPartitionKeyIdLastLevel = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -766,6 +796,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 defaultPriorityLevel,
                 enablePerRegionPerPartitionAutoscale,
                 enableAllVersionsAndDeletesChangeFeed,
+                softDeleteConfiguration,
+                enforceHierarchicalPartitionKeyIdLastLevel,
                 additionalBinaryDataProperties);
         }
     }

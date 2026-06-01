@@ -600,6 +600,42 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
+        /// <summary> The configuration for soft delete on the Cosmos DB account. </summary>
+        [WirePath("properties.softDeleteConfiguration")]
+        public SoftDeleteConfiguration SoftDeleteConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SoftDeleteConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountUpdateProperties();
+                }
+                Properties.SoftDeleteConfiguration = value;
+            }
+        }
+
+        /// <summary> Flag to indicate enabling/disabling of hierarchical partition key ID last level enforcement on the account. </summary>
+        [WirePath("properties.enforceHierarchicalPartitionKeyIdLastLevel")]
+        public bool? EnforceHierarchicalPartitionKeyIdLastLevel
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnforceHierarchicalPartitionKeyIdLastLevel;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountUpdateProperties();
+                }
+                Properties.EnforceHierarchicalPartitionKeyIdLastLevel = value;
+            }
+        }
+
         /// <summary> Describes the version of the MongoDB account. </summary>
         [WirePath("properties.apiProperties.serverVersion")]
         public CosmosDBServerVersion? ApiServerVersion

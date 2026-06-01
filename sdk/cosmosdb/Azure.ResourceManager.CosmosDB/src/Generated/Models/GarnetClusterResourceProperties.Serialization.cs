@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("replicationFactor"u8);
                 writer.WriteNumberValue(ReplicationFactor.Value);
             }
-            if (Optional.IsDefined(NodeCount))
+            if (Optional.IsDefined(ShardCount))
             {
-                writer.WritePropertyName("nodeCount"u8);
-                writer.WriteNumberValue(NodeCount.Value);
+                writer.WritePropertyName("shardCount"u8);
+                writer.WriteNumberValue(ShardCount.Value);
             }
             if (Optional.IsDefined(NodeSku))
             {
@@ -116,6 +116,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteBooleanValue(IsAvailabilityZoneEnabled.Value);
+            }
+            if (Optional.IsDefined(AuthenticationMethod))
+            {
+                writer.WritePropertyName("authenticationMethod"u8);
+                writer.WriteStringValue(AuthenticationMethod.Value.ToString());
+            }
+            if (Optional.IsDefined(Persistence))
+            {
+                writer.WritePropertyName("persistence"u8);
+                writer.WriteBooleanValue(Persistence.Value);
             }
             if (Optional.IsDefined(AllocationState))
             {
@@ -193,9 +203,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ResourceIdentifier subnetId = default;
             IReadOnlyList<GarnetClusterResourcePropertiesEndPointsItem> endPoints = default;
             int? replicationFactor = default;
-            int? nodeCount = default;
+            int? shardCount = default;
             string nodeSku = default;
             bool? isAvailabilityZoneEnabled = default;
+            GarnetAuthenticationType? authenticationMethod = default;
+            bool? persistence = default;
             AllocationState? allocationState = default;
             CassandraClusterType? clusterType = default;
             ResponseError provisionError = default;
@@ -244,13 +256,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     replicationFactor = prop.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("nodeCount"u8))
+                if (prop.NameEquals("shardCount"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nodeCount = prop.Value.GetInt32();
+                    shardCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("nodeSku"u8))
@@ -265,6 +277,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         continue;
                     }
                     isAvailabilityZoneEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("authenticationMethod"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    authenticationMethod = new GarnetAuthenticationType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("persistence"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    persistence = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("allocationState"u8))
@@ -325,9 +355,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 subnetId,
                 endPoints ?? new ChangeTrackingList<GarnetClusterResourcePropertiesEndPointsItem>(),
                 replicationFactor,
-                nodeCount,
+                shardCount,
                 nodeSku,
                 isAvailabilityZoneEnabled,
+                authenticationMethod,
+                persistence,
                 allocationState,
                 clusterType,
                 provisionError,
