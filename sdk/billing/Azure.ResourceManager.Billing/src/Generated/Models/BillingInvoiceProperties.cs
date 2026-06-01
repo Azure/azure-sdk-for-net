@@ -93,15 +93,15 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The amount due as of now. </summary>
         [WirePath("amountDue")]
-        public BillingAmount AmountDue { get; set; }
+        public BillingAmount AmountDue { get; }
 
         /// <summary> The amount of Azure prepayment applied to the charges. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
         [WirePath("azurePrepaymentApplied")]
-        public BillingAmount AzurePrepaymentApplied { get; set; }
+        public BillingAmount AzurePrepaymentApplied { get; }
 
         /// <summary> The total charges for the invoice billing period. </summary>
         [WirePath("billedAmount")]
-        public BillingAmount BilledAmount { get; set; }
+        public BillingAmount BilledAmount { get; }
 
         /// <summary> The Id of the active invoice which is originally billed after this invoice was voided. This field is applicable to the void invoices only. </summary>
         [WirePath("billedDocumentId")]
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The total refund for returns and cancellations during the invoice billing period. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
         [WirePath("creditAmount")]
-        public BillingAmount CreditAmount { get; set; }
+        public BillingAmount CreditAmount { get; }
 
         /// <summary> The Id of the invoice which got voided and this credit note was issued as a result. This field is applicable to the credit notes only. </summary>
         [WirePath("creditForDocumentId")]
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The amount of free Azure credits applied to the charges. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
         [WirePath("freeAzureCreditApplied")]
-        public BillingAmount FreeAzureCreditApplied { get; set; }
+        public BillingAmount FreeAzureCreditApplied { get; }
 
         /// <summary> The date when the invoice was generated. </summary>
         [WirePath("invoiceDate")]
@@ -193,15 +193,15 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The pre-tax amount due. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
         [WirePath("subTotal")]
-        public BillingAmount SubTotal { get; set; }
+        public BillingAmount SubTotal { get; }
 
         /// <summary> The amount of tax charged for the billing period. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
         [WirePath("taxAmount")]
-        public BillingAmount TaxAmount { get; set; }
+        public BillingAmount TaxAmount { get; }
 
         /// <summary> The amount due when the invoice was generated. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
         [WirePath("totalAmount")]
-        public BillingAmount TotalAmount { get; set; }
+        public BillingAmount TotalAmount { get; }
 
         /// <summary> The details of a refund request. </summary>
         [WirePath("refundDetails")]

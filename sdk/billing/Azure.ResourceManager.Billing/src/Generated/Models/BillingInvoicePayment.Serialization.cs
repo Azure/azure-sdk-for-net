@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 throw new FormatException($"The model {nameof(BillingInvoicePayment)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Amount))
+            if (options.Format != "W" && Optional.IsDefined(Amount))
             {
                 writer.WritePropertyName("amount"u8);
                 writer.WriteObjectValue(Amount, options);

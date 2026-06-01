@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> MpnSponsorship. </summary>
         private const string MpnSponsorshipValue = "MpnSponsorship";
         /// <summary> MSDN. </summary>
-        private const string MSDNValue = "MSDN";
+        private const string MsdnValue = "MSDN";
         /// <summary> NonProfitSponsorship. </summary>
         private const string NonProfitSponsorshipValue = "NonProfitSponsorship";
         /// <summary> Sponsorship. </summary>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static SpendingLimitType MpnSponsorship { get; } = new SpendingLimitType(MpnSponsorshipValue);
 
         /// <summary> MSDN. </summary>
-        public static SpendingLimitType MSDN { get; } = new SpendingLimitType(MSDNValue);
+        public static SpendingLimitType Msdn { get; } = new SpendingLimitType(MsdnValue);
 
         /// <summary> NonProfitSponsorship. </summary>
         public static SpendingLimitType NonProfitSponsorship { get; } = new SpendingLimitType(NonProfitSponsorshipValue);

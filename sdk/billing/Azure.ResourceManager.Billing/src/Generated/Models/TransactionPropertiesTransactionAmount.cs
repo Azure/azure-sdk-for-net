@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Billing.Models
     public partial class TransactionPropertiesTransactionAmount : BillingAmount
     {
         /// <summary> Initializes a new instance of <see cref="TransactionPropertiesTransactionAmount"/>. </summary>
-        public TransactionPropertiesTransactionAmount()
+        internal TransactionPropertiesTransactionAmount()
         {
         }
 

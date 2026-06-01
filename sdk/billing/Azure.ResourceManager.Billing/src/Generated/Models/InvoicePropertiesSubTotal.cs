@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Billing.Models
     public partial class InvoicePropertiesSubTotal : BillingAmount
     {
         /// <summary> Initializes a new instance of <see cref="InvoicePropertiesSubTotal"/>. </summary>
-        public InvoicePropertiesSubTotal()
+        internal InvoicePropertiesSubTotal()
         {
         }
 

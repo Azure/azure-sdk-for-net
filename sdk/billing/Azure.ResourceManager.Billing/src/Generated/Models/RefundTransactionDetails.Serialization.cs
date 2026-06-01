@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 throw new FormatException($"The model {nameof(RefundTransactionDetails)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AmountRequested))
+            if (options.Format != "W" && Optional.IsDefined(AmountRequested))
             {
                 writer.WritePropertyName("amountRequested"u8);
                 writer.WriteObjectValue(AmountRequested, options);
             }
-            if (Optional.IsDefined(AmountRefunded))
+            if (options.Format != "W" && Optional.IsDefined(AmountRefunded))
             {
                 writer.WritePropertyName("amountRefunded"u8);
                 writer.WriteObjectValue(AmountRefunded, options);

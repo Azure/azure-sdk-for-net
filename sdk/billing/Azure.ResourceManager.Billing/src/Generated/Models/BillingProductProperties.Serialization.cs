@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("invoiceSectionDisplayName"u8);
                 writer.WriteStringValue(InvoiceSectionDisplayName);
             }
-            if (Optional.IsDefined(LastCharge))
+            if (options.Format != "W" && Optional.IsDefined(LastCharge))
             {
                 writer.WritePropertyName("lastCharge"u8);
                 writer.WriteObjectValue(LastCharge, options);

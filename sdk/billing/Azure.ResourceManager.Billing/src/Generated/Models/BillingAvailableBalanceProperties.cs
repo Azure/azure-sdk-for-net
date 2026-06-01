@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Credit amount for immediate payment. </summary>
         [WirePath("amount")]
-        public BillingAmount Amount { get; set; }
+        public BillingAmount Amount { get; }
 
         /// <summary> The list of payments on accounts. </summary>
         [WirePath("paymentsOnAccount")]
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Total amount of payments on accounts. </summary>
         [WirePath("totalPaymentsOnAccount")]
-        public BillingAmount TotalPaymentsOnAccount { get; set; }
+        public BillingAmount TotalPaymentsOnAccount { get; }
     }
 }

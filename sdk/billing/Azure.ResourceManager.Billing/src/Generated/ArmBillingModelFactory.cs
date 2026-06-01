@@ -2406,6 +2406,92 @@ namespace Azure.ResourceManager.Billing.Models
                 tags);
         }
 
+        /// <summary> A transaction. </summary>
+        /// <param name="azureCreditApplied"> The amount of any Azure credits automatically applied to this transaction. </param>
+        /// <param name="azurePlan"> Details of the Azure plan. </param>
+        /// <param name="billingCurrency"> The ISO 4217 code for the currency in which this transaction is billed. </param>
+        /// <param name="billingProfileDisplayName"> The name of the billing profile. </param>
+        /// <param name="billingProfileId"> The fully qualified ID that uniquely identifies a billing profile. </param>
+        /// <param name="consumptionCommitmentDecremented"> The amount of Microsoft Azure Consumption Commitment(MACC) decrement through the transaction. </param>
+        /// <param name="customerDisplayName"> The name of the customer. </param>
+        /// <param name="customerId"> The fully qualified ID that uniquely identifies a customer. </param>
+        /// <param name="creditType"> The credit type of the transaction. Applies only to credited transactions. </param>
+        /// <param name="on"> The date of transaction. </param>
+        /// <param name="discount"> The percentage discount, if any, applied to this transaction. </param>
+        /// <param name="effectivePrice"> The price of the product after applying any discounts. </param>
+        /// <param name="exchangeRate"> The exchange rate used to convert charged amount to billing currency, if applicable. </param>
+        /// <param name="invoice"> Invoice name on which the transaction was billed or 'Pending' if the transaction is not billed. </param>
+        /// <param name="invoiceId"> The fully qualified ID of the invoice on which the transaction was billed. This field is only applicable for transactions which are billed. </param>
+        /// <param name="invoiceSectionDisplayName"> The name of the invoice section. </param>
+        /// <param name="invoiceSectionId"> The fully qualified ID that uniquely identifies an invoice section. </param>
+        /// <param name="isThirdParty"> Whether or not the transaction is third party. </param>
+        /// <param name="kind"> Type of the transaction, billed or unbilled. </param>
+        /// <param name="marketPrice"> The retail price of the product. </param>
+        /// <param name="partNumber"> The part number of the product for which the transaction took place. The field is only applicable for Enterprise Agreement invoices. </param>
+        /// <param name="pricingCurrency"> The ISO 4217 code for the currency in which the product is priced. </param>
+        /// <param name="productDescription"> The description of the product for which the transaction took place. </param>
+        /// <param name="productFamily"> The family of the product for which the transaction took place. </param>
+        /// <param name="productTypeId"> The ID of the product type for which the transaction took place. </param>
+        /// <param name="productType"> The type of the product for which the transaction took place. </param>
+        /// <param name="quantity"> The quantity purchased in the transaction. </param>
+        /// <param name="reasonCode"> There reason code for the transaction. </param>
+        /// <param name="servicePeriodStartOn"> The date of the purchase of the product, or the start date of the month in which usage started. </param>
+        /// <param name="servicePeriodEndOn"> The end date of the product term, or the end date of the month in which usage ended. </param>
+        /// <param name="subTotal"> The pre-tax charged amount for the transaction. </param>
+        /// <param name="tax"> The tax amount applied to the transaction. </param>
+        /// <param name="transactionAmount"> The charge associated with the transaction. </param>
+        /// <param name="transactionType"> The type of transaction. </param>
+        /// <param name="units"> The number of units used for a given product. </param>
+        /// <param name="unitOfMeasure"> The unit of measure used to bill for the product. For example, compute services are billed per hour. </param>
+        /// <param name="unitType"> The description for the unit of measure for a given product. </param>
+        /// <param name="specialTaxationType"> Identifies the type of tax calculation used for the invoice. The field is applicable only to invoices with special tax calculation logic. </param>
+        /// <param name="refundTransactionDetails"> The refund details of a transaction. </param>
+        /// <returns> A new <see cref="Models.BillingTransactionProperties"/> instance for mocking. </returns>
+        public static BillingTransactionProperties BillingTransactionProperties(BillingAmount azureCreditApplied = default, string azurePlan = default, string billingCurrency = default, BinaryData billingProfileDisplayName = default, ResourceIdentifier billingProfileId = default, BillingAmount consumptionCommitmentDecremented = default, string customerDisplayName = default, ResourceIdentifier customerId = default, BillingTransactionCreditType? creditType = default, DateTimeOffset? @on = default, float? discount = default, BillingAmount effectivePrice = default, float? exchangeRate = default, string invoice = default, ResourceIdentifier invoiceId = default, string invoiceSectionDisplayName = default, ResourceIdentifier invoiceSectionId = default, bool? isThirdParty = default, BillingTransactionKind? kind = default, BillingAmount marketPrice = default, string partNumber = default, string pricingCurrency = default, string productDescription = default, string productFamily = default, string productTypeId = default, string productType = default, int? quantity = default, string reasonCode = default, DateTimeOffset? servicePeriodStartOn = default, DateTimeOffset? servicePeriodEndOn = default, BillingAmount subTotal = default, BillingAmount tax = default, BillingAmount transactionAmount = default, string transactionType = default, float? units = default, string unitOfMeasure = default, string unitType = default, SpecialTaxationType? specialTaxationType = default, RefundTransactionDetails refundTransactionDetails = default)
+        {
+            return new BillingTransactionProperties(
+                azureCreditApplied,
+                azurePlan,
+                billingCurrency,
+                billingProfileDisplayName,
+                billingProfileId,
+                consumptionCommitmentDecremented,
+                customerDisplayName,
+                customerId,
+                creditType,
+                @on,
+                discount,
+                effectivePrice,
+                exchangeRate,
+                invoice,
+                invoiceId,
+                invoiceSectionDisplayName,
+                invoiceSectionId,
+                isThirdParty,
+                kind,
+                marketPrice,
+                partNumber,
+                pricingCurrency,
+                productDescription,
+                productFamily,
+                productTypeId,
+                productType,
+                quantity,
+                reasonCode,
+                servicePeriodStartOn,
+                servicePeriodEndOn,
+                subTotal,
+                tax,
+                transactionAmount,
+                transactionType,
+                units,
+                unitOfMeasure,
+                unitType,
+                specialTaxationType,
+                refundTransactionDetails,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The amount of any Azure credits automatically applied to this transaction. </summary>
         /// <param name="currency"> The currency for the amount value. </param>
         /// <param name="value"> The amount value. For example, if the currency is USD, then a value of 600 would be $600.00. </param>
@@ -2467,6 +2553,26 @@ namespace Azure.ResourceManager.Billing.Models
         public static TransactionPropertiesTransactionAmount TransactionPropertiesTransactionAmount(string currency = default, float? value = default)
         {
             return new TransactionPropertiesTransactionAmount(currency, value, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The refund details of a transaction. </summary>
+        /// <param name="amountRequested"> The amount of refund requested. </param>
+        /// <param name="amountRefunded"> The amount refunded. </param>
+        /// <param name="refundOperationId"> The ID of refund operation. </param>
+        /// <returns> A new <see cref="Models.TransactionPropertiesRefundTransactionDetails"/> instance for mocking. </returns>
+        public static TransactionPropertiesRefundTransactionDetails TransactionPropertiesRefundTransactionDetails(BillingAmount amountRequested = default, BillingAmount amountRefunded = default, string refundOperationId = default)
+        {
+            return new TransactionPropertiesRefundTransactionDetails(amountRequested, amountRefunded, refundOperationId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The refund details of a transaction. </summary>
+        /// <param name="amountRequested"> The amount of refund requested. </param>
+        /// <param name="amountRefunded"> The amount refunded. </param>
+        /// <param name="refundOperationId"> The ID of refund operation. </param>
+        /// <returns> A new <see cref="Models.RefundTransactionDetails"/> instance for mocking. </returns>
+        public static RefundTransactionDetails RefundTransactionDetails(BillingAmount amountRequested = default, BillingAmount amountRefunded = default, string refundOperationId = default)
+        {
+            return new RefundTransactionDetails(amountRequested, amountRefunded, refundOperationId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The amount of refund requested. </summary>
@@ -3762,104 +3868,6 @@ namespace Azure.ResourceManager.Billing.Models
                     default),
                 etag,
                 tags);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.BillingTransactionProperties"/>. </summary>
-        /// <param name="azureCreditApplied"> The amount of any Azure credits automatically applied to this transaction. </param>
-        /// <param name="azurePlan"> Details of the Azure plan. </param>
-        /// <param name="billingCurrency"> The ISO 4217 code for the currency in which this transaction is billed. </param>
-        /// <param name="billingProfileDisplayName"> The name of the billing profile. </param>
-        /// <param name="billingProfileId"> The fully qualified ID that uniquely identifies a billing profile. </param>
-        /// <param name="consumptionCommitmentDecremented"> The amount of Microsoft Azure Consumption Commitment(MACC) decrement through the transaction. </param>
-        /// <param name="customerDisplayName"> The name of the customer. </param>
-        /// <param name="customerId"> The fully qualified ID that uniquely identifies a customer. </param>
-        /// <param name="creditType"> The credit type of the transaction. Applies only to credited transactions. </param>
-        /// <param name="on"> The date of transaction. </param>
-        /// <param name="discount"> The percentage discount, if any, applied to this transaction. </param>
-        /// <param name="effectivePrice"> The price of the product after applying any discounts. </param>
-        /// <param name="exchangeRate"> The exchange rate used to convert charged amount to billing currency, if applicable. </param>
-        /// <param name="invoice"> Invoice name on which the transaction was billed or 'Pending' if the transaction is not billed. </param>
-        /// <param name="invoiceId"> The fully qualified ID of the invoice on which the transaction was billed. This field is only applicable for transactions which are billed. </param>
-        /// <param name="invoiceSectionDisplayName"> The name of the invoice section. </param>
-        /// <param name="invoiceSectionId"> The fully qualified ID that uniquely identifies an invoice section. </param>
-        /// <param name="isThirdParty"> Whether or not the transaction is third party. </param>
-        /// <param name="kind"> Type of the transaction, billed or unbilled. </param>
-        /// <param name="marketPrice"> The retail price of the product. </param>
-        /// <param name="partNumber"> The part number of the product for which the transaction took place. The field is only applicable for Enterprise Agreement invoices. </param>
-        /// <param name="pricingCurrency"> The ISO 4217 code for the currency in which the product is priced. </param>
-        /// <param name="productDescription"> The description of the product for which the transaction took place. </param>
-        /// <param name="productFamily"> The family of the product for which the transaction took place. </param>
-        /// <param name="productTypeId"> The ID of the product type for which the transaction took place. </param>
-        /// <param name="productType"> The type of the product for which the transaction took place. </param>
-        /// <param name="quantity"> The quantity purchased in the transaction. </param>
-        /// <param name="reasonCode"> There reason code for the transaction. </param>
-        /// <param name="servicePeriodStartOn"> The date of the purchase of the product, or the start date of the month in which usage started. </param>
-        /// <param name="servicePeriodEndOn"> The end date of the product term, or the end date of the month in which usage ended. </param>
-        /// <param name="subTotal"> The pre-tax charged amount for the transaction. </param>
-        /// <param name="tax"> The tax amount applied to the transaction. </param>
-        /// <param name="transactionAmount"> The charge associated with the transaction. </param>
-        /// <param name="transactionType"> The type of transaction. </param>
-        /// <param name="units"> The number of units used for a given product. </param>
-        /// <param name="unitOfMeasure"> The unit of measure used to bill for the product. For example, compute services are billed per hour. </param>
-        /// <param name="unitType"> The description for the unit of measure for a given product. </param>
-        /// <param name="specialTaxationType"> Identifies the type of tax calculation used for the invoice. The field is applicable only to invoices with special tax calculation logic. </param>
-        /// <param name="refundTransactionDetails"> The refund details of a transaction. </param>
-        /// <returns> A new <see cref="Models.BillingTransactionProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BillingTransactionProperties BillingTransactionProperties(BillingAmount azureCreditApplied, string azurePlan, string billingCurrency, BinaryData billingProfileDisplayName, ResourceIdentifier billingProfileId, BillingAmount consumptionCommitmentDecremented, string customerDisplayName, ResourceIdentifier customerId, BillingTransactionCreditType? creditType, DateTimeOffset? @on, float? discount, BillingAmount effectivePrice, float? exchangeRate, string invoice, ResourceIdentifier invoiceId, string invoiceSectionDisplayName, ResourceIdentifier invoiceSectionId, bool? isThirdParty, BillingTransactionKind? kind, BillingAmount marketPrice, string partNumber, string pricingCurrency, string productDescription, string productFamily, string productTypeId, string productType, int? quantity, string reasonCode, DateTimeOffset? servicePeriodStartOn, DateTimeOffset? servicePeriodEndOn, BillingAmount subTotal, BillingAmount tax, BillingAmount transactionAmount, string transactionType, float? units, string unitOfMeasure, string unitType, SpecialTaxationType? specialTaxationType, RefundTransactionDetails refundTransactionDetails)
-        {
-            return new BillingTransactionProperties(
-                azureCreditApplied,
-                azurePlan,
-                billingCurrency,
-                billingProfileDisplayName,
-                billingProfileId,
-                consumptionCommitmentDecremented,
-                customerDisplayName,
-                customerId,
-                creditType,
-                @on,
-                discount,
-                effectivePrice,
-                exchangeRate,
-                invoice,
-                invoiceId,
-                invoiceSectionDisplayName,
-                invoiceSectionId,
-                isThirdParty,
-                kind,
-                marketPrice,
-                partNumber,
-                pricingCurrency,
-                productDescription,
-                productFamily,
-                productTypeId,
-                productType,
-                quantity,
-                reasonCode,
-                servicePeriodStartOn,
-                servicePeriodEndOn,
-                subTotal,
-                tax,
-                transactionAmount,
-                transactionType,
-                units,
-                unitOfMeasure,
-                unitType,
-                specialTaxationType,
-                refundTransactionDetails,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RefundTransactionDetails"/>. </summary>
-        /// <param name="amountRequested"> The amount of refund requested. </param>
-        /// <param name="amountRefunded"> The amount refunded. </param>
-        /// <param name="refundOperationId"> The ID of refund operation. </param>
-        /// <returns> A new <see cref="Models.RefundTransactionDetails"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RefundTransactionDetails RefundTransactionDetails(BillingAmount amountRequested, BillingAmount amountRefunded, string refundOperationId)
-        {
-            return new RefundTransactionDetails(amountRequested, amountRefunded, refundOperationId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of SubscriptionRenewalTermDetails. </summary>

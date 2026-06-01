@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Billing.Models
     public partial class InvoicePropertiesFreeAzureCreditApplied : BillingAmount
     {
         /// <summary> Initializes a new instance of <see cref="InvoicePropertiesFreeAzureCreditApplied"/>. </summary>
-        public InvoicePropertiesFreeAzureCreditApplied()
+        internal InvoicePropertiesFreeAzureCreditApplied()
         {
         }
 

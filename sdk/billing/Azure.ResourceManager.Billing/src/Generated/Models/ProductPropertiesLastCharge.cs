@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Billing.Models
     public partial class ProductPropertiesLastCharge : BillingAmount
     {
         /// <summary> Initializes a new instance of <see cref="ProductPropertiesLastCharge"/>. </summary>
-        public ProductPropertiesLastCharge()
+        internal ProductPropertiesLastCharge()
         {
         }
 
