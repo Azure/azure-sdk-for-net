@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 HttpMessage message = _virtualNetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DevTestLabVirtualNetworkData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation<DevTestLabVirtualNetworkResource> operation = new DevTestLabsArmOperation<DevTestLabVirtualNetworkResource>(
-                    new DevTestLabVirtualNetworkOperationSource(Client),
+                    new DevTestLabVirtualNetworkResourceOperationSource(Client),
                     _virtualNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 HttpMessage message = _virtualNetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DevTestLabVirtualNetworkData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation<DevTestLabVirtualNetworkResource> operation = new DevTestLabsArmOperation<DevTestLabVirtualNetworkResource>(
-                    new DevTestLabVirtualNetworkOperationSource(Client),
+                    new DevTestLabVirtualNetworkResourceOperationSource(Client),
                     _virtualNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,

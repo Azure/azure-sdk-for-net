@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.FileShares
                 HttpMessage message = _fileSharesInterfaceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, FileShareData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FileSharesArmOperation<FileShareResource> operation = new FileSharesArmOperation<FileShareResource>(
-                    new FileShareOperationSource(Client),
+                    new FileShareResourceOperationSource(Client),
                     _fileSharesInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.FileShares
                 HttpMessage message = _fileSharesInterfaceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, FileShareData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FileSharesArmOperation<FileShareResource> operation = new FileSharesArmOperation<FileShareResource>(
-                    new FileShareOperationSource(Client),
+                    new FileShareResourceOperationSource(Client),
                     _fileSharesInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,

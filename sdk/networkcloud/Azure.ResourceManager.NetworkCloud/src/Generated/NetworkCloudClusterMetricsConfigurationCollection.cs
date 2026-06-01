@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _clusterMetricsConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metricsConfigurationName, NetworkCloudClusterMetricsConfigurationData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudClusterMetricsConfigurationResource> operation = new NetworkCloudArmOperation<NetworkCloudClusterMetricsConfigurationResource>(
-                    new NetworkCloudClusterMetricsConfigurationOperationSource(Client),
+                    new NetworkCloudClusterMetricsConfigurationResourceOperationSource(Client),
                     _clusterMetricsConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _clusterMetricsConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metricsConfigurationName, NetworkCloudClusterMetricsConfigurationData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudClusterMetricsConfigurationResource> operation = new NetworkCloudArmOperation<NetworkCloudClusterMetricsConfigurationResource>(
-                    new NetworkCloudClusterMetricsConfigurationOperationSource(Client),
+                    new NetworkCloudClusterMetricsConfigurationResourceOperationSource(Client),
                     _clusterMetricsConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
