@@ -22,17 +22,14 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Initializes a new instance of <see cref="ResponseWebSearchCallItem"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="id"></param>
         /// <param name="object"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="id"> The unique ID of the web search tool call. </param>
         /// <param name="status"> The status of the web search tool call. </param>
-        internal ResponseWebSearchCallItem(ItemType @type, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, ResponseWebSearchCallItemStatus status) : base(@type, id, @object, additionalBinaryDataProperties)
+        internal ResponseWebSearchCallItem(ItemType @type, string id, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseWebSearchCallItemStatus status) : base(@type, id, @object, additionalBinaryDataProperties)
         {
             Status = status;
         }
-
-        /// <summary> The unique ID of the web search tool call. </summary>
-        public override string Id { get; }
 
         /// <summary> The status of the web search tool call. </summary>
         public ResponseWebSearchCallItemStatus Status { get; }

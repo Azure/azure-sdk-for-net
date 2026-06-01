@@ -244,7 +244,7 @@ namespace Azure.AI.VoiceLive
         /// an absolute number from 0.0 to 100.0, or a relative change (e.g., `+10`, `-6dB`).
         /// </param>
         /// <returns> A new <see cref="VoiceLive.AzurePersonalVoice"/> instance for mocking. </returns>
-        public static AzurePersonalVoice AzurePersonalVoice(string name = default, float? temperature = default, PersonalVoiceModels model = default, Uri customLexiconUri = default, Uri customTextNormalizationUri = default, IEnumerable<string> preferLocales = default, string locale = default, string style = default, string pitch = default, string rate = default, string volume = default)
+        public static AzurePersonalVoice AzurePersonalVoice(string name = default, float? temperature = default, VoiceLive.PersonalVoiceModels model = default, Uri customLexiconUri = default, Uri customTextNormalizationUri = default, IEnumerable<string> preferLocales = default, string locale = default, string style = default, string pitch = default, string rate = default, string volume = default)
         {
             preferLocales ??= new ChangeTrackingList<string>();
 
@@ -306,7 +306,7 @@ namespace Azure.AI.VoiceLive
         /// an absolute number from 0.0 to 100.0, or a relative change (e.g., `+10`, `-6dB`).
         /// </param>
         /// <returns> A new <see cref="VoiceLive.AzureAvatarSyncVoice"/> instance for mocking. </returns>
-        public static AzureAvatarSyncVoice AzureAvatarSyncVoice(PersonalVoiceModels model = default, float? temperature = default, Uri customLexiconUri = default, Uri customTextNormalizationUri = default, IEnumerable<string> preferLocales = default, string locale = default, string style = default, string pitch = default, string rate = default, string volume = default)
+        public static AzureAvatarSyncVoice AzureAvatarSyncVoice(PersonalVoiceModel model = default, float? temperature = default, Uri customLexiconUri = default, Uri customTextNormalizationUri = default, IEnumerable<string> preferLocales = default, string locale = default, string style = default, string pitch = default, string rate = default, string volume = default)
         {
             preferLocales ??= new ChangeTrackingList<string>();
 
@@ -597,7 +597,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputProtocol"> Output protocol for avatar streaming. Default is 'webrtc'. </param>
         /// <param name="auditOutputAudio"> When enabled, forwards audit audio via WebSocket for review/debugging purposes, even when avatar output is delivered via WebRTC. </param>
         /// <returns> A new <see cref="VoiceLive.AvatarConfiguration"/> instance for mocking. </returns>
-        public static AvatarConfiguration AvatarConfiguration(AvatarConfigTypes? avatarKind = default, IEnumerable<IceServer> iceServers = default, string character = default, string style = default, PhotoAvatarBaseMode? baseMode = default, bool customized = default, VideoParams video = default, SceneParams scene = default, AvatarOutputProtocol? outputProtocol = default, bool? auditOutputAudio = default)
+        public static AvatarConfiguration AvatarConfiguration(AvatarConfigKind? avatarKind = default, IEnumerable<IceServer> iceServers = default, string character = default, string style = default, PhotoAvatarBaseMode? baseMode = default, bool customized = default, VideoParams video = default, SceneParams scene = default, AvatarOutputProtocol? outputProtocol = default, bool? auditOutputAudio = default)
         {
             iceServers ??= new ChangeTrackingList<IceServer>();
 
@@ -1223,32 +1223,32 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> A response item that represents a web search call. </summary>
+        /// <param name="id"></param>
         /// <param name="object"></param>
-        /// <param name="id"> The unique ID of the web search tool call. </param>
         /// <param name="status"> The status of the web search tool call. </param>
         /// <returns> A new <see cref="VoiceLive.ResponseWebSearchCallItem"/> instance for mocking. </returns>
-        public static ResponseWebSearchCallItem ResponseWebSearchCallItem(string @object = default, string id = default, ResponseWebSearchCallItemStatus status = default)
+        public static ResponseWebSearchCallItem ResponseWebSearchCallItem(string id = default, string @object = default, ResponseWebSearchCallItemStatus status = default)
         {
-            return new ResponseWebSearchCallItem(ItemType.WebSearchCall, @object, additionalBinaryDataProperties: null, id, status);
+            return new ResponseWebSearchCallItem(ItemType.WebSearchCall, id, @object, additionalBinaryDataProperties: null, status);
         }
 
         /// <summary> A response item that represents a file search call. </summary>
+        /// <param name="id"></param>
         /// <param name="object"></param>
-        /// <param name="id"> The unique ID of the file search tool call. </param>
         /// <param name="queries"> The queries used for the file search. </param>
         /// <param name="status"> The status of the file search tool call. </param>
         /// <param name="results"> The results of the file search. </param>
         /// <returns> A new <see cref="VoiceLive.ResponseFileSearchCallItem"/> instance for mocking. </returns>
-        public static ResponseFileSearchCallItem ResponseFileSearchCallItem(string @object = default, string id = default, IEnumerable<string> queries = default, ResponseFileSearchCallItemStatus status = default, IEnumerable<FileSearchResult> results = default)
+        public static ResponseFileSearchCallItem ResponseFileSearchCallItem(string id = default, string @object = default, IEnumerable<string> queries = default, ResponseFileSearchCallItemStatus status = default, IEnumerable<FileSearchResult> results = default)
         {
             queries ??= new ChangeTrackingList<string>();
             results ??= new ChangeTrackingList<FileSearchResult>();
 
             return new ResponseFileSearchCallItem(
                 ItemType.FileSearchCall,
+                id,
                 @object,
                 additionalBinaryDataProperties: null,
-                id,
                 queries.ToList(),
                 status,
                 results.ToList());
@@ -2499,7 +2499,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="model"> Underlying neural model to use for personal voice. </param>
         /// <returns> A new <see cref="VoiceLive.AzurePersonalVoice"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AzurePersonalVoice AzurePersonalVoice(string name, float? temperature, PersonalVoiceModels model)
+        public static AzurePersonalVoice AzurePersonalVoice(string name, float? temperature, VoiceLive.PersonalVoiceModels model)
         {
             return AzurePersonalVoice(name: name, temperature: temperature, model: model, customLexiconUri: default, customTextNormalizationUri: default, preferLocales: default, locale: default, style: default, pitch: default, rate: default, volume: default);
         }

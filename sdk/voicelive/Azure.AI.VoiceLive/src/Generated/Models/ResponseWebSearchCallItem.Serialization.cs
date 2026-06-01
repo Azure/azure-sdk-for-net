@@ -79,11 +79,6 @@ namespace Azure.AI.VoiceLive
                 throw new FormatException($"The model {nameof(ResponseWebSearchCallItem)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
         }
@@ -114,9 +109,9 @@ namespace Azure.AI.VoiceLive
                 return null;
             }
             ItemType @type = default;
+            string id = default;
             string @object = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string id = default;
             ResponseWebSearchCallItemStatus status = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -125,14 +120,14 @@ namespace Azure.AI.VoiceLive
                     @type = new ItemType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("object"u8))
-                {
-                    @object = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("id"u8))
                 {
                     id = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("object"u8))
+                {
+                    @object = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -145,7 +140,7 @@ namespace Azure.AI.VoiceLive
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponseWebSearchCallItem(@type, @object, additionalBinaryDataProperties, id, status);
+            return new ResponseWebSearchCallItem(@type, id, @object, additionalBinaryDataProperties, status);
         }
     }
 }

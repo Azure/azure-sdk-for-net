@@ -165,7 +165,7 @@ namespace Azure.AI.VoiceLive
             }
             AzureVoiceType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            PersonalVoiceModels model = default;
+            PersonalVoiceModel model = default;
             float? temperature = default;
             Uri customLexiconUri = default;
             Uri customTextNormalizationUri = default;
@@ -184,7 +184,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("model"u8))
                 {
-                    model = new PersonalVoiceModels(prop.Value.GetString());
+                    model = new PersonalVoiceModel(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("temperature"u8))

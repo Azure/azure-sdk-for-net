@@ -79,11 +79,6 @@ namespace Azure.AI.VoiceLive
                 throw new FormatException($"The model {nameof(ResponseFileSearchCallItem)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
             if (Optional.IsCollectionDefined(Queries))
             {
                 writer.WritePropertyName("queries"u8);
@@ -139,9 +134,9 @@ namespace Azure.AI.VoiceLive
                 return null;
             }
             ItemType @type = default;
+            string id = default;
             string @object = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string id = default;
             IList<string> queries = default;
             ResponseFileSearchCallItemStatus status = default;
             IList<FileSearchResult> results = default;
@@ -152,14 +147,14 @@ namespace Azure.AI.VoiceLive
                     @type = new ItemType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("object"u8))
-                {
-                    @object = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("id"u8))
                 {
                     id = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("object"u8))
+                {
+                    @object = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("queries"u8))
@@ -209,9 +204,9 @@ namespace Azure.AI.VoiceLive
             }
             return new ResponseFileSearchCallItem(
                 @type,
+                id,
                 @object,
                 additionalBinaryDataProperties,
-                id,
                 queries ?? new ChangeTrackingList<string>(),
                 status,
                 results ?? new ChangeTrackingList<FileSearchResult>());

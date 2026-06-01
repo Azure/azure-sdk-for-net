@@ -41,7 +41,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputProtocol"> Output protocol for avatar streaming. Default is 'webrtc'. </param>
         /// <param name="auditOutputAudio"> When enabled, forwards audit audio via WebSocket for review/debugging purposes, even when avatar output is delivered via WebRTC. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvatarConfiguration(AvatarConfigTypes? avatarKind, IList<IceServer> iceServers, string character, string style, PhotoAvatarBaseMode? baseMode, bool customized, VideoParams video, SceneParams scene, AvatarOutputProtocol? outputProtocol, bool? auditOutputAudio, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AvatarConfiguration(AvatarConfigKind? avatarKind, IList<IceServer> iceServers, string character, string style, PhotoAvatarBaseMode? baseMode, bool customized, VideoParams video, SceneParams scene, AvatarOutputProtocol? outputProtocol, bool? auditOutputAudio, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AvatarKind = avatarKind;
             IceServers = iceServers;
@@ -57,7 +57,7 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Type of avatar to use. </summary>
-        public AvatarConfigTypes? AvatarKind { get; set; }
+        public AvatarConfigKind? AvatarKind { get; set; }
 
         /// <summary> Optional list of ICE servers to use for WebRTC connection establishment. </summary>
         public IList<IceServer> IceServers { get; }

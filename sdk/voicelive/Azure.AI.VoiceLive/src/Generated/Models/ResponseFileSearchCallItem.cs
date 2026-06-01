@@ -24,21 +24,18 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Initializes a new instance of <see cref="ResponseFileSearchCallItem"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="id"></param>
         /// <param name="object"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="id"> The unique ID of the file search tool call. </param>
         /// <param name="queries"> The queries used for the file search. </param>
         /// <param name="status"> The status of the file search tool call. </param>
         /// <param name="results"> The results of the file search. </param>
-        internal ResponseFileSearchCallItem(ItemType @type, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, IList<string> queries, ResponseFileSearchCallItemStatus status, IList<FileSearchResult> results) : base(@type, id, @object, additionalBinaryDataProperties)
+        internal ResponseFileSearchCallItem(ItemType @type, string id, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> queries, ResponseFileSearchCallItemStatus status, IList<FileSearchResult> results) : base(@type, id, @object, additionalBinaryDataProperties)
         {
             Queries = queries;
             Status = status;
             Results = results;
         }
-
-        /// <summary> The unique ID of the file search tool call. </summary>
-        public override string Id { get; }
 
         /// <summary> The queries used for the file search. </summary>
         public IList<string> Queries { get; }

@@ -43,6 +43,6 @@ namespace Azure.AI.VoiceLive
         internal ItemType Type { get; set; }
 
         /// <summary> Gets the Id. </summary>
-        public virtual string Id { get; }
+        public string Id { get; }
     }
 }

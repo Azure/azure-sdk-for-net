@@ -158,27 +158,27 @@ namespace Azure.AI.VoiceLive
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AvatarConfigTypes : System.IEquatable<Azure.AI.VoiceLive.AvatarConfigTypes>
+    public readonly partial struct AvatarConfigKind : System.IEquatable<Azure.AI.VoiceLive.AvatarConfigKind>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public AvatarConfigTypes(string value) { throw null; }
-        public static Azure.AI.VoiceLive.AvatarConfigTypes PhotoAvatar { get { throw null; } }
-        public static Azure.AI.VoiceLive.AvatarConfigTypes VideoAvatar { get { throw null; } }
-        public bool Equals(Azure.AI.VoiceLive.AvatarConfigTypes other) { throw null; }
+        public AvatarConfigKind(string value) { throw null; }
+        public static Azure.AI.VoiceLive.AvatarConfigKind PhotoAvatar { get { throw null; } }
+        public static Azure.AI.VoiceLive.AvatarConfigKind VideoAvatar { get { throw null; } }
+        public bool Equals(Azure.AI.VoiceLive.AvatarConfigKind other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.VoiceLive.AvatarConfigTypes left, Azure.AI.VoiceLive.AvatarConfigTypes right) { throw null; }
-        public static implicit operator Azure.AI.VoiceLive.AvatarConfigTypes (string value) { throw null; }
-        public static implicit operator Azure.AI.VoiceLive.AvatarConfigTypes? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.VoiceLive.AvatarConfigTypes left, Azure.AI.VoiceLive.AvatarConfigTypes right) { throw null; }
+        public static bool operator ==(Azure.AI.VoiceLive.AvatarConfigKind left, Azure.AI.VoiceLive.AvatarConfigKind right) { throw null; }
+        public static implicit operator Azure.AI.VoiceLive.AvatarConfigKind (string value) { throw null; }
+        public static implicit operator Azure.AI.VoiceLive.AvatarConfigKind? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.VoiceLive.AvatarConfigKind left, Azure.AI.VoiceLive.AvatarConfigKind right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class AvatarConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.AvatarConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.AvatarConfiguration>
     {
         public AvatarConfiguration(string character, bool customized) { }
         public bool? AuditOutputAudio { get { throw null; } set { } }
-        public Azure.AI.VoiceLive.AvatarConfigTypes? AvatarKind { get { throw null; } set { } }
+        public Azure.AI.VoiceLive.AvatarConfigKind? AvatarKind { get { throw null; } set { } }
         public Azure.AI.VoiceLive.PhotoAvatarBaseMode? BaseMode { get { throw null; } set { } }
         public string Character { get { throw null; } set { } }
         public bool Customized { get { throw null; } set { } }
@@ -222,11 +222,11 @@ namespace Azure.AI.VoiceLive
     }
     public partial class AzureAvatarSyncVoice : Azure.AI.VoiceLive.AzureVoice, System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.AzureAvatarSyncVoice>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.AzureAvatarSyncVoice>
     {
-        public AzureAvatarSyncVoice(Azure.AI.VoiceLive.PersonalVoiceModels model) { }
+        public AzureAvatarSyncVoice(Azure.AI.VoiceLive.PersonalVoiceModel model) { }
         public System.Uri CustomLexiconUri { get { throw null; } set { } }
         public System.Uri CustomTextNormalizationUri { get { throw null; } set { } }
         public string Locale { get { throw null; } set { } }
-        public Azure.AI.VoiceLive.PersonalVoiceModels Model { get { throw null; } set { } }
+        public Azure.AI.VoiceLive.PersonalVoiceModel Model { get { throw null; } set { } }
         public string Pitch { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> PreferLocales { get { throw null; } }
         public string Rate { get { throw null; } set { } }
@@ -899,6 +899,26 @@ namespace Azure.AI.VoiceLive
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.OutputTokenDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PersonalVoiceModel : System.IEquatable<Azure.AI.VoiceLive.PersonalVoiceModel>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PersonalVoiceModel(string value) { throw null; }
+        public static Azure.AI.VoiceLive.PersonalVoiceModel DragonHDOmniLatestNeural { get { throw null; } }
+        public static Azure.AI.VoiceLive.PersonalVoiceModel DragonLatestNeural { get { throw null; } }
+        public static Azure.AI.VoiceLive.PersonalVoiceModel MaiVoice1 { get { throw null; } }
+        public static Azure.AI.VoiceLive.PersonalVoiceModel PhoenixLatestNeural { get { throw null; } }
+        public static Azure.AI.VoiceLive.PersonalVoiceModel PhoenixV2Neural { get { throw null; } }
+        public bool Equals(Azure.AI.VoiceLive.PersonalVoiceModel other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.VoiceLive.PersonalVoiceModel left, Azure.AI.VoiceLive.PersonalVoiceModel right) { throw null; }
+        public static implicit operator Azure.AI.VoiceLive.PersonalVoiceModel (string value) { throw null; }
+        public static implicit operator Azure.AI.VoiceLive.PersonalVoiceModel? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.VoiceLive.PersonalVoiceModel left, Azure.AI.VoiceLive.PersonalVoiceModel right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PersonalVoiceModels : System.IEquatable<Azure.AI.VoiceLive.PersonalVoiceModels>
     {
         private readonly object _dummy;
@@ -913,8 +933,9 @@ namespace Azure.AI.VoiceLive
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.VoiceLive.PersonalVoiceModels left, Azure.AI.VoiceLive.PersonalVoiceModels right) { throw null; }
+        public static implicit operator Azure.AI.VoiceLive.PersonalVoiceModels (Azure.AI.VoiceLive.PersonalVoiceModel value) { throw null; }
+        public static implicit operator Azure.AI.VoiceLive.PersonalVoiceModel (Azure.AI.VoiceLive.PersonalVoiceModels value) { throw null; }
         public static implicit operator Azure.AI.VoiceLive.PersonalVoiceModels (string value) { throw null; }
-        public static implicit operator Azure.AI.VoiceLive.PersonalVoiceModels? (string value) { throw null; }
         public static bool operator !=(Azure.AI.VoiceLive.PersonalVoiceModels left, Azure.AI.VoiceLive.PersonalVoiceModels right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1094,7 +1115,6 @@ namespace Azure.AI.VoiceLive
     public partial class ResponseFileSearchCallItem : Azure.AI.VoiceLive.SessionResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.ResponseFileSearchCallItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ResponseFileSearchCallItem>
     {
         internal ResponseFileSearchCallItem() { }
-        public override string Id { get { throw null; } }
         public System.Collections.Generic.IList<string> Queries { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.VoiceLive.FileSearchResult> Results { get { throw null; } }
         public Azure.AI.VoiceLive.ResponseFileSearchCallItemStatus Status { get { throw null; } }
@@ -1257,7 +1277,6 @@ namespace Azure.AI.VoiceLive
     public partial class ResponseWebSearchCallItem : Azure.AI.VoiceLive.SessionResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.ResponseWebSearchCallItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ResponseWebSearchCallItem>
     {
         internal ResponseWebSearchCallItem() { }
-        public override string Id { get { throw null; } }
         public Azure.AI.VoiceLive.ResponseWebSearchCallItemStatus Status { get { throw null; } }
         protected override Azure.AI.VoiceLive.SessionResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1582,7 +1601,7 @@ namespace Azure.AI.VoiceLive
     public abstract partial class SessionResponseItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.SessionResponseItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.SessionResponseItem>
     {
         internal SessionResponseItem() { }
-        public virtual string Id { get { throw null; } }
+        public string Id { get { throw null; } }
         protected virtual Azure.AI.VoiceLive.SessionResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.VoiceLive.SessionResponseItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2769,8 +2788,8 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.AudioInputTranscriptionOptions AudioInputTranscriptionOptions(Azure.AI.VoiceLive.AudioInputTranscriptionOptionsModel model = default(Azure.AI.VoiceLive.AudioInputTranscriptionOptionsModel), string language = null, System.Collections.Generic.IDictionary<string, string> customSpeech = null, System.Collections.Generic.IEnumerable<string> phraseList = null) { throw null; }
         public static Azure.AI.VoiceLive.AudioNoiseReduction AudioNoiseReduction(Azure.AI.VoiceLive.AudioNoiseReductionType type = default(Azure.AI.VoiceLive.AudioNoiseReductionType)) { throw null; }
         public static Azure.AI.VoiceLive.AvatarConfiguration AvatarConfiguration(System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.IceServer> iceServers, string character, string style, bool customized, Azure.AI.VoiceLive.VideoParams video) { throw null; }
-        public static Azure.AI.VoiceLive.AvatarConfiguration AvatarConfiguration(Azure.AI.VoiceLive.AvatarConfigTypes? avatarKind = default(Azure.AI.VoiceLive.AvatarConfigTypes?), System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.IceServer> iceServers = null, string character = null, string style = null, Azure.AI.VoiceLive.PhotoAvatarBaseMode? baseMode = default(Azure.AI.VoiceLive.PhotoAvatarBaseMode?), bool customized = false, Azure.AI.VoiceLive.VideoParams video = null, Azure.AI.VoiceLive.SceneParams scene = null, Azure.AI.VoiceLive.AvatarOutputProtocol? outputProtocol = default(Azure.AI.VoiceLive.AvatarOutputProtocol?), bool? auditOutputAudio = default(bool?)) { throw null; }
-        public static Azure.AI.VoiceLive.AzureAvatarSyncVoice AzureAvatarSyncVoice(Azure.AI.VoiceLive.PersonalVoiceModels model = default(Azure.AI.VoiceLive.PersonalVoiceModels), float? temperature = default(float?), System.Uri customLexiconUri = null, System.Uri customTextNormalizationUri = null, System.Collections.Generic.IEnumerable<string> preferLocales = null, string locale = null, string style = null, string pitch = null, string rate = null, string volume = null) { throw null; }
+        public static Azure.AI.VoiceLive.AvatarConfiguration AvatarConfiguration(Azure.AI.VoiceLive.AvatarConfigKind? avatarKind = default(Azure.AI.VoiceLive.AvatarConfigKind?), System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.IceServer> iceServers = null, string character = null, string style = null, Azure.AI.VoiceLive.PhotoAvatarBaseMode? baseMode = default(Azure.AI.VoiceLive.PhotoAvatarBaseMode?), bool customized = false, Azure.AI.VoiceLive.VideoParams video = null, Azure.AI.VoiceLive.SceneParams scene = null, Azure.AI.VoiceLive.AvatarOutputProtocol? outputProtocol = default(Azure.AI.VoiceLive.AvatarOutputProtocol?), bool? auditOutputAudio = default(bool?)) { throw null; }
+        public static Azure.AI.VoiceLive.AzureAvatarSyncVoice AzureAvatarSyncVoice(Azure.AI.VoiceLive.PersonalVoiceModel model = default(Azure.AI.VoiceLive.PersonalVoiceModel), float? temperature = default(float?), System.Uri customLexiconUri = null, System.Uri customTextNormalizationUri = null, System.Collections.Generic.IEnumerable<string> preferLocales = null, string locale = null, string style = null, string pitch = null, string rate = null, string volume = null) { throw null; }
         public static Azure.AI.VoiceLive.AzureCustomVoice AzureCustomVoice(string name, string endpointId, float? temperature, string customLexiconUri, System.Collections.Generic.IEnumerable<string> preferLocales, string locale, string style, string pitch, string rate, string volume) { throw null; }
         public static Azure.AI.VoiceLive.AzureCustomVoice AzureCustomVoice(string name = null, string endpointId = null, float? temperature = default(float?), string customLexiconUri = null, System.Uri customTextNormalizationUri = null, System.Collections.Generic.IEnumerable<string> preferLocales = null, string locale = null, string style = null, string pitch = null, string rate = null, string volume = null) { throw null; }
         public static Azure.AI.VoiceLive.AzurePersonalVoice AzurePersonalVoice(string name, float? temperature, Azure.AI.VoiceLive.PersonalVoiceModels model) { throw null; }
@@ -2813,14 +2832,14 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.ResponseAudioContentPart ResponseAudioContentPart(string transcript = null) { throw null; }
         public static Azure.AI.VoiceLive.ResponseCancelledDetails ResponseCancelledDetails(Azure.AI.VoiceLive.ResponseCancelledDetailsReason reason = default(Azure.AI.VoiceLive.ResponseCancelledDetailsReason)) { throw null; }
         public static Azure.AI.VoiceLive.ResponseFailedDetails ResponseFailedDetails(System.BinaryData error = null) { throw null; }
-        public static Azure.AI.VoiceLive.ResponseFileSearchCallItem ResponseFileSearchCallItem(string @object = null, string id = null, System.Collections.Generic.IEnumerable<string> queries = null, Azure.AI.VoiceLive.ResponseFileSearchCallItemStatus status = default(Azure.AI.VoiceLive.ResponseFileSearchCallItemStatus), System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.FileSearchResult> results = null) { throw null; }
+        public static Azure.AI.VoiceLive.ResponseFileSearchCallItem ResponseFileSearchCallItem(string id = null, string @object = null, System.Collections.Generic.IEnumerable<string> queries = null, Azure.AI.VoiceLive.ResponseFileSearchCallItemStatus status = default(Azure.AI.VoiceLive.ResponseFileSearchCallItemStatus), System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.FileSearchResult> results = null) { throw null; }
         public static Azure.AI.VoiceLive.ResponseFunctionCallItem ResponseFunctionCallItem(string id = null, string @object = null, string name = null, string callId = null, string arguments = null, Azure.AI.VoiceLive.SessionResponseItemStatus status = default(Azure.AI.VoiceLive.SessionResponseItemStatus)) { throw null; }
         public static Azure.AI.VoiceLive.ResponseFunctionCallOutputItem ResponseFunctionCallOutputItem(string id = null, string @object = null, string callId = null, string output = null) { throw null; }
         public static Azure.AI.VoiceLive.ResponseIncompleteDetails ResponseIncompleteDetails(Azure.AI.VoiceLive.ResponseIncompleteDetailsReason reason = default(Azure.AI.VoiceLive.ResponseIncompleteDetailsReason)) { throw null; }
         public static Azure.AI.VoiceLive.ResponseStatusDetails ResponseStatusDetails(string type = null) { throw null; }
         public static Azure.AI.VoiceLive.ResponseTextContentPart ResponseTextContentPart(string text = null) { throw null; }
         public static Azure.AI.VoiceLive.ResponseTokenStatistics ResponseTokenStatistics(int totalTokens = 0, int inputTokens = 0, int outputTokens = 0, Azure.AI.VoiceLive.InputTokenDetails inputTokenDetails = null, Azure.AI.VoiceLive.OutputTokenDetails outputTokenDetails = null) { throw null; }
-        public static Azure.AI.VoiceLive.ResponseWebSearchCallItem ResponseWebSearchCallItem(string @object = null, string id = null, Azure.AI.VoiceLive.ResponseWebSearchCallItemStatus status = default(Azure.AI.VoiceLive.ResponseWebSearchCallItemStatus)) { throw null; }
+        public static Azure.AI.VoiceLive.ResponseWebSearchCallItem ResponseWebSearchCallItem(string id = null, string @object = null, Azure.AI.VoiceLive.ResponseWebSearchCallItemStatus status = default(Azure.AI.VoiceLive.ResponseWebSearchCallItemStatus)) { throw null; }
         public static Azure.AI.VoiceLive.SceneParams SceneParams(float? zoom = default(float?), float? positionX = default(float?), float? positionY = default(float?), float? rotationX = default(float?), float? rotationY = default(float?), float? rotationZ = default(float?), float? amplitude = default(float?)) { throw null; }
         public static Azure.AI.VoiceLive.ServerEventOutputAudioBufferCleared ServerEventOutputAudioBufferCleared(string eventId = null) { throw null; }
         public static Azure.AI.VoiceLive.ServerEventResponseAudioTranscriptAnnotationAdded ServerEventResponseAudioTranscriptAnnotationAdded(string eventId = null, string responseId = null, string itemId = null, int outputIndex = 0, int contentIndex = 0, int annotationIndex = 0, System.BinaryData annotation = null) { throw null; }

@@ -169,7 +169,7 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            AvatarConfigTypes? avatarKind = default;
+            AvatarConfigKind? avatarKind = default;
             IList<IceServer> iceServers = default;
             string character = default;
             string style = default;
@@ -188,7 +188,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    avatarKind = new AvatarConfigTypes(prop.Value.GetString());
+                    avatarKind = new AvatarConfigKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ice_servers"u8))
