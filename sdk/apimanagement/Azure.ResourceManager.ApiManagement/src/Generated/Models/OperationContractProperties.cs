@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="OperationContractProperties"/>. </summary>
         /// <param name="displayName"> Operation Name. </param>
         /// <param name="method"> A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them. </param>
-        /// <param name="urlTemplate"> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="method"/> or <paramref name="urlTemplate"/> is null. </exception>
-        public OperationContractProperties(string displayName, string @method, string urlTemplate)
+        /// <param name="uriTemplate"> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="method"/> or <paramref name="uriTemplate"/> is null. </exception>
+        public OperationContractProperties(string displayName, string @method, string uriTemplate)
         {
             Argument.AssertNotNull(displayName, nameof(displayName));
             Argument.AssertNotNull(@method, nameof(@method));
-            Argument.AssertNotNull(urlTemplate, nameof(urlTemplate));
+            Argument.AssertNotNull(uriTemplate, nameof(uriTemplate));
 
             DisplayName = displayName;
             Method = @method;
-            UrlTemplate = urlTemplate;
+            UriTemplate = uriTemplate;
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationContractProperties"/>. </summary>
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="displayName"> Operation Name. </param>
         /// <param name="method"> A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them. </param>
-        /// <param name="urlTemplate"> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </param>
-        internal OperationContractProperties(IList<ParameterContract> templateParameters, string description, RequestContract request, IList<ResponseContract> responses, string policies, IDictionary<string, BinaryData> additionalBinaryDataProperties, string displayName, string @method, string urlTemplate) : base(templateParameters, description, request, responses, policies, additionalBinaryDataProperties)
+        /// <param name="uriTemplate"> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </param>
+        internal OperationContractProperties(IList<ParameterContract> templateParameters, string description, RequestContract request, IList<ResponseContract> responses, string policies, IDictionary<string, BinaryData> additionalBinaryDataProperties, string displayName, string @method, string uriTemplate) : base(templateParameters, description, request, responses, policies, additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Method = @method;
-            UrlTemplate = urlTemplate;
+            UriTemplate = uriTemplate;
         }
 
         /// <summary> Operation Name. </summary>
@@ -57,6 +57,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </summary>
         [WirePath("urlTemplate")]
-        public string UrlTemplate { get; set; }
+        public string UriTemplate { get; set; }
     }
 }

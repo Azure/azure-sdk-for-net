@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             string title = default;
             string description = default;
-            string resourceId = default;
+            Uri resourceUri = default;
             BackendProperties properties = default;
             BackendCredentialsContract credentials = default;
             BackendProxyContract proxy = default;
@@ -140,7 +140,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("resourceId"u8))
                 {
-                    resourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -237,7 +241,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new BackendContractProperties(
                 title,
                 description,
-                resourceId,
+                resourceUri,
                 properties,
                 credentials,
                 proxy,

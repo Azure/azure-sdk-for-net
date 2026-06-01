@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private readonly string _value;
         private const string HttpValue = "http";
         private const string SoapValue = "soap";
-        private const string WebsocketValue = "websocket";
-        private const string GraphqlValue = "graphql";
-        private const string OdataValue = "odata";
-        private const string GrpcValue = "grpc";
+        private const string WebSocketValue = "websocket";
+        private const string GraphQLValue = "graphql";
+        private const string ODataValue = "odata";
+        private const string GRPCValue = "grpc";
         /// <summary> Model Context Protocol API. </summary>
         private const string McpValue = "mcp";
 
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Gets the Soap. </summary>
         public static ApiType Soap { get; } = new ApiType(SoapValue);
 
-        /// <summary> Gets the Websocket. </summary>
-        public static ApiType Websocket { get; } = new ApiType(WebsocketValue);
+        /// <summary> Gets the WebSocket. </summary>
+        public static ApiType WebSocket { get; } = new ApiType(WebSocketValue);
 
-        /// <summary> Gets the Graphql. </summary>
-        public static ApiType Graphql { get; } = new ApiType(GraphqlValue);
+        /// <summary> Gets the GraphQL. </summary>
+        public static ApiType GraphQL { get; } = new ApiType(GraphQLValue);
 
-        /// <summary> Gets the Odata. </summary>
-        public static ApiType Odata { get; } = new ApiType(OdataValue);
+        /// <summary> Gets the OData. </summary>
+        public static ApiType OData { get; } = new ApiType(ODataValue);
 
-        /// <summary> Gets the Grpc. </summary>
-        public static ApiType Grpc { get; } = new ApiType(GrpcValue);
+        /// <summary> Gets the GRPC. </summary>
+        public static ApiType GRPC { get; } = new ApiType(GRPCValue);
 
         /// <summary> Model Context Protocol API. </summary>
         public static ApiType Mcp { get; } = new ApiType(McpValue);

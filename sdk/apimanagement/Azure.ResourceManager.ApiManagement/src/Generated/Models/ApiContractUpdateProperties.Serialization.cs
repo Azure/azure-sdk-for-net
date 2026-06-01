@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(ServiceUri))
+            if (Optional.IsDefined(ServiceLink))
             {
                 writer.WritePropertyName("serviceUrl"u8);
-                writer.WriteStringValue(ServiceUri.AbsoluteUri);
+                writer.WriteStringValue(ServiceLink.AbsoluteUri);
             }
             if (Optional.IsDefined(Path))
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             McpProperties mcpProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string displayName = default;
-            Uri serviceUri = default;
+            Uri serviceLink = default;
             string path = default;
             IList<ApiOperationInvokableProtocol> protocols = default;
             foreach (var prop in element.EnumerateObject())
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    serviceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    serviceLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("path"u8))
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 mcpProperties,
                 additionalBinaryDataProperties,
                 displayName,
-                serviceUri,
+                serviceLink,
                 path,
                 protocols ?? new ChangeTrackingList<ApiOperationInvokableProtocol>());
         }

@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("useFromLocation"u8);
                 writer.WriteStringValue(UseFromLocation);
             }
-            if (Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(ResourceUri))
             {
                 writer.WritePropertyName("resourceId"u8);
-                writer.WriteStringValue(ResourceId);
+                writer.WriteStringValue(ResourceUri.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string description = default;
             string connectionString = default;
             string useFromLocation = default;
-            string resourceId = default;
+            Uri resourceUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -160,7 +160,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("resourceId"u8))
                 {
-                    resourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -168,7 +172,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CacheUpdateProperties(description, connectionString, useFromLocation, resourceId, additionalBinaryDataProperties);
+            return new CacheUpdateProperties(description, connectionString, useFromLocation, resourceUri, additionalBinaryDataProperties);
         }
     }
 }

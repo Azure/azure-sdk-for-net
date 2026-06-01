@@ -83,10 +83,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStringValue(HostnameType.ToString());
             writer.WritePropertyName("hostName"u8);
             writer.WriteStringValue(HostName);
-            if (Optional.IsDefined(KeyVaultId))
+            if (Optional.IsDefined(KeyVaultSecretUri))
             {
                 writer.WritePropertyName("keyVaultId"u8);
-                writer.WriteStringValue(KeyVaultId);
+                writer.WriteStringValue(KeyVaultSecretUri.AbsoluteUri);
             }
             if (Optional.IsDefined(IdentityClientId))
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             HostnameType hostnameType = default;
             string hostName = default;
-            string keyVaultId = default;
+            Uri keyVaultSecretUri = default;
             string identityClientId = default;
             string encodedCertificate = default;
             string certificatePassword = default;
@@ -196,7 +196,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("keyVaultId"u8))
                 {
-                    keyVaultId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyVaultSecretUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("identityClientId"u8))
@@ -267,7 +271,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new HostnameConfiguration(
                 hostnameType,
                 hostName,
-                keyVaultId,
+                keyVaultSecretUri,
                 identityClientId,
                 encodedCertificate,
                 certificatePassword,

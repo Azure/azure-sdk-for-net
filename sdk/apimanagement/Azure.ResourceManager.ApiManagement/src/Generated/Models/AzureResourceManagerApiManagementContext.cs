@@ -164,7 +164,6 @@ namespace Azure.ResourceManager.ApiManagement
     [ModelReaderWriterBuildable(typeof(ApiManagementWorkspaceLinksListResult))]
     [ModelReaderWriterBuildable(typeof(ApiManagementWorkspaceLinksProperties))]
     [ModelReaderWriterBuildable(typeof(ApiManagementWorkspaceLinksResource))]
-    [ModelReaderWriterBuildable(typeof(ApimResource))]
     [ModelReaderWriterBuildable(typeof(ApiOperationData))]
     [ModelReaderWriterBuildable(typeof(ApiOperationPatch))]
     [ModelReaderWriterBuildable(typeof(ApiOperationPolicyResource))]

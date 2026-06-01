@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(ResourceUri))
             {
                 writer.WritePropertyName("resourceId"u8);
-                writer.WriteStringValue(ResourceId);
+                writer.WriteStringValue(ResourceUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Properties))
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             string title = default;
             string description = default;
-            string resourceId = default;
+            Uri resourceUri = default;
             BackendProperties properties = default;
             BackendCredentialsContract credentials = default;
             BackendProxyContract proxy = default;
@@ -197,7 +197,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("resourceId"u8))
                 {
-                    resourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -276,7 +280,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new BackendBaseParameters(
                 title,
                 description,
-                resourceId,
+                resourceUri,
                 properties,
                 credentials,
                 proxy,

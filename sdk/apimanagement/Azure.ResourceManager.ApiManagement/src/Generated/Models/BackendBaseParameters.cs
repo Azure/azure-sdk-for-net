@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="BackendBaseParameters"/>. </summary>
         /// <param name="title"> Backend Title. </param>
         /// <param name="description"> Backend Description. </param>
-        /// <param name="resourceId"> Management Uri of the Resource in External System. This URL can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </param>
+        /// <param name="resourceUri"> Management Uri of the Resource in External System. This URL can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </param>
         /// <param name="properties"> Backend Properties contract. </param>
         /// <param name="credentials"> Backend Credentials Contract Properties. </param>
         /// <param name="proxy"> Backend gateway Contract Properties. </param>
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="pool"> Backend Pool Properties. </param>
         /// <param name="typePropertiesType"> Type of the backend. A backend can be either Single or Pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackendBaseParameters(string title, string description, string resourceId, BackendProperties properties, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, BackendCircuitBreaker circuitBreaker, string azureRegion, BackendBaseParametersPool pool, BackendType? typePropertiesType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackendBaseParameters(string title, string description, Uri resourceUri, BackendProperties properties, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, BackendCircuitBreaker circuitBreaker, string azureRegion, BackendBaseParametersPool pool, BackendType? typePropertiesType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Title = title;
             Description = description;
-            ResourceId = resourceId;
+            ResourceUri = resourceUri;
             Properties = properties;
             Credentials = credentials;
             Proxy = proxy;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Management Uri of the Resource in External System. This URL can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </summary>
         [WirePath("resourceId")]
-        public string ResourceId { get; set; }
+        public Uri ResourceUri { get; set; }
 
         /// <summary> Backend Properties contract. </summary>
         [WirePath("properties")]

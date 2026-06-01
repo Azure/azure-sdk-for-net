@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Imports the API having a OData front end. </summary>
         private const string ODataValue = "odata";
         /// <summary> Imports the API having a gRPC front end. </summary>
-        private const string GRPCValue = "grpc";
+        private const string GrpcValue = "grpc";
         /// <summary> Imports the API having a Model Context Protocol (MCP) front end. </summary>
         private const string MCPValue = "mcp";
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static SoapApiType OData { get; } = new SoapApiType(ODataValue);
 
         /// <summary> Imports the API having a gRPC front end. </summary>
-        public static SoapApiType GRPC { get; } = new SoapApiType(GRPCValue);
+        public static SoapApiType Grpc { get; } = new SoapApiType(GrpcValue);
 
         /// <summary> Imports the API having a Model Context Protocol (MCP) front end. </summary>
         public static SoapApiType MCP { get; } = new SoapApiType(MCPValue);

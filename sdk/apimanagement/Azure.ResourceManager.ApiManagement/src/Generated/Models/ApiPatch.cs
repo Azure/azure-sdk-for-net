@@ -336,11 +336,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Absolute URL of the backend service implementing this API. </summary>
         [WirePath("properties.serviceUrl")]
-        public Uri ServiceUri
+        public Uri ServiceLink
         {
             get
             {
-                return Properties is null ? default : Properties.ServiceUri;
+                return Properties is null ? default : Properties.ServiceLink;
             }
             set
             {
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new ApiContractUpdateProperties();
                 }
-                Properties.ServiceUri = value;
+                Properties.ServiceLink = value;
             }
         }
 

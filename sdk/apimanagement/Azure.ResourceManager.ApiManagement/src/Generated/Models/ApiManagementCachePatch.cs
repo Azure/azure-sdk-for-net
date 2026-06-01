@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Original uri of entity in external system cache points to. </summary>
         [WirePath("properties.resourceId")]
-        public string ResourceId
+        public Uri ResourceUri
         {
             get
             {
-                return Properties is null ? default : Properties.ResourceId;
+                return Properties is null ? default : Properties.ResourceUri;
             }
             set
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new CacheUpdateProperties();
                 }
-                Properties.ResourceId = value;
+                Properties.ResourceUri = value;
             }
         }
     }

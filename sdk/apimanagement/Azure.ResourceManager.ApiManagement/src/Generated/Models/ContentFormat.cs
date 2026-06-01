@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> The WSDL document is hosted on a publicly accessible internet address. </summary>
         private const string WsdlLinkValue = "wsdl-link";
         /// <summary> The contents are inline and Content Type is a OpenAPI 3.0 YAML Document. </summary>
-        private const string OpenapiValue = "openapi";
+        private const string OpenApiValue = "openapi";
         /// <summary> The contents are inline and Content Type is a OpenAPI 3.0 JSON Document. </summary>
-        private const string OpenapiJsonValue = "openapi+json";
+        private const string OpenApiJsonValue = "openapi+json";
         /// <summary> The OpenAPI 3.0 YAML document is hosted on a publicly accessible internet address. </summary>
-        private const string OpenapiLinkValue = "openapi-link";
+        private const string OpenApiLinkValue = "openapi-link";
         /// <summary> The OpenAPI 3.0 JSON document is hosted on a publicly accessible internet address. </summary>
-        private const string OpenapiJsonLinkValue = "openapi+json-link";
+        private const string OpenApiJsonLinkValue = "openapi+json-link";
         /// <summary> The GraphQL API endpoint hosted on a publicly accessible internet address. </summary>
-        private const string GraphqlLinkValue = "graphql-link";
+        private const string GraphQLLinkValue = "graphql-link";
         /// <summary> The contents are inline and Content Type is a OData XML Document. </summary>
         private const string OdataValue = "odata";
         /// <summary> The OData metadata document hosted on a publicly accessible internet address. </summary>
@@ -75,19 +75,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static ContentFormat WsdlLink { get; } = new ContentFormat(WsdlLinkValue);
 
         /// <summary> The contents are inline and Content Type is a OpenAPI 3.0 YAML Document. </summary>
-        public static ContentFormat Openapi { get; } = new ContentFormat(OpenapiValue);
+        public static ContentFormat OpenApi { get; } = new ContentFormat(OpenApiValue);
 
         /// <summary> The contents are inline and Content Type is a OpenAPI 3.0 JSON Document. </summary>
-        public static ContentFormat OpenapiJson { get; } = new ContentFormat(OpenapiJsonValue);
+        public static ContentFormat OpenApiJson { get; } = new ContentFormat(OpenApiJsonValue);
 
         /// <summary> The OpenAPI 3.0 YAML document is hosted on a publicly accessible internet address. </summary>
-        public static ContentFormat OpenapiLink { get; } = new ContentFormat(OpenapiLinkValue);
+        public static ContentFormat OpenApiLink { get; } = new ContentFormat(OpenApiLinkValue);
 
         /// <summary> The OpenAPI 3.0 JSON document is hosted on a publicly accessible internet address. </summary>
-        public static ContentFormat OpenapiJsonLink { get; } = new ContentFormat(OpenapiJsonLinkValue);
+        public static ContentFormat OpenApiJsonLink { get; } = new ContentFormat(OpenApiJsonLinkValue);
 
         /// <summary> The GraphQL API endpoint hosted on a publicly accessible internet address. </summary>
-        public static ContentFormat GraphqlLink { get; } = new ContentFormat(GraphqlLinkValue);
+        public static ContentFormat GraphQLLink { get; } = new ContentFormat(GraphQLLinkValue);
 
         /// <summary> The contents are inline and Content Type is a OData XML Document. </summary>
         public static ContentFormat Odata { get; } = new ContentFormat(OdataValue);

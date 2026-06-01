@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         private readonly string _value;
         /// <summary> Migrate API Management service to stv2 from stv1, by reserving the IP Address of the service. This will have a downtime of upto 15 minutes, while the IP address is getting migrate to new infrastructure. </summary>
-        private const string PreserveIpValue = "PreserveIp";
+        private const string PreserveIPValue = "PreserveIp";
         /// <summary> Migrate API Management service to stv2 from stv1. This will have no downtime as the service configuration will be migrated to new infrastructure, but the IP address will changed. </summary>
         private const string NewIPValue = "NewIP";
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Migrate API Management service to stv2 from stv1, by reserving the IP Address of the service. This will have a downtime of upto 15 minutes, while the IP address is getting migrate to new infrastructure. </summary>
-        public static MigrateToStv2Mode PreserveIp { get; } = new MigrateToStv2Mode(PreserveIpValue);
+        public static MigrateToStv2Mode PreserveIP { get; } = new MigrateToStv2Mode(PreserveIPValue);
 
         /// <summary> Migrate API Management service to stv2 from stv1. This will have no downtime as the service configuration will be migrated to new infrastructure, but the IP address will changed. </summary>
         public static MigrateToStv2Mode NewIP { get; } = new MigrateToStv2Mode(NewIPValue);

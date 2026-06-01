@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="description"> Cache description. </param>
         /// <param name="connectionString"> Runtime connection string to cache. </param>
         /// <param name="useFromLocation"> Location identifier to use cache from (should be either 'default' or valid Azure region identifier). </param>
-        /// <param name="resourceId"> Original uri of entity in external system cache points to. </param>
+        /// <param name="resourceUri"> Original uri of entity in external system cache points to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CacheContractProperties(string description, string connectionString, string useFromLocation, string resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CacheContractProperties(string description, string connectionString, string useFromLocation, Uri resourceUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             ConnectionString = connectionString;
             UseFromLocation = useFromLocation;
-            ResourceId = resourceId;
+            ResourceUri = resourceUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -59,6 +59,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Original uri of entity in external system cache points to. </summary>
         [WirePath("resourceId")]
-        public string ResourceId { get; set; }
+        public Uri ResourceUri { get; set; }
     }
 }

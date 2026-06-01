@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="BackendContractProperties"/>. </summary>
         /// <param name="title"> Backend Title. </param>
         /// <param name="description"> Backend Description. </param>
-        /// <param name="resourceId"> Management Uri of the Resource in External System. This URL can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </param>
+        /// <param name="resourceUri"> Management Uri of the Resource in External System. This URL can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </param>
         /// <param name="properties"> Backend Properties contract. </param>
         /// <param name="credentials"> Backend Credentials Contract Properties. </param>
         /// <param name="proxy"> Backend gateway Contract Properties. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="uri"> Runtime Url of the Backend. Required when backend type is 'Single'. </param>
         /// <param name="protocol"> Backend communication protocol. Required when backend type is 'Single'. </param>
-        internal BackendContractProperties(string title, string description, string resourceId, BackendProperties properties, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, BackendCircuitBreaker circuitBreaker, string azureRegion, BackendBaseParametersPool pool, BackendType? typePropertiesType, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri uri, BackendProtocol? protocol) : base(title, description, resourceId, properties, credentials, proxy, tls, circuitBreaker, azureRegion, pool, typePropertiesType, additionalBinaryDataProperties)
+        internal BackendContractProperties(string title, string description, Uri resourceUri, BackendProperties properties, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, BackendCircuitBreaker circuitBreaker, string azureRegion, BackendBaseParametersPool pool, BackendType? typePropertiesType, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri uri, BackendProtocol? protocol) : base(title, description, resourceUri, properties, credentials, proxy, tls, circuitBreaker, azureRegion, pool, typePropertiesType, additionalBinaryDataProperties)
         {
             Uri = uri;
             Protocol = protocol;

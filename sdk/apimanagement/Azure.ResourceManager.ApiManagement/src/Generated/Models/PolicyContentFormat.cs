@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> The policy XML document is hosted on a HTTP endpoint accessible from the API Management service. </summary>
         private const string XmlLinkValue = "xml-link";
         /// <summary> The contents are inline and Content type is a non XML encoded policy document. </summary>
-        private const string RawxmlValue = "rawxml";
+        private const string RawXmlValue = "rawxml";
         /// <summary> The policy document is not XML encoded and is hosted on a HTTP endpoint accessible from the API Management service. </summary>
-        private const string RawxmlLinkValue = "rawxml-link";
+        private const string RawXmlLinkValue = "rawxml-link";
 
         /// <summary> Initializes a new instance of <see cref="PolicyContentFormat"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static PolicyContentFormat XmlLink { get; } = new PolicyContentFormat(XmlLinkValue);
 
         /// <summary> The contents are inline and Content type is a non XML encoded policy document. </summary>
-        public static PolicyContentFormat Rawxml { get; } = new PolicyContentFormat(RawxmlValue);
+        public static PolicyContentFormat RawXml { get; } = new PolicyContentFormat(RawXmlValue);
 
         /// <summary> The policy document is not XML encoded and is hosted on a HTTP endpoint accessible from the API Management service. </summary>
-        public static PolicyContentFormat RawxmlLink { get; } = new PolicyContentFormat(RawxmlLinkValue);
+        public static PolicyContentFormat RawXmlLink { get; } = new PolicyContentFormat(RawXmlLinkValue);
 
         /// <summary> Determines if two <see cref="PolicyContentFormat"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         private readonly string _value;
         /// <summary> Send an e-mail to the user confirming they have successfully signed up. </summary>
-        private const string SignupValue = "signup";
+        private const string SignUpValue = "signup";
         /// <summary> Send an e-mail inviting the user to sign-up and complete registration. </summary>
         private const string InviteValue = "invite";
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Send an e-mail to the user confirming they have successfully signed up. </summary>
-        public static ConfirmationEmailType Signup { get; } = new ConfirmationEmailType(SignupValue);
+        public static ConfirmationEmailType SignUp { get; } = new ConfirmationEmailType(SignUpValue);
 
         /// <summary> Send an e-mail inviting the user to sign-up and complete registration. </summary>
         public static ConfirmationEmailType Invite { get; } = new ConfirmationEmailType(InviteValue);

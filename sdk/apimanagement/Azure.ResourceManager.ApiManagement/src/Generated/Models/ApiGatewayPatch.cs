@@ -8,32 +8,41 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Parameter supplied to Update API Management gateway. </summary>
-    public partial class ApiGatewayPatch : ApimResource
+    public partial class ApiGatewayPatch : ResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ApiGatewayPatch"/>. </summary>
         public ApiGatewayPatch()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiGatewayPatch"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type for API Management resource is set to Microsoft.ApiManagement. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the API Management gateway. </param>
         /// <param name="sku"> SKU properties of the API Management gateway. </param>
         /// <param name="eTag"> ETag of the resource. </param>
-        internal ApiGatewayPatch(string id, string name, string @type, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApiManagementGatewayUpdateProperties properties, ApiManagementGatewaySkuPropertiesForPatch sku, ETag? eTag) : base(id, name, @type, tags, additionalBinaryDataProperties)
+        /// <param name="tags"> Resource tags. </param>
+        internal ApiGatewayPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApiManagementGatewayUpdateProperties properties, ApiManagementGatewaySkuPropertiesForPatch sku, ETag? eTag, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Sku = sku;
             ETag = eTag;
+            Tags = tags;
         }
 
         /// <summary> Properties of the API Management gateway. </summary>

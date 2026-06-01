@@ -16,32 +16,39 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Parameter supplied to Update Api Management Service. </summary>
-    public partial class ApiManagementServicePatch : ApimResource
+    public partial class ApiManagementServicePatch : ResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ApiManagementServicePatch"/>. </summary>
         public ApiManagementServicePatch()
         {
             Zones = new ChangeTrackingList<string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementServicePatch"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type for API Management resource is set to Microsoft.ApiManagement. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the API Management service. </param>
         /// <param name="sku"> SKU properties of the API Management service. </param>
         /// <param name="identity"> Managed service identity of the Api Management service. </param>
         /// <param name="eTag"> ETag of the resource. </param>
         /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
-        internal ApiManagementServicePatch(string id, string name, string @type, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApiManagementServiceUpdateProperties properties, ApiManagementServiceSkuProperties sku, ManagedServiceIdentity identity, ETag? eTag, IList<string> zones) : base(id, name, @type, tags, additionalBinaryDataProperties)
+        /// <param name="tags"> Resource tags. </param>
+        internal ApiManagementServicePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApiManagementServiceUpdateProperties properties, ApiManagementServiceSkuProperties sku, ManagedServiceIdentity identity, ETag? eTag, IList<string> zones, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Sku = sku;
             Identity = identity;
             ETag = eTag;
             Zones = zones;
+            Tags = tags;
         }
 
         /// <summary> Properties of the API Management service. </summary>

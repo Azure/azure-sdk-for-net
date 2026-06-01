@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct ConnectivityCheckProtocol : IEquatable<ConnectivityCheckProtocol>
     {
         private readonly string _value;
-        private const string TCPValue = "TCP";
-        private const string HTTPValue = "HTTP";
-        private const string HTTPSValue = "HTTPS";
+        private const string TcpValue = "TCP";
+        private const string HttpValue = "HTTP";
+        private const string HttpsValue = "HTTPS";
 
         /// <summary> Initializes a new instance of <see cref="ConnectivityCheckProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _value = value;
         }
 
-        /// <summary> Gets the TCP. </summary>
-        public static ConnectivityCheckProtocol TCP { get; } = new ConnectivityCheckProtocol(TCPValue);
+        /// <summary> Gets the Tcp. </summary>
+        public static ConnectivityCheckProtocol Tcp { get; } = new ConnectivityCheckProtocol(TcpValue);
 
-        /// <summary> Gets the HTTP. </summary>
-        public static ConnectivityCheckProtocol HTTP { get; } = new ConnectivityCheckProtocol(HTTPValue);
+        /// <summary> Gets the Http. </summary>
+        public static ConnectivityCheckProtocol Http { get; } = new ConnectivityCheckProtocol(HttpValue);
 
-        /// <summary> Gets the HTTPS. </summary>
-        public static ConnectivityCheckProtocol HTTPS { get; } = new ConnectivityCheckProtocol(HTTPSValue);
+        /// <summary> Gets the Https. </summary>
+        public static ConnectivityCheckProtocol Https { get; } = new ConnectivityCheckProtocol(HttpsValue);
 
         /// <summary> Determines if two <see cref="ConnectivityCheckProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

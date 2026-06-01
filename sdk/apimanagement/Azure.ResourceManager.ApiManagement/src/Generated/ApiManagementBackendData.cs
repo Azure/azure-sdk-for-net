@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Management Uri of the Resource in External System. This URL can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </summary>
         [WirePath("properties.resourceId")]
-        public string ResourceId
+        public Uri ResourceUri
         {
             get
             {
-                return Properties is null ? default : Properties.ResourceId;
+                return Properties is null ? default : Properties.ResourceUri;
             }
             set
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new BackendContractProperties();
                 }
-                Properties.ResourceId = value;
+                Properties.ResourceUri = value;
             }
         }
 

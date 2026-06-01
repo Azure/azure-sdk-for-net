@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> API_NAME;rev=API_REVISION - OPERATION_NAME. </summary>
         private const string NameValue = "Name";
         /// <summary> HTTP_VERB URL. </summary>
-        private const string UrlValue = "Url";
+        private const string UriValue = "Url";
 
         /// <summary> Initializes a new instance of <see cref="OperationNameFormat"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static OperationNameFormat Name { get; } = new OperationNameFormat(NameValue);
 
         /// <summary> HTTP_VERB URL. </summary>
-        public static OperationNameFormat Url { get; } = new OperationNameFormat(UrlValue);
+        public static OperationNameFormat Uri { get; } = new OperationNameFormat(UriValue);
 
         /// <summary> Determines if two <see cref="OperationNameFormat"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

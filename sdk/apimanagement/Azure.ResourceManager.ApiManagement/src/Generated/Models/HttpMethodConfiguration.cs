@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct HttpMethodConfiguration : IEquatable<HttpMethodConfiguration>
     {
         private readonly string _value;
-        private const string GETValue = "GET";
-        private const string POSTValue = "POST";
+        private const string GetValue = "GET";
+        private const string PostValue = "POST";
 
         /// <summary> Initializes a new instance of <see cref="HttpMethodConfiguration"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _value = value;
         }
 
-        /// <summary> Gets the GET. </summary>
-        public static HttpMethodConfiguration GET { get; } = new HttpMethodConfiguration(GETValue);
+        /// <summary> Gets the Get. </summary>
+        public static HttpMethodConfiguration Get { get; } = new HttpMethodConfiguration(GetValue);
 
-        /// <summary> Gets the POST. </summary>
-        public static HttpMethodConfiguration POST { get; } = new HttpMethodConfiguration(POSTValue);
+        /// <summary> Gets the Post. </summary>
+        public static HttpMethodConfiguration Post { get; } = new HttpMethodConfiguration(PostValue);
 
         /// <summary> Determines if two <see cref="HttpMethodConfiguration"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
