@@ -211,7 +211,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The file or directory path to delete, relative to the session home directory. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="recursive"> Whether to recursively delete directory contents. Defaults to false. </param>
+        /// <param name="recursive"> Whether to recursively delete directory contents. The service defaults to `false` if a value is not specified by the caller. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
@@ -235,7 +235,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The file or directory path to delete, relative to the session home directory. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="recursive"> Whether to recursively delete directory contents. Defaults to false. </param>
+        /// <param name="recursive"> Whether to recursively delete directory contents. The service defaults to `false` if a value is not specified by the caller. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
@@ -254,7 +254,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The file or directory path to delete, relative to the session home directory. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="recursive"> Whether to recursively delete directory contents. Defaults to false. </param>
+        /// <param name="recursive"> Whether to recursively delete directory contents. The service defaults to `false` if a value is not specified by the caller. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
@@ -271,7 +271,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The file or directory path to delete, relative to the session home directory. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="recursive"> Whether to recursively delete directory contents. Defaults to false. </param>
+        /// <param name="recursive"> Whether to recursively delete directory contents. The service defaults to `false` if a value is not specified by the caller. </param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>

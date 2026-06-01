@@ -34,7 +34,7 @@ network:
 safe-outputs:
   report-failure-as-issue: false
   create-pull-request-review-comment:
-    max: 40
+    max: 100
     target: "${{ github.event.pull_request.number || github.event.check_run.pull_requests[0].number || github.event.inputs.pr_number }}"
   submit-pull-request-review:
     max: 1
@@ -80,6 +80,8 @@ This workflow runs automatically when a pull request modifies files under an `Az
 
 Fetch the pull request details. If the PR is in draft state, use `noop` and stop — draft PRs are not ready for review and should not have their state modified.
 
+If this workflow was triggered by `check_run`, compare `github.event.check_run.head_sha` against the PR's current head SHA. If they differ, the failing check belongs to a superseded commit — use `noop` and stop rather than posting stale feedback against code the author has already changed.
+
 Then check CI status: list the check runs and commit statuses for the PR head commit.
 
 - If this workflow was triggered by `check_run` (i.e., CI just failed), skip the status check — CI failure is already confirmed. Go directly to failure analysis: apply the CI failure analysis skill (`.github/skills/analyze-ci-failures/SKILL.md`) to diagnose failures. Use its check-name mapping and log-symptom tables to classify each failure, fetch job logs for details, and include actionable fix instructions in your review. Link to failed check run URLs so authors can navigate directly to the failure logs.
@@ -119,10 +121,11 @@ Use only the scanner script fetched from the base branch and API surface files f
 
 Apply all relevant phases from the skill files, with these workflow-specific adjustments:
 
-1. Phase 1 versioning findings are blocking.
+1. Phase 1 versioning findings are blocking, but do **not** stop after Phase 1 — continue into Phase 2 and submit one combined review so versioning and API/naming findings reach the author in the same round (per the updated Phase 1 in the skill).
 2. Phase 2 API review findings should focus on new or changed public API surface only.
-3. Phase 3 breaking-change detection must use the CI failure details fetched in Step 0 and API diffs. Do not run `dotnet build` in this workflow because that would execute untrusted PR code. If CI reports ApiCompat failures or build errors, surface them with links to the failed check run URL or Azure DevOps target URL.
-4. For migration PRs, apply Phases 4 and 5 from the migration skill. Treat manual edits to `src/Generated/` as blocking unless there is clear evidence they are generated output rather than hand edits.
+3. **Contextual naming must be exhaustive.** Use the scanner's `-ListNewTypes` inventory mode to enumerate every new public type, then record a verdict for each one in a single pass (see Phase 2 step 4 in the skill). Surfacing only a subset of naming issues per round is the main cause of repeated review rounds and must be avoided.
+4. Phase 3 breaking-change detection must use the CI failure details fetched in Step 0 and API diffs. Do not run `dotnet build` in this workflow because that would execute untrusted PR code. If CI reports ApiCompat failures or build errors, surface them with links to the failed check run URL or Azure DevOps target URL.
+5. For migration PRs, apply Phases 4 and 5 from the migration skill. Treat manual edits to `src/Generated/` as blocking unless there is clear evidence they are generated output rather than hand edits.
 
 ## Step 4 - Submit one PR review
 
@@ -131,6 +134,8 @@ Create inline review comments for findings using `create_pull_request_review_com
 - Start with a rule ID or phase marker, such as `**[SUFFIX001]**`, `**[Phase 1]**`, `**[4.10]**`, or `**[5.2]**`.
 - Explain the problem and the required fix.
 - Target the current changed file and line in the PR diff. Prefer the current `*.net10.0.cs` API file for API-surface comments.
+
+Post one inline comment per distinct finding so large refresh PRs (which can touch a huge number of files and generate many findings) are reviewed completely without dropping any. You may still merge several closely-related naming findings (e.g., multiple generically-named types fixed the same way) into one comment for readability, but do not omit findings to keep the count down. Always report the full evaluated/flagged counts in the review summary.
 
 Then submit exactly one review using `submit_pull_request_review`:
 
@@ -146,6 +151,7 @@ The review body should contain:
 - Scope: <packages reviewed>
 - Versioning: <pass/fail/not applicable>
 - API surface: <pass/fail with count>
+- Contextual naming: evaluated <N> new public types, flagged <M>
 - ApiCompat / breaking changes: <pass/fail/pending/not applicable>
 - Migration-specific checks: <pass/fail/not applicable>
 

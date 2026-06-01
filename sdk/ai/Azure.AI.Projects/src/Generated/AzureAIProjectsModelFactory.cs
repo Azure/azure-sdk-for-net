@@ -366,103 +366,15 @@ namespace Azure.AI.Projects
             return new EmbeddingConfiguration(modelDeploymentName, embeddingField, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Model Version Definition. </summary>
-        /// <param name="systemData"> System related metadata. </param>
-        /// <param name="blobUri"> URI of the model artifact in blob storage. </param>
-        /// <param name="weightType"> The weight type of the model. </param>
-        /// <param name="baseModel"> Base model asset ID. </param>
-        /// <param name="source"> The source of the model. </param>
-        /// <param name="loraConfig"> Adapter-specific configuration. Required when weight_type is lora; ignored otherwise. May be auto-populated from adapter_config.json when present in the uploaded files — user-provided values take precedence over auto-detected values. </param>
-        /// <param name="artifactProfile"> The artifact profile of the model. </param>
-        /// <param name="warnings"> Service-computed advisory warnings derived from the artifact profile. </param>
-        /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="version"> The version of the resource. </param>
+        /// <summary> Request body for updating a model version. Only description and tags can be modified. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <returns> A new <see cref="Projects.ModelVersion"/> instance for mocking. </returns>
-        public static ModelVersion ModelVersion(SystemDataV3 systemData = default, Uri blobUri = default, FoundryModelWeightType? weightType = default, string baseModel = default, ModelSourceData source = default, LoraConfig loraConfig = default, ArtifactProfile artifactProfile = default, IEnumerable<FoundryModelWarning> warnings = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Projects.UpdateModelVersionOptions"/> instance for mocking. </returns>
+        public static UpdateModelVersionOptions UpdateModelVersionOptions(string description = default, IDictionary<string, string> tags = default)
         {
-            warnings ??= new ChangeTrackingList<FoundryModelWarning>();
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ModelVersion(
-                systemData,
-                blobUri,
-                weightType,
-                baseModel,
-                source,
-                loraConfig,
-                artifactProfile,
-                warnings.ToList(),
-                id,
-                name,
-                version,
-                description,
-                tags,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> System metadata for a resource. </summary>
-        /// <param name="createdAt"> Timestamp of resource creation. </param>
-        /// <param name="createdBy"> Identity that created the resource. </param>
-        /// <param name="createdByType"> Type of identity that created the resource. </param>
-        /// <param name="lastModifiedAt"> Timestamp of last resource modification. </param>
-        /// <returns> A new <see cref="Projects.SystemDataV3"/> instance for mocking. </returns>
-        public static SystemDataV3 SystemDataV3(DateTimeOffset? createdAt = default, string createdBy = default, string createdByType = default, DateTimeOffset? lastModifiedAt = default)
-        {
-            return new SystemDataV3(createdAt, createdBy, createdByType, lastModifiedAt, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Source information for the model. </summary>
-        /// <param name="sourceType"> The source type of the model. </param>
-        /// <param name="jobId"> The job ID that produced this model. </param>
-        /// <returns> A new <see cref="Projects.ModelSourceData"/> instance for mocking. </returns>
-        public static ModelSourceData ModelSourceData(FoundryModelSourceType? sourceType = default, string jobId = default)
-        {
-            return new ModelSourceData(sourceType, jobId, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Adapter-specific metadata for LoRA models. Drives serving engine configuration at deployment time. </summary>
-        /// <param name="rank"> LoRA rank (r). Positive integer. Common values: 8, 16, 32, 64. </param>
-        /// <param name="alpha"> LoRA scaling factor (α). Positive integer; typically 2× the rank. </param>
-        /// <param name="targetModules"> Model layers modified by the adapter (e.g., q_proj, v_proj). Auto-detected from adapter_config.json if omitted. </param>
-        /// <param name="dropout"> Dropout rate used during training. Informational — not used at serving time. </param>
-        /// <returns> A new <see cref="Projects.LoraConfig"/> instance for mocking. </returns>
-        public static LoraConfig LoraConfig(int? rank = default, int? alpha = default, IEnumerable<string> targetModules = default, float? dropout = default)
-        {
-            targetModules ??= new ChangeTrackingList<string>();
-
-            return new LoraConfig(rank, alpha, targetModules.ToList(), dropout, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Artifact profile of the model. </summary>
-        /// <param name="category"> The category of the artifact profile. </param>
-        /// <param name="signals"> Signals detected in the model artifact. </param>
-        /// <returns> A new <see cref="Projects.ArtifactProfile"/> instance for mocking. </returns>
-        public static ArtifactProfile ArtifactProfile(FoundryModelArtifactProfileCategory category = default, IEnumerable<FoundryModelArtifactProfileSignal> signals = default)
-        {
-            signals ??= new ChangeTrackingList<FoundryModelArtifactProfileSignal>();
-
-            return new ArtifactProfile(category, signals.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A warning associated with a model. </summary>
-        /// <param name="code"> The warning code. </param>
-        /// <param name="message"> The warning message. </param>
-        /// <returns> A new <see cref="Projects.FoundryModelWarning"/> instance for mocking. </returns>
-        public static FoundryModelWarning FoundryModelWarning(FoundryModelWarningCode? code = default, string message = default)
-        {
-            return new FoundryModelWarning(code, message, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The CreateAsyncResponse. </summary>
-        /// <param name="location"> URL to poll for operation status. </param>
-        /// <param name="operationResult"> URL to the operation result, or null if the operation is still in progress. </param>
-        /// <returns> A new <see cref="Projects.CreateAsyncResponse"/> instance for mocking. </returns>
-        public static CreateAsyncResponse CreateAsyncResponse(Uri location = default, Uri operationResult = default)
-        {
-            return new CreateAsyncResponse(location, operationResult, additionalBinaryDataProperties: null);
+            return new UpdateModelVersionOptions(description, tags, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents a request for a pending upload of a model version. </summary>
@@ -482,14 +394,6 @@ namespace Azure.AI.Projects
         public static ModelPendingUploadResponse ModelPendingUploadResponse(AIProjectBlobReference blobReference = default, string pendingUploadId = default, string version = default)
         {
             return new ModelPendingUploadResponse(blobReference, pendingUploadId, version, "TemporaryBlobReference", additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Request to fetch credentials for a model asset. </summary>
-        /// <param name="blobUri"> Blob URI of the model asset to fetch credentials for. </param>
-        /// <returns> A new <see cref="Projects.ModelCredentialRequest"/> instance for mocking. </returns>
-        public static ModelCredentialRequest ModelCredentialRequest(Uri blobUri = default)
-        {
-            return new ModelCredentialRequest(blobUri, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -552,7 +456,7 @@ namespace Azure.AI.Projects
         /// <param name="displayName"> Name of the red-team run. </param>
         /// <param name="turnCount"> Number of simulation rounds. </param>
         /// <param name="attackStrategies"> List of attack strategies or nested lists of attack strategies. </param>
-        /// <param name="isSimulationOnly"> Simulation-only or Simulation + Evaluation. Default false, if true the scan outputs conversation not evaluation result. </param>
+        /// <param name="isSimulationOnly"> Simulation-only or Simulation + Evaluation. If `true` the scan outputs conversation not evaluation result. The service defaults to `false` if a value is not specified by the caller. </param>
         /// <param name="riskCategories"> List of risk categories to generate attack objectives for. </param>
         /// <param name="applicationScenario"> Application scenario for the red team operation, to generate scenario specific attacks. </param>
         /// <param name="tags"> Red team's tags. Unlike properties, tags are fully mutable. </param>
@@ -928,7 +832,7 @@ namespace Azure.AI.Projects
         /// <param name="id"> Stable identifier for this dimension (snake_case, e.g., `correct_resolution`). Required. Provided by the user when manually creating a rubric evaluator or during human-in-the-loop review of a generated set; the generation pipeline produces an initial value the user can edit. Editable when saving new versions. </param>
         /// <param name="description"> What this dimension measures (e.g., 'Correctly identifies the user's reservation intent and pursues the appropriate workflow'). </param>
         /// <param name="weight"> Relative weight of this dimension (1-10). The generation pipeline assigns exactly one dimension weight 8-10; all others use 1-6. User edits are not constrained by this heuristic. </param>
-        /// <param name="alwaysApplicable"> When true, the LLM judge always scores this dimension regardless of relevance (skips applicability assessment). The service-generated general quality/policy dimension has this set to true and is non-editable. Users may set this on their own custom dimensions. Defaults to `false`. </param>
+        /// <param name="alwaysApplicable"> When true, the LLM judge always scores this dimension regardless of relevance (skips applicability assessment). The service-generated general quality/policy dimension has this set to true and is non-editable. Users may set this on their own custom dimensions. The service defaults to `false` if a value is not specified by the caller. </param>
         /// <returns> A new <see cref="Evaluation.EvaluationsDimension"/> instance for mocking. </returns>
         public static EvaluationsDimension EvaluationsDimension(string id = default, string description = default, int weight = default, bool? alwaysApplicable = default)
         {
@@ -1421,7 +1325,7 @@ namespace Azure.AI.Projects
         /// <param name="isUserProfileEnabled"> Whether to enable user profile extraction and storage. Default is true. </param>
         /// <param name="userProfileDetails"> Specific categories or types of user profile information to extract and store. </param>
         /// <param name="isChatSummaryEnabled"> Whether to enable chat summary extraction and storage. Defaults to `true`. </param>
-        /// <param name="proceduralMemoryEnabled"> Whether to enable procedural memory extraction and storage. Defaults to `true`. </param>
+        /// <param name="proceduralMemoryEnabled"> Whether to enable procedural memory extraction and storage. The service defaults to `true` if a value is not specified by the caller. </param>
         /// <param name="defaultTtlSeconds"> The default time-to-live for memories in seconds. A value of `0` indicates that memories do not expire. Defaults to `0`. </param>
         /// <returns> A new <see cref="Memory.MemoryStoreDefaultOptions"/> instance for mocking. </returns>
         public static MemoryStoreDefaultOptions MemoryStoreDefaultOptions(bool isUserProfileEnabled = default, string userProfileDetails = default, bool isChatSummaryEnabled = default, bool? proceduralMemoryEnabled = default, TimeSpan? defaultTtlSeconds = default)
