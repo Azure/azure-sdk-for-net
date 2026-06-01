@@ -211,12 +211,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="content"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkMonitorResource>> UpdateAsync(WaitUntil waitUntil, NetworkMonitorPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<NetworkMonitorResource>> UpdateAsync(WaitUntil waitUntil, NetworkMonitorPatchContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _networkMonitorsClientDiagnostics.CreateScope("NetworkMonitorResource.Update");
             scope.Start();
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkMonitorsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkMonitorPatch.ToRequestContent(patch), context);
+                HttpMessage message = _networkMonitorsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkMonitorPatchContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkMonitorResource> operation = new ManagedNetworkFabricArmOperation<NetworkMonitorResource>(
                     new NetworkMonitorOperationSource(Client),
@@ -270,12 +270,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="content"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<NetworkMonitorResource> Update(WaitUntil waitUntil, NetworkMonitorPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<NetworkMonitorResource> Update(WaitUntil waitUntil, NetworkMonitorPatchContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _networkMonitorsClientDiagnostics.CreateScope("NetworkMonitorResource.Update");
             scope.Start();
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkMonitorsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkMonitorPatch.ToRequestContent(patch), context);
+                HttpMessage message = _networkMonitorsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkMonitorPatchContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkMonitorResource> operation = new ManagedNetworkFabricArmOperation<NetworkMonitorResource>(
                     new NetworkMonitorOperationSource(Client),
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 else
                 {
                     NetworkMonitorData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    NetworkMonitorPatch patch = new NetworkMonitorPatch();
+                    NetworkMonitorPatchContent patch = new NetworkMonitorPatchContent();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 else
                 {
                     NetworkMonitorData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    NetworkMonitorPatch patch = new NetworkMonitorPatch();
+                    NetworkMonitorPatchContent patch = new NetworkMonitorPatchContent();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 else
                 {
                     NetworkMonitorData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    NetworkMonitorPatch patch = new NetworkMonitorPatch();
+                    NetworkMonitorPatchContent patch = new NetworkMonitorPatchContent();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<NetworkMonitorResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 else
                 {
                     NetworkMonitorData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    NetworkMonitorPatch patch = new NetworkMonitorPatch();
+                    NetworkMonitorPatchContent patch = new NetworkMonitorPatchContent();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<NetworkMonitorResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -734,7 +734,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 else
                 {
                     NetworkMonitorData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    NetworkMonitorPatch patch = new NetworkMonitorPatch();
+                    NetworkMonitorPatchContent patch = new NetworkMonitorPatchContent();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 else
                 {
                     NetworkMonitorData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    NetworkMonitorPatch patch = new NetworkMonitorPatch();
+                    NetworkMonitorPatchContent patch = new NetworkMonitorPatchContent();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

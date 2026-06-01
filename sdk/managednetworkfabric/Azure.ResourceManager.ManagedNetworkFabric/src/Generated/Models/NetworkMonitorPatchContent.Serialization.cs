@@ -15,61 +15,61 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Network Monitor Patch resource definition. </summary>
-    public partial class NetworkMonitorPatch : ManagedNetworkFabricResourcePatch, IJsonModel<NetworkMonitorPatch>
+    public partial class NetworkMonitorPatchContent : ManagedNetworkFabricResourcePatch, IJsonModel<NetworkMonitorPatchContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ManagedNetworkFabricResourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkMonitorPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkMonitorPatchContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNetworkMonitorPatch(document.RootElement, options);
+                        return DeserializeNetworkMonitorPatchContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkMonitorPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkMonitorPatchContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkMonitorPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkMonitorPatchContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkMonitorPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkMonitorPatchContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NetworkMonitorPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NetworkMonitorPatchContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkMonitorPatch IPersistableModel<NetworkMonitorPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkMonitorPatch)PersistableModelCreateCore(data, options);
+        NetworkMonitorPatchContent IPersistableModel<NetworkMonitorPatchContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkMonitorPatchContent)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NetworkMonitorPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkMonitorPatchContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="networkMonitorPatch"> The <see cref="NetworkMonitorPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(NetworkMonitorPatch networkMonitorPatch)
+        /// <param name="networkMonitorPatchContent"> The <see cref="NetworkMonitorPatchContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NetworkMonitorPatchContent networkMonitorPatchContent)
         {
-            if (networkMonitorPatch == null)
+            if (networkMonitorPatchContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(networkMonitorPatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(networkMonitorPatchContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NetworkMonitorPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkMonitorPatchContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkMonitorPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkMonitorPatchContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkMonitorPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkMonitorPatchContent)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -95,24 +95,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkMonitorPatch IJsonModel<NetworkMonitorPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkMonitorPatch)JsonModelCreateCore(ref reader, options);
+        NetworkMonitorPatchContent IJsonModel<NetworkMonitorPatchContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkMonitorPatchContent)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ManagedNetworkFabricResourcePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkMonitorPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkMonitorPatchContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkMonitorPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkMonitorPatchContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNetworkMonitorPatch(document.RootElement, options);
+            return DeserializeNetworkMonitorPatchContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NetworkMonitorPatch DeserializeNetworkMonitorPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static NetworkMonitorPatchContent DeserializeNetworkMonitorPatchContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NetworkMonitorPatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, properties);
+            return new NetworkMonitorPatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, properties);
         }
     }
 }

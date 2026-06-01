@@ -3301,12 +3301,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="tags"> Resource tags. </param>
         /// <param name="bmpConfiguration"> BGP Monitoring Protocol (BMP) Configurations for the Network Monitor. </param>
-        /// <returns> A new <see cref="Models.NetworkMonitorPatch"/> instance for mocking. </returns>
-        public static NetworkMonitorPatch NetworkMonitorPatch(IDictionary<string, string> tags = default, BmpConfigurationPatchProperties bmpConfiguration = default)
+        /// <returns> A new <see cref="Models.NetworkMonitorPatchContent"/> instance for mocking. </returns>
+        public static NetworkMonitorPatchContent NetworkMonitorPatchContent(IDictionary<string, string> tags = default, BmpConfigurationPatchProperties bmpConfiguration = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkMonitorPatch(tags, additionalBinaryDataProperties: null, bmpConfiguration is null ? default : new NetworkMonitorPatchProperties(bmpConfiguration, null));
+            return new NetworkMonitorPatchContent(tags, additionalBinaryDataProperties: null, bmpConfiguration is null ? default : new NetworkMonitorPatchProperties(bmpConfiguration, null));
         }
 
         /// <param name="stationConfigurationState"> Enabling a station. Either True/False. </param>
@@ -3372,12 +3372,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="hostName"> The host name of the device. </param>
         /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Models.NetworkBootstrapDevicePatch"/> instance for mocking. </returns>
-        public static NetworkBootstrapDevicePatch NetworkBootstrapDevicePatch(IDictionary<string, string> tags = default, string annotation = default, string hostName = default, string serialNumber = default, NetworkFabricManagedServiceIdentityPatch identity = default)
+        /// <returns> A new <see cref="Models.NetworkBootstrapDevicePatchContent"/> instance for mocking. </returns>
+        public static NetworkBootstrapDevicePatchContent NetworkBootstrapDevicePatchContent(IDictionary<string, string> tags = default, string annotation = default, string hostName = default, string serialNumber = default, NetworkFabricManagedServiceIdentityPatch identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkBootstrapDevicePatch(tags, additionalBinaryDataProperties: null, annotation is null && hostName is null && serialNumber is null ? default : new NetworkBootstrapDevicePatchProperties(annotation, hostName, serialNumber, null), identity);
+            return new NetworkBootstrapDevicePatchContent(tags, additionalBinaryDataProperties: null, annotation is null && hostName is null && serialNumber is null ? default : new NetworkBootstrapDevicePatchProperties(annotation, hostName, serialNumber, null), identity);
         }
 
         /// <summary> Network Bootstrap Device reboot Response. </summary>

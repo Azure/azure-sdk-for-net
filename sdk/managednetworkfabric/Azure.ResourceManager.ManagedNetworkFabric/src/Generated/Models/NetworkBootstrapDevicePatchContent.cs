@@ -11,19 +11,19 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Network Bootstrap Device Patch Parameters defines the patch parameters of the resource. </summary>
-    public partial class NetworkBootstrapDevicePatch : ManagedNetworkFabricResourcePatch
+    public partial class NetworkBootstrapDevicePatchContent : ManagedNetworkFabricResourcePatch
     {
-        /// <summary> Initializes a new instance of <see cref="NetworkBootstrapDevicePatch"/>. </summary>
-        public NetworkBootstrapDevicePatch()
+        /// <summary> Initializes a new instance of <see cref="NetworkBootstrapDevicePatchContent"/>. </summary>
+        public NetworkBootstrapDevicePatchContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkBootstrapDevicePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkBootstrapDevicePatchContent"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Network Bootstrap Device Patch properties. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal NetworkBootstrapDevicePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkBootstrapDevicePatchProperties properties, NetworkFabricManagedServiceIdentityPatch identity) : base(tags, additionalBinaryDataProperties)
+        internal NetworkBootstrapDevicePatchContent(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkBootstrapDevicePatchProperties properties, NetworkFabricManagedServiceIdentityPatch identity) : base(tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             Identity = identity;

@@ -15,61 +15,61 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Network Bootstrap Device Patch Parameters defines the patch parameters of the resource. </summary>
-    public partial class NetworkBootstrapDevicePatch : ManagedNetworkFabricResourcePatch, IJsonModel<NetworkBootstrapDevicePatch>
+    public partial class NetworkBootstrapDevicePatchContent : ManagedNetworkFabricResourcePatch, IJsonModel<NetworkBootstrapDevicePatchContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ManagedNetworkFabricResourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkBootstrapDevicePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkBootstrapDevicePatchContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNetworkBootstrapDevicePatch(document.RootElement, options);
+                        return DeserializeNetworkBootstrapDevicePatchContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkBootstrapDevicePatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkBootstrapDevicePatchContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkBootstrapDevicePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkBootstrapDevicePatchContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkBootstrapDevicePatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkBootstrapDevicePatchContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NetworkBootstrapDevicePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NetworkBootstrapDevicePatchContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkBootstrapDevicePatch IPersistableModel<NetworkBootstrapDevicePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkBootstrapDevicePatch)PersistableModelCreateCore(data, options);
+        NetworkBootstrapDevicePatchContent IPersistableModel<NetworkBootstrapDevicePatchContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkBootstrapDevicePatchContent)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NetworkBootstrapDevicePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkBootstrapDevicePatchContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="networkBootstrapDevicePatch"> The <see cref="NetworkBootstrapDevicePatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(NetworkBootstrapDevicePatch networkBootstrapDevicePatch)
+        /// <param name="networkBootstrapDevicePatchContent"> The <see cref="NetworkBootstrapDevicePatchContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NetworkBootstrapDevicePatchContent networkBootstrapDevicePatchContent)
         {
-            if (networkBootstrapDevicePatch == null)
+            if (networkBootstrapDevicePatchContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(networkBootstrapDevicePatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(networkBootstrapDevicePatchContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NetworkBootstrapDevicePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkBootstrapDevicePatchContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkBootstrapDevicePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkBootstrapDevicePatchContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkBootstrapDevicePatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkBootstrapDevicePatchContent)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -100,24 +100,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkBootstrapDevicePatch IJsonModel<NetworkBootstrapDevicePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkBootstrapDevicePatch)JsonModelCreateCore(ref reader, options);
+        NetworkBootstrapDevicePatchContent IJsonModel<NetworkBootstrapDevicePatchContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkBootstrapDevicePatchContent)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ManagedNetworkFabricResourcePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkBootstrapDevicePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkBootstrapDevicePatchContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkBootstrapDevicePatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkBootstrapDevicePatchContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNetworkBootstrapDevicePatch(document.RootElement, options);
+            return DeserializeNetworkBootstrapDevicePatchContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NetworkBootstrapDevicePatch DeserializeNetworkBootstrapDevicePatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static NetworkBootstrapDevicePatchContent DeserializeNetworkBootstrapDevicePatchContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NetworkBootstrapDevicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, properties, identity);
+            return new NetworkBootstrapDevicePatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, properties, identity);
         }
     }
 }

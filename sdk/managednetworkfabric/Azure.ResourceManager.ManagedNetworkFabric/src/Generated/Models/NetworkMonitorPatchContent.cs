@@ -11,18 +11,18 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Network Monitor Patch resource definition. </summary>
-    public partial class NetworkMonitorPatch : ManagedNetworkFabricResourcePatch
+    public partial class NetworkMonitorPatchContent : ManagedNetworkFabricResourcePatch
     {
-        /// <summary> Initializes a new instance of <see cref="NetworkMonitorPatch"/>. </summary>
-        public NetworkMonitorPatch()
+        /// <summary> Initializes a new instance of <see cref="NetworkMonitorPatchContent"/>. </summary>
+        public NetworkMonitorPatchContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkMonitorPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkMonitorPatchContent"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Network Monitor Patch properties. </param>
-        internal NetworkMonitorPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkMonitorPatchProperties properties) : base(tags, additionalBinaryDataProperties)
+        internal NetworkMonitorPatchContent(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkMonitorPatchProperties properties) : base(tags, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

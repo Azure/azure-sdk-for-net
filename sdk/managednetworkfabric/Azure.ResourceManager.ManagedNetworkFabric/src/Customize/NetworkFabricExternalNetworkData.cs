@@ -3,8 +3,8 @@
 
 #nullable disable
 
-using System.ComponentModel;
 using System;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
