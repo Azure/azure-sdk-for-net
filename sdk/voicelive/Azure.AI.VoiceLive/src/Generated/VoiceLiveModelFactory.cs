@@ -244,7 +244,7 @@ namespace Azure.AI.VoiceLive
         /// an absolute number from 0.0 to 100.0, or a relative change (e.g., `+10`, `-6dB`).
         /// </param>
         /// <returns> A new <see cref="VoiceLive.AzurePersonalVoice"/> instance for mocking. </returns>
-        public static AzurePersonalVoice AzurePersonalVoice(string name = default, float? temperature = default, VoiceLive.PersonalVoiceModels model = default, Uri customLexiconUri = default, Uri customTextNormalizationUri = default, IEnumerable<string> preferLocales = default, string locale = default, string style = default, string pitch = default, string rate = default, string volume = default)
+        public static AzurePersonalVoice AzurePersonalVoice(string name = default, float? temperature = default, PersonalVoiceModels model = default, Uri customLexiconUri = default, Uri customTextNormalizationUri = default, IEnumerable<string> preferLocales = default, string locale = default, string style = default, string pitch = default, string rate = default, string volume = default)
         {
             preferLocales ??= new ChangeTrackingList<string>();
 
@@ -2499,7 +2499,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="model"> Underlying neural model to use for personal voice. </param>
         /// <returns> A new <see cref="VoiceLive.AzurePersonalVoice"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AzurePersonalVoice AzurePersonalVoice(string name, float? temperature, VoiceLive.PersonalVoiceModels model)
+        public static AzurePersonalVoice AzurePersonalVoice(string name, float? temperature, PersonalVoiceModels model)
         {
             return AzurePersonalVoice(name: name, temperature: temperature, model: model, customLexiconUri: default, customTextNormalizationUri: default, preferLocales: default, locale: default, style: default, pitch: default, rate: default, volume: default);
         }

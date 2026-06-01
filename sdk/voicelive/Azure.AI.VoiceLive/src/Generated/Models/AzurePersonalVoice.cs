@@ -17,7 +17,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="name"> Voice name cannot be empty. </param>
         /// <param name="model"> Underlying neural model to use for personal voice. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public AzurePersonalVoice(string name, VoiceLive.PersonalVoiceModels model) : base(AzureVoiceType.AzurePersonal)
+        public AzurePersonalVoice(string name, PersonalVoiceModels model) : base(AzureVoiceType.AzurePersonal)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -70,7 +70,7 @@ namespace Azure.AI.VoiceLive
         /// Typical values: a named level (`silent`, `x-soft`, `soft`, `medium`, `loud`, `x-loud`, `default`),
         /// an absolute number from 0.0 to 100.0, or a relative change (e.g., `+10`, `-6dB`).
         /// </param>
-        internal AzurePersonalVoice(AzureVoiceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, float? temperature, VoiceLive.PersonalVoiceModels model, Uri customLexiconUri, Uri customTextNormalizationUri, IList<string> preferLocales, string locale, string style, string pitch, string rate, string volume) : base(@type, additionalBinaryDataProperties)
+        internal AzurePersonalVoice(AzureVoiceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, float? temperature, PersonalVoiceModels model, Uri customLexiconUri, Uri customTextNormalizationUri, IList<string> preferLocales, string locale, string style, string pitch, string rate, string volume) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Temperature = temperature;
@@ -92,7 +92,7 @@ namespace Azure.AI.VoiceLive
         public float? Temperature { get; set; }
 
         /// <summary> Underlying neural model to use for personal voice. </summary>
-        public VoiceLive.PersonalVoiceModels Model { get; set; }
+        public PersonalVoiceModels Model { get; set; }
 
         /// <summary> URL of a custom lexicon file for pronunciation customization. </summary>
         public Uri CustomLexiconUri { get; set; }

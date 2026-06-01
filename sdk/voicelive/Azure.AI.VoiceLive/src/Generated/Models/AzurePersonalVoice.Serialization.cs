@@ -169,7 +169,7 @@ namespace Azure.AI.VoiceLive
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
             float? temperature = default;
-            VoiceLive.PersonalVoiceModels model = default;
+            PersonalVoiceModels model = default;
             Uri customLexiconUri = default;
             Uri customTextNormalizationUri = default;
             IList<string> preferLocales = default;
@@ -201,7 +201,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("model"u8))
                 {
-                    model = new VoiceLive.PersonalVoiceModels(prop.Value.GetString());
+                    model = new PersonalVoiceModels(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("custom_lexicon_url"u8))
