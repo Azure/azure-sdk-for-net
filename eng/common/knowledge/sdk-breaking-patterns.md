@@ -37,7 +37,7 @@ enum FooStatusEnum
 
 ---
 
-### 4. Model Renamed
+### 2. Model Renamed
 
 **Detection:** TypeSpec diff shows a model definition's name changed while its structure remains the same or similar. This is distinct from Pattern 5 (Model Removed) — a rename has a clear old→new mapping, while a removal has no replacement.
 
@@ -73,7 +73,7 @@ model NewModelName {
 
 ---
 
-### 5. Model Removed
+### 3. Model Removed
 
 **Detection:** TypeSpec diff shows model definition deleted with no replacement. If a replacement model with similar properties exists, this is a rename — see Pattern 4 (Model Renamed) instead.
 
@@ -92,7 +92,7 @@ model DeprecatedModel {
 
 ---
 
-### 6. Property Type Changed
+### 4. Property Type Changed
 
 **Detection:** TypeSpec diff shows property type changed (e.g., `int32` → `duration`, `string` → custom model).
 
@@ -122,7 +122,7 @@ model DeprecatedModel {
 
 ---
 
-### 7. Property Renamed
+### 5. Property Renamed
 
 **Detection:** TypeSpec diff shows property name changed, or changelog shows renamed getter/setter.
 
@@ -147,11 +147,11 @@ model DeprecatedModel {
 
 ---
 
-### 8. Operation Renamed
+### 6. Operation Renamed
 
 **Detection:** TypeSpec diff shows operation name changed, or changelog shows paired method removal + addition. This is distinct from Pattern 10 (Operation Removed) — a rename has a clear old→new mapping, while a removal has no replacement.
 
-**How to distinguish from Pattern 10:** If a method disappears from the changelog AND a new method with similar parameters/return type appears, this is a rename (Pattern 8). If a method disappears with no replacement, that's a removal (Pattern 10).
+**How to distinguish from Pattern 8:** If a method disappears from the changelog AND a new method with similar parameters/return type appears, this is a rename (Pattern 6). If a method disappears with no replacement, that's a removal (Pattern 8).
 
 **Per-Language Changelog Pattern:**
 - **Python:** `Removed operation StorageTaskAssignmentOperations.list` / `Added operation StorageTaskAssignmentOperations.storage_task_assignment_list`
@@ -165,12 +165,12 @@ model DeprecatedModel {
 ```typespec
 // In client.tsp — restore the original operation name
 @@clientName(MyService.StorageTaskAssignment.storageTaskAssignmentList, "list", "python");
-@@clientName(MyService.MyInterface.newOpName, "oldOpName", "go");
+@@clientName(MyService.MyInterface.B, "A", "go");
 ```
 
 ---
 
-### 9. Operation Signature Changed (Parameters Added/Removed/Reordered)
+### 7. Operation Signature Changed (Parameters Added/Removed/Reordered)
 
 **Detection:** TypeSpec diff shows operation parameters added/removed/retyped, or changelog shows parameter changes.
 
@@ -183,11 +183,15 @@ model DeprecatedModel {
 - **All languages:** ❌ Breaking — method signatures change in generated clients
 - **Go:** Required parameter additions, optional-to-required changes, and parameter deletions cannot be resolved through client customizations
 
-**Mitigation (Python — parameter reorder):**
+**Mitigation:**
+
+- **All languages**: Required parameter additions, optional-to-required changes, and Required parameter deletions cannot be resolved through client customizations
+
+**Mitigation (parameter reorder):**
+
 ```typespec
 // In client.tsp — use @@override to control parameter order
 op MyCustomOp(
-  @path provider: "Microsoft.ThisWillBeReplaced",
   @path provisioningServiceName: string,
   ...Azure.ResourceManager.CommonTypes.ResourceGroupNameParameter,
 ): ProvisioningServiceDescription;
@@ -195,23 +199,28 @@ op MyCustomOp(
 @@override(ProvisioningServiceDescriptions.get, MyCustomOp, "python");
 ```
 
-**Mitigation (general — rename/hide):**
+**Mitigation (parameter add optional parameter):**
+
 ```typespec
-@@clientName(MyService.MyInterface.newOpName, "oldOpName");
-@@access(MyService.MyInterface.internalOp, Access.internal, "python");
+// In client.tsp — use @@override to control parameter order
+op MyCustomOp(
+  @path provisioningServiceName: string,
+  ...Azure.ResourceManager.CommonTypes.ResourceGroupNameParameter,
+  @query provider?: string //put the added optional paramerter at the last
+): ProvisioningServiceDescription;
+
+@@override(ProvisioningServiceDescriptions.get, MyCustomOp);
 ```
 
----
+### 8. Operation Removed or Hidden
 
-### 10. Operation Removed or Hidden
-
-**Detection:** TypeSpec diff shows operation deleted or `@removed` decorator added, with no replacement operation. If a replacement operation with similar parameters exists, this is a rename — see Pattern 8 (Operation Renamed) instead.
+**Detection:** TypeSpec diff shows operation deleted or `@removed` decorator added, with no replacement operation. If a replacement operation with similar parameters exists, this is a rename — see Pattern 6 (Operation Renamed) instead.
 
 **Per-Language Impact:**
 - **All languages:** ❌ Breaking — method no longer exists in client
 - **Go:** Cannot be resolved through client customizations
 
-**Mitigation:**
+**typespec pattern:**
 ```typespec
 // In main.tsp — use version gating instead of deletion
 @removed(Versions.v2026_07_01)
@@ -220,7 +229,7 @@ op oldOperation(): void;
 
 ---
 
-### 11. Combine multiple model properties into one
+### 9. Combine multiple model properties into one
 
 **Detection:** TypeSpec diff shows that one or more properties in a model are combined into a new model, and a new property of that model is added.
 
@@ -233,7 +242,7 @@ op oldOperation(): void;
 
 ---
 
-### 12. Interface Renamed (DataPlane only)
+### 10. Interface Renamed (DataPlane only)
 
 **Detection:** TypeSpec diff shows interface name changed.
 
