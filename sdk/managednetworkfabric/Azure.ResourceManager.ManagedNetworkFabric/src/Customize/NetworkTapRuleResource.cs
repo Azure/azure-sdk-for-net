@@ -127,6 +127,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return new CompatArmOperation<NetworkTapRuleResyncResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
         }
 
+        // The generated method was renamed to StartResync; keep the shipped Synchronize name as an alias.
+        /// <summary> Implements the operation to the underlying resources. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Task<ArmOperation<NetworkTapRuleResyncResult>> SynchronizeAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+            => StartResyncAsync(waitUntil, cancellationToken);
+
+        // The generated method was renamed to StartResync; keep the shipped Synchronize name as an alias.
+        /// <summary> Implements the operation to the underlying resources. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<NetworkTapRuleResyncResult> Synchronize(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+            => StartResync(waitUntil, cancellationToken);
+
         private static StateUpdateCommonPostActionResult ToStateUpdateResult(ResponseError error)
             => new StateUpdateCommonPostActionResult(error, additionalBinaryDataProperties: null, configurationState: null);
     }

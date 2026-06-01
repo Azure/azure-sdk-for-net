@@ -11,7 +11,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
@@ -133,8 +132,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use RestartAsync instead.")]
         public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> RebootAsync(WaitUntil waitUntil, NetworkDeviceRebootContent content, CancellationToken cancellationToken = default)
         {
-            ArmOperation<OperationStatusResult> operation = await RestartAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
-            return new CompatArmOperation<OperationStatusResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
+            ArmOperation<NetworkFabricOperationStatusResult> operation = await RestartAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+            return new CompatArmOperation<NetworkFabricOperationStatusResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
         }
 
         /// <summary> Backward-compatible shim for Reboot. Use Restart instead for richer result type. </summary>
@@ -142,8 +141,90 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use Restart instead.")]
         public virtual ArmOperation<StateUpdateCommonPostActionResult> Reboot(WaitUntil waitUntil, NetworkDeviceRebootContent content, CancellationToken cancellationToken = default)
         {
-            ArmOperation<OperationStatusResult> operation = Restart(waitUntil, content, cancellationToken);
-            return new CompatArmOperation<OperationStatusResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
+            ArmOperation<NetworkFabricOperationStatusResult> operation = Restart(waitUntil, content, cancellationToken);
+            return new CompatArmOperation<NetworkFabricOperationStatusResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
+        }
+
+        // The generated method has the same parameters but returns the shared ARM OperationStatusResult.
+        // Keep this custom same-signature method to preserve the shipped NetworkFabricOperationStatusResult return type.
+        /// <summary> Reboot the Network Device. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
+        /// <param name="content"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<NetworkFabricOperationStatusResult>> RestartAsync(WaitUntil waitUntil, NetworkDeviceRebootContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.Restart");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDevicesRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkDeviceRebootContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ManagedNetworkFabricArmOperation<NetworkFabricOperationStatusResult> operation = new ManagedNetworkFabricArmOperation<NetworkFabricOperationStatusResult>(
+                    new NetworkFabricOperationStatusResultOperationSource(),
+                    _networkDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The generated method has the same parameters but returns the shared ARM OperationStatusResult.
+        // Keep this custom same-signature method to preserve the shipped NetworkFabricOperationStatusResult return type.
+        /// <summary> Reboot the Network Device. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
+        /// <param name="content"> Request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<NetworkFabricOperationStatusResult> Restart(WaitUntil waitUntil, NetworkDeviceRebootContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.Restart");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDevicesRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkDeviceRebootContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ManagedNetworkFabricArmOperation<NetworkFabricOperationStatusResult> operation = new ManagedNetworkFabricArmOperation<NetworkFabricOperationStatusResult>(
+                    new NetworkFabricOperationStatusResultOperationSource(),
+                    _networkDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Backward-compatible shim for RefreshConfiguration. Use ReloadConfiguration instead for richer result type. </summary>

@@ -127,6 +127,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return new CompatArmOperation<NetworkTapResyncResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
         }
 
+        // The generated method was renamed to StartResync; keep the shipped Synchronize name as an alias.
+        /// <summary> Implements the operation to the underlying resources. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Task<ArmOperation<NetworkTapResyncResult>> SynchronizeAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+            => StartResyncAsync(waitUntil, cancellationToken);
+
+        // The generated method was renamed to StartResync; keep the shipped Synchronize name as an alias.
+        /// <summary> Implements the operation to the underlying resources. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<NetworkTapResyncResult> Synchronize(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+            => StartResync(waitUntil, cancellationToken);
+
         /// <summary> Backward-compatible shim for UpdateAdministrativeState. Use SetAdministrativeState instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use SetAdministrativeStateAsync instead.")]
