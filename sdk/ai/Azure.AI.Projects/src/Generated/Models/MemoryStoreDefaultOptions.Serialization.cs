@@ -93,7 +93,7 @@ namespace Azure.AI.Projects.Memory
             if (Optional.IsDefined(DefaultTtlSeconds))
             {
                 writer.WritePropertyName("default_ttl_seconds"u8);
-                writer.WriteNumberValue(Convert.ToInt32(DefaultTtlSeconds.Value.TotalSeconds));
+                writer.WriteNumberValue(Convert.ToInt32(Math.Round(DefaultTtlSeconds.Value.TotalSeconds)));
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
