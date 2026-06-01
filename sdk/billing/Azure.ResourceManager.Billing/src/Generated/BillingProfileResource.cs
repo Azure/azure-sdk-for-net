@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.Billing
     {
         private readonly ClientDiagnostics _billingProfilesClientDiagnostics;
         private readonly BillingProfiles _billingProfilesRestClient;
+        private readonly ClientDiagnostics _availableBalancesClientDiagnostics;
+        private readonly AvailableBalances _availableBalancesRestClient;
         private readonly ClientDiagnostics _billingRequestsClientDiagnostics;
         private readonly BillingRequests _billingRequestsRestClient;
         private readonly ClientDiagnostics _billingPermissionsClientDiagnostics;
@@ -68,6 +70,8 @@ namespace Azure.ResourceManager.Billing
             TryGetApiVersion(ResourceType, out string billingProfileApiVersion);
             _billingProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
             _billingProfilesRestClient = new BillingProfiles(_billingProfilesClientDiagnostics, Pipeline, Endpoint, billingProfileApiVersion ?? "2024-04-01");
+            _availableBalancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
+            _availableBalancesRestClient = new AvailableBalances(_availableBalancesClientDiagnostics, Pipeline, Endpoint, billingProfileApiVersion ?? "2024-04-01");
             _billingRequestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
             _billingRequestsRestClient = new BillingRequests(_billingRequestsClientDiagnostics, Pipeline, Endpoint, billingProfileApiVersion ?? "2024-04-01");
             _billingPermissionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
@@ -306,6 +310,102 @@ namespace Azure.ResourceManager.Billing
                     operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The Available Credit or Payment on Account Balance for a billing profile. The credit balance can be used to settle due or past due invoices and is supported for billing accounts with agreement type Microsoft Customer Agreement. The payment on account balance is supported for billing accounts with agreement type Microsoft Customer Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/availableBalance/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AvailableBalanceOperationGroup_GetByBillingProfile. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingProfileResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<BillingAvailableBalanceData>> GetBillingProfileAvailableBalanceAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _availableBalancesClientDiagnostics.CreateScope("BillingProfileResource.GetBillingProfileAvailableBalance");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _availableBalancesRestClient.CreateGetBillingProfileAvailableBalanceRequest(Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BillingAvailableBalanceData> response = Response.FromValue(BillingAvailableBalanceData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The Available Credit or Payment on Account Balance for a billing profile. The credit balance can be used to settle due or past due invoices and is supported for billing accounts with agreement type Microsoft Customer Agreement. The payment on account balance is supported for billing accounts with agreement type Microsoft Customer Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/availableBalance/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AvailableBalanceOperationGroup_GetByBillingProfile. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingProfileResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<BillingAvailableBalanceData> GetBillingProfileAvailableBalance(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _availableBalancesClientDiagnostics.CreateScope("BillingProfileResource.GetBillingProfileAvailableBalance");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _availableBalancesRestClient.CreateGetBillingProfileAvailableBalanceRequest(Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BillingAvailableBalanceData> response = Response.FromValue(BillingAvailableBalanceData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
             }
             catch (Exception e)
             {
@@ -1603,13 +1703,6 @@ namespace Azure.ResourceManager.Billing
             Argument.AssertNotNullOrEmpty(billingRoleAssignmentName, nameof(billingRoleAssignmentName));
 
             return GetBillingProfileRoleAssignments().Get(billingRoleAssignmentName, cancellationToken);
-        }
-
-        /// <summary> Gets an object representing a <see cref="AvailableBalanceResource"/> along with the instance operations that can be performed on it in the <see cref="BillingProfileResource"/>. </summary>
-        /// <returns> Returns a <see cref="AvailableBalanceResource"/> object. </returns>
-        public virtual AvailableBalanceResource GetAvailableBalance()
-        {
-            return new AvailableBalanceResource(Client, Id.AppendChildResource("availableBalance", "default"));
         }
 
         /// <summary> Gets a collection of BillingProfileSubscriptions in the <see cref="BillingProfileResource"/>. </summary>

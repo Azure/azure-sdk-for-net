@@ -152,24 +152,6 @@ namespace Azure.ResourceManager.Billing.Mocking
             return new BillingAssociatedTenantResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="BillingAccountAvailableBalanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BillingAccountAvailableBalanceResource"/> object. </returns>
-        public virtual BillingAccountAvailableBalanceResource GetBillingAccountAvailableBalanceResource(ResourceIdentifier id)
-        {
-            BillingAccountAvailableBalanceResource.ValidateResourceId(id);
-            return new BillingAccountAvailableBalanceResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="AvailableBalanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AvailableBalanceResource"/> object. </returns>
-        public virtual AvailableBalanceResource GetAvailableBalanceResource(ResourceIdentifier id)
-        {
-            AvailableBalanceResource.ValidateResourceId(id);
-            return new AvailableBalanceResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="BillingProductResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BillingProductResource"/> object. </returns>

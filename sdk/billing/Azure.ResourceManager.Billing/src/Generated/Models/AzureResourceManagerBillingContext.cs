@@ -22,8 +22,6 @@ namespace Azure.ResourceManager.Billing
     [ModelReaderWriterBuildable(typeof(AssociatedTenantListResult))]
     [ModelReaderWriterBuildable(typeof(AvailableBalancePropertiesAmount))]
     [ModelReaderWriterBuildable(typeof(AvailableBalancePropertiesTotalPaymentsOnAccount))]
-    [ModelReaderWriterBuildable(typeof(AvailableBalanceResource))]
-    [ModelReaderWriterBuildable(typeof(BillingAccountAvailableBalanceResource))]
     [ModelReaderWriterBuildable(typeof(BillingAccountData))]
     [ModelReaderWriterBuildable(typeof(BillingAccountEnrollmentDetails))]
     [ModelReaderWriterBuildable(typeof(BillingAccountListResult))]

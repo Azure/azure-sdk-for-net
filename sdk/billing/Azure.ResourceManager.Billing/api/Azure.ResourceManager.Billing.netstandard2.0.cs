@@ -1,40 +1,10 @@
 namespace Azure.ResourceManager.Billing
 {
-    public partial class AvailableBalanceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.BillingAvailableBalanceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.BillingAvailableBalanceData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AvailableBalanceResource() { }
-        public virtual Azure.ResourceManager.Billing.BillingAvailableBalanceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string billingProfileName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Billing.AvailableBalanceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.AvailableBalanceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.Billing.BillingAvailableBalanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.BillingAvailableBalanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.BillingAvailableBalanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Billing.BillingAvailableBalanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.BillingAvailableBalanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.BillingAvailableBalanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.BillingAvailableBalanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class AzureResourceManagerBillingContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerBillingContext() { }
         public static Azure.ResourceManager.Billing.AzureResourceManagerBillingContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
-    public partial class BillingAccountAvailableBalanceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.BillingAvailableBalanceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.BillingAvailableBalanceData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected BillingAccountAvailableBalanceResource() { }
-        public virtual Azure.ResourceManager.Billing.BillingAvailableBalanceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string billingAccountName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Billing.BillingAccountAvailableBalanceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingAccountAvailableBalanceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.Billing.BillingAvailableBalanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.BillingAvailableBalanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.BillingAvailableBalanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Billing.BillingAvailableBalanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.BillingAvailableBalanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.BillingAvailableBalanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.BillingAvailableBalanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class BillingAccountCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Billing.BillingAccountResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.BillingAccountResource>, System.Collections.IEnumerable
     {
@@ -161,7 +131,8 @@ namespace Azure.ResourceManager.Billing
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Billing.Models.BillingDocumentDownloadResult>> DownloadDocumentsByBillingAccountAsync(Azure.WaitUntil waitUntil, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.Models.BillingDocumentDownloadRequestContent> parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Billing.BillingAccountResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingAccountResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Billing.BillingAccountAvailableBalanceResource GetBillingAccountAvailableBalance() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Billing.Models.BillingAvailableBalanceData> GetBillingAccountAvailableBalance(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.Models.BillingAvailableBalanceData>> GetBillingAccountAvailableBalanceAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Billing.BillingAccountPaymentMethodResource> GetBillingAccountPaymentMethod(string paymentMethodName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingAccountPaymentMethodResource>> GetBillingAccountPaymentMethodAsync(string paymentMethodName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Billing.BillingAccountPaymentMethodCollection GetBillingAccountPaymentMethods() { throw null; }
@@ -339,21 +310,6 @@ namespace Azure.ResourceManager.Billing
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.BillingAssociatedTenantData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Billing.BillingAssociatedTenantResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Billing.BillingAssociatedTenantData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Billing.BillingAssociatedTenantResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Billing.BillingAssociatedTenantData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class BillingAvailableBalanceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.BillingAvailableBalanceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.BillingAvailableBalanceData>
-    {
-        internal BillingAvailableBalanceData() { }
-        public Azure.ResourceManager.Billing.Models.BillingAvailableBalanceProperties Properties { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Billing.BillingAvailableBalanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.BillingAvailableBalanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.BillingAvailableBalanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Billing.BillingAvailableBalanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.BillingAvailableBalanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.BillingAvailableBalanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.BillingAvailableBalanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class BillingCustomerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Billing.BillingCustomerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.BillingCustomerResource>, System.Collections.IEnumerable
     {
@@ -814,10 +770,8 @@ namespace Azure.ResourceManager.Billing
     {
         public static Azure.Pageable<Azure.ResourceManager.Billing.Models.BillingOperationInfo> GetAll(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Billing.Models.BillingOperationInfo> GetAllAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Billing.AvailableBalanceResource GetAvailableBalanceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Billing.BillingAccountResource> GetBillingAccount(this Azure.ResourceManager.Resources.TenantResource tenantResource, string billingAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingAccountResource>> GetBillingAccountAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string billingAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Billing.BillingAccountAvailableBalanceResource GetBillingAccountAvailableBalanceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Billing.BillingAccountPaymentMethodResource GetBillingAccountPaymentMethodResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Billing.BillingAccountPolicyResource GetBillingAccountPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Billing.BillingAccountResource GetBillingAccountResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1452,13 +1406,14 @@ namespace Azure.ResourceManager.Billing
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Billing.BillingProfileResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingProfileResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Billing.AvailableBalanceResource GetAvailableBalance() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Billing.BillingInvoiceSectionResource> GetBillingInvoiceSection(string invoiceSectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingInvoiceSectionResource>> GetBillingInvoiceSectionAsync(string invoiceSectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Billing.BillingInvoiceSectionCollection GetBillingInvoiceSections() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Billing.BillingPaymentMethodLinkResource> GetBillingPaymentMethodLink(string paymentMethodName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingPaymentMethodLinkResource>> GetBillingPaymentMethodLinkAsync(string paymentMethodName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Billing.BillingPaymentMethodLinkCollection GetBillingPaymentMethodLinks() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Billing.Models.BillingAvailableBalanceData> GetBillingProfileAvailableBalance(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.Models.BillingAvailableBalanceData>> GetBillingProfileAvailableBalanceAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Billing.BillingProfileCustomerResource> GetBillingProfileCustomer(string customerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingProfileCustomerResource>> GetBillingProfileCustomerAsync(string customerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Billing.BillingProfileCustomerCollection GetBillingProfileCustomers() { throw null; }
@@ -2628,8 +2583,6 @@ namespace Azure.ResourceManager.Billing.Mocking
     public partial class MockableBillingArmClient : Azure.ResourceManager.ArmResource
     {
         protected MockableBillingArmClient() { }
-        public virtual Azure.ResourceManager.Billing.AvailableBalanceResource GetAvailableBalanceResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.Billing.BillingAccountAvailableBalanceResource GetBillingAccountAvailableBalanceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Billing.BillingAccountPaymentMethodResource GetBillingAccountPaymentMethodResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Billing.BillingAccountPolicyResource GetBillingAccountPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Billing.BillingAccountResource GetBillingAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -2769,7 +2722,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.BillingAmount BillingAmount(string currency = null, float? value = default(float?)) { throw null; }
         public static Azure.ResourceManager.Billing.BillingAssociatedTenantData BillingAssociatedTenantData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Billing.Models.BillingAssociatedTenantProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Billing.Models.BillingAssociatedTenantProperties BillingAssociatedTenantProperties(Azure.ResourceManager.Billing.Models.BillingProvisioningState? provisioningState = default(Azure.ResourceManager.Billing.Models.BillingProvisioningState?), string displayName = null, System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.Billing.Models.BillingManagementTenantState? billingManagementState = default(Azure.ResourceManager.Billing.Models.BillingManagementTenantState?), Azure.ResourceManager.Billing.Models.BillingProvisioningTenantState? provisioningManagementState = default(Azure.ResourceManager.Billing.Models.BillingProvisioningTenantState?), string provisioningBillingRequestId = null) { throw null; }
-        public static Azure.ResourceManager.Billing.BillingAvailableBalanceData BillingAvailableBalanceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Billing.Models.BillingAvailableBalanceProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.Billing.Models.BillingAvailableBalanceData BillingAvailableBalanceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Billing.Models.BillingAvailableBalanceProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Billing.Models.BillingAvailableBalanceProperties BillingAvailableBalanceProperties(Azure.ResourceManager.Billing.Models.BillingAmount amount = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.Models.BillingPaymentOnAccount> paymentsOnAccount = null, Azure.ResourceManager.Billing.Models.BillingAmount totalPaymentsOnAccount = null) { throw null; }
         public static Azure.ResourceManager.Billing.Models.BillingCheckAccessContent BillingCheckAccessContent(System.Collections.Generic.IEnumerable<string> actions = null) { throw null; }
         public static Azure.ResourceManager.Billing.Models.BillingCheckAccessResult BillingCheckAccessResult(Azure.ResourceManager.Billing.Models.BillingProfileAccessDecision? accessDecision = default(Azure.ResourceManager.Billing.Models.BillingProfileAccessDecision?), string action = null) { throw null; }
@@ -3441,6 +3394,21 @@ namespace Azure.ResourceManager.Billing.Models
         Azure.ResourceManager.Billing.Models.BillingAssociatedTenantProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Models.BillingAssociatedTenantProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Models.BillingAssociatedTenantProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Models.BillingAssociatedTenantProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class BillingAvailableBalanceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Models.BillingAvailableBalanceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Models.BillingAvailableBalanceData>
+    {
+        public BillingAvailableBalanceData() { }
+        public Azure.ResourceManager.Billing.Models.BillingAvailableBalanceProperties Properties { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Billing.Models.BillingAvailableBalanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Models.BillingAvailableBalanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Models.BillingAvailableBalanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Billing.Models.BillingAvailableBalanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Models.BillingAvailableBalanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Models.BillingAvailableBalanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Models.BillingAvailableBalanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class BillingAvailableBalanceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Models.BillingAvailableBalanceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Models.BillingAvailableBalanceProperties>
     {

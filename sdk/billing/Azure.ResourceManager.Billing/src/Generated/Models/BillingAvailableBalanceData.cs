@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Billing.Models;
+using Azure.ResourceManager.Billing;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Billing
+namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The Available Credit or Payment on Account Balance. The credit balance can be used to settle due or past due invoices. </summary>
     public partial class BillingAvailableBalanceData : ResourceData
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Billing
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingAvailableBalanceData"/>. </summary>
-        internal BillingAvailableBalanceData()
+        public BillingAvailableBalanceData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary> The Available Credit or Payment on Account Balance. The credit balance can be used to settle due or past due invoices. </summary>
         [WirePath("properties")]
-        public BillingAvailableBalanceProperties Properties { get; }
+        public BillingAvailableBalanceProperties Properties { get; set; }
 
         /// <summary> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
         [WirePath("tags")]

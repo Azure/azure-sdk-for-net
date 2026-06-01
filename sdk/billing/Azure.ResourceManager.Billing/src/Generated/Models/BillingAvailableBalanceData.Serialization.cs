@@ -12,10 +12,10 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Billing.Models;
+using Azure.ResourceManager.Billing;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Billing
+namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The Available Credit or Payment on Account Balance. The credit balance can be used to settle due or past due invoices. </summary>
     public partial class BillingAvailableBalanceData : ResourceData, IJsonModel<BillingAvailableBalanceData>
