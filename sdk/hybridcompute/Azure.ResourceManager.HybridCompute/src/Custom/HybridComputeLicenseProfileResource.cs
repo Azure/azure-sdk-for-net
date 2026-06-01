@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.HybridCompute
 {
     public partial class HybridComputeLicenseProfileResource
     {
+        // Backward-compat justification: the GA license profile resource exposed create/update methods on the resource type.
         /// <summary> The operation to create or update a license profile. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
         /// <param name="data"> Parameters supplied to the Create or Update license profile operation. </param>
@@ -34,6 +35,7 @@ namespace Azure.ResourceManager.HybridCompute
             return GetCachedClient(client => new HybridComputeLicenseProfileCollection(client, Id.Parent)).CreateOrUpdate(waitUntil, data, cancellationToken);
         }
 
+        // Backward-compat justification: the GA license profile resource identifier helper assumed the implicit default profile name.
         /// <summary>
         /// Creates a resource identifier for <see cref="HybridComputeLicenseProfileResource"/> with 3 parameters (backward compat).
         /// The old API had a single default licenseProfile name; the new API requires the licenseProfileName explicitly.

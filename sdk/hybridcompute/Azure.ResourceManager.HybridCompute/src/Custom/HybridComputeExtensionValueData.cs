@@ -5,7 +5,7 @@
 
 namespace Azure.ResourceManager.HybridCompute
 {
-    // Preserve the public parameterless constructor from the previous GA SDK.
+    // Backward-compat justification: the GA extension value data model exposed a public parameterless constructor.
     public partial class HybridComputeExtensionValueData
     {
         /// <summary> Initializes a new instance of <see cref="HybridComputeExtensionValueData"/>. </summary>

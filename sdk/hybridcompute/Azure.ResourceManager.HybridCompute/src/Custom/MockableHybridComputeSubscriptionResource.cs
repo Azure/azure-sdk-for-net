@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
 {
     public partial class MockableHybridComputeSubscriptionResource
     {
+        // Backward-compat justification: the GA mockable subscription APIs exposed AzureLocation-based extension value overloads.
         /// <summary>
         /// Gets a collection of HybridComputeExtensionValues.
         /// This overload accepts <see cref="AzureLocation"/> for backward compatibility.
@@ -40,6 +41,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         public virtual Response<HybridComputeExtensionValueResource> GetHybridComputeExtensionValue(AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
             => GetHybridComputeExtensionValue(location.ToString(), publisher, extensionType, version, cancellationToken);
 
+        // Backward-compat justification: the GA mockable subscription APIs exposed the GetValidationDetailsPrivateLinkScope legacy name.
         /// <summary>
         /// Returns a Azure Arc PrivateLinkScope's validation details.
         /// This method was renamed to <see cref="GetValidationDetailsAsync(AzureLocation, string, CancellationToken)"/>.
@@ -56,6 +58,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         public virtual Response<PrivateLinkScopeValidationDetails> GetValidationDetailsPrivateLinkScope(AzureLocation location, string privateLinkScopeId, CancellationToken cancellationToken = default)
             => GetValidationDetails(location, privateLinkScopeId, cancellationToken);
 
+        // Backward-compat justification: the GA mockable subscription APIs exposed the ValidateLicenseLicense legacy name.
         /// <summary>
         /// Validates a license.
         /// This method was renamed to <see cref="ValidateLicenseAsync(WaitUntil, HybridComputeLicenseData, CancellationToken)"/>.

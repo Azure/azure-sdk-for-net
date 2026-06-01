@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
 {
     public partial class MockableHybridComputeResourceGroupResource
     {
+        // Backward-compat justification: the GA mockable resource group APIs exposed ArcSettings-based UpdateSetting overloads.
         /// <summary>
         /// Updates the base Settings of the target resource.
         /// This method preserves the AutoRest-generated mockable API for backward compatibility.
@@ -53,6 +54,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             return Response.FromValue(ArcSettings.FromArcSettingsData(response.Value.Data), response.GetRawResponse());
         }
 
+        // Backward-compat justification: the GA mockable resource group APIs exposed machine get overloads with an expand parameter.
         /// <summary>
         /// Gets a hybrid machine.
         /// This overload includes a string <paramref name="expand"/> parameter for backward compatibility.

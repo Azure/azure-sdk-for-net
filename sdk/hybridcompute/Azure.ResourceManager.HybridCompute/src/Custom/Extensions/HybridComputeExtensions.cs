@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.HybridCompute
     public static partial class HybridComputeExtensions
     {
         // ----- SubscriptionResource overloads -----
+        // Backward-compat justification: the GA subscription extension methods exposed legacy names and AzureLocation-based overloads.
 
         /// <summary>
         /// Gets a collection of HybridComputeExtensionValues.
@@ -97,6 +98,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         // ----- ResourceGroupResource overloads -----
+        // Backward-compat justification: the GA resource group extension methods exposed ArcSettings-based settings APIs and expand overloads.
 
         /// <summary>
         /// Updates the base Settings of the target resource.
