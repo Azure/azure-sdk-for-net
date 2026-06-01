@@ -809,7 +809,7 @@ namespace Azure.ResourceManager.Resources
                 Core.HttpMessage message = _armDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent.ToString(), Id.Name, ArmDeploymentContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResourcesArmOperation<ArmDeploymentResource> operation = new ResourcesArmOperation<ArmDeploymentResource>(
-                    new ArmDeploymentOperationSource(Client),
+                    new ArmDeploymentResourceOperationSource(Client),
                     _armDeploymentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -868,7 +868,7 @@ namespace Azure.ResourceManager.Resources
                 Core.HttpMessage message = _armDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent.ToString(), Id.Name, ArmDeploymentContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResourcesArmOperation<ArmDeploymentResource> operation = new ResourcesArmOperation<ArmDeploymentResource>(
-                    new ArmDeploymentOperationSource(Client),
+                    new ArmDeploymentResourceOperationSource(Client),
                     _armDeploymentsClientDiagnostics,
                     Pipeline,
                     message.Request,

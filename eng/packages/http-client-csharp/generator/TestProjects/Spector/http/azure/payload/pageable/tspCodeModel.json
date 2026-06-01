@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -35,6 +36,7 @@
           "name": "Page"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "4",
@@ -60,6 +62,7 @@
                   "name": "User"
                 }
               },
+              "isExactName": false,
               "properties": [
                 {
                   "$id": "7",
@@ -85,7 +88,8 @@
                       "name": "name"
                     }
                   },
-                  "isHttpMetadata": false
+                  "isHttpMetadata": false,
+                  "isExactName": false
                 }
               ]
             },
@@ -103,7 +107,8 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "9",
@@ -136,7 +141,8 @@
               "name": "nextLink"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -149,6 +155,7 @@
       "$id": "12",
       "kind": "client",
       "name": "PageableClient",
+      "isExactName": false,
       "namespace": "_Specs_.Azure.Payload.Pageable",
       "doc": "Test describing pageable.",
       "methods": [
@@ -156,12 +163,14 @@
           "$id": "13",
           "kind": "paging",
           "name": "list",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "doc": "List users",
           "operation": {
             "$id": "14",
             "name": "list",
+            "isExactName": false,
             "resourceName": "Pageable",
             "doc": "List users",
             "accessibility": "public",
@@ -207,9 +216,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable.list.maxpagesize",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "19",
@@ -242,9 +253,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable.list.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -259,7 +272,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "GET",
@@ -337,7 +355,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

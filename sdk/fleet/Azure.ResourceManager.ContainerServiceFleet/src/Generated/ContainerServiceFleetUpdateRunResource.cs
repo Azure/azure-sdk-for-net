@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 HttpMessage message = _updateRunsRestClient.CreateSkipRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceFleetSkipProperties.ToRequestContent(body), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource>(
-                    new ContainerServiceFleetUpdateRunOperationSource(Client),
+                    new ContainerServiceFleetUpdateRunResourceOperationSource(Client),
                     _updateRunsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 HttpMessage message = _updateRunsRestClient.CreateSkipRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceFleetSkipProperties.ToRequestContent(body), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource>(
-                    new ContainerServiceFleetUpdateRunOperationSource(Client),
+                    new ContainerServiceFleetUpdateRunResourceOperationSource(Client),
                     _updateRunsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 HttpMessage message = _updateRunsRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource>(
-                    new ContainerServiceFleetUpdateRunOperationSource(Client),
+                    new ContainerServiceFleetUpdateRunResourceOperationSource(Client),
                     _updateRunsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 HttpMessage message = _updateRunsRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource>(
-                    new ContainerServiceFleetUpdateRunOperationSource(Client),
+                    new ContainerServiceFleetUpdateRunResourceOperationSource(Client),
                     _updateRunsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 HttpMessage message = _updateRunsRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource>(
-                    new ContainerServiceFleetUpdateRunOperationSource(Client),
+                    new ContainerServiceFleetUpdateRunResourceOperationSource(Client),
                     _updateRunsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 HttpMessage message = _updateRunsRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource>(
-                    new ContainerServiceFleetUpdateRunOperationSource(Client),
+                    new ContainerServiceFleetUpdateRunResourceOperationSource(Client),
                     _updateRunsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -691,7 +691,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 HttpMessage message = _updateRunsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceFleetUpdateRunData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource>(
-                    new ContainerServiceFleetUpdateRunOperationSource(Client),
+                    new ContainerServiceFleetUpdateRunResourceOperationSource(Client),
                     _updateRunsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 HttpMessage message = _updateRunsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceFleetUpdateRunData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource>(
-                    new ContainerServiceFleetUpdateRunOperationSource(Client),
+                    new ContainerServiceFleetUpdateRunResourceOperationSource(Client),
                     _updateRunsClientDiagnostics,
                     Pipeline,
                     message.Request,

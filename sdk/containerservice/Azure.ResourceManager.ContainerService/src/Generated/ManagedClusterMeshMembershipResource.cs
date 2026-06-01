@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ContainerService
                 HttpMessage message = _meshMembershipsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedClusterMeshMembershipData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceArmOperation<ManagedClusterMeshMembershipResource> operation = new ContainerServiceArmOperation<ManagedClusterMeshMembershipResource>(
-                    new ManagedClusterMeshMembershipOperationSource(Client),
+                    new ManagedClusterMeshMembershipResourceOperationSource(Client),
                     _meshMembershipsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.ContainerService
                 HttpMessage message = _meshMembershipsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedClusterMeshMembershipData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceArmOperation<ManagedClusterMeshMembershipResource> operation = new ContainerServiceArmOperation<ManagedClusterMeshMembershipResource>(
-                    new ManagedClusterMeshMembershipOperationSource(Client),
+                    new ManagedClusterMeshMembershipResourceOperationSource(Client),
                     _meshMembershipsClientDiagnostics,
                     Pipeline,
                     message.Request,

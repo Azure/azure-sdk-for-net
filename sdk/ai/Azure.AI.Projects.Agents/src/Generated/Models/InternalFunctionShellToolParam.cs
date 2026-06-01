@@ -13,6 +13,7 @@ namespace OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalFunctionShellToolParam"/>. </summary>
         public InternalFunctionShellToolParam() : base(ToolType.Shell)
         {
+            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalFunctionShellToolParam"/>. </summary>
@@ -21,11 +22,17 @@ namespace OpenAI
         /// <param name="environment"></param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
         /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        internal InternalFunctionShellToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, FunctionShellToolParamEnvironment environment, string name, string description) : base(@type, additionalBinaryDataProperties)
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        internal InternalFunctionShellToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, FunctionShellToolParamEnvironment environment, string name, string description, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
         {
             Environment = environment;
             Name = name;
             Description = description;
+            ToolConfigs = toolConfigs;
         }
 
         /// <summary> Gets or sets the Environment. </summary>
@@ -36,5 +43,12 @@ namespace OpenAI
 
         /// <summary> Optional user-defined description for this tool or configuration. </summary>
         public string Description { get; set; }
+
+        /// <summary>
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </summary>
+        public IDictionary<string, ToolConfig> ToolConfigs { get; }
     }
 }

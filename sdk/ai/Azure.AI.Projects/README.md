@@ -584,6 +584,50 @@ status = deleteResponse.IsDeleted ? "" : " not";
 Console.WriteLine($"The memory store {deleteResponse.Name} was{status} deleted.");
 ```
 
+The items, stored at the memories can be directly managed using MemoryStores client.
+Create Items.
+
+```C# Snippet:Sample_CreateItems_MemoryStoreItems_Async
+MemoryItem customerData = await projectClient.MemoryStores.CreateMemoryAsync(name: memoryStore.Name, scope: scope, content: "The lover of oranges.", kind: MemoryItemKind.UserProfile);
+MemoryItem orangeSKU = await projectClient.MemoryStores.CreateMemoryAsync(name: memoryStore.Name, scope: scope, content: "Orange SKU is 658954.", kind: MemoryItemKind.ChatSummary);
+Console.WriteLine($"Created memory store item {customerData.MemoryId}: {customerData.Content}");
+Console.WriteLine($"Created memory store item {orangeSKU.MemoryId}: {orangeSKU.Content}");
+```
+
+Update a memory store item.
+
+```C# Snippet:Sample_UpdateItem_MemoryStoreItems_Async
+MemoryItem item = await projectClient.MemoryStores.UpdateMemoryAsync(name: memoryStore.Name, memoryId: orangeSKU.MemoryId, content: "Apple SKU is 786545.");
+Console.WriteLine($"Updated memory store item {item.MemoryId}, new content: {item.Content}");
+```
+
+Get the memory store item.
+
+```C# Snippet:Sample_GetItems_MemoryStoreItems_Async
+item = await projectClient.MemoryStores.GetMemoryAsync(name: memoryStore.Name, memoryId: customerData.MemoryId);
+Console.WriteLine($"Retrieved memory store item {item.MemoryId}: {item.Content}");
+```
+
+List memory store items.
+
+```C# Snippet:Sample_ListItems_MemoryStoreItems_Async
+Console.WriteLine($"Listing memory store items from {memoryStore.Name}");
+await foreach (MemoryItem oneItem in projectClient.MemoryStores.GetMemoriesAsync(name: memoryStore.Name, scope: scope))
+{
+    Console.WriteLine($"    item {oneItem.MemoryId}: {oneItem.Content}");
+}
+```
+
+Delete memory store items.
+
+```C# Snippet:Sample_Delete_UpdateStoreItems_Async
+DeleteMemoryResponse response = await projectClient.MemoryStores.DeleteMemoryAsync(name: memoryStore.Name, memoryId: customerData.MemoryId);
+Console.WriteLine($"Memory Item with ID {response.MemoryId} was{(response.Deleted ? " " : " not ")}removed.");
+response = await projectClient.MemoryStores.DeleteMemoryAsync(name: memoryStore.Name, memoryId: orangeSKU.MemoryId);
+Console.WriteLine($"Memory Item with ID {response.MemoryId} was{(response.Deleted ? " " : " not ")}removed.");
+```
+
+
 For more information about memory stores please refer [this article](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/agent-memory)
 
 ### Evaluations

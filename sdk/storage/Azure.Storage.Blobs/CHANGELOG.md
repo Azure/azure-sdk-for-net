@@ -10,6 +10,7 @@
 ### Bugs Fixed
 
 ### Other Changes
+- Improved performance of `DownloadToAsync` by buffering each range into memory concurrently instead of streaming one range at a time. This increases throughput but also increases memory consumption, as up to `MaximumConcurrency` ranges (each up to `MaximumTransferLength` in size) may be buffered simultaneously. Use `StorageTransferOptions.MaximumConcurrency` and `StorageTransferOptions.MaximumTransferLength` to control memory usage.
 
 ## 12.28.0 (2026-05-12)
 

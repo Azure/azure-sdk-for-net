@@ -24,13 +24,16 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="type"> The type of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
+        /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="inputTokensCount"> The number of input tokens for the LLM web summarization activity. </param>
         /// <param name="outputTokensCount"> The number of output tokens for the LLM web summarization activity. </param>
-        internal KnowledgeBaseModelWebSummarizationActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? inputTokensCount, int? outputTokensCount) : base(id, @type, elapsedMs, error, additionalBinaryDataProperties)
+        /// <param name="modelName"> The name of the model used for the LLM web summarization activity. </param>
+        internal KnowledgeBaseModelWebSummarizationActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? inputTokensCount, int? outputTokensCount, string modelName) : base(id, @type, elapsedMs, error, warning, additionalBinaryDataProperties)
         {
             InputTokensCount = inputTokensCount;
             OutputTokensCount = outputTokensCount;
+            ModelName = modelName;
         }
 
         /// <summary> The number of input tokens for the LLM web summarization activity. </summary>
@@ -38,5 +41,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> The number of output tokens for the LLM web summarization activity. </summary>
         public int? OutputTokensCount { get; }
+
+        /// <summary> The name of the model used for the LLM web summarization activity. </summary>
+        public string ModelName { get; }
     }
 }

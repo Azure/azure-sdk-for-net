@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Elastic
                 HttpMessage message = _elasticMonitorResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ElasticMonitorPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ElasticArmOperation<ElasticMonitorResource> operation = new ElasticArmOperation<ElasticMonitorResource>(
-                    new ElasticMonitorOperationSource(Client),
+                    new ElasticMonitorResourceOperationSource(Client),
                     _elasticMonitorResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Elastic
                 HttpMessage message = _elasticMonitorResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ElasticMonitorPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ElasticArmOperation<ElasticMonitorResource> operation = new ElasticArmOperation<ElasticMonitorResource>(
-                    new ElasticMonitorOperationSource(Client),
+                    new ElasticMonitorResourceOperationSource(Client),
                     _elasticMonitorResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1660,7 +1660,7 @@ namespace Azure.ResourceManager.Elastic
                 HttpMessage message = _elasticMonitorResourcesRestClient.CreateResubscribeOrganizationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResubscribeProperties.ToRequestContent(body), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ElasticArmOperation<ElasticMonitorResource> operation = new ElasticArmOperation<ElasticMonitorResource>(
-                    new ElasticMonitorOperationSource(Client),
+                    new ElasticMonitorResourceOperationSource(Client),
                     _elasticMonitorResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1716,7 +1716,7 @@ namespace Azure.ResourceManager.Elastic
                 HttpMessage message = _elasticMonitorResourcesRestClient.CreateResubscribeOrganizationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResubscribeProperties.ToRequestContent(body), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ElasticArmOperation<ElasticMonitorResource> operation = new ElasticArmOperation<ElasticMonitorResource>(
-                    new ElasticMonitorOperationSource(Client),
+                    new ElasticMonitorResourceOperationSource(Client),
                     _elasticMonitorResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

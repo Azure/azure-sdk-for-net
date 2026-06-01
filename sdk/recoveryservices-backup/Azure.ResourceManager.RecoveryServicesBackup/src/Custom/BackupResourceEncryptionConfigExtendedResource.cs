@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         internal BackupResourceEncryptionConfigExtendedCreateOrUpdateContent ToContent(BackupResourceEncryptionConfigExtendedData data)
         {
-            return new BackupResourceEncryptionConfigExtendedCreateOrUpdateContent(data.Id, data.Name, data.ResourceType, data.SystemData, null, data.Location, data.Properties, data.Tags, data.ETag);
+            return new BackupResourceEncryptionConfigExtendedCreateOrUpdateContent(data.Id, data.Name, data.ResourceType, data.SystemData, null, data.Tags, data.Location, data.Properties, data.ETag);
         }
     }
 }

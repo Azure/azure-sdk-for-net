@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _accessBridgesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkCloudAccessBridgePatch.ToRequestContent(patch), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudAccessBridgeResource> operation = new NetworkCloudArmOperation<NetworkCloudAccessBridgeResource>(
-                    new NetworkCloudAccessBridgeOperationSource(Client),
+                    new NetworkCloudAccessBridgeResourceOperationSource(Client),
                     _accessBridgesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _accessBridgesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkCloudAccessBridgePatch.ToRequestContent(patch), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudAccessBridgeResource> operation = new NetworkCloudArmOperation<NetworkCloudAccessBridgeResource>(
-                    new NetworkCloudAccessBridgeOperationSource(Client),
+                    new NetworkCloudAccessBridgeResourceOperationSource(Client),
                     _accessBridgesClientDiagnostics,
                     Pipeline,
                     message.Request,

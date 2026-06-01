@@ -6,48 +6,37 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
-    /// A Class representing a SiteRecoveryVaultSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteRecoveryVaultSettingResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSiteRecoveryVaultSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSiteRecoveryVaultSetting method.
+    /// A class representing a SiteRecoveryVaultSetting along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteRecoveryVaultSettingResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSiteRecoveryVaultSettings method.
     /// </summary>
     public partial class SiteRecoveryVaultSettingResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SiteRecoveryVaultSettingResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="resourceName"> The resourceName. </param>
-        /// <param name="vaultSettingName"> The vaultSettingName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string vaultSettingName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics;
-        private readonly ReplicationVaultSettingRestOperations _siteRecoveryVaultSettingReplicationVaultSettingRestClient;
+        private readonly ClientDiagnostics _replicationVaultSettingClientDiagnostics;
+        private readonly ReplicationVaultSetting _replicationVaultSettingRestClient;
         private readonly SiteRecoveryVaultSettingData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationVaultSettings";
 
-        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryVaultSettingResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryVaultSettingResource for mocking. </summary>
         protected SiteRecoveryVaultSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryVaultSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVaultSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteRecoveryVaultSettingResource(ArmClient client, SiteRecoveryVaultSettingData data) : this(client, data.Id)
@@ -56,71 +45,93 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryVaultSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVaultSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SiteRecoveryVaultSettingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string siteRecoveryVaultSettingReplicationVaultSettingApiVersion);
-            _siteRecoveryVaultSettingReplicationVaultSettingRestClient = new ReplicationVaultSettingRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteRecoveryVaultSettingReplicationVaultSettingApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string siteRecoveryVaultSettingApiVersion);
+            _replicationVaultSettingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
+            _replicationVaultSettingRestClient = new ReplicationVaultSetting(_replicationVaultSettingClientDiagnostics, Pipeline, Endpoint, siteRecoveryVaultSettingApiVersion ?? "2026-02-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual SiteRecoveryVaultSettingData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="vaultSettingName"> The vaultSettingName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string vaultSettingName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the vault setting. This includes the Migration Hub connection settings.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationVaultSetting_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VaultSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryVaultSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteRecoveryVaultSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SiteRecoveryVaultSettingResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics.CreateScope("SiteRecoveryVaultSettingResource.Get");
+            using DiagnosticScope scope = _replicationVaultSettingClientDiagnostics.CreateScope("SiteRecoveryVaultSettingResource.Get");
             scope.Start();
             try
             {
-                var response = await _siteRecoveryVaultSettingReplicationVaultSettingRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationVaultSettingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SiteRecoveryVaultSettingData> response = Response.FromValue(SiteRecoveryVaultSettingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteRecoveryVaultSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,33 +145,41 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Gets the vault setting. This includes the Migration Hub connection settings.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationVaultSetting_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VaultSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryVaultSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteRecoveryVaultSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SiteRecoveryVaultSettingResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics.CreateScope("SiteRecoveryVaultSettingResource.Get");
+            using DiagnosticScope scope = _replicationVaultSettingClientDiagnostics.CreateScope("SiteRecoveryVaultSettingResource.Get");
             scope.Start();
             try
             {
-                var response = _siteRecoveryVaultSettingReplicationVaultSettingRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationVaultSettingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SiteRecoveryVaultSettingData> response = Response.FromValue(SiteRecoveryVaultSettingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteRecoveryVaultSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -171,23 +190,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         }
 
         /// <summary>
-        /// The operation to configure vault setting.
+        /// Update a SiteRecoveryVaultSetting.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationVaultSetting_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> VaultSettings_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryVaultSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteRecoveryVaultSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,14 +218,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics.CreateScope("SiteRecoveryVaultSettingResource.Update");
+            using DiagnosticScope scope = _replicationVaultSettingClientDiagnostics.CreateScope("SiteRecoveryVaultSettingResource.Update");
             scope.Start();
             try
             {
-                var response = await _siteRecoveryVaultSettingReplicationVaultSettingRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVaultSettingResource>(new SiteRecoveryVaultSettingOperationSource(Client), _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, _siteRecoveryVaultSettingReplicationVaultSettingRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationVaultSettingRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SiteRecoveryVaultSettingCreateOrUpdateContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVaultSettingResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVaultSettingResource>(
+                    new SiteRecoveryVaultSettingResourceOperationSource(Client),
+                    _replicationVaultSettingClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -217,23 +249,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         }
 
         /// <summary>
-        /// The operation to configure vault setting.
+        /// Update a SiteRecoveryVaultSetting.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationVaultSetting_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> VaultSettings_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryVaultSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteRecoveryVaultSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -245,14 +277,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics.CreateScope("SiteRecoveryVaultSettingResource.Update");
+            using DiagnosticScope scope = _replicationVaultSettingClientDiagnostics.CreateScope("SiteRecoveryVaultSettingResource.Update");
             scope.Start();
             try
             {
-                var response = _siteRecoveryVaultSettingReplicationVaultSettingRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVaultSettingResource>(new SiteRecoveryVaultSettingOperationSource(Client), _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, _siteRecoveryVaultSettingReplicationVaultSettingRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationVaultSettingRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SiteRecoveryVaultSettingCreateOrUpdateContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVaultSettingResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVaultSettingResource>(
+                    new SiteRecoveryVaultSettingResourceOperationSource(Client),
+                    _replicationVaultSettingClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

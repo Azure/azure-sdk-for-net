@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.WebPubSub
                 HttpMessage message = _customDomainsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, WebPubSubCustomDomainData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WebPubSubArmOperation<WebPubSubCustomDomainResource> operation = new WebPubSubArmOperation<WebPubSubCustomDomainResource>(
-                    new WebPubSubCustomDomainOperationSource(Client),
+                    new WebPubSubCustomDomainResourceOperationSource(Client),
                     _customDomainsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.WebPubSub
                 HttpMessage message = _customDomainsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, WebPubSubCustomDomainData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WebPubSubArmOperation<WebPubSubCustomDomainResource> operation = new WebPubSubArmOperation<WebPubSubCustomDomainResource>(
-                    new WebPubSubCustomDomainOperationSource(Client),
+                    new WebPubSubCustomDomainResourceOperationSource(Client),
                     _customDomainsClientDiagnostics,
                     Pipeline,
                     message.Request,

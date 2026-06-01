@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 HttpMessage message = _clustersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, CosmosDBForPostgreSqlClusterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlClusterResource> operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlClusterResource>(
-                    new CosmosDBForPostgreSqlClusterOperationSource(Client),
+                    new CosmosDBForPostgreSqlClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 HttpMessage message = _clustersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, CosmosDBForPostgreSqlClusterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlClusterResource> operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlClusterResource>(
-                    new CosmosDBForPostgreSqlClusterOperationSource(Client),
+                    new CosmosDBForPostgreSqlClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
