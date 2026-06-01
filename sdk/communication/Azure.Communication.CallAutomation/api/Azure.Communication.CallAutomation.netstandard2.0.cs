@@ -229,6 +229,7 @@ namespace Azure.Communication.CallAutomation
         public static Azure.Communication.CallAutomation.MediaStreamingStarted MediaStreamingStarted(Azure.Communication.CallAutomation.MediaStreamingUpdate mediaStreamingUpdate = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
         public static Azure.Communication.CallAutomation.MediaStreamingStopped MediaStreamingStopped(Azure.Communication.CallAutomation.MediaStreamingUpdate mediaStreamingUpdate = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
         public static Azure.Communication.CallAutomation.MediaStreamingUpdate MediaStreamingUpdate(string contentType = null, Azure.Communication.CallAutomation.MediaStreamingStatus mediaStreamingStatus = default(Azure.Communication.CallAutomation.MediaStreamingStatus), Azure.Communication.CallAutomation.MediaStreamingStatusDetails mediaStreamingStatusDetails = default(Azure.Communication.CallAutomation.MediaStreamingStatusDetails)) { throw null; }
+        public static Azure.Communication.CallAutomation.MediaStreamingUpdated MediaStreamingUpdated(Azure.Communication.CallAutomation.MediaStreamingUpdate mediaStreamingUpdate = null, string streamUrl = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
         public static Azure.Communication.CallAutomation.MuteParticipantResult MuteParticipantResult(string operationContext = null) { throw null; }
         public static Azure.Communication.CallAutomation.OutStreamingData OutStreamingData(Azure.Communication.CallAutomation.MediaKind kind) { throw null; }
         public static Azure.Communication.CallAutomation.ParticipantsUpdated ParticipantsUpdated(string callConnectionId = null, string serverCallId = null, string correlationId = null, System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.CallParticipant> participants = null, int sequenceNumber = 0, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
@@ -1091,6 +1092,7 @@ namespace Azure.Communication.CallAutomation
         public static Azure.Communication.CallAutomation.MediaStreamingStatus MediaStreamingFailed { get { throw null; } }
         public static Azure.Communication.CallAutomation.MediaStreamingStatus MediaStreamingStarted { get { throw null; } }
         public static Azure.Communication.CallAutomation.MediaStreamingStatus MediaStreamingStopped { get { throw null; } }
+        public static Azure.Communication.CallAutomation.MediaStreamingStatus MediaStreamingUpdated { get { throw null; } }
         public static Azure.Communication.CallAutomation.MediaStreamingStatus UnspecifiedError { get { throw null; } }
         public bool Equals(Azure.Communication.CallAutomation.MediaStreamingStatus other) { throw null; }
         public override bool Equals(object obj) { throw null; }
@@ -1117,6 +1119,7 @@ namespace Azure.Communication.CallAutomation
         public static Azure.Communication.CallAutomation.MediaStreamingStatusDetails StreamConnectionReestablished { get { throw null; } }
         public static Azure.Communication.CallAutomation.MediaStreamingStatusDetails StreamConnectionUnsuccessful { get { throw null; } }
         public static Azure.Communication.CallAutomation.MediaStreamingStatusDetails StreamUrlMissing { get { throw null; } }
+        public static Azure.Communication.CallAutomation.MediaStreamingStatusDetails StreamUrlUpdated { get { throw null; } }
         public static Azure.Communication.CallAutomation.MediaStreamingStatusDetails SubscriptionStarted { get { throw null; } }
         public static Azure.Communication.CallAutomation.MediaStreamingStatusDetails SubscriptionStopped { get { throw null; } }
         public static Azure.Communication.CallAutomation.MediaStreamingStatusDetails TooManyRequests { get { throw null; } }
@@ -1181,6 +1184,28 @@ namespace Azure.Communication.CallAutomation
         public string ContentType { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaStreamingStatus MediaStreamingStatus { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaStreamingStatusDetails MediaStreamingStatusDetails { get { throw null; } }
+    }
+    public partial class MediaStreamingUpdated : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        internal MediaStreamingUpdated() { }
+        public Azure.Communication.CallAutomation.MediaStreamingUpdate MediaStreamingUpdate { get { throw null; } }
+        public string StreamUrl { get { throw null; } }
+        public static Azure.Communication.CallAutomation.MediaStreamingUpdated Deserialize(string content) { throw null; }
+    }
+    public sealed partial class MediaWebSocketClient : System.IDisposable
+    {
+        internal MediaWebSocketClient() { }
+        public System.Net.WebSockets.ClientWebSocket Socket { get { throw null; } }
+        public static Azure.Communication.CallAutomation.MediaWebSocketClient.MediaWebSocketBuilder Builder(Azure.Communication.CallAutomation.CallAutomationClient client) { throw null; }
+        public void Dispose() { }
+        public sealed partial class MediaWebSocketBuilder
+        {
+            internal MediaWebSocketBuilder() { }
+            public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.MediaWebSocketClient> BuildAndConnectAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+            public Azure.Communication.CallAutomation.MediaWebSocketClient.MediaWebSocketBuilder WithCustomHeader(string name, string value) { throw null; }
+            public Azure.Communication.CallAutomation.MediaWebSocketClient.MediaWebSocketBuilder WithStreamUrl(string streamUrl) { throw null; }
+            public Azure.Communication.CallAutomation.MediaWebSocketClient.MediaWebSocketBuilder WithStreamUrl(System.Uri streamUrl) { throw null; }
+        }
     }
     public partial class MoveParticipantEventResult
     {
@@ -1626,6 +1651,7 @@ namespace Azure.Communication.CallAutomation
         public StartDialog(Azure.Communication.CallAutomation.BaseDialog dialog) { }
         public StartDialog(string dialogId, Azure.Communication.CallAutomation.BaseDialog dialog) { }
         public Azure.Communication.CallAutomation.BaseDialog Dialog { get { throw null; } }
+        public string DialogCnameOverride { get { throw null; } set { } }
         public string DialogId { get { throw null; } }
         public string OperationCallbackUri { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }

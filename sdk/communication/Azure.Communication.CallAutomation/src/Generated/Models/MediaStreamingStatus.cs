@@ -26,6 +26,7 @@ namespace Azure.Communication.CallAutomation
         private const string MediaStreamingFailedValue = "mediaStreamingFailed";
         private const string MediaStreamingStoppedValue = "mediaStreamingStopped";
         private const string UnspecifiedErrorValue = "unspecifiedError";
+        private const string MediaStreamingUpdatedValue = "mediaStreamingUpdated";
 
         /// <summary> mediaStreamingStarted. </summary>
         public static MediaStreamingStatus MediaStreamingStarted { get; } = new MediaStreamingStatus(MediaStreamingStartedValue);
@@ -35,6 +36,8 @@ namespace Azure.Communication.CallAutomation
         public static MediaStreamingStatus MediaStreamingStopped { get; } = new MediaStreamingStatus(MediaStreamingStoppedValue);
         /// <summary> unspecifiedError. </summary>
         public static MediaStreamingStatus UnspecifiedError { get; } = new MediaStreamingStatus(UnspecifiedErrorValue);
+        /// <summary> mediaStreamingUpdated. </summary>
+        public static MediaStreamingStatus MediaStreamingUpdated { get; } = new MediaStreamingStatus(MediaStreamingUpdatedValue);
         /// <summary> Determines if two <see cref="MediaStreamingStatus"/> values are the same. </summary>
         public static bool operator ==(MediaStreamingStatus left, MediaStreamingStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaStreamingStatus"/> values are not the same. </summary>

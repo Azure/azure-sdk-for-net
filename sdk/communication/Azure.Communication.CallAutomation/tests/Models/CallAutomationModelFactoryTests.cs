@@ -397,8 +397,8 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var resultInformation = CallAutomationModelFactory.ResultInformation(200, 0, "Success");
             var operationContext = "testContext";
 
-            var eventResult = CallAutomationModelFactory.ContinuousDtmfRecognitionToneReceived(
-                resultInformation, sequenceId, tone, operationContext, callConnectionId, serverCallId, correlationId);
+            var eventResult = CallAutomationModelFactory.ContinuousDtmfRecognitionToneReceived(resultInformation,
+                sequenceId, tone, operationContext, callConnectionId, serverCallId, correlationId);
 
             Assert.That(eventResult.SequenceId, Is.EqualTo(sequenceId));
             Assert.That(eventResult.Tone, Is.EqualTo(tone));
@@ -422,17 +422,18 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var recordingKind = RecordingKind.AzureCommunicationServices;
             var resultInformation = CallAutomationModelFactory.ResultInformation(200, 0, "Success");
 
-            var eventResult = CallAutomationModelFactory.RecordingStateChanged(recordingId,
-                state, startDateTime, recordingKind, operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
+            var eventResult = CallAutomationModelFactory.RecordingStateChanged(recordingId, state, startDateTime, recordingKind,
+                operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
 
             Assert.That(eventResult.CallConnectionId, Is.EqualTo(callConnectionId));
             Assert.That(eventResult.ServerCallId, Is.EqualTo(serverCallId));
             Assert.That(eventResult.CorrelationId, Is.EqualTo(correlationId));
+            Assert.That(eventResult.OperationContext, Is.EqualTo(operationContext));
+            Assert.That(eventResult.ResultInformation, Is.EqualTo(resultInformation));
             Assert.That(eventResult.RecordingId, Is.EqualTo(recordingId));
             Assert.That(eventResult.State, Is.EqualTo(state));
             Assert.That(eventResult.StartDateTime, Is.EqualTo(startDateTime));
             Assert.That(eventResult.RecordingKind, Is.EqualTo(recordingKind));
-            Assert.That(eventResult.ResultInformation, Is.EqualTo(resultInformation));
         }
 
         [Test]

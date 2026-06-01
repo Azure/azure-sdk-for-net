@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
-    [CodeGenModel("MediaStreamingSubscriptionState", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
+    [CodeGenModel("MediaStreamingSubscriptionStateDto", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     [JsonConverter(typeof(EquatableEnumJsonConverter<MediaStreamingSubscriptionState>))]
     public readonly partial struct MediaStreamingSubscriptionState : IEquatable<MediaStreamingSubscriptionState>
     {

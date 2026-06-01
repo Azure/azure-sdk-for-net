@@ -37,11 +37,17 @@ namespace Azure.Communication.CallAutomation
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
-        internal StartDialogRequestInternal(BaseDialog dialog, string operationCallbackUri, string operationContext)
+        /// <param name="dialogCnameOverride">
+        /// Optional CNAME override for the dialog connection host. When provided and the
+        /// AcsDialogEnableCallerCnameOverride feature flag is enabled, bypasses ECS-based
+        /// CNAME resolution for ACS calls. Only applies to PowerVirtualAgents dialog type.
+        /// </param>
+        internal StartDialogRequestInternal(BaseDialog dialog, string operationCallbackUri, string operationContext, string dialogCnameOverride)
         {
             Dialog = dialog;
             OperationCallbackUri = operationCallbackUri;
             OperationContext = operationContext;
+            DialogCnameOverride = dialogCnameOverride;
         }
 
         /// <summary>
@@ -57,5 +63,11 @@ namespace Azure.Communication.CallAutomation
         public string OperationCallbackUri { get; set; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
+        /// <summary>
+        /// Optional CNAME override for the dialog connection host. When provided and the
+        /// AcsDialogEnableCallerCnameOverride feature flag is enabled, bypasses ECS-based
+        /// CNAME resolution for ACS calls. Only applies to PowerVirtualAgents dialog type.
+        /// </summary>
+        public string DialogCnameOverride { get; set; }
     }
 }

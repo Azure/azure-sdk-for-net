@@ -41,6 +41,28 @@ var client = new CallAutomationClient(endpoint, tokenCredential);
 ```
 
 ## Examples
+
+### WebSocket Connection for Media Streaming
+
+Use `MediaWebSocketClient.Builder` to create authenticated WebSocket connections to ACS media streaming and transcription endpoints. Authentication (HMAC or AAD) is handled internally based on the `CallAutomationClient` credentials.
+
+```C#
+var client = new CallAutomationClient(connectionString);
+
+// Minimal usage — only stream URL is required.
+var ws = await MediaWebSocketClient
+    .Builder(client)
+    .WithStreamUrl(callConnectionProperties.MediaStreamingSubscription.StreamUrl)
+    .BuildAndConnectAsync(cancellationToken);
+
+// With custom headers
+var ws = await MediaWebSocketClient
+    .Builder(client)
+    .WithStreamUrl(callConnectionProperties.MediaStreamingSubscription.StreamUrl)
+    .WithCustomHeader("X-Correlation-Id", correlationId)
+    .BuildAndConnectAsync(cancellationToken);
+```
+
 ### Make a call to a phone number recipient
 To make an outbound call, call the `CreateCall` or `CreateCallAsync` function from the `CallAutomationClient`.
 ```C#
