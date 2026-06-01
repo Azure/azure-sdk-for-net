@@ -17,7 +17,6 @@ namespace Azure.Generator.Management.Visitors
     {
         private HashSet<CSharpType>? _modelTypes;
         private HashSet<CSharpType>? _modelFactoryModelTypes;
-        private Dictionary<CSharpType, ModelProvider>? _modelProvidersByType;
 
         protected override TypeProvider? VisitType(TypeProvider type)
         {
@@ -107,25 +106,15 @@ namespace Azure.Generator.Management.Visitors
             }
         }
 
-        private Dictionary<CSharpType, ModelProvider> ModelProvidersByType
-        {
-            get
-            {
-                BuildModelTypes();
-                return _modelProvidersByType!;
-            }
-        }
-
         private void BuildModelTypes()
         {
-            if (_modelTypes is not null && _modelFactoryModelTypes is not null && _modelProvidersByType is not null)
+            if (_modelTypes is not null && _modelFactoryModelTypes is not null)
             {
                 return;
             }
 
             var modelTypes = new HashSet<CSharpType>();
             var modelFactoryModelTypes = new HashSet<CSharpType>();
-            var modelProvidersByType = new Dictionary<CSharpType, ModelProvider>();
 
             foreach (var inputModel in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
             {
@@ -135,28 +124,25 @@ namespace Azure.Generator.Management.Visitors
                     continue;
                 }
 
-                AddModelProvider(model, modelTypes, modelFactoryModelTypes, modelProvidersByType);
+                AddModelProvider(model, modelTypes, modelFactoryModelTypes);
             }
 
             foreach (var model in ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ModelProvider>())
             {
-                AddModelProvider(model, modelTypes, modelFactoryModelTypes, modelProvidersByType);
+                AddModelProvider(model, modelTypes, modelFactoryModelTypes);
             }
 
             _modelTypes = modelTypes;
             _modelFactoryModelTypes = modelFactoryModelTypes;
-            _modelProvidersByType = modelProvidersByType;
         }
 
         private static void AddModelProvider(
             ModelProvider model,
             HashSet<CSharpType> modelTypes,
-            HashSet<CSharpType> modelFactoryModelTypes,
-            Dictionary<CSharpType, ModelProvider> modelProvidersByType)
+            HashSet<CSharpType> modelFactoryModelTypes)
         {
             var type = model.Type.WithNullable(false);
             modelTypes.Add(type);
-            modelProvidersByType[type] = model;
             if (IsModelFactoryModel(model))
             {
                 modelFactoryModelTypes.Add(type);
