@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationRecoveryPlansRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _resourceName, recoveryPlanName, SiteRecoveryRecoveryPlanCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
-                    new SiteRecoveryRecoveryPlanOperationSource(Client),
+                    new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
                     _replicationRecoveryPlansClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationRecoveryPlansRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _resourceName, recoveryPlanName, SiteRecoveryRecoveryPlanCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
-                    new SiteRecoveryRecoveryPlanOperationSource(Client),
+                    new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
                     _replicationRecoveryPlansClientDiagnostics,
                     Pipeline,
                     message.Request,
