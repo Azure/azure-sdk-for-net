@@ -11,13 +11,55 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class HyperVFailoverIPConfigDetails : IUtf8JsonSerializable, IJsonModel<HyperVFailoverIPConfigDetails>
+    /// <summary> The HyperVFailoverIPConfigDetails. </summary>
+    public partial class HyperVFailoverIPConfigDetails : IJsonModel<HyperVFailoverIPConfigDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVFailoverIPConfigDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HyperVFailoverIPConfigDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVFailoverIPConfigDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHyperVFailoverIPConfigDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HyperVFailoverIPConfigDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVFailoverIPConfigDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HyperVFailoverIPConfigDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HyperVFailoverIPConfigDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HyperVFailoverIPConfigDetails IPersistableModel<HyperVFailoverIPConfigDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HyperVFailoverIPConfigDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HyperVFailoverIPConfigDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +71,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVFailoverIPConfigDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVFailoverIPConfigDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HyperVFailoverIPConfigDetails)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(IPConfigName))
             {
                 writer.WritePropertyName("ipConfigName"u8);
@@ -69,8 +110,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("recoveryLBBackendAddressPoolIds"u8);
                 writer.WriteStartArray();
-                foreach (var item in RecoveryLBBackendAddressPoolIds)
+                foreach (string item in RecoveryLBBackendAddressPoolIds)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -94,21 +140,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("tfoLBBackendAddressPoolIds"u8);
                 writer.WriteStartArray();
-                foreach (var item in TfoLBBackendAddressPoolIds)
+                foreach (string item in TfoLBBackendAddressPoolIds)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -117,22 +168,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        HyperVFailoverIPConfigDetails IJsonModel<HyperVFailoverIPConfigDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HyperVFailoverIPConfigDetails IJsonModel<HyperVFailoverIPConfigDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HyperVFailoverIPConfigDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVFailoverIPConfigDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVFailoverIPConfigDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HyperVFailoverIPConfigDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHyperVFailoverIPConfigDetails(document.RootElement, options);
         }
 
-        internal static HyperVFailoverIPConfigDetails DeserializeHyperVFailoverIPConfigDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HyperVFailoverIPConfigDetails DeserializeHyperVFailoverIPConfigDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -148,113 +204,125 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IPAddress tfoStaticIPAddress = default;
             ResourceIdentifier tfoPublicIPAddressId = default;
             IList<string> tfoLBBackendAddressPoolIds = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("ipConfigName"u8))
+                if (prop.NameEquals("ipConfigName"u8))
                 {
-                    ipConfigName = property.Value.GetString();
+                    ipConfigName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isPrimary"u8))
+                if (prop.NameEquals("isPrimary"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isPrimary = property.Value.GetBoolean();
+                    isPrimary = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isSeletedForFailover"u8))
+                if (prop.NameEquals("isSeletedForFailover"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isSeletedForFailover = property.Value.GetBoolean();
+                    isSeletedForFailover = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("recoverySubnetName"u8))
+                if (prop.NameEquals("recoverySubnetName"u8))
                 {
-                    recoverySubnetName = property.Value.GetString();
+                    recoverySubnetName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryStaticIPAddress"u8))
+                if (prop.NameEquals("recoveryStaticIPAddress"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryStaticIPAddress = IPAddress.Parse(property.Value.GetString());
+                    recoveryStaticIPAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recoveryPublicIPAddressId"u8))
+                if (prop.NameEquals("recoveryPublicIPAddressId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryPublicIPAddressId = new ResourceIdentifier(property.Value.GetString());
+                    recoveryPublicIPAddressId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recoveryLBBackendAddressPoolIds"u8))
+                if (prop.NameEquals("recoveryLBBackendAddressPoolIds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     recoveryLBBackendAddressPoolIds = array;
                     continue;
                 }
-                if (property.NameEquals("tfoSubnetName"u8))
+                if (prop.NameEquals("tfoSubnetName"u8))
                 {
-                    tfoSubnetName = property.Value.GetString();
+                    tfoSubnetName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tfoStaticIPAddress"u8))
+                if (prop.NameEquals("tfoStaticIPAddress"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    tfoStaticIPAddress = IPAddress.Parse(property.Value.GetString());
+                    tfoStaticIPAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tfoPublicIPAddressId"u8))
+                if (prop.NameEquals("tfoPublicIPAddressId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    tfoPublicIPAddressId = new ResourceIdentifier(property.Value.GetString());
+                    tfoPublicIPAddressId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tfoLBBackendAddressPoolIds"u8))
+                if (prop.NameEquals("tfoLBBackendAddressPoolIds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     tfoLBBackendAddressPoolIds = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new HyperVFailoverIPConfigDetails(
                 ipConfigName,
                 isPrimary,
@@ -267,38 +335,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 tfoStaticIPAddress,
                 tfoPublicIPAddressId,
                 tfoLBBackendAddressPoolIds ?? new ChangeTrackingList<string>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<HyperVFailoverIPConfigDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVFailoverIPConfigDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HyperVFailoverIPConfigDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        HyperVFailoverIPConfigDetails IPersistableModel<HyperVFailoverIPConfigDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVFailoverIPConfigDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHyperVFailoverIPConfigDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HyperVFailoverIPConfigDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<HyperVFailoverIPConfigDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

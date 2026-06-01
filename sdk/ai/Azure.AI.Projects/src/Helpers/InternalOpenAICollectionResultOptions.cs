@@ -44,11 +44,9 @@ internal partial class InternalOpenAICollectionResultOptions
     public InternalOpenAICollectionResultOptions GetCloneForPage<T>(InternalOpenAIPaginatedListResultOfT<T> page)
     {
         InternalOpenAICollectionResultOptions clonedOptions = (InternalOpenAICollectionResultOptions)MemberwiseClone();
-        clonedOptions.Filters.AddRange(Filters);
-        clonedOptions.Includes.AddRange(Includes);
 
         clonedOptions.AfterId = page.LastId;
-        clonedOptions.BeforeId = page.FirstId;
+        clonedOptions.BeforeId = BeforeId;
 
         return clonedOptions;
     }

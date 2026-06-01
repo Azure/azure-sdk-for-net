@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> A deleted skill Object. </summary>
+    /// <summary> A deleted skill. </summary>
     public partial class DeleteSkillResponse : IJsonModel<DeleteSkillResponse>
     {
         /// <summary> Initializes a new instance of <see cref="DeleteSkillResponse"/> for deserialization. </summary>
@@ -84,6 +84,8 @@ namespace Azure.AI.Projects.Agents
             {
                 throw new FormatException($"The model {nameof(DeleteSkillResponse)} does not support writing '{format}' format.");
             }
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("deleted"u8);
@@ -130,11 +132,17 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
+            string id = default;
             string name = default;
             bool deleted = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("id"u8))
+                {
+                    id = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("name"u8))
                 {
                     name = prop.Value.GetString();
@@ -150,7 +158,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeleteSkillResponse(name, deleted, additionalBinaryDataProperties);
+            return new DeleteSkillResponse(id, name, deleted, additionalBinaryDataProperties);
         }
     }
 }
