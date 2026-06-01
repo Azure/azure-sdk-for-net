@@ -32,6 +32,8 @@ namespace Azure.Generator.Provisioning.Primitives
             ApiVersions = [.. CollectApiVersions(metadata)];
             Methods = [.. CollectMethods(metadata)];
             RbacRoles = [.. CollectRbacRoles(metadata)];
+            ReadableScopes = [.. CollectScopes(metadata, IsReadableOperation)];
+            WritableScopes = [.. CollectScopes(metadata, IsWritableOperation)];
         }
 
         internal IReadOnlyList<ArmResourceMetadata> Metadata { get; }
@@ -55,6 +57,10 @@ namespace Azure.Generator.Provisioning.Primitives
         internal IReadOnlyList<ResourceMethod> Methods { get; }
 
         internal IReadOnlyList<ArmResourceRbacRole> RbacRoles { get; }
+
+        internal IReadOnlyList<ResourceScope> ReadableScopes { get; }
+
+        internal IReadOnlyList<ResourceScope> WritableScopes { get; }
 
         internal static IReadOnlyList<ProvisioningResourceProjection> Create(IReadOnlyList<ArmResourceMetadata> metadata)
         {
@@ -193,5 +199,28 @@ namespace Azure.Generator.Provisioning.Primitives
                 }
             }
         }
+
+        private static IEnumerable<ResourceScope> CollectScopes(
+            IReadOnlyList<ArmResourceMetadata> metadata,
+            Func<ResourceOperationKind, bool> operationSelector)
+        {
+            var seen = new HashSet<ResourceScope>();
+            foreach (var resource in metadata)
+            {
+                foreach (var method in resource.Methods)
+                {
+                    if (operationSelector(method.Kind) && seen.Add(method.Scope.Kind))
+                    {
+                        yield return method.Scope.Kind;
+                    }
+                }
+            }
+        }
+
+        private static bool IsReadableOperation(ResourceOperationKind kind)
+            => kind == ResourceOperationKind.Read;
+
+        private static bool IsWritableOperation(ResourceOperationKind kind)
+            => kind == ResourceOperationKind.Create || kind == ResourceOperationKind.Update;
     }
 }
