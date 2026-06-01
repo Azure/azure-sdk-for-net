@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
-    internal partial class DuplicatePropertyTestOperationSource : IOperationSource<DuplicatePropertyTestResource>
+    internal partial class SharedConfigResourceOperationSource : IOperationSource<SharedConfigResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal DuplicatePropertyTestOperationSource(ArmClient client)
+        internal SharedConfigResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        DuplicatePropertyTestResource IOperationSource<DuplicatePropertyTestResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SharedConfigResource IOperationSource<SharedConfigResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            DuplicatePropertyTestData data = DuplicatePropertyTestData.DeserializeDuplicatePropertyTestData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DuplicatePropertyTestResource(_client, data);
+            SharedConfigData data = SharedConfigData.DeserializeSharedConfigData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SharedConfigResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<DuplicatePropertyTestResource> IOperationSource<DuplicatePropertyTestResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SharedConfigResource> IOperationSource<SharedConfigResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            DuplicatePropertyTestData data = DuplicatePropertyTestData.DeserializeDuplicatePropertyTestData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DuplicatePropertyTestResource(_client, data);
+            SharedConfigData data = SharedConfigData.DeserializeSharedConfigData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SharedConfigResource(_client, data);
         }
     }
 }

@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
-    internal partial class SampleDataOperationSource : IOperationSource<SampleDataResource>
+    internal partial class DuplicatePropertyTestResourceOperationSource : IOperationSource<DuplicatePropertyTestResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal SampleDataOperationSource(ArmClient client)
+        internal DuplicatePropertyTestResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        SampleDataResource IOperationSource<SampleDataResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DuplicatePropertyTestResource IOperationSource<DuplicatePropertyTestResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            SampleData data = SampleData.DeserializeSampleData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new SampleDataResource(_client, data);
+            DuplicatePropertyTestData data = DuplicatePropertyTestData.DeserializeDuplicatePropertyTestData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DuplicatePropertyTestResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<SampleDataResource> IOperationSource<SampleDataResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DuplicatePropertyTestResource> IOperationSource<DuplicatePropertyTestResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            SampleData data = SampleData.DeserializeSampleData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new SampleDataResource(_client, data);
+            DuplicatePropertyTestData data = DuplicatePropertyTestData.DeserializeDuplicatePropertyTestData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DuplicatePropertyTestResource(_client, data);
         }
     }
 }

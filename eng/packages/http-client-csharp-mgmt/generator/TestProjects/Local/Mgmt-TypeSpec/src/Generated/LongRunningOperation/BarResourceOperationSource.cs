@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
-    internal partial class MultiFlattenTestOperationSource : IOperationSource<MultiFlattenTestResource>
+    internal partial class BarResourceOperationSource : IOperationSource<BarResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal MultiFlattenTestOperationSource(ArmClient client)
+        internal BarResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        MultiFlattenTestResource IOperationSource<MultiFlattenTestResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        BarResource IOperationSource<BarResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            MultiFlattenTestData data = MultiFlattenTestData.DeserializeMultiFlattenTestData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new MultiFlattenTestResource(_client, data);
+            BarData data = BarData.DeserializeBarData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new BarResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<MultiFlattenTestResource> IOperationSource<MultiFlattenTestResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<BarResource> IOperationSource<BarResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            MultiFlattenTestData data = MultiFlattenTestData.DeserializeMultiFlattenTestData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new MultiFlattenTestResource(_client, data);
+            BarData data = BarData.DeserializeBarData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new BarResource(_client, data);
         }
     }
 }

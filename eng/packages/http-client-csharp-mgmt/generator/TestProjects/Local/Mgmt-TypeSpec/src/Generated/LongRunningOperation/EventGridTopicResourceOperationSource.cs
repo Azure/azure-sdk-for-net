@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
-    internal partial class SharedConfigOperationSource : IOperationSource<SharedConfigResource>
+    internal partial class EventGridTopicResourceOperationSource : IOperationSource<EventGridTopicResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal SharedConfigOperationSource(ArmClient client)
+        internal EventGridTopicResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        SharedConfigResource IOperationSource<SharedConfigResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        EventGridTopicResource IOperationSource<EventGridTopicResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            SharedConfigData data = SharedConfigData.DeserializeSharedConfigData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new SharedConfigResource(_client, data);
+            EventGridTopicData data = EventGridTopicData.DeserializeEventGridTopicData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new EventGridTopicResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<SharedConfigResource> IOperationSource<SharedConfigResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<EventGridTopicResource> IOperationSource<EventGridTopicResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            SharedConfigData data = SharedConfigData.DeserializeSharedConfigData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new SharedConfigResource(_client, data);
+            EventGridTopicData data = EventGridTopicData.DeserializeEventGridTopicData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new EventGridTopicResource(_client, data);
         }
     }
 }

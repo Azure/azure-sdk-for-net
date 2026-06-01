@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
-    internal partial class WorkloadNetworkVmGroupOperationSource : IOperationSource<WorkloadNetworkVmGroupResource>
+    internal partial class ServiceGroupSiteResourceOperationSource : IOperationSource<ServiceGroupSiteResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal WorkloadNetworkVmGroupOperationSource(ArmClient client)
+        internal ServiceGroupSiteResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        WorkloadNetworkVmGroupResource IOperationSource<WorkloadNetworkVmGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ServiceGroupSiteResource IOperationSource<ServiceGroupSiteResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            WorkloadNetworkVmGroupData data = WorkloadNetworkVmGroupData.DeserializeWorkloadNetworkVmGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new WorkloadNetworkVmGroupResource(_client, data);
+            ServiceGroupSiteData data = ServiceGroupSiteData.DeserializeServiceGroupSiteData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ServiceGroupSiteResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<WorkloadNetworkVmGroupResource> IOperationSource<WorkloadNetworkVmGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ServiceGroupSiteResource> IOperationSource<ServiceGroupSiteResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            WorkloadNetworkVmGroupData data = WorkloadNetworkVmGroupData.DeserializeWorkloadNetworkVmGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new WorkloadNetworkVmGroupResource(_client, data);
+            ServiceGroupSiteData data = ServiceGroupSiteData.DeserializeServiceGroupSiteData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ServiceGroupSiteResource(_client, data);
         }
     }
 }

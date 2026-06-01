@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
-    internal partial class TestCertificateOperationSource : IOperationSource<TestCertificateResource>
+    internal partial class WorkloadNetworkVmGroupResourceOperationSource : IOperationSource<WorkloadNetworkVmGroupResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal TestCertificateOperationSource(ArmClient client)
+        internal WorkloadNetworkVmGroupResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        TestCertificateResource IOperationSource<TestCertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        WorkloadNetworkVmGroupResource IOperationSource<WorkloadNetworkVmGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            TestCertificateData data = TestCertificateData.DeserializeTestCertificateData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new TestCertificateResource(_client, data);
+            WorkloadNetworkVmGroupData data = WorkloadNetworkVmGroupData.DeserializeWorkloadNetworkVmGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new WorkloadNetworkVmGroupResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<TestCertificateResource> IOperationSource<TestCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<WorkloadNetworkVmGroupResource> IOperationSource<WorkloadNetworkVmGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            TestCertificateData data = TestCertificateData.DeserializeTestCertificateData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new TestCertificateResource(_client, data);
+            WorkloadNetworkVmGroupData data = WorkloadNetworkVmGroupData.DeserializeWorkloadNetworkVmGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new WorkloadNetworkVmGroupResource(_client, data);
         }
     }
 }

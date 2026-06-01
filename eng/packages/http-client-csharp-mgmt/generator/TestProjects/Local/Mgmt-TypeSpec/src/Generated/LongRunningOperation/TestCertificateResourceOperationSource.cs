@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
-    internal partial class ServiceGroupSiteOperationSource : IOperationSource<ServiceGroupSiteResource>
+    internal partial class TestCertificateResourceOperationSource : IOperationSource<TestCertificateResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal ServiceGroupSiteOperationSource(ArmClient client)
+        internal TestCertificateResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        ServiceGroupSiteResource IOperationSource<ServiceGroupSiteResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        TestCertificateResource IOperationSource<TestCertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ServiceGroupSiteData data = ServiceGroupSiteData.DeserializeServiceGroupSiteData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ServiceGroupSiteResource(_client, data);
+            TestCertificateData data = TestCertificateData.DeserializeTestCertificateData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new TestCertificateResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<ServiceGroupSiteResource> IOperationSource<ServiceGroupSiteResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<TestCertificateResource> IOperationSource<TestCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ServiceGroupSiteData data = ServiceGroupSiteData.DeserializeServiceGroupSiteData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ServiceGroupSiteResource(_client, data);
+            TestCertificateData data = TestCertificateData.DeserializeTestCertificateData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new TestCertificateResource(_client, data);
         }
     }
 }
