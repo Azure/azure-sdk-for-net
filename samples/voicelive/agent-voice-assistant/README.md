@@ -32,7 +32,7 @@ dotnet restore
 
 ### 2. Configure credentials
 
-Agent sessions require `DefaultAzureCredential`. Ensure you're logged in:
+Agent sessions require `DefaultAzureCredential` (from Azure Core, exposed via the `Azure.Identity` namespace). Ensure you're logged in:
 
 ```bash
 az login
@@ -84,6 +84,13 @@ dotnet run -- --endpoint https://<your-resource>.services.ai.azure.com/ \
 - `--auth-identity-client-id <id>`: Managed identity client ID (optional)
 - `--voice <name>`: Voice for the assistant (default: `en-US-AvaNeural`)
 - `--verbose`: Enable detailed logging
+- `--show-traces`: Print VoiceLive telemetry spans to console
+
+You can also enable tracing with environment variable:
+
+```bash
+VOICELIVE_ENABLE_CONSOLE_TRACING=true
+```
 
 ## Features
 

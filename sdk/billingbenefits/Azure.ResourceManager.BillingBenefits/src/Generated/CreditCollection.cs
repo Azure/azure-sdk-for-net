@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _creditsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, creditName, CreditData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<CreditResource> operation = new BillingBenefitsArmOperation<CreditResource>(
-                    new CreditOperationSource(Client),
+                    new CreditResourceOperationSource(Client),
                     _creditsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _creditsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, creditName, CreditData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<CreditResource> operation = new BillingBenefitsArmOperation<CreditResource>(
-                    new CreditOperationSource(Client),
+                    new CreditResourceOperationSource(Client),
                     _creditsClientDiagnostics,
                     Pipeline,
                     message.Request,

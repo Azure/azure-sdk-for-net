@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _maccsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MaccPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<MaccResource> operation = new BillingBenefitsArmOperation<MaccResource>(
-                    new MaccOperationSource(Client),
+                    new MaccResourceOperationSource(Client),
                     _maccsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _maccsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MaccPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<MaccResource> operation = new BillingBenefitsArmOperation<MaccResource>(
-                    new MaccOperationSource(Client),
+                    new MaccResourceOperationSource(Client),
                     _maccsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _maccsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<MaccResource> operation = new BillingBenefitsArmOperation<MaccResource>(
-                    new MaccOperationSource(Client),
+                    new MaccResourceOperationSource(Client),
                     _maccsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _maccsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<MaccResource> operation = new BillingBenefitsArmOperation<MaccResource>(
-                    new MaccOperationSource(Client),
+                    new MaccResourceOperationSource(Client),
                     _maccsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _maccsRestClient.CreateChargeShortfallRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChargeShortfallRequest.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<MaccResource> operation = new BillingBenefitsArmOperation<MaccResource>(
-                    new MaccOperationSource(Client),
+                    new MaccResourceOperationSource(Client),
                     _maccsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _maccsRestClient.CreateChargeShortfallRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChargeShortfallRequest.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<MaccResource> operation = new BillingBenefitsArmOperation<MaccResource>(
-                    new MaccOperationSource(Client),
+                    new MaccResourceOperationSource(Client),
                     _maccsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _maccsRestClient.CreateWriteOffRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<MaccResource> operation = new BillingBenefitsArmOperation<MaccResource>(
-                    new MaccOperationSource(Client),
+                    new MaccResourceOperationSource(Client),
                     _maccsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _maccsRestClient.CreateWriteOffRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<MaccResource> operation = new BillingBenefitsArmOperation<MaccResource>(
-                    new MaccOperationSource(Client),
+                    new MaccResourceOperationSource(Client),
                     _maccsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _diagnosticSettingsRestClient.CreateUpdateDiagnosticProactiveLogCollectionSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, DiagnosticProactiveLogCollectionSettingData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxEdgeArmOperation<DiagnosticProactiveLogCollectionSettingResource> operation = new DataBoxEdgeArmOperation<DiagnosticProactiveLogCollectionSettingResource>(
-                    new DiagnosticProactiveLogCollectionSettingOperationSource(Client),
+                    new DiagnosticProactiveLogCollectionSettingResourceOperationSource(Client),
                     _diagnosticSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _diagnosticSettingsRestClient.CreateUpdateDiagnosticProactiveLogCollectionSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, DiagnosticProactiveLogCollectionSettingData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxEdgeArmOperation<DiagnosticProactiveLogCollectionSettingResource> operation = new DataBoxEdgeArmOperation<DiagnosticProactiveLogCollectionSettingResource>(
-                    new DiagnosticProactiveLogCollectionSettingOperationSource(Client),
+                    new DiagnosticProactiveLogCollectionSettingResourceOperationSource(Client),
                     _diagnosticSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,
