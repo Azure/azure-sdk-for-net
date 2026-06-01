@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary></summary>
-    internal partial class AutoExportJobOperationSource : IOperationSource<AutoExportJobResource>
+    internal partial class StorageCacheResourceOperationSource : IOperationSource<StorageCacheResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal AutoExportJobOperationSource(ArmClient client)
+        internal StorageCacheResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        AutoExportJobResource IOperationSource<AutoExportJobResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        StorageCacheResource IOperationSource<StorageCacheResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            AutoExportJobData data = AutoExportJobData.DeserializeAutoExportJobData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new AutoExportJobResource(_client, data);
+            StorageCacheData data = StorageCacheData.DeserializeStorageCacheData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new StorageCacheResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<AutoExportJobResource> IOperationSource<AutoExportJobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<StorageCacheResource> IOperationSource<StorageCacheResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            AutoExportJobData data = AutoExportJobData.DeserializeAutoExportJobData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new AutoExportJobResource(_client, data);
+            StorageCacheData data = StorageCacheData.DeserializeStorageCacheData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new StorageCacheResource(_client, data);
         }
     }
 }

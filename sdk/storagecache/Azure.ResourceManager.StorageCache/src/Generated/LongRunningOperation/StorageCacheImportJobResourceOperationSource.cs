@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary></summary>
-    internal partial class StorageCacheImportJobOperationSource : IOperationSource<StorageCacheImportJobResource>
+    internal partial class StorageCacheImportJobResourceOperationSource : IOperationSource<StorageCacheImportJobResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal StorageCacheImportJobOperationSource(ArmClient client)
+        internal StorageCacheImportJobResourceOperationSource(ArmClient client)
         {
             _client = client;
         }

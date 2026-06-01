@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.StorageCache
                 HttpMessage message = _amlFilesystemsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, AmlFileSystemPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageCacheArmOperation<AmlFileSystemResource> operation = new StorageCacheArmOperation<AmlFileSystemResource>(
-                    new AmlFileSystemOperationSource(Client),
+                    new AmlFileSystemResourceOperationSource(Client),
                     _amlFilesystemsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.StorageCache
                 HttpMessage message = _amlFilesystemsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, AmlFileSystemPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageCacheArmOperation<AmlFileSystemResource> operation = new StorageCacheArmOperation<AmlFileSystemResource>(
-                    new AmlFileSystemOperationSource(Client),
+                    new AmlFileSystemResourceOperationSource(Client),
                     _amlFilesystemsClientDiagnostics,
                     Pipeline,
                     message.Request,

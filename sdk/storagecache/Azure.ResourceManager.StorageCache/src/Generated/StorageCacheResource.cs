@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.StorageCache
                 HttpMessage message = _cachesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, StorageCacheData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageCacheArmOperation<StorageCacheResource> operation = new StorageCacheArmOperation<StorageCacheResource>(
-                    new StorageCacheOperationSource(Client),
+                    new StorageCacheResourceOperationSource(Client),
                     _cachesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.StorageCache
                 HttpMessage message = _cachesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, StorageCacheData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageCacheArmOperation<StorageCacheResource> operation = new StorageCacheArmOperation<StorageCacheResource>(
-                    new StorageCacheOperationSource(Client),
+                    new StorageCacheResourceOperationSource(Client),
                     _cachesClientDiagnostics,
                     Pipeline,
                     message.Request,

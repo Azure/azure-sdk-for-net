@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary></summary>
-    internal partial class StorageCacheOperationSource : IOperationSource<StorageCacheResource>
+    internal partial class AmlFileSystemResourceOperationSource : IOperationSource<AmlFileSystemResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal StorageCacheOperationSource(ArmClient client)
+        internal AmlFileSystemResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        StorageCacheResource IOperationSource<StorageCacheResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        AmlFileSystemResource IOperationSource<AmlFileSystemResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            StorageCacheData data = StorageCacheData.DeserializeStorageCacheData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new StorageCacheResource(_client, data);
+            AmlFileSystemData data = AmlFileSystemData.DeserializeAmlFileSystemData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new AmlFileSystemResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<StorageCacheResource> IOperationSource<StorageCacheResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AmlFileSystemResource> IOperationSource<AmlFileSystemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            StorageCacheData data = StorageCacheData.DeserializeStorageCacheData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new StorageCacheResource(_client, data);
+            AmlFileSystemData data = AmlFileSystemData.DeserializeAmlFileSystemData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new AmlFileSystemResource(_client, data);
         }
     }
 }

@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.StorageCache
                 HttpMessage message = _autoImportJobsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, AutoImportJobPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageCacheArmOperation<AutoImportJobResource> operation = new StorageCacheArmOperation<AutoImportJobResource>(
-                    new AutoImportJobOperationSource(Client),
+                    new AutoImportJobResourceOperationSource(Client),
                     _autoImportJobsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.StorageCache
                 HttpMessage message = _autoImportJobsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, AutoImportJobPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageCacheArmOperation<AutoImportJobResource> operation = new StorageCacheArmOperation<AutoImportJobResource>(
-                    new AutoImportJobOperationSource(Client),
+                    new AutoImportJobResourceOperationSource(Client),
                     _autoImportJobsClientDiagnostics,
                     Pipeline,
                     message.Request,

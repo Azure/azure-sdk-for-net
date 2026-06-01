@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.StorageCache
                 HttpMessage message = _expansionJobsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ExpansionJobPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageCacheArmOperation<ExpansionJobResource> operation = new StorageCacheArmOperation<ExpansionJobResource>(
-                    new ExpansionJobOperationSource(Client),
+                    new ExpansionJobResourceOperationSource(Client),
                     _expansionJobsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.StorageCache
                 HttpMessage message = _expansionJobsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ExpansionJobPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageCacheArmOperation<ExpansionJobResource> operation = new StorageCacheArmOperation<ExpansionJobResource>(
-                    new ExpansionJobOperationSource(Client),
+                    new ExpansionJobResourceOperationSource(Client),
                     _expansionJobsClientDiagnostics,
                     Pipeline,
                     message.Request,

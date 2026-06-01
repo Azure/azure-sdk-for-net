@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary></summary>
-    internal partial class AmlFileSystemOperationSource : IOperationSource<AmlFileSystemResource>
+    internal partial class AutoImportJobResourceOperationSource : IOperationSource<AutoImportJobResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal AmlFileSystemOperationSource(ArmClient client)
+        internal AutoImportJobResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        AmlFileSystemResource IOperationSource<AmlFileSystemResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        AutoImportJobResource IOperationSource<AutoImportJobResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            AmlFileSystemData data = AmlFileSystemData.DeserializeAmlFileSystemData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new AmlFileSystemResource(_client, data);
+            AutoImportJobData data = AutoImportJobData.DeserializeAutoImportJobData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new AutoImportJobResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<AmlFileSystemResource> IOperationSource<AmlFileSystemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AutoImportJobResource> IOperationSource<AutoImportJobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            AmlFileSystemData data = AmlFileSystemData.DeserializeAmlFileSystemData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new AmlFileSystemResource(_client, data);
+            AutoImportJobData data = AutoImportJobData.DeserializeAutoImportJobData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new AutoImportJobResource(_client, data);
         }
     }
 }

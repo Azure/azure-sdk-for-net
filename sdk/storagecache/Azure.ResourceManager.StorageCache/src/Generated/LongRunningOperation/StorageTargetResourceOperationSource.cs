@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary></summary>
-    internal partial class ExpansionJobOperationSource : IOperationSource<ExpansionJobResource>
+    internal partial class StorageTargetResourceOperationSource : IOperationSource<StorageTargetResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal ExpansionJobOperationSource(ArmClient client)
+        internal StorageTargetResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        ExpansionJobResource IOperationSource<ExpansionJobResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        StorageTargetResource IOperationSource<StorageTargetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ExpansionJobData data = ExpansionJobData.DeserializeExpansionJobData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ExpansionJobResource(_client, data);
+            StorageTargetData data = StorageTargetData.DeserializeStorageTargetData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new StorageTargetResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<ExpansionJobResource> IOperationSource<ExpansionJobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<StorageTargetResource> IOperationSource<StorageTargetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ExpansionJobData data = ExpansionJobData.DeserializeExpansionJobData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ExpansionJobResource(_client, data);
+            StorageTargetData data = StorageTargetData.DeserializeStorageTargetData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new StorageTargetResource(_client, data);
         }
     }
 }
