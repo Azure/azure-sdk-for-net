@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 HttpMessage message = _storagePoolsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storagePoolName, PureStoragePoolData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PureStorageBlockArmOperation<PureStoragePoolResource> operation = new PureStorageBlockArmOperation<PureStoragePoolResource>(
-                    new PureStoragePoolOperationSource(Client),
+                    new PureStoragePoolResourceOperationSource(Client),
                     _storagePoolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 HttpMessage message = _storagePoolsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storagePoolName, PureStoragePoolData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PureStorageBlockArmOperation<PureStoragePoolResource> operation = new PureStorageBlockArmOperation<PureStoragePoolResource>(
-                    new PureStoragePoolOperationSource(Client),
+                    new PureStoragePoolResourceOperationSource(Client),
                     _storagePoolsClientDiagnostics,
                     Pipeline,
                     message.Request,
