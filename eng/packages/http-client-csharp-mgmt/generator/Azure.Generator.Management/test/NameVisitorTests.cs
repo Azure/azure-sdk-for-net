@@ -142,14 +142,14 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
-        public void TestPatchModelRenameUsesSemanticModelIdentityForResourceDerivedClientNameOverride()
+        public void TestPatchModelRenameRespectsResourceDerivedClientNameOverride()
         {
             var (client, models, patchModel) = InputResourceData.ClientWithResourcePatchBodyEquivalentModelInstance();
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
 
             var type = plugin.Object.TypeFactory.CreateModel(patchModel);
 
-            Assert.That(type?.Name, Is.EqualTo("ResponseTypePatch"));
+            Assert.That(type?.Name, Is.EqualTo("OperationSpecificUpdateShape"));
         }
     }
 }

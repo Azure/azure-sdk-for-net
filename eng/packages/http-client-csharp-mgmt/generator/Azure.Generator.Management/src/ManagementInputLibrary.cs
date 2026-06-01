@@ -304,11 +304,10 @@ namespace Azure.Generator.Management
 
         private IReadOnlyDictionary<string, (string ResourceName, bool IsAlsoUsedInCreate)> ResourceUpdateModelToResourceNameMap => _resourceUpdateModelToResourceNameMap ??= BuildResourceUpdateModelToResourceNameMap();
 
-        // User-supplied @@clientName is normally respected for PATCH-only payloads, but resource-derived
-        // update shapes are a special compatibility case: previous GA SDKs exposed them as {Resource}Patch
-        // even when the underlying TypeSpec model had an operation-specific client name.
+        // User-supplied @@clientName is respected for PATCH-only payloads. Otherwise,
+        // apply the management-plane convention of naming update payloads {Resource}Patch.
         internal bool ShouldRenameResourceUpdateModel(InputModelType model)
-            => !ClientNameOverriddenModels.Contains(model) || InheritsFromArmResource(model) || IsUpdatePayloadClientName(model);
+            => !ClientNameOverriddenModels.Contains(model);
 
         /// <summary> Gets the ARM provider schema containing all resource metadata and non-resource methods. </summary>
         public ArmProviderSchema ArmProviderSchema => _providerSchema ??= BuildArmProviderSchema();
@@ -380,24 +379,6 @@ namespace Azure.Generator.Management
             => !string.IsNullOrEmpty(model.Namespace)
                 ? $"{model.Namespace}.{model.Name}"
                 : model.CrossLanguageDefinitionId;
-
-        private static bool InheritsFromArmResource(InputModelType model)
-        {
-            // Operation-specific ARM update payloads may be modeled as derived resources. Treating that shape as
-            // resource-derived avoids depending on service-specific suffixes such as "Fragment".
-            for (var baseModel = model.BaseModel; baseModel != null; baseModel = baseModel.BaseModel)
-            {
-                if (string.Equals(baseModel.CrossLanguageDefinitionId, KnownManagementTypes.ArmResourceId, StringComparison.Ordinal))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private static bool IsUpdatePayloadClientName(InputModelType model)
-            => model.Name.EndsWith("Update", StringComparison.Ordinal);
 
         private IReadOnlyDictionary<InputServiceMethod, InputClient> ConstructMethodClientMap()
         {
