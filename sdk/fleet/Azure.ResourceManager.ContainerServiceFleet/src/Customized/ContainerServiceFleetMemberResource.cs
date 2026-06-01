@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<ContainerServiceFleetMemberResource> Update(WaitUntil waitUntil, ContainerServiceFleetMemberPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            return  Update(waitUntil, patch, ETagHelper.ToETag(ifMatch), cancellationToken);
+            return Update(waitUntil, patch, ETagHelper.ToETag(ifMatch), cancellationToken);
         }
     }
 }

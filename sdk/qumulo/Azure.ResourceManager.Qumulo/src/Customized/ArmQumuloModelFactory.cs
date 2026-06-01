@@ -52,6 +52,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                 adminPassword,
                 availabilityZone,
                 userDetailsEmail,
+                default,
                 identity,
                 initialCapacity);
         }
@@ -92,6 +93,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                 adminPassword,
                 availabilityZone,
                 userDetailsEmail,
+                default,
                 identity,
                 initialCapacity);
         }

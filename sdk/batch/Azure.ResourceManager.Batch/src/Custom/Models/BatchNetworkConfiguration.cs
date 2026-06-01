@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 if (value is null)
                 {
-                   EndpointConfiguration = null;
+                    EndpointConfiguration = null;
                 }
                 else
                 {

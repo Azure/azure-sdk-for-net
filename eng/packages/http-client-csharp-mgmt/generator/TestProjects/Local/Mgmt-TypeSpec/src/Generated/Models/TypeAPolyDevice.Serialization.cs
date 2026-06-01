@@ -111,8 +111,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string kind = "TypeA";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             TypeAPolyDeviceProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,8 +168,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
                 kind,
+                additionalBinaryDataProperties,
                 properties);
         }
     }

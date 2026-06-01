@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 provisioningState is null && status is null && entityType is null && displayName is null && productCode is null && billingAccountResourceId is null && commitment is null && startOn is null && endOn is null && systemId is null && automaticShortfall is null && automaticShortfallSuppressReason is null && shortfall is null && milestones is null && resourceId is null && isAllowContributors is null && primaryResourceId is null && primaryBillingAccountResourceId is null ? default : new MaccModelProperties(
                     provisioningState,
                     status,
@@ -68,7 +67,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     isAllowContributors,
                     primaryResourceId,
                     primaryBillingAccountResourceId,
-                    null));
+                    null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -111,7 +111,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 provisioningState is null && status is null && entityType is null && displayName is null && productCode is null && billingAccountResourceId is null && commitment is null && startOn is null && endOn is null && systemId is null && automaticShortfall is null && automaticShortfallSuppressReason is null && shortfall is null && milestones is null && resourceId is null && isAllowContributors is null && primaryResourceId is null && primaryBillingAccountResourceId is null ? default : new MaccModelProperties(
@@ -139,7 +138,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 etag,
                 identity,
                 sku,
-                plan);
+                plan,
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -172,7 +172,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 provisioningState is null && status is null && entityType is null && displayName is null && productCode is null && billingAccountResourceId is null && commitment is null && startOn is null && endOn is null && systemId is null && automaticShortfall is null && automaticShortfallSuppressReason is null && shortfall is null && milestones is null && resourceId is null && isAllowContributors is null && primaryResourceId is null && primaryBillingAccountResourceId is null ? default : new MaccModelProperties(
                     provisioningState,
                     status,
@@ -192,7 +191,53 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     isAllowContributors,
                     primaryResourceId,
                     primaryBillingAccountResourceId,
-                    null));
+                    null),
+                additionalBinaryDataProperties: null);
+        }
+
+        // TODO: Remove this workaround when the management generator restores model factory
+        // methods for flattened polymorphic models.
+        /// <summary> Savings plan validate model. </summary>
+        /// <param name="displayName"> Display name. </param>
+        /// <param name="savingsPlanOrderId"> Identifier of the savings plan created. </param>
+        /// <param name="provisioningState"> Provisioning state. </param>
+        /// <param name="billingScopeId"> Subscription that will be charged for purchasing the benefit. </param>
+        /// <param name="term"> Represent benefit term in ISO 8601 format. </param>
+        /// <param name="billingPlan"> Represents the billing plan in ISO 8601 format. Required only for monthly billing plans. </param>
+        /// <param name="appliedScopeType"> Type of the Applied Scope. </param>
+        /// <param name="appliedScopeProperties"> Properties specific to applied scope type. Not required if not applicable. </param>
+        /// <param name="commitment"> Commitment towards the benefit. </param>
+        /// <param name="isRenewed"> Setting this to true will automatically purchase a new benefit on the expiration date time. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="skuName"> Gets or sets the Name. </param>
+        /// <param name="kind"> Resource provider kind. </param>
+        /// <returns> A new <see cref="SavingsPlanValidateModel"/> instance for mocking. </returns>
+        public static SavingsPlanValidateModel SavingsPlanValidateModel(string displayName = default, ResourceIdentifier savingsPlanOrderId = default, BillingBenefitsProvisioningState? provisioningState = default, ResourceIdentifier billingScopeId = default, BillingBenefitsTerm? term = default, BillingBenefitsBillingPlan? billingPlan = default, BillingBenefitsAppliedScopeType? appliedScopeType = default, BillingBenefitsAppliedScopeProperties appliedScopeProperties = default, BillingBenefitsCommitment commitment = default, bool? isRenewed = default, ResourceIdentifier id = default, string name = default, ResourceType? type = default, SystemData systemData = default, string skuName = default, string kind = default)
+        {
+            return new SavingsPlanValidateModel(
+                BenefitType.SavingsPlan,
+                additionalBinaryDataProperties: null,
+                displayName is null && savingsPlanOrderId is null && provisioningState is null && billingScopeId is null && term is null && billingPlan is null && appliedScopeType is null && appliedScopeProperties is null && commitment is null && isRenewed is null ? default : new SavingsPlanOrderAliasProperties(
+                    displayName,
+                    savingsPlanOrderId,
+                    provisioningState,
+                    billingScopeId,
+                    term,
+                    billingPlan,
+                    appliedScopeType,
+                    appliedScopeProperties,
+                    commitment,
+                    isRenewed,
+                    null),
+                id,
+                name,
+                type,
+                systemData,
+                new ResourceSku(skuName, null),
+                kind);
         }
     }
 }

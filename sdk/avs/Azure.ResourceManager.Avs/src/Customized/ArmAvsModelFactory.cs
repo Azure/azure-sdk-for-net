@@ -221,8 +221,8 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                null,
-                displayName is null && members is null ? default : new WorkloadNetworkVmGroupProperties(displayName, members.ToList(), status, provisioningState, revision, null));
+                displayName is null && members is null ? default : new WorkloadNetworkVmGroupProperties(displayName, (members ?? Enumerable.Empty<string>()).ToList(), status, provisioningState, revision, null),
+                default);
         }
     }
 }

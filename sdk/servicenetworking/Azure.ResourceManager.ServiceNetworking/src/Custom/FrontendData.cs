@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 // ProvisioningState is also read-only
             }
 
-            return new TrafficControllerFrontendData(Id, Name, ResourceType, SystemData, _serializedAdditionalRawData, Tags, Location, properties);
+            return new TrafficControllerFrontendData(Id, Name, ResourceType, SystemData, Tags, Location, properties, _serializedAdditionalRawData);
         }
 
         /// <summary> The Fully Qualified Domain Name of the DNS record associated to a Traffic Controller frontend. </summary>

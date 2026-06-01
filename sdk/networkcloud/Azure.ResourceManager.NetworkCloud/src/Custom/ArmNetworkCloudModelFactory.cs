@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkCloudOperationStatusResult NetworkCloudOperationStatusResult(ResourceIdentifier id, ResourceIdentifier resourceId, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IEnumerable<NetworkCloudOperationStatusResult> operations, ResponseError error)
         {
-            return NetworkCloudOperationStatusResult(endOn: endOn, error: error, id: id, name: name, operations: operations, percentComplete: percentComplete, resourceId: resourceId, startOn: startOn, status: status, exitCode: default, outputHead: default, resultRef: default, resultUri: default);
+            return new NetworkCloudOperationStatusResult(endOn, error, id, name, operations?.ToList(), percentComplete, new OperationStatusResultProperties(default, default, default, default, default), resourceId, startOn, status, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleData" />. </summary>
