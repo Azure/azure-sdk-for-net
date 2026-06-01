@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.CloudHealth
                 HttpMessage message = _healthModelsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HealthModelPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CloudHealthArmOperation<HealthModelResource> operation = new CloudHealthArmOperation<HealthModelResource>(
-                    new HealthModelOperationSource(Client),
+                    new HealthModelResourceOperationSource(Client),
                     _healthModelsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.CloudHealth
                 HttpMessage message = _healthModelsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HealthModelPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CloudHealthArmOperation<HealthModelResource> operation = new CloudHealthArmOperation<HealthModelResource>(
-                    new HealthModelOperationSource(Client),
+                    new HealthModelResourceOperationSource(Client),
                     _healthModelsClientDiagnostics,
                     Pipeline,
                     message.Request,

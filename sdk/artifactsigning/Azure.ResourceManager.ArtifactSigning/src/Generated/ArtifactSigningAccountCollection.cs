@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 HttpMessage message = _codeSigningAccountsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, ArtifactSigningAccountData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ArtifactSigningArmOperation<ArtifactSigningAccountResource> operation = new ArtifactSigningArmOperation<ArtifactSigningAccountResource>(
-                    new ArtifactSigningAccountOperationSource(Client),
+                    new ArtifactSigningAccountResourceOperationSource(Client),
                     _codeSigningAccountsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 HttpMessage message = _codeSigningAccountsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, ArtifactSigningAccountData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ArtifactSigningArmOperation<ArtifactSigningAccountResource> operation = new ArtifactSigningArmOperation<ArtifactSigningAccountResource>(
-                    new ArtifactSigningAccountOperationSource(Client),
+                    new ArtifactSigningAccountResourceOperationSource(Client),
                     _codeSigningAccountsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -43,12 +43,12 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Captured stdout output for the shell call. </summary>
-        public string Stdout { get; }
+        public string Stdout { get; set; }
 
         /// <summary> Captured stderr output for the shell call. </summary>
-        public string Stderr { get; }
+        public string Stderr { get; set; }
 
         /// <summary> The exit or timeout outcome associated with this shell call. </summary>
-        public FunctionShellCallOutputOutcomeParam Outcome { get; }
+        public FunctionShellCallOutputOutcomeParam Outcome { get; set; }
     }
 }

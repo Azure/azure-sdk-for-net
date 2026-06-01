@@ -33,7 +33,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="id"> Stable identifier for this dimension (snake_case, e.g., `correct_resolution`). Required. Provided by the user when manually creating a rubric evaluator or during human-in-the-loop review of a generated set; the generation pipeline produces an initial value the user can edit. Editable when saving new versions. </param>
         /// <param name="description"> What this dimension measures (e.g., 'Correctly identifies the user's reservation intent and pursues the appropriate workflow'). </param>
         /// <param name="weight"> Relative weight of this dimension (1-10). The generation pipeline assigns exactly one dimension weight 8-10; all others use 1-6. User edits are not constrained by this heuristic. </param>
-        /// <param name="alwaysApplicable"> When true, the LLM judge always scores this dimension regardless of relevance (skips applicability assessment). The service-generated general quality/policy dimension has this set to true and is non-editable. Users may set this on their own custom dimensions. </param>
+        /// <param name="alwaysApplicable"> When true, the LLM judge always scores this dimension regardless of relevance (skips applicability assessment). The service-generated general quality/policy dimension has this set to true and is non-editable. Users may set this on their own custom dimensions. The service defaults to `false` if a value is not specified by the caller. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal EvaluationsDimension(string id, string description, int weight, bool? alwaysApplicable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -53,7 +53,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Relative weight of this dimension (1-10). The generation pipeline assigns exactly one dimension weight 8-10; all others use 1-6. User edits are not constrained by this heuristic. </summary>
         public int Weight { get; set; }
 
-        /// <summary> When true, the LLM judge always scores this dimension regardless of relevance (skips applicability assessment). The service-generated general quality/policy dimension has this set to true and is non-editable. Users may set this on their own custom dimensions. </summary>
+        /// <summary> When true, the LLM judge always scores this dimension regardless of relevance (skips applicability assessment). The service-generated general quality/policy dimension has this set to true and is non-editable. Users may set this on their own custom dimensions. The service defaults to `false` if a value is not specified by the caller. </summary>
         public bool? AlwaysApplicable { get; set; }
     }
 }

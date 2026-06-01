@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
@@ -33,7 +34,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
@@ -49,7 +51,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "7",
@@ -65,7 +68,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "9",
@@ -81,7 +85,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -99,6 +104,7 @@
           "name": "InputModel"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "12",
@@ -123,7 +129,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -141,6 +148,7 @@
           "name": "OutputModel"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "15",
@@ -165,7 +173,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -182,6 +191,7 @@
           "name": "RoundTripModel"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "18",
@@ -201,6 +211,7 @@
                 "name": "ResultModel"
               }
             },
+            "isExactName": false,
             "properties": [
               {
                 "$id": "20",
@@ -225,7 +236,8 @@
                     "name": "name"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -240,7 +252,8 @@
               "name": "result"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -262,6 +275,7 @@
           "name": "OrphanModel"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "23",
@@ -286,7 +300,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "25",
@@ -311,7 +326,8 @@
               "name": "desc"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -321,6 +337,7 @@
       "$id": "27",
       "kind": "client",
       "name": "UsageClient",
+      "isExactName": false,
       "namespace": "_Specs_.Azure.ClientGenerator.Core.Usage",
       "doc": "Test for internal decorator.",
       "methods": [],
@@ -353,7 +370,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -365,18 +383,21 @@
           "$id": "31",
           "kind": "client",
           "name": "ModelInOperation",
+          "isExactName": false,
           "namespace": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation",
           "methods": [
             {
               "$id": "32",
               "kind": "basic",
               "name": "inputToInputOutput",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Expected body parameter:\n```json\n{\n  \"name\": \"Madge\"\n}\n```",
               "operation": {
                 "$id": "33",
                 "name": "inputToInputOutput",
+                "isExactName": false,
                 "resourceName": "ModelInOperation",
                 "doc": "Expected body parameter:\n```json\n{\n  \"name\": \"Madge\"\n}\n```",
                 "accessibility": "public",
@@ -414,9 +435,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.inputToInputOutput.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "36",
@@ -452,9 +475,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.inputToInputOutput.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -503,12 +528,14 @@
               "$id": "38",
               "kind": "basic",
               "name": "outputToInputOutput",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Expected response body:\n```json\n{\n  \"name\": \"Madge\"\n}\n```",
               "operation": {
                 "$id": "39",
                 "name": "outputToInputOutput",
+                "isExactName": false,
                 "resourceName": "ModelInOperation",
                 "doc": "Expected response body:\n```json\n{\n  \"name\": \"Madge\"\n}\n```",
                 "accessibility": "public",
@@ -544,9 +571,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.outputToInputOutput.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -598,12 +627,14 @@
               "$id": "42",
               "kind": "basic",
               "name": "modelInReadOnlyProperty",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "\"ResultModel\" should be usage=output, as it is read-only and does not exist in request body.\n\nExpected body parameter:\n```json\n{\n}\n```\n\nExpected response body:\n```json\n{\n  \"result\": {\n    \"name\": \"Madge\"\n  }\n}\n```",
               "operation": {
                 "$id": "43",
                 "name": "modelInReadOnlyProperty",
+                "isExactName": false,
                 "resourceName": "ModelInOperation",
                 "doc": "\"ResultModel\" should be usage=output, as it is read-only and does not exist in request body.\n\nExpected body parameter:\n```json\n{\n}\n```\n\nExpected response body:\n```json\n{\n  \"result\": {\n    \"name\": \"Madge\"\n  }\n}\n```",
                 "accessibility": "public",
@@ -641,9 +672,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.modelInReadOnlyProperty.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "46",
@@ -676,9 +709,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.modelInReadOnlyProperty.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "48",
@@ -714,9 +749,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.modelInReadOnlyProperty.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -782,12 +819,14 @@
               "$id": "50",
               "kind": "basic",
               "name": "orphanModelSerializable",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Serialize the 'OrphanModel' as request body.\n\nExpected body parameter:\n```json\n{\n  \"name\": \"name\",\n  \"desc\": \"desc\"\n}\n```",
               "operation": {
                 "$id": "51",
                 "name": "orphanModelSerializable",
+                "isExactName": false,
                 "resourceName": "ModelInOperation",
                 "doc": "Serialize the 'OrphanModel' as request body.\n\nExpected body parameter:\n```json\n{\n  \"name\": \"name\",\n  \"desc\": \"desc\"\n}\n```",
                 "accessibility": "public",
@@ -825,9 +864,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.orphanModelSerializable.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "54",
@@ -871,9 +912,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.orphanModelSerializable.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -948,7 +991,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
