@@ -13,6 +13,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
+    // Backward-compat justification: the GA ESU key payload accepted licenseStatus values encoded as either numbers or strings.
     public partial class EsuKey
     {
         internal EsuKey(string sku, int? licenseStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)

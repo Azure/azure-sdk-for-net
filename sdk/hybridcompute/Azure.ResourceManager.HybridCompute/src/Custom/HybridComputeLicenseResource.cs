@@ -9,6 +9,7 @@ using Azure.ResourceManager.HybridCompute.Models;
 
 namespace Azure.ResourceManager.HybridCompute
 {
+    // Backward-compat justification: the GA license resource exposed Update overloads that accepted full license data.
     public partial class HybridComputeLicenseResource
     {
         /// <summary>

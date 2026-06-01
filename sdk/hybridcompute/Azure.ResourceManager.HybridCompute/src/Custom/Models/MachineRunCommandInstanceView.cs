@@ -8,6 +8,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
+    // Backward-compat justification: the GA instance view model exposed the Statuses property directly.
     public partial class MachineRunCommandInstanceView
     {
         /// <summary> The  status information. </summary>

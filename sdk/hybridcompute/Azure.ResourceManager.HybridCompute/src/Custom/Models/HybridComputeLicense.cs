@@ -12,6 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
+    // Backward-compat justification: the GA SDK exposed HybridComputeLicense in the Models namespace instead of HybridComputeLicenseData.
     /// <summary> Describes a license in a hybrid machine. </summary>
     public partial class HybridComputeLicense : TrackedResourceData, IJsonModel<HybridComputeLicense>
     {

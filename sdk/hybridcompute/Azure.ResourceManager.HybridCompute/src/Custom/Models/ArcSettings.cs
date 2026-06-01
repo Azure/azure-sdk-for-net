@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    // Compatibility shim for the AutoRest-generated model preserved during TypeSpec migration.
+    // Backward-compat justification: the GA settings APIs exposed ArcSettings with Guid-based tenant IDs instead of ArcSettingsData.
     /// <summary> The ArcSettings. </summary>
     public partial class ArcSettings : ResourceData, IUtf8JsonSerializable, IJsonModel<ArcSettings>, IPersistableModel<ArcSettings>
     {

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HybridCompute.Models;
 using Azure.ResourceManager.Models;
@@ -51,6 +52,196 @@ namespace Azure.ResourceManager.HybridCompute
             get
             {
                 return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Specifies if this machine is licensed as part of a Software Assurance agreement. </summary>
+        [WirePath("properties.softwareAssurance.softwareAssuranceCustomer")]
+        public bool? SoftwareAssuranceCustomer
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SoftwareAssuranceCustomer;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LicenseProfileProperties();
+                }
+                Properties.SoftwareAssuranceCustomer = value;
+            }
+        }
+
+        /// <summary> The guid id of the license. </summary>
+        [WirePath("properties.esuProfile.assignedLicenseImmutableId")]
+        public Guid? AssignedLicenseImmutableId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AssignedLicenseImmutableId;
+            }
+        }
+
+        /// <summary> The list of ESU keys. </summary>
+        [WirePath("properties.esuProfile.esuKeys")]
+        public IReadOnlyList<EsuKey> EsuKeys
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new LicenseProfileProperties();
+                }
+                return Properties.EsuKeys;
+            }
+        }
+
+        /// <summary> The type of the Esu servers. </summary>
+        [WirePath("properties.esuProfile.serverType")]
+        public EsuServerType? ServerType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServerType;
+            }
+        }
+
+        /// <summary> Indicates the eligibility state of Esu. </summary>
+        [WirePath("properties.esuProfile.esuEligibility")]
+        public EsuEligibility? EsuEligibility
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EsuEligibility;
+            }
+        }
+
+        /// <summary> Indicates whether there is an ESU Key currently active for the machine. </summary>
+        [WirePath("properties.esuProfile.esuKeyState")]
+        public EsuKeyState? EsuKeyState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EsuKeyState;
+            }
+        }
+
+        /// <summary> The resource id of the license. </summary>
+        [WirePath("properties.esuProfile.assignedLicense")]
+        public string AssignedLicense
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AssignedLicense;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LicenseProfileProperties();
+                }
+                Properties.AssignedLicense = value;
+            }
+        }
+
+        /// <summary> Indicates the subscription status of the product. </summary>
+        [WirePath("properties.productProfile.subscriptionStatus")]
+        public LicenseProfileSubscriptionStatus? SubscriptionStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubscriptionStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LicenseProfileProperties();
+                }
+                Properties.SubscriptionStatus = value;
+            }
+        }
+
+        /// <summary> Indicates the product type of the license. </summary>
+        [WirePath("properties.productProfile.productType")]
+        public LicenseProfileProductType? ProductType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProductType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LicenseProfileProperties();
+                }
+                Properties.ProductType = value;
+            }
+        }
+
+        /// <summary> The timestamp in UTC when the user enrolls the feature. </summary>
+        [WirePath("properties.productProfile.enrollmentDate")]
+        public DateTimeOffset? EnrollmentOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnrollmentOn;
+            }
+        }
+
+        /// <summary> The timestamp in UTC when the billing starts. </summary>
+        [WirePath("properties.productProfile.billingStartDate")]
+        public DateTimeOffset? BillingStartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingStartOn;
+            }
+        }
+
+        /// <summary> The timestamp in UTC when the user disenrolled the feature. </summary>
+        [WirePath("properties.productProfile.disenrollmentDate")]
+        public DateTimeOffset? DisenrollmentOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisenrollmentOn;
+            }
+        }
+
+        /// <summary> The timestamp in UTC when the billing ends. </summary>
+        [WirePath("properties.productProfile.billingEndDate")]
+        public DateTimeOffset? BillingEndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingEndOn;
+            }
+        }
+
+        /// <summary> The errors that were encountered during the feature enrollment or disenrollment. </summary>
+        [WirePath("properties.productProfile.error")]
+        public ResponseError Error
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Error;
+            }
+        }
+
+        /// <summary> The list of product features. </summary>
+        [WirePath("properties.productProfile.productFeatures")]
+        public IList<HybridComputeProductFeature> ProductFeatures
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new LicenseProfileProperties();
+                }
+                return Properties.ProductFeatures;
             }
         }
     }
