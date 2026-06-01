@@ -3865,7 +3865,7 @@ namespace Azure.ResourceManager.Billing.Models
         public bool? IsMonthlyInvoice { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Billing.Models.BillingInvoicePayment> Payments { get { throw null; } }
         public string PurchaseOrderNumber { get { throw null; } }
-        public Azure.ResourceManager.Billing.Models.RebillDetails RebillDetails { get { throw null; } set { } }
+        public Azure.ResourceManager.Billing.Models.RebillDetails RebillDetails { get { throw null; } }
         public Azure.ResourceManager.Billing.Models.RefundDetailsSummary RefundDetails { get { throw null; } set { } }
         public Azure.ResourceManager.Billing.Models.SpecialTaxationType? SpecialTaxationType { get { throw null; } }
         public Azure.ResourceManager.Billing.Models.BillingInvoiceStatus? Status { get { throw null; } }
@@ -6352,7 +6352,7 @@ namespace Azure.ResourceManager.Billing.Models
     }
     public partial class InvoicePropertiesRebillDetails : Azure.ResourceManager.Billing.Models.RebillDetails, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Models.InvoicePropertiesRebillDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Models.InvoicePropertiesRebillDetails>
     {
-        public InvoicePropertiesRebillDetails() { }
+        internal InvoicePropertiesRebillDetails() { }
         protected override Azure.ResourceManager.Billing.Models.RebillDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.Billing.Models.RebillDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6881,7 +6881,7 @@ namespace Azure.ResourceManager.Billing.Models
     }
     public partial class RebillDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Models.RebillDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Models.RebillDetails>
     {
-        public RebillDetails() { }
+        internal RebillDetails() { }
         public Azure.Core.ResourceIdentifier CreditNoteDocumentId { get { throw null; } }
         public Azure.Core.ResourceIdentifier InvoiceDocumentId { get { throw null; } }
         public Azure.ResourceManager.Billing.Models.RebillDetails RebillDetailsValue { get { throw null; } }

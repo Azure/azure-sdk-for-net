@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.Billing.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RebillDetails"/>. </summary>
-        public RebillDetails()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RebillDetails"/>. </summary>
         /// <param name="invoiceDocumentId"> The ID of invoice. </param>
         /// <param name="creditNoteDocumentId"> The ID of credit note. </param>
         /// <param name="rebillDetailsValue"> The rebill details of an invoice. </param>
