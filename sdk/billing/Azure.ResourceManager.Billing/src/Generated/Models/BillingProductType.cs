@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> SavingsPlan. </summary>
         private const string SavingsPlanValue = "SavingsPlan";
         /// <summary> SAAS. </summary>
-        private const string SAASValue = "SAAS";
+        private const string SaasValue = "SAAS";
 
         /// <summary> Initializes a new instance of <see cref="BillingProductType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static BillingProductType SavingsPlan { get; } = new BillingProductType(SavingsPlanValue);
 
         /// <summary> SAAS. </summary>
-        public static BillingProductType SAAS { get; } = new BillingProductType(SAASValue);
+        public static BillingProductType Saas { get; } = new BillingProductType(SaasValue);
 
         /// <summary> Determines if two <see cref="BillingProductType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
