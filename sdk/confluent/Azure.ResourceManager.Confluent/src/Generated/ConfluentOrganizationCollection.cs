@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Confluent
                 HttpMessage message = _confluentOrganizationRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, ConfluentOrganizationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ConfluentArmOperation<ConfluentOrganizationResource> operation = new ConfluentArmOperation<ConfluentOrganizationResource>(
-                    new ConfluentOrganizationOperationSource(Client),
+                    new ConfluentOrganizationResourceOperationSource(Client),
                     _confluentOrganizationClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Confluent
                 HttpMessage message = _confluentOrganizationRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, ConfluentOrganizationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ConfluentArmOperation<ConfluentOrganizationResource> operation = new ConfluentArmOperation<ConfluentOrganizationResource>(
-                    new ConfluentOrganizationOperationSource(Client),
+                    new ConfluentOrganizationResourceOperationSource(Client),
                     _confluentOrganizationClientDiagnostics,
                     Pipeline,
                     message.Request,

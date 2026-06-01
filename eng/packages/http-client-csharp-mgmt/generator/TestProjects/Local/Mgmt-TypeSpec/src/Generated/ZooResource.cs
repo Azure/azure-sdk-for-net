@@ -233,7 +233,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _zoosRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ZooPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<ZooResource> operation = new TestsArmOperation<ZooResource>(
-                    new ZooOperationSource(Client),
+                    new ZooResourceOperationSource(Client),
                     _zoosClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _zoosRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ZooPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<ZooResource> operation = new TestsArmOperation<ZooResource>(
-                    new ZooOperationSource(Client),
+                    new ZooResourceOperationSource(Client),
                     _zoosClientDiagnostics,
                     Pipeline,
                     message.Request,

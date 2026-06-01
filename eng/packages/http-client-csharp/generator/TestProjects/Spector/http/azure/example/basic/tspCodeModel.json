@@ -28,14 +28,16 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "_Specs_.Azure.Example.Basic",
       "isFixed": false,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "4",
@@ -61,14 +63,16 @@
           "enumType": {
             "$ref": "4"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "_Specs_.Azure.Example.Basic",
       "isFixed": true,
       "isFlags": false,
       "usage": "ApiVersionEnum",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
@@ -86,7 +90,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "9",
@@ -102,7 +107,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -119,6 +125,7 @@
           "name": "ActionRequest"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "12",
@@ -143,7 +150,8 @@
               "name": "stringProperty"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "14",
@@ -163,6 +171,7 @@
                 "name": "Model"
               }
             },
+            "isExactName": false,
             "properties": [
               {
                 "$id": "16",
@@ -187,7 +196,8 @@
                     "name": "int32Property"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "18",
@@ -212,7 +222,8 @@
                     "name": "float32Property"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "20",
@@ -233,7 +244,8 @@
                     "name": "enumProperty"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -248,7 +260,8 @@
               "name": "modelProperty"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "21",
@@ -280,7 +293,8 @@
               "name": "arrayProperty"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "24",
@@ -317,7 +331,8 @@
               "name": "recordProperty"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -337,6 +352,7 @@
           "name": "ActionResponse"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "29",
@@ -361,7 +377,8 @@
               "name": "stringProperty"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "31",
@@ -382,7 +399,8 @@
               "name": "modelProperty"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "32",
@@ -403,7 +421,8 @@
               "name": "arrayProperty"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "33",
@@ -424,7 +443,8 @@
               "name": "recordProperty"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -434,12 +454,14 @@
       "$id": "34",
       "kind": "client",
       "name": "AzureExampleClient",
+      "isExactName": false,
       "namespace": "AzureExampleBasicClient",
       "methods": [
         {
           "$id": "35",
           "kind": "basic",
           "name": "basicAction",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2022-12-01-preview"
@@ -447,6 +469,7 @@
           "operation": {
             "$id": "36",
             "name": "basicAction",
+            "isExactName": false,
             "resourceName": "AzureExampleClient",
             "accessibility": "public",
             "parameters": [
@@ -509,9 +532,11 @@
                     "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient.basicAction.apiVersion",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "43",
@@ -552,9 +577,11 @@
                     "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient.basicAction.queryParam",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "47",
@@ -595,9 +622,11 @@
                     "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient.basicAction.headerParam",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "51",
@@ -632,9 +661,11 @@
                     "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient.basicAction.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "53",
@@ -667,9 +698,11 @@
                     "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient.basicAction.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "55",
@@ -705,9 +738,11 @@
                     "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient.basicAction.body",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
                 ],
+                "isExactName": false,
                 "serializationOptions": {
                   "json": {
                     "name": "body"
@@ -805,7 +840,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient.endpoint"
+          "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient.endpoint",
+          "isExactName": false
         },
         {
           "$ref": "40"

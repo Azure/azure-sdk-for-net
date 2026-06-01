@@ -2290,12 +2290,3 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTypeDefinitionAsync(bool? includeTermTemplate, string type, Azure.RequestContext context) { throw null; }
     }
 }
-namespace Microsoft.Extensions.Azure
-{
-    public static partial class PurviewDataMapClientBuilderExtensions
-    {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.DataMap.DataMapClient, Azure.Analytics.Purview.DataMap.DataMapClientOptions> AddDataMapClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.DataMap.DataMapClient, Azure.Analytics.Purview.DataMap.DataMapClientOptions> AddDataMapClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
-    }
-}

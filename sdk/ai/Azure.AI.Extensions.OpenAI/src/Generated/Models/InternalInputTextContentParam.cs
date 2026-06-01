@@ -31,9 +31,9 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The type of the input item. Always `input_text`. </summary>
-        internal string Type { get; } = "input_text";
+        public string Type { get; } = "input_text";
 
         /// <summary> The text input to the model. </summary>
-        public string Text { get; }
+        public string Text { get; set; }
     }
 }

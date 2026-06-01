@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 HttpMessage message = _reportRestClient.CreateUpdateRequest(Id.Name, AppComplianceReportPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppComplianceAutomationArmOperation<AppComplianceReportResource> operation = new AppComplianceAutomationArmOperation<AppComplianceReportResource>(
-                    new AppComplianceReportOperationSource(Client),
+                    new AppComplianceReportResourceOperationSource(Client),
                     _reportClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 HttpMessage message = _reportRestClient.CreateUpdateRequest(Id.Name, AppComplianceReportPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppComplianceAutomationArmOperation<AppComplianceReportResource> operation = new AppComplianceAutomationArmOperation<AppComplianceReportResource>(
-                    new AppComplianceReportOperationSource(Client),
+                    new AppComplianceReportResourceOperationSource(Client),
                     _reportClientDiagnostics,
                     Pipeline,
                     message.Request,

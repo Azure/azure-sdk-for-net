@@ -9,6 +9,7 @@
       "$id": "1",
       "kind": "client",
       "name": "HeadClient",
+      "isExactName": false,
       "namespace": "Payload.Head",
       "doc": "Test scenario for HEAD operation returning response headers.",
       "methods": [
@@ -16,11 +17,13 @@
           "$id": "2",
           "kind": "basic",
           "name": "contentTypeHeaderInResponse",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "3",
             "name": "contentTypeHeaderInResponse",
+            "isExactName": false,
             "resourceName": "Head",
             "accessibility": "public",
             "parameters": [],
@@ -106,7 +109,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Payload.Head.endpoint"
+          "crossLanguageDefinitionId": "Payload.Head.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

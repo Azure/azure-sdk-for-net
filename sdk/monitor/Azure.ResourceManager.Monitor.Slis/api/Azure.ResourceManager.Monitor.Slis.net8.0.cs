@@ -311,7 +311,8 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public SliSamplingType(string value) { throw null; }
-        public static Azure.ResourceManager.Monitor.Slis.Models.SliSamplingType Avg { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Slis.Models.SliSamplingType Average { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Slis.Models.SliSamplingType Count { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Slis.Models.SliSamplingType Max { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Slis.Models.SliSamplingType Min { get { throw null; } }
         public static Azure.ResourceManager.Monitor.Slis.Models.SliSamplingType Sum { get { throw null; } }
