@@ -76,7 +76,7 @@ namespace Azure.AI.VoiceLive
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("image_url"u8);
+                writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(Detail))
@@ -122,7 +122,7 @@ namespace Azure.AI.VoiceLive
                     @type = new ContentPartType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("image_url"u8))
+                if (prop.NameEquals("url"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {

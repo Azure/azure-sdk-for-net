@@ -17,7 +17,6 @@ namespace Azure.AI.VoiceLive
         private const string SemanticDetectionV1Value = "semantic_detection_v1";
         private const string SemanticDetectionV1EnValue = "semantic_detection_v1_en";
         private const string SemanticDetectionV1MultilingualValue = "semantic_detection_v1_multilingual";
-        private const string SmartEndOfTurnDetectionValue = "smart_end_of_turn_detection";
 
         /// <summary> Initializes a new instance of <see cref="EouDetectionModel"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -37,9 +36,6 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets the SemanticDetectionV1Multilingual. </summary>
         public static EouDetectionModel SemanticDetectionV1Multilingual { get; } = new EouDetectionModel(SemanticDetectionV1MultilingualValue);
-
-        /// <summary> Gets the SmartEndOfTurnDetection. </summary>
-        public static EouDetectionModel SmartEndOfTurnDetection { get; } = new EouDetectionModel(SmartEndOfTurnDetectionValue);
 
         /// <summary> Determines if two <see cref="EouDetectionModel"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

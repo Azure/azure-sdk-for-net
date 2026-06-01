@@ -23,38 +23,14 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Initializes a new instance of <see cref="AudioEchoCancellation"/>. </summary>
         /// <param name="type"> The type of echo cancellation model to use. </param>
-        /// <param name="referenceSource">
-        /// The source of the echo cancellation reference signal.
-        /// <list type="bullet"><item><description>`server`: EC uses the internal TTS loopback as the reference signal (default, existing behavior).</description></item><item><description>`client`: EC uses the client-supplied reference channel (ch1 of stereo input). Internal TTS loopback is skipped.</description></item></list>
-        /// </param>
-        /// <param name="channels">
-        /// Number of input audio channels.
-        /// <list type="bullet"><item><description>`1`: Mono input (default).</description></item><item><description>`2`: Interleaved stereo input where channel 0 is the microphone signal and channel 1 is the echo reference signal.</description></item></list>
-        /// When set to 2, `reference_source` must be `client` and `input_audio_format` must be `pcm16`.
-        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AudioEchoCancellation(string @type, EchoCancellationReferenceSource? referenceSource, int? channels, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AudioEchoCancellation(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
-            ReferenceSource = referenceSource;
-            Channels = channels;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of echo cancellation model to use. </summary>
         public string Type { get; } = "server_echo_cancellation";
-
-        /// <summary>
-        /// The source of the echo cancellation reference signal.
-        /// <list type="bullet"><item><description>`server`: EC uses the internal TTS loopback as the reference signal (default, existing behavior).</description></item><item><description>`client`: EC uses the client-supplied reference channel (ch1 of stereo input). Internal TTS loopback is skipped.</description></item></list>
-        /// </summary>
-        public EchoCancellationReferenceSource? ReferenceSource { get; set; }
-
-        /// <summary>
-        /// Number of input audio channels.
-        /// <list type="bullet"><item><description>`1`: Mono input (default).</description></item><item><description>`2`: Interleaved stereo input where channel 0 is the microphone signal and channel 1 is the echo reference signal.</description></item></list>
-        /// When set to 2, `reference_source` must be `client` and `input_audio_format` must be `pcm16`.
-        /// </summary>
-        public int? Channels { get; set; }
     }
 }

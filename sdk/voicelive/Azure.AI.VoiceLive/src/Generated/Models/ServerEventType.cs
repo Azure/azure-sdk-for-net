@@ -80,16 +80,6 @@ namespace Azure.AI.VoiceLive
         private const string OutputAudioBufferClearedValue = "output_audio_buffer.cleared";
         /// <summary> Audio transcript annotation added. </summary>
         private const string ResponseAudioTranscriptAnnotationAddedValue = "response.audio_transcript.annotation.added";
-        /// <summary> Invocation passthrough delta from hosted agent. </summary>
-        private const string ResponseInvocationDeltaValue = "response.invocation.delta";
-        /// <summary> Returned when the WebRTC SDP negotiation completes successfully. </summary>
-        private const string RtcCallSdpCreatedValue = "rtc.call.sdp.created";
-        /// <summary> Returned when a WebRTC call operation fails. </summary>
-        private const string RtcCallErrorValue = "rtc.call.error";
-        /// <summary> Output audio buffer playback started. </summary>
-        private const string OutputAudioBufferStartedValue = "output_audio_buffer.started";
-        /// <summary> Output audio buffer playback stopped. </summary>
-        private const string OutputAudioBufferStoppedValue = "output_audio_buffer.stopped";
 
         /// <summary> Initializes a new instance of <see cref="ServerEventType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -265,21 +255,6 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Audio transcript annotation added. </summary>
         public static ServerEventType ResponseAudioTranscriptAnnotationAdded { get; } = new ServerEventType(ResponseAudioTranscriptAnnotationAddedValue);
-
-        /// <summary> Invocation passthrough delta from hosted agent. </summary>
-        public static ServerEventType ResponseInvocationDelta { get; } = new ServerEventType(ResponseInvocationDeltaValue);
-
-        /// <summary> Returned when the WebRTC SDP negotiation completes successfully. </summary>
-        public static ServerEventType RtcCallSdpCreated { get; } = new ServerEventType(RtcCallSdpCreatedValue);
-
-        /// <summary> Returned when a WebRTC call operation fails. </summary>
-        public static ServerEventType RtcCallError { get; } = new ServerEventType(RtcCallErrorValue);
-
-        /// <summary> Output audio buffer playback started. </summary>
-        public static ServerEventType OutputAudioBufferStarted { get; } = new ServerEventType(OutputAudioBufferStartedValue);
-
-        /// <summary> Output audio buffer playback stopped. </summary>
-        public static ServerEventType OutputAudioBufferStopped { get; } = new ServerEventType(OutputAudioBufferStoppedValue);
 
         /// <summary> Determines if two <see cref="ServerEventType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

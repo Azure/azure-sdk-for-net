@@ -163,11 +163,6 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("tool_choice"u8);
                 writer.WriteObjectValue(ToolChoice, options);
             }
-            if (Optional.IsDefined(ParallelToolCalls))
-            {
-                writer.WritePropertyName("parallel_tool_calls"u8);
-                writer.WriteBooleanValue(ParallelToolCalls.Value);
-            }
             if (Optional.IsDefined(Temperature))
             {
                 writer.WritePropertyName("temperature"u8);
@@ -290,7 +285,6 @@ namespace Azure.AI.VoiceLive
             IList<AudioTimestampType> outputAudioTimestampTypes = default;
             IList<VoiceLiveToolDefinition> tools = default;
             ToolChoiceOption toolChoice = default;
-            bool? parallelToolCalls = default;
             float? temperature = default;
             MaxResponseOutputTokensOption maxResponseOutputTokens = default;
             ReasoningEffort? reasoningEffort = default;
@@ -443,15 +437,6 @@ namespace Azure.AI.VoiceLive
                     toolChoice = ToolChoiceOption.DeserializeToolChoiceOption(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("parallel_tool_calls"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    parallelToolCalls = prop.Value.GetBoolean();
-                    continue;
-                }
                 if (prop.NameEquals("temperature"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -553,7 +538,6 @@ namespace Azure.AI.VoiceLive
                 outputAudioTimestampTypes ?? new ChangeTrackingList<AudioTimestampType>(),
                 tools ?? new ChangeTrackingList<VoiceLiveToolDefinition>(),
                 toolChoice,
-                parallelToolCalls,
                 temperature,
                 maxResponseOutputTokens,
                 reasoningEffort,
