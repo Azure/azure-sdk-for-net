@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StandbyPool
                 HttpMessage message = _standbyVirtualMachinePoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyVirtualMachinePoolName, StandbyVirtualMachinePoolData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StandbyPoolArmOperation<StandbyVirtualMachinePoolResource> operation = new StandbyPoolArmOperation<StandbyVirtualMachinePoolResource>(
-                    new StandbyVirtualMachinePoolOperationSource(Client),
+                    new StandbyVirtualMachinePoolResourceOperationSource(Client),
                     _standbyVirtualMachinePoolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.StandbyPool
                 HttpMessage message = _standbyVirtualMachinePoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyVirtualMachinePoolName, StandbyVirtualMachinePoolData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StandbyPoolArmOperation<StandbyVirtualMachinePoolResource> operation = new StandbyPoolArmOperation<StandbyVirtualMachinePoolResource>(
-                    new StandbyVirtualMachinePoolOperationSource(Client),
+                    new StandbyVirtualMachinePoolResourceOperationSource(Client),
                     _standbyVirtualMachinePoolsClientDiagnostics,
                     Pipeline,
                     message.Request,
