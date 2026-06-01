@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Reservations
                 HttpMessage message = _reservationRestClient.CreateUpdateRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), ReservationDetailPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ReservationsArmOperation<ReservationDetailResource> operation = new ReservationsArmOperation<ReservationDetailResource>(
-                    new ReservationDetailOperationSource(Client),
+                    new ReservationDetailResourceOperationSource(Client),
                     _reservationClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Reservations
                 HttpMessage message = _reservationRestClient.CreateUpdateRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), ReservationDetailPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ReservationsArmOperation<ReservationDetailResource> operation = new ReservationsArmOperation<ReservationDetailResource>(
-                    new ReservationDetailOperationSource(Client),
+                    new ReservationDetailResourceOperationSource(Client),
                     _reservationClientDiagnostics,
                     Pipeline,
                     message.Request,

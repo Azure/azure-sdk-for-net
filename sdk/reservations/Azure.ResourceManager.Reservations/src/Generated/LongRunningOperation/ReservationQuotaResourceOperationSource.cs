@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Reservations
 {
     /// <summary></summary>
-    internal partial class ReservationDetailOperationSource : IOperationSource<ReservationDetailResource>
+    internal partial class ReservationQuotaResourceOperationSource : IOperationSource<ReservationQuotaResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal ReservationDetailOperationSource(ArmClient client)
+        internal ReservationQuotaResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        ReservationDetailResource IOperationSource<ReservationDetailResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ReservationQuotaResource IOperationSource<ReservationQuotaResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ReservationDetailData data = ReservationDetailData.DeserializeReservationDetailData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ReservationDetailResource(_client, data);
+            ReservationQuotaData data = ReservationQuotaData.DeserializeReservationQuotaData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ReservationQuotaResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<ReservationDetailResource> IOperationSource<ReservationDetailResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ReservationQuotaResource> IOperationSource<ReservationQuotaResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ReservationDetailData data = ReservationDetailData.DeserializeReservationDetailData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ReservationDetailResource(_client, data);
+            ReservationQuotaData data = ReservationQuotaData.DeserializeReservationQuotaData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ReservationQuotaResource(_client, data);
         }
     }
 }

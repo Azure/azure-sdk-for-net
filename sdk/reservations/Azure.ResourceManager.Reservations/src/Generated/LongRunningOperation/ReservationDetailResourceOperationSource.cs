@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Reservations
 {
     /// <summary></summary>
-    internal partial class ReservationOrderOperationSource : IOperationSource<ReservationOrderResource>
+    internal partial class ReservationDetailResourceOperationSource : IOperationSource<ReservationDetailResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal ReservationOrderOperationSource(ArmClient client)
+        internal ReservationDetailResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        ReservationOrderResource IOperationSource<ReservationOrderResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ReservationDetailResource IOperationSource<ReservationDetailResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ReservationOrderData data = ReservationOrderData.DeserializeReservationOrderData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ReservationOrderResource(_client, data);
+            ReservationDetailData data = ReservationDetailData.DeserializeReservationDetailData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ReservationDetailResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<ReservationOrderResource> IOperationSource<ReservationOrderResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ReservationDetailResource> IOperationSource<ReservationDetailResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ReservationOrderData data = ReservationOrderData.DeserializeReservationOrderData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ReservationOrderResource(_client, data);
+            ReservationDetailData data = ReservationDetailData.DeserializeReservationDetailData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ReservationDetailResource(_client, data);
         }
     }
 }

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Reservations
                 HttpMessage message = _reservationOrderRestClient.CreateCreateOrUpdateRequest(reservationOrderId, ReservationPurchaseContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ReservationsArmOperation<ReservationOrderResource> operation = new ReservationsArmOperation<ReservationOrderResource>(
-                    new ReservationOrderOperationSource(Client),
+                    new ReservationOrderResourceOperationSource(Client),
                     _reservationOrderClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Reservations
                 HttpMessage message = _reservationOrderRestClient.CreateCreateOrUpdateRequest(reservationOrderId, ReservationPurchaseContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ReservationsArmOperation<ReservationOrderResource> operation = new ReservationsArmOperation<ReservationOrderResource>(
-                    new ReservationOrderOperationSource(Client),
+                    new ReservationOrderResourceOperationSource(Client),
                     _reservationOrderClientDiagnostics,
                     Pipeline,
                     message.Request,

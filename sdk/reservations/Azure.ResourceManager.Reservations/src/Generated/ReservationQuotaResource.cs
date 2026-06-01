@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Reservations
                 HttpMessage message = _quotaRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ReservationQuotaData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ReservationsArmOperation<ReservationQuotaResource> operation = new ReservationsArmOperation<ReservationQuotaResource>(
-                    new ReservationQuotaOperationSource(Client),
+                    new ReservationQuotaResourceOperationSource(Client),
                     _quotaClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Reservations
                 HttpMessage message = _quotaRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ReservationQuotaData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ReservationsArmOperation<ReservationQuotaResource> operation = new ReservationsArmOperation<ReservationQuotaResource>(
-                    new ReservationQuotaOperationSource(Client),
+                    new ReservationQuotaResourceOperationSource(Client),
                     _quotaClientDiagnostics,
                     Pipeline,
                     message.Request,
