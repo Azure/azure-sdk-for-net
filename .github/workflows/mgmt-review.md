@@ -44,14 +44,14 @@ safe-outputs:
     report-as-issue: false
   jobs:
     dismiss_stale_change_requests:
-      description: "Dismiss prior management review change requests after a newer non-blocking review"
+      description: "Dismiss the prior management review change request after a newer non-blocking review"
       runs-on: ubuntu-latest
       needs: safe_outputs
-      output: "Stale management review change requests dismissed"
+      output: "Stale management review change request dismissed"
       permissions:
         pull-requests: write
       steps:
-        - name: Dismiss stale change-request reviews
+        - name: Dismiss stale change-request review
           uses: actions/github-script@v9
           env:
             TARGET_PR_NUMBER: "${{ github.event.pull_request.number || github.event.check_run.pull_requests[0].number || github.event.inputs.pr_number }}"
@@ -78,57 +78,38 @@ safe-outputs:
                   body.includes(`Analyzed by ${workflowName}:`);
               };
 
-              const loadReviews = async () => {
-                const reviews = await github.paginate(github.rest.pulls.listReviews, {
-                  owner,
-                  repo,
-                  pull_number: prNumber,
-                  per_page: 100
-                });
-                return reviews.filter(isThisWorkflowReview);
-              };
-
-              let workflowReviews = [];
-              for (let attempt = 1; attempt <= 3; attempt++) {
-                workflowReviews = await loadReviews();
-                if (workflowReviews.some(review => review.commit_id === headSha && review.state === 'COMMENTED')) {
-                  break;
-                }
-                if (attempt < 3) {
-                  await new Promise(resolve => setTimeout(resolve, 2000));
-                }
-              }
-
-              const currentComments = workflowReviews
-                .filter(review => review.commit_id === headSha && review.state === 'COMMENTED')
+              const workflowReviews = (await github.paginate(github.rest.pulls.listReviews, {
+                owner,
+                repo,
+                pull_number: prNumber,
+                per_page: 100
+              }))
+                .filter(isThisWorkflowReview)
                 .sort((a, b) => new Date(b.submitted_at) - new Date(a.submitted_at));
 
-              if (currentComments.length === 0) {
-                core.info(`No non-blocking management review comment found on current head ${headSha}; skipping dismissal.`);
+              const latestReview = workflowReviews[0];
+              if (!latestReview || latestReview.commit_id !== headSha || latestReview.state !== 'COMMENTED') {
+                core.info(`Latest management review is not a non-blocking comment on current head ${headSha}; skipping dismissal.`);
                 return;
               }
 
-              const latestCurrentCommentAt = new Date(currentComments[0].submitted_at);
-              const staleChangeRequests = workflowReviews.filter(review =>
+              const staleChangeRequest = workflowReviews.find(review =>
                 review.state === 'CHANGES_REQUESTED' &&
-                review.commit_id !== headSha &&
-                new Date(review.submitted_at) < latestCurrentCommentAt);
+                review.commit_id !== headSha);
 
-              if (staleChangeRequests.length === 0) {
-                core.info('No stale management review change requests to dismiss.');
+              if (!staleChangeRequest) {
+                core.info('No stale management review change request to dismiss.');
                 return;
               }
 
-              for (const review of staleChangeRequests) {
-                await github.rest.pulls.dismissReview({
-                  owner,
-                  repo,
-                  pull_number: prNumber,
-                  review_id: review.id,
-                  message: `Dismissed because ${workflowName} found no blocking issues on newer commit ${headSha}.`
-                });
-                core.info(`Dismissed stale change-request review ${review.id} from commit ${review.commit_id}.`);
-              }
+              await github.rest.pulls.dismissReview({
+                owner,
+                repo,
+                pull_number: prNumber,
+                review_id: staleChangeRequest.id,
+                message: `Dismissed because ${workflowName} found no blocking issues on newer commit ${headSha}.`
+              });
+              core.info(`Dismissed stale change-request review ${staleChangeRequest.id} from commit ${staleChangeRequest.commit_id}.`);
   messages:
     footer: "> Analyzed by {workflow_name}: {run_url}"
     run-started: "{workflow_name} is reviewing this .NET management SDK PR: {run_url}"
@@ -229,7 +210,7 @@ Then submit exactly one review using `submit_pull_request_review`:
 - Use `REQUEST_CHANGES` if any blocking issue was found.
 - Use `COMMENT` if no blocking issue was found.
 - Do not use `APPROVE`.
-- When submitting `COMMENT`, also emit the `dismiss_stale_change_requests` safe-output tool with no arguments. The deterministic safe-output job will dismiss only this workflow's stale `REQUEST_CHANGES` reviews from older commits when the current head has a non-blocking management review comment. Do not attempt to dismiss reviews directly from the agent.
+- When submitting `COMMENT`, also emit the `dismiss_stale_change_requests` safe-output tool with no arguments. The deterministic safe-output job will check that this workflow's latest review is the new non-blocking comment on the current head, then dismiss this workflow's prior stale `REQUEST_CHANGES` review from an older commit. Do not attempt to dismiss reviews directly from the agent.
 
 The review body should contain:
 
