@@ -186,13 +186,13 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             VirtualHardDisk image = default;
             ComputeBulkActionsCachingType? caching = default;
             bool? isWriteAcceleratorEnabled = default;
-            DiskCreateOptionType createOption = default;
+            ComputeBulkActionsDiskCreateOptionType createOption = default;
             int? diskSizeGB = default;
-            ManagedDiskInfo managedDisk = default;
+            ComputeBulkActionsManagedDiskInfo managedDisk = default;
             ApiEntityReference sourceResource = default;
             bool? isToBeDetached = default;
-            DiskDetachOptionType? detachOption = default;
-            DiskDeleteOptionType? deleteOption = default;
+            ComputeBulkActionsDiskDetachOptionType? detachOption = default;
+            ComputeBulkActionsDiskDeleteOptionType? deleteOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 }
                 if (prop.NameEquals("createOption"u8))
                 {
-                    createOption = new DiskCreateOptionType(prop.Value.GetString());
+                    createOption = new ComputeBulkActionsDiskCreateOptionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("diskSizeGB"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    managedDisk = ManagedDiskInfo.DeserializeManagedDiskInfo(prop.Value, options);
+                    managedDisk = ComputeBulkActionsManagedDiskInfo.DeserializeComputeBulkActionsManagedDiskInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("sourceResource"u8))
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    detachOption = new DiskDetachOptionType(prop.Value.GetString());
+                    detachOption = new ComputeBulkActionsDiskDetachOptionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("deleteOption"u8))
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    deleteOption = new DiskDeleteOptionType(prop.Value.GetString());
+                    deleteOption = new ComputeBulkActionsDiskDeleteOptionType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

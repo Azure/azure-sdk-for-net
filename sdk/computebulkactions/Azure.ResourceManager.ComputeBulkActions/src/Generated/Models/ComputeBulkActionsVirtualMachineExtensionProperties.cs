@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="protectedSettingsFromKeyVault"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
         /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeBulkActionsVirtualMachineExtensionProperties(string forceUpdateTag, string publisher, string @type, string typeHandlerVersion, bool? isAutoUpgradeMinorVersionEnabled, bool? isAutomaticUpgradeEnabled, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> protectedSettings, bool? isSuppressFailures, KeyVaultSecretReference protectedSettingsFromKeyVault, IList<string> provisionAfterExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkActionsVirtualMachineExtensionProperties(string forceUpdateTag, string publisher, string @type, string typeHandlerVersion, bool? isAutoUpgradeMinorVersionEnabled, bool? isAutomaticUpgradeEnabled, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> protectedSettings, bool? isSuppressFailures, ComputeBulkActionsKeyVaultSecretReference protectedSettingsFromKeyVault, IList<string> provisionAfterExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ForceUpdateTag = forceUpdateTag;
             Publisher = publisher;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public bool? IsSuppressFailures { get; set; }
 
         /// <summary> The extensions protected settings that are passed by reference, and consumed from key vault. </summary>
-        public KeyVaultSecretReference ProtectedSettingsFromKeyVault { get; set; }
+        public ComputeBulkActionsKeyVaultSecretReference ProtectedSettingsFromKeyVault { get; set; }
 
         /// <summary> Collection of extension names after which this extension needs to be provisioned. </summary>
         public IList<string> ProvisionAfterExtensions { get; }

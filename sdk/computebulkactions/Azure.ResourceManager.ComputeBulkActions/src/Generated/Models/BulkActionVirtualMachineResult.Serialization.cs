@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             string name = default;
             ResourceIdentifier id = default;
             string @type = default;
-            VMOperationStatus operationStatus = default;
+            BulkActionVMOperationStatus operationStatus = default;
             ComputeBulkActionsApiError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 }
                 if (prop.NameEquals("operationStatus"u8))
                 {
-                    operationStatus = new VMOperationStatus(prop.Value.GetString());
+                    operationStatus = new BulkActionVMOperationStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("error"u8))

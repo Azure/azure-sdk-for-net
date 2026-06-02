@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 return null;
             }
-            WindowsVMGuestPatchMode? patchMode = default;
+            ComputeBulkActionsWindowsVMGuestPatchMode? patchMode = default;
             bool? isHotpatchingEnabled = default;
-            WindowsPatchAssessmentMode? assessmentMode = default;
-            WindowsVMGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings = default;
+            ComputeBulkActionsWindowsPatchAssessmentMode? assessmentMode = default;
+            ComputeBulkActionsWindowsVMGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    patchMode = new WindowsVMGuestPatchMode(prop.Value.GetString());
+                    patchMode = new ComputeBulkActionsWindowsVMGuestPatchMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("enableHotpatching"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    assessmentMode = new WindowsPatchAssessmentMode(prop.Value.GetString());
+                    assessmentMode = new ComputeBulkActionsWindowsPatchAssessmentMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("automaticByPlatformSettings"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    automaticByPlatformSettings = WindowsVMGuestPatchAutomaticByPlatformSettings.DeserializeWindowsVMGuestPatchAutomaticByPlatformSettings(prop.Value, options);
+                    automaticByPlatformSettings = ComputeBulkActionsWindowsVMGuestPatchAutomaticByPlatformSettings.DeserializeComputeBulkActionsWindowsVMGuestPatchAutomaticByPlatformSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

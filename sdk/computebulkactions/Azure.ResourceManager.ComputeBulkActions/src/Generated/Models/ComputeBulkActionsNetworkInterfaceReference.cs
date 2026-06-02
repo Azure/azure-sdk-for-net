@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="id"> The ID of the sub-resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Describes a network interface reference properties. </param>
-        internal ComputeBulkActionsNetworkInterfaceReference(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkInterfaceReferenceProperties properties) : base(id, additionalBinaryDataProperties)
+        internal ComputeBulkActionsNetworkInterfaceReference(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputeBulkActionsNetworkInterfaceReferenceProperties properties) : base(id, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> Describes a network interface reference properties. </summary>
-        public NetworkInterfaceReferenceProperties Properties { get; set; }
+        public ComputeBulkActionsNetworkInterfaceReferenceProperties Properties { get; set; }
     }
 }

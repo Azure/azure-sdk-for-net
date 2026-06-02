@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             bool? isPasswordAuthenticationDisabled = default;
             SshConfiguration ssh = default;
             bool? isVMAgentProvisioned = default;
-            LinuxPatchSettings patchSettings = default;
+            ComputeBulkActionsLinuxPatchSettings patchSettings = default;
             bool? isVMAgentPlatformUpdatesEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    patchSettings = LinuxPatchSettings.DeserializeLinuxPatchSettings(prop.Value, options);
+                    patchSettings = ComputeBulkActionsLinuxPatchSettings.DeserializeComputeBulkActionsLinuxPatchSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("enableVMAgentPlatformUpdates"u8))

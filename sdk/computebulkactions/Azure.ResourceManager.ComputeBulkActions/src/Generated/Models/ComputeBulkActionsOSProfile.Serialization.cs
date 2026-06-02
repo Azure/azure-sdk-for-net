@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
-                foreach (VaultSecretGroup item in Secrets)
+                foreach (ComputeBulkActionsVaultSecretGroup item in Secrets)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             string customData = default;
             ComputeBulkActionsWindowsConfiguration windowsConfiguration = default;
             ComputeBulkActionsLinuxConfiguration linuxConfiguration = default;
-            IList<VaultSecretGroup> secrets = default;
+            IList<ComputeBulkActionsVaultSecretGroup> secrets = default;
             bool? isExtensionOperationsAllowed = default;
             bool? isGuestProvisionSignalRequired = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -222,10 +222,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    List<VaultSecretGroup> array = new List<VaultSecretGroup>();
+                    List<ComputeBulkActionsVaultSecretGroup> array = new List<ComputeBulkActionsVaultSecretGroup>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VaultSecretGroup.DeserializeVaultSecretGroup(item, options));
+                        array.Add(ComputeBulkActionsVaultSecretGroup.DeserializeComputeBulkActionsVaultSecretGroup(item, options));
                     }
                     secrets = array;
                     continue;
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 customData,
                 windowsConfiguration,
                 linuxConfiguration,
-                secrets ?? new ChangeTrackingList<VaultSecretGroup>(),
+                secrets ?? new ChangeTrackingList<ComputeBulkActionsVaultSecretGroup>(),
                 isExtensionOperationsAllowed,
                 isGuestProvisionSignalRequired,
                 additionalBinaryDataProperties);

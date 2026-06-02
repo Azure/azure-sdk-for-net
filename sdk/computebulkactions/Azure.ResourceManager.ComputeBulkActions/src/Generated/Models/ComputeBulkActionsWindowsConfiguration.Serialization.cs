@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 writer.WritePropertyName("additionalUnattendContent"u8);
                 writer.WriteStartArray();
-                foreach (AdditionalUnattendContent item in AdditionalUnattendContent)
+                foreach (ComputeBulkActionsAdditionalUnattendContent item in AdditionalUnattendContent)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             bool? isVMAgentProvisioned = default;
             bool? enableAutomaticUpdates = default;
             string timeZone = default;
-            IList<AdditionalUnattendContent> additionalUnattendContent = default;
+            IList<ComputeBulkActionsAdditionalUnattendContent> additionalUnattendContent = default;
             ComputeBulkActionsPatchSettings patchSettings = default;
             WinRMConfiguration winRM = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -189,10 +189,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    List<AdditionalUnattendContent> array = new List<AdditionalUnattendContent>();
+                    List<ComputeBulkActionsAdditionalUnattendContent> array = new List<ComputeBulkActionsAdditionalUnattendContent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.AdditionalUnattendContent.DeserializeAdditionalUnattendContent(item, options));
+                        array.Add(ComputeBulkActionsAdditionalUnattendContent.DeserializeComputeBulkActionsAdditionalUnattendContent(item, options));
                     }
                     additionalUnattendContent = array;
                     continue;
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 isVMAgentProvisioned,
                 enableAutomaticUpdates,
                 timeZone,
-                additionalUnattendContent ?? new ChangeTrackingList<AdditionalUnattendContent>(),
+                additionalUnattendContent ?? new ChangeTrackingList<ComputeBulkActionsAdditionalUnattendContent>(),
                 patchSettings,
                 winRM,
                 additionalBinaryDataProperties);

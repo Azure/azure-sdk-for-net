@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <summary> Initializes a new instance of <see cref="ScheduledEventsAdditionalPublishingTargets"/>. </summary>
         /// <param name="eventGridAndResourceGraph"> The configuration parameters used while creating eventGridAndResourceGraph Scheduled Event setting. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledEventsAdditionalPublishingTargets(EventGridAndResourceGraph eventGridAndResourceGraph, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledEventsAdditionalPublishingTargets(ComputeBulkActionsEventGridAndResourceGraph eventGridAndResourceGraph, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EventGridAndResourceGraph = eventGridAndResourceGraph;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The configuration parameters used while creating eventGridAndResourceGraph Scheduled Event setting. </summary>
-        public EventGridAndResourceGraph EventGridAndResourceGraph { get; set; }
+        public ComputeBulkActionsEventGridAndResourceGraph EventGridAndResourceGraph { get; set; }
     }
 }

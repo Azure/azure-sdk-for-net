@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsDataDisk"/>. </summary>
         /// <param name="lun"> Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. </param>
         /// <param name="createOption"> Specifies how the virtual machine disk should be created. Possible values are Attach, FromImage, Empty, Copy, Restore. </param>
-        public ComputeBulkActionsDataDisk(int lun, DiskCreateOptionType createOption)
+        public ComputeBulkActionsDataDisk(int lun, ComputeBulkActionsDiskCreateOptionType createOption)
         {
             Lun = lun;
             CreateOption = createOption;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="detachOption"> Specifies the detach behavior to be used while detaching a disk or which is already in the process of detachment from the virtual machine. Supported values: ForceDetach. This feature is still in preview. To force-detach a data disk update toBeDetached to 'true' along with setting detachOption: 'ForceDetach'. </param>
         /// <param name="deleteOption"> Specifies whether data disk should be deleted or detached upon VM deletion. Possible values are: Delete, Detach. The default value is set to Detach. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeBulkActionsDataDisk(int lun, string name, VirtualHardDisk vhd, VirtualHardDisk image, ComputeBulkActionsCachingType? caching, bool? isWriteAcceleratorEnabled, DiskCreateOptionType createOption, int? diskSizeGB, ManagedDiskInfo managedDisk, ApiEntityReference sourceResource, bool? isToBeDetached, DiskDetachOptionType? detachOption, DiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkActionsDataDisk(int lun, string name, VirtualHardDisk vhd, VirtualHardDisk image, ComputeBulkActionsCachingType? caching, bool? isWriteAcceleratorEnabled, ComputeBulkActionsDiskCreateOptionType createOption, int? diskSizeGB, ComputeBulkActionsManagedDiskInfo managedDisk, ApiEntityReference sourceResource, bool? isToBeDetached, ComputeBulkActionsDiskDetachOptionType? detachOption, ComputeBulkActionsDiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Lun = lun;
             Name = name;
@@ -78,13 +78,13 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public bool? IsWriteAcceleratorEnabled { get; set; }
 
         /// <summary> Specifies how the virtual machine disk should be created. Possible values are Attach, FromImage, Empty, Copy, Restore. </summary>
-        public DiskCreateOptionType CreateOption { get; set; }
+        public ComputeBulkActionsDiskCreateOptionType CreateOption { get; set; }
 
         /// <summary> Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. The property 'diskSizeGB' is the number of bytes x 1024^3 for the disk and the value cannot be larger than 1023. </summary>
         public int? DiskSizeGB { get; set; }
 
         /// <summary> The managed disk parameters. </summary>
-        public ManagedDiskInfo ManagedDisk { get; set; }
+        public ComputeBulkActionsManagedDiskInfo ManagedDisk { get; set; }
 
         /// <summary> The source resource identifier. It can be a snapshot, or disk restore point from which to create a disk. </summary>
         internal ApiEntityReference SourceResource { get; set; }
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public bool? IsToBeDetached { get; set; }
 
         /// <summary> Specifies the detach behavior to be used while detaching a disk or which is already in the process of detachment from the virtual machine. Supported values: ForceDetach. This feature is still in preview. To force-detach a data disk update toBeDetached to 'true' along with setting detachOption: 'ForceDetach'. </summary>
-        public DiskDetachOptionType? DetachOption { get; set; }
+        public ComputeBulkActionsDiskDetachOptionType? DetachOption { get; set; }
 
         /// <summary> Specifies whether data disk should be deleted or detached upon VM deletion. Possible values are: Delete, Detach. The default value is set to Detach. </summary>
-        public DiskDeleteOptionType? DeleteOption { get; set; }
+        public ComputeBulkActionsDiskDeleteOptionType? DeleteOption { get; set; }
 
         /// <summary> Specifies the virtual hard disk's uri. </summary>
         public string VhdUri

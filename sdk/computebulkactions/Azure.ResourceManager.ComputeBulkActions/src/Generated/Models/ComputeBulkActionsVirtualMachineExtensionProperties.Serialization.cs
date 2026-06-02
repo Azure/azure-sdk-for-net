@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             IDictionary<string, BinaryData> settings = default;
             IDictionary<string, BinaryData> protectedSettings = default;
             bool? isSuppressFailures = default;
-            KeyVaultSecretReference protectedSettingsFromKeyVault = default;
+            ComputeBulkActionsKeyVaultSecretReference protectedSettingsFromKeyVault = default;
             IList<string> provisionAfterExtensions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    protectedSettingsFromKeyVault = KeyVaultSecretReference.DeserializeKeyVaultSecretReference(prop.Value, options);
+                    protectedSettingsFromKeyVault = ComputeBulkActionsKeyVaultSecretReference.DeserializeComputeBulkActionsKeyVaultSecretReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisionAfterExtensions"u8))

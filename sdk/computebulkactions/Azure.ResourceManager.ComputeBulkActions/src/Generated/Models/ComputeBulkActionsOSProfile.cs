@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsOSProfile"/>. </summary>
         public ComputeBulkActionsOSProfile()
         {
-            Secrets = new ChangeTrackingList<VaultSecretGroup>();
+            Secrets = new ChangeTrackingList<ComputeBulkActionsVaultSecretGroup>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsOSProfile"/>. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="isExtensionOperationsAllowed"> Specifies whether extension operations should be allowed on the virtual machine. This may only be set to False when no extensions are present on the virtual machine. </param>
         /// <param name="isGuestProvisionSignalRequired"> Optional property which must either be set to True or omitted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeBulkActionsOSProfile(string computerName, string adminUsername, string adminPassword, string customData, ComputeBulkActionsWindowsConfiguration windowsConfiguration, ComputeBulkActionsLinuxConfiguration linuxConfiguration, IList<VaultSecretGroup> secrets, bool? isExtensionOperationsAllowed, bool? isGuestProvisionSignalRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkActionsOSProfile(string computerName, string adminUsername, string adminPassword, string customData, ComputeBulkActionsWindowsConfiguration windowsConfiguration, ComputeBulkActionsLinuxConfiguration linuxConfiguration, IList<ComputeBulkActionsVaultSecretGroup> secrets, bool? isExtensionOperationsAllowed, bool? isGuestProvisionSignalRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ComputerName = computerName;
             AdminUsername = adminUsername;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public ComputeBulkActionsLinuxConfiguration LinuxConfiguration { get; set; }
 
         /// <summary> Specifies set of certificates that should be installed onto the virtual machine. To install certificates on a virtual machine it is recommended to use the [Azure Key Vault virtual machine extension for Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux) or the [Azure Key Vault virtual machine extension for Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows). </summary>
-        public IList<VaultSecretGroup> Secrets { get; }
+        public IList<ComputeBulkActionsVaultSecretGroup> Secrets { get; }
 
         /// <summary> Specifies whether extension operations should be allowed on the virtual machine. This may only be set to False when no extensions are present on the virtual machine. </summary>
         public bool? IsExtensionOperationsAllowed { get; set; }

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
-        internal LocationBasedLaunchBulkInstancesOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, LaunchBulkInstancesOperationProperties properties, AzureLocation location, IList<string> zones, IDictionary<string, string> tags, ManagedServiceIdentity identity, ArmPlan plan) : base(id, name, resourceType, systemData)
+        internal LocationBasedLaunchBulkInstancesOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputeBulkActionsLaunchBulkInstancesOperationProperties properties, AzureLocation location, IList<string> zones, IDictionary<string, string> tags, ManagedServiceIdentity identity, ArmPlan plan) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public LaunchBulkInstancesOperationProperties Properties { get; set; }
+        public ComputeBulkActionsLaunchBulkInstancesOperationProperties Properties { get; set; }
 
         /// <summary> The location name. </summary>
         public AzureLocation Location { get; }

@@ -7,7 +7,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 {
     /// <summary> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations. </summary>
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("AutomaticallyApprove")]
-    public partial class ScheduledEventsPolicy
+    public partial class ComputeBulkActionsScheduledEventsPolicy
     {
         /// <summary> Specifies whether Redeploy Scheduled Events are automatically approved. </summary>
         public bool? IsRedeployAutomaticallyApproved

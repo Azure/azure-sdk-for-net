@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="encryptionIdentity"> Specifies the Managed Identity used by ADE to get access token for keyvault operations. </param>
         /// <param name="proxyAgentSettings"> Specifies ProxyAgent settings while creating the virtual machine. Minimum compute api-version: 2023-09-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeBulkActionsSecurityProfile(UefiSettings uefiSettings, bool? isEncryptionAtHostEnabled, ComputeBulkActionsSecurityType? securityType, EncryptionIdentity encryptionIdentity, ProxyAgentSettings proxyAgentSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkActionsSecurityProfile(ComputeBulkActionsUefiSettings uefiSettings, bool? isEncryptionAtHostEnabled, ComputeBulkActionsSecurityType? securityType, EncryptionIdentity encryptionIdentity, ComputeBulkActionsProxyAgentSettings proxyAgentSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UefiSettings = uefiSettings;
             IsEncryptionAtHostEnabled = isEncryptionAtHostEnabled;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         }
 
         /// <summary> Specifies the security settings like secure boot and vTPM used while creating the virtual machine. Minimum compute api-version: 2020-12-01. </summary>
-        public UefiSettings UefiSettings { get; set; }
+        public ComputeBulkActionsUefiSettings UefiSettings { get; set; }
 
         /// <summary> This property can be used by user in the request to enable or disable the Host Encryption for the virtual machine or virtual machine scale set. This will enable the encryption for all the disks including Resource/Temp disk at host itself. The default behavior is: The Encryption at host will be disabled unless this property is set to true for the resource. </summary>
         public bool? IsEncryptionAtHostEnabled { get; set; }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         internal EncryptionIdentity EncryptionIdentity { get; set; }
 
         /// <summary> Specifies ProxyAgent settings while creating the virtual machine. Minimum compute api-version: 2023-09-01. </summary>
-        public ProxyAgentSettings ProxyAgentSettings { get; set; }
+        public ComputeBulkActionsProxyAgentSettings ProxyAgentSettings { get; set; }
 
         /// <summary> Specifies ARM Resource ID of one of the user identities associated with the VM. </summary>
         public ResourceIdentifier UserAssignedIdentityResourceId

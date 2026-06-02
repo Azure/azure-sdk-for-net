@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             ComputeBulkActionsImageReference imageReference = default;
             ComputeBulkActionsOSDisk osDisk = default;
             IList<ComputeBulkActionsDataDisk> dataDisks = default;
-            DiskControllerType? diskControllerType = default;
+            ComputeBulkActionsDiskControllerType? diskControllerType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    diskControllerType = new DiskControllerType(prop.Value.GetString());
+                    diskControllerType = new ComputeBulkActionsDiskControllerType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

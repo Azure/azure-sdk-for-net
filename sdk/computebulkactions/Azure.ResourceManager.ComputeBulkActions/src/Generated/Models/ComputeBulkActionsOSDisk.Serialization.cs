@@ -179,17 +179,17 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 return null;
             }
             ComputeBulkActionsOperatingSystemType? osType = default;
-            DiskEncryptionSettings encryptionSettings = default;
+            ComputeBulkActionsDiskEncryptionSettings encryptionSettings = default;
             string name = default;
             VirtualHardDisk vhd = default;
             VirtualHardDisk image = default;
             ComputeBulkActionsCachingType? caching = default;
             bool? isWriteAcceleratorEnabled = default;
-            DiffDiskSettings diffDiskSettings = default;
-            DiskCreateOptionType createOption = default;
+            ComputeBulkActionsDiffDiskSettings diffDiskSettings = default;
+            ComputeBulkActionsDiskCreateOptionType createOption = default;
             int? diskSizeGB = default;
-            ManagedDiskInfo managedDisk = default;
-            DiskDeleteOptionType? deleteOption = default;
+            ComputeBulkActionsManagedDiskInfo managedDisk = default;
+            ComputeBulkActionsDiskDeleteOptionType? deleteOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    encryptionSettings = DiskEncryptionSettings.DeserializeDiskEncryptionSettings(prop.Value, options);
+                    encryptionSettings = ComputeBulkActionsDiskEncryptionSettings.DeserializeComputeBulkActionsDiskEncryptionSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -258,12 +258,12 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    diffDiskSettings = DiffDiskSettings.DeserializeDiffDiskSettings(prop.Value, options);
+                    diffDiskSettings = ComputeBulkActionsDiffDiskSettings.DeserializeComputeBulkActionsDiffDiskSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("createOption"u8))
                 {
-                    createOption = new DiskCreateOptionType(prop.Value.GetString());
+                    createOption = new ComputeBulkActionsDiskCreateOptionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("diskSizeGB"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    managedDisk = ManagedDiskInfo.DeserializeManagedDiskInfo(prop.Value, options);
+                    managedDisk = ComputeBulkActionsManagedDiskInfo.DeserializeComputeBulkActionsManagedDiskInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("deleteOption"u8))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    deleteOption = new DiskDeleteOptionType(prop.Value.GetString());
+                    deleteOption = new ComputeBulkActionsDiskDeleteOptionType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

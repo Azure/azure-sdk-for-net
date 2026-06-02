@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            LaunchBulkInstancesOperationProperties properties = default;
+            ComputeBulkActionsLaunchBulkInstancesOperationProperties properties = default;
             AzureLocation location = default;
             IList<string> zones = default;
             IDictionary<string, string> tags = default;
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
                     {
                         continue;
                     }
-                    properties = LaunchBulkInstancesOperationProperties.DeserializeLaunchBulkInstancesOperationProperties(prop.Value, options);
+                    properties = ComputeBulkActionsLaunchBulkInstancesOperationProperties.DeserializeComputeBulkActionsLaunchBulkInstancesOperationProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("zones"u8))

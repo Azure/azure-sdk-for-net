@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <summary> Initializes a new instance of <see cref="WinRMConfiguration"/>. </summary>
         public WinRMConfiguration()
         {
-            Listeners = new ChangeTrackingList<WinRMListener>();
+            Listeners = new ChangeTrackingList<ComputeBulkActionsWinRMListener>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WinRMConfiguration"/>. </summary>
         /// <param name="listeners"> The list of Windows Remote Management listeners. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WinRMConfiguration(IList<WinRMListener> listeners, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WinRMConfiguration(IList<ComputeBulkActionsWinRMListener> listeners, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Listeners = listeners;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of Windows Remote Management listeners. </summary>
-        public IList<WinRMListener> Listeners { get; }
+        public IList<ComputeBulkActionsWinRMListener> Listeners { get; }
     }
 }

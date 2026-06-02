@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 return null;
             }
-            ScheduledEventsPolicy scheduledEventsPolicy = default;
+            ComputeBulkActionsScheduledEventsPolicy scheduledEventsPolicy = default;
             ComputeBulkActionsStorageProfile storageProfile = default;
             ComputeBulkActionsAdditionalCapabilities additionalCapabilities = default;
             ComputeBulkActionsOSProfile osProfile = default;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             DiagnosticsProfile diagnosticsProfile = default;
             string licenseType = default;
             string extensionsTimeBudget = default;
-            ScheduledEventsProfile scheduledEventsProfile = default;
+            ComputeBulkActionsScheduledEventsProfile scheduledEventsProfile = default;
             string userData = default;
             CapacityReservationProfile capacityReservation = default;
             ApplicationProfile applicationProfile = default;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    scheduledEventsPolicy = ScheduledEventsPolicy.DeserializeScheduledEventsPolicy(prop.Value, options);
+                    scheduledEventsPolicy = ComputeBulkActionsScheduledEventsPolicy.DeserializeComputeBulkActionsScheduledEventsPolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("storageProfile"u8))
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    scheduledEventsProfile = ScheduledEventsProfile.DeserializeScheduledEventsProfile(prop.Value, options);
+                    scheduledEventsProfile = ComputeBulkActionsScheduledEventsProfile.DeserializeComputeBulkActionsScheduledEventsProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("userData"u8))

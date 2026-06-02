@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             }
             ResourceIdentifier id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            NetworkInterfaceReferenceProperties properties = default;
+            ComputeBulkActionsNetworkInterfaceReferenceProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    properties = NetworkInterfaceReferenceProperties.DeserializeNetworkInterfaceReferenceProperties(prop.Value, options);
+                    properties = ComputeBulkActionsNetworkInterfaceReferenceProperties.DeserializeComputeBulkActionsNetworkInterfaceReferenceProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

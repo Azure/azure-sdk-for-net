@@ -141,11 +141,11 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 return null;
             }
-            UefiSettings uefiSettings = default;
+            ComputeBulkActionsUefiSettings uefiSettings = default;
             bool? isEncryptionAtHostEnabled = default;
             ComputeBulkActionsSecurityType? securityType = default;
             EncryptionIdentity encryptionIdentity = default;
-            ProxyAgentSettings proxyAgentSettings = default;
+            ComputeBulkActionsProxyAgentSettings proxyAgentSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    uefiSettings = UefiSettings.DeserializeUefiSettings(prop.Value, options);
+                    uefiSettings = ComputeBulkActionsUefiSettings.DeserializeComputeBulkActionsUefiSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("encryptionAtHost"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    proxyAgentSettings = ProxyAgentSettings.DeserializeProxyAgentSettings(prop.Value, options);
+                    proxyAgentSettings = ComputeBulkActionsProxyAgentSettings.DeserializeComputeBulkActionsProxyAgentSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

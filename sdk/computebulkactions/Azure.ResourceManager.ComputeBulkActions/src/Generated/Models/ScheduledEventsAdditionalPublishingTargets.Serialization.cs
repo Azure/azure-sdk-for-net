@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 return null;
             }
-            EventGridAndResourceGraph eventGridAndResourceGraph = default;
+            ComputeBulkActionsEventGridAndResourceGraph eventGridAndResourceGraph = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    eventGridAndResourceGraph = EventGridAndResourceGraph.DeserializeEventGridAndResourceGraph(prop.Value, options);
+                    eventGridAndResourceGraph = ComputeBulkActionsEventGridAndResourceGraph.DeserializeComputeBulkActionsEventGridAndResourceGraph(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

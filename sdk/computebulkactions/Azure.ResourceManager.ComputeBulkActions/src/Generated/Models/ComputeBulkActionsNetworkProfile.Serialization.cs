@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 writer.WritePropertyName("networkInterfaceConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (VirtualMachineNetworkInterfaceConfiguration item in NetworkInterfaceConfigurations)
+                foreach (ComputeBulkActionsVirtualMachineNetworkInterfaceConfiguration item in NetworkInterfaceConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             }
             IList<ComputeBulkActionsNetworkInterfaceReference> networkInterfaces = default;
             ComputeBulkActionsNetworkApiVersion? networkApiVersion = default;
-            IList<VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations = default;
+            IList<ComputeBulkActionsVirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -176,10 +176,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    List<VirtualMachineNetworkInterfaceConfiguration> array = new List<VirtualMachineNetworkInterfaceConfiguration>();
+                    List<ComputeBulkActionsVirtualMachineNetworkInterfaceConfiguration> array = new List<ComputeBulkActionsVirtualMachineNetworkInterfaceConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineNetworkInterfaceConfiguration.DeserializeVirtualMachineNetworkInterfaceConfiguration(item, options));
+                        array.Add(ComputeBulkActionsVirtualMachineNetworkInterfaceConfiguration.DeserializeComputeBulkActionsVirtualMachineNetworkInterfaceConfiguration(item, options));
                     }
                     networkInterfaceConfigurations = array;
                     continue;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputeBulkActionsNetworkProfile(networkInterfaces ?? new ChangeTrackingList<ComputeBulkActionsNetworkInterfaceReference>(), networkApiVersion, networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceConfiguration>(), additionalBinaryDataProperties);
+            return new ComputeBulkActionsNetworkProfile(networkInterfaces ?? new ChangeTrackingList<ComputeBulkActionsNetworkInterfaceReference>(), networkApiVersion, networkInterfaceConfigurations ?? new ChangeTrackingList<ComputeBulkActionsVirtualMachineNetworkInterfaceConfiguration>(), additionalBinaryDataProperties);
         }
     }
 }

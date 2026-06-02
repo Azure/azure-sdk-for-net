@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="patchSettings"> [Preview Feature] Specifies settings related to VM Guest Patching on Linux. </param>
         /// <param name="isVMAgentPlatformUpdatesEnabled"> Indicates whether VMAgent Platform Updates is enabled for the Linux virtual machine. Default value is false. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeBulkActionsLinuxConfiguration(bool? isPasswordAuthenticationDisabled, SshConfiguration ssh, bool? isVMAgentProvisioned, LinuxPatchSettings patchSettings, bool? isVMAgentPlatformUpdatesEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkActionsLinuxConfiguration(bool? isPasswordAuthenticationDisabled, SshConfiguration ssh, bool? isVMAgentProvisioned, ComputeBulkActionsLinuxPatchSettings patchSettings, bool? isVMAgentPlatformUpdatesEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsPasswordAuthenticationDisabled = isPasswordAuthenticationDisabled;
             Ssh = ssh;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public bool? IsVMAgentProvisioned { get; set; }
 
         /// <summary> [Preview Feature] Specifies settings related to VM Guest Patching on Linux. </summary>
-        public LinuxPatchSettings PatchSettings { get; set; }
+        public ComputeBulkActionsLinuxPatchSettings PatchSettings { get; set; }
 
         /// <summary> Indicates whether VMAgent Platform Updates is enabled for the Linux virtual machine. Default value is false. </summary>
         public bool? IsVMAgentPlatformUpdatesEnabled { get; set; }

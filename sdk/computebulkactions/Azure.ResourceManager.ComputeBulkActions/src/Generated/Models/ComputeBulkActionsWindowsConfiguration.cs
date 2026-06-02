@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsWindowsConfiguration"/>. </summary>
         public ComputeBulkActionsWindowsConfiguration()
         {
-            AdditionalUnattendContent = new ChangeTrackingList<AdditionalUnattendContent>();
+            AdditionalUnattendContent = new ChangeTrackingList<ComputeBulkActionsAdditionalUnattendContent>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsWindowsConfiguration"/>. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="patchSettings"> [Preview Feature] Specifies settings related to VM Guest Patching on Windows. </param>
         /// <param name="winRM"> Specifies the Windows Remote Management listeners. This enables remote Windows PowerShell. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeBulkActionsWindowsConfiguration(bool? isVMAgentProvisioned, bool? enableAutomaticUpdates, string timeZone, IList<AdditionalUnattendContent> additionalUnattendContent, ComputeBulkActionsPatchSettings patchSettings, WinRMConfiguration winRM, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkActionsWindowsConfiguration(bool? isVMAgentProvisioned, bool? enableAutomaticUpdates, string timeZone, IList<ComputeBulkActionsAdditionalUnattendContent> additionalUnattendContent, ComputeBulkActionsPatchSettings patchSettings, WinRMConfiguration winRM, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsVMAgentProvisioned = isVMAgentProvisioned;
             EnableAutomaticUpdates = enableAutomaticUpdates;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public string TimeZone { get; set; }
 
         /// <summary> Specifies additional base-64 encoded XML formatted information that can be included in the Unattend.xml file, which is used by Windows Setup. </summary>
-        public IList<AdditionalUnattendContent> AdditionalUnattendContent { get; }
+        public IList<ComputeBulkActionsAdditionalUnattendContent> AdditionalUnattendContent { get; }
 
         /// <summary> [Preview Feature] Specifies settings related to VM Guest Patching on Windows. </summary>
         public ComputeBulkActionsPatchSettings PatchSettings { get; set; }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         internal WinRMConfiguration WinRM { get; set; }
 
         /// <summary> The list of Windows Remote Management listeners. </summary>
-        public IList<WinRMListener> WinRMListeners
+        public IList<ComputeBulkActionsWinRMListener> WinRMListeners
         {
             get
             {

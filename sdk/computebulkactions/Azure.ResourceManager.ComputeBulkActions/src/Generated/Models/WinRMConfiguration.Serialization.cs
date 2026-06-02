@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 writer.WritePropertyName("listeners"u8);
                 writer.WriteStartArray();
-                foreach (WinRMListener item in Listeners)
+                foreach (ComputeBulkActionsWinRMListener item in Listeners)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 return null;
             }
-            IList<WinRMListener> listeners = default;
+            IList<ComputeBulkActionsWinRMListener> listeners = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    List<WinRMListener> array = new List<WinRMListener>();
+                    List<ComputeBulkActionsWinRMListener> array = new List<ComputeBulkActionsWinRMListener>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(WinRMListener.DeserializeWinRMListener(item, options));
+                        array.Add(ComputeBulkActionsWinRMListener.DeserializeComputeBulkActionsWinRMListener(item, options));
                     }
                     listeners = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WinRMConfiguration(listeners ?? new ChangeTrackingList<WinRMListener>(), additionalBinaryDataProperties);
+            return new WinRMConfiguration(listeners ?? new ChangeTrackingList<ComputeBulkActionsWinRMListener>(), additionalBinaryDataProperties);
         }
     }
 }
