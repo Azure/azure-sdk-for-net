@@ -487,6 +487,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new ZooAddressListListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The ZooRecommendation. </summary>
+        /// <param name="recommendedValue"> The recommended value. </param>
+        /// <param name="reason"> The reason for the recommendation. </param>
+        /// <returns> A new <see cref="Models.ZooRecommendation"/> instance for mocking. </returns>
+        public static ZooRecommendation ZooRecommendation(string recommendedValue = default, string reason = default)
+        {
+            return new ZooRecommendation(recommendedValue, reason, additionalBinaryDataProperties: null);
+        }
+
         /// <summary>
         /// Test resource to reproduce issue #55436 - Missing constructor parameters in factory methods.
         /// This uses a patch model with properties that extend a base type with nested complex objects.
@@ -1785,15 +1794,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 properties);
-        }
-
-        /// <summary> The ZooRecommendation. </summary>
-        /// <param name="recommendedValue"> The recommended value. </param>
-        /// <param name="reason"> The reason for the recommendation. </param>
-        /// <returns> A new <see cref="Models.ZooRecommendation"/> instance for mocking. </returns>
-        public static ZooRecommendation ZooRecommendation(string recommendedValue = default, string reason = default)
-        {
-            return new ZooRecommendation(recommendedValue, reason, additionalBinaryDataProperties: null);
         }
     }
 }

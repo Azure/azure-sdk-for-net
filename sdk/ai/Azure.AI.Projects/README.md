@@ -1263,7 +1263,7 @@ EvaluationRule continuousEvalRule = await projectClient.EvaluationRules.CreateOr
 Console.WriteLine($"Continuous Evaluation Rule created (id: {continuousEvalRule.Id}, name: {continuousEvalRule.DisplayName})");
 ```
 
-### Evaluation insights
+#### Evaluation insights
 
 To further analyze the evaluation runs the `ProjectInsights` can be used. They allow to cluster and compare the evaluation
 runs against baseline.
@@ -1381,6 +1381,55 @@ private static void ParseCompareResults(ProjectsInsight compareInsight)
         throw new InvalidOperationException("Evaluation comparison generation failed.");
     }
 }
+```
+
+#### Evaluator generation jobs
+
+To test the Agent or model, used for specific scenario we can generate the evaluator, which will ask
+question and evaluate answers related to it. In the code below we will create an Agent,
+which can generate questions and answers based on provided prompt and use it for evaluator generation.
+
+```C# Snippet:Sample_CreateAnAgent_EvaluatorGenerationJob_Async
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a helpful assistant that answers general questions",
+};
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+    agentName: "evalAgent",
+    options: new(agentDefinition));
+Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
+EvaluatorGenerationJob job = new()
+{
+    Inputs = new EvaluatorGenerationInputs(
+        sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
+        model: modelDeploymentName,
+        evaluatorName: "coherence"
+    )
+};
+```
+
+To generate the evaluator, we need to start the job:
+
+```C# Snippet:Sample_CreateJob_EvaluatorGenerationJob_Async
+EvaluatorGenerationJob runningJob = await projectClient.EvaluatorGenerationJobs.CreateAsync(job);
+Console.WriteLine($"Created job ID: {runningJob.Id}");
+```
+
+After the generation job is complete, the `EvaluatorVersion` object will be returned
+in `runningJob.Result` property.
+
+```C# Snippet:Sample_GetJob_EvaluatorGenerationJob_Async
+while (runningJob.Status != JobStatus.Failed && runningJob.Status != JobStatus.Succeeded)
+{
+    await Task.Delay(500);
+    Console.WriteLine($"Waiting for job ID: {runningJob.Id}...");
+    runningJob = await projectClient.EvaluatorGenerationJobs.GetAsync(jobId: runningJob.Id);
+}
+if (runningJob.Status == JobStatus.Failed)
+{
+    throw new InvalidOperationException($"The job {runningJob.Id} has failed.");
+}
+Console.WriteLine($"The job ID: {runningJob.Id} completed, created evaluator {runningJob.Result.Name}, v. {runningJob.Result.Version}");
 ```
 
 ### Red teams

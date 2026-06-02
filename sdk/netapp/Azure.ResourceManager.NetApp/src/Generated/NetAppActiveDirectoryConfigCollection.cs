@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _activeDirectoryConfigsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, activeDirectoryConfigName, NetAppActiveDirectoryConfigData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppActiveDirectoryConfigResource> operation = new NetAppArmOperation<NetAppActiveDirectoryConfigResource>(
-                    new NetAppActiveDirectoryConfigOperationSource(Client),
+                    new NetAppActiveDirectoryConfigResourceOperationSource(Client),
                     _activeDirectoryConfigsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _activeDirectoryConfigsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, activeDirectoryConfigName, NetAppActiveDirectoryConfigData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppActiveDirectoryConfigResource> operation = new NetAppArmOperation<NetAppActiveDirectoryConfigResource>(
-                    new NetAppActiveDirectoryConfigOperationSource(Client),
+                    new NetAppActiveDirectoryConfigResourceOperationSource(Client),
                     _activeDirectoryConfigsClientDiagnostics,
                     Pipeline,
                     message.Request,
