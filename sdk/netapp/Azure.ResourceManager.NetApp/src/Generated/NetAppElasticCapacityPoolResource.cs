@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _elasticCapacityPoolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetAppElasticCapacityPoolPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppElasticCapacityPoolResource> operation = new NetAppArmOperation<NetAppElasticCapacityPoolResource>(
-                    new NetAppElasticCapacityPoolOperationSource(Client),
+                    new NetAppElasticCapacityPoolResourceOperationSource(Client),
                     _elasticCapacityPoolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _elasticCapacityPoolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetAppElasticCapacityPoolPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppElasticCapacityPoolResource> operation = new NetAppArmOperation<NetAppElasticCapacityPoolResource>(
-                    new NetAppElasticCapacityPoolOperationSource(Client),
+                    new NetAppElasticCapacityPoolResourceOperationSource(Client),
                     _elasticCapacityPoolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _elasticCapacityPoolsRestClient.CreateChangeZoneRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ChangeZoneContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppElasticCapacityPoolResource> operation = new NetAppArmOperation<NetAppElasticCapacityPoolResource>(
-                    new NetAppElasticCapacityPoolOperationSource(Client),
+                    new NetAppElasticCapacityPoolResourceOperationSource(Client),
                     _elasticCapacityPoolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _elasticCapacityPoolsRestClient.CreateChangeZoneRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ChangeZoneContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppElasticCapacityPoolResource> operation = new NetAppArmOperation<NetAppElasticCapacityPoolResource>(
-                    new NetAppElasticCapacityPoolOperationSource(Client),
+                    new NetAppElasticCapacityPoolResourceOperationSource(Client),
                     _elasticCapacityPoolsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DurableTask
                 HttpMessage message = _schedulersRestClient.CreateUpdatePrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DurableTaskPrivateEndpointConnectionPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DurableTaskArmOperation<DurableTaskPrivateEndpointConnectionResource> operation = new DurableTaskArmOperation<DurableTaskPrivateEndpointConnectionResource>(
-                    new PrivateEndpointConnectionOperationSource(Client),
+                    new DurableTaskPrivateEndpointConnectionResourceOperationSource(Client),
                     _schedulersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DurableTask
                 HttpMessage message = _schedulersRestClient.CreateUpdatePrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DurableTaskPrivateEndpointConnectionPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DurableTaskArmOperation<DurableTaskPrivateEndpointConnectionResource> operation = new DurableTaskArmOperation<DurableTaskPrivateEndpointConnectionResource>(
-                    new PrivateEndpointConnectionOperationSource(Client),
+                    new DurableTaskPrivateEndpointConnectionResourceOperationSource(Client),
                     _schedulersClientDiagnostics,
                     Pipeline,
                     message.Request,
