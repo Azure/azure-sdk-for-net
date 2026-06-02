@@ -40,13 +40,6 @@ namespace Azure.ResourceManager.ComputeBulkActions.Mocking
 
         private BulkActions BulkActionsRestClient => _bulkActionsRestClient ??= new BulkActions(BulkActionsClientDiagnostics, Pipeline, Endpoint, "2026-02-01-preview");
 
-        /// <summary> Gets a collection of BulkActions in the <see cref="SubscriptionResource"/>. </summary>
-        /// <returns> An object representing collection of BulkActions and their operations over a BulkActionResource. </returns>
-        public virtual BulkActionCollection GetBulkActions()
-        {
-            return GetCachedClient(client => new BulkActionCollection(client, Id));
-        }
-
         /// <summary>
         /// List LaunchBulkInstancesOperation resources by subscriptionId.
         /// <list type="bullet">
@@ -73,7 +66,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BulkActionData, BulkActionResource>(new BulkActionsGetBySubscriptionAsyncCollectionResultOfT(BulkActionsRestClient, Guid.Parse(Id.SubscriptionId), location, context), data => new BulkActionResource(Client, data));
+            return new AsyncPageableWrapper<BulkActionData, BulkActionResource>(new BulkActionsGetBySubscriptionAsyncCollectionResultOfT(BulkActionsRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableComputeBulkActionsSubscriptionResource.GetBulkActions"), data => new BulkActionResource(Client, data));
         }
 
         /// <summary>
@@ -102,7 +95,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BulkActionData, BulkActionResource>(new BulkActionsGetBySubscriptionCollectionResultOfT(BulkActionsRestClient, Guid.Parse(Id.SubscriptionId), location, context), data => new BulkActionResource(Client, data));
+            return new PageableWrapper<BulkActionData, BulkActionResource>(new BulkActionsGetBySubscriptionCollectionResultOfT(BulkActionsRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableComputeBulkActionsSubscriptionResource.GetBulkActions"), data => new BulkActionResource(Client, data));
         }
 
         /// <summary>

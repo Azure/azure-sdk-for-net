@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         private readonly string _resourceGroupName;
         private readonly AzureLocation _location;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of BulkActionsGetByResourceGroupCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BulkActions client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="location"> The location name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BulkActionsGetByResourceGroupCollectionResultOfT(BulkActions client, Guid subscriptionId, string resourceGroupName, AzureLocation location, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public BulkActionsGetByResourceGroupCollectionResultOfT(BulkActions client, Guid subscriptionId, string resourceGroupName, AzureLocation location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _location = location;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of BulkActionsGetByResourceGroupCollectionResultOfT as an enumerable collection. </summary>
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _location, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _location, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BulkActionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

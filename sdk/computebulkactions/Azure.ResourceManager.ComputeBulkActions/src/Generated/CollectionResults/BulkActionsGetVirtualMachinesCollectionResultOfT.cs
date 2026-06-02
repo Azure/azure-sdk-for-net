@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         private readonly string _filter;
         private readonly string _skiptoken;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of BulkActionsGetVirtualMachinesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BulkActions client used to send requests. </param>
@@ -34,7 +35,8 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// <param name="filter"> Filter expression to filter the virtual machines. </param>
         /// <param name="skiptoken"> Skip token for pagination. Uses the token from a previous response to fetch the next page of results. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BulkActionsGetVirtualMachinesCollectionResultOfT(BulkActions client, Guid subscriptionId, string resourceGroupName, AzureLocation location, string name, string filter, string skiptoken, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public BulkActionsGetVirtualMachinesCollectionResultOfT(BulkActions client, Guid subscriptionId, string resourceGroupName, AzureLocation location, string name, string filter, string skiptoken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -44,6 +46,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
             _filter = filter;
             _skiptoken = skiptoken;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of BulkActionsGetVirtualMachinesCollectionResultOfT as an enumerable collection. </summary>
@@ -76,7 +79,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetVirtualMachinesRequest(nextLink, _subscriptionId, _resourceGroupName, _location, _name, _filter, _skiptoken, _context) : _client.CreateGetVirtualMachinesRequest(_subscriptionId, _resourceGroupName, _location, _name, _filter, _skiptoken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BulkActionResource.GetVirtualMachines");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

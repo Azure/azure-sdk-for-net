@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ComputeBulkActions
 {
     /// <summary></summary>
-    internal partial class BulkActionOperationSource : IOperationSource<BulkActionResource>
+    internal partial class BulkActionResourceOperationSource : IOperationSource<BulkActionResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal BulkActionOperationSource(ArmClient client)
+        internal BulkActionResourceOperationSource(ArmClient client)
         {
             _client = client;
         }

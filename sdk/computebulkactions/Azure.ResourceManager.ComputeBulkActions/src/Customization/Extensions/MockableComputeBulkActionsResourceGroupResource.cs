@@ -27,9 +27,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Mocking
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            Response<OperationStatusResult> response = await GetBulkActions(location).GetAsync(location, name, cancellationToken).ConfigureAwait(false);
-            var resourceId = BulkActionResource.CreateResourceIdentifier(Id.SubscriptionId, location, name);
-            return Response.FromValue(new BulkActionResource(Client, resourceId), response.GetRawResponse());
+            return await GetBulkActions(location).GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an instance of <see cref="BulkActionResource"/>. </summary>
@@ -41,9 +39,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Mocking
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            Response<OperationStatusResult> response = GetBulkActions(location).Get(location, name, cancellationToken);
-            var resourceId = BulkActionResource.CreateResourceIdentifier(Id.SubscriptionId, location, name);
-            return Response.FromValue(new BulkActionResource(Client, resourceId), response.GetRawResponse());
+            return GetBulkActions(location).Get(name, cancellationToken);
         }
     }
 }

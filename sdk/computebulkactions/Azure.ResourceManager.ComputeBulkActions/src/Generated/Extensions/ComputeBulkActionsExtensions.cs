@@ -57,23 +57,6 @@ namespace Azure.ResourceManager.ComputeBulkActions
         }
 
         /// <summary>
-        /// Gets a collection of BulkActions in the <see cref="SubscriptionResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.GetBulkActions()"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of BulkActions and their operations over a BulkActionResource. </returns>
-        public static BulkActionCollection GetBulkActions(this SubscriptionResource subscriptionResource)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableComputeBulkActionsSubscriptionResource(subscriptionResource).GetBulkActions();
-        }
-
-        /// <summary>
         /// List LaunchBulkInstancesOperation resources by subscriptionId.
         /// <item>
         /// <term> Mocking. </term>
