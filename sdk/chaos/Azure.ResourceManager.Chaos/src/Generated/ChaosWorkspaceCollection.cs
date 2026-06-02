@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Chaos
                 HttpMessage message = _workspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, ChaosWorkspaceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ChaosArmOperation<ChaosWorkspaceResource> operation = new ChaosArmOperation<ChaosWorkspaceResource>(
-                    new ChaosWorkspaceOperationSource(Client),
+                    new ChaosWorkspaceResourceOperationSource(Client),
                     _workspacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Chaos
                 HttpMessage message = _workspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, ChaosWorkspaceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ChaosArmOperation<ChaosWorkspaceResource> operation = new ChaosArmOperation<ChaosWorkspaceResource>(
-                    new ChaosWorkspaceOperationSource(Client),
+                    new ChaosWorkspaceResourceOperationSource(Client),
                     _workspacesClientDiagnostics,
                     Pipeline,
                     message.Request,

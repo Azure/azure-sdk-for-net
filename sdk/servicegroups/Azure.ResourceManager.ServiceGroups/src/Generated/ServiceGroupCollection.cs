@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ServiceGroups
                 HttpMessage message = _managementClientRestClient.CreateCreateOrUpdateServiceGroupRequest(serviceGroupName, ServiceGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceGroupsArmOperation<ServiceGroupResource> operation = new ServiceGroupsArmOperation<ServiceGroupResource>(
-                    new ServiceGroupOperationSource(Client),
+                    new ServiceGroupResourceOperationSource(Client),
                     _managementClientClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ServiceGroups
                 HttpMessage message = _managementClientRestClient.CreateCreateOrUpdateServiceGroupRequest(serviceGroupName, ServiceGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceGroupsArmOperation<ServiceGroupResource> operation = new ServiceGroupsArmOperation<ServiceGroupResource>(
-                    new ServiceGroupOperationSource(Client),
+                    new ServiceGroupResourceOperationSource(Client),
                     _managementClientClientDiagnostics,
                     Pipeline,
                     message.Request,

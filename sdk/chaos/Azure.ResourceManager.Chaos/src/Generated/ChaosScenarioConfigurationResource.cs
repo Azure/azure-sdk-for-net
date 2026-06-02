@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Chaos
                 HttpMessage message = _scenarioConfigurationsRestClient.CreateExecuteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ChaosArmOperation<ChaosScenarioRunResource> operation = new ChaosArmOperation<ChaosScenarioRunResource>(
-                    new ChaosScenarioRunOperationSource(Client),
+                    new ChaosScenarioRunResourceOperationSource(Client),
                     _scenarioConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Chaos
                 HttpMessage message = _scenarioConfigurationsRestClient.CreateExecuteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ChaosArmOperation<ChaosScenarioRunResource> operation = new ChaosArmOperation<ChaosScenarioRunResource>(
-                    new ChaosScenarioRunOperationSource(Client),
+                    new ChaosScenarioRunResourceOperationSource(Client),
                     _scenarioConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.Chaos
                 HttpMessage message = _scenarioConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ChaosScenarioConfigurationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ChaosArmOperation<ChaosScenarioConfigurationResource> operation = new ChaosArmOperation<ChaosScenarioConfigurationResource>(
-                    new ChaosScenarioConfigurationOperationSource(Client),
+                    new ChaosScenarioConfigurationResourceOperationSource(Client),
                     _scenarioConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.Chaos
                 HttpMessage message = _scenarioConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ChaosScenarioConfigurationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ChaosArmOperation<ChaosScenarioConfigurationResource> operation = new ChaosArmOperation<ChaosScenarioConfigurationResource>(
-                    new ChaosScenarioConfigurationOperationSource(Client),
+                    new ChaosScenarioConfigurationResourceOperationSource(Client),
                     _scenarioConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
                 HttpMessage message = _instancesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, instancename, WeightsAndBiasesInstanceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WeightsAndBiasesArmOperation<WeightsAndBiasesInstanceResource> operation = new WeightsAndBiasesArmOperation<WeightsAndBiasesInstanceResource>(
-                    new WeightsAndBiasesInstanceOperationSource(Client),
+                    new WeightsAndBiasesInstanceResourceOperationSource(Client),
                     _instancesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
                 HttpMessage message = _instancesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, instancename, WeightsAndBiasesInstanceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WeightsAndBiasesArmOperation<WeightsAndBiasesInstanceResource> operation = new WeightsAndBiasesArmOperation<WeightsAndBiasesInstanceResource>(
-                    new WeightsAndBiasesInstanceOperationSource(Client),
+                    new WeightsAndBiasesInstanceResourceOperationSource(Client),
                     _instancesClientDiagnostics,
                     Pipeline,
                     message.Request,

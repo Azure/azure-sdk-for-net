@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Chaos
                 HttpMessage message = _scenarioRunsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ChaosArmOperation<ChaosScenarioRunResource> operation = new ChaosArmOperation<ChaosScenarioRunResource>(
-                    new ChaosScenarioRunOperationSource(Client),
+                    new ChaosScenarioRunResourceOperationSource(Client),
                     _scenarioRunsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Chaos
                 HttpMessage message = _scenarioRunsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ChaosArmOperation<ChaosScenarioRunResource> operation = new ChaosArmOperation<ChaosScenarioRunResource>(
-                    new ChaosScenarioRunOperationSource(Client),
+                    new ChaosScenarioRunResourceOperationSource(Client),
                     _scenarioRunsClientDiagnostics,
                     Pipeline,
                     message.Request,

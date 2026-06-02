@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 HttpMessage message = _protectedItemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, protectedItemName, BackupProtectedItemData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesBackupArmOperation<BackupProtectedItemResource> operation = new RecoveryServicesBackupArmOperation<BackupProtectedItemResource>(
-                    new BackupProtectedItemOperationSource(Client),
+                    new BackupProtectedItemResourceOperationSource(Client),
                     _protectedItemsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 HttpMessage message = _protectedItemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, protectedItemName, BackupProtectedItemData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesBackupArmOperation<BackupProtectedItemResource> operation = new RecoveryServicesBackupArmOperation<BackupProtectedItemResource>(
-                    new BackupProtectedItemOperationSource(Client),
+                    new BackupProtectedItemResourceOperationSource(Client),
                     _protectedItemsClientDiagnostics,
                     Pipeline,
                     message.Request,

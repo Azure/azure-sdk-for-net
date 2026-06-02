@@ -7,6 +7,10 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed the `EvaluatorGenerationJob` serialization
+
+### Sample Updates
+- Added sample for evaluator generator job.
 
 ### Other Changes
 

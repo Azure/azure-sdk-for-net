@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.TrustedSigning
                 HttpMessage message = _certificateProfilesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, profileName, TrustedSigningCertificateProfileData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TrustedSigningArmOperation<TrustedSigningCertificateProfileResource> operation = new TrustedSigningArmOperation<TrustedSigningCertificateProfileResource>(
-                    new TrustedSigningCertificateProfileOperationSource(Client),
+                    new TrustedSigningCertificateProfileResourceOperationSource(Client),
                     _certificateProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.TrustedSigning
                 HttpMessage message = _certificateProfilesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, profileName, TrustedSigningCertificateProfileData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TrustedSigningArmOperation<TrustedSigningCertificateProfileResource> operation = new TrustedSigningArmOperation<TrustedSigningCertificateProfileResource>(
-                    new TrustedSigningCertificateProfileOperationSource(Client),
+                    new TrustedSigningCertificateProfileResourceOperationSource(Client),
                     _certificateProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,
