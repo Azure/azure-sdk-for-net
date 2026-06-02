@@ -1,5 +1,13 @@
 name: azsdk-common-prepare-release-plan-eval
-description: Evaluation suite for the azsdk-common-prepare-release-plan skill
+description: |
+  Capability tests for the prepare-release-plan skill.
+
+  This file is the canonical four-layer-pattern exemplar referenced by the
+  skill-eval-authoring skill. Every capability stimulus asserts BOTH that the
+  right skill was loaded (skill-invocation) AND that the right MCP tool was
+  called (tool-calls). Substring graders are only used as cheap output-shape
+  sanity checks, never as the sole assertion.
+
 type: capability
 
 environment: azsdk-mcp-mock
@@ -7,6 +15,7 @@ environment: azsdk-mcp-mock
 tags:
   area: azsdk-common-prepare-release-plan
   type: ci-gate
+  tier: integration
 
 config:
   runs: 1
@@ -18,51 +27,90 @@ scoring:
   threshold: 0.8
 
 stimuli:
-  - name: release-plan-basic-001
-    prompt: "I need to create a release plan for my API spec PR https://github.com/Azure/azure-rest-api-specs/pull/12345. The API version is 2024-06-01 and it's a stable release."
+  # ----- HAPPY PATH: create release plan from spec PR -----
+  - name: create-from-spec-pr
+    prompt: |
+      Create a release plan for spec PR
+      https://github.com/Azure/azure-rest-api-specs/pull/38387.
+      API version 2024-06-01-preview, public preview, beta SDK,
+      target December 2026, TypeSpec project
+      specification/contosowidgetmanager/Contoso.WidgetManager.
     graders:
-      - type: output-contains
+      - type: skill-invocation
         config:
-          substring: "release plan"
+          required: ["azsdk-common-prepare-release-plan"]
+      - type: tool-calls
+        config:
+          required:
+            - name: azsdk_create_release_plan
+          disallowed:
+            - name: azsdk_release_sdk
+      - type: output-matches
+        config:
+          pattern: "(release plan|work item).*(created|link|id|succeeded)"
 
-  - name: release-plan-edge-001
-    prompt: "Update the release plan with these SDK details: JavaScript package '@azure/arm-compute' and Go package 'sdk/armcompute'."
+  # ----- HAPPY PATH: update SDK details on existing release plan -----
+  - name: update-sdk-details
+    prompt: |
+      Update release plan 67890 with these SDK packages:
+      JavaScript @azure/arm-compute v3.0.0 and Go sdk/armcompute v2.0.0.
     graders:
-      - type: output-contains
+      - type: skill-invocation
         config:
-          substring: "release plan"
+          required: ["azsdk-common-prepare-release-plan"]
+      - type: tool-calls
+        config:
+          required:
+            - name: azsdk_update_sdk_details_in_release_plan
 
-  - name: release-plan-link-001
-    prompt: "I have release plan 67890 and SDK PRs for Python (PR #100) and .NET (PR #200) in the azure-sdk repos. Link them to the release plan."
+  # ----- HAPPY PATH: link SDK pull requests -----
+  - name: link-sdk-prs
+    prompt: |
+      I have release plan 67890 and SDK PRs:
+      Python Azure/azure-sdk-for-python#100 and .NET Azure/azure-sdk-for-net#200.
+      Link them to the release plan.
     graders:
-      - type: output-contains
+      - type: skill-invocation
         config:
-          substring: "release plan"
+          required: ["azsdk-common-prepare-release-plan"]
+      - type: tool-calls
+        config:
+          required:
+            - name: azsdk_link_sdk_pull_request_to_release_plan
 
-  - name: release-plan-negative-001
+  # ----- HAPPY PATH: get release plan status -----
+  - name: get-release-plan-status
+    prompt: "What's the status of release plan 67890?"
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-prepare-release-plan"]
+      - type: tool-calls
+        config:
+          required:
+            - name: azsdk_get_release_plan
+
+  # ----- NEGATIVE: wrong tool family (package release, not release plan) -----
+  - name: refuses-package-release
     prompt: "Release the azure-mgmt-compute Python package to PyPI now."
     graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azsdk-common-prepare-release-plan"]
       - type: tool-calls
         config:
           disallowed:
-            - name: azure-sdk-mcp-azsdk_create_release_plan
-      - type: output-not-contains
-        config:
-          substring: "Service Tree ID"
+            - name: azsdk_create_release_plan
+            - name: azsdk_release_sdk
 
-  - name: basic-trigger
-    prompt: "I need to prepare a release plan for the new Azure SDK package version"
-    graders:
-      - type: output-contains
-        config:
-          substring: "release"
-
-  - name: anti-trigger
+  # ----- NEGATIVE: completely off-topic -----
+  - name: refuses-logging-question
     prompt: "How do I configure logging in my Azure Function?"
     graders:
-      - type: output-not-contains
+      - type: skill-invocation
         config:
-          substring: "release plan"
-      - type: output-not-contains
+          disallowed: ["azsdk-common-prepare-release-plan"]
+      - type: tool-calls
         config:
-          substring: "changelog"
+          disallowed:
+            - name: azsdk_create_release_plan
