@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _l2IsolationDomainsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, l2IsolationDomainName, NetworkFabricL2IsolationDomainData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkFabricL2IsolationDomainResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricL2IsolationDomainResource>(
-                    new NetworkFabricL2IsolationDomainOperationSource(Client),
+                    new NetworkFabricL2IsolationDomainResourceOperationSource(Client),
                     _l2IsolationDomainsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _l2IsolationDomainsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, l2IsolationDomainName, NetworkFabricL2IsolationDomainData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkFabricL2IsolationDomainResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricL2IsolationDomainResource>(
-                    new NetworkFabricL2IsolationDomainOperationSource(Client),
+                    new NetworkFabricL2IsolationDomainResourceOperationSource(Client),
                     _l2IsolationDomainsClientDiagnostics,
                     Pipeline,
                     message.Request,

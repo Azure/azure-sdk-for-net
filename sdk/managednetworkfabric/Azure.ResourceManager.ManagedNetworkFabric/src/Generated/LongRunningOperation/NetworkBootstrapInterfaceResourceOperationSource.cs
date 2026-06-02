@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary></summary>
-    internal partial class NetworkFabricAccessControlListOperationSource : IOperationSource<NetworkFabricAccessControlListResource>
+    internal partial class NetworkBootstrapInterfaceResourceOperationSource : IOperationSource<NetworkBootstrapInterfaceResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal NetworkFabricAccessControlListOperationSource(ArmClient client)
+        internal NetworkBootstrapInterfaceResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        NetworkFabricAccessControlListResource IOperationSource<NetworkFabricAccessControlListResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkBootstrapInterfaceResource IOperationSource<NetworkBootstrapInterfaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            NetworkFabricAccessControlListData data = NetworkFabricAccessControlListData.DeserializeNetworkFabricAccessControlListData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkFabricAccessControlListResource(_client, data);
+            NetworkBootstrapInterfaceData data = NetworkBootstrapInterfaceData.DeserializeNetworkBootstrapInterfaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkBootstrapInterfaceResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<NetworkFabricAccessControlListResource> IOperationSource<NetworkFabricAccessControlListResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkBootstrapInterfaceResource> IOperationSource<NetworkBootstrapInterfaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            NetworkFabricAccessControlListData data = NetworkFabricAccessControlListData.DeserializeNetworkFabricAccessControlListData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkFabricAccessControlListResource(_client, data);
+            NetworkBootstrapInterfaceData data = NetworkBootstrapInterfaceData.DeserializeNetworkBootstrapInterfaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkBootstrapInterfaceResource(_client, data);
         }
     }
 }

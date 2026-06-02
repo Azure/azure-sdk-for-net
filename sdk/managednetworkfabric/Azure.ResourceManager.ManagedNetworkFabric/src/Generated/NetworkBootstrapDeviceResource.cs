@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _networkBootstrapDevicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkBootstrapDevicePatchContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceResource> operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceResource>(
-                    new NetworkBootstrapDeviceOperationSource(Client),
+                    new NetworkBootstrapDeviceResourceOperationSource(Client),
                     _networkBootstrapDevicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _networkBootstrapDevicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkBootstrapDevicePatchContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceResource> operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceResource>(
-                    new NetworkBootstrapDeviceOperationSource(Client),
+                    new NetworkBootstrapDeviceResourceOperationSource(Client),
                     _networkBootstrapDevicesClientDiagnostics,
                     Pipeline,
                     message.Request,

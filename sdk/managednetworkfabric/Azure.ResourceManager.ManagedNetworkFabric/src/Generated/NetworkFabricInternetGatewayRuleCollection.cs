@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _internetGatewayRulesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, internetGatewayRuleName, NetworkFabricInternetGatewayRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkFabricInternetGatewayRuleResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricInternetGatewayRuleResource>(
-                    new NetworkFabricInternetGatewayRuleOperationSource(Client),
+                    new NetworkFabricInternetGatewayRuleResourceOperationSource(Client),
                     _internetGatewayRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _internetGatewayRulesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, internetGatewayRuleName, NetworkFabricInternetGatewayRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkFabricInternetGatewayRuleResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricInternetGatewayRuleResource>(
-                    new NetworkFabricInternetGatewayRuleOperationSource(Client),
+                    new NetworkFabricInternetGatewayRuleResourceOperationSource(Client),
                     _internetGatewayRulesClientDiagnostics,
                     Pipeline,
                     message.Request,

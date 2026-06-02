@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _networkPacketBrokersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkPacketBrokerPatchContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkPacketBrokerResource> operation = new ManagedNetworkFabricArmOperation<NetworkPacketBrokerResource>(
-                    new NetworkPacketBrokerOperationSource(Client),
+                    new NetworkPacketBrokerResourceOperationSource(Client),
                     _networkPacketBrokersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _networkPacketBrokersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkPacketBrokerPatchContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkPacketBrokerResource> operation = new ManagedNetworkFabricArmOperation<NetworkPacketBrokerResource>(
-                    new NetworkPacketBrokerOperationSource(Client),
+                    new NetworkPacketBrokerResourceOperationSource(Client),
                     _networkPacketBrokersClientDiagnostics,
                     Pipeline,
                     message.Request,

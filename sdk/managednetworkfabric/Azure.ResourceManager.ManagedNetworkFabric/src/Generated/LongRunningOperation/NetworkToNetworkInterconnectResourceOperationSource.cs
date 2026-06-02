@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary></summary>
-    internal partial class NetworkFabricL3IsolationDomainOperationSource : IOperationSource<NetworkFabricL3IsolationDomainResource>
+    internal partial class NetworkToNetworkInterconnectResourceOperationSource : IOperationSource<NetworkToNetworkInterconnectResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal NetworkFabricL3IsolationDomainOperationSource(ArmClient client)
+        internal NetworkToNetworkInterconnectResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        NetworkFabricL3IsolationDomainResource IOperationSource<NetworkFabricL3IsolationDomainResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkToNetworkInterconnectResource IOperationSource<NetworkToNetworkInterconnectResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            NetworkFabricL3IsolationDomainData data = NetworkFabricL3IsolationDomainData.DeserializeNetworkFabricL3IsolationDomainData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkFabricL3IsolationDomainResource(_client, data);
+            NetworkToNetworkInterconnectData data = NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkToNetworkInterconnectResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<NetworkFabricL3IsolationDomainResource> IOperationSource<NetworkFabricL3IsolationDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkToNetworkInterconnectResource> IOperationSource<NetworkToNetworkInterconnectResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            NetworkFabricL3IsolationDomainData data = NetworkFabricL3IsolationDomainData.DeserializeNetworkFabricL3IsolationDomainData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkFabricL3IsolationDomainResource(_client, data);
+            NetworkToNetworkInterconnectData data = NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkToNetworkInterconnectResource(_client, data);
         }
     }
 }

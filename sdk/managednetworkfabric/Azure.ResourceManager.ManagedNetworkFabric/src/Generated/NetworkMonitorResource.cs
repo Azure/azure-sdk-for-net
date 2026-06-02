@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _networkMonitorsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkMonitorPatchContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkMonitorResource> operation = new ManagedNetworkFabricArmOperation<NetworkMonitorResource>(
-                    new NetworkMonitorOperationSource(Client),
+                    new NetworkMonitorResourceOperationSource(Client),
                     _networkMonitorsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _networkMonitorsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkMonitorPatchContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkMonitorResource> operation = new ManagedNetworkFabricArmOperation<NetworkMonitorResource>(
-                    new NetworkMonitorOperationSource(Client),
+                    new NetworkMonitorResourceOperationSource(Client),
                     _networkMonitorsClientDiagnostics,
                     Pipeline,
                     message.Request,

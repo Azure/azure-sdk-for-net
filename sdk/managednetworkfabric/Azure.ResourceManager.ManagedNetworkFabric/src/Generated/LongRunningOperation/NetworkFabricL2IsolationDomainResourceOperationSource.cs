@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary></summary>
-    internal partial class NetworkTapOperationSource : IOperationSource<NetworkTapResource>
+    internal partial class NetworkFabricL2IsolationDomainResourceOperationSource : IOperationSource<NetworkFabricL2IsolationDomainResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal NetworkTapOperationSource(ArmClient client)
+        internal NetworkFabricL2IsolationDomainResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        NetworkTapResource IOperationSource<NetworkTapResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkFabricL2IsolationDomainResource IOperationSource<NetworkFabricL2IsolationDomainResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            NetworkTapData data = NetworkTapData.DeserializeNetworkTapData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkTapResource(_client, data);
+            NetworkFabricL2IsolationDomainData data = NetworkFabricL2IsolationDomainData.DeserializeNetworkFabricL2IsolationDomainData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkFabricL2IsolationDomainResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<NetworkTapResource> IOperationSource<NetworkTapResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkFabricL2IsolationDomainResource> IOperationSource<NetworkFabricL2IsolationDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            NetworkTapData data = NetworkTapData.DeserializeNetworkTapData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkTapResource(_client, data);
+            NetworkFabricL2IsolationDomainData data = NetworkFabricL2IsolationDomainData.DeserializeNetworkFabricL2IsolationDomainData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkFabricL2IsolationDomainResource(_client, data);
         }
     }
 }

@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary></summary>
-    internal partial class NetworkFabricNeighborGroupOperationSource : IOperationSource<NetworkFabricNeighborGroupResource>
+    internal partial class NetworkFabricNeighborGroupResourceOperationSource : IOperationSource<NetworkFabricNeighborGroupResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal NetworkFabricNeighborGroupOperationSource(ArmClient client)
+        internal NetworkFabricNeighborGroupResourceOperationSource(ArmClient client)
         {
             _client = client;
         }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _ipCommunitiesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricIPCommunityPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkFabricIPCommunityResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricIPCommunityResource>(
-                    new CompatibilityOperationSource<NetworkFabricIPCommunityResource, NetworkFabricIPCommunityData>(Client, NetworkFabricIPCommunityData.DeserializeNetworkFabricIPCommunityData, (client, data) => new NetworkFabricIPCommunityResource(client, data)),
+                    new NetworkFabricIPCommunityResourceOperationSource(Client),
                     _ipCommunitiesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _ipCommunitiesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricIPCommunityPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkFabricIPCommunityResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricIPCommunityResource>(
-                    new CompatibilityOperationSource<NetworkFabricIPCommunityResource, NetworkFabricIPCommunityData>(Client, NetworkFabricIPCommunityData.DeserializeNetworkFabricIPCommunityData, (client, data) => new NetworkFabricIPCommunityResource(client, data)),
+                    new NetworkFabricIPCommunityResourceOperationSource(Client),
                     _ipCommunitiesClientDiagnostics,
                     Pipeline,
                     message.Request,

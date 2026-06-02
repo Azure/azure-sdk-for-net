@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _externalNetworksRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, externalNetworkName, NetworkFabricExternalNetworkData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkFabricExternalNetworkResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricExternalNetworkResource>(
-                    new NetworkFabricExternalNetworkOperationSource(Client),
+                    new NetworkFabricExternalNetworkResourceOperationSource(Client),
                     _externalNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _externalNetworksRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, externalNetworkName, NetworkFabricExternalNetworkData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkFabricExternalNetworkResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricExternalNetworkResource>(
-                    new NetworkFabricExternalNetworkOperationSource(Client),
+                    new NetworkFabricExternalNetworkResourceOperationSource(Client),
                     _externalNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,

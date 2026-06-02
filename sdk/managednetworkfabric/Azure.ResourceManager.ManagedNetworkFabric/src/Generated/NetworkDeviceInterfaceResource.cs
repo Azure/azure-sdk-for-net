@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _networkInterfacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetworkDeviceInterfacePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkDeviceInterfaceResource> operation = new ManagedNetworkFabricArmOperation<NetworkDeviceInterfaceResource>(
-                    new NetworkDeviceInterfaceOperationSource(Client),
+                    new NetworkDeviceInterfaceResourceOperationSource(Client),
                     _networkInterfacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _networkInterfacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetworkDeviceInterfacePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkDeviceInterfaceResource> operation = new ManagedNetworkFabricArmOperation<NetworkDeviceInterfaceResource>(
-                    new NetworkDeviceInterfaceOperationSource(Client),
+                    new NetworkDeviceInterfaceResourceOperationSource(Client),
                     _networkInterfacesClientDiagnostics,
                     Pipeline,
                     message.Request,

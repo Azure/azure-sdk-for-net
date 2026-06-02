@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary></summary>
-    internal partial class NetworkToNetworkInterconnectOperationSource : IOperationSource<NetworkToNetworkInterconnectResource>
+    internal partial class NetworkMonitorResourceOperationSource : IOperationSource<NetworkMonitorResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal NetworkToNetworkInterconnectOperationSource(ArmClient client)
+        internal NetworkMonitorResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        NetworkToNetworkInterconnectResource IOperationSource<NetworkToNetworkInterconnectResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkMonitorResource IOperationSource<NetworkMonitorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            NetworkToNetworkInterconnectData data = NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkToNetworkInterconnectResource(_client, data);
+            NetworkMonitorData data = NetworkMonitorData.DeserializeNetworkMonitorData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkMonitorResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<NetworkToNetworkInterconnectResource> IOperationSource<NetworkToNetworkInterconnectResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkMonitorResource> IOperationSource<NetworkMonitorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            NetworkToNetworkInterconnectData data = NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkToNetworkInterconnectResource(_client, data);
+            NetworkMonitorData data = NetworkMonitorData.DeserializeNetworkMonitorData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkMonitorResource(_client, data);
         }
     }
 }

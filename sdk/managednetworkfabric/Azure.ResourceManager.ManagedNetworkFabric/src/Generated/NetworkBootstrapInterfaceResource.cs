@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _networkBootstrapInterfacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetworkBootstrapInterfacePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkBootstrapInterfaceResource> operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapInterfaceResource>(
-                    new NetworkBootstrapInterfaceOperationSource(Client),
+                    new NetworkBootstrapInterfaceResourceOperationSource(Client),
                     _networkBootstrapInterfacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _networkBootstrapInterfacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetworkBootstrapInterfacePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkBootstrapInterfaceResource> operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapInterfaceResource>(
-                    new NetworkBootstrapInterfaceOperationSource(Client),
+                    new NetworkBootstrapInterfaceResourceOperationSource(Client),
                     _networkBootstrapInterfacesClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary></summary>
-    internal partial class NetworkDeviceOperationSource : IOperationSource<NetworkDeviceResource>
+    internal partial class NetworkFabricExternalNetworkResourceOperationSource : IOperationSource<NetworkFabricExternalNetworkResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal NetworkDeviceOperationSource(ArmClient client)
+        internal NetworkFabricExternalNetworkResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        NetworkDeviceResource IOperationSource<NetworkDeviceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkFabricExternalNetworkResource IOperationSource<NetworkFabricExternalNetworkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            NetworkDeviceData data = NetworkDeviceData.DeserializeNetworkDeviceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkDeviceResource(_client, data);
+            NetworkFabricExternalNetworkData data = NetworkFabricExternalNetworkData.DeserializeNetworkFabricExternalNetworkData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkFabricExternalNetworkResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<NetworkDeviceResource> IOperationSource<NetworkDeviceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkFabricExternalNetworkResource> IOperationSource<NetworkFabricExternalNetworkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            NetworkDeviceData data = NetworkDeviceData.DeserializeNetworkDeviceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkDeviceResource(_client, data);
+            NetworkFabricExternalNetworkData data = NetworkFabricExternalNetworkData.DeserializeNetworkFabricExternalNetworkData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkFabricExternalNetworkResource(_client, data);
         }
     }
 }

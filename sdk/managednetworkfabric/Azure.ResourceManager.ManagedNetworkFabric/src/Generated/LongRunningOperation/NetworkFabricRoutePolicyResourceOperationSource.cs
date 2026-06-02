@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary></summary>
-    internal partial class NetworkTapRuleOperationSource : IOperationSource<NetworkTapRuleResource>
+    internal partial class NetworkFabricRoutePolicyResourceOperationSource : IOperationSource<NetworkFabricRoutePolicyResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal NetworkTapRuleOperationSource(ArmClient client)
+        internal NetworkFabricRoutePolicyResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        NetworkTapRuleResource IOperationSource<NetworkTapRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkFabricRoutePolicyResource IOperationSource<NetworkFabricRoutePolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            NetworkTapRuleData data = NetworkTapRuleData.DeserializeNetworkTapRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkTapRuleResource(_client, data);
+            NetworkFabricRoutePolicyData data = NetworkFabricRoutePolicyData.DeserializeNetworkFabricRoutePolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkFabricRoutePolicyResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<NetworkTapRuleResource> IOperationSource<NetworkTapRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkFabricRoutePolicyResource> IOperationSource<NetworkFabricRoutePolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            NetworkTapRuleData data = NetworkTapRuleData.DeserializeNetworkTapRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkTapRuleResource(_client, data);
+            NetworkFabricRoutePolicyData data = NetworkFabricRoutePolicyData.DeserializeNetworkFabricRoutePolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkFabricRoutePolicyResource(_client, data);
         }
     }
 }

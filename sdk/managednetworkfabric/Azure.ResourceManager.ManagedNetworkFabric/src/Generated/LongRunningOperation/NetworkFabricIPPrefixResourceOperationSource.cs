@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary></summary>
-    internal partial class NetworkBootstrapDeviceOperationSource : IOperationSource<NetworkBootstrapDeviceResource>
+    internal partial class NetworkFabricIPPrefixResourceOperationSource : IOperationSource<NetworkFabricIPPrefixResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal NetworkBootstrapDeviceOperationSource(ArmClient client)
+        internal NetworkFabricIPPrefixResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        NetworkBootstrapDeviceResource IOperationSource<NetworkBootstrapDeviceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkFabricIPPrefixResource IOperationSource<NetworkFabricIPPrefixResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            NetworkBootstrapDeviceData data = NetworkBootstrapDeviceData.DeserializeNetworkBootstrapDeviceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkBootstrapDeviceResource(_client, data);
+            NetworkFabricIPPrefixData data = NetworkFabricIPPrefixData.DeserializeNetworkFabricIPPrefixData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkFabricIPPrefixResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<NetworkBootstrapDeviceResource> IOperationSource<NetworkBootstrapDeviceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkFabricIPPrefixResource> IOperationSource<NetworkFabricIPPrefixResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            NetworkBootstrapDeviceData data = NetworkBootstrapDeviceData.DeserializeNetworkBootstrapDeviceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkBootstrapDeviceResource(_client, data);
+            NetworkFabricIPPrefixData data = NetworkFabricIPPrefixData.DeserializeNetworkFabricIPPrefixData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkFabricIPPrefixResource(_client, data);
         }
     }
 }

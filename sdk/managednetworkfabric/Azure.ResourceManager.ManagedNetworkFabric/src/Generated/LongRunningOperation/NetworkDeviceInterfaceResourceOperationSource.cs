@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary></summary>
-    internal partial class NetworkDeviceInterfaceOperationSource : IOperationSource<NetworkDeviceInterfaceResource>
+    internal partial class NetworkDeviceInterfaceResourceOperationSource : IOperationSource<NetworkDeviceInterfaceResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal NetworkDeviceInterfaceOperationSource(ArmClient client)
+        internal NetworkDeviceInterfaceResourceOperationSource(ArmClient client)
         {
             _client = client;
         }

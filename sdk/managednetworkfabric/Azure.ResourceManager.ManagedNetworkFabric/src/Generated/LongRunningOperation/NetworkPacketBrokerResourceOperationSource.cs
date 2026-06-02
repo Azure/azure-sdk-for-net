@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary></summary>
-    internal partial class NetworkFabricIPExtendedCommunityOperationSource : IOperationSource<NetworkFabricIPExtendedCommunityResource>
+    internal partial class NetworkPacketBrokerResourceOperationSource : IOperationSource<NetworkPacketBrokerResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal NetworkFabricIPExtendedCommunityOperationSource(ArmClient client)
+        internal NetworkPacketBrokerResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        NetworkFabricIPExtendedCommunityResource IOperationSource<NetworkFabricIPExtendedCommunityResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkPacketBrokerResource IOperationSource<NetworkPacketBrokerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            NetworkFabricIPExtendedCommunityData data = NetworkFabricIPExtendedCommunityData.DeserializeNetworkFabricIPExtendedCommunityData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkFabricIPExtendedCommunityResource(_client, data);
+            NetworkPacketBrokerData data = NetworkPacketBrokerData.DeserializeNetworkPacketBrokerData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkPacketBrokerResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<NetworkFabricIPExtendedCommunityResource> IOperationSource<NetworkFabricIPExtendedCommunityResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkPacketBrokerResource> IOperationSource<NetworkPacketBrokerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            NetworkFabricIPExtendedCommunityData data = NetworkFabricIPExtendedCommunityData.DeserializeNetworkFabricIPExtendedCommunityData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkFabricIPExtendedCommunityResource(_client, data);
+            NetworkPacketBrokerData data = NetworkPacketBrokerData.DeserializeNetworkPacketBrokerData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkPacketBrokerResource(_client, data);
         }
     }
 }

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkToNetworkInterconnectName, NetworkToNetworkInterconnectData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkToNetworkInterconnectResource> operation = new ManagedNetworkFabricArmOperation<NetworkToNetworkInterconnectResource>(
-                    new NetworkToNetworkInterconnectOperationSource(Client),
+                    new NetworkToNetworkInterconnectResourceOperationSource(Client),
                     _networkToNetworkInterconnectsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkToNetworkInterconnectName, NetworkToNetworkInterconnectData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkToNetworkInterconnectResource> operation = new ManagedNetworkFabricArmOperation<NetworkToNetworkInterconnectResource>(
-                    new NetworkToNetworkInterconnectOperationSource(Client),
+                    new NetworkToNetworkInterconnectResourceOperationSource(Client),
                     _networkToNetworkInterconnectsClientDiagnostics,
                     Pipeline,
                     message.Request,

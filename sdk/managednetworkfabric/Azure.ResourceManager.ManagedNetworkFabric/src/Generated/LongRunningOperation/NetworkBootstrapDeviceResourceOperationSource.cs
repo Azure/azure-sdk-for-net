@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary></summary>
-    internal partial class NetworkRackOperationSource : IOperationSource<NetworkRackResource>
+    internal partial class NetworkBootstrapDeviceResourceOperationSource : IOperationSource<NetworkBootstrapDeviceResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal NetworkRackOperationSource(ArmClient client)
+        internal NetworkBootstrapDeviceResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        NetworkRackResource IOperationSource<NetworkRackResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkBootstrapDeviceResource IOperationSource<NetworkBootstrapDeviceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            NetworkRackData data = NetworkRackData.DeserializeNetworkRackData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkRackResource(_client, data);
+            NetworkBootstrapDeviceData data = NetworkBootstrapDeviceData.DeserializeNetworkBootstrapDeviceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkBootstrapDeviceResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<NetworkRackResource> IOperationSource<NetworkRackResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkBootstrapDeviceResource> IOperationSource<NetworkBootstrapDeviceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            NetworkRackData data = NetworkRackData.DeserializeNetworkRackData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkRackResource(_client, data);
+            NetworkBootstrapDeviceData data = NetworkBootstrapDeviceData.DeserializeNetworkBootstrapDeviceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkBootstrapDeviceResource(_client, data);
         }
     }
 }

@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _networkTapRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTapRulePatchContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkTapRuleResource> operation = new ManagedNetworkFabricArmOperation<NetworkTapRuleResource>(
-                    new NetworkTapRuleOperationSource(Client),
+                    new NetworkTapRuleResourceOperationSource(Client),
                     _networkTapRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _networkTapRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTapRulePatchContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkTapRuleResource> operation = new ManagedNetworkFabricArmOperation<NetworkTapRuleResource>(
-                    new NetworkTapRuleOperationSource(Client),
+                    new NetworkTapRuleResourceOperationSource(Client),
                     _networkTapRulesClientDiagnostics,
                     Pipeline,
                     message.Request,

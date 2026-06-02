@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _ipCommunitiesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipCommunityName, NetworkFabricIPCommunityData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkFabricIPCommunityResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricIPCommunityResource>(
-                    new NetworkFabricIPCommunityOperationSource(Client),
+                    new NetworkFabricIPCommunityResourceOperationSource(Client),
                     _ipCommunitiesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _ipCommunitiesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipCommunityName, NetworkFabricIPCommunityData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkFabricIPCommunityResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricIPCommunityResource>(
-                    new NetworkFabricIPCommunityOperationSource(Client),
+                    new NetworkFabricIPCommunityResourceOperationSource(Client),
                     _ipCommunitiesClientDiagnostics,
                     Pipeline,
                     message.Request,
