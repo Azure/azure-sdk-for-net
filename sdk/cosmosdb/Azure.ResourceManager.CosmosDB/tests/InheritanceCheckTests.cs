@@ -25,6 +25,9 @@ namespace Azure.ResourceManager.TestFramework
                 "CosmosDBMongoCollection",
                 "CosmosDBMongoVCoreCollection",
                 "RedistributeThroughputPropertiesResource",
+                "SoftDeletedDatabaseAccountResource",
+                "SoftDeletedSqlContainerResource",
+                "SoftDeletedSqlDatabaseResource",
             };
         }
     }
