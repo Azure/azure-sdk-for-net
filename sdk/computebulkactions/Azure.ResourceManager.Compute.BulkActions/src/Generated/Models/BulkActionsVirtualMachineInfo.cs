@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="operationStatus"> Represents the operationStatus of the virtual machine in response to the last operation performed on it by the LaunchBulkInstancesOperation. </param>
         /// <param name="error"> Error information when operationStatus is Failed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkActionsVirtualMachineInfo(string name, ResourceIdentifier id, string @type, VMOperationStatus operationStatus, ApiError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkActionsVirtualMachineInfo(string name, ResourceIdentifier id, string @type, VMOperationStatus operationStatus, ComputeApiError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Id = id;
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public VMOperationStatus OperationStatus { get; }
 
         /// <summary> Error information when operationStatus is Failed. </summary>
-        public ApiError Error { get; }
+        public ComputeApiError Error { get; }
     }
 }

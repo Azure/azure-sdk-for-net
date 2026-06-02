@@ -14,51 +14,51 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> ApiError for Fleet. </summary>
-    public partial class ApiError : IJsonModel<ApiError>
+    public partial class ComputeApiError : IJsonModel<ComputeApiError>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ApiError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ComputeApiError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeApiError>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeApiError(document.RootElement, options);
+                        return DeserializeComputeApiError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiError)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeApiError)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeApiError>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeBulkActionsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ApiError)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeApiError)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApiError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ComputeApiError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiError IPersistableModel<ApiError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ComputeApiError IPersistableModel<ComputeApiError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApiError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeApiError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ApiError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeApiError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeApiError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiError)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeApiError)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Code))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
-                foreach (ApiErrorBase item in Details)
+                foreach (ComputeApiErrorBase item in Details)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -123,24 +123,24 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiError IJsonModel<ApiError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ComputeApiError IJsonModel<ComputeApiError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ApiError JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ComputeApiError JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeApiError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiError)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeApiError)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApiError(document.RootElement, options);
+            return DeserializeComputeApiError(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ApiError DeserializeApiError(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeApiError DeserializeComputeApiError(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             string code = default;
             string target = default;
             string message = default;
-            IList<ApiErrorBase> details = default;
+            IList<ComputeApiErrorBase> details = default;
             InnerError innererror = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -175,10 +175,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    List<ApiErrorBase> array = new List<ApiErrorBase>();
+                    List<ComputeApiErrorBase> array = new List<ComputeApiErrorBase>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ApiErrorBase.DeserializeApiErrorBase(item, options));
+                        array.Add(ComputeApiErrorBase.DeserializeComputeApiErrorBase(item, options));
                     }
                     details = array;
                     continue;
@@ -197,11 +197,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApiError(
+            return new ComputeApiError(
                 code,
                 target,
                 message,
-                details ?? new ChangeTrackingList<ApiErrorBase>(),
+                details ?? new ChangeTrackingList<ComputeApiErrorBase>(),
                 innererror,
                 additionalBinaryDataProperties);
         }

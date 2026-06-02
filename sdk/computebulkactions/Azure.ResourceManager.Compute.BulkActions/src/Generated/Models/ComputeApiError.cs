@@ -7,30 +7,36 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> API error base. </summary>
-    public partial class ApiErrorBase
+    /// <summary> ApiError for Fleet. </summary>
+    public partial class ComputeApiError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ApiErrorBase"/>. </summary>
-        internal ApiErrorBase()
+        /// <summary> Initializes a new instance of <see cref="ComputeApiError"/>. </summary>
+        internal ComputeApiError()
         {
+            Details = new ChangeTrackingList<ComputeApiErrorBase>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiErrorBase"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeApiError"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="target"> The target of the particular error. </param>
         /// <param name="message"> The error message. </param>
+        /// <param name="details"> The API error details. </param>
+        /// <param name="innererror"> The API inner error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiErrorBase(string code, string target, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeApiError(string code, string target, string message, IList<ComputeApiErrorBase> details, InnerError innererror, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Target = target;
             Message = message;
+            Details = details;
+            Innererror = innererror;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,5 +48,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> The error message. </summary>
         public string Message { get; }
+
+        /// <summary> The API error details. </summary>
+        public IList<ComputeApiErrorBase> Details { get; }
+
+        /// <summary> The API inner error. </summary>
+        public InnerError Innererror { get; }
     }
 }

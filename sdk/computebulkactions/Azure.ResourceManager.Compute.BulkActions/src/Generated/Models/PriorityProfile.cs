@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="evictionPolicy"> Eviction Policy to follow when evicting Spot VMs. Available from 2026-04-06-preview. </param>
         /// <param name="allocationStrategy"> The allocation strategy for VM size selection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PriorityProfile(PriorityType? @type, float? maxPricePerVM, EvictionPolicy? evictionPolicy, AllocationStrategy? allocationStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PriorityProfile(VirtualMachinePriorityTypes? @type, float? maxPricePerVM, VirtualMachineEvictionPolicyTypes? evictionPolicy, ComputeAllocationStrategy? allocationStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             MaxPricePerVM = maxPricePerVM;
@@ -37,15 +37,15 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> The priority type for VM allocation. </summary>
-        public PriorityType? Type { get; set; }
+        public VirtualMachinePriorityTypes? Type { get; set; }
 
         /// <summary> Price per hour of each Spot VM will never exceed this. Available from 2026-04-06-preview. </summary>
         public float? MaxPricePerVM { get; set; }
 
         /// <summary> Eviction Policy to follow when evicting Spot VMs. Available from 2026-04-06-preview. </summary>
-        public EvictionPolicy? EvictionPolicy { get; set; }
+        public VirtualMachineEvictionPolicyTypes? EvictionPolicy { get; set; }
 
         /// <summary> The allocation strategy for VM size selection. </summary>
-        public AllocationStrategy? AllocationStrategy { get; set; }
+        public ComputeAllocationStrategy? AllocationStrategy { get; set; }
     }
 }

@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 return null;
             }
-            PriorityType? @type = default;
+            VirtualMachinePriorityTypes? @type = default;
             float? maxPricePerVM = default;
-            EvictionPolicy? evictionPolicy = default;
-            AllocationStrategy? allocationStrategy = default;
+            VirtualMachineEvictionPolicyTypes? evictionPolicy = default;
+            ComputeAllocationStrategy? allocationStrategy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    @type = new PriorityType(prop.Value.GetString());
+                    @type = new VirtualMachinePriorityTypes(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("maxPricePerVM"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    evictionPolicy = new EvictionPolicy(prop.Value.GetString());
+                    evictionPolicy = new VirtualMachineEvictionPolicyTypes(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("allocationStrategy"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    allocationStrategy = new AllocationStrategy(prop.Value.GetString());
+                    allocationStrategy = new ComputeAllocationStrategy(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

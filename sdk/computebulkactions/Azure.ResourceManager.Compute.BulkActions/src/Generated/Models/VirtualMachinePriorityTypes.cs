@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> The priority type for VM allocation. </summary>
-    public readonly partial struct PriorityType : IEquatable<PriorityType>
+    public readonly partial struct VirtualMachinePriorityTypes : IEquatable<VirtualMachinePriorityTypes>
     {
         private readonly string _value;
         /// <summary> Regular priority VMs. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Spot priority VMs. </summary>
         private const string SpotValue = "Spot";
 
-        /// <summary> Initializes a new instance of <see cref="PriorityType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachinePriorityTypes"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PriorityType(string value)
+        public VirtualMachinePriorityTypes(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Regular priority VMs. </summary>
-        public static PriorityType Regular { get; } = new PriorityType(RegularValue);
+        public static VirtualMachinePriorityTypes Regular { get; } = new VirtualMachinePriorityTypes(RegularValue);
 
         /// <summary> Spot priority VMs. </summary>
-        public static PriorityType Spot { get; } = new PriorityType(SpotValue);
+        public static VirtualMachinePriorityTypes Spot { get; } = new VirtualMachinePriorityTypes(SpotValue);
 
-        /// <summary> Determines if two <see cref="PriorityType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="VirtualMachinePriorityTypes"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(PriorityType left, PriorityType right) => left.Equals(right);
+        public static bool operator ==(VirtualMachinePriorityTypes left, VirtualMachinePriorityTypes right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="PriorityType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="VirtualMachinePriorityTypes"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(PriorityType left, PriorityType right) => !left.Equals(right);
+        public static bool operator !=(VirtualMachinePriorityTypes left, VirtualMachinePriorityTypes right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="PriorityType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="VirtualMachinePriorityTypes"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PriorityType(string value) => new PriorityType(value);
+        public static implicit operator VirtualMachinePriorityTypes(string value) => new VirtualMachinePriorityTypes(value);
 
-        /// <summary> Converts a string to a <see cref="PriorityType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="VirtualMachinePriorityTypes"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PriorityType?(string value) => value == null ? null : new PriorityType(value);
+        public static implicit operator VirtualMachinePriorityTypes?(string value) => value == null ? null : new VirtualMachinePriorityTypes(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PriorityType other && Equals(other);
+        public override bool Equals(object obj) => obj is VirtualMachinePriorityTypes other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(PriorityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(VirtualMachinePriorityTypes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

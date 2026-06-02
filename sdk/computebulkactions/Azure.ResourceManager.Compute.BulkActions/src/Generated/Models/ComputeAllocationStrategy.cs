@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> The allocation strategy for VM size selection. </summary>
-    public readonly partial struct AllocationStrategy : IEquatable<AllocationStrategy>
+    public readonly partial struct ComputeAllocationStrategy : IEquatable<ComputeAllocationStrategy>
     {
         private readonly string _value;
         /// <summary> Platform prioritizes VM sizes with the lowest hourly cost. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Platform prioritizes VM sizes with the highest available capacity first. </summary>
         private const string CapacityOptimizedValue = "CapacityOptimized";
 
-        /// <summary> Initializes a new instance of <see cref="AllocationStrategy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeAllocationStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AllocationStrategy(string value)
+        public ComputeAllocationStrategy(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Platform prioritizes VM sizes with the lowest hourly cost. </summary>
-        public static AllocationStrategy LowestPrice { get; } = new AllocationStrategy(LowestPriceValue);
+        public static ComputeAllocationStrategy LowestPrice { get; } = new ComputeAllocationStrategy(LowestPriceValue);
 
         /// <summary> Customer specifies a rank for each VM size, platform uses VM sizes in rank order. </summary>
-        public static AllocationStrategy Prioritized { get; } = new AllocationStrategy(PrioritizedValue);
+        public static ComputeAllocationStrategy Prioritized { get; } = new ComputeAllocationStrategy(PrioritizedValue);
 
         /// <summary> Platform prioritizes VM sizes with the highest available capacity first. </summary>
-        public static AllocationStrategy CapacityOptimized { get; } = new AllocationStrategy(CapacityOptimizedValue);
+        public static ComputeAllocationStrategy CapacityOptimized { get; } = new ComputeAllocationStrategy(CapacityOptimizedValue);
 
-        /// <summary> Determines if two <see cref="AllocationStrategy"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeAllocationStrategy"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(AllocationStrategy left, AllocationStrategy right) => left.Equals(right);
+        public static bool operator ==(ComputeAllocationStrategy left, ComputeAllocationStrategy right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AllocationStrategy"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeAllocationStrategy"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(AllocationStrategy left, AllocationStrategy right) => !left.Equals(right);
+        public static bool operator !=(ComputeAllocationStrategy left, ComputeAllocationStrategy right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AllocationStrategy"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeAllocationStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AllocationStrategy(string value) => new AllocationStrategy(value);
+        public static implicit operator ComputeAllocationStrategy(string value) => new ComputeAllocationStrategy(value);
 
-        /// <summary> Converts a string to a <see cref="AllocationStrategy"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeAllocationStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AllocationStrategy?(string value) => value == null ? null : new AllocationStrategy(value);
+        public static implicit operator ComputeAllocationStrategy?(string value) => value == null ? null : new ComputeAllocationStrategy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AllocationStrategy other && Equals(other);
+        public override bool Equals(object obj) => obj is ComputeAllocationStrategy other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(AllocationStrategy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ComputeAllocationStrategy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

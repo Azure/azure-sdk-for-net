@@ -790,7 +790,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="operationStatus"> Represents the operationStatus of the virtual machine in response to the last operation performed on it by the LaunchBulkInstancesOperation. </param>
         /// <param name="error"> Error information when operationStatus is Failed. </param>
         /// <returns> A new <see cref="Models.BulkActionsVirtualMachineInfo"/> instance for mocking. </returns>
-        public static BulkActionsVirtualMachineInfo BulkActionsVirtualMachineInfo(string name = default, ResourceIdentifier id = default, string @type = default, VMOperationStatus operationStatus = default, ApiError error = default)
+        public static BulkActionsVirtualMachineInfo BulkActionsVirtualMachineInfo(string name = default, ResourceIdentifier id = default, string @type = default, VMOperationStatus operationStatus = default, ComputeApiError error = default)
         {
             return new BulkActionsVirtualMachineInfo(
                 name,
@@ -807,12 +807,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="message"> The error message. </param>
         /// <param name="details"> The API error details. </param>
         /// <param name="innererror"> The API inner error. </param>
-        /// <returns> A new <see cref="Models.ApiError"/> instance for mocking. </returns>
-        public static ApiError ApiError(string code = default, string target = default, string message = default, IEnumerable<ApiErrorBase> details = default, InnerError innererror = default)
+        /// <returns> A new <see cref="Models.ComputeApiError"/> instance for mocking. </returns>
+        public static ComputeApiError ComputeApiError(string code = default, string target = default, string message = default, IEnumerable<ComputeApiErrorBase> details = default, InnerError innererror = default)
         {
-            details ??= new ChangeTrackingList<ApiErrorBase>();
+            details ??= new ChangeTrackingList<ComputeApiErrorBase>();
 
-            return new ApiError(
+            return new ComputeApiError(
                 code,
                 target,
                 message,
@@ -825,10 +825,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="code"> The error code. </param>
         /// <param name="target"> The target of the particular error. </param>
         /// <param name="message"> The error message. </param>
-        /// <returns> A new <see cref="Models.ApiErrorBase"/> instance for mocking. </returns>
-        public static ApiErrorBase ApiErrorBase(string code = default, string target = default, string message = default)
+        /// <returns> A new <see cref="Models.ComputeApiErrorBase"/> instance for mocking. </returns>
+        public static ComputeApiErrorBase ComputeApiErrorBase(string code = default, string target = default, string message = default)
         {
-            return new ApiErrorBase(code, target, message, additionalBinaryDataProperties: null);
+            return new ComputeApiErrorBase(code, target, message, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Inner error details. </summary>
