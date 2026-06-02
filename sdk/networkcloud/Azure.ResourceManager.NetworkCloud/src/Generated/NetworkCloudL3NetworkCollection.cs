@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _l3NetworksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, l3NetworkName, NetworkCloudL3NetworkData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudL3NetworkResource> operation = new NetworkCloudArmOperation<NetworkCloudL3NetworkResource>(
-                    new NetworkCloudL3NetworkOperationSource(Client),
+                    new NetworkCloudL3NetworkResourceOperationSource(Client),
                     _l3NetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _l3NetworksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, l3NetworkName, NetworkCloudL3NetworkData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudL3NetworkResource> operation = new NetworkCloudArmOperation<NetworkCloudL3NetworkResource>(
-                    new NetworkCloudL3NetworkOperationSource(Client),
+                    new NetworkCloudL3NetworkResourceOperationSource(Client),
                     _l3NetworksClientDiagnostics,
                     Pipeline,
                     message.Request,

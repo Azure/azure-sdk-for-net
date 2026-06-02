@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _volumeGroupsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetAppVolumeGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppVolumeGroupResource> operation = new NetAppArmOperation<NetAppVolumeGroupResource>(
-                    new NetAppVolumeGroupOperationSource(Client),
+                    new NetAppVolumeGroupResourceOperationSource(Client),
                     _volumeGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _volumeGroupsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetAppVolumeGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppVolumeGroupResource> operation = new NetAppArmOperation<NetAppVolumeGroupResource>(
-                    new NetAppVolumeGroupOperationSource(Client),
+                    new NetAppVolumeGroupResourceOperationSource(Client),
                     _volumeGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,

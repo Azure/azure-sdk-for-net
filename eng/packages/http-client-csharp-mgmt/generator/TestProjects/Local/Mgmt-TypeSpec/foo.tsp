@@ -145,6 +145,13 @@ interface Foos {
     ArmResponse<FooDependency[]>
   >;
 
+  @action("splitDependencies")
+  splitDependencies is ArmResourceActionAsync<
+    Foo,
+    void,
+    FooDependency[]
+  >;
+
   /** Get the provisioning state of a Foo resource. */
   @get
   @action("getProvisioningState")

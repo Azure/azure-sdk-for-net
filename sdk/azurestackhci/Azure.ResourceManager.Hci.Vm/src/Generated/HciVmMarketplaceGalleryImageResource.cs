@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _marketplaceGalleryImagesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmMarketplaceGalleryImagePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmMarketplaceGalleryImageResource> operation = new VmArmOperation<HciVmMarketplaceGalleryImageResource>(
-                    new HciVmMarketplaceGalleryImageOperationSource(Client),
+                    new HciVmMarketplaceGalleryImageResourceOperationSource(Client),
                     _marketplaceGalleryImagesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _marketplaceGalleryImagesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmMarketplaceGalleryImagePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmMarketplaceGalleryImageResource> operation = new VmArmOperation<HciVmMarketplaceGalleryImageResource>(
-                    new HciVmMarketplaceGalleryImageOperationSource(Client),
+                    new HciVmMarketplaceGalleryImageResourceOperationSource(Client),
                     _marketplaceGalleryImagesClientDiagnostics,
                     Pipeline,
                     message.Request,

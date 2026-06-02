@@ -90,17 +90,24 @@ namespace Azure.AI.Projects.Agents
         /// <param name="tools"> The list of tools to include in this version. </param>
         /// <param name="description"> A human-readable description of the toolbox. </param>
         /// <param name="metadata"> Arbitrary key-value metadata to associate with the toolbox. </param>
+        /// <param name="skills"> The list of skill sources to include in this version. A skill reference specifies a skill name and optionally a version. If version is omitted, the skill's default version is used. </param>
         /// <param name="policies"> Policy configuration for this toolbox version. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="tools"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ToolboxVersion> CreateToolboxVersion(string name, IEnumerable<ProjectsAgentTool> tools, string description = default, IDictionary<string, string> metadata = default, ToolboxPolicies policies = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<ToolboxVersion> CreateToolboxVersion(string name, IEnumerable<ProjectsAgentTool> tools, string description = default, IDictionary<string, string> metadata = default, IEnumerable<ToolboxSkill> skills = default, ToolboxPolicies policies = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(tools, nameof(tools));
 
-            CreateToolboxVersionRequest spreadModel = new CreateToolboxVersionRequest(description, metadata ?? new ChangeTrackingDictionary<string, string>(), tools?.ToList() as IList<ProjectsAgentTool> ?? new ChangeTrackingList<ProjectsAgentTool>(), policies, default);
+            CreateToolboxVersionRequest spreadModel = new CreateToolboxVersionRequest(
+                description,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                tools?.ToList() as IList<ProjectsAgentTool> ?? new ChangeTrackingList<ProjectsAgentTool>(),
+                skills?.ToList() as IList<ToolboxSkill> ?? new ChangeTrackingList<ToolboxSkill>(),
+                policies,
+                default);
             ClientResult result = CreateToolboxVersion(name, spreadModel, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((ToolboxVersion)result, result.GetRawResponse());
         }
@@ -110,17 +117,24 @@ namespace Azure.AI.Projects.Agents
         /// <param name="tools"> The list of tools to include in this version. </param>
         /// <param name="description"> A human-readable description of the toolbox. </param>
         /// <param name="metadata"> Arbitrary key-value metadata to associate with the toolbox. </param>
+        /// <param name="skills"> The list of skill sources to include in this version. A skill reference specifies a skill name and optionally a version. If version is omitted, the skill's default version is used. </param>
         /// <param name="policies"> Policy configuration for this toolbox version. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="tools"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ToolboxVersion>> CreateToolboxVersionAsync(string name, IEnumerable<ProjectsAgentTool> tools, string description = default, IDictionary<string, string> metadata = default, ToolboxPolicies policies = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<ToolboxVersion>> CreateToolboxVersionAsync(string name, IEnumerable<ProjectsAgentTool> tools, string description = default, IDictionary<string, string> metadata = default, IEnumerable<ToolboxSkill> skills = default, ToolboxPolicies policies = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(tools, nameof(tools));
 
-            CreateToolboxVersionRequest spreadModel = new CreateToolboxVersionRequest(description, metadata ?? new ChangeTrackingDictionary<string, string>(), tools?.ToList() as IList<ProjectsAgentTool> ?? new ChangeTrackingList<ProjectsAgentTool>(), policies, default);
+            CreateToolboxVersionRequest spreadModel = new CreateToolboxVersionRequest(
+                description,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                tools?.ToList() as IList<ProjectsAgentTool> ?? new ChangeTrackingList<ProjectsAgentTool>(),
+                skills?.ToList() as IList<ToolboxSkill> ?? new ChangeTrackingList<ToolboxSkill>(),
+                policies,
+                default);
             ClientResult result = await CreateToolboxVersionAsync(name, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((ToolboxVersion)result, result.GetRawResponse());
         }

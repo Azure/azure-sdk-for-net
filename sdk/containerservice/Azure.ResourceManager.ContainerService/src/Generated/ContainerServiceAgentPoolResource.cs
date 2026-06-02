@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.ContainerService
                 HttpMessage message = _agentPoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceAgentPoolData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceArmOperation<ContainerServiceAgentPoolResource> operation = new ContainerServiceArmOperation<ContainerServiceAgentPoolResource>(
-                    new ContainerServiceAgentPoolOperationSource(Client),
+                    new ContainerServiceAgentPoolResourceOperationSource(Client),
                     _agentPoolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -791,7 +791,7 @@ namespace Azure.ResourceManager.ContainerService
                 HttpMessage message = _agentPoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceAgentPoolData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceArmOperation<ContainerServiceAgentPoolResource> operation = new ContainerServiceArmOperation<ContainerServiceAgentPoolResource>(
-                    new ContainerServiceAgentPoolOperationSource(Client),
+                    new ContainerServiceAgentPoolResourceOperationSource(Client),
                     _agentPoolsClientDiagnostics,
                     Pipeline,
                     message.Request,

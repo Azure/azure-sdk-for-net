@@ -74,6 +74,9 @@ steps:
       arguments: 'restore'
       workingDirectory: '$(Agent.BuildDirectory)'
 
+  - pwsh: ./eng/scripts/Verify-McpConfigSync.ps1
+    displayName: Verify MCP config (.mcp.json vs .vscode/mcp.json) are in sync
+
   - pwsh: |
       $failed = $false
       if ('$(ProjectNames)' -and '$(ProjectNames)' -notlike '$(*') {
