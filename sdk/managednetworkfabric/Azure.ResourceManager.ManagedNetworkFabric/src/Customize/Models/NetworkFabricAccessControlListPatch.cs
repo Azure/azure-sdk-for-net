@@ -127,6 +127,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
+        /// <summary> Configuration to enable or disable ACL action count. </summary>
+        public NetworkFabricBooleanValue? GlobalAccessControlListActionsEnableCount
+        {
+            get => Properties?.GlobalAccessControlListActionsEnableCount;
+            set
+            {
+                Properties ??= new AccessControlListPatchProperties();
+                Properties.GlobalAccessControlListActionsEnableCount = value;
+            }
+        }
+
         /// <summary> Switch configuration description. </summary>
         public string Annotation
         {

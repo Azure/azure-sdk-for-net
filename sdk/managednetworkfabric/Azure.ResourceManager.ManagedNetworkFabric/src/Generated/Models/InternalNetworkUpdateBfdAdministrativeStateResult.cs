@@ -83,14 +83,5 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Internal Network BFD Administrative State response properties. </summary>
         internal InternalNetworkUpdateBfdAdministrativeStateResponseProperties Properties { get; }
-
-        /// <summary> NeighborAddress administrative status. </summary>
-        public IList<NeighborAddressBfdAdministrativeStatus> NeighborAddressAdministrativeStatus
-        {
-            get
-            {
-                return Properties is null ? default : Properties.NeighborAddressAdministrativeStatus;
-            }
-        }
     }
 }

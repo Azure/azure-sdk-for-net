@@ -42,9 +42,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Prefix of the route. </summary>
-        public string Prefix { get; }
-
         /// <summary> List of next hop addresses. </summary>
         public IList<string> NextHop { get; }
     }

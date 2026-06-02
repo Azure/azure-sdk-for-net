@@ -42,14 +42,5 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Commit Batch Details. </summary>
         internal CommitBatchDetails CommitBatchDetails { get; }
-
-        /// <summary> List of devices for which the commit operation failed. </summary>
-        public IList<string> CommitBatchDetailsFailedDevices
-        {
-            get
-            {
-                return CommitBatchDetails is null ? default : CommitBatchDetails.FailedDevices;
-            }
-        }
     }
 }

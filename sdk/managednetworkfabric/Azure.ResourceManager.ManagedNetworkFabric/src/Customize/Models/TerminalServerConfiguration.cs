@@ -28,6 +28,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="TerminalServerConfiguration"/>. </summary>
+        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
+        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
+        [Obsolete("This constructor is obsolete and will be removed in a future version. Use NetworkFabricTerminalServerConfiguration instead.")]
+        public TerminalServerConfiguration(string primaryIPv4Prefix, string secondaryIPv4Prefix)
+            : this(default, default, default, null, primaryIPv4Prefix, default, secondaryIPv4Prefix, default, default, new ChangeTrackingList<NetworkFabricSecretRotationStatus>())
+        {
+        }
+
         [Obsolete("This constructor is obsolete and will be removed in a future version. Use NetworkFabricTerminalServerConfiguration instead.")]
         internal TerminalServerConfiguration(string username, string password, string serialNumber, IDictionary<string, BinaryData> additionalBinaryDataProperties, string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, ResourceIdentifier networkDeviceId, IReadOnlyList<NetworkFabricSecretRotationStatus> secretRotationStatus)
             : base(username, password, serialNumber, additionalBinaryDataProperties)
