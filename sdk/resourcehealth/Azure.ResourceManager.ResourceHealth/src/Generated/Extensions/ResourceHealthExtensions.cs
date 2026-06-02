@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// Lists the all the children and its current health status for a parent resource. Use the nextLink property in the response to get the next page of children current health
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourceHealthArmClient.GetAllAsync(ResourceIdentifier, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResourceHealthArmClient.GetAvailabilityStatusOfChildResourceAsync(ResourceIdentifier, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -237,19 +237,19 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> A collection of <see cref="AvailabilityStatusData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AvailabilityStatusData> GetAllAsync(this ArmClient client, ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatusData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ResourceHealthAvailabilityStatusData> GetAvailabilityStatusOfChildResourceAsync(this ArmClient client, ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableResourceHealthArmClient(client).GetAllAsync(scope, filter, expand, cancellationToken);
+            return GetMockableResourceHealthArmClient(client).GetAvailabilityStatusOfChildResourceAsync(scope, filter, expand, cancellationToken);
         }
 
         /// <summary>
         /// Lists the all the children and its current health status for a parent resource. Use the nextLink property in the response to get the next page of children current health
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourceHealthArmClient.GetAll(ResourceIdentifier, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResourceHealthArmClient.GetAvailabilityStatusOfChildResource(ResourceIdentifier, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -258,19 +258,19 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> A collection of <see cref="AvailabilityStatusData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AvailabilityStatusData> GetAll(this ArmClient client, ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatusData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ResourceHealthAvailabilityStatusData> GetAvailabilityStatusOfChildResource(this ArmClient client, ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableResourceHealthArmClient(client).GetAll(scope, filter, expand, cancellationToken);
+            return GetMockableResourceHealthArmClient(client).GetAvailabilityStatusOfChildResource(scope, filter, expand, cancellationToken);
         }
 
         /// <summary>
         /// Lists the current availability status for all the resources in the resource group.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourceHealthResourceGroupResource.GetAvailabilityStatusesAsync(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResourceHealthResourceGroupResource.GetAvailabilityStatusesByResourceGroupAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -279,18 +279,18 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> A collection of <see cref="AvailabilityStatusResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AvailabilityStatusResource> GetAvailabilityStatusesAsync(this ResourceGroupResource resourceGroupResource, string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<AvailabilityStatusResource> GetAvailabilityStatusesByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableResourceHealthResourceGroupResource(resourceGroupResource).GetAvailabilityStatusesAsync(filter, expand, cancellationToken);
+            return GetMockableResourceHealthResourceGroupResource(resourceGroupResource).GetAvailabilityStatusesByResourceGroupAsync(filter, expand, cancellationToken);
         }
 
         /// <summary>
         /// Lists the current availability status for all the resources in the resource group.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourceHealthResourceGroupResource.GetAvailabilityStatuses(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResourceHealthResourceGroupResource.GetAvailabilityStatusesByResourceGroup(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -299,11 +299,11 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> A collection of <see cref="AvailabilityStatusResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AvailabilityStatusResource> GetAvailabilityStatuses(this ResourceGroupResource resourceGroupResource, string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        public static Pageable<AvailabilityStatusResource> GetAvailabilityStatusesByResourceGroup(this ResourceGroupResource resourceGroupResource, string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableResourceHealthResourceGroupResource(resourceGroupResource).GetAvailabilityStatuses(filter, expand, cancellationToken);
+            return GetMockableResourceHealthResourceGroupResource(resourceGroupResource).GetAvailabilityStatusesByResourceGroup(filter, expand, cancellationToken);
         }
 
         /// <summary>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// Lists the current availability status for all the resources in the subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourceHealthSubscriptionResource.GetAvailabilityStatusesAsync(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResourceHealthSubscriptionResource.GetAvailabilityStatusesBySubscriptionAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -378,18 +378,18 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="AvailabilityStatusResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AvailabilityStatusResource> GetAvailabilityStatusesAsync(this SubscriptionResource subscriptionResource, string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<AvailabilityStatusResource> GetAvailabilityStatusesBySubscriptionAsync(this SubscriptionResource subscriptionResource, string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableResourceHealthSubscriptionResource(subscriptionResource).GetAvailabilityStatusesAsync(filter, expand, cancellationToken);
+            return GetMockableResourceHealthSubscriptionResource(subscriptionResource).GetAvailabilityStatusesBySubscriptionAsync(filter, expand, cancellationToken);
         }
 
         /// <summary>
         /// Lists the current availability status for all the resources in the subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourceHealthSubscriptionResource.GetAvailabilityStatuses(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResourceHealthSubscriptionResource.GetAvailabilityStatusesBySubscription(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -398,11 +398,11 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="AvailabilityStatusResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AvailabilityStatusResource> GetAvailabilityStatuses(this SubscriptionResource subscriptionResource, string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        public static Pageable<AvailabilityStatusResource> GetAvailabilityStatusesBySubscription(this SubscriptionResource subscriptionResource, string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableResourceHealthSubscriptionResource(subscriptionResource).GetAvailabilityStatuses(filter, expand, cancellationToken);
+            return GetMockableResourceHealthSubscriptionResource(subscriptionResource).GetAvailabilityStatusesBySubscription(filter, expand, cancellationToken);
         }
 
         /// <summary>

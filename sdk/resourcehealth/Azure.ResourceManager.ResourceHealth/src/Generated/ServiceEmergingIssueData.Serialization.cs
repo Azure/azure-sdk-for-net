@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.ResourceHealth
                 throw new FormatException($"The model {nameof(ServiceEmergingIssueData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(EmergingIssueProperties))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(EmergingIssueProperties, options);
+                writer.WriteObjectValue(Properties, options);
             }
         }
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ResourceHealth
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            EmergingIssue emergingIssueProperties = default;
+            EmergingIssue properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ResourceHealth
                     {
                         continue;
                     }
-                    emergingIssueProperties = EmergingIssue.DeserializeEmergingIssue(prop.Value, options);
+                    properties = EmergingIssue.DeserializeEmergingIssue(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                emergingIssueProperties);
+                properties);
         }
     }
 }

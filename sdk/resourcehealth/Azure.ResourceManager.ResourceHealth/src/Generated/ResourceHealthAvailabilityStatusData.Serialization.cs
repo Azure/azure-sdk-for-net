@@ -16,58 +16,58 @@ using Azure.ResourceManager.ResourceHealth.Models;
 namespace Azure.ResourceManager.ResourceHealth
 {
     /// <summary> availabilityStatus of a resource. </summary>
-    public partial class AvailabilityStatusData : ResourceHealthAvailabilityStatusProxy, IJsonModel<AvailabilityStatusData>
+    public partial class ResourceHealthAvailabilityStatusData : ResourceHealthAvailabilityStatusProxy, IJsonModel<ResourceHealthAvailabilityStatusData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResourceHealthAvailabilityStatusProxy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AvailabilityStatusData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceHealthAvailabilityStatusData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAvailabilityStatusData(document.RootElement, options);
+                        return DeserializeResourceHealthAvailabilityStatusData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailabilityStatusData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatusData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AvailabilityStatusData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceHealthAvailabilityStatusData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerResourceHealthContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AvailabilityStatusData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatusData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AvailabilityStatusData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ResourceHealthAvailabilityStatusData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AvailabilityStatusData IPersistableModel<AvailabilityStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AvailabilityStatusData)PersistableModelCreateCore(data, options);
+        ResourceHealthAvailabilityStatusData IPersistableModel<ResourceHealthAvailabilityStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResourceHealthAvailabilityStatusData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AvailabilityStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ResourceHealthAvailabilityStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AvailabilityStatusData"/> from. </param>
-        internal static AvailabilityStatusData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ResourceHealthAvailabilityStatusData"/> from. </param>
+        internal static ResourceHealthAvailabilityStatusData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAvailabilityStatusData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeResourceHealthAvailabilityStatusData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AvailabilityStatusData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ResourceHealthAvailabilityStatusData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AvailabilityStatusData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceHealthAvailabilityStatusData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailabilityStatusData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatusData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -93,24 +93,24 @@ namespace Azure.ResourceManager.ResourceHealth
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AvailabilityStatusData IJsonModel<AvailabilityStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AvailabilityStatusData)JsonModelCreateCore(ref reader, options);
+        ResourceHealthAvailabilityStatusData IJsonModel<ResourceHealthAvailabilityStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ResourceHealthAvailabilityStatusData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResourceHealthAvailabilityStatusProxy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AvailabilityStatusData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceHealthAvailabilityStatusData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailabilityStatusData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatusData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAvailabilityStatusData(document.RootElement, options);
+            return DeserializeResourceHealthAvailabilityStatusData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AvailabilityStatusData DeserializeAvailabilityStatusData(JsonElement element, ModelReaderWriterOptions options)
+        internal static ResourceHealthAvailabilityStatusData DeserializeResourceHealthAvailabilityStatusData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ResourceHealth
             ResourceIdentifier id = default;
             string name = default;
             ResourceType? @type = default;
-            string location = default;
+            AzureLocation? location = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceHealthAvailabilityStatusProperties properties = default;
             foreach (var prop in element.EnumerateObject())
@@ -149,7 +149,11 @@ namespace Azure.ResourceManager.ResourceHealth
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -166,7 +170,7 @@ namespace Azure.ResourceManager.ResourceHealth
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AvailabilityStatusData(
+            return new ResourceHealthAvailabilityStatusData(
                 id,
                 name,
                 @type,

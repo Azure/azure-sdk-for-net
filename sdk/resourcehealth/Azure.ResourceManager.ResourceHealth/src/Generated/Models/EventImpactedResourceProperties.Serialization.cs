@@ -15,51 +15,51 @@ using Azure.ResourceManager.ResourceHealth;
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> Properties of impacted resource. </summary>
-    internal partial class ResourceHealthEventImpactedResourceProperties : IJsonModel<ResourceHealthEventImpactedResourceProperties>
+    internal partial class EventImpactedResourceProperties : IJsonModel<EventImpactedResourceProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceHealthEventImpactedResourceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EventImpactedResourceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventImpactedResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventImpactedResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeResourceHealthEventImpactedResourceProperties(document.RootElement, options);
+                        return DeserializeEventImpactedResourceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceHealthEventImpactedResourceProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventImpactedResourceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventImpactedResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventImpactedResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerResourceHealthContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceHealthEventImpactedResourceProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventImpactedResourceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResourceHealthEventImpactedResourceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EventImpactedResourceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceHealthEventImpactedResourceProperties IPersistableModel<ResourceHealthEventImpactedResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EventImpactedResourceProperties IPersistableModel<EventImpactedResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResourceHealthEventImpactedResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EventImpactedResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResourceHealthEventImpactedResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EventImpactedResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventImpactedResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventImpactedResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceHealthEventImpactedResourceProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EventImpactedResourceProperties)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(TargetResourceType))
             {
@@ -119,24 +119,24 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceHealthEventImpactedResourceProperties IJsonModel<ResourceHealthEventImpactedResourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EventImpactedResourceProperties IJsonModel<EventImpactedResourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceHealthEventImpactedResourceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EventImpactedResourceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventImpactedResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventImpactedResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceHealthEventImpactedResourceProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EventImpactedResourceProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResourceHealthEventImpactedResourceProperties(document.RootElement, options);
+            return DeserializeEventImpactedResourceProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ResourceHealthEventImpactedResourceProperties DeserializeResourceHealthEventImpactedResourceProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static EventImpactedResourceProperties DeserializeEventImpactedResourceProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResourceHealthEventImpactedResourceProperties(targetResourceType, targetResourceId, targetRegion, info ?? new ChangeTrackingList<ResourceHealthKeyValueItem>(), additionalBinaryDataProperties);
+            return new EventImpactedResourceProperties(targetResourceType, targetResourceId, targetRegion, info ?? new ChangeTrackingList<ResourceHealthKeyValueItem>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ResourceHealth
     {
         private readonly ClientDiagnostics _childAvailabilityStatusesClientDiagnostics;
         private readonly ChildAvailabilityStatuses _childAvailabilityStatusesRestClient;
-        private readonly AvailabilityStatusData _data;
+        private readonly ResourceHealthAvailabilityStatusData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ResourceHealth/childAvailabilityStatuses";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <summary> Initializes a new instance of <see cref="ChildAvailabilityStatusResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ChildAvailabilityStatusResource(ArmClient client, AvailabilityStatusData data) : this(client, data.Id)
+        internal ChildAvailabilityStatusResource(ArmClient client, ResourceHealthAvailabilityStatusData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ResourceHealth
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual AvailabilityStatusData Data
+        public virtual ResourceHealthAvailabilityStatusData Data
         {
             get
             {
@@ -122,9 +122,9 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _childAvailabilityStatusesRestClient.CreateGetByResourceRequest(Id.Parent.ToString(), filter, expand, context);
+                HttpMessage message = _childAvailabilityStatusesRestClient.CreateGetAvailabilityStatusOfChildResourceRequest(Id.Parent.ToString(), filter, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AvailabilityStatusData> response = Response.FromValue(AvailabilityStatusData.FromResponse(result), result);
+                Response<ResourceHealthAvailabilityStatusData> response = Response.FromValue(ResourceHealthAvailabilityStatusData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -172,9 +172,9 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _childAvailabilityStatusesRestClient.CreateGetByResourceRequest(Id.Parent.ToString(), filter, expand, context);
+                HttpMessage message = _childAvailabilityStatusesRestClient.CreateGetAvailabilityStatusOfChildResourceRequest(Id.Parent.ToString(), filter, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AvailabilityStatusData> response = Response.FromValue(AvailabilityStatusData.FromResponse(result), result);
+                Response<ResourceHealthAvailabilityStatusData> response = Response.FromValue(ResourceHealthAvailabilityStatusData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

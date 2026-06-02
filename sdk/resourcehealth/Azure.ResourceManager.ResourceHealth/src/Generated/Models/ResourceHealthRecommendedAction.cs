@@ -24,15 +24,15 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> Initializes a new instance of <see cref="ResourceHealthRecommendedAction"/>. </summary>
         /// <param name="action"> Recommended action. </param>
         /// <param name="actionUri"> Link to the action. </param>
-        /// <param name="actionUriComment"> the comment for the Action. </param>
-        /// <param name="actionUriText"> Substring of action, it describes which text should host the action URL. </param>
+        /// <param name="actionUrlComment"> the comment for the Action. </param>
+        /// <param name="actionUrlText"> Substring of action, it describes which text should host the action URL. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceHealthRecommendedAction(string action, Uri actionUri, string actionUriComment, string actionUriText, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceHealthRecommendedAction(string action, Uri actionUri, string actionUrlComment, string actionUrlText, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Action = action;
             ActionUri = actionUri;
-            ActionUriComment = actionUriComment;
-            ActionUriText = actionUriText;
+            ActionUrlComment = actionUrlComment;
+            ActionUrlText = actionUrlText;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public Uri ActionUri { get; }
 
         /// <summary> the comment for the Action. </summary>
-        public string ActionUriComment { get; }
+        public string ActionUrlComment { get; }
 
         /// <summary> Substring of action, it describes which text should host the action URL. </summary>
-        public string ActionUriText { get; }
+        public string ActionUrlText { get; }
     }
 }

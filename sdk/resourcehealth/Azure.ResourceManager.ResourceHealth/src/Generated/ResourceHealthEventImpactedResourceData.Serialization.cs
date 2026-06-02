@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ResourceHealth
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ResourceHealthEventImpactedResourceProperties properties = default;
+            EventImpactedResourceProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ResourceHealth
                     {
                         continue;
                     }
-                    properties = ResourceHealthEventImpactedResourceProperties.DeserializeResourceHealthEventImpactedResourceProperties(prop.Value, options);
+                    properties = EventImpactedResourceProperties.DeserializeEventImpactedResourceProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

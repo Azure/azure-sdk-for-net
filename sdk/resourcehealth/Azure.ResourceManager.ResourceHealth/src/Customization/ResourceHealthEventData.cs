@@ -7,13 +7,10 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    [CodeGenSuppress("Faqs")]
-    [CodeGenSuppress("Impact")]
-    [CodeGenSuppress("Links")]
     public partial class ResourceHealthEventData
     {
         /// <summary> Frequently asked questions for the service health event. </summary>
-        // This shim is required because the generated property is IList<T>, while GA 1.0.0 exposed IReadOnlyList<T>,
+        // This is required because the generated property is IList<T>, while GA exposed IReadOnlyList<T>,
         // and @@alternateType cannot change the collection interface type.
         public IReadOnlyList<ResourceHealthEventFaq> Faqs => Properties?.Faqs as IReadOnlyList<ResourceHealthEventFaq>;
 

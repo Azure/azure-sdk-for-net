@@ -30,22 +30,40 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="emergingIssueProperties"> The emerging issue entity properties. </param>
-        internal ServiceEmergingIssueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, EmergingIssue emergingIssueProperties) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> The emerging issue entity properties. </param>
+        internal ServiceEmergingIssueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, EmergingIssue properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            EmergingIssueProperties = emergingIssueProperties;
+            Properties = properties;
         }
 
         /// <summary> The emerging issue entity properties. </summary>
-        internal EmergingIssue EmergingIssueProperties { get; }
+        internal EmergingIssue Properties { get; }
 
         /// <summary> Timestamp for when last time refreshed for ongoing emerging issue. </summary>
         public DateTimeOffset? RefreshedOn
         {
             get
             {
-                return EmergingIssueProperties is null ? default : EmergingIssueProperties.RefreshedOn;
+                return Properties is null ? default : Properties.RefreshedOn;
+            }
+        }
+
+        /// <summary> The list of emerging issues of banner type. </summary>
+        public IList<EmergingIssueBannerType> StatusBanners
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StatusBanners;
+            }
+        }
+
+        /// <summary> The list of emerging issues of active event type. </summary>
+        public IList<EmergingIssueActiveEventType> StatusActiveEvents
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StatusActiveEvents;
             }
         }
     }

@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 return null;
             }
             string name = default;
-            ResourceHealthOperationDisplay display = default;
+            OperationDisplay display = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    display = ResourceHealthOperationDisplay.DeserializeResourceHealthOperationDisplay(prop.Value, options);
+                    display = OperationDisplay.DeserializeOperationDisplay(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

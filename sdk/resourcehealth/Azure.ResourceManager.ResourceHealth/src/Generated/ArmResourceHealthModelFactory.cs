@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="name"> Name of the operation. </param>
         /// <param name="display"> Properties of the operation. </param>
         /// <returns> A new <see cref="Models.ResourceHealthOperationInfo"/> instance for mocking. </returns>
-        public static ResourceHealthOperationInfo ResourceHealthOperationInfo(string name = default, ResourceHealthOperationDisplay display = default)
+        public static ResourceHealthOperationInfo ResourceHealthOperationInfo(string name = default, OperationDisplay display = default)
         {
             return new ResourceHealthOperationInfo(name, display, additionalBinaryDataProperties: null);
         }
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="resource"> Resource name. </param>
         /// <param name="operation"> Operation name. </param>
         /// <param name="description"> Description of the operation. </param>
-        /// <returns> A new <see cref="Models.ResourceHealthOperationDisplay"/> instance for mocking. </returns>
-        public static ResourceHealthOperationDisplay ResourceHealthOperationDisplay(string provider = default, string resource = default, string operation = default, string description = default)
+        /// <returns> A new <see cref="Models.OperationDisplay"/> instance for mocking. </returns>
+        public static OperationDisplay OperationDisplay(string provider = default, string resource = default, string operation = default, string description = default)
         {
-            return new ResourceHealthOperationDisplay(provider, resource, operation, description, additionalBinaryDataProperties: null);
+            return new OperationDisplay(provider, resource, operation, description, additionalBinaryDataProperties: null);
         }
 
         /// <summary> availabilityStatus of a resource. </summary>
@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="type"> Microsoft.ResourceHealth/AvailabilityStatuses. </param>
         /// <param name="location"> Azure Resource Manager geo location of the resource. </param>
         /// <param name="properties"> Properties of availability state. </param>
-        /// <returns> A new <see cref="ResourceHealth.AvailabilityStatusData"/> instance for mocking. </returns>
-        public static AvailabilityStatusData AvailabilityStatusData(ResourceIdentifier id = default, string name = default, ResourceType? @type = default, string location = default, ResourceHealthAvailabilityStatusProperties properties = default)
+        /// <returns> A new <see cref="ResourceHealth.ResourceHealthAvailabilityStatusData"/> instance for mocking. </returns>
+        public static ResourceHealthAvailabilityStatusData ResourceHealthAvailabilityStatusData(ResourceIdentifier id = default, string name = default, ResourceType? @type = default, AzureLocation? location = default, ResourceHealthAvailabilityStatusProperties properties = default)
         {
-            return new AvailabilityStatusData(
+            return new ResourceHealthAvailabilityStatusData(
                 id,
                 name,
                 @type,
@@ -129,12 +129,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> Lists actions the user can take based on the current availabilityState of the resource. </summary>
         /// <param name="action"> Recommended action. </param>
         /// <param name="actionUri"> Link to the action. </param>
-        /// <param name="actionUriComment"> the comment for the Action. </param>
-        /// <param name="actionUriText"> Substring of action, it describes which text should host the action URL. </param>
+        /// <param name="actionUrlComment"> the comment for the Action. </param>
+        /// <param name="actionUrlText"> Substring of action, it describes which text should host the action URL. </param>
         /// <returns> A new <see cref="Models.ResourceHealthRecommendedAction"/> instance for mocking. </returns>
-        public static ResourceHealthRecommendedAction ResourceHealthRecommendedAction(string action = default, Uri actionUri = default, string actionUriComment = default, string actionUriText = default)
+        public static ResourceHealthRecommendedAction ResourceHealthRecommendedAction(string action = default, Uri actionUri = default, string actionUrlComment = default, string actionUrlText = default)
         {
-            return new ResourceHealthRecommendedAction(action, actionUri, actionUriComment, actionUriText, additionalBinaryDataProperties: null);
+            return new ResourceHealthRecommendedAction(action, actionUri, actionUrlComment, actionUrlText, additionalBinaryDataProperties: null);
         }
 
         /// <param name="eventStartOn"> Timestamp for when the event started. </param>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="type"> Microsoft.ResourceHealth/AvailabilityStatuses. </param>
         /// <param name="location"> Azure Resource Manager geo location of the resource. </param>
         /// <returns> A new <see cref="Models.ResourceHealthAvailabilityStatusProxy"/> instance for mocking. </returns>
-        public static ResourceHealthAvailabilityStatusProxy ResourceHealthAvailabilityStatusProxy(ResourceIdentifier id = default, string name = default, ResourceType? @type = default, string location = default)
+        public static ResourceHealthAvailabilityStatusProxy ResourceHealthAvailabilityStatusProxy(ResourceIdentifier id = default, string name = default, ResourceType? @type = default, AzureLocation? location = default)
         {
             return new ResourceHealthAvailabilityStatusProxy(id, name, @type, location, additionalBinaryDataProperties: null);
         }
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                targetResourceType is null && targetResourceId is null && targetRegion is null && info is null ? default : new ResourceHealthEventImpactedResourceProperties(targetResourceType, targetResourceId, targetRegion, (info ?? new ChangeTrackingList<ResourceHealthKeyValueItem>()).ToList(), null));
+                targetResourceType is null && targetResourceId is null && targetRegion is null && info is null ? default : new EventImpactedResourceProperties(targetResourceType, targetResourceId, targetRegion, (info ?? new ChangeTrackingList<ResourceHealthKeyValueItem>()).ToList(), null));
         }
 
         /// <summary> Key value tuple. </summary>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="billingId"> Billing identifier information. </param>
         /// <param name="additionalInformationMessage"> Additional information Message. </param>
         /// <returns> A new <see cref="ResourceHealth.ResourceHealthEventData"/> instance for mocking. </returns>
-        public static ResourceHealthEventData ResourceHealthEventData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceHealthEventTypeValue? eventType = default, ResourceHealthEventSubTypeValue? eventSubType = default, ResourceHealthEventSourceValue? eventSource = default, ResourceHealthEventStatusValue? status = default, string title = default, string summary = default, string header = default, ResourceHealthEventInsightLevelValue? level = default, ResourceHealthEventLevelValue? eventLevel = default, bool? isEventSensitive = default, string externalIncidentId = default, string reason = default, ResourceHealthEventArticle article = default, IEnumerable<ResourceHealthEventLink> links = default, DateTimeOffset? impactStartOn = default, DateTimeOffset? impactMitigationOn = default, IEnumerable<ResourceHealthEventImpact> impact = default, ResourceHealthEventRecommendedActions recommendedActions = default, IEnumerable<ResourceHealthEventFaq> faqs = default, bool? isHirEvent = default, bool? isMicrosoftSupportEnabled = default, string description = default, bool? isPlatformInitiated = default, bool? isChatWithUsEnabled = default, int? priority = default, DateTimeOffset? lastUpdateOn = default, string hirStage = default, int? duration = default, string impactType = default, IEnumerable<string> eventTags = default, double? newRate = default, double? oldRate = default, string currencyType = default, string billingId = default, string additionalInformationMessage = default)
+        public static ResourceHealthEventData ResourceHealthEventData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceHealthEventTypeValue? eventType = default, EventSubTypeValues? eventSubType = default, ResourceHealthEventSourceValue? eventSource = default, ResourceHealthEventStatusValue? status = default, string title = default, string summary = default, string header = default, ResourceHealthEventInsightLevelValue? level = default, ResourceHealthEventLevelValue? eventLevel = default, bool? isEventSensitive = default, string externalIncidentId = default, string reason = default, ResourceHealthEventArticle article = default, IEnumerable<ResourceHealthEventLink> links = default, DateTimeOffset? impactStartOn = default, DateTimeOffset? impactMitigationOn = default, IEnumerable<ResourceHealthEventImpact> impact = default, ResourceHealthEventRecommendedActions recommendedActions = default, IEnumerable<ResourceHealthEventFaq> faqs = default, bool? isHirEvent = default, bool? isMicrosoftSupportEnabled = default, string description = default, bool? isPlatformInitiated = default, bool? isChatWithUsEnabled = default, int? priority = default, DateTimeOffset? lastUpdateOn = default, string hirStage = default, int? duration = default, string impactType = default, IEnumerable<string> eventTags = default, double? newRate = default, double? oldRate = default, string currencyType = default, string billingId = default, string additionalInformationMessage = default)
         {
             return new ResourceHealthEventData(
                 id,
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                eventType is null && eventSubType is null && eventSource is null && status is null && title is null && summary is null && header is null && level is null && eventLevel is null && isEventSensitive is null && externalIncidentId is null && reason is null && article is null && links is null && impactStartOn is null && impactMitigationOn is null && impact is null && recommendedActions is null && faqs is null && isHirEvent is null && isMicrosoftSupportEnabled is null && description is null && isPlatformInitiated is null && isChatWithUsEnabled is null && priority is null && lastUpdateOn is null && hirStage is null && duration is null && impactType is null && eventTags is null && newRate is null && oldRate is null && currencyType is null && billingId is null && additionalInformationMessage is null ? default : new ResourceHealthEventProperties(
+                eventType is null && eventSubType is null && eventSource is null && status is null && title is null && summary is null && header is null && level is null && eventLevel is null && isEventSensitive is null && externalIncidentId is null && reason is null && article is null && links is null && impactStartOn is null && impactMitigationOn is null && impact is null && recommendedActions is null && faqs is null && isHirEvent is null && isMicrosoftSupportEnabled is null && description is null && isPlatformInitiated is null && isChatWithUsEnabled is null && priority is null && lastUpdateOn is null && hirStage is null && duration is null && impactType is null && eventTags is null && newRate is null && oldRate is null && currencyType is null && billingId is null && additionalInformationMessage is null ? default : new EventProperties(
                     eventType,
                     eventSubType,
                     eventSource,

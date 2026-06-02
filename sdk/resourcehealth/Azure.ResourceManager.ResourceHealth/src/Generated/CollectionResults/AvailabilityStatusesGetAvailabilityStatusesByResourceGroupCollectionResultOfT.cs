@@ -14,37 +14,40 @@ using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    internal partial class ResourceHealthEventGetBySubscriptionIdCollectionResultOfT : Pageable<ResourceHealthEventData>
+    internal partial class AvailabilityStatusesGetAvailabilityStatusesByResourceGroupCollectionResultOfT : Pageable<ResourceHealthAvailabilityStatusData>
     {
-        private readonly ResourceHealthEvent _client;
+        private readonly AvailabilityStatuses _client;
         private readonly string _subscriptionId;
+        private readonly string _resourceGroupName;
         private readonly string _filter;
-        private readonly string _queryStartTime;
+        private readonly string _expand;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ResourceHealthEventGetBySubscriptionIdCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ResourceHealthEvent client used to send requests. </param>
+        /// <summary> Initializes a new instance of AvailabilityStatusesGetAvailabilityStatusesByResourceGroupCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The AvailabilityStatuses client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
-        /// <param name="queryStartTime"> Specifies from when to return events (default is 3 days), based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
+        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ResourceHealthEventGetBySubscriptionIdCollectionResultOfT(ResourceHealthEvent client, string subscriptionId, string filter, string queryStartTime, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public AvailabilityStatusesGetAvailabilityStatusesByResourceGroupCollectionResultOfT(AvailabilityStatuses client, string subscriptionId, string resourceGroupName, string filter, string expand, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
+            _resourceGroupName = resourceGroupName;
             _filter = filter;
-            _queryStartTime = queryStartTime;
+            _expand = expand;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ResourceHealthEventGetBySubscriptionIdCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of AvailabilityStatusesGetAvailabilityStatusesByResourceGroupCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ResourceHealthEventGetBySubscriptionIdCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ResourceHealthEventData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of AvailabilityStatusesGetAvailabilityStatusesByResourceGroupCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<ResourceHealthAvailabilityStatusData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -54,13 +57,14 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     yield break;
                 }
-                ResourceHealthEventListResult result = ResourceHealthEventListResult.FromResponse(response);
-                yield return Page<ResourceHealthEventData>.FromValues((IReadOnlyList<ResourceHealthEventData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
-                nextPage = result.NextLink;
-                if (nextPage == null)
+                ResourceHealthAvailabilityStatusListResult result = ResourceHealthAvailabilityStatusListResult.FromResponse(response);
+                yield return Page<ResourceHealthAvailabilityStatusData>.FromValues((IReadOnlyList<ResourceHealthAvailabilityStatusData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                string nextPageString = result.NextLink;
+                if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }
+                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 
@@ -69,7 +73,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionIdRequest(nextLink, _subscriptionId, _filter, _queryStartTime, _context) : _client.CreateGetBySubscriptionIdRequest(_subscriptionId, _filter, _queryStartTime, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAvailabilityStatusesByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _filter, _expand, _context) : _client.CreateGetAvailabilityStatusesByResourceGroupRequest(_subscriptionId, _resourceGroupName, _filter, _expand, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

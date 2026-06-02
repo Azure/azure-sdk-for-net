@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="name"> Name of the operation. </param>
         /// <param name="display"> Properties of the operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceHealthOperationInfo(string name, ResourceHealthOperationDisplay display, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceHealthOperationInfo(string name, OperationDisplay display, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Display = display;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public string Name { get; }
 
         /// <summary> Properties of the operation. </summary>
-        public ResourceHealthOperationDisplay Display { get; }
+        public OperationDisplay Display { get; }
     }
 }

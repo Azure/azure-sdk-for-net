@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="type"> Microsoft.ResourceHealth/AvailabilityStatuses. </param>
         /// <param name="location"> Azure Resource Manager geo location of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceHealthAvailabilityStatusProxy(ResourceIdentifier id, string name, ResourceType? @type, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceHealthAvailabilityStatusProxy(ResourceIdentifier id, string name, ResourceType? @type, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public ResourceType? Type { get; }
 
         /// <summary> Azure Resource Manager geo location of the resource. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
     }
 }

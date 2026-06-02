@@ -12,13 +12,13 @@ using Azure.ResourceManager.ResourceHealth;
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> Properties of event. </summary>
-    internal partial class ResourceHealthEventProperties
+    internal partial class EventProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventProperties"/>. </summary>
-        internal ResourceHealthEventProperties()
+        /// <summary> Initializes a new instance of <see cref="EventProperties"/>. </summary>
+        internal EventProperties()
         {
             Links = new ChangeTrackingList<ResourceHealthEventLink>();
             Impact = new ChangeTrackingList<ResourceHealthEventImpact>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             EventTags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventProperties"/>. </summary>
         /// <param name="eventType"> Type of event. </param>
         /// <param name="eventSubType"> Sub-type of event. </param>
         /// <param name="eventSource"> Source of event. </param>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="currencyType"> Billing currency type information. Example: USD, CAD. </param>
         /// <param name="billingId"> Billing identifier information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceHealthEventProperties(ResourceHealthEventTypeValue? eventType, ResourceHealthEventSubTypeValue? eventSubType, ResourceHealthEventSourceValue? eventSource, ResourceHealthEventStatusValue? status, string title, string summary, string header, ResourceHealthEventInsightLevelValue? level, ResourceHealthEventLevelValue? eventLevel, bool? isEventSensitive, string externalIncidentId, string reason, ResourceHealthEventArticle article, IList<ResourceHealthEventLink> links, DateTimeOffset? impactStartOn, DateTimeOffset? impactMitigationOn, IList<ResourceHealthEventImpact> impact, ResourceHealthEventRecommendedActions recommendedActions, IList<ResourceHealthEventFaq> faqs, bool? isHirEvent, bool? isMicrosoftSupportEnabled, string description, bool? isPlatformInitiated, bool? isChatWithUsEnabled, int? priority, DateTimeOffset? lastUpdateOn, string hirStage, ResourceHealthEventAdditionalInformation additionalInformation, int? duration, string impactType, IList<string> eventTags, double? newRate, double? oldRate, string currencyType, string billingId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventProperties(ResourceHealthEventTypeValue? eventType, EventSubTypeValues? eventSubType, ResourceHealthEventSourceValue? eventSource, ResourceHealthEventStatusValue? status, string title, string summary, string header, ResourceHealthEventInsightLevelValue? level, ResourceHealthEventLevelValue? eventLevel, bool? isEventSensitive, string externalIncidentId, string reason, ResourceHealthEventArticle article, IList<ResourceHealthEventLink> links, DateTimeOffset? impactStartOn, DateTimeOffset? impactMitigationOn, IList<ResourceHealthEventImpact> impact, ResourceHealthEventRecommendedActions recommendedActions, IList<ResourceHealthEventFaq> faqs, bool? isHirEvent, bool? isMicrosoftSupportEnabled, string description, bool? isPlatformInitiated, bool? isChatWithUsEnabled, int? priority, DateTimeOffset? lastUpdateOn, string hirStage, ResourceHealthEventAdditionalInformation additionalInformation, int? duration, string impactType, IList<string> eventTags, double? newRate, double? oldRate, string currencyType, string billingId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EventType = eventType;
             EventSubType = eventSubType;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public ResourceHealthEventTypeValue? EventType { get; }
 
         /// <summary> Sub-type of event. </summary>
-        public ResourceHealthEventSubTypeValue? EventSubType { get; }
+        public EventSubTypeValues? EventSubType { get; }
 
         /// <summary> Source of event. </summary>
         public ResourceHealthEventSourceValue? EventSource { get; }

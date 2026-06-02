@@ -84,15 +84,15 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WritePropertyName("actionUrl"u8);
                 writer.WriteStringValue(ActionUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ActionUriComment))
+            if (Optional.IsDefined(ActionUrlComment))
             {
                 writer.WritePropertyName("_ActionUrl.Comment"u8);
-                writer.WriteStringValue(ActionUriComment);
+                writer.WriteStringValue(ActionUrlComment);
             }
-            if (Optional.IsDefined(ActionUriText))
+            if (Optional.IsDefined(ActionUrlText))
             {
                 writer.WritePropertyName("actionUrlText"u8);
-                writer.WriteStringValue(ActionUriText);
+                writer.WriteStringValue(ActionUrlText);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -138,8 +138,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
             string action = default;
             Uri actionUri = default;
-            string actionUriComment = default;
-            string actionUriText = default;
+            string actionUrlComment = default;
+            string actionUrlText = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -159,12 +159,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
                 if (prop.NameEquals("_ActionUrl.Comment"u8))
                 {
-                    actionUriComment = prop.Value.GetString();
+                    actionUrlComment = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("actionUrlText"u8))
                 {
-                    actionUriText = prop.Value.GetString();
+                    actionUrlText = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResourceHealthRecommendedAction(action, actionUri, actionUriComment, actionUriText, additionalBinaryDataProperties);
+            return new ResourceHealthRecommendedAction(action, actionUri, actionUrlComment, actionUrlText, additionalBinaryDataProperties);
         }
     }
 }

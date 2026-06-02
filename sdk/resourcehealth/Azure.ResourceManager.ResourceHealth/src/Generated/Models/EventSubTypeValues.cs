@@ -12,7 +12,7 @@ using Azure.ResourceManager.ResourceHealth;
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> Sub-type of event. </summary>
-    public readonly partial struct ResourceHealthEventSubTypeValue : IEquatable<ResourceHealthEventSubTypeValue>
+    public readonly partial struct EventSubTypeValues : IEquatable<EventSubTypeValues>
     {
         private readonly string _value;
         /// <summary> Retirement. </summary>
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> UnauthorizedPartyAbuse. </summary>
         private const string UnauthorizedPartyAbuseValue = "UnauthorizedPartyAbuse";
 
-        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventSubTypeValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventSubTypeValues"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ResourceHealthEventSubTypeValue(string value)
+        public EventSubTypeValues(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -43,53 +43,53 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         }
 
         /// <summary> Retirement. </summary>
-        public static ResourceHealthEventSubTypeValue Retirement { get; } = new ResourceHealthEventSubTypeValue(RetirementValue);
+        public static EventSubTypeValues Retirement { get; } = new EventSubTypeValues(RetirementValue);
 
         /// <summary> ForeignExchangeRateChange. </summary>
-        public static ResourceHealthEventSubTypeValue ForeignExchangeRateChange { get; } = new ResourceHealthEventSubTypeValue(ForeignExchangeRateChangeValue);
+        public static EventSubTypeValues ForeignExchangeRateChange { get; } = new EventSubTypeValues(ForeignExchangeRateChangeValue);
 
         /// <summary> Underbilling. </summary>
-        public static ResourceHealthEventSubTypeValue Underbilling { get; } = new ResourceHealthEventSubTypeValue(UnderbillingValue);
+        public static EventSubTypeValues Underbilling { get; } = new EventSubTypeValues(UnderbillingValue);
 
         /// <summary> Overbilling. </summary>
-        public static ResourceHealthEventSubTypeValue Overbilling { get; } = new ResourceHealthEventSubTypeValue(OverbillingValue);
+        public static EventSubTypeValues Overbilling { get; } = new EventSubTypeValues(OverbillingValue);
 
         /// <summary> PriceChanges. </summary>
-        public static ResourceHealthEventSubTypeValue PriceChanges { get; } = new ResourceHealthEventSubTypeValue(PriceChangesValue);
+        public static EventSubTypeValues PriceChanges { get; } = new EventSubTypeValues(PriceChangesValue);
 
         /// <summary> TaxChanges. </summary>
-        public static ResourceHealthEventSubTypeValue TaxChanges { get; } = new ResourceHealthEventSubTypeValue(TaxChangesValue);
+        public static EventSubTypeValues TaxChanges { get; } = new EventSubTypeValues(TaxChangesValue);
 
         /// <summary> MeterIDChanges. </summary>
-        public static ResourceHealthEventSubTypeValue MeterIDChanges { get; } = new ResourceHealthEventSubTypeValue(MeterIDChangesValue);
+        public static EventSubTypeValues MeterIDChanges { get; } = new EventSubTypeValues(MeterIDChangesValue);
 
         /// <summary> UnauthorizedPartyAbuse. </summary>
-        public static ResourceHealthEventSubTypeValue UnauthorizedPartyAbuse { get; } = new ResourceHealthEventSubTypeValue(UnauthorizedPartyAbuseValue);
+        public static EventSubTypeValues UnauthorizedPartyAbuse { get; } = new EventSubTypeValues(UnauthorizedPartyAbuseValue);
 
-        /// <summary> Determines if two <see cref="ResourceHealthEventSubTypeValue"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="EventSubTypeValues"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ResourceHealthEventSubTypeValue left, ResourceHealthEventSubTypeValue right) => left.Equals(right);
+        public static bool operator ==(EventSubTypeValues left, EventSubTypeValues right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ResourceHealthEventSubTypeValue"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="EventSubTypeValues"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ResourceHealthEventSubTypeValue left, ResourceHealthEventSubTypeValue right) => !left.Equals(right);
+        public static bool operator !=(EventSubTypeValues left, EventSubTypeValues right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ResourceHealthEventSubTypeValue"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EventSubTypeValues"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceHealthEventSubTypeValue(string value) => new ResourceHealthEventSubTypeValue(value);
+        public static implicit operator EventSubTypeValues(string value) => new EventSubTypeValues(value);
 
-        /// <summary> Converts a string to a <see cref="ResourceHealthEventSubTypeValue"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EventSubTypeValues"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceHealthEventSubTypeValue?(string value) => value == null ? null : new ResourceHealthEventSubTypeValue(value);
+        public static implicit operator EventSubTypeValues?(string value) => value == null ? null : new EventSubTypeValues(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ResourceHealthEventSubTypeValue other && Equals(other);
+        public override bool Equals(object obj) => obj is EventSubTypeValues other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ResourceHealthEventSubTypeValue other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EventSubTypeValues other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

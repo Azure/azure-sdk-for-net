@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByResourceRequest(string resourceUri, string filter, string expand, RequestContext context)
+        internal HttpMessage CreateGetAvailabilityStatusRequest(string resourceUri, string filter, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ResourceHealth
             return message;
         }
 
-        internal HttpMessage CreateGetBySubscriptionIdRequest(string subscriptionId, string filter, string expand, RequestContext context)
+        internal HttpMessage CreateGetAvailabilityStatusesBySubscriptionRequest(string subscriptionId, string filter, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ResourceHealth
             return message;
         }
 
-        internal HttpMessage CreateNextGetBySubscriptionIdRequest(Uri nextPage, string subscriptionId, string filter, string expand, RequestContext context)
+        internal HttpMessage CreateNextGetAvailabilityStatusesBySubscriptionRequest(Uri nextPage, string subscriptionId, string filter, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ResourceHealth
             return message;
         }
 
-        internal HttpMessage CreateGetByResourceGroupRequest(string subscriptionId, string resourceGroupName, string filter, string expand, RequestContext context)
+        internal HttpMessage CreateGetAvailabilityStatusesByResourceGroupRequest(string subscriptionId, string resourceGroupName, string filter, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ResourceHealth
             return message;
         }
 
-        internal HttpMessage CreateNextGetByResourceGroupRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string filter, string expand, RequestContext context)
+        internal HttpMessage CreateNextGetAvailabilityStatusesByResourceGroupRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string filter, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByResourceRequest(string resourceUri, string filter, string expand, RequestContext context)
+        internal HttpMessage CreateGetAvailabilityStatusOfChildResourceRequest(string resourceUri, string filter, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ResourceHealth
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceUri, string filter, string expand, RequestContext context)
+        internal HttpMessage CreateGetHistoricalAvailabilityStatusesOfChildResourceRequest(string resourceUri, string filter, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ResourceHealth
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string resourceUri, string filter, string expand, RequestContext context)
+        internal HttpMessage CreateNextGetHistoricalAvailabilityStatusesOfChildResourceRequest(Uri nextPage, string resourceUri, string filter, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

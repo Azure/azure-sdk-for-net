@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of impacted resource. </param>
-        internal ResourceHealthEventImpactedResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceHealthEventImpactedResourceProperties properties) : base(id, name, resourceType, systemData)
+        internal ResourceHealthEventImpactedResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, EventImpactedResourceProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> Properties of impacted resource. </summary>
-        internal ResourceHealthEventImpactedResourceProperties Properties { get; }
+        internal EventImpactedResourceProperties Properties { get; }
 
         /// <summary> Resource type within Microsoft cloud. </summary>
         public ResourceType? TargetResourceType

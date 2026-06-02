@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.ResourceHealth
 {
     /// <summary></summary>
-    public partial class AvailabilityStatusResource : IJsonModel<AvailabilityStatusData>
+    public partial class AvailabilityStatusResource : IJsonModel<ResourceHealthAvailabilityStatusData>
     {
-        private static IJsonModel<AvailabilityStatusData> s_dataDeserializationInstance;
+        private static IJsonModel<ResourceHealthAvailabilityStatusData> s_dataDeserializationInstance;
 
-        private static IJsonModel<AvailabilityStatusData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AvailabilityStatusData();
+        private static IJsonModel<ResourceHealthAvailabilityStatusData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ResourceHealthAvailabilityStatusData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AvailabilityStatusData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AvailabilityStatusData>)Data).Write(writer, options);
+        void IJsonModel<ResourceHealthAvailabilityStatusData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ResourceHealthAvailabilityStatusData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AvailabilityStatusData IJsonModel<AvailabilityStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        ResourceHealthAvailabilityStatusData IJsonModel<ResourceHealthAvailabilityStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AvailabilityStatusData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AvailabilityStatusData>(Data, options, AzureResourceManagerResourceHealthContext.Default);
+        BinaryData IPersistableModel<ResourceHealthAvailabilityStatusData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceHealthAvailabilityStatusData>(Data, options, AzureResourceManagerResourceHealthContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AvailabilityStatusData IPersistableModel<AvailabilityStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AvailabilityStatusData>(data, options, AzureResourceManagerResourceHealthContext.Default);
+        ResourceHealthAvailabilityStatusData IPersistableModel<ResourceHealthAvailabilityStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceHealthAvailabilityStatusData>(data, options, AzureResourceManagerResourceHealthContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AvailabilityStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<ResourceHealthAvailabilityStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

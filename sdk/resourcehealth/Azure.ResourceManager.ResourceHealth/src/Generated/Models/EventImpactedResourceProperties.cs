@@ -13,24 +13,24 @@ using Azure.ResourceManager.ResourceHealth;
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> Properties of impacted resource. </summary>
-    internal partial class ResourceHealthEventImpactedResourceProperties
+    internal partial class EventImpactedResourceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventImpactedResourceProperties"/>. </summary>
-        internal ResourceHealthEventImpactedResourceProperties()
+        /// <summary> Initializes a new instance of <see cref="EventImpactedResourceProperties"/>. </summary>
+        internal EventImpactedResourceProperties()
         {
             Info = new ChangeTrackingList<ResourceHealthKeyValueItem>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventImpactedResourceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventImpactedResourceProperties"/>. </summary>
         /// <param name="targetResourceType"> Resource type within Microsoft cloud. </param>
         /// <param name="targetResourceId"> Identity for resource within Microsoft cloud. </param>
         /// <param name="targetRegion"> Impacted resource region name. </param>
         /// <param name="info"> Additional information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceHealthEventImpactedResourceProperties(ResourceType? targetResourceType, ResourceIdentifier targetResourceId, string targetRegion, IList<ResourceHealthKeyValueItem> info, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventImpactedResourceProperties(ResourceType? targetResourceType, ResourceIdentifier targetResourceId, string targetRegion, IList<ResourceHealthKeyValueItem> info, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetResourceType = targetResourceType;
             TargetResourceId = targetResourceId;

@@ -14,64 +14,64 @@ using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
-    /// <summary> The List availabilityStatus operation response. </summary>
-    internal partial class AvailabilityStatusListResult : IJsonModel<AvailabilityStatusListResult>
+    /// <summary> The List events operation response. </summary>
+    internal partial class ResourceHealthEventListResult : IJsonModel<ResourceHealthEventListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="AvailabilityStatusListResult"/> for deserialization. </summary>
-        internal AvailabilityStatusListResult()
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventListResult"/> for deserialization. </summary>
+        internal ResourceHealthEventListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AvailabilityStatusListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceHealthEventListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AvailabilityStatusListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAvailabilityStatusListResult(document.RootElement, options);
+                        return DeserializeResourceHealthEventListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailabilityStatusListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceHealthEventListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AvailabilityStatusListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerResourceHealthContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AvailabilityStatusListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceHealthEventListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AvailabilityStatusListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ResourceHealthEventListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AvailabilityStatusListResult IPersistableModel<AvailabilityStatusListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ResourceHealthEventListResult IPersistableModel<ResourceHealthEventListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AvailabilityStatusListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ResourceHealthEventListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AvailabilityStatusListResult"/> from. </param>
-        internal static AvailabilityStatusListResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ResourceHealthEventListResult"/> from. </param>
+        internal static ResourceHealthEventListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAvailabilityStatusListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeResourceHealthEventListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AvailabilityStatusListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ResourceHealthEventListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AvailabilityStatusListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailabilityStatusListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceHealthEventListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (AvailabilityStatusData item in Value)
+            foreach (ResourceHealthEventData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -118,47 +118,51 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AvailabilityStatusListResult IJsonModel<AvailabilityStatusListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ResourceHealthEventListResult IJsonModel<ResourceHealthEventListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AvailabilityStatusListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceHealthEventListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AvailabilityStatusListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailabilityStatusListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceHealthEventListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAvailabilityStatusListResult(document.RootElement, options);
+            return DeserializeResourceHealthEventListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AvailabilityStatusListResult DeserializeAvailabilityStatusListResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static ResourceHealthEventListResult DeserializeResourceHealthEventListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<AvailabilityStatusData> value = default;
-            string nextLink = default;
+            IList<ResourceHealthEventData> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<AvailabilityStatusData> array = new List<AvailabilityStatusData>();
+                    List<ResourceHealthEventData> array = new List<ResourceHealthEventData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AvailabilityStatusData.DeserializeAvailabilityStatusData(item, options));
+                        array.Add(ResourceHealthEventData.DeserializeResourceHealthEventData(item, options));
                     }
                     value = array;
                     continue;
                 }
                 if (prop.NameEquals("nextLink"u8))
                 {
-                    nextLink = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -166,7 +170,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AvailabilityStatusListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ResourceHealthEventListResult(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

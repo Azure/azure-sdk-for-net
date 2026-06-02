@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     yield break;
                 }
-                Models.Events result = Models.Events.FromResponse(response);
+                ResourceHealthEventListResult result = ResourceHealthEventListResult.FromResponse(response);
                 yield return Page<ResourceHealthEventData>.FromValues((IReadOnlyList<ResourceHealthEventData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

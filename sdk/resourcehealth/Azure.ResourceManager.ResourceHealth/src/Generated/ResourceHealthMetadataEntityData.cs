@@ -48,5 +48,32 @@ namespace Azure.ResourceManager.ResourceHealth
                 return Properties is null ? default : Properties.DisplayName;
             }
         }
+
+        /// <summary> The list of keys on which this entity depends on. </summary>
+        public IList<string> DependsOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DependsOn;
+            }
+        }
+
+        /// <summary> The list of scenarios applicable to this metadata entity. </summary>
+        public IList<MetadataEntityScenario> ApplicableScenarios
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApplicableScenarios;
+            }
+        }
+
+        /// <summary> The list of supported values. </summary>
+        public IList<MetadataSupportedValueDetail> SupportedValues
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SupportedValues;
+            }
+        }
     }
 }

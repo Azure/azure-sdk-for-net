@@ -13,23 +13,23 @@ using Azure.ResourceManager.ResourceHealth;
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> The List availabilityStatus operation response. </summary>
-    internal partial class AvailabilityStatusListResult
+    internal partial class ResourceHealthAvailabilityStatusListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AvailabilityStatusListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthAvailabilityStatusListResult"/>. </summary>
         /// <param name="value"> The list of availabilityStatuses. </param>
-        internal AvailabilityStatusListResult(IEnumerable<AvailabilityStatusData> value)
+        internal ResourceHealthAvailabilityStatusListResult(IEnumerable<ResourceHealthAvailabilityStatusData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AvailabilityStatusListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthAvailabilityStatusListResult"/>. </summary>
         /// <param name="value"> The list of availabilityStatuses. </param>
         /// <param name="nextLink"> The URI to fetch the next page of availabilityStatuses. Call ListNext() with this URI to fetch the next page of availabilityStatuses. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvailabilityStatusListResult(IList<AvailabilityStatusData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceHealthAvailabilityStatusListResult(IList<ResourceHealthAvailabilityStatusData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         }
 
         /// <summary> The list of availabilityStatuses. </summary>
-        public IList<AvailabilityStatusData> Value { get; }
+        public IList<ResourceHealthAvailabilityStatusData> Value { get; }
 
         /// <summary> The URI to fetch the next page of availabilityStatuses. Call ListNext() with this URI to fetch the next page of availabilityStatuses. </summary>
         public string NextLink { get; }

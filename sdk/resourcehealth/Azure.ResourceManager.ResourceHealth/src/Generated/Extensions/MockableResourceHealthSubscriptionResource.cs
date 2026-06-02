@@ -129,19 +129,19 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AvailabilityStatusResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AvailabilityStatusResource> GetAvailabilityStatusesAsync(string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AvailabilityStatusResource> GetAvailabilityStatusesBySubscriptionAsync(string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AvailabilityStatusData, AvailabilityStatusResource>(new AvailabilityStatusesGetBySubscriptionIdAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ResourceHealthAvailabilityStatusData, AvailabilityStatusResource>(new AvailabilityStatusesGetAvailabilityStatusesBySubscriptionAsyncCollectionResultOfT(
                 AvailabilityStatusesRestClient,
                 Id.SubscriptionId,
                 filter,
                 expand,
                 context,
-                "MockableResourceHealthSubscriptionResource.GetAvailabilityStatuses"), data => new AvailabilityStatusResource(Client, data));
+                "MockableResourceHealthSubscriptionResource.GetAvailabilityStatusesBySubscription"), data => new AvailabilityStatusResource(Client, data));
         }
 
         /// <summary>
@@ -165,19 +165,19 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AvailabilityStatusResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AvailabilityStatusResource> GetAvailabilityStatuses(string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<AvailabilityStatusResource> GetAvailabilityStatusesBySubscription(string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AvailabilityStatusData, AvailabilityStatusResource>(new AvailabilityStatusesGetBySubscriptionIdCollectionResultOfT(
+            return new PageableWrapper<ResourceHealthAvailabilityStatusData, AvailabilityStatusResource>(new AvailabilityStatusesGetAvailabilityStatusesBySubscriptionCollectionResultOfT(
                 AvailabilityStatusesRestClient,
                 Id.SubscriptionId,
                 filter,
                 expand,
                 context,
-                "MockableResourceHealthSubscriptionResource.GetAvailabilityStatuses"), data => new AvailabilityStatusResource(Client, data));
+                "MockableResourceHealthSubscriptionResource.GetAvailabilityStatusesBySubscription"), data => new AvailabilityStatusResource(Client, data));
         }
     }
 }

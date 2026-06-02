@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -15,51 +14,48 @@ using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    internal partial class AvailabilityStatusesGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<AvailabilityStatusData>
+    internal partial class ResourceHealthEventGetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventIdCollectionResultOfT : Pageable<ResourceHealthEventImpactedResourceData>
     {
-        private readonly AvailabilityStatuses _client;
+        private readonly ResourceHealthEvent _client;
         private readonly string _subscriptionId;
-        private readonly string _resourceGroupName;
+        private readonly string _eventTrackingId;
         private readonly string _filter;
-        private readonly string _expand;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of AvailabilityStatusesGetByResourceGroupAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The AvailabilityStatuses client used to send requests. </param>
+        /// <summary> Initializes a new instance of ResourceHealthEventGetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventIdCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ResourceHealthEvent client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
-        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public AvailabilityStatusesGetByResourceGroupAsyncCollectionResultOfT(AvailabilityStatuses client, string subscriptionId, string resourceGroupName, string filter, string expand, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ResourceHealthEventGetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventIdCollectionResultOfT(ResourceHealthEvent client, string subscriptionId, string eventTrackingId, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
-            _resourceGroupName = resourceGroupName;
+            _eventTrackingId = eventTrackingId;
             _filter = filter;
-            _expand = expand;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of AvailabilityStatusesGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ResourceHealthEventGetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventIdCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of AvailabilityStatusesGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<AvailabilityStatusData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ResourceHealthEventGetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventIdCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<ResourceHealthEventImpactedResourceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
                 }
-                AvailabilityStatusListResult result = AvailabilityStatusListResult.FromResponse(response);
-                yield return Page<AvailabilityStatusData>.FromValues((IReadOnlyList<AvailabilityStatusData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                EventImpactedResourceListResult result = EventImpactedResourceListResult.FromResponse(response);
+                yield return Page<ResourceHealthEventImpactedResourceData>.FromValues((IReadOnlyList<ResourceHealthEventImpactedResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
@@ -72,14 +68,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _filter, _expand, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _filter, _expand, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventIdRequest(nextLink, _subscriptionId, _eventTrackingId, _filter, _context) : _client.CreateGetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventIdRequest(_subscriptionId, _eventTrackingId, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {
