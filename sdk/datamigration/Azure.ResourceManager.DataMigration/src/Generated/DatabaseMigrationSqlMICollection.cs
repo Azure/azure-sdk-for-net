@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataMigration
                 HttpMessage message = _databaseMigrationsSqlMiRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, targetDbName, DatabaseMigrationSqlMIData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataMigrationArmOperation<DatabaseMigrationSqlMIResource> operation = new DataMigrationArmOperation<DatabaseMigrationSqlMIResource>(
-                    new DatabaseMigrationSqlMIOperationSource(Client),
+                    new DatabaseMigrationSqlMIResourceOperationSource(Client),
                     _databaseMigrationsSqlMiClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataMigration
                 HttpMessage message = _databaseMigrationsSqlMiRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, targetDbName, DatabaseMigrationSqlMIData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataMigrationArmOperation<DatabaseMigrationSqlMIResource> operation = new DataMigrationArmOperation<DatabaseMigrationSqlMIResource>(
-                    new DatabaseMigrationSqlMIOperationSource(Client),
+                    new DatabaseMigrationSqlMIResourceOperationSource(Client),
                     _databaseMigrationsSqlMiClientDiagnostics,
                     Pipeline,
                     message.Request,

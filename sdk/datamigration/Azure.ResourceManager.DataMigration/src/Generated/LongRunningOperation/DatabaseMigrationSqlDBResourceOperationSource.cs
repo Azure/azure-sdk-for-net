@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataMigration
 {
     /// <summary></summary>
-    internal partial class DatabaseMigrationSqlDBOperationSource : IOperationSource<DatabaseMigrationSqlDBResource>
+    internal partial class DatabaseMigrationSqlDBResourceOperationSource : IOperationSource<DatabaseMigrationSqlDBResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal DatabaseMigrationSqlDBOperationSource(ArmClient client)
+        internal DatabaseMigrationSqlDBResourceOperationSource(ArmClient client)
         {
             _client = client;
         }

@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataMigration
 {
     /// <summary></summary>
-    internal partial class DatabaseMigrationsMongoToCosmosDbvCoreMongoOperationSource : IOperationSource<DatabaseMigrationsMongoToCosmosDbvCoreMongoResource>
+    internal partial class DatabaseMigrationsMongoToCosmosDbvCoreMongoResourceOperationSource : IOperationSource<DatabaseMigrationsMongoToCosmosDbvCoreMongoResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal DatabaseMigrationsMongoToCosmosDbvCoreMongoOperationSource(ArmClient client)
+        internal DatabaseMigrationsMongoToCosmosDbvCoreMongoResourceOperationSource(ArmClient client)
         {
             _client = client;
         }

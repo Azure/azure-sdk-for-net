@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataMigration
                 HttpMessage message = _databaseMigrationsMongoToCosmosDbvCoreMongoRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, migrationName, DatabaseMigrationCosmosDbMongoData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataMigrationArmOperation<DatabaseMigrationsMongoToCosmosDbvCoreMongoResource> operation = new DataMigrationArmOperation<DatabaseMigrationsMongoToCosmosDbvCoreMongoResource>(
-                    new DatabaseMigrationsMongoToCosmosDbvCoreMongoOperationSource(Client),
+                    new DatabaseMigrationsMongoToCosmosDbvCoreMongoResourceOperationSource(Client),
                     _databaseMigrationsMongoToCosmosDbvCoreMongoClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataMigration
                 HttpMessage message = _databaseMigrationsMongoToCosmosDbvCoreMongoRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, migrationName, DatabaseMigrationCosmosDbMongoData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataMigrationArmOperation<DatabaseMigrationsMongoToCosmosDbvCoreMongoResource> operation = new DataMigrationArmOperation<DatabaseMigrationsMongoToCosmosDbvCoreMongoResource>(
-                    new DatabaseMigrationsMongoToCosmosDbvCoreMongoOperationSource(Client),
+                    new DatabaseMigrationsMongoToCosmosDbvCoreMongoResourceOperationSource(Client),
                     _databaseMigrationsMongoToCosmosDbvCoreMongoClientDiagnostics,
                     Pipeline,
                     message.Request,

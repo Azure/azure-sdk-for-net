@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataMigration
 {
     /// <summary></summary>
-    internal partial class DatabaseMigrationSqlMIOperationSource : IOperationSource<DatabaseMigrationSqlMIResource>
+    internal partial class DataMigrationServiceResourceOperationSource : IOperationSource<DataMigrationServiceResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal DatabaseMigrationSqlMIOperationSource(ArmClient client)
+        internal DataMigrationServiceResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        DatabaseMigrationSqlMIResource IOperationSource<DatabaseMigrationSqlMIResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DataMigrationServiceResource IOperationSource<DataMigrationServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            DatabaseMigrationSqlMIData data = DatabaseMigrationSqlMIData.DeserializeDatabaseMigrationSqlMIData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DatabaseMigrationSqlMIResource(_client, data);
+            DataMigrationServiceData data = DataMigrationServiceData.DeserializeDataMigrationServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DataMigrationServiceResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<DatabaseMigrationSqlMIResource> IOperationSource<DatabaseMigrationSqlMIResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DataMigrationServiceResource> IOperationSource<DataMigrationServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            DatabaseMigrationSqlMIData data = DatabaseMigrationSqlMIData.DeserializeDatabaseMigrationSqlMIData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DatabaseMigrationSqlMIResource(_client, data);
+            DataMigrationServiceData data = DataMigrationServiceData.DeserializeDataMigrationServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DataMigrationServiceResource(_client, data);
         }
     }
 }

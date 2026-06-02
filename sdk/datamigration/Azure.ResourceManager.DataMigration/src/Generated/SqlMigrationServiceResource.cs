@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DataMigration
                 HttpMessage message = _sqlMigrationServicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SqlMigrationServicePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataMigrationArmOperation<SqlMigrationServiceResource> operation = new DataMigrationArmOperation<SqlMigrationServiceResource>(
-                    new SqlMigrationServiceOperationSource(Client),
+                    new SqlMigrationServiceResourceOperationSource(Client),
                     _sqlMigrationServicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DataMigration
                 HttpMessage message = _sqlMigrationServicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SqlMigrationServicePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataMigrationArmOperation<SqlMigrationServiceResource> operation = new DataMigrationArmOperation<SqlMigrationServiceResource>(
-                    new SqlMigrationServiceOperationSource(Client),
+                    new SqlMigrationServiceResourceOperationSource(Client),
                     _sqlMigrationServicesClientDiagnostics,
                     Pipeline,
                     message.Request,

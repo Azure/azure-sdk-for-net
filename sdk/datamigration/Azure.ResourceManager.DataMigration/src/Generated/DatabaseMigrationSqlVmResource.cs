@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DataMigration
                 HttpMessage message = _databaseMigrationsSqlVmRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, force, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataMigrationArmOperation<DatabaseMigrationSqlVmResource> operation = new DataMigrationArmOperation<DatabaseMigrationSqlVmResource>(
-                    new DatabaseMigrationSqlVmOperationSource(Client),
+                    new DatabaseMigrationSqlVmResourceOperationSource(Client),
                     _databaseMigrationsSqlVmClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.DataMigration
                 HttpMessage message = _databaseMigrationsSqlVmRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, force, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataMigrationArmOperation<DatabaseMigrationSqlVmResource> operation = new DataMigrationArmOperation<DatabaseMigrationSqlVmResource>(
-                    new DatabaseMigrationSqlVmOperationSource(Client),
+                    new DatabaseMigrationSqlVmResourceOperationSource(Client),
                     _databaseMigrationsSqlVmClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.DataMigration
                 HttpMessage message = _databaseMigrationsSqlVmRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabaseMigrationSqlVmData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataMigrationArmOperation<DatabaseMigrationSqlVmResource> operation = new DataMigrationArmOperation<DatabaseMigrationSqlVmResource>(
-                    new DatabaseMigrationSqlVmOperationSource(Client),
+                    new DatabaseMigrationSqlVmResourceOperationSource(Client),
                     _databaseMigrationsSqlVmClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.DataMigration
                 HttpMessage message = _databaseMigrationsSqlVmRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabaseMigrationSqlVmData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataMigrationArmOperation<DatabaseMigrationSqlVmResource> operation = new DataMigrationArmOperation<DatabaseMigrationSqlVmResource>(
-                    new DatabaseMigrationSqlVmOperationSource(Client),
+                    new DatabaseMigrationSqlVmResourceOperationSource(Client),
                     _databaseMigrationsSqlVmClientDiagnostics,
                     Pipeline,
                     message.Request,
