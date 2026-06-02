@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.HybridCompute
 
         /// <summary> Optional. If set to true, provisioning will complete as soon as script starts and will not wait for script to complete. </summary>
         [WirePath("properties.asyncExecution")]
-        public bool? AsyncExecution
+        public bool? IsAsyncExecution
         {
             get
             {
-                return Properties is null ? default : Properties.AsyncExecution;
+                return Properties is null ? default : Properties.IsAsyncExecution;
             }
             set
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     Properties = new MachineRunCommandProperties();
                 }
-                Properties.AsyncExecution = value;
+                Properties.IsAsyncExecution = value;
             }
         }
 

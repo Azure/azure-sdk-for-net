@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AsyncExecution))
+            if (Optional.IsDefined(IsAsyncExecution))
             {
                 writer.WritePropertyName("asyncExecution"u8);
-                writer.WriteBooleanValue(AsyncExecution.Value);
+                writer.WriteBooleanValue(IsAsyncExecution.Value);
             }
             if (Optional.IsDefined(RunAsUser))
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             MachineRunCommandScriptSource source = default;
             IList<RunCommandInputParameter> parameters = default;
             IList<RunCommandInputParameter> protectedParameters = default;
-            bool? asyncExecution = default;
+            bool? isAsyncExecution = default;
             string runAsUser = default;
             string runAsPassword = default;
             int? timeoutInSeconds = default;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    asyncExecution = prop.Value.GetBoolean();
+                    isAsyncExecution = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("runAsUser"u8))
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 source,
                 parameters ?? new ChangeTrackingList<RunCommandInputParameter>(),
                 protectedParameters ?? new ChangeTrackingList<RunCommandInputParameter>(),
-                asyncExecution,
+                isAsyncExecution,
                 runAsUser,
                 runAsPassword,
                 timeoutInSeconds,
