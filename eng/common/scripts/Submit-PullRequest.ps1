@@ -1,4 +1,4 @@
- #!/usr/bin/env pwsh -c
+#!/usr/bin/env pwsh -c
 
 <#
 .DESCRIPTION
@@ -38,6 +38,10 @@ Close the PR after opening to save on CI resources and prevent alerts to code
 owners, assignees, requested reviewers, or others.
 .PARAMETER OpenAsDraft
 Opens the PR as a draft
+.PARAMETER AddBuildSummary
+Whether to add an Azure DevOps build summary attachment for the created or existing PR.
+.PARAMETER UpdateExistingPullRequest
+Whether to update the existing PR title and body when the PR already exists. Defaults to false to preserve current behavior for existing callers.
 #>
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
@@ -79,7 +83,9 @@ param(
 
   [boolean]$MaintainerCanModify=$true,
 
-  [boolean]$AddBuildSummary=($null -ne $env:SYSTEM_TEAMPROJECTID)
+  [boolean]$AddBuildSummary=($null -ne $env:SYSTEM_TEAMPROJECTID),
+
+  [boolean]$UpdateExistingPullRequest=$false
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -101,14 +107,31 @@ if ($resp.Count -gt 0) {
   $existingNumber = $existingPr.number
   $existingTitle = $existingPr.title
   LogDebug "Pull request already exists $existingUrl"
-  # setting variable to reference the pull request by number
-  Write-Host "##vso[task.setvariable variable=Submitted.PullRequest.Number]$existingNumber"
-  if ($AddBuildSummary) {
-    $summaryPath = New-TemporaryFile
-    $summaryMarkdown = "**PR:** [Azure/$RepoName#$existingNumber]($existingUrl)"
-    $summaryMarkdown += "`n**Title:** $existingTitle"
-    $summaryMarkdown | Out-File $summaryPath
-    Write-Host "##vso[task.addattachment type=Distributedtask.Core.Summary;name=Existing Pull Request;]$summaryPath"
+
+  try {
+    if ($UpdateExistingPullRequest) {
+      Update-GitHubIssue -RepoOwner $RepoOwner -RepoName $RepoName -IssueNumber $existingNumber `
+        -Title $PRTitle -Body $PRBody -AuthToken $AuthToken | Out-Null
+      $existingTitle = $PRTitle
+      LogDebug "Updated existing pull request $existingUrl title and body"
+    }
+    else {
+      LogDebug "Skipping existing pull request title/body update because UpdateExistingPullRequest is false"
+    }
+
+    # setting variable to reference the pull request by number
+    Write-Host "##vso[task.setvariable variable=Submitted.PullRequest.Number]$existingNumber"
+    if ($AddBuildSummary) {
+      $summaryPath = New-TemporaryFile
+      $summaryMarkdown = "**PR:** [Azure/$RepoName#$existingNumber]($existingUrl)"
+      $summaryMarkdown += "`n**Title:** $existingTitle"
+      $summaryMarkdown | Out-File $summaryPath
+      Write-Host "##vso[task.addattachment type=Distributedtask.Core.Summary;name=Existing Pull Request;]$summaryPath"
+    }
+  }
+  catch {
+    LogError "Failed to process existing pull request $existingUrl with exception:`n$_"
+    exit 1
   }
 }
 else {
