@@ -202,9 +202,11 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexerName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
+#pragma warning disable AZC0002 // CancellationToken is intentionally required to disambiguate from (string, MatchConditions, CancellationToken) overload
         public virtual Response DeleteIndexer(
             string indexerName,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
+#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(indexerName, nameof(indexerName));
 
@@ -220,9 +222,11 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexerName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
+#pragma warning disable AZC0002 // CancellationToken is intentionally required to disambiguate from (string, MatchConditions, CancellationToken) overload
         public virtual async Task<Response> DeleteIndexerAsync(
             string indexerName,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
+#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(indexerName, nameof(indexerName));
 

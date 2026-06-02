@@ -293,9 +293,11 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
+#pragma warning disable AZC0002 // CancellationToken is intentionally required to disambiguate from (string, MatchConditions, CancellationToken) overload
         public virtual Response DeleteIndex(
             string indexName,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken) =>
+#pragma warning restore AZC0002
             DeleteIndex(indexName, matchConditions: null, cancellationToken);
 
         /// <summary>
@@ -307,9 +309,11 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
+#pragma warning disable AZC0002 // CancellationToken is intentionally required to disambiguate from (string, MatchConditions, CancellationToken) overload
         public virtual async Task<Response> DeleteIndexAsync(
             string indexName,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken) =>
+#pragma warning restore AZC0002
             await DeleteIndexAsync(indexName, matchConditions: null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -515,9 +519,11 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="synonymMapName"/> or <see cref="SynonymMap.Name"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
+#pragma warning disable AZC0002 // CancellationToken is intentionally required to disambiguate from (string, MatchConditions, CancellationToken) overload
         public virtual Response DeleteSynonymMap(
             string synonymMapName,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken) =>
+#pragma warning restore AZC0002
             DeleteSynonymMap(synonymMapName, matchConditions: null, cancellationToken);
 
         /// <summary>
@@ -529,9 +535,11 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="synonymMapName"/> or <see cref="SynonymMap.Name"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
+#pragma warning disable AZC0002 // CancellationToken is intentionally required to disambiguate from (string, MatchConditions, CancellationToken) overload
         public virtual async Task<Response> DeleteSynonymMapAsync(
             string synonymMapName,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken) =>
+#pragma warning restore AZC0002
             await DeleteSynonymMapAsync(synonymMapName, matchConditions: null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
