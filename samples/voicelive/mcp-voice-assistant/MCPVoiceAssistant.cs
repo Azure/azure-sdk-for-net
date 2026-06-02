@@ -107,13 +107,13 @@ public class MCPVoiceAssistant : IDisposable
         // Register MCP servers.
         sessionOptions.Tools.Add(new VoiceLiveMcpServerDefinition("deepwiki", "https://mcp.deepwiki.com/mcp")
         {
-            RequireApproval = McpApprovalKind.Never,
+            RequireApproval = MCPApprovalType.Never,
             AllowedTools = { "read_wiki_structure", "ask_question" }
         });
 
         sessionOptions.Tools.Add(new VoiceLiveMcpServerDefinition("azure_doc", "https://learn.microsoft.com/api/mcp")
         {
-            RequireApproval = McpApprovalKind.Always
+            RequireApproval = MCPApprovalType.Always
         });
 
         try
