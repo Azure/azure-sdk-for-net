@@ -54,51 +54,6 @@ namespace Azure.ResourceManager.StorageMover.Models
             return new StorageMoverPatch(description is null ? default : new StorageMoverUpdateProperties(description, null), tags, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="description"> A description for the Agent. </param>
-        /// <param name="agentVersion"> The Agent version. </param>
-        /// <param name="arcResourceId"> The fully qualified resource ID of the Hybrid Compute resource for the Agent. </param>
-        /// <param name="arcVmUuid"> The VM UUID of the Hybrid Compute resource for the Agent. </param>
-        /// <param name="agentStatus"> The Agent status. </param>
-        /// <param name="lastStatusUpdate"> The last updated time of the Agent status. </param>
-        /// <param name="localIPAddress"> Local IP address reported by the Agent. </param>
-        /// <param name="memoryInMB"> Available memory reported by the Agent, in MB. </param>
-        /// <param name="numberOfCores"> Available compute cores reported by the Agent. </param>
-        /// <param name="uptimeInSeconds"> Uptime of the Agent in seconds. </param>
-        /// <param name="timeZone"> The agent's local time zone represented in Windows format. </param>
-        /// <param name="errorDetails"> Gets the ErrorDetails. </param>
-        /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        /// <param name="uploadLimitScheduleWeeklyRecurrences"> The set of weekly repeating recurrences of the WAN-link upload limit schedule. </param>
-        /// <returns> A new <see cref="StorageMover.StorageMoverAgentData"/> instance for mocking. </returns>
-        public static StorageMoverAgentData StorageMoverAgentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, string agentVersion = default, string arcResourceId = default, string arcVmUuid = default, StorageMoverAgentStatus? agentStatus = default, DateTimeOffset? lastStatusUpdate = default, string localIPAddress = default, long? memoryInMB = default, long? numberOfCores = default, long? uptimeInSeconds = default, string timeZone = default, StorageMoverAgentPropertiesErrorDetails errorDetails = default, StorageMoverProvisioningState? provisioningState = default, IEnumerable<UploadLimitWeeklyRecurrence> uploadLimitScheduleWeeklyRecurrences = default)
-        {
-            return new StorageMoverAgentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                new AgentProperties(
-                    description,
-                    agentVersion,
-                    arcResourceId,
-                    arcVmUuid,
-                    agentStatus,
-                    lastStatusUpdate,
-                    localIPAddress,
-                    memoryInMB,
-                    numberOfCores,
-                    uptimeInSeconds,
-                    timeZone,
-                    new UploadLimitSchedule((uploadLimitScheduleWeeklyRecurrences ?? new ChangeTrackingList<UploadLimitWeeklyRecurrence>()).ToList(), null),
-                    errorDetails,
-                    provisioningState,
-                    null));
-        }
-
         /// <summary> The weekly recurrence of the WAN-link upload limit schedule. The start time must be earlier in the day than the end time. The recurrence must not span across multiple days. </summary>
         /// <param name="startTime"> The start time of the schedule recurrence. Full hour and 30-minute intervals are supported. </param>
         /// <param name="endTime"> The end time of the schedule recurrence. Full hour and 30-minute intervals are supported. </param>
@@ -529,6 +484,217 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static JobRunWarning JobRunWarning(string code = default, string message = default, string target = default)
         {
             return new JobRunWarning(code, message, target, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageMover.JobDefinitionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> A description for the Job Definition. </param>
+        /// <param name="copyMode"> Strategy to use for copy. </param>
+        /// <param name="sourceName"> The name of the source Endpoint. </param>
+        /// <param name="sourceResourceId"> Fully qualified resource ID of the source Endpoint. </param>
+        /// <param name="sourceSubpath"> The subpath to use when reading from the source Endpoint. </param>
+        /// <param name="targetName"> The name of the target Endpoint. </param>
+        /// <param name="targetResourceId"> Fully qualified resource ID of the target Endpoint. </param>
+        /// <param name="targetSubpath"> The subpath to use when writing to the target Endpoint. </param>
+        /// <param name="latestJobRunName"> The name of the Job Run in a non-terminal state, if exists. </param>
+        /// <param name="latestJobRunResourceId"> The fully qualified resource ID of the Job Run in a non-terminal state, if exists. </param>
+        /// <param name="latestJobRunStatus"> The current status of the Job Run in a non-terminal state, if exists. </param>
+        /// <param name="agentName"> Name of the Agent to assign for new Job Runs of this Job Definition. </param>
+        /// <param name="agentResourceId"> Fully qualified resource id of the Agent to assign for new Job Runs of this Job Definition. </param>
+        /// <param name="provisioningState"> The provisioning state of this resource. </param>
+        /// <returns> A new <see cref="StorageMover.JobDefinitionData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static JobDefinitionData JobDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, StorageMoverCopyMode copyMode, string sourceName, ResourceIdentifier sourceResourceId, string sourceSubpath, string targetName, ResourceIdentifier targetResourceId, string targetSubpath, string latestJobRunName, ResourceIdentifier latestJobRunResourceId, JobRunStatus? latestJobRunStatus, string agentName, ResourceIdentifier agentResourceId, StorageMoverProvisioningState? provisioningState)
+        {
+            return new JobDefinitionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                description is null && sourceName is null && sourceResourceId is null && sourceSubpath is null && targetName is null && targetResourceId is null && targetSubpath is null && latestJobRunName is null && latestJobRunResourceId is null && latestJobRunStatus is null && agentName is null && agentResourceId is null && provisioningState is null ? default : new JobDefinitionProperties(
+                    description,
+                    default,
+                    copyMode,
+                    sourceName,
+                    sourceResourceId,
+                    sourceSubpath,
+                    targetName,
+                    targetResourceId,
+                    targetSubpath,
+                    latestJobRunName,
+                    latestJobRunResourceId,
+                    latestJobRunStatus,
+                    agentName,
+                    agentResourceId,
+                    default,
+                    provisioningState,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default));
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageMover.JobDefinitionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> A description for the Job Definition. OnPremToCloud is for migrating data from on-premises to cloud. CloudToCloud is for migrating data between cloud to cloud. </param>
+        /// <param name="jobType"> The type of the Job. </param>
+        /// <param name="copyMode"> Strategy to use for copy. </param>
+        /// <param name="sourceName"> The name of the source Endpoint. </param>
+        /// <param name="sourceResourceId"> Fully qualified resource ID of the source Endpoint. </param>
+        /// <param name="sourceSubpath"> The subpath to use when reading from the source Endpoint. </param>
+        /// <param name="targetName"> The name of the target Endpoint. </param>
+        /// <param name="targetResourceId"> Fully qualified resource ID of the target Endpoint. </param>
+        /// <param name="targetSubpath"> The subpath to use when writing to the target Endpoint. </param>
+        /// <param name="latestJobRunName"> The name of the Job Run in a non-terminal state, if exists. </param>
+        /// <param name="latestJobRunResourceId"> The fully qualified resource ID of the Job Run in a non-terminal state, if exists. </param>
+        /// <param name="latestJobRunStatus"> The current status of the Job Run in a non-terminal state, if exists. </param>
+        /// <param name="agentName"> Name of the Agent to assign for new Job Runs of this Job Definition. </param>
+        /// <param name="agentResourceId"> Fully qualified resource id of the Agent to assign for new Job Runs of this Job Definition. </param>
+        /// <param name="sourceTargetMapValue"> The list of cloud endpoints to migrate. </param>
+        /// <param name="provisioningState"> The provisioning state of this resource. </param>
+        /// <returns> A new <see cref="StorageMover.JobDefinitionData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static JobDefinitionData JobDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, JobType? jobType, StorageMoverCopyMode copyMode, string sourceName, ResourceIdentifier sourceResourceId, string sourceSubpath, string targetName, ResourceIdentifier targetResourceId, string targetSubpath, string latestJobRunName, ResourceIdentifier latestJobRunResourceId, JobRunStatus? latestJobRunStatus, string agentName, ResourceIdentifier agentResourceId, IEnumerable<SourceTargetMap> sourceTargetMapValue, StorageMoverProvisioningState? provisioningState)
+        {
+
+            return new JobDefinitionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                description is null && jobType is null && sourceName is null && sourceResourceId is null && sourceSubpath is null && targetName is null && targetResourceId is null && targetSubpath is null && latestJobRunName is null && latestJobRunResourceId is null && latestJobRunStatus is null && agentName is null && agentResourceId is null && sourceTargetMapValue is null && provisioningState is null ? default : new JobDefinitionProperties(
+                    description,
+                    jobType,
+                    copyMode,
+                    sourceName,
+                    sourceResourceId,
+                    sourceSubpath,
+                    targetName,
+                    targetResourceId,
+                    targetSubpath,
+                    latestJobRunName,
+                    latestJobRunResourceId,
+                    latestJobRunStatus,
+                    agentName,
+                    agentResourceId,
+                    new JobDefinitionPropertiesSourceTargetMap((sourceTargetMapValue ?? new ChangeTrackingList<SourceTargetMap>()).ToList(), default),
+                    provisioningState,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default));
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageMover.JobRunData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="status"> The state of the job execution. </param>
+        /// <param name="scanStatus"> The status of Agent's scanning of source. </param>
+        /// <param name="agentName"> Name of the Agent assigned to this run. </param>
+        /// <param name="agentResourceId"> Fully qualified resource id of the Agent assigned to this run. </param>
+        /// <param name="executionStartOn"> Start time of the run. Null if no Agent reported that the job has started. </param>
+        /// <param name="executionEndOn"> End time of the run. Null if Agent has not reported that the job has ended. </param>
+        /// <param name="lastStatusUpdate"> The last updated time of the Job Run. </param>
+        /// <param name="itemsScanned"> Number of items scanned so far in source. </param>
+        /// <param name="itemsExcluded"> Number of items that will not be transferred, as they are excluded by user configuration. </param>
+        /// <param name="itemsUnsupported"> Number of items that will not be transferred, as they are unsupported on target. </param>
+        /// <param name="itemsNoTransferNeeded"> Number of items that will not be transferred, as they are already found on target (e.g. mirror mode). </param>
+        /// <param name="itemsFailed"> Number of items that were attempted to transfer and failed. </param>
+        /// <param name="itemsTransferred"> Number of items successfully transferred to target. </param>
+        /// <param name="bytesScanned"> Bytes of data scanned so far in source. </param>
+        /// <param name="bytesExcluded"> Bytes of data that will not be transferred, as they are excluded by user configuration. </param>
+        /// <param name="bytesUnsupported"> Bytes of data that will not be transferred, as they are unsupported on target. </param>
+        /// <param name="bytesNoTransferNeeded"> Bytes of data that will not be transferred, as they are already found on target (e.g. mirror mode). </param>
+        /// <param name="bytesFailed"> Bytes of data that were attempted to transfer and failed. </param>
+        /// <param name="bytesTransferred"> Bytes of data successfully transferred to target. </param>
+        /// <param name="sourceName"> Name of source Endpoint resource. This resource may no longer exist. </param>
+        /// <param name="sourceResourceId"> Fully qualified resource id of source Endpoint. This id may no longer exist. </param>
+        /// <param name="sourceProperties"> Copy of source Endpoint resource's properties at time of Job Run creation. </param>
+        /// <param name="targetName"> Name of target Endpoint resource. This resource may no longer exist. </param>
+        /// <param name="targetResourceId"> Fully qualified resource id of of Endpoint. This id may no longer exist. </param>
+        /// <param name="targetProperties"> Copy of Endpoint resource's properties at time of Job Run creation. </param>
+        /// <param name="jobDefinitionProperties"> Copy of parent Job Definition's properties at time of Job Run creation. </param>
+        /// <param name="error"> Error details. </param>
+        /// <param name="provisioningState"> The provisioning state of this resource. </param>
+        /// <returns> A new <see cref="StorageMover.JobRunData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static JobRunData JobRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobRunStatus? status, JobRunScanStatus? scanStatus, string agentName, ResourceIdentifier agentResourceId, DateTimeOffset? executionStartOn, DateTimeOffset? executionEndOn, DateTimeOffset? lastStatusUpdate, long? itemsScanned, long? itemsExcluded, long? itemsUnsupported, long? itemsNoTransferNeeded, long? itemsFailed, long? itemsTransferred, long? bytesScanned, long? bytesExcluded, long? bytesUnsupported, long? bytesNoTransferNeeded, long? bytesFailed, long? bytesTransferred, string sourceName, ResourceIdentifier sourceResourceId, BinaryData sourceProperties, string targetName, ResourceIdentifier targetResourceId, BinaryData targetProperties, BinaryData jobDefinitionProperties, JobRunError error, StorageMoverProvisioningState? provisioningState)
+        {
+            return JobRunData(id: id, name: name, resourceType: resourceType, systemData: systemData, status: status, scanStatus: scanStatus, agentName: agentName, agentResourceId: agentResourceId, executionStartOn: executionStartOn, executionEndOn: executionEndOn, triggerType: default, scheduledExecutionOn: default, lastStatusUpdate: lastStatusUpdate, itemsScanned: itemsScanned, itemsExcluded: itemsExcluded, itemsUnsupported: itemsUnsupported, itemsNoTransferNeeded: itemsNoTransferNeeded, itemsFailed: itemsFailed, itemsTransferred: itemsTransferred, bytesScanned: bytesScanned, bytesExcluded: bytesExcluded, bytesUnsupported: bytesUnsupported, bytesNoTransferNeeded: bytesNoTransferNeeded, bytesFailed: bytesFailed, bytesTransferred: bytesTransferred, sourceName: sourceName, sourceResourceId: sourceResourceId, sourceProperties: sourceProperties, targetName: targetName, targetResourceId: targetResourceId, targetProperties: targetProperties, jobDefinitionProperties: jobDefinitionProperties, error: error, warnings: default, provisioningState: provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageMover.StorageMoverAgentData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> A description for the Agent. </param>
+        /// <param name="agentVersion"> The Agent version. </param>
+        /// <param name="arcResourceId"> The fully qualified resource ID of the Hybrid Compute resource for the Agent. </param>
+        /// <param name="arcVmUuid"> The VM UUID of the Hybrid Compute resource for the Agent. </param>
+        /// <param name="agentStatus"> The Agent status. </param>
+        /// <param name="lastStatusUpdate"> The last updated time of the Agent status. </param>
+        /// <param name="localIPAddress"> Local IP address reported by the Agent. </param>
+        /// <param name="memoryInMB"> Available memory reported by the Agent, in MB. </param>
+        /// <param name="numberOfCores"> Available compute cores reported by the Agent. </param>
+        /// <param name="uptimeInSeconds"> Uptime of the Agent in seconds. </param>
+        /// <param name="errorDetails"></param>
+        /// <param name="provisioningState"> The provisioning state of this resource. </param>
+        /// <returns> A new <see cref="StorageMover.StorageMoverAgentData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StorageMoverAgentData StorageMoverAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string agentVersion, string arcResourceId, string arcVmUuid, StorageMoverAgentStatus? agentStatus, DateTimeOffset? lastStatusUpdate, string localIPAddress, long? memoryInMB, long? numberOfCores, long? uptimeInSeconds, StorageMoverAgentPropertiesErrorDetails errorDetails, StorageMoverProvisioningState? provisioningState)
+        {
+            return new StorageMoverAgentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                description is null && agentVersion is null && arcResourceId is null && arcVmUuid is null && agentStatus is null && lastStatusUpdate is null && localIPAddress is null && memoryInMB is null && numberOfCores is null && uptimeInSeconds is null && errorDetails is null && provisioningState is null ? default : new AgentProperties(
+                    description,
+                    agentVersion,
+                    arcResourceId,
+                    arcVmUuid,
+                    agentStatus,
+                    lastStatusUpdate,
+                    localIPAddress,
+                    memoryInMB,
+                    numberOfCores,
+                    uptimeInSeconds,
+                    default,
+                    default,
+                    errorDetails,
+                    provisioningState,
+                    default));
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageMover.StorageMoverEndpointData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties">
+        /// The resource specific properties for the Storage Mover resource.
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include , ,  and .
+        /// </param>
+        /// <returns> A new <see cref="StorageMover.StorageMoverEndpointData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StorageMoverEndpointData StorageMoverEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EndpointBaseProperties properties)
+        {
+            return StorageMoverEndpointData(id: id, name: name, resourceType: resourceType, systemData: systemData, properties: properties, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureStorageBlobContainerEndpointProperties"/>. </summary>
