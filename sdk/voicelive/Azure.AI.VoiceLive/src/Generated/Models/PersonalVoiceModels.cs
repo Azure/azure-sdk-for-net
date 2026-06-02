@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> PersonalVoice models. </summary>
-    public readonly partial struct PersonalVoiceModel : IEquatable<PersonalVoiceModel>
+    public readonly partial struct PersonalVoiceModels : IEquatable<PersonalVoiceModels>
     {
         private readonly string _value;
         /// <summary> Use the latest Dragon model. </summary>
@@ -25,10 +25,10 @@ namespace Azure.AI.VoiceLive
         /// <summary> Use the MAI-Voice-1 model. </summary>
         private const string MaiVoice1Value = "MAI-Voice-1";
 
-        /// <summary> Initializes a new instance of <see cref="PersonalVoiceModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PersonalVoiceModels"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PersonalVoiceModel(string value)
+        public PersonalVoiceModels(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -36,44 +36,44 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Use the latest Dragon model. </summary>
-        public static PersonalVoiceModel DragonLatestNeural { get; } = new PersonalVoiceModel(DragonLatestNeuralValue);
+        public static PersonalVoiceModels DragonLatestNeural { get; } = new PersonalVoiceModels(DragonLatestNeuralValue);
 
         /// <summary> Use the latest Phoenix model. </summary>
-        public static PersonalVoiceModel PhoenixLatestNeural { get; } = new PersonalVoiceModel(PhoenixLatestNeuralValue);
+        public static PersonalVoiceModels PhoenixLatestNeural { get; } = new PersonalVoiceModels(PhoenixLatestNeuralValue);
 
         /// <summary> Use the Phoenix V2 model. </summary>
-        public static PersonalVoiceModel PhoenixV2Neural { get; } = new PersonalVoiceModel(PhoenixV2NeuralValue);
+        public static PersonalVoiceModels PhoenixV2Neural { get; } = new PersonalVoiceModels(PhoenixV2NeuralValue);
 
         /// <summary> Use the latest Dragon HD Omni model. </summary>
-        public static PersonalVoiceModel DragonHDOmniLatestNeural { get; } = new PersonalVoiceModel(DragonHDOmniLatestNeuralValue);
+        public static PersonalVoiceModels DragonHDOmniLatestNeural { get; } = new PersonalVoiceModels(DragonHDOmniLatestNeuralValue);
 
         /// <summary> Use the MAI-Voice-1 model. </summary>
-        public static PersonalVoiceModel MaiVoice1 { get; } = new PersonalVoiceModel(MaiVoice1Value);
+        public static PersonalVoiceModels MaiVoice1 { get; } = new PersonalVoiceModels(MaiVoice1Value);
 
-        /// <summary> Determines if two <see cref="PersonalVoiceModel"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="PersonalVoiceModels"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(PersonalVoiceModel left, PersonalVoiceModel right) => left.Equals(right);
+        public static bool operator ==(PersonalVoiceModels left, PersonalVoiceModels right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="PersonalVoiceModel"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="PersonalVoiceModels"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(PersonalVoiceModel left, PersonalVoiceModel right) => !left.Equals(right);
+        public static bool operator !=(PersonalVoiceModels left, PersonalVoiceModels right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="PersonalVoiceModel"/>. </summary>
+        /// <summary> Converts a string to a <see cref="PersonalVoiceModels"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PersonalVoiceModel(string value) => new PersonalVoiceModel(value);
+        public static implicit operator PersonalVoiceModels(string value) => new PersonalVoiceModels(value);
 
-        /// <summary> Converts a string to a <see cref="PersonalVoiceModel"/>. </summary>
+        /// <summary> Converts a string to a <see cref="PersonalVoiceModels"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PersonalVoiceModel?(string value) => value == null ? null : new PersonalVoiceModel(value);
+        public static implicit operator PersonalVoiceModels?(string value) => value == null ? null : new PersonalVoiceModels(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PersonalVoiceModel other && Equals(other);
+        public override bool Equals(object obj) => obj is PersonalVoiceModels other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(PersonalVoiceModel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PersonalVoiceModels other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -15,7 +15,7 @@ namespace Azure.AI.VoiceLive
     {
         /// <summary> Initializes a new instance of <see cref="AzureAvatarSyncVoice"/>. </summary>
         /// <param name="model"> Underlying neural model to use. </param>
-        public AzureAvatarSyncVoice(PersonalVoiceModel model) : base(AzureVoiceType.AvatarVoiceSync)
+        public AzureAvatarSyncVoice(PersonalVoiceModels model) : base(AzureVoiceType.AvatarVoiceSync)
         {
             Model = model;
             PreferLocales = new ChangeTrackingList<string>();
@@ -64,7 +64,7 @@ namespace Azure.AI.VoiceLive
         /// Typical values: a named level (`silent`, `x-soft`, `soft`, `medium`, `loud`, `x-loud`, `default`),
         /// an absolute number from 0.0 to 100.0, or a relative change (e.g., `+10`, `-6dB`).
         /// </param>
-        internal AzureAvatarSyncVoice(AzureVoiceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, PersonalVoiceModel model, float? temperature, Uri customLexiconUri, Uri customTextNormalizationUri, IList<string> preferLocales, string locale, string style, string pitch, string rate, string volume) : base(@type, additionalBinaryDataProperties)
+        internal AzureAvatarSyncVoice(AzureVoiceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, PersonalVoiceModels model, float? temperature, Uri customLexiconUri, Uri customTextNormalizationUri, IList<string> preferLocales, string locale, string style, string pitch, string rate, string volume) : base(@type, additionalBinaryDataProperties)
         {
             Model = model;
             Temperature = temperature;
@@ -79,7 +79,7 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Underlying neural model to use. </summary>
-        public PersonalVoiceModel Model { get; set; }
+        public PersonalVoiceModels Model { get; set; }
 
         /// <summary> Temperature must be between 0.0 and 1.0. </summary>
         public float? Temperature { get; set; }

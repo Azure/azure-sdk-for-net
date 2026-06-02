@@ -306,7 +306,7 @@ namespace Azure.AI.VoiceLive
         /// an absolute number from 0.0 to 100.0, or a relative change (e.g., `+10`, `-6dB`).
         /// </param>
         /// <returns> A new <see cref="VoiceLive.AzureAvatarSyncVoice"/> instance for mocking. </returns>
-        public static AzureAvatarSyncVoice AzureAvatarSyncVoice(PersonalVoiceModel model = default, float? temperature = default, Uri customLexiconUri = default, Uri customTextNormalizationUri = default, IEnumerable<string> preferLocales = default, string locale = default, string style = default, string pitch = default, string rate = default, string volume = default)
+        public static AzureAvatarSyncVoice AzureAvatarSyncVoice(PersonalVoiceModels model = default, float? temperature = default, Uri customLexiconUri = default, Uri customTextNormalizationUri = default, IEnumerable<string> preferLocales = default, string locale = default, string style = default, string pitch = default, string rate = default, string volume = default)
         {
             preferLocales ??= new ChangeTrackingList<string>();
 

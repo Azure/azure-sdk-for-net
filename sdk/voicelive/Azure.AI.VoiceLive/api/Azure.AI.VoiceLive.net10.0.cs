@@ -222,11 +222,11 @@ namespace Azure.AI.VoiceLive
     }
     public partial class AzureAvatarSyncVoice : Azure.AI.VoiceLive.AzureVoice, System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.AzureAvatarSyncVoice>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.AzureAvatarSyncVoice>
     {
-        public AzureAvatarSyncVoice(Azure.AI.VoiceLive.PersonalVoiceModel model) { }
+        public AzureAvatarSyncVoice(Azure.AI.VoiceLive.PersonalVoiceModels model) { }
         public System.Uri CustomLexiconUri { get { throw null; } set { } }
         public System.Uri CustomTextNormalizationUri { get { throw null; } set { } }
         public string Locale { get { throw null; } set { } }
-        public Azure.AI.VoiceLive.PersonalVoiceModel Model { get { throw null; } set { } }
+        public Azure.AI.VoiceLive.PersonalVoiceModels Model { get { throw null; } set { } }
         public string Pitch { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> PreferLocales { get { throw null; } }
         public string Rate { get { throw null; } set { } }
@@ -899,26 +899,6 @@ namespace Azure.AI.VoiceLive
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.OutputTokenDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PersonalVoiceModel : System.IEquatable<Azure.AI.VoiceLive.PersonalVoiceModel>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PersonalVoiceModel(string value) { throw null; }
-        public static Azure.AI.VoiceLive.PersonalVoiceModel DragonHDOmniLatestNeural { get { throw null; } }
-        public static Azure.AI.VoiceLive.PersonalVoiceModel DragonLatestNeural { get { throw null; } }
-        public static Azure.AI.VoiceLive.PersonalVoiceModel MaiVoice1 { get { throw null; } }
-        public static Azure.AI.VoiceLive.PersonalVoiceModel PhoenixLatestNeural { get { throw null; } }
-        public static Azure.AI.VoiceLive.PersonalVoiceModel PhoenixV2Neural { get { throw null; } }
-        public bool Equals(Azure.AI.VoiceLive.PersonalVoiceModel other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.VoiceLive.PersonalVoiceModel left, Azure.AI.VoiceLive.PersonalVoiceModel right) { throw null; }
-        public static implicit operator Azure.AI.VoiceLive.PersonalVoiceModel (string value) { throw null; }
-        public static implicit operator Azure.AI.VoiceLive.PersonalVoiceModel? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.VoiceLive.PersonalVoiceModel left, Azure.AI.VoiceLive.PersonalVoiceModel right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PersonalVoiceModels : System.IEquatable<Azure.AI.VoiceLive.PersonalVoiceModels>
     {
         private readonly object _dummy;
@@ -933,9 +913,8 @@ namespace Azure.AI.VoiceLive
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.VoiceLive.PersonalVoiceModels left, Azure.AI.VoiceLive.PersonalVoiceModels right) { throw null; }
-        public static implicit operator Azure.AI.VoiceLive.PersonalVoiceModels (Azure.AI.VoiceLive.PersonalVoiceModel value) { throw null; }
-        public static implicit operator Azure.AI.VoiceLive.PersonalVoiceModel (Azure.AI.VoiceLive.PersonalVoiceModels value) { throw null; }
         public static implicit operator Azure.AI.VoiceLive.PersonalVoiceModels (string value) { throw null; }
+        public static implicit operator Azure.AI.VoiceLive.PersonalVoiceModels? (string value) { throw null; }
         public static bool operator !=(Azure.AI.VoiceLive.PersonalVoiceModels left, Azure.AI.VoiceLive.PersonalVoiceModels right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2789,7 +2768,7 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.AudioNoiseReduction AudioNoiseReduction(Azure.AI.VoiceLive.AudioNoiseReductionType type = default(Azure.AI.VoiceLive.AudioNoiseReductionType)) { throw null; }
         public static Azure.AI.VoiceLive.AvatarConfiguration AvatarConfiguration(System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.IceServer> iceServers, string character, string style, bool customized, Azure.AI.VoiceLive.VideoParams video) { throw null; }
         public static Azure.AI.VoiceLive.AvatarConfiguration AvatarConfiguration(Azure.AI.VoiceLive.AvatarConfigKind? avatarKind = default(Azure.AI.VoiceLive.AvatarConfigKind?), System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.IceServer> iceServers = null, string character = null, string style = null, Azure.AI.VoiceLive.PhotoAvatarBaseMode? baseMode = default(Azure.AI.VoiceLive.PhotoAvatarBaseMode?), bool customized = false, Azure.AI.VoiceLive.VideoParams video = null, Azure.AI.VoiceLive.SceneParams scene = null, Azure.AI.VoiceLive.AvatarOutputProtocol? outputProtocol = default(Azure.AI.VoiceLive.AvatarOutputProtocol?), bool? auditOutputAudio = default(bool?)) { throw null; }
-        public static Azure.AI.VoiceLive.AzureAvatarSyncVoice AzureAvatarSyncVoice(Azure.AI.VoiceLive.PersonalVoiceModel model = default(Azure.AI.VoiceLive.PersonalVoiceModel), float? temperature = default(float?), System.Uri customLexiconUri = null, System.Uri customTextNormalizationUri = null, System.Collections.Generic.IEnumerable<string> preferLocales = null, string locale = null, string style = null, string pitch = null, string rate = null, string volume = null) { throw null; }
+        public static Azure.AI.VoiceLive.AzureAvatarSyncVoice AzureAvatarSyncVoice(Azure.AI.VoiceLive.PersonalVoiceModels model = default(Azure.AI.VoiceLive.PersonalVoiceModels), float? temperature = default(float?), System.Uri customLexiconUri = null, System.Uri customTextNormalizationUri = null, System.Collections.Generic.IEnumerable<string> preferLocales = null, string locale = null, string style = null, string pitch = null, string rate = null, string volume = null) { throw null; }
         public static Azure.AI.VoiceLive.AzureCustomVoice AzureCustomVoice(string name, string endpointId, float? temperature, string customLexiconUri, System.Collections.Generic.IEnumerable<string> preferLocales, string locale, string style, string pitch, string rate, string volume) { throw null; }
         public static Azure.AI.VoiceLive.AzureCustomVoice AzureCustomVoice(string name = null, string endpointId = null, float? temperature = default(float?), string customLexiconUri = null, System.Uri customTextNormalizationUri = null, System.Collections.Generic.IEnumerable<string> preferLocales = null, string locale = null, string style = null, string pitch = null, string rate = null, string volume = null) { throw null; }
         public static Azure.AI.VoiceLive.AzurePersonalVoice AzurePersonalVoice(string name, float? temperature, Azure.AI.VoiceLive.PersonalVoiceModels model) { throw null; }
