@@ -42,8 +42,30 @@ namespace Azure.ResourceManager.CosmosDB
             Identity = identity;
         }
 
+        /// <summary> The properties of an Azure Cosmos DB resource throughput. </summary>
+        [WirePath("properties")]
+        internal ThroughputSettingsProperties Properties { get; set; }
+
         /// <summary> Identity for the resource. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> Gets or sets the Resource. </summary>
+        [WirePath("properties.resource")]
+        public ExtendedThroughputSettingsResourceInfo Resource
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Resource;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThroughputSettingsProperties();
+                }
+                Properties.Resource = value;
+            }
+        }
     }
 }

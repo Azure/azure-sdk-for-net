@@ -44,5 +44,45 @@ namespace Azure.ResourceManager.CosmosDB.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
+
+        /// <summary> Properties to create and update Azure Cosmos DB Cassandra table. </summary>
+        [WirePath("properties")]
+        internal CassandraTableCreateUpdateProperties Properties { get; set; }
+
+        /// <summary> The standard JSON format of a Cassandra table. </summary>
+        [WirePath("properties.resource")]
+        public CassandraTableResourceInfo Resource
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Resource;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CassandraTableCreateUpdateProperties();
+                }
+                Properties.Resource = value;
+            }
+        }
+
+        /// <summary> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </summary>
+        [WirePath("properties.options")]
+        public CosmosDBCreateUpdateConfig Options
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Options;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CassandraTableCreateUpdateProperties();
+                }
+                Properties.Options = value;
+            }
+        }
     }
 }

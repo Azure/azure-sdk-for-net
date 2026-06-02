@@ -44,5 +44,45 @@ namespace Azure.ResourceManager.CosmosDB.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
+
+        /// <summary> Properties to create and update Azure Cosmos DB MongoDB collection. </summary>
+        [WirePath("properties")]
+        internal MongoDBCollectionCreateUpdateProperties Properties { get; set; }
+
+        /// <summary> The standard JSON format of a MongoDB collection. </summary>
+        [WirePath("properties.resource")]
+        public MongoDBCollectionResourceInfo Resource
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Resource;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MongoDBCollectionCreateUpdateProperties();
+                }
+                Properties.Resource = value;
+            }
+        }
+
+        /// <summary> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </summary>
+        [WirePath("properties.options")]
+        public CosmosDBCreateUpdateConfig Options
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Options;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MongoDBCollectionCreateUpdateProperties();
+                }
+                Properties.Options = value;
+            }
+        }
     }
 }

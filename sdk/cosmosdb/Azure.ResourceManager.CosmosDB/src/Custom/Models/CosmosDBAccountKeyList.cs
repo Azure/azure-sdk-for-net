@@ -4,8 +4,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure;
-using Azure.Core;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.CosmosDB.Models

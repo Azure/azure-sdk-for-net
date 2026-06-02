@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -17,6 +18,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="CassandraKeyspaceCreateOrUpdateContent"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="resourceKeyspaceName"> Name of the Cosmos DB Cassandra keyspace. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceKeyspaceName"/> is null. </exception>
+        public CassandraKeyspaceCreateOrUpdateContent(AzureLocation location, string resourceKeyspaceName) : base(location)
+        {
+            Argument.AssertNotNull(resourceKeyspaceName, nameof(resourceKeyspaceName));
+
+            Properties = new CassandraKeyspaceCreateUpdateProperties(resourceKeyspaceName);
+        }
 
         /// <summary> Initializes a new instance of <see cref="CassandraKeyspaceCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -31,6 +43,46 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+        }
+
+        /// <summary> Properties to create and update Azure Cosmos DB Cassandra keyspace. </summary>
+        [WirePath("properties")]
+        internal CassandraKeyspaceCreateUpdateProperties Properties { get; set; }
+
+        /// <summary> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </summary>
+        [WirePath("properties.options")]
+        public CosmosDBCreateUpdateConfig Options
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Options;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CassandraKeyspaceCreateUpdateProperties();
+                }
+                Properties.Options = value;
+            }
+        }
+
+        /// <summary> Name of the Cosmos DB Cassandra keyspace. </summary>
+        [WirePath("properties.resource.id")]
+        public string ResourceKeyspaceName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceKeyspaceName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CassandraKeyspaceCreateUpdateProperties();
+                }
+                Properties.ResourceKeyspaceName = value;
+            }
         }
     }
 }

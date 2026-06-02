@@ -60,7 +60,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Properties to create and update Azure Cosmos DB database accounts. </summary>
         [WirePath("properties")]
-        internal DatabaseAccountCreateUpdateProperties Properties { get; }
+        internal DatabaseAccountCreateUpdateProperties Properties { get; set; }
+
+        /// <summary> The consistency policy for the Cosmos DB account. </summary>
+        [WirePath("properties.consistencyPolicy")]
+        public ConsistencyPolicy ConsistencyPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConsistencyPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.ConsistencyPolicy = value;
+            }
+        }
 
         /// <summary> An array that contains the georeplication locations enabled for the Cosmos DB account. </summary>
         [WirePath("properties.locations")]
@@ -68,7 +86,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Locations;
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                return Properties.Locations;
             }
         }
 
@@ -78,7 +100,47 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             get
             {
-                return Properties is null ? default : Properties.IPRules;
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                return Properties.IPRules;
+            }
+        }
+
+        /// <summary> Flag to indicate whether to enable/disable Virtual Network ACL rules. </summary>
+        [WirePath("properties.isVirtualNetworkFilterEnabled")]
+        public bool? IsVirtualNetworkFilterEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsVirtualNetworkFilterEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.IsVirtualNetworkFilterEnabled = value;
+            }
+        }
+
+        /// <summary> Enables automatic failover of the write region in the rare event that the region is unavailable due to an outage. Automatic failover will result in a new write region for the account and is chosen based on the failover priorities configured for the account. </summary>
+        [WirePath("properties.enableAutomaticFailover")]
+        public bool? EnableAutomaticFailover
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableAutomaticFailover;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.EnableAutomaticFailover = value;
             }
         }
 
@@ -88,7 +150,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Capabilities;
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                return Properties.Capabilities;
             }
         }
 
@@ -98,7 +164,209 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             get
             {
-                return Properties is null ? default : Properties.VirtualNetworkRules;
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                return Properties.VirtualNetworkRules;
+            }
+        }
+
+        /// <summary> Enables the account to write in multiple locations. </summary>
+        [WirePath("properties.enableMultipleWriteLocations")]
+        public bool? EnableMultipleWriteLocations
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableMultipleWriteLocations;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.EnableMultipleWriteLocations = value;
+            }
+        }
+
+        /// <summary> Enables the cassandra connector on the Cosmos DB C* account. </summary>
+        [WirePath("properties.enableCassandraConnector")]
+        public bool? EnableCassandraConnector
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableCassandraConnector;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.EnableCassandraConnector = value;
+            }
+        }
+
+        /// <summary> The cassandra connector offer type for the Cosmos DB database C* account. </summary>
+        [WirePath("properties.connectorOffer")]
+        public ConnectorOffer? ConnectorOffer
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectorOffer;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.ConnectorOffer = value;
+            }
+        }
+
+        /// <summary> Disable write operations on metadata resources (databases, containers, throughput) via account keys. </summary>
+        [WirePath("properties.disableKeyBasedMetadataWriteAccess")]
+        public bool? DisableKeyBasedMetadataWriteAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisableKeyBasedMetadataWriteAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.DisableKeyBasedMetadataWriteAccess = value;
+            }
+        }
+
+        /// <summary> The URI of the key vault. </summary>
+        [WirePath("properties.keyVaultKeyUri")]
+        public Uri KeyVaultKeyUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KeyVaultKeyUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.KeyVaultKeyUri = value;
+            }
+        }
+
+        /// <summary> The default identity for accessing key vault used in features like customer managed keys. The default identity needs to be explicitly set by the users. It can be "FirstPartyIdentity", "SystemAssignedIdentity" and more. </summary>
+        [WirePath("properties.defaultIdentity")]
+        public string DefaultIdentity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultIdentity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.DefaultIdentity = value;
+            }
+        }
+
+        /// <summary> Whether requests from Public Network are allowed. </summary>
+        [WirePath("properties.publicNetworkAccess")]
+        public CosmosDBPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.PublicNetworkAccess = value;
+            }
+        }
+
+        /// <summary> Flag to indicate whether Free Tier is enabled. </summary>
+        [WirePath("properties.enableFreeTier")]
+        public bool? IsFreeTierEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsFreeTierEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.IsFreeTierEnabled = value;
+            }
+        }
+
+        /// <summary> Flag to indicate whether to enable storage analytics. </summary>
+        [WirePath("properties.enableAnalyticalStorage")]
+        public bool? IsAnalyticalStorageEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsAnalyticalStorageEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.IsAnalyticalStorageEnabled = value;
+            }
+        }
+
+        /// <summary> Enum to indicate the mode of account creation. </summary>
+        [WirePath("properties.createMode")]
+        public CosmosDBAccountCreateMode? CreateMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreateMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.CreateMode = value;
+            }
+        }
+
+        /// <summary> The object representing the policy for taking backups on an account. </summary>
+        [WirePath("properties.backupPolicy")]
+        public CosmosDBAccountBackupPolicy BackupPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackupPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.BackupPolicy = value;
             }
         }
 
@@ -108,7 +376,29 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Cors;
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                return Properties.Cors;
+            }
+        }
+
+        /// <summary> Indicates what services are allowed to bypass firewall checks. </summary>
+        [WirePath("properties.networkAclBypass")]
+        public NetworkAclBypass? NetworkAclBypass
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkAclBypass;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.NetworkAclBypass = value;
             }
         }
 
@@ -118,7 +408,47 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             get
             {
-                return Properties is null ? default : Properties.NetworkAclBypassResourceIds;
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                return Properties.NetworkAclBypassResourceIds;
+            }
+        }
+
+        /// <summary> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </summary>
+        [WirePath("properties.disableLocalAuth")]
+        public bool? DisableLocalAuth
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisableLocalAuth;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.DisableLocalAuth = value;
+            }
+        }
+
+        /// <summary> Parameters to indicate the information about the restore. </summary>
+        [WirePath("properties.restoreParameters")]
+        public CosmosDBAccountRestoreParameters RestoreParameters
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RestoreParameters;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.RestoreParameters = value;
             }
         }
 
@@ -128,7 +458,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             get
             {
-                return Properties.CapacityMode;
+                return Properties is null ? default : Properties.CapacityMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.CapacityMode = value;
             }
         }
 
@@ -138,7 +476,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             get
             {
-                return Properties.EnableMaterializedViews;
+                return Properties is null ? default : Properties.EnableMaterializedViews;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.EnableMaterializedViews = value;
             }
         }
 
@@ -148,7 +494,133 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             get
             {
-                return Properties.KeysMetadata;
+                return Properties is null ? default : Properties.KeysMetadata;
+            }
+        }
+
+        /// <summary> Flag to indicate enabling/disabling of Partition Merge feature on the account. </summary>
+        [WirePath("properties.enablePartitionMerge")]
+        public bool? EnablePartitionMerge
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnablePartitionMerge;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.EnablePartitionMerge = value;
+            }
+        }
+
+        /// <summary> Flag to indicate enabling/disabling of Burst Capacity Preview feature on the account. </summary>
+        [WirePath("properties.enableBurstCapacity")]
+        public bool? EnableBurstCapacity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableBurstCapacity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.EnableBurstCapacity = value;
+            }
+        }
+
+        /// <summary> Indicates the minimum allowed Tls version. The default is Tls 1.0, except for Cassandra and Mongo API's, which only work with Tls 1.2. </summary>
+        [WirePath("properties.minimalTlsVersion")]
+        public CosmosDBMinimalTlsVersion? MinimalTlsVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MinimalTlsVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.MinimalTlsVersion = value;
+            }
+        }
+
+        /// <summary> Indicates the status of the Customer Managed Key feature on the account. In case there are errors, the property provides troubleshooting guidance. </summary>
+        [WirePath("properties.customerManagedKeyStatus")]
+        public string CustomerManagedKeyStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomerManagedKeyStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.CustomerManagedKeyStatus = value;
+            }
+        }
+
+        /// <summary> Flag to indicate enabling/disabling of Priority Based Execution Preview feature on the account. </summary>
+        [WirePath("properties.enablePriorityBasedExecution")]
+        public bool? EnablePriorityBasedExecution
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnablePriorityBasedExecution;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.EnablePriorityBasedExecution = value;
+            }
+        }
+
+        /// <summary> Enum to indicate default Priority Level of request for Priority Based Execution. </summary>
+        [WirePath("properties.defaultPriorityLevel")]
+        public DefaultPriorityLevel? DefaultPriorityLevel
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultPriorityLevel;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.DefaultPriorityLevel = value;
+            }
+        }
+
+        /// <summary> Flag to indicate enabling/disabling of Per-Region Per-partition autoscale Preview feature on the account. </summary>
+        [WirePath("properties.enablePerRegionPerPartitionAutoscale")]
+        public bool? EnablePerRegionPerPartitionAutoscale
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnablePerRegionPerPartitionAutoscale;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.EnablePerRegionPerPartitionAutoscale = value;
             }
         }
 
@@ -158,7 +630,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             get
             {
-                return Properties.EnableAllVersionsAndDeletesChangeFeed;
+                return Properties is null ? default : Properties.EnableAllVersionsAndDeletesChangeFeed;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.EnableAllVersionsAndDeletesChangeFeed = value;
             }
         }
 
@@ -168,7 +648,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             get
             {
-                return Properties.SoftDeleteConfiguration;
+                return Properties is null ? default : Properties.SoftDeleteConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.SoftDeleteConfiguration = value;
             }
         }
 
@@ -178,7 +666,51 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             get
             {
-                return Properties.EnforceHierarchicalPartitionKeyIdLastLevel;
+                return Properties is null ? default : Properties.EnforceHierarchicalPartitionKeyIdLastLevel;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.EnforceHierarchicalPartitionKeyIdLastLevel = value;
+            }
+        }
+
+        /// <summary> Describes the version of the MongoDB account. </summary>
+        [WirePath("properties.apiProperties.serverVersion")]
+        public CosmosDBServerVersion? ApiServerVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApiServerVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.ApiServerVersion = value;
+            }
+        }
+
+        /// <summary> Describes the types of schema for analytical storage. </summary>
+        [WirePath("properties.analyticalStorageConfiguration.schemaType")]
+        public AnalyticalStorageSchemaType? AnalyticalStorageSchemaType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AnalyticalStorageSchemaType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.AnalyticalStorageSchemaType = value;
             }
         }
 
@@ -188,7 +720,51 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             get
             {
-                return Properties.DiagnosticLogEnableFullTextQuery;
+                return Properties is null ? default : Properties.DiagnosticLogEnableFullTextQuery;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.DiagnosticLogEnableFullTextQuery = value;
+            }
+        }
+
+        /// <summary> The total throughput limit imposed on the account. A totalThroughputLimit of 2000 imposes a strict limit of max throughput that can be provisioned on that account to be 2000. A totalThroughputLimit of -1 indicates no limits on provisioning of throughput. </summary>
+        [WirePath("properties.capacity.totalThroughputLimit")]
+        public int? CapacityTotalThroughputLimit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CapacityTotalThroughputLimit;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.CapacityTotalThroughputLimit = value;
+            }
+        }
+
+        /// <summary> The offer type for the Cosmos DB database account. </summary>
+        [WirePath("properties.databaseAccountOfferType")]
+        public CosmosDBAccountOfferType DatabaseAccountOfferType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DatabaseAccountOfferType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.DatabaseAccountOfferType = value;
             }
         }
     }

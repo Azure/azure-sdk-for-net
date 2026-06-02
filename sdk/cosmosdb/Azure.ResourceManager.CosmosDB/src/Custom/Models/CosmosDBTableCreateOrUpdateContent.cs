@@ -1,46 +1,25 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using Microsoft.TypeSpec.Generator.Customizations;
-
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    // Back-compat: 1.4.0 GA exposed Resource/Options as top-level get/set on the
-    // TrackedResource wrapper, but MPG emits them as GET-ONLY flatten proxies because
-    // the inner TableCreateUpdateProperties holder has required ctor args
-    // (BuildSetterForSafeFlatten cannot synthesize lazy-create setters). We considered
-    // @@usage(input|output) on the inner model in client.tsp but verified empirically
-    // that it does not change implicit-flatten emission for TrackedResource +
-    // OmitProperties wrappers. Re-emit Properties (internal) and Resource/Options as
-    // setter-bearing proxies; Options delegates directly because the typed ctor
-    // guarantees Properties is non-null after construction.
-    // TODO: revisit when https://github.com/Azure/azure-sdk-for-net/issues/59498 is fixed.
-    [CodeGenSuppress("Properties")]
-    [CodeGenSuppress("Resource")]
-    [CodeGenSuppress("Options")]
+    // Back-compat alias: 1.4.0 GA exposed the flat name `ResourceTableName` on
+    // the wrapper; the generator now emits the nested `Resource.TableName` form
+    // instead, so re-add the flat name as a pass-through (lazy-create Resource).
+    /// <summary> Parameters to create and update Cosmos DB Table. </summary>
     public partial class CosmosDBTableCreateOrUpdateContent
     {
-        [WirePath("properties")]
-        internal TableCreateUpdateProperties Properties { get; set; }
-
-        [WirePath("properties.resource")]
-        public CosmosDBTableResourceInfo Resource
-        {
-            get => Properties?.Resource;
-            set => Properties = new TableCreateUpdateProperties(value) { Options = Properties?.Options };
-        }
-
-        [WirePath("properties.options")]
-        public CosmosDBCreateUpdateConfig Options
-        {
-            get => Properties.Options;
-            set => Properties.Options = value;
-        }
+        /// <summary> Name of the Cosmos DB table. </summary>
         public string ResourceTableName
         {
-            get => Resource?.TableName;
-            set => Resource = new CosmosDBTableResourceInfo(value);
+            get => Resource is null ? default : Resource.TableName;
+            set
+            {
+                if (Resource is null)
+                    Resource = new CosmosDBTableResourceInfo(value);
+                else
+                    Resource.TableName = value;
+            }
         }
     }
 }

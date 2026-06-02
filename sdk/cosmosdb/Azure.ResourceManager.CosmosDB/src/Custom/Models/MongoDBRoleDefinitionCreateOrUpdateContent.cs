@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.ResourceManager.CosmosDB;
-
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     // MPG flattens MongoRoleDefinitionResource.type onto this wrapper; client.tsp @@clientName

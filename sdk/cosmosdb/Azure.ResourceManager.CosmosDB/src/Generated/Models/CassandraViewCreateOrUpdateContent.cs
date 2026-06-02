@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Properties to create and update Azure Cosmos DB Cassandra view. </summary>
         [WirePath("properties")]
-        internal CassandraViewCreateUpdateProperties Properties { get; }
+        internal CassandraViewCreateUpdateProperties Properties { get; set; }
 
         /// <summary> The standard JSON format of a Cassandra view. </summary>
         [WirePath("properties.resource")]
@@ -55,7 +55,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             get
             {
-                return Properties.Resource;
+                return Properties is null ? default : Properties.Resource;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CassandraViewCreateUpdateProperties();
+                }
+                Properties.Resource = value;
             }
         }
 
@@ -65,7 +73,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             get
             {
-                return Properties.Options;
+                return Properties is null ? default : Properties.Options;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CassandraViewCreateUpdateProperties();
+                }
+                Properties.Options = value;
             }
         }
     }
