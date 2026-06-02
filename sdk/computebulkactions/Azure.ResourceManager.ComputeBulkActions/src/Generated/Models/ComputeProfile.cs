@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <summary> Initializes a new instance of <see cref="ComputeProfile"/>. </summary>
         /// <param name="virtualMachineProfile"> Base Virtual Machine Profile Properties to be specified according to "specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/{computeApiVersion}/virtualMachine.json#/definitions/VirtualMachineProperties". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineProfile"/> is null. </exception>
-        public ComputeProfile(VirtualMachineProfile virtualMachineProfile)
+        public ComputeProfile(ComputeBulkActionsVirtualMachineProfile virtualMachineProfile)
         {
             Argument.AssertNotNull(virtualMachineProfile, nameof(virtualMachineProfile));
 
             VirtualMachineProfile = virtualMachineProfile;
-            Extensions = new ChangeTrackingList<VirtualMachineExtension>();
+            Extensions = new ChangeTrackingList<ComputeBulkActionsVirtualMachineExtension>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeProfile"/>. </summary>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// The default value will be the latest supported computeApiVersion by LaunchBulkInstancesOperation.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeProfile(VirtualMachineProfile virtualMachineProfile, IList<VirtualMachineExtension> extensions, string computeApiVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeProfile(ComputeBulkActionsVirtualMachineProfile virtualMachineProfile, IList<ComputeBulkActionsVirtualMachineExtension> extensions, string computeApiVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualMachineProfile = virtualMachineProfile;
             Extensions = extensions;
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         }
 
         /// <summary> Base Virtual Machine Profile Properties to be specified according to "specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/{computeApiVersion}/virtualMachine.json#/definitions/VirtualMachineProperties". </summary>
-        public VirtualMachineProfile VirtualMachineProfile { get; set; }
+        public ComputeBulkActionsVirtualMachineProfile VirtualMachineProfile { get; set; }
 
         /// <summary> Virtual Machine Extensions Array to be specified according to "specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/{computeApiVersion}/virtualMachine.json#/definitions/VirtualMachineExtension". </summary>
-        public IList<VirtualMachineExtension> Extensions { get; }
+        public IList<ComputeBulkActionsVirtualMachineExtension> Extensions { get; }
 
         /// <summary>
         /// Specifies the Microsoft.Compute API version to use when creating underlying Virtual Machines.

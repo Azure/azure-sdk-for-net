@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public ZoneAllocationPolicy(ZoneDistributionStrategy distributionStrategy)
         {
             DistributionStrategy = distributionStrategy;
-            ZonePreferences = new ChangeTrackingList<ZonePreference>();
+            ZonePreferences = new ChangeTrackingList<ComputeBulkActionsZonePreference>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ZoneAllocationPolicy"/>. </summary>
         /// <param name="distributionStrategy"> Distribution strategy used for zone allocation policy. </param>
         /// <param name="zonePreferences"> Zone preferences, required when zone distribution strategy is Prioritized. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ZoneAllocationPolicy(ZoneDistributionStrategy distributionStrategy, IList<ZonePreference> zonePreferences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ZoneAllocationPolicy(ZoneDistributionStrategy distributionStrategy, IList<ComputeBulkActionsZonePreference> zonePreferences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DistributionStrategy = distributionStrategy;
             ZonePreferences = zonePreferences;
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public ZoneDistributionStrategy DistributionStrategy { get; set; }
 
         /// <summary> Zone preferences, required when zone distribution strategy is Prioritized. </summary>
-        public IList<ZonePreference> ZonePreferences { get; }
+        public IList<ComputeBulkActionsZonePreference> ZonePreferences { get; }
     }
 }

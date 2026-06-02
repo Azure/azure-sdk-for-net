@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 writer.WritePropertyName("zonePreferences"u8);
                 writer.WriteStartArray();
-                foreach (ZonePreference item in ZonePreferences)
+                foreach (ComputeBulkActionsZonePreference item in ZonePreferences)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 return null;
             }
             ZoneDistributionStrategy distributionStrategy = default;
-            IList<ZonePreference> zonePreferences = default;
+            IList<ComputeBulkActionsZonePreference> zonePreferences = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,10 +149,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    List<ZonePreference> array = new List<ZonePreference>();
+                    List<ComputeBulkActionsZonePreference> array = new List<ComputeBulkActionsZonePreference>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ZonePreference.DeserializeZonePreference(item, options));
+                        array.Add(ComputeBulkActionsZonePreference.DeserializeComputeBulkActionsZonePreference(item, options));
                     }
                     zonePreferences = array;
                     continue;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ZoneAllocationPolicy(distributionStrategy, zonePreferences ?? new ChangeTrackingList<ZonePreference>(), additionalBinaryDataProperties);
+            return new ZoneAllocationPolicy(distributionStrategy, zonePreferences ?? new ChangeTrackingList<ComputeBulkActionsZonePreference>(), additionalBinaryDataProperties);
         }
     }
 }

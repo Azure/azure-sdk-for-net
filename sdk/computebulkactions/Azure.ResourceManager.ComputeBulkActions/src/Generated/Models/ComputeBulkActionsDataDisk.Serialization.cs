@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             string name = default;
             VirtualHardDisk vhd = default;
             VirtualHardDisk image = default;
-            CachingType? caching = default;
+            ComputeBulkActionsCachingType? caching = default;
             bool? isWriteAcceleratorEnabled = default;
             DiskCreateOptionType createOption = default;
             int? diskSizeGB = default;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    caching = new CachingType(prop.Value.GetString());
+                    caching = new ComputeBulkActionsCachingType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("writeAcceleratorEnabled"u8))

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="zoneAllocationPolicy"> Zone Allocation Policy for launching instances. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <returns> A new <see cref="Models.LaunchBulkInstancesOperationProperties"/> instance for mocking. </returns>
-        public static LaunchBulkInstancesOperationProperties LaunchBulkInstancesOperationProperties(BulkActionProvisioningState? provisioningState = default, int capacity = default, CapacityType? capacityType = default, PriorityProfile priorityProfile = default, IEnumerable<VmSizeProfile> vmSizesProfile = default, VMAttributes vmAttributes = default, ComputeProfile computeProfile = default, ZoneAllocationPolicy zoneAllocationPolicy = default, BulkActionRetryPolicy retryPolicy = default)
+        public static LaunchBulkInstancesOperationProperties LaunchBulkInstancesOperationProperties(BulkActionProvisioningState? provisioningState = default, int capacity = default, ComputeBulkActionsCapacityType? capacityType = default, ComputeBulkActionsPriorityProfile priorityProfile = default, IEnumerable<VmSizeProfile> vmSizesProfile = default, VMAttributes vmAttributes = default, ComputeProfile computeProfile = default, ZoneAllocationPolicy zoneAllocationPolicy = default, BulkActionRetryPolicy retryPolicy = default)
         {
             vmSizesProfile ??= new ChangeTrackingList<VmSizeProfile>();
 
@@ -176,9 +176,9 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// The default value will be the latest supported computeApiVersion by LaunchBulkInstancesOperation.
         /// </param>
         /// <returns> A new <see cref="Models.ComputeProfile"/> instance for mocking. </returns>
-        public static ComputeProfile ComputeProfile(VirtualMachineProfile virtualMachineProfile = default, IEnumerable<VirtualMachineExtension> extensions = default, string computeApiVersion = default)
+        public static ComputeProfile ComputeProfile(ComputeBulkActionsVirtualMachineProfile virtualMachineProfile = default, IEnumerable<ComputeBulkActionsVirtualMachineExtension> extensions = default, string computeApiVersion = default)
         {
-            extensions ??= new ChangeTrackingList<VirtualMachineExtension>();
+            extensions ??= new ChangeTrackingList<ComputeBulkActionsVirtualMachineExtension>();
 
             return new ComputeProfile(virtualMachineProfile, extensions.ToList(), computeApiVersion, additionalBinaryDataProperties: null);
         }
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="isExtensionOperationsAllowed"> Specifies whether extension operations should be allowed on the virtual machine. This may only be set to False when no extensions are present on the virtual machine. </param>
         /// <param name="isGuestProvisionSignalRequired"> Optional property which must either be set to True or omitted. </param>
         /// <returns> A new <see cref="Models.ComputeBulkActionsOSProfile"/> instance for mocking. </returns>
-        public static ComputeBulkActionsOSProfile ComputeBulkActionsOSProfile(string computerName = default, string adminUsername = default, string adminPassword = default, string customData = default, WindowsConfiguration windowsConfiguration = default, LinuxConfiguration linuxConfiguration = default, IEnumerable<VaultSecretGroup> secrets = default, bool? isExtensionOperationsAllowed = default, bool? isGuestProvisionSignalRequired = default)
+        public static ComputeBulkActionsOSProfile ComputeBulkActionsOSProfile(string computerName = default, string adminUsername = default, string adminPassword = default, string customData = default, ComputeBulkActionsWindowsConfiguration windowsConfiguration = default, ComputeBulkActionsLinuxConfiguration linuxConfiguration = default, IEnumerable<VaultSecretGroup> secrets = default, bool? isExtensionOperationsAllowed = default, bool? isGuestProvisionSignalRequired = default)
         {
             secrets ??= new ChangeTrackingList<VaultSecretGroup>();
 
@@ -230,12 +230,12 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="additionalUnattendContent"> Specifies additional base-64 encoded XML formatted information that can be included in the Unattend.xml file, which is used by Windows Setup. </param>
         /// <param name="patchSettings"> [Preview Feature] Specifies settings related to VM Guest Patching on Windows. </param>
         /// <param name="winRMListeners"> The list of Windows Remote Management listeners. </param>
-        /// <returns> A new <see cref="Models.WindowsConfiguration"/> instance for mocking. </returns>
-        public static WindowsConfiguration WindowsConfiguration(bool? isVMAgentProvisioned = default, bool? enableAutomaticUpdates = default, string timeZone = default, IEnumerable<AdditionalUnattendContent> additionalUnattendContent = default, ComputeBulkActionsPatchSettings patchSettings = default, IEnumerable<WinRMListener> winRMListeners = default)
+        /// <returns> A new <see cref="Models.ComputeBulkActionsWindowsConfiguration"/> instance for mocking. </returns>
+        public static ComputeBulkActionsWindowsConfiguration ComputeBulkActionsWindowsConfiguration(bool? isVMAgentProvisioned = default, bool? enableAutomaticUpdates = default, string timeZone = default, IEnumerable<AdditionalUnattendContent> additionalUnattendContent = default, ComputeBulkActionsPatchSettings patchSettings = default, IEnumerable<WinRMListener> winRMListeners = default)
         {
             additionalUnattendContent ??= new ChangeTrackingList<AdditionalUnattendContent>();
 
-            return new WindowsConfiguration(
+            return new ComputeBulkActionsWindowsConfiguration(
                 isVMAgentProvisioned,
                 enableAutomaticUpdates,
                 timeZone,
@@ -260,9 +260,9 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="networkApiVersion"> specifies the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations. </param>
         /// <param name="networkInterfaceConfigurations"> Specifies the networking configurations that will be used to create the virtual machine networking resources. </param>
         /// <returns> A new <see cref="Models.ComputeBulkActionsNetworkProfile"/> instance for mocking. </returns>
-        public static ComputeBulkActionsNetworkProfile ComputeBulkActionsNetworkProfile(IEnumerable<NetworkInterfaceReference> networkInterfaces = default, NetworkApiVersion? networkApiVersion = default, IEnumerable<VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations = default)
+        public static ComputeBulkActionsNetworkProfile ComputeBulkActionsNetworkProfile(IEnumerable<ComputeBulkActionsNetworkInterfaceReference> networkInterfaces = default, ComputeBulkActionsNetworkApiVersion? networkApiVersion = default, IEnumerable<VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations = default)
         {
-            networkInterfaces ??= new ChangeTrackingList<NetworkInterfaceReference>();
+            networkInterfaces ??= new ChangeTrackingList<ComputeBulkActionsNetworkInterfaceReference>();
             networkInterfaceConfigurations ??= new ChangeTrackingList<VirtualMachineNetworkInterfaceConfiguration>();
 
             return new ComputeBulkActionsNetworkProfile(networkInterfaces.ToList(), networkApiVersion, networkInterfaceConfigurations.ToList(), additionalBinaryDataProperties: null);
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="auxiliaryMode"> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </param>
         /// <param name="auxiliarySku"> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </param>
         /// <returns> A new <see cref="Models.VirtualMachineNetworkInterfaceConfigurationProperties"/> instance for mocking. </returns>
-        public static VirtualMachineNetworkInterfaceConfigurationProperties VirtualMachineNetworkInterfaceConfigurationProperties(bool? isPrimary = default, DeleteOption? deleteOption = default, bool? isAcceleratedNetworkingEnabled = default, bool? isTcpStateTrackingDisabled = default, bool? isFpgaEnabled = default, bool? isIPForwardingEnabled = default, ResourceIdentifier networkSecurityGroupId = default, IEnumerable<string> dnsServers = default, IEnumerable<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations = default, ResourceIdentifier dscpConfigurationId = default, NetworkInterfaceAuxiliaryMode? auxiliaryMode = default, NetworkInterfaceAuxiliarySku? auxiliarySku = default)
+        public static VirtualMachineNetworkInterfaceConfigurationProperties VirtualMachineNetworkInterfaceConfigurationProperties(bool? isPrimary = default, ComputeBulkActionsDeleteOption? deleteOption = default, bool? isAcceleratedNetworkingEnabled = default, bool? isTcpStateTrackingDisabled = default, bool? isFpgaEnabled = default, bool? isIPForwardingEnabled = default, ResourceIdentifier networkSecurityGroupId = default, IEnumerable<string> dnsServers = default, IEnumerable<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations = default, ResourceIdentifier dscpConfigurationId = default, NetworkInterfaceAuxiliaryMode? auxiliaryMode = default, NetworkInterfaceAuxiliarySku? auxiliarySku = default)
         {
             ipConfigurations ??= new ChangeTrackingList<VirtualMachineNetworkInterfaceIPConfiguration>();
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="applicationGatewayBackendAddressPools"> Specifies an array of references to backend address pools of application gateways. A virtual machine can reference backend address pools of multiple application gateways. Multiple virtual machines cannot use the same application gateway. </param>
         /// <param name="loadBalancerBackendAddressPools"> Specifies an array of references to backend address pools of load balancers. A virtual machine can reference backend address pools of one public and one internal load balancer. [Multiple virtual machines cannot use the same basic sku load balancer]. </param>
         /// <returns> A new <see cref="Models.VirtualMachineNetworkInterfaceIPConfigurationProperties"/> instance for mocking. </returns>
-        public static VirtualMachineNetworkInterfaceIPConfigurationProperties VirtualMachineNetworkInterfaceIPConfigurationProperties(ResourceIdentifier subnetId = default, bool? isPrimary = default, VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration = default, IPVersion? privateIPAddressVersion = default, IEnumerable<ComputeBulkActionsSubResource> applicationSecurityGroups = default, IEnumerable<ComputeBulkActionsSubResource> applicationGatewayBackendAddressPools = default, IEnumerable<ComputeBulkActionsSubResource> loadBalancerBackendAddressPools = default)
+        public static VirtualMachineNetworkInterfaceIPConfigurationProperties VirtualMachineNetworkInterfaceIPConfigurationProperties(ResourceIdentifier subnetId = default, bool? isPrimary = default, VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration = default, ComputeBulkActionsIPVersion? privateIPAddressVersion = default, IEnumerable<ComputeBulkActionsSubResource> applicationSecurityGroups = default, IEnumerable<ComputeBulkActionsSubResource> applicationGatewayBackendAddressPools = default, IEnumerable<ComputeBulkActionsSubResource> loadBalancerBackendAddressPools = default)
         {
             applicationSecurityGroups ??= new ChangeTrackingList<ComputeBulkActionsSubResource>();
             applicationGatewayBackendAddressPools ??= new ChangeTrackingList<ComputeBulkActionsSubResource>();
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="publicIPAddressVersion"> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: 'IPv4' and 'IPv6'. </param>
         /// <param name="publicIPAllocationMethod"> Specify the public IP allocation type. </param>
         /// <returns> A new <see cref="Models.VirtualMachinePublicIPAddressConfigurationProperties"/> instance for mocking. </returns>
-        public static VirtualMachinePublicIPAddressConfigurationProperties VirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes = default, DeleteOption? deleteOption = default, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default, IEnumerable<VirtualMachineIpTag> ipTags = default, ResourceIdentifier publicIPPrefixId = default, IPVersion? publicIPAddressVersion = default, PublicIPAllocationMethod? publicIPAllocationMethod = default)
+        public static VirtualMachinePublicIPAddressConfigurationProperties VirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes = default, ComputeBulkActionsDeleteOption? deleteOption = default, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default, IEnumerable<VirtualMachineIpTag> ipTags = default, ResourceIdentifier publicIPPrefixId = default, ComputeBulkActionsIPVersion? publicIPAddressVersion = default, PublicIPAllocationMethod? publicIPAllocationMethod = default)
         {
             ipTags ??= new ChangeTrackingList<VirtualMachineIpTag>();
 
@@ -386,14 +386,14 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="isSuppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
         /// <param name="protectedSettingsFromKeyVault"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
         /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineExtensionProperties"/> instance for mocking. </returns>
-        public static VirtualMachineExtensionProperties VirtualMachineExtensionProperties(string forceUpdateTag = default, string publisher = default, string @type = default, string typeHandlerVersion = default, bool? isAutoUpgradeMinorVersionEnabled = default, bool? isAutomaticUpgradeEnabled = default, IDictionary<string, BinaryData> settings = default, IDictionary<string, BinaryData> protectedSettings = default, bool? isSuppressFailures = default, KeyVaultSecretReference protectedSettingsFromKeyVault = default, IEnumerable<string> provisionAfterExtensions = default)
+        /// <returns> A new <see cref="Models.ComputeBulkActionsVirtualMachineExtensionProperties"/> instance for mocking. </returns>
+        public static ComputeBulkActionsVirtualMachineExtensionProperties ComputeBulkActionsVirtualMachineExtensionProperties(string forceUpdateTag = default, string publisher = default, string @type = default, string typeHandlerVersion = default, bool? isAutoUpgradeMinorVersionEnabled = default, bool? isAutomaticUpgradeEnabled = default, IDictionary<string, BinaryData> settings = default, IDictionary<string, BinaryData> protectedSettings = default, bool? isSuppressFailures = default, KeyVaultSecretReference protectedSettingsFromKeyVault = default, IEnumerable<string> provisionAfterExtensions = default)
         {
             settings ??= new ChangeTrackingDictionary<string, BinaryData>();
             protectedSettings ??= new ChangeTrackingDictionary<string, BinaryData>();
             provisionAfterExtensions ??= new ChangeTrackingList<string>();
 
-            return new VirtualMachineExtensionProperties(
+            return new ComputeBulkActionsVirtualMachineExtensionProperties(
                 forceUpdateTag,
                 publisher,
                 @type,
@@ -412,9 +412,9 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="distributionStrategy"> Distribution strategy used for zone allocation policy. </param>
         /// <param name="zonePreferences"> Zone preferences, required when zone distribution strategy is Prioritized. </param>
         /// <returns> A new <see cref="Models.ZoneAllocationPolicy"/> instance for mocking. </returns>
-        public static ZoneAllocationPolicy ZoneAllocationPolicy(ZoneDistributionStrategy distributionStrategy = default, IEnumerable<ZonePreference> zonePreferences = default)
+        public static ZoneAllocationPolicy ZoneAllocationPolicy(ZoneDistributionStrategy distributionStrategy = default, IEnumerable<ComputeBulkActionsZonePreference> zonePreferences = default)
         {
-            zonePreferences ??= new ChangeTrackingList<ZonePreference>();
+            zonePreferences ??= new ChangeTrackingList<ComputeBulkActionsZonePreference>();
 
             return new ZoneAllocationPolicy(distributionStrategy, zonePreferences.ToList(), additionalBinaryDataProperties: null);
         }
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <returns> A new <see cref="Models.ResourceOperationDetails"/> instance for mocking. </returns>
-        public static ResourceOperationDetails ResourceOperationDetails(string operationId = default, ResourceIdentifier resourceId = default, ResourceOperationType? opType = default, string subscriptionId = default, DateTimeOffset? deadlineOn = default, DeadlineType? deadlineType = default, BulkActionOperationState? state = default, string timezone = default, ResourceOperationError resourceOperationError = default, DateTimeOffset? completedOn = default, BulkActionRetryPolicy retryPolicy = default)
+        public static ResourceOperationDetails ResourceOperationDetails(string operationId = default, ResourceIdentifier resourceId = default, ResourceOperationType? opType = default, string subscriptionId = default, DateTimeOffset? deadlineOn = default, ComputeBulkActionsDeadlineType? deadlineType = default, BulkActionOperationState? state = default, string timezone = default, ResourceOperationError resourceOperationError = default, DateTimeOffset? completedOn = default, BulkActionRetryPolicy retryPolicy = default)
         {
             return new ResourceOperationDetails(
                 operationId,

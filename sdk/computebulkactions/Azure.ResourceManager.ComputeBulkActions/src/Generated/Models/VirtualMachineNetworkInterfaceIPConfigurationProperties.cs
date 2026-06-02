@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="applicationGatewayBackendAddressPools"> Specifies an array of references to backend address pools of application gateways. A virtual machine can reference backend address pools of multiple application gateways. Multiple virtual machines cannot use the same application gateway. </param>
         /// <param name="loadBalancerBackendAddressPools"> Specifies an array of references to backend address pools of load balancers. A virtual machine can reference backend address pools of one public and one internal load balancer. [Multiple virtual machines cannot use the same basic sku load balancer]. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineNetworkInterfaceIPConfigurationProperties(ComputeBulkActionsSubResource subnet, bool? isPrimary, VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration, IPVersion? privateIPAddressVersion, IList<ComputeBulkActionsSubResource> applicationSecurityGroups, IList<ComputeBulkActionsSubResource> applicationGatewayBackendAddressPools, IList<ComputeBulkActionsSubResource> loadBalancerBackendAddressPools, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineNetworkInterfaceIPConfigurationProperties(ComputeBulkActionsSubResource subnet, bool? isPrimary, VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration, ComputeBulkActionsIPVersion? privateIPAddressVersion, IList<ComputeBulkActionsSubResource> applicationSecurityGroups, IList<ComputeBulkActionsSubResource> applicationGatewayBackendAddressPools, IList<ComputeBulkActionsSubResource> loadBalancerBackendAddressPools, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Subnet = subnet;
             IsPrimary = isPrimary;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public VirtualMachinePublicIPAddressConfiguration PublicIPAddressConfiguration { get; set; }
 
         /// <summary> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: 'IPv4' and 'IPv6'. </summary>
-        public IPVersion? PrivateIPAddressVersion { get; set; }
+        public ComputeBulkActionsIPVersion? PrivateIPAddressVersion { get; set; }
 
         /// <summary> Specifies an array of references to application security group. </summary>
         public IList<ComputeBulkActionsSubResource> ApplicationSecurityGroups { get; }

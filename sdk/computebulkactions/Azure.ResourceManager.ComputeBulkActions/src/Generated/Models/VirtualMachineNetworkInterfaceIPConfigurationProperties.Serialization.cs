@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             ComputeBulkActionsSubResource subnet = default;
             bool? isPrimary = default;
             VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration = default;
-            IPVersion? privateIPAddressVersion = default;
+            ComputeBulkActionsIPVersion? privateIPAddressVersion = default;
             IList<ComputeBulkActionsSubResource> applicationSecurityGroups = default;
             IList<ComputeBulkActionsSubResource> applicationGatewayBackendAddressPools = default;
             IList<ComputeBulkActionsSubResource> loadBalancerBackendAddressPools = default;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    privateIPAddressVersion = new IPVersion(prop.Value.GetString());
+                    privateIPAddressVersion = new ComputeBulkActionsIPVersion(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("applicationSecurityGroups"u8))

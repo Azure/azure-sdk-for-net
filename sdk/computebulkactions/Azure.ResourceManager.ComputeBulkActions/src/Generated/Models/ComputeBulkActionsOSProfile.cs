@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="isExtensionOperationsAllowed"> Specifies whether extension operations should be allowed on the virtual machine. This may only be set to False when no extensions are present on the virtual machine. </param>
         /// <param name="isGuestProvisionSignalRequired"> Optional property which must either be set to True or omitted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeBulkActionsOSProfile(string computerName, string adminUsername, string adminPassword, string customData, WindowsConfiguration windowsConfiguration, LinuxConfiguration linuxConfiguration, IList<VaultSecretGroup> secrets, bool? isExtensionOperationsAllowed, bool? isGuestProvisionSignalRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkActionsOSProfile(string computerName, string adminUsername, string adminPassword, string customData, ComputeBulkActionsWindowsConfiguration windowsConfiguration, ComputeBulkActionsLinuxConfiguration linuxConfiguration, IList<VaultSecretGroup> secrets, bool? isExtensionOperationsAllowed, bool? isGuestProvisionSignalRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ComputerName = computerName;
             AdminUsername = adminUsername;
@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public string CustomData { get; set; }
 
         /// <summary> Specifies Windows operating system settings on the virtual machine. </summary>
-        public WindowsConfiguration WindowsConfiguration { get; set; }
+        public ComputeBulkActionsWindowsConfiguration WindowsConfiguration { get; set; }
 
         /// <summary> Specifies the Linux operating system settings on the virtual machine. For a list of supported Linux distributions, see [Linux on Azure-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros). </summary>
-        public LinuxConfiguration LinuxConfiguration { get; set; }
+        public ComputeBulkActionsLinuxConfiguration LinuxConfiguration { get; set; }
 
         /// <summary> Specifies set of certificates that should be installed onto the virtual machine. To install certificates on a virtual machine it is recommended to use the [Azure Key Vault virtual machine extension for Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux) or the [Azure Key Vault virtual machine extension for Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows). </summary>
         public IList<VaultSecretGroup> Secrets { get; }

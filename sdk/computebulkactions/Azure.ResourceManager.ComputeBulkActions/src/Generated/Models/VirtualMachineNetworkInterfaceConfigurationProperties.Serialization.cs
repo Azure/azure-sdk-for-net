@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 return null;
             }
             bool? isPrimary = default;
-            DeleteOption? deleteOption = default;
+            ComputeBulkActionsDeleteOption? deleteOption = default;
             bool? isAcceleratedNetworkingEnabled = default;
             bool? isTcpStateTrackingDisabled = default;
             bool? isFpgaEnabled = default;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    deleteOption = new DeleteOption(prop.Value.GetString());
+                    deleteOption = new ComputeBulkActionsDeleteOption(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("enableAcceleratedNetworking"u8))

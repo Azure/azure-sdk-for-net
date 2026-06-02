@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="managedDisk"> The managed disk parameters. </param>
         /// <param name="deleteOption"> Specifies whether OS Disk should be deleted or detached upon VM deletion. Possible values are: Delete, Detach. The default value is set to Detach. For an ephemeral OS Disk, the default value is set to Delete. The user cannot change the delete option for an ephemeral OS Disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeBulkActionsOSDisk(OperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, VirtualHardDisk vhd, VirtualHardDisk image, CachingType? caching, bool? isWriteAcceleratorEnabled, DiffDiskSettings diffDiskSettings, DiskCreateOptionType createOption, int? diskSizeGB, ManagedDiskInfo managedDisk, DiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkActionsOSDisk(ComputeBulkActionsOperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, VirtualHardDisk vhd, VirtualHardDisk image, ComputeBulkActionsCachingType? caching, bool? isWriteAcceleratorEnabled, DiffDiskSettings diffDiskSettings, DiskCreateOptionType createOption, int? diskSizeGB, ManagedDiskInfo managedDisk, DiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OsType = osType;
             EncryptionSettings = encryptionSettings;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         }
 
         /// <summary> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. Possible values are: Windows, Linux. </summary>
-        public OperatingSystemType? OsType { get; set; }
+        public ComputeBulkActionsOperatingSystemType? OsType { get; set; }
 
         /// <summary> Specifies the encryption settings for the OS Disk. Minimum compute api-version: 2015-06-15. </summary>
         public DiskEncryptionSettings EncryptionSettings { get; set; }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         internal VirtualHardDisk Image { get; set; }
 
         /// <summary> Specifies the caching requirements. Possible values are: None, ReadOnly, ReadWrite. The defaulting behavior is: None for Standard storage. ReadOnly for Premium storage. </summary>
-        public CachingType? Caching { get; set; }
+        public ComputeBulkActionsCachingType? Caching { get; set; }
 
         /// <summary> Specifies whether writeAccelerator should be enabled or disabled on the disk. </summary>
         public bool? IsWriteAcceleratorEnabled { get; set; }

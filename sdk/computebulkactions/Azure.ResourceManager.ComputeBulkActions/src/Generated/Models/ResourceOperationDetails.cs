@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceOperationDetails(string operationId, ResourceIdentifier resourceId, ResourceOperationType? opType, string subscriptionId, DateTimeOffset? deadlineOn, DeadlineType? deadlineType, BulkActionOperationState? state, string timezone, ResourceOperationError resourceOperationError, DateTimeOffset? completedOn, BulkActionRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceOperationDetails(string operationId, ResourceIdentifier resourceId, ResourceOperationType? opType, string subscriptionId, DateTimeOffset? deadlineOn, ComputeBulkActionsDeadlineType? deadlineType, BulkActionOperationState? state, string timezone, ResourceOperationError resourceOperationError, DateTimeOffset? completedOn, BulkActionRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationId = operationId;
             ResourceId = resourceId;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public DateTimeOffset? DeadlineOn { get; }
 
         /// <summary> Type of deadline of the operation. </summary>
-        public DeadlineType? DeadlineType { get; }
+        public ComputeBulkActionsDeadlineType? DeadlineType { get; }
 
         /// <summary> Current state of the operation. </summary>
         public BulkActionOperationState? State { get; }

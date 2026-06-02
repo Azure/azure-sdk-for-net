@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             }
             BulkActionProvisioningState? provisioningState = default;
             int capacity = default;
-            CapacityType? capacityType = default;
-            PriorityProfile priorityProfile = default;
+            ComputeBulkActionsCapacityType? capacityType = default;
+            ComputeBulkActionsPriorityProfile priorityProfile = default;
             IList<VmSizeProfile> vmSizesProfile = default;
             VMAttributes vmAttributes = default;
             ComputeProfile computeProfile = default;
@@ -194,12 +194,12 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    capacityType = new CapacityType(prop.Value.GetString());
+                    capacityType = new ComputeBulkActionsCapacityType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("priorityProfile"u8))
                 {
-                    priorityProfile = PriorityProfile.DeserializePriorityProfile(prop.Value, options);
+                    priorityProfile = ComputeBulkActionsPriorityProfile.DeserializeComputeBulkActionsPriorityProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("vmSizesProfile"u8))

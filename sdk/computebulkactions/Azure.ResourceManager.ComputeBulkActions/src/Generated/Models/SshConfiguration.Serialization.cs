@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 writer.WritePropertyName("publicKeys"u8);
                 writer.WriteStartArray();
-                foreach (SshPublicKey item in PublicKeys)
+                foreach (ComputeBulkActionsSshPublicKey item in PublicKeys)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 return null;
             }
-            IList<SshPublicKey> publicKeys = default;
+            IList<ComputeBulkActionsSshPublicKey> publicKeys = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    List<SshPublicKey> array = new List<SshPublicKey>();
+                    List<ComputeBulkActionsSshPublicKey> array = new List<ComputeBulkActionsSshPublicKey>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SshPublicKey.DeserializeSshPublicKey(item, options));
+                        array.Add(ComputeBulkActionsSshPublicKey.DeserializeComputeBulkActionsSshPublicKey(item, options));
                     }
                     publicKeys = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SshConfiguration(publicKeys ?? new ChangeTrackingList<SshPublicKey>(), additionalBinaryDataProperties);
+            return new SshConfiguration(publicKeys ?? new ChangeTrackingList<ComputeBulkActionsSshPublicKey>(), additionalBinaryDataProperties);
         }
     }
 }

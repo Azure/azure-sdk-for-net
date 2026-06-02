@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="encryptionIdentity"> Specifies the Managed Identity used by ADE to get access token for keyvault operations. </param>
         /// <param name="proxyAgentSettings"> Specifies ProxyAgent settings while creating the virtual machine. Minimum compute api-version: 2023-09-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeBulkActionsSecurityProfile(UefiSettings uefiSettings, bool? isEncryptionAtHostEnabled, SecurityType? securityType, EncryptionIdentity encryptionIdentity, ProxyAgentSettings proxyAgentSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkActionsSecurityProfile(UefiSettings uefiSettings, bool? isEncryptionAtHostEnabled, ComputeBulkActionsSecurityType? securityType, EncryptionIdentity encryptionIdentity, ProxyAgentSettings proxyAgentSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UefiSettings = uefiSettings;
             IsEncryptionAtHostEnabled = isEncryptionAtHostEnabled;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public bool? IsEncryptionAtHostEnabled { get; set; }
 
         /// <summary> Specifies the SecurityType of the virtual machine. It has to be set to any specified value to enable UefiSettings. The default behavior is: UefiSettings will not be enabled unless this property is set. </summary>
-        public SecurityType? SecurityType { get; set; }
+        public ComputeBulkActionsSecurityType? SecurityType { get; set; }
 
         /// <summary> Specifies the Managed Identity used by ADE to get access token for keyvault operations. </summary>
         internal EncryptionIdentity EncryptionIdentity { get; set; }

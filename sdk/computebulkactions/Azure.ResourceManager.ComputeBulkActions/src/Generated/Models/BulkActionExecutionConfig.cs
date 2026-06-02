@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="optimizationPreference"> Details that could optimize the user's request. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkActionExecutionConfig(OptimizationPreference? optimizationPreference, BulkActionRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkActionExecutionConfig(ComputeBulkActionsOptimizationPreference? optimizationPreference, BulkActionRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OptimizationPreference = optimizationPreference;
             RetryPolicy = retryPolicy;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         }
 
         /// <summary> Details that could optimize the user's request. </summary>
-        public OptimizationPreference? OptimizationPreference { get; set; }
+        public ComputeBulkActionsOptimizationPreference? OptimizationPreference { get; set; }
 
         /// <summary> Retry policy the user can pass. </summary>
         public BulkActionRetryPolicy RetryPolicy { get; set; }

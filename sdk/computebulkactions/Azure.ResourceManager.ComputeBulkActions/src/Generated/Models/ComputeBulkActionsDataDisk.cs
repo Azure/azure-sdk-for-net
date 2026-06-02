@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="detachOption"> Specifies the detach behavior to be used while detaching a disk or which is already in the process of detachment from the virtual machine. Supported values: ForceDetach. This feature is still in preview. To force-detach a data disk update toBeDetached to 'true' along with setting detachOption: 'ForceDetach'. </param>
         /// <param name="deleteOption"> Specifies whether data disk should be deleted or detached upon VM deletion. Possible values are: Delete, Detach. The default value is set to Detach. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeBulkActionsDataDisk(int lun, string name, VirtualHardDisk vhd, VirtualHardDisk image, CachingType? caching, bool? isWriteAcceleratorEnabled, DiskCreateOptionType createOption, int? diskSizeGB, ManagedDiskInfo managedDisk, ApiEntityReference sourceResource, bool? isToBeDetached, DiskDetachOptionType? detachOption, DiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkActionsDataDisk(int lun, string name, VirtualHardDisk vhd, VirtualHardDisk image, ComputeBulkActionsCachingType? caching, bool? isWriteAcceleratorEnabled, DiskCreateOptionType createOption, int? diskSizeGB, ManagedDiskInfo managedDisk, ApiEntityReference sourceResource, bool? isToBeDetached, DiskDetachOptionType? detachOption, DiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Lun = lun;
             Name = name;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         internal VirtualHardDisk Image { get; set; }
 
         /// <summary> Specifies the caching requirements. Possible values are: None, ReadOnly, ReadWrite. The defaulting behavior is: None for Standard storage. ReadOnly for Premium storage. </summary>
-        public CachingType? Caching { get; set; }
+        public ComputeBulkActionsCachingType? Caching { get; set; }
 
         /// <summary> Specifies whether writeAccelerator should be enabled or disabled on the disk. </summary>
         public bool? IsWriteAcceleratorEnabled { get; set; }

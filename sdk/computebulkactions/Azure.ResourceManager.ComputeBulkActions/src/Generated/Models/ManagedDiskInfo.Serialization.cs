@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             }
             ResourceIdentifier id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            StorageAccountType? storageAccountType = default;
+            ComputeBulkActionsStorageAccountType? storageAccountType = default;
             DiskEncryptionSetReference diskEncryptionSet = default;
             VMDiskSecurityProfile securityProfile = default;
             foreach (var prop in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    storageAccountType = new StorageAccountType(prop.Value.GetString());
+                    storageAccountType = new ComputeBulkActionsStorageAccountType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("diskEncryptionSet"u8))

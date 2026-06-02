@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="storageAccountType"> Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </param>
         /// <param name="diskEncryptionSet"> Specifies the customer managed disk encryption set resource id for the managed disk. </param>
         /// <param name="securityProfile"> Specifies the security profile for the managed disk. </param>
-        internal ManagedDiskInfo(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, StorageAccountType? storageAccountType, DiskEncryptionSetReference diskEncryptionSet, VMDiskSecurityProfile securityProfile) : base(id, additionalBinaryDataProperties)
+        internal ManagedDiskInfo(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputeBulkActionsStorageAccountType? storageAccountType, DiskEncryptionSetReference diskEncryptionSet, VMDiskSecurityProfile securityProfile) : base(id, additionalBinaryDataProperties)
         {
             StorageAccountType = storageAccountType;
             DiskEncryptionSet = diskEncryptionSet;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         }
 
         /// <summary> Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </summary>
-        public StorageAccountType? StorageAccountType { get; set; }
+        public ComputeBulkActionsStorageAccountType? StorageAccountType { get; set; }
 
         /// <summary> Specifies the customer managed disk encryption set resource id for the managed disk. </summary>
         internal DiskEncryptionSetReference DiskEncryptionSet { get; set; }

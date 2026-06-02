@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="auxiliaryMode"> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </param>
         /// <param name="auxiliarySku"> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineNetworkInterfaceConfigurationProperties(bool? isPrimary, DeleteOption? deleteOption, bool? isAcceleratedNetworkingEnabled, bool? isTcpStateTrackingDisabled, bool? isFpgaEnabled, bool? isIPForwardingEnabled, ComputeBulkActionsSubResource networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, ComputeBulkActionsSubResource dscpConfiguration, NetworkInterfaceAuxiliaryMode? auxiliaryMode, NetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineNetworkInterfaceConfigurationProperties(bool? isPrimary, ComputeBulkActionsDeleteOption? deleteOption, bool? isAcceleratedNetworkingEnabled, bool? isTcpStateTrackingDisabled, bool? isFpgaEnabled, bool? isIPForwardingEnabled, ComputeBulkActionsSubResource networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, ComputeBulkActionsSubResource dscpConfiguration, NetworkInterfaceAuxiliaryMode? auxiliaryMode, NetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsPrimary = isPrimary;
             DeleteOption = deleteOption;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public bool? IsPrimary { get; set; }
 
         /// <summary> Specify what happens to the network interface when the VM is deleted. </summary>
-        public DeleteOption? DeleteOption { get; set; }
+        public ComputeBulkActionsDeleteOption? DeleteOption { get; set; }
 
         /// <summary> Specifies whether the network interface is accelerated networking-enabled. </summary>
         public bool? IsAcceleratedNetworkingEnabled { get; set; }

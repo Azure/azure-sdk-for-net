@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 return null;
             }
             bool? isPrimary = default;
-            DeleteOption? deleteOption = default;
+            ComputeBulkActionsDeleteOption? deleteOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    deleteOption = new DeleteOption(prop.Value.GetString());
+                    deleteOption = new ComputeBulkActionsDeleteOption(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

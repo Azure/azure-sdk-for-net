@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
-                foreach (VirtualMachineExtension item in Extensions)
+                foreach (ComputeBulkActionsVirtualMachineExtension item in Extensions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -138,15 +138,15 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 return null;
             }
-            VirtualMachineProfile virtualMachineProfile = default;
-            IList<VirtualMachineExtension> extensions = default;
+            ComputeBulkActionsVirtualMachineProfile virtualMachineProfile = default;
+            IList<ComputeBulkActionsVirtualMachineExtension> extensions = default;
             string computeApiVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("virtualMachineProfile"u8))
                 {
-                    virtualMachineProfile = VirtualMachineProfile.DeserializeVirtualMachineProfile(prop.Value, options);
+                    virtualMachineProfile = ComputeBulkActionsVirtualMachineProfile.DeserializeComputeBulkActionsVirtualMachineProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("extensions"u8))
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    List<VirtualMachineExtension> array = new List<VirtualMachineExtension>();
+                    List<ComputeBulkActionsVirtualMachineExtension> array = new List<ComputeBulkActionsVirtualMachineExtension>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineExtension.DeserializeVirtualMachineExtension(item, options));
+                        array.Add(ComputeBulkActionsVirtualMachineExtension.DeserializeComputeBulkActionsVirtualMachineExtension(item, options));
                     }
                     extensions = array;
                     continue;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputeProfile(virtualMachineProfile, extensions ?? new ChangeTrackingList<VirtualMachineExtension>(), computeApiVersion, additionalBinaryDataProperties);
+            return new ComputeProfile(virtualMachineProfile, extensions ?? new ChangeTrackingList<ComputeBulkActionsVirtualMachineExtension>(), computeApiVersion, additionalBinaryDataProperties);
         }
     }
 }

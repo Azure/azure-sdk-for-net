@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="priorityProfile"> Configuration Options for Regular or Spot instances in LaunchBulkInstancesOperation. </param>
         /// <param name="computeProfile"> Compute Profile to configure the Virtual Machines. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="priorityProfile"/> or <paramref name="computeProfile"/> is null. </exception>
-        public LaunchBulkInstancesOperationProperties(int capacity, PriorityProfile priorityProfile, ComputeProfile computeProfile)
+        public LaunchBulkInstancesOperationProperties(int capacity, ComputeBulkActionsPriorityProfile priorityProfile, ComputeProfile computeProfile)
         {
             Argument.AssertNotNull(priorityProfile, nameof(priorityProfile));
             Argument.AssertNotNull(computeProfile, nameof(computeProfile));
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="zoneAllocationPolicy"> Zone Allocation Policy for launching instances. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LaunchBulkInstancesOperationProperties(BulkActionProvisioningState? provisioningState, int capacity, CapacityType? capacityType, PriorityProfile priorityProfile, IList<VmSizeProfile> vmSizesProfile, VMAttributes vmAttributes, ComputeProfile computeProfile, ZoneAllocationPolicy zoneAllocationPolicy, BulkActionRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LaunchBulkInstancesOperationProperties(BulkActionProvisioningState? provisioningState, int capacity, ComputeBulkActionsCapacityType? capacityType, ComputeBulkActionsPriorityProfile priorityProfile, IList<VmSizeProfile> vmSizesProfile, VMAttributes vmAttributes, ComputeProfile computeProfile, ZoneAllocationPolicy zoneAllocationPolicy, BulkActionRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Capacity = capacity;
@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public int Capacity { get; set; }
 
         /// <summary> Specifies capacity type for launching instances. It can be in terms of VMs or vCPUs. </summary>
-        public CapacityType? CapacityType { get; set; }
+        public ComputeBulkActionsCapacityType? CapacityType { get; set; }
 
         /// <summary> Configuration Options for Regular or Spot instances in LaunchBulkInstancesOperation. </summary>
-        public PriorityProfile PriorityProfile { get; set; }
+        public ComputeBulkActionsPriorityProfile PriorityProfile { get; set; }
 
         /// <summary> List of VM sizes supported for LaunchBulkInstancesOperation. </summary>
         public IList<VmSizeProfile> VmSizesProfile { get; }

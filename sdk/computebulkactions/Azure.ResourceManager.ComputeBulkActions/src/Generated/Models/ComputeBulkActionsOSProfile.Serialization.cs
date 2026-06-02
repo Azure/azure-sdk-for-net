@@ -170,8 +170,8 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             string adminUsername = default;
             string adminPassword = default;
             string customData = default;
-            WindowsConfiguration windowsConfiguration = default;
-            LinuxConfiguration linuxConfiguration = default;
+            ComputeBulkActionsWindowsConfiguration windowsConfiguration = default;
+            ComputeBulkActionsLinuxConfiguration linuxConfiguration = default;
             IList<VaultSecretGroup> secrets = default;
             bool? isExtensionOperationsAllowed = default;
             bool? isGuestProvisionSignalRequired = default;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    windowsConfiguration = WindowsConfiguration.DeserializeWindowsConfiguration(prop.Value, options);
+                    windowsConfiguration = ComputeBulkActionsWindowsConfiguration.DeserializeComputeBulkActionsWindowsConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("linuxConfiguration"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    linuxConfiguration = LinuxConfiguration.DeserializeLinuxConfiguration(prop.Value, options);
+                    linuxConfiguration = ComputeBulkActionsLinuxConfiguration.DeserializeComputeBulkActionsLinuxConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("secrets"u8))

@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             }
             UefiSettings uefiSettings = default;
             bool? isEncryptionAtHostEnabled = default;
-            SecurityType? securityType = default;
+            ComputeBulkActionsSecurityType? securityType = default;
             EncryptionIdentity encryptionIdentity = default;
             ProxyAgentSettings proxyAgentSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    securityType = new SecurityType(prop.Value.GetString());
+                    securityType = new ComputeBulkActionsSecurityType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("encryptionIdentity"u8))

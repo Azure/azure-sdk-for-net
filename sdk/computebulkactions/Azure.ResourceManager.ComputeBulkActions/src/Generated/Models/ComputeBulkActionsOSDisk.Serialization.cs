@@ -178,12 +178,12 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 return null;
             }
-            OperatingSystemType? osType = default;
+            ComputeBulkActionsOperatingSystemType? osType = default;
             DiskEncryptionSettings encryptionSettings = default;
             string name = default;
             VirtualHardDisk vhd = default;
             VirtualHardDisk image = default;
-            CachingType? caching = default;
+            ComputeBulkActionsCachingType? caching = default;
             bool? isWriteAcceleratorEnabled = default;
             DiffDiskSettings diffDiskSettings = default;
             DiskCreateOptionType createOption = default;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    osType = new OperatingSystemType(prop.Value.GetString());
+                    osType = new ComputeBulkActionsOperatingSystemType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("encryptionSettings"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    caching = new CachingType(prop.Value.GetString());
+                    caching = new ComputeBulkActionsCachingType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("writeAcceleratorEnabled"u8))

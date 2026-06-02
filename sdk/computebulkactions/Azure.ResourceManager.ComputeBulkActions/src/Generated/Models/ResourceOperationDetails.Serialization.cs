@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             ResourceOperationType? opType = default;
             string subscriptionId = default;
             DateTimeOffset? deadlineOn = default;
-            DeadlineType? deadlineType = default;
+            ComputeBulkActionsDeadlineType? deadlineType = default;
             BulkActionOperationState? state = default;
             string timezone = default;
             ResourceOperationError resourceOperationError = default;
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    deadlineType = new DeadlineType(prop.Value.GetString());
+                    deadlineType = new ComputeBulkActionsDeadlineType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("state"u8))

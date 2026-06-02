@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 return null;
             }
-            OptimizationPreference? optimizationPreference = default;
+            ComputeBulkActionsOptimizationPreference? optimizationPreference = default;
             BulkActionRetryPolicy retryPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    optimizationPreference = new OptimizationPreference(prop.Value.GetString());
+                    optimizationPreference = new ComputeBulkActionsOptimizationPreference(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("retryPolicy"u8))
