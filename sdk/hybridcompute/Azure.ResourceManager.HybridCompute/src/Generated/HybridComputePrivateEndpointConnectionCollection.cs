@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HybridCompute
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, HybridComputePrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridComputeArmOperation<HybridComputePrivateEndpointConnectionResource> operation = new HybridComputeArmOperation<HybridComputePrivateEndpointConnectionResource>(
-                    new HybridComputePrivateEndpointConnectionOperationSource(Client),
+                    new HybridComputePrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.HybridCompute
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, HybridComputePrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridComputeArmOperation<HybridComputePrivateEndpointConnectionResource> operation = new HybridComputeArmOperation<HybridComputePrivateEndpointConnectionResource>(
-                    new HybridComputePrivateEndpointConnectionOperationSource(Client),
+                    new HybridComputePrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,

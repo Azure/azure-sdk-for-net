@@ -31,6 +31,5 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Describe the Update properties of a license profile. </summary>
         [WirePath("properties")]
         internal LicenseProfileUpdateProperties Properties { get; set; }
-
     }
 }

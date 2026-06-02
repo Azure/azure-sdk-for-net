@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.HybridCompute
                 HttpMessage message = _machineExtensionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, HybridComputeMachineExtensionPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridComputeArmOperation<HybridComputeMachineExtensionResource> operation = new HybridComputeArmOperation<HybridComputeMachineExtensionResource>(
-                    new HybridComputeMachineExtensionOperationSource(Client),
+                    new HybridComputeMachineExtensionResourceOperationSource(Client),
                     _machineExtensionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.HybridCompute
                 HttpMessage message = _machineExtensionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, HybridComputeMachineExtensionPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridComputeArmOperation<HybridComputeMachineExtensionResource> operation = new HybridComputeArmOperation<HybridComputeMachineExtensionResource>(
-                    new HybridComputeMachineExtensionOperationSource(Client),
+                    new HybridComputeMachineExtensionResourceOperationSource(Client),
                     _machineExtensionsClientDiagnostics,
                     Pipeline,
                     message.Request,

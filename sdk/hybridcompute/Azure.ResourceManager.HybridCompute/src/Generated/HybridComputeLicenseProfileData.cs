@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HybridCompute.Models;
 using Azure.ResourceManager.Models;
@@ -54,6 +53,5 @@ namespace Azure.ResourceManager.HybridCompute
                 return Properties is null ? default : Properties.ProvisioningState;
             }
         }
-
     }
 }

@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary></summary>
-    internal partial class HybridComputePrivateEndpointConnectionOperationSource : IOperationSource<HybridComputePrivateEndpointConnectionResource>
+    internal partial class HybridComputePrivateEndpointConnectionResourceOperationSource : IOperationSource<HybridComputePrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal HybridComputePrivateEndpointConnectionOperationSource(ArmClient client)
+        internal HybridComputePrivateEndpointConnectionResourceOperationSource(ArmClient client)
         {
             _client = client;
         }

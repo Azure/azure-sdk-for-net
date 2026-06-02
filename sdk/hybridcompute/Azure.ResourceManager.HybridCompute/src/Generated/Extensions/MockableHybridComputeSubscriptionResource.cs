@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
                 HttpMessage message = LicensesRestClient.CreateValidateLicenseRequest(Id.SubscriptionId, HybridComputeLicenseData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridComputeArmOperation<HybridComputeLicenseResource> operation = new HybridComputeArmOperation<HybridComputeLicenseResource>(
-                    new HybridComputeLicenseOperationSource(Client),
+                    new HybridComputeLicenseResourceOperationSource(Client),
                     LicensesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
                 HttpMessage message = LicensesRestClient.CreateValidateLicenseRequest(Id.SubscriptionId, HybridComputeLicenseData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridComputeArmOperation<HybridComputeLicenseResource> operation = new HybridComputeArmOperation<HybridComputeLicenseResource>(
-                    new HybridComputeLicenseOperationSource(Client),
+                    new HybridComputeLicenseResourceOperationSource(Client),
                     LicensesClientDiagnostics,
                     Pipeline,
                     message.Request,

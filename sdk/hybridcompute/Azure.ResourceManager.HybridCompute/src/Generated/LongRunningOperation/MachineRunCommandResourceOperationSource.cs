@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary></summary>
-    internal partial class HybridComputeLicenseOperationSource : IOperationSource<HybridComputeLicenseResource>
+    internal partial class MachineRunCommandResourceOperationSource : IOperationSource<MachineRunCommandResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal HybridComputeLicenseOperationSource(ArmClient client)
+        internal MachineRunCommandResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        HybridComputeLicenseResource IOperationSource<HybridComputeLicenseResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        MachineRunCommandResource IOperationSource<MachineRunCommandResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            HybridComputeLicenseData data = HybridComputeLicenseData.DeserializeHybridComputeLicenseData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new HybridComputeLicenseResource(_client, data);
+            MachineRunCommandData data = MachineRunCommandData.DeserializeMachineRunCommandData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new MachineRunCommandResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<HybridComputeLicenseResource> IOperationSource<HybridComputeLicenseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MachineRunCommandResource> IOperationSource<MachineRunCommandResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            HybridComputeLicenseData data = HybridComputeLicenseData.DeserializeHybridComputeLicenseData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new HybridComputeLicenseResource(_client, data);
+            MachineRunCommandData data = MachineRunCommandData.DeserializeMachineRunCommandData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new MachineRunCommandResource(_client, data);
         }
     }
 }
