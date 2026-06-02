@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary></summary>
-    internal partial class ArcGatewayOperationSource : IOperationSource<ArcGatewayResource>
+    internal partial class HybridComputeLicenseProfileResourceOperationSource : IOperationSource<HybridComputeLicenseProfileResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal ArcGatewayOperationSource(ArmClient client)
+        internal HybridComputeLicenseProfileResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        ArcGatewayResource IOperationSource<ArcGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        HybridComputeLicenseProfileResource IOperationSource<HybridComputeLicenseProfileResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ArcGatewayData data = ArcGatewayData.DeserializeArcGatewayData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ArcGatewayResource(_client, data);
+            HybridComputeLicenseProfileData data = HybridComputeLicenseProfileData.DeserializeHybridComputeLicenseProfileData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HybridComputeLicenseProfileResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<ArcGatewayResource> IOperationSource<ArcGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HybridComputeLicenseProfileResource> IOperationSource<HybridComputeLicenseProfileResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ArcGatewayData data = ArcGatewayData.DeserializeArcGatewayData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ArcGatewayResource(_client, data);
+            HybridComputeLicenseProfileData data = HybridComputeLicenseProfileData.DeserializeHybridComputeLicenseProfileData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HybridComputeLicenseProfileResource(_client, data);
         }
     }
 }

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HybridCompute
                 HttpMessage message = _gatewaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, ArcGatewayData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridComputeArmOperation<ArcGatewayResource> operation = new HybridComputeArmOperation<ArcGatewayResource>(
-                    new ArcGatewayOperationSource(Client),
+                    new ArcGatewayResourceOperationSource(Client),
                     _gatewaysClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.HybridCompute
                 HttpMessage message = _gatewaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, ArcGatewayData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridComputeArmOperation<ArcGatewayResource> operation = new HybridComputeArmOperation<ArcGatewayResource>(
-                    new ArcGatewayOperationSource(Client),
+                    new ArcGatewayResourceOperationSource(Client),
                     _gatewaysClientDiagnostics,
                     Pipeline,
                     message.Request,

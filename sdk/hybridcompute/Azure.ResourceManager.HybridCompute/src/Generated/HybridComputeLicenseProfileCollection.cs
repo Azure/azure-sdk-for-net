@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HybridCompute
                 HttpMessage message = _licenseProfilesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HybridComputeLicenseProfileData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridComputeArmOperation<HybridComputeLicenseProfileResource> operation = new HybridComputeArmOperation<HybridComputeLicenseProfileResource>(
-                    new HybridComputeLicenseProfileOperationSource(Client),
+                    new HybridComputeLicenseProfileResourceOperationSource(Client),
                     _licenseProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.HybridCompute
                 HttpMessage message = _licenseProfilesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HybridComputeLicenseProfileData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridComputeArmOperation<HybridComputeLicenseProfileResource> operation = new HybridComputeArmOperation<HybridComputeLicenseProfileResource>(
-                    new HybridComputeLicenseProfileOperationSource(Client),
+                    new HybridComputeLicenseProfileResourceOperationSource(Client),
                     _licenseProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,
