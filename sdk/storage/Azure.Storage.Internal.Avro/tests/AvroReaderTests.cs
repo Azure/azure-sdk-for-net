@@ -105,9 +105,9 @@ namespace Azure.Storage.Internal.Avro.Tests
         public void ReadFixedBytesAsync_ExceedsMaxFieldSize_ThrowsInvalidDataException()
         {
             using MemoryStream stream = new MemoryStream(new byte[10]);
-            int oversized = AvroConstants.MaxFieldSize + 1;
+            long oversized = (long)int.MaxValue + 1;
             Assert.ThrowsAsync<InvalidDataException>(
-                async () => await AvroParser.ReadFixedBytesAsync(stream, oversized, async: true, default));
+                async () => await AvroParser.ReadFixedBytesAsync(stream, (int)oversized, async: true, default));
         }
 
         [Test]
@@ -134,7 +134,7 @@ namespace Azure.Storage.Internal.Avro.Tests
         {
             // Encode (MaxFieldSize + 1) as zigzag varint.
             // zigzag(n) = n * 2 for positive n
-            long value = (long)AvroConstants.MaxFieldSize + 1;
+            long value = (long)int.MaxValue + 1;
             ulong zigzag = (ulong)(value << 1);
             using MemoryStream stream = new MemoryStream(EncodeVarint(zigzag));
             Assert.ThrowsAsync<InvalidDataException>(
