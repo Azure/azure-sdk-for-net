@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of DatabaseMigrationSqlDBResources and their operations over a DatabaseMigrationSqlDBResource. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsolete.")]
+        [Obsolete("This method is obsolete. Use GetDatabaseMigrationSqlDBs(this ArmClient client, ResourceIdentifier scope)")]
         public static DatabaseMigrationSqlDBCollection GetDatabaseMigrationSqlDBs(this ResourceGroupResource resourceGroupResource)
             => GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDatabaseMigrationSqlDBs();
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsolete.")]
+        [Obsolete("This method is obsolete. Use GetDatabaseMigrationSqlDB(this ArmClient client, ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)")]
         [ForwardsClientCalls]
         public static Response<DatabaseMigrationSqlDBResource> GetDatabaseMigrationSqlDB(this ResourceGroupResource resourceGroupResource, string sqlDBInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
             => GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDatabaseMigrationSqlDB(sqlDBInstanceName, targetDBName, migrationOperationId, expand, cancellationToken);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsolete.")]
+        [Obsolete("This method is obsolete. Use GetDatabaseMigrationSqlDBAsync(this ArmClient client, ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)")]
         [ForwardsClientCalls]
         public static Task<Response<DatabaseMigrationSqlDBResource>> GetDatabaseMigrationSqlDBAsync(this ResourceGroupResource resourceGroupResource, string sqlDBInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
             => GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDatabaseMigrationSqlDBAsync(sqlDBInstanceName, targetDBName, migrationOperationId, expand, cancellationToken);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of DatabaseMigrationSqlMIResources and their operations over a DatabaseMigrationSqlMIResource. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsolete.")]
+        [Obsolete("This method is obsolete. Use GetDatabaseMigrationSqlMIs(this ArmClient client, ResourceIdentifier scope)")]
         public static DatabaseMigrationSqlMICollection GetDatabaseMigrationSqlMIs(this ResourceGroupResource resourceGroupResource)
             => GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDatabaseMigrationSqlMIs();
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsolete.")]
+        [Obsolete("This method is obsolete. GetDatabaseMigrationSqlMI(this ArmClient client, ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)")]
         [ForwardsClientCalls]
         public static Response<DatabaseMigrationSqlMIResource> GetDatabaseMigrationSqlMI(this ResourceGroupResource resourceGroupResource, string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
             => GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDatabaseMigrationSqlMI(managedInstanceName, targetDBName, migrationOperationId, expand, cancellationToken);
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsolete.")]
+        [Obsolete("This method is obsolete. Use GetDatabaseMigrationSqlMIAsync(this ArmClient client, ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)")]
         [ForwardsClientCalls]
         public static Task<Response<DatabaseMigrationSqlMIResource>> GetDatabaseMigrationSqlMIAsync(this ResourceGroupResource resourceGroupResource, string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
             => GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDatabaseMigrationSqlMIAsync(managedInstanceName, targetDBName, migrationOperationId, expand, cancellationToken);
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of DatabaseMigrationSqlVmResources and their operations over a DatabaseMigrationSqlVmResource. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsolete.")]
+        [Obsolete("This method is obsolete. Use GetDatabaseMigrationSqlVms(this ArmClient client, ResourceIdentifier scope)")]
         public static DatabaseMigrationSqlVmCollection GetDatabaseMigrationSqlVms(this ResourceGroupResource resourceGroupResource)
             => GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDatabaseMigrationSqlVms();
 
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDBName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsolete.")]
+        [Obsolete("This method is obsolete. Use GetDatabaseMigrationSqlVm(this ArmClient client, ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)")]
         [ForwardsClientCalls]
         public static Response<DatabaseMigrationSqlVmResource> GetDatabaseMigrationSqlVm(this ResourceGroupResource resourceGroupResource, string sqlVirtualMachineName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
             => GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDatabaseMigrationSqlVm(sqlVirtualMachineName, targetDBName, migrationOperationId, expand, cancellationToken);
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDBName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsolete.")]
+        [Obsolete("This method is obsolete. Use GetDatabaseMigrationSqlVmAsync(this ArmClient client, ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)")]
         [ForwardsClientCalls]
         public static Task<Response<DatabaseMigrationSqlVmResource>> GetDatabaseMigrationSqlVmAsync(this ResourceGroupResource resourceGroupResource, string sqlVirtualMachineName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
             => GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDatabaseMigrationSqlVmAsync(sqlVirtualMachineName, targetDBName, migrationOperationId, expand, cancellationToken);
