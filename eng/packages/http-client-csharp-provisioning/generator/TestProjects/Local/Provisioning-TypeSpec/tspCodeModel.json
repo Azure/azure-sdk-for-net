@@ -580,7 +580,7 @@
     {
       "$id": "48",
       "kind": "constant",
-      "name": "ListAccept",
+      "name": "listContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -596,7 +596,7 @@
     {
       "$id": "50",
       "kind": "constant",
-      "name": "ListAccept1",
+      "name": "createOrUpdateContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -612,7 +612,7 @@
     {
       "$id": "52",
       "kind": "constant",
-      "name": "ListAccept2",
+      "name": "createOrUpdateContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -628,7 +628,7 @@
     {
       "$id": "54",
       "kind": "constant",
-      "name": "ListAccept3",
+      "name": "createOrUpdateContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -644,7 +644,7 @@
     {
       "$id": "56",
       "kind": "constant",
-      "name": "ListAccept4",
+      "name": "createOrUpdateContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -660,7 +660,7 @@
     {
       "$id": "58",
       "kind": "constant",
-      "name": "ListAccept5",
+      "name": "getContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -676,7 +676,7 @@
     {
       "$id": "60",
       "kind": "constant",
-      "name": "ListAccept6",
+      "name": "updateContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -692,7 +692,7 @@
     {
       "$id": "62",
       "kind": "constant",
-      "name": "ListAccept7",
+      "name": "updateContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -708,7 +708,7 @@
     {
       "$id": "64",
       "kind": "constant",
-      "name": "ListAccept8",
+      "name": "updateContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -724,7 +724,7 @@
     {
       "$id": "66",
       "kind": "constant",
-      "name": "ListAccept9",
+      "name": "updateContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -740,7 +740,7 @@
     {
       "$id": "68",
       "kind": "constant",
-      "name": "ListAccept10",
+      "name": "listContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -756,7 +756,7 @@
     {
       "$id": "70",
       "kind": "constant",
-      "name": "ListAccept11",
+      "name": "listBySubscriptionContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -772,7 +772,7 @@
     {
       "$id": "72",
       "kind": "constant",
-      "name": "ListAccept12",
+      "name": "createOrUpdateContentType4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -788,7 +788,7 @@
     {
       "$id": "74",
       "kind": "constant",
-      "name": "ListAccept13",
+      "name": "createOrUpdateContentType5",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -804,7 +804,7 @@
     {
       "$id": "76",
       "kind": "constant",
-      "name": "ListAccept14",
+      "name": "getContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -820,7 +820,7 @@
     {
       "$id": "78",
       "kind": "constant",
-      "name": "ListAccept15",
+      "name": "listContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -836,7 +836,7 @@
     {
       "$id": "80",
       "kind": "constant",
-      "name": "ListAccept16",
+      "name": "getContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -852,7 +852,7 @@
     {
       "$id": "82",
       "kind": "constant",
-      "name": "ListAccept17",
+      "name": "createOrUpdateContentType6",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -868,7 +868,7 @@
     {
       "$id": "84",
       "kind": "constant",
-      "name": "ListAccept18",
+      "name": "createOrUpdateContentType7",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -884,7 +884,7 @@
     {
       "$id": "86",
       "kind": "constant",
-      "name": "ListAccept19",
+      "name": "listContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -900,7 +900,7 @@
     {
       "$id": "88",
       "kind": "constant",
-      "name": "ListAccept20",
+      "name": "getContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -916,7 +916,7 @@
     {
       "$id": "90",
       "kind": "constant",
-      "name": "ListAccept21",
+      "name": "createOrUpdateContentType8",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -932,7 +932,7 @@
     {
       "$id": "92",
       "kind": "constant",
-      "name": "ListAccept22",
+      "name": "createOrUpdateContentType9",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -948,7 +948,7 @@
     {
       "$id": "94",
       "kind": "constant",
-      "name": "ListAccept23",
+      "name": "createOrUpdateContentType10",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -964,7 +964,7 @@
     {
       "$id": "96",
       "kind": "constant",
-      "name": "ListAccept24",
+      "name": "createOrUpdateContentType11",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -980,7 +980,7 @@
     {
       "$id": "98",
       "kind": "constant",
-      "name": "ListAccept25",
+      "name": "listContentType4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -996,7 +996,7 @@
     {
       "$id": "100",
       "kind": "constant",
-      "name": "ListAccept26",
+      "name": "getByRevisionNumberContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -14156,7 +14156,7 @@
       "flows": [
         {
           "scopes": [
-            "https://management.azure.com/.default"
+            "user_impersonation"
           ],
           "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize"
         }
