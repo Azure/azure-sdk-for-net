@@ -5,6 +5,5 @@
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Azure.ResourceManager.ComputeBulkActions</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <NoWarn>$(NoWarn);AZC0030;AZC0033</NoWarn>
   </PropertyGroup>
 </Project>
