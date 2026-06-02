@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Initializes a new instance of <see cref="LaunchBulkInstancesOperationListResult"/>. </summary>
         /// <param name="value"> The list of LaunchBulkInstancesOperation resources. </param>
-        internal LaunchBulkInstancesOperationListResult(IEnumerable<LocationBasedLaunchBulkInstancesOperationData> value)
+        internal LaunchBulkInstancesOperationListResult(IEnumerable<BulkActionData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="value"> The list of LaunchBulkInstancesOperation resources. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LaunchBulkInstancesOperationListResult(IList<LocationBasedLaunchBulkInstancesOperationData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LaunchBulkInstancesOperationListResult(IList<BulkActionData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         }
 
         /// <summary> The list of LaunchBulkInstancesOperation resources. </summary>
-        public IList<LocationBasedLaunchBulkInstancesOperationData> Value { get; }
+        public IList<BulkActionData> Value { get; }
 
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }

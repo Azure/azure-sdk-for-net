@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
     {
         private readonly ClientDiagnostics _bulkActionsClientDiagnostics;
         private readonly BulkActions _bulkActionsRestClient;
-        private readonly LocationBasedLaunchBulkInstancesOperationData _data;
+        private readonly BulkActionData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ComputeBulkActions/locations/operations";
 
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// <summary> Initializes a new instance of <see cref="BulkActionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BulkActionResource(ArmClient client, LocationBasedLaunchBulkInstancesOperationData data) : this(client, data.Id)
+        internal BulkActionResource(ArmClient client, BulkActionData data) : this(client, data.Id)
         {
             this.HasData = true;
             _data = data;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual LocationBasedLaunchBulkInstancesOperationData Data
+        public virtual BulkActionData Data
         {
             get
             {

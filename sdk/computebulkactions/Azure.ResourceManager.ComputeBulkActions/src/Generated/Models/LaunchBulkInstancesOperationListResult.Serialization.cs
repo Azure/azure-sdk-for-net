@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (LocationBasedLaunchBulkInstancesOperationData item in Value)
+            foreach (BulkActionData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 return null;
             }
-            IList<LocationBasedLaunchBulkInstancesOperationData> value = default;
+            IList<BulkActionData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<LocationBasedLaunchBulkInstancesOperationData> array = new List<LocationBasedLaunchBulkInstancesOperationData>();
+                    List<BulkActionData> array = new List<BulkActionData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LocationBasedLaunchBulkInstancesOperationData.DeserializeLocationBasedLaunchBulkInstancesOperationData(item, options));
+                        array.Add(BulkActionData.DeserializeBulkActionData(item, options));
                     }
                     value = array;
                     continue;

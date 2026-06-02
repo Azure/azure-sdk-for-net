@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
-        /// <returns> A new <see cref="ComputeBulkActions.LocationBasedLaunchBulkInstancesOperationData"/> instance for mocking. </returns>
-        public static LocationBasedLaunchBulkInstancesOperationData LocationBasedLaunchBulkInstancesOperationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ComputeBulkActionsLaunchBulkInstancesOperationProperties properties = default, AzureLocation location = default, IEnumerable<string> zones = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
+        /// <returns> A new <see cref="ComputeBulkActions.BulkActionData"/> instance for mocking. </returns>
+        public static BulkActionData BulkActionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ComputeBulkActionsLaunchBulkInstancesOperationProperties properties = default, AzureLocation location = default, IEnumerable<string> zones = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
         {
             zones ??= new ChangeTrackingList<string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new LocationBasedLaunchBulkInstancesOperationData(
+            return new BulkActionData(
                 id,
                 name,
                 resourceType,
@@ -442,9 +442,9 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="target"> The target of the particular error. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="details"> The API error details. </param>
-        /// <param name="innererror"> The API inner error. </param>
+        /// <param name="innerError"> The API inner error. </param>
         /// <returns> A new <see cref="Models.ComputeBulkActionsApiError"/> instance for mocking. </returns>
-        public static ComputeBulkActionsApiError ComputeBulkActionsApiError(string code = default, string target = default, string message = default, IEnumerable<ComputeBulkActionsApiErrorBase> details = default, ComputeBulkActionsInnerError innererror = default)
+        public static ComputeBulkActionsApiError ComputeBulkActionsApiError(string code = default, string target = default, string message = default, IEnumerable<ComputeBulkActionsApiErrorBase> details = default, ComputeBulkActionsInnerError innerError = default)
         {
             details ??= new ChangeTrackingList<ComputeBulkActionsApiErrorBase>();
 
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 target,
                 message,
                 details.ToList(),
-                innererror,
+                innerError,
                 additionalBinaryDataProperties: null);
         }
 

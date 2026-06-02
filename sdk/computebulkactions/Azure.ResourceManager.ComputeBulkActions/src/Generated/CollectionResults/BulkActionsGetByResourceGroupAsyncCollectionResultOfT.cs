@@ -15,7 +15,7 @@ using Azure.ResourceManager.ComputeBulkActions.Models;
 
 namespace Azure.ResourceManager.ComputeBulkActions
 {
-    internal partial class BulkActionsGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<LocationBasedLaunchBulkInstancesOperationData>
+    internal partial class BulkActionsGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<BulkActionData>
     {
         private readonly BulkActions _client;
         private readonly Guid _subscriptionId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of BulkActionsGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<LocationBasedLaunchBulkInstancesOperationData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<BulkActionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
                     yield break;
                 }
                 LaunchBulkInstancesOperationListResult result = LaunchBulkInstancesOperationListResult.FromResponse(response);
-                yield return Page<LocationBasedLaunchBulkInstancesOperationData>.FromValues((IReadOnlyList<LocationBasedLaunchBulkInstancesOperationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<BulkActionData>.FromValues((IReadOnlyList<BulkActionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

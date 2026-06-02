@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Innererror))
+            if (Optional.IsDefined(InnerError))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(Innererror, options);
+                writer.WriteObjectValue(InnerError, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             string target = default;
             string message = default;
             IList<ComputeBulkActionsApiErrorBase> details = default;
-            ComputeBulkActionsInnerError innererror = default;
+            ComputeBulkActionsInnerError innerError = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    innererror = ComputeBulkActionsInnerError.DeserializeComputeBulkActionsInnerError(prop.Value, options);
+                    innerError = ComputeBulkActionsInnerError.DeserializeComputeBulkActionsInnerError(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 target,
                 message,
                 details ?? new ChangeTrackingList<ComputeBulkActionsApiErrorBase>(),
-                innererror,
+                innerError,
                 additionalBinaryDataProperties);
         }
     }

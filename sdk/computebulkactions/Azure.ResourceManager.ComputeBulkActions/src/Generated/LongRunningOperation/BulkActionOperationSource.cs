@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         BulkActionResource IOperationSource<BulkActionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            LocationBasedLaunchBulkInstancesOperationData data = LocationBasedLaunchBulkInstancesOperationData.DeserializeLocationBasedLaunchBulkInstancesOperationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            BulkActionData data = BulkActionData.DeserializeBulkActionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new BulkActionResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         async ValueTask<BulkActionResource> IOperationSource<BulkActionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            LocationBasedLaunchBulkInstancesOperationData data = LocationBasedLaunchBulkInstancesOperationData.DeserializeLocationBasedLaunchBulkInstancesOperationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            BulkActionData data = BulkActionData.DeserializeBulkActionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new BulkActionResource(_client, data);
         }
     }

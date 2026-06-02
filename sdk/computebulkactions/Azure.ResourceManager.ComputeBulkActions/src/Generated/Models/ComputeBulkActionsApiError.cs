@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="target"> The target of the particular error. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="details"> The API error details. </param>
-        /// <param name="innererror"> The API inner error. </param>
+        /// <param name="innerError"> The API inner error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeBulkActionsApiError(string code, string target, string message, IList<ComputeBulkActionsApiErrorBase> details, ComputeBulkActionsInnerError innererror, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkActionsApiError(string code, string target, string message, IList<ComputeBulkActionsApiErrorBase> details, ComputeBulkActionsInnerError innerError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Target = target;
             Message = message;
             Details = details;
-            Innererror = innererror;
+            InnerError = innerError;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public IList<ComputeBulkActionsApiErrorBase> Details { get; }
 
         /// <summary> The API inner error. </summary>
-        public ComputeBulkActionsInnerError Innererror { get; }
+        public ComputeBulkActionsInnerError InnerError { get; }
     }
 }

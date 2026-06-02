@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.TestFramework
         [OneTimeSetUp]
         public void SetExceptionList()
         {
-            ExceptionList = new string[] { "SubResource" };
+            ExceptionList = new string[] { "ComputeBulkActionsSubResource" };
         }
     }
 }

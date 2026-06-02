@@ -14,19 +14,19 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ComputeBulkActions
 {
     /// <summary> Location based type. </summary>
-    public partial class LocationBasedLaunchBulkInstancesOperationData : ResourceData
+    public partial class BulkActionData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LocationBasedLaunchBulkInstancesOperationData"/>. </summary>
-        public LocationBasedLaunchBulkInstancesOperationData()
+        /// <summary> Initializes a new instance of <see cref="BulkActionData"/>. </summary>
+        public BulkActionData()
         {
             Zones = new ChangeTrackingList<string>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="LocationBasedLaunchBulkInstancesOperationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkActionData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
-        internal LocationBasedLaunchBulkInstancesOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputeBulkActionsLaunchBulkInstancesOperationProperties properties, AzureLocation location, IList<string> zones, IDictionary<string, string> tags, ManagedServiceIdentity identity, ArmPlan plan) : base(id, name, resourceType, systemData)
+        internal BulkActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputeBulkActionsLaunchBulkInstancesOperationProperties properties, AzureLocation location, IList<string> zones, IDictionary<string, string> tags, ManagedServiceIdentity identity, ArmPlan plan) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

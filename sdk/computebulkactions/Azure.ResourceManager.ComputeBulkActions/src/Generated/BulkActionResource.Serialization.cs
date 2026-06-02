@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.ComputeBulkActions
 {
     /// <summary></summary>
-    public partial class BulkActionResource : IJsonModel<LocationBasedLaunchBulkInstancesOperationData>
+    public partial class BulkActionResource : IJsonModel<BulkActionData>
     {
-        private static IJsonModel<LocationBasedLaunchBulkInstancesOperationData> s_dataDeserializationInstance;
+        private static IJsonModel<BulkActionData> s_dataDeserializationInstance;
 
-        private static IJsonModel<LocationBasedLaunchBulkInstancesOperationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new LocationBasedLaunchBulkInstancesOperationData();
+        private static IJsonModel<BulkActionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new BulkActionData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LocationBasedLaunchBulkInstancesOperationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LocationBasedLaunchBulkInstancesOperationData>)Data).Write(writer, options);
+        void IJsonModel<BulkActionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BulkActionData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LocationBasedLaunchBulkInstancesOperationData IJsonModel<LocationBasedLaunchBulkInstancesOperationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        BulkActionData IJsonModel<BulkActionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LocationBasedLaunchBulkInstancesOperationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LocationBasedLaunchBulkInstancesOperationData>(Data, options, AzureResourceManagerComputeBulkActionsContext.Default);
+        BinaryData IPersistableModel<BulkActionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BulkActionData>(Data, options, AzureResourceManagerComputeBulkActionsContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LocationBasedLaunchBulkInstancesOperationData IPersistableModel<LocationBasedLaunchBulkInstancesOperationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LocationBasedLaunchBulkInstancesOperationData>(data, options, AzureResourceManagerComputeBulkActionsContext.Default);
+        BulkActionData IPersistableModel<BulkActionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BulkActionData>(data, options, AzureResourceManagerComputeBulkActionsContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LocationBasedLaunchBulkInstancesOperationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<BulkActionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

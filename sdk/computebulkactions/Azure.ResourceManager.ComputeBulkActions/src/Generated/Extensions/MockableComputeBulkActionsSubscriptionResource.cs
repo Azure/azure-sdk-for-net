@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LocationBasedLaunchBulkInstancesOperationData, BulkActionResource>(new BulkActionsGetBySubscriptionAsyncCollectionResultOfT(BulkActionsRestClient, Guid.Parse(Id.SubscriptionId), location, context), data => new BulkActionResource(Client, data));
+            return new AsyncPageableWrapper<BulkActionData, BulkActionResource>(new BulkActionsGetBySubscriptionAsyncCollectionResultOfT(BulkActionsRestClient, Guid.Parse(Id.SubscriptionId), location, context), data => new BulkActionResource(Client, data));
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LocationBasedLaunchBulkInstancesOperationData, BulkActionResource>(new BulkActionsGetBySubscriptionCollectionResultOfT(BulkActionsRestClient, Guid.Parse(Id.SubscriptionId), location, context), data => new BulkActionResource(Client, data));
+            return new PageableWrapper<BulkActionData, BulkActionResource>(new BulkActionsGetBySubscriptionCollectionResultOfT(BulkActionsRestClient, Guid.Parse(Id.SubscriptionId), location, context), data => new BulkActionResource(Client, data));
         }
 
         /// <summary>
