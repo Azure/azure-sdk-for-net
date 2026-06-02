@@ -604,7 +604,7 @@ namespace Azure.Generator.Provisioning.Providers
                     This.Invoke(
                         "DefineResource",
                         [
-                            Literal("Scope"),
+                            Nameof(Identifier("Scope")),
                             New.Array(typeof(string), [Literal("scope")])
                         ],
                         [typeof(ProvisionableResource)],
