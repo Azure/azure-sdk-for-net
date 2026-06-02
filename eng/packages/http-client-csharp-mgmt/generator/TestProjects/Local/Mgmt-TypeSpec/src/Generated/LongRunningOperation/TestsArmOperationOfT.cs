@@ -46,7 +46,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="finalStateVia"> The finalStateVia of the operation. </param>
         /// <param name="skipApiVersionOverride"> If should skip Api version override. </param>
         /// <param name="apiVersionOverrideValue"> The Api version override value. </param>
-        internal TestsArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
+        internal TestsArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = true, string apiVersionOverrideValue = null)
         {
             IOperation nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
             if (nextLinkOperation is NextLinkOperationImplementation nextLinkOperationImplementation)
