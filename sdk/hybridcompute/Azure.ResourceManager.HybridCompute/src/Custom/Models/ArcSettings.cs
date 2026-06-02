@@ -38,31 +38,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
         [WirePath("properties.gatewayResourceId")]
         public ResourceIdentifier GatewayResourceId { get; set; }
 
-        internal ArcSettingsData ToArcSettingsData()
-        {
-            string tenantId = TenantId?.ToString();
-            SettingsGatewayProperties gatewayProperties = GatewayResourceId is null ? default : new SettingsGatewayProperties(GatewayResourceId, null);
-
-            return new ArcSettingsData(
-                Id,
-                Name,
-                ResourceType,
-                SystemData,
-                additionalBinaryDataProperties: null,
-                tenantId is null && gatewayProperties is null ? default : new SettingsProperties(tenantId, gatewayProperties, null));
-        }
-
-        internal static ArcSettings FromArcSettingsData(ArcSettingsData data)
-        {
-            if (data is null)
-            {
-                return null;
-            }
-
-            Guid? tenantId = Guid.TryParse(data.TenantId, out Guid parsedTenantId) ? parsedTenantId : default(Guid?);
-            return new ArcSettings(data.Id, data.Name, data.ResourceType, data.SystemData, tenantId, data.GatewayResourceId, null);
-        }
-
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArcSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArcSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
