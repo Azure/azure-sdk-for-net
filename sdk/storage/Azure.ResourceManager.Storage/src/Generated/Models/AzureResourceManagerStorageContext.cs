@@ -19,6 +19,11 @@ namespace Azure.ResourceManager.Storage
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AccountImmutabilityPolicy))]
     [ModelReaderWriterBuildable(typeof(AccountSasContent))]
+    [ModelReaderWriterBuildable(typeof(AdvancedPlatformMetricsRuleConfig))]
+    [ModelReaderWriterBuildable(typeof(AdvancedPlatformMetricsRuleData))]
+    [ModelReaderWriterBuildable(typeof(AdvancedPlatformMetricsRuleListResult))]
+    [ModelReaderWriterBuildable(typeof(AdvancedPlatformMetricsRuleProperties))]
+    [ModelReaderWriterBuildable(typeof(AdvancedPlatformMetricsRuleResource))]
     [ModelReaderWriterBuildable(typeof(BlobContainerData))]
     [ModelReaderWriterBuildable(typeof(BlobContainerImmutabilityPolicy))]
     [ModelReaderWriterBuildable(typeof(BlobContainerResource))]

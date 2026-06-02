@@ -907,8 +907,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="maxProvisionedIops"> The maximum provisioned IOPS limit for a file share in the storage account. </param>
         /// <param name="minProvisionedBandwidthMiBPerSec"> The minimum provisioned bandwidth limit in mebibytes per second for a file share in the storage account. </param>
         /// <param name="maxProvisionedBandwidthMiBPerSec"> The maximum provisioned bandwidth limit in mebibytes per second for a file share in the storage account. </param>
+        /// <param name="guardrailIOScalar"> The IO scalar used for guardrail calculations for a file share in the storage account. </param>
+        /// <param name="guardrailBandwidthScalar"> The bandwidth scalar used for guardrail calculations for a file share in the storage account. </param>
         /// <returns> A new <see cref="Models.FileShareLimits"/> instance for mocking. </returns>
-        public static FileShareLimits FileShareLimits(int? minProvisionedStorageGiB = default, int? maxProvisionedStorageGiB = default, int? minProvisionedIops = default, int? maxProvisionedIops = default, int? minProvisionedBandwidthMiBPerSec = default, int? maxProvisionedBandwidthMiBPerSec = default)
+        public static FileShareLimits FileShareLimits(int? minProvisionedStorageGiB = default, int? maxProvisionedStorageGiB = default, int? minProvisionedIops = default, int? maxProvisionedIops = default, int? minProvisionedBandwidthMiBPerSec = default, int? maxProvisionedBandwidthMiBPerSec = default, double? guardrailIOScalar = default, double? guardrailBandwidthScalar = default)
         {
             return new FileShareLimits(
                 minProvisionedStorageGiB,
@@ -917,6 +919,8 @@ namespace Azure.ResourceManager.Storage.Models
                 maxProvisionedIops,
                 minProvisionedBandwidthMiBPerSec,
                 maxProvisionedBandwidthMiBPerSec,
+                guardrailIOScalar,
+                guardrailBandwidthScalar,
                 additionalBinaryDataProperties: null);
         }
 
@@ -1533,6 +1537,55 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageDataSharePropertiesPatch(description, accessPolicies.ToList(), assets.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The advanced platform metrics rule for the storage account. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Returns the advanced platform metrics rule. </param>
+        /// <returns> A new <see cref="Storage.AdvancedPlatformMetricsRuleData"/> instance for mocking. </returns>
+        public static AdvancedPlatformMetricsRuleData AdvancedPlatformMetricsRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AdvancedPlatformMetricsRuleProperties properties = default)
+        {
+            return new AdvancedPlatformMetricsRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> An object that defines the advanced platform metrics rule. </summary>
+        /// <param name="ruleType"> Indicates the type of the advanced platform metrics rule. Possible values include: ContainerLevelCapacityMetrics. </param>
+        /// <param name="enabled"> A boolean flag which enables the advanced platform metrics rule. </param>
+        /// <param name="lastModifiedOn"> Gets the last modification date and time of the advanced platform metrics rule in UTC. </param>
+        /// <param name="metricsEmitted"> The metrics emitted by the rule. Metrics are mapped according to the rule type from RuleTypeProperty. Rule type to metrics mapping: ContainerLevelCapacityMetrics =&gt; {ContainerUsedSize, ContainerBlobCount}. </param>
+        /// <param name="ruleConfig"> Configuration for the advanced platform metrics rule. </param>
+        /// <returns> A new <see cref="Models.AdvancedPlatformMetricsRuleProperties"/> instance for mocking. </returns>
+        public static AdvancedPlatformMetricsRuleProperties AdvancedPlatformMetricsRuleProperties(AdvancedPlatformMetricsRuleType? ruleType = default, bool enabled = default, DateTimeOffset? lastModifiedOn = default, IEnumerable<MetricsEmitted> metricsEmitted = default, AdvancedPlatformMetricsRuleConfig ruleConfig = default)
+        {
+            metricsEmitted ??= new ChangeTrackingList<MetricsEmitted>();
+
+            return new AdvancedPlatformMetricsRuleProperties(
+                ruleType,
+                enabled,
+                lastModifiedOn,
+                metricsEmitted.ToList(),
+                ruleConfig,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Configuration for the advanced platform metrics rule. </summary>
+        /// <param name="filterType"> The type of filter applied to the rule. Possible values include: AllContainersFilter, ContainerPrefixFilter, ContainerListFilter. </param>
+        /// <param name="filterValues"> The values for the filter applied to the rule. If filter type is AllContainersFilter, filter values should be empty. If filter type is ContainerPrefixFilter, filter values should contain a list of container prefixes. If filter type is ContainerListFilter, filter values should contain a list of container names. </param>
+        /// <returns> A new <see cref="Models.AdvancedPlatformMetricsRuleConfig"/> instance for mocking. </returns>
+        public static AdvancedPlatformMetricsRuleConfig AdvancedPlatformMetricsRuleConfig(AdvancedPlatformMetricsFilterType? filterType = default, IEnumerable<string> filterValues = default)
+        {
+            filterValues ??= new ChangeTrackingList<string>();
+
+            return new AdvancedPlatformMetricsRuleConfig(filterType, filterValues.ToList(), additionalBinaryDataProperties: null);
+        }
+
         /// <summary> A list of private link resources. </summary>
         /// <param name="value"> Array of private link resources. </param>
         /// <returns> A new <see cref="Models.StoragePrivateLinkResourceListResult"/> instance for mocking. </returns>
@@ -1744,6 +1797,20 @@ namespace Azure.ResourceManager.Storage.Models
         public static StorageUsageName StorageUsageName(string value = default, string localizedValue = default)
         {
             return new StorageUsageName(value, localizedValue, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Minimum and maximum provisioned storage, IOPS and bandwidth limits for a file share in the storage account. </summary>
+        /// <param name="minProvisionedStorageGiB"> The minimum provisioned storage quota limit in gibibytes for a file share in the storage account. </param>
+        /// <param name="maxProvisionedStorageGiB"> The maximum provisioned storage quota limit in gibibytes for a file share in the storage account. </param>
+        /// <param name="minProvisionedIops"> The minimum provisioned IOPS limit for a file share in the storage account. </param>
+        /// <param name="maxProvisionedIops"> The maximum provisioned IOPS limit for a file share in the storage account. </param>
+        /// <param name="minProvisionedBandwidthMiBPerSec"> The minimum provisioned bandwidth limit in mebibytes per second for a file share in the storage account. </param>
+        /// <param name="maxProvisionedBandwidthMiBPerSec"> The maximum provisioned bandwidth limit in mebibytes per second for a file share in the storage account. </param>
+        /// <returns> A new <see cref="Models.FileShareLimits"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FileShareLimits FileShareLimits(int? minProvisionedStorageGiB, int? maxProvisionedStorageGiB, int? minProvisionedIops, int? maxProvisionedIops, int? minProvisionedBandwidthMiBPerSec, int? maxProvisionedBandwidthMiBPerSec)
+        {
+            return FileShareLimits(minProvisionedStorageGiB: minProvisionedStorageGiB, maxProvisionedStorageGiB: maxProvisionedStorageGiB, minProvisionedIops: minProvisionedIops, maxProvisionedIops: maxProvisionedIops, minProvisionedBandwidthMiBPerSec: minProvisionedBandwidthMiBPerSec, maxProvisionedBandwidthMiBPerSec: maxProvisionedBandwidthMiBPerSec, guardrailIOScalar: default, guardrailBandwidthScalar: default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
