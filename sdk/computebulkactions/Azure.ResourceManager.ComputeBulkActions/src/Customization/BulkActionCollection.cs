@@ -32,8 +32,11 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         /// <param name="location"> The location for the resource. </param>
-        internal BulkActionCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : this(client, id)
+        internal BulkActionCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
+            this.TryGetApiVersion(BulkActionResource.ResourceType, out string bulkActionApiVersion);
+            _bulkActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeBulkActions", BulkActionResource.ResourceType.Namespace, Diagnostics);
+            _bulkActionsRestClient = new BulkActions(_bulkActionsClientDiagnostics, Pipeline, Endpoint, bulkActionApiVersion ?? "2026-02-01-preview");
             _ = location;
         }
 
