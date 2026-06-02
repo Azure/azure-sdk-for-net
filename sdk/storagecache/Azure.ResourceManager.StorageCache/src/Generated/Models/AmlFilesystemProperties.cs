@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="hsm"> Hydration and archive settings and status. </param>
         /// <param name="rootSquashSettings"> Specifies root squash settings of the AML file system. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AmlFilesystemProperties(float storageCapacityTiB, float? currentStorageCapacityTiB, string clusterUuid, AmlFileSystemHealth health, AmlFileSystemProvisioningStateType? provisioningState, string filesystemSubnet, AmlFileSystemClientInfo clientInfo, int? throughputProvisionedMBps, AmlFileSystemEncryptionSettings encryptionSettings, AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow, AmlFileSystemPropertiesHsm hsm, AmlFileSystemRootSquashSettings rootSquashSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AmlFilesystemProperties(float storageCapacityTiB, float? currentStorageCapacityTiB, Guid? clusterUuid, AmlFileSystemHealth health, AmlFileSystemProvisioningStateType? provisioningState, string filesystemSubnet, AmlFileSystemClientInfo clientInfo, int? throughputProvisionedMBps, AmlFileSystemEncryptionSettings encryptionSettings, AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow, AmlFileSystemPropertiesHsm hsm, AmlFileSystemRootSquashSettings rootSquashSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageCapacityTiB = storageCapacityTiB;
             CurrentStorageCapacityTiB = currentStorageCapacityTiB;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public float? CurrentStorageCapacityTiB { get; }
 
         /// <summary> The unique identifier of the AML file system cluster. </summary>
-        public string ClusterUuid { get; }
+        public Guid? ClusterUuid { get; }
 
         /// <summary> Health of the AML file system. </summary>
         public AmlFileSystemHealth Health { get; }

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary> The unique identifier of the AML file system cluster. </summary>
-        public string ClusterUuid
+        public Guid? ClusterUuid
         {
             get
             {

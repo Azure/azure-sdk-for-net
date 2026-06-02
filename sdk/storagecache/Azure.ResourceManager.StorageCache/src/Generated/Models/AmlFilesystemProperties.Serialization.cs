@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (options.Format != "W" && Optional.IsDefined(ClusterUuid))
             {
                 writer.WritePropertyName("clusterUuid"u8);
-                writer.WriteStringValue(ClusterUuid);
+                writer.WriteStringValue(ClusterUuid.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Health))
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
             float storageCapacityTiB = default;
             float? currentStorageCapacityTiB = default;
-            string clusterUuid = default;
+            Guid? clusterUuid = default;
             AmlFileSystemHealth health = default;
             AmlFileSystemProvisioningStateType? provisioningState = default;
             string filesystemSubnet = default;
@@ -203,7 +203,11 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
                 if (prop.NameEquals("clusterUuid"u8))
                 {
-                    clusterUuid = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clusterUuid = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("health"u8))
