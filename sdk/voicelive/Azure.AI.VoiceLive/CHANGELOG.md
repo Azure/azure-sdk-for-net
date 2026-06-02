@@ -10,12 +10,10 @@
 - Added avatar voice synchronization support via `AzureAvatarSyncVoice` with configurable voice parameters.
 - Added phrase-level transcription support, including word-level timing, confidence, and phrase grouping.
 - Added new personal voice models: `PersonalVoiceModels.MaiVoice1` and `PersonalVoiceModels.DragonHDOmniLatestNeural`.
-- Added `EchoCancellationReferenceSource` (`Client`, `Server`) on `AudioEchoCancellation.ReferenceSource` for selecting the echo cancellation reference.
-- Added `SmartEndOfTurnDetection` as a new turn-detection option.
+- Added new turn-detection options, including semantic VAD variants (`AzureSemanticVadTurnDetection`, `AzureSemanticVadTurnDetectionEn`, and `AzureSemanticVadTurnDetectionMultilingual`).
  
 ### Breaking Changes
  
-- Changed `SessionResponseItem.Id` to a virtual property.
 - Updated transcription completion APIs to include additional metadata (logprobs and phrases).
 - Updated `OutputTokenDetails` constructors to support reasoning tokens.
 - Updated `VoiceLiveSessionOptions` to include new properties such as `Include` and `Metadata`.
@@ -29,7 +27,7 @@
 
 ### Other Changes
 
-- Sample location moved from `sdk/voicelive/Azure.AI.VoiceLive/samples/` to top-level `samples/voicelive/`. Existing sample folders were renamed to kebab-case (`BasicVoiceAssistant` → `basic-voice-assistant`, `CustomerServiceBot` → `customer-service-bot`), and each sample's entry point was renamed from `SampleProgram.cs` to `Program.cs`.
+- Runnable sample applications moved from `sdk/voicelive/Azure.AI.VoiceLive/samples/` to top-level `samples/voicelive/`. Existing sample folders were renamed to kebab-case (`BasicVoiceAssistant` → `basic-voice-assistant`, `CustomerServiceBot` → `customer-service-bot`), and each sample's entry point was renamed from `SampleProgram.cs` to `Program.cs`.
 - Added new samples:
   - `samples/voicelive/agent-voice-assistant` — Foundry agent integration sample.
   - `samples/voicelive/mcp-voice-assistant` — MCP server integration sample.
