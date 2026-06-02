@@ -3,9 +3,7 @@
 
 #nullable disable
 
-using System;
 using System.ClientModel.Primitives;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,13 +18,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         NetworkFabricOperationStatusResult IOperationSource<NetworkFabricOperationStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return ModelReaderWriter.Read<NetworkFabricOperationStatusResult>(new BinaryData(Encoding.UTF8.GetBytes(document.RootElement.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerManagedNetworkFabricContext.Default);
+            return NetworkFabricOperationStatusResult.DeserializeNetworkFabricOperationStatusResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         async ValueTask<NetworkFabricOperationStatusResult> IOperationSource<NetworkFabricOperationStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ModelReaderWriter.Read<NetworkFabricOperationStatusResult>(new BinaryData(Encoding.UTF8.GetBytes(document.RootElement.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerManagedNetworkFabricContext.Default);
+            return NetworkFabricOperationStatusResult.DeserializeNetworkFabricOperationStatusResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }
