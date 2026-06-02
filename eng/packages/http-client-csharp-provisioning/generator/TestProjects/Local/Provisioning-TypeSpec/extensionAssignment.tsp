@@ -26,14 +26,10 @@ model ExtensionAssignmentProperties {
 
 @armResourceOperations
 interface ExtensionAssignments {
-  get is ArmResourceRead<
-    ExtensionAssignment,
-    Azure.ResourceManager.Foundations.ExtensionBaseParameters
-  >;
+  get is Extension.Read<Extension.ScopeParameter, ExtensionAssignment>;
 
-  createOrUpdate is ArmResourceCreateOrReplaceSync<
-    ExtensionAssignment,
-    Azure.ResourceManager.Foundations.ExtensionBaseParameters,
-    Response = ArmResourceUpdatedResponse<ExtensionAssignment>
+  createOrUpdate is Extension.CreateOrUpdateAsync<
+    Extension.ScopeParameter,
+    ExtensionAssignment
   >;
 }
