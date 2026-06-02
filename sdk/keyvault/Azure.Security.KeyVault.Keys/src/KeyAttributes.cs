@@ -130,22 +130,22 @@ namespace Azure.Security.KeyVault.Keys
                         }
                         break;
                     case ExternalKeyPropertyName:
-                    if (prop.Value.ValueKind != JsonValueKind.Null)
-                    {
-                        string externalId = null;
-                        foreach (JsonProperty extProp in prop.Value.EnumerateObject())
+                        if (prop.Value.ValueKind != JsonValueKind.Null)
                         {
-                            if (extProp.Name == ExternalKeyIdPropertyName)
+                            string externalId = null;
+                            foreach (JsonProperty extProp in prop.Value.EnumerateObject())
                             {
-                                externalId = extProp.Value.GetString();
+                                if (extProp.Name == ExternalKeyIdPropertyName)
+                                {
+                                    externalId = extProp.Value.GetString();
+                                }
+                            }
+                            if (externalId != null)
+                            {
+                                ExternalKey = new ExternalKey(externalId);
                             }
                         }
-                        if (externalId != null)
-                        {
-                            ExternalKey = new ExternalKey(externalId);
-                        }
-                    }
-                    break;
+                        break;
                 }
             }
         }
