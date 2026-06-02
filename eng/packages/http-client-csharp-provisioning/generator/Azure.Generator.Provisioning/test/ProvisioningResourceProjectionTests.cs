@@ -136,6 +136,59 @@ namespace Azure.Generator.Provisioning.Tests
             Assert.That(mixedNullProjection.SingletonResourceName, Is.Null);
         }
 
+        [Test]
+        public void CollapsedProjectionCollectsReadableAndWritableScopesFromMethods()
+        {
+            var model = CreateModel("TestResourceData");
+            var resourceGroupResource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                methods:
+                [
+                    CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup),
+                    CreateMethod(ResourceOperationKind.Create, ResourceScope.ResourceGroup),
+                    CreateMethod(ResourceOperationKind.Action, ResourceScope.Tenant)
+                ]);
+            var subscriptionResource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.Subscription,
+                ["2024-01-01"],
+                methods:
+                [
+                    CreateMethod(ResourceOperationKind.Read, ResourceScope.Subscription),
+                    CreateMethod(ResourceOperationKind.Update, ResourceScope.Subscription),
+                    CreateMethod(ResourceOperationKind.Delete, ResourceScope.ManagementGroup)
+                ]);
+
+            var projection = ProvisioningResourceProjection.Create([resourceGroupResource, subscriptionResource])[0];
+
+            Assert.That(projection.ReadableScopes, Is.EqualTo(new[] { ResourceScope.ResourceGroup, ResourceScope.Subscription }));
+            Assert.That(projection.WritableScopes, Is.EqualTo(new[] { ResourceScope.ResourceGroup, ResourceScope.Subscription }));
+        }
+
+        [Test]
+        public void ProjectionIdentifiesWritableExtensionResource()
+        {
+            var model = CreateModel("ExtensionResourceData");
+            var resource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}/providers/Microsoft.Extension/assignments/{assignmentName}",
+                "Microsoft.Extension/assignments",
+                ResourceScope.Extension,
+                ["2024-01-01"],
+                parentResourceId: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                methods: [CreateMethod(ResourceOperationKind.Create, ResourceScope.Extension)]);
+
+            var projection = ProvisioningResourceProjection.Create([resource])[0];
+
+            Assert.That(projection.IsExtensionResource, Is.True);
+        }
+
         private static ArmResourceMetadata CreateMetadata(
             InputModelType model,
             string resourceIdPattern,
@@ -146,7 +199,8 @@ namespace Azure.Generator.Provisioning.Tests
             string? resourceName = null,
             string? singletonResourceName = null,
             string? parentResourceId = null,
-            ArmResourceNameConstraints? nameConstraints = null)
+            ArmResourceNameConstraints? nameConstraints = null,
+            IReadOnlyList<ResourceMethod>? methods = null)
         {
             var path = new RequestPathPattern(resourceIdPattern);
             return new ArmResourceMetadata(
@@ -155,7 +209,7 @@ namespace Azure.Generator.Provisioning.Tests
                 resourceType,
                 model,
                 new ArmScopeInfo(scope, RequestPathPattern.GetFromScope(scope, path), null),
-                [],
+                methods ?? [],
                 singletonResourceName,
                 parentResourceId is null ? null : new RequestPathPattern(parentResourceId),
                 [],
@@ -164,7 +218,18 @@ namespace Azure.Generator.Provisioning.Tests
                 rbacRoles ?? [new ArmResourceRbacRole("FirstRole", "11111111-1111-1111-1111-111111111111")]);
         }
 
-        private static InputModelType CreateModel(string name)
+        private static ResourceMethod CreateMethod(ResourceOperationKind kind, ResourceScope scope)
+        {
+            var path = RequestPathPattern.GetFromScope(scope, new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}"));
+            return new ResourceMethod(
+                kind,
+                null!,
+                path,
+                new ArmScopeInfo(scope, path, null),
+                null!);
+        }
+
+        private static InputModelType CreateModel(string name, IReadOnlyList<InputModelProperty>? properties = null)
             => new(
                 name,
                 "Sample.Models",
@@ -174,7 +239,7 @@ namespace Azure.Generator.Provisioning.Tests
                 string.Empty,
                 "Test model.",
                 InputModelTypeUsage.Input | InputModelTypeUsage.Output,
-                [],
+                properties ?? [],
                 null,
                 [],
                 null,
