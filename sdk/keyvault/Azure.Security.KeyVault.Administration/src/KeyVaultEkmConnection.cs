@@ -17,16 +17,16 @@ namespace Azure.Security.KeyVault.Administration
     public partial class KeyVaultEkmConnection
     {
         /// <summary> Initializes a new instance of the <see cref="KeyVaultEkmConnection"/> class. </summary>
-        /// <param name="host"> EKM proxy FQDN (Fully Qualified Domain Name). Only allowed characters are a-z, A-Z, 0-9, hyphen (-), dot (.), and colon (:). </param>
+        /// <param name="fullyQualifiedHostName"> The fully qualified host name of the EKM proxy. Only allowed characters are a-z, A-Z, 0-9, hyphen (-), dot (.), and colon (:). </param>
         /// <param name="serverCaCertificates"> The root CA certificate chain that issued the proxy server's certificate, as an ordered collection of DER-encoded certificates. </param>
-        /// <exception cref="ArgumentNullException"><paramref name="host"/> or <paramref name="serverCaCertificates"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="host"/> is an empty string.</exception>
-        public KeyVaultEkmConnection(string host, IEnumerable<byte[]> serverCaCertificates)
+        /// <exception cref="ArgumentNullException"><paramref name="fullyQualifiedHostName"/> or <paramref name="serverCaCertificates"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="fullyQualifiedHostName"/> is an empty string.</exception>
+        public KeyVaultEkmConnection(string fullyQualifiedHostName, IEnumerable<byte[]> serverCaCertificates)
         {
-            Argument.AssertNotNullOrEmpty(host, nameof(host));
+            Argument.AssertNotNullOrEmpty(fullyQualifiedHostName, nameof(fullyQualifiedHostName));
             Argument.AssertNotNull(serverCaCertificates, nameof(serverCaCertificates));
 
-            Host = host;
+            Host = fullyQualifiedHostName;
             ServerCaCertificates = serverCaCertificates
                 .Select(BinaryData.FromBytes)
                 .ToList();

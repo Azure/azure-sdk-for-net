@@ -16,13 +16,13 @@ KeyVaultEkmClient client = new KeyVaultEkmClient(new Uri(managedHsmUrl), new Def
 
 ## Creating an EKM connection
 
-Configure the Managed HSM to talk to your External Key Manager proxy by creating a `KeyVaultEkmConnection`. The connection requires the host name of the EKM proxy and the proxy's server CA certificate. You can also set a `PathPrefix` and the expected `ServerSubjectCommonName`.
+Configure the Managed HSM to talk to your External Key Manager proxy by creating a `KeyVaultEkmConnection`. The connection requires the fullyQualifiedHostName of the EKM proxy and the proxy's server CA certificate. You can also set a `PathPrefix` and the expected `ServerSubjectCommonName`.
 
 ```C# Snippet:EkmCreateConnectionAsync
 // Read the EKM proxy's CA certificate bytes.
 byte[] serverCaCertificate = File.ReadAllBytes("ekm-proxy-ca.cer");
 
-// Build the EKM connection. Host is the FQDN of the EKM proxy.
+// Build the EKM connection with the EKM proxy's fullyQualifiedHostName
 KeyVaultEkmConnection connection = new KeyVaultEkmConnection("ekm.contoso.com", new[] { serverCaCertificate })
 {
     PathPrefix = "v1",

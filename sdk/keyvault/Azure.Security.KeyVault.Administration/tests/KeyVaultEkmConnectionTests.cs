@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(
                 () => new KeyVaultEkmConnection(null, new[] { s_cert1 }));
-            Assert.That(ex.ParamName, Is.EqualTo("host"));
+            Assert.That(ex.ParamName, Is.EqualTo("fullyQualifiedHostName"));
         }
 
         [Test]
@@ -24,7 +24,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         {
             ArgumentException ex = Assert.Throws<ArgumentException>(
                 () => new KeyVaultEkmConnection(string.Empty, new[] { s_cert1 }));
-            Assert.That(ex.ParamName, Is.EqualTo("host"));
+            Assert.That(ex.ParamName, Is.EqualTo("fullyQualifiedHostName"));
         }
 
         [Test]

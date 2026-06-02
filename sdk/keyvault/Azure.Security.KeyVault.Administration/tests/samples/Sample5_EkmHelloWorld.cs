@@ -46,7 +46,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             // Read the EKM proxy's CA certificate bytes.
             byte[] serverCaCertificate = File.ReadAllBytes("ekm-proxy-ca.cer");
 
-            // Build the EKM connection. Host is the FQDN of the EKM proxy.
+            // Build the EKM connection with the EKM proxy's fullyQualifiedHostName
             KeyVaultEkmConnection connection = new KeyVaultEkmConnection("ekm.contoso.com", new[] { serverCaCertificate })
             {
                 PathPrefix = "v1",
