@@ -14,7 +14,7 @@ using Azure.ResourceManager.ComputeBulkActions.Models;
 
 namespace Azure.ResourceManager.ComputeBulkActions
 {
-    internal partial class BulkActionsGetVirtualMachinesCollectionResultOfT : Pageable<VirtualMachine>
+    internal partial class BulkActionsGetVirtualMachinesCollectionResultOfT : Pageable<BulkActionVirtualMachineResult>
     {
         private readonly BulkActions _client;
         private readonly Guid _subscriptionId;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of BulkActionsGetVirtualMachinesCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<VirtualMachine>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<BulkActionVirtualMachineResult>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
                     yield break;
                 }
                 VirtualMachineListResult result = VirtualMachineListResult.FromResponse(response);
-                yield return Page<VirtualMachine>.FromValues((IReadOnlyList<VirtualMachine>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<BulkActionVirtualMachineResult>.FromValues((IReadOnlyList<BulkActionVirtualMachineResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

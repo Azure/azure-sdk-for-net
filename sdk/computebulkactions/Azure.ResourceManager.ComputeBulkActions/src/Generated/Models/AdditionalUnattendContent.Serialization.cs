@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             }
             AdditionalUnattendContentPassName? passName = default;
             AdditionalUnattendContentComponentName? componentName = default;
-            SettingName? settingName = default;
+            AdditionalUnattendContentSettingName? settingName = default;
             string content = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    settingName = new SettingName(prop.Value.GetString());
+                    settingName = new AdditionalUnattendContentSettingName(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("content"u8))

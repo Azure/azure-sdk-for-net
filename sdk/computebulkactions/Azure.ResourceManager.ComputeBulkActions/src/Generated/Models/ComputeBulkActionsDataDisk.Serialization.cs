@@ -14,56 +14,56 @@ using Azure.ResourceManager.ComputeBulkActions;
 namespace Azure.ResourceManager.ComputeBulkActions.Models
 {
     /// <summary> Describes a data disk. </summary>
-    public partial class DataDisk : IJsonModel<DataDisk>
+    public partial class ComputeBulkActionsDataDisk : IJsonModel<ComputeBulkActionsDataDisk>
     {
-        /// <summary> Initializes a new instance of <see cref="DataDisk"/> for deserialization. </summary>
-        internal DataDisk()
+        /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsDataDisk"/> for deserialization. </summary>
+        internal ComputeBulkActionsDataDisk()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DataDisk PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ComputeBulkActionsDataDisk PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataDisk>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeBulkActionsDataDisk>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDataDisk(document.RootElement, options);
+                        return DeserializeComputeBulkActionsDataDisk(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataDisk)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeBulkActionsDataDisk)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataDisk>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeBulkActionsDataDisk>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeBulkActionsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DataDisk)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeBulkActionsDataDisk)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataDisk>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ComputeBulkActionsDataDisk>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataDisk IPersistableModel<DataDisk>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ComputeBulkActionsDataDisk IPersistableModel<ComputeBulkActionsDataDisk>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataDisk>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeBulkActionsDataDisk>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DataDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeBulkActionsDataDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataDisk>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeBulkActionsDataDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataDisk)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeBulkActionsDataDisk)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("lun"u8);
             writer.WriteNumberValue(Lun);
@@ -157,24 +157,24 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataDisk IJsonModel<DataDisk>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ComputeBulkActionsDataDisk IJsonModel<ComputeBulkActionsDataDisk>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DataDisk JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ComputeBulkActionsDataDisk JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataDisk>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeBulkActionsDataDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataDisk)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeBulkActionsDataDisk)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDataDisk(document.RootElement, options);
+            return DeserializeComputeBulkActionsDataDisk(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DataDisk DeserializeDataDisk(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeBulkActionsDataDisk DeserializeComputeBulkActionsDataDisk(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataDisk(
+            return new ComputeBulkActionsDataDisk(
                 lun,
                 name,
                 vhd,

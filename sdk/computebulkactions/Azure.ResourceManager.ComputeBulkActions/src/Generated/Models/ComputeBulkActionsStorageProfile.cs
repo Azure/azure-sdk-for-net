@@ -12,24 +12,24 @@ using Azure.ResourceManager.ComputeBulkActions;
 namespace Azure.ResourceManager.ComputeBulkActions.Models
 {
     /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
-    public partial class StorageProfile
+    public partial class ComputeBulkActionsStorageProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StorageProfile"/>. </summary>
-        public StorageProfile()
+        /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsStorageProfile"/>. </summary>
+        public ComputeBulkActionsStorageProfile()
         {
-            DataDisks = new ChangeTrackingList<DataDisk>();
+            DataDisks = new ChangeTrackingList<ComputeBulkActionsDataDisk>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsStorageProfile"/>. </summary>
         /// <param name="imageReference"> Specifies information about the image to use. You can specify information about platform images, marketplace images, or virtual machine images. This element is required when you want to use a platform image, marketplace image, or virtual machine image, but is not used in other creation operations. </param>
         /// <param name="osDisk"> Specifies information about the operating system disk used by the virtual machine. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </param>
         /// <param name="dataDisks"> Specifies the parameters that are used to add a data disk to a virtual machine. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </param>
         /// <param name="diskControllerType"> Specifies the disk controller type configured for the VM. <b>Note:</b> This property will be set to the default disk controller type if not specified provided virtual machine is being created with 'hyperVGeneration' set to V2 based on the capabilities of the operating system disk and VM size from the the specified minimum api version. You need to deallocate the VM before updating its disk controller type unless you are updating the VM size in the VM configuration which implicitly deallocates and reallocates the VM. Minimum api-version: 2022-08-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageProfile(ImageReference imageReference, OSDisk osDisk, IList<DataDisk> dataDisks, DiskControllerType? diskControllerType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkActionsStorageProfile(ComputeBulkActionsImageReference imageReference, ComputeBulkActionsOSDisk osDisk, IList<ComputeBulkActionsDataDisk> dataDisks, DiskControllerType? diskControllerType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImageReference = imageReference;
             OsDisk = osDisk;
@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         }
 
         /// <summary> Specifies information about the image to use. You can specify information about platform images, marketplace images, or virtual machine images. This element is required when you want to use a platform image, marketplace image, or virtual machine image, but is not used in other creation operations. </summary>
-        public ImageReference ImageReference { get; set; }
+        public ComputeBulkActionsImageReference ImageReference { get; set; }
 
         /// <summary> Specifies information about the operating system disk used by the virtual machine. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </summary>
-        public OSDisk OsDisk { get; set; }
+        public ComputeBulkActionsOSDisk OsDisk { get; set; }
 
         /// <summary> Specifies the parameters that are used to add a data disk to a virtual machine. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </summary>
-        public IList<DataDisk> DataDisks { get; }
+        public IList<ComputeBulkActionsDataDisk> DataDisks { get; }
 
         /// <summary> Specifies the disk controller type configured for the VM. <b>Note:</b> This property will be set to the default disk controller type if not specified provided virtual machine is being created with 'hyperVGeneration' set to V2 based on the capabilities of the operating system disk and VM size from the the specified minimum api version. You need to deallocate the VM before updating its disk controller type unless you are updating the VM size in the VM configuration which implicitly deallocates and reallocates the VM. Minimum api-version: 2022-08-01. </summary>
         public DiskControllerType? DiskControllerType { get; set; }

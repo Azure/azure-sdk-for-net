@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="zoneAllocationPolicy"> Zone Allocation Policy for launching instances. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <returns> A new <see cref="Models.LaunchBulkInstancesOperationProperties"/> instance for mocking. </returns>
-        public static LaunchBulkInstancesOperationProperties LaunchBulkInstancesOperationProperties(ProvisioningState? provisioningState = default, int capacity = default, CapacityType? capacityType = default, PriorityProfile priorityProfile = default, IEnumerable<VmSizeProfile> vmSizesProfile = default, VMAttributes vmAttributes = default, ComputeProfile computeProfile = default, ZoneAllocationPolicy zoneAllocationPolicy = default, BulkActionRetryPolicy retryPolicy = default)
+        public static LaunchBulkInstancesOperationProperties LaunchBulkInstancesOperationProperties(BulkActionProvisioningState? provisioningState = default, int capacity = default, CapacityType? capacityType = default, PriorityProfile priorityProfile = default, IEnumerable<VmSizeProfile> vmSizesProfile = default, VMAttributes vmAttributes = default, ComputeProfile computeProfile = default, ZoneAllocationPolicy zoneAllocationPolicy = default, BulkActionRetryPolicy retryPolicy = default)
         {
             vmSizesProfile ??= new ChangeTrackingList<VmSizeProfile>();
 
@@ -188,12 +188,12 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="osDisk"> Specifies information about the operating system disk used by the virtual machine. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </param>
         /// <param name="dataDisks"> Specifies the parameters that are used to add a data disk to a virtual machine. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </param>
         /// <param name="diskControllerType"> Specifies the disk controller type configured for the VM. <b>Note:</b> This property will be set to the default disk controller type if not specified provided virtual machine is being created with 'hyperVGeneration' set to V2 based on the capabilities of the operating system disk and VM size from the the specified minimum api version. You need to deallocate the VM before updating its disk controller type unless you are updating the VM size in the VM configuration which implicitly deallocates and reallocates the VM. Minimum api-version: 2022-08-01. </param>
-        /// <returns> A new <see cref="Models.StorageProfile"/> instance for mocking. </returns>
-        public static StorageProfile StorageProfile(ImageReference imageReference = default, OSDisk osDisk = default, IEnumerable<DataDisk> dataDisks = default, DiskControllerType? diskControllerType = default)
+        /// <returns> A new <see cref="Models.ComputeBulkActionsStorageProfile"/> instance for mocking. </returns>
+        public static ComputeBulkActionsStorageProfile ComputeBulkActionsStorageProfile(ComputeBulkActionsImageReference imageReference = default, ComputeBulkActionsOSDisk osDisk = default, IEnumerable<ComputeBulkActionsDataDisk> dataDisks = default, DiskControllerType? diskControllerType = default)
         {
-            dataDisks ??= new ChangeTrackingList<DataDisk>();
+            dataDisks ??= new ChangeTrackingList<ComputeBulkActionsDataDisk>();
 
-            return new StorageProfile(imageReference, osDisk, dataDisks.ToList(), diskControllerType, additionalBinaryDataProperties: null);
+            return new ComputeBulkActionsStorageProfile(imageReference, osDisk, dataDisks.ToList(), diskControllerType, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Specifies the operating system settings for the virtual machine. Some of the settings cannot be changed once VM is provisioned. </summary>
@@ -206,12 +206,12 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="secrets"> Specifies set of certificates that should be installed onto the virtual machine. To install certificates on a virtual machine it is recommended to use the [Azure Key Vault virtual machine extension for Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux) or the [Azure Key Vault virtual machine extension for Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows). </param>
         /// <param name="isExtensionOperationsAllowed"> Specifies whether extension operations should be allowed on the virtual machine. This may only be set to False when no extensions are present on the virtual machine. </param>
         /// <param name="isGuestProvisionSignalRequired"> Optional property which must either be set to True or omitted. </param>
-        /// <returns> A new <see cref="Models.OSProfile"/> instance for mocking. </returns>
-        public static OSProfile OSProfile(string computerName = default, string adminUsername = default, string adminPassword = default, string customData = default, WindowsConfiguration windowsConfiguration = default, LinuxConfiguration linuxConfiguration = default, IEnumerable<VaultSecretGroup> secrets = default, bool? isExtensionOperationsAllowed = default, bool? isGuestProvisionSignalRequired = default)
+        /// <returns> A new <see cref="Models.ComputeBulkActionsOSProfile"/> instance for mocking. </returns>
+        public static ComputeBulkActionsOSProfile ComputeBulkActionsOSProfile(string computerName = default, string adminUsername = default, string adminPassword = default, string customData = default, WindowsConfiguration windowsConfiguration = default, LinuxConfiguration linuxConfiguration = default, IEnumerable<VaultSecretGroup> secrets = default, bool? isExtensionOperationsAllowed = default, bool? isGuestProvisionSignalRequired = default)
         {
             secrets ??= new ChangeTrackingList<VaultSecretGroup>();
 
-            return new OSProfile(
+            return new ComputeBulkActionsOSProfile(
                 computerName,
                 adminUsername,
                 adminPassword,
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="patchSettings"> [Preview Feature] Specifies settings related to VM Guest Patching on Windows. </param>
         /// <param name="winRMListeners"> The list of Windows Remote Management listeners. </param>
         /// <returns> A new <see cref="Models.WindowsConfiguration"/> instance for mocking. </returns>
-        public static WindowsConfiguration WindowsConfiguration(bool? isVMAgentProvisioned = default, bool? enableAutomaticUpdates = default, string timeZone = default, IEnumerable<AdditionalUnattendContent> additionalUnattendContent = default, PatchSettings patchSettings = default, IEnumerable<WinRMListener> winRMListeners = default)
+        public static WindowsConfiguration WindowsConfiguration(bool? isVMAgentProvisioned = default, bool? enableAutomaticUpdates = default, string timeZone = default, IEnumerable<AdditionalUnattendContent> additionalUnattendContent = default, ComputeBulkActionsPatchSettings patchSettings = default, IEnumerable<WinRMListener> winRMListeners = default)
         {
             additionalUnattendContent ??= new ChangeTrackingList<AdditionalUnattendContent>();
 
@@ -259,13 +259,13 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="networkInterfaces"> Specifies the list of resource Ids for the network interfaces associated with the virtual machine. </param>
         /// <param name="networkApiVersion"> specifies the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations. </param>
         /// <param name="networkInterfaceConfigurations"> Specifies the networking configurations that will be used to create the virtual machine networking resources. </param>
-        /// <returns> A new <see cref="Models.NetworkProfile"/> instance for mocking. </returns>
-        public static NetworkProfile NetworkProfile(IEnumerable<NetworkInterfaceReference> networkInterfaces = default, NetworkApiVersion? networkApiVersion = default, IEnumerable<VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations = default)
+        /// <returns> A new <see cref="Models.ComputeBulkActionsNetworkProfile"/> instance for mocking. </returns>
+        public static ComputeBulkActionsNetworkProfile ComputeBulkActionsNetworkProfile(IEnumerable<NetworkInterfaceReference> networkInterfaces = default, NetworkApiVersion? networkApiVersion = default, IEnumerable<VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations = default)
         {
             networkInterfaces ??= new ChangeTrackingList<NetworkInterfaceReference>();
             networkInterfaceConfigurations ??= new ChangeTrackingList<VirtualMachineNetworkInterfaceConfiguration>();
 
-            return new NetworkProfile(networkInterfaces.ToList(), networkApiVersion, networkInterfaceConfigurations.ToList(), additionalBinaryDataProperties: null);
+            return new ComputeBulkActionsNetworkProfile(networkInterfaces.ToList(), networkApiVersion, networkInterfaceConfigurations.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Describes a virtual machine network interface configurations. </summary>
@@ -425,10 +425,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="type"> Type of the virtual machine. </param>
         /// <param name="operationStatus"> This represents the operationStatus of the virtual machine in response to the last operation that was performed on it by Azure Fleet resource. </param>
         /// <param name="error"> Error information when `operationStatus` is `Failed`. </param>
-        /// <returns> A new <see cref="Models.VirtualMachine"/> instance for mocking. </returns>
-        public static VirtualMachine VirtualMachine(string name = default, ResourceIdentifier id = default, string @type = default, VMOperationStatus operationStatus = default, ComputeBulkActionsApiError error = default)
+        /// <returns> A new <see cref="Models.BulkActionVirtualMachineResult"/> instance for mocking. </returns>
+        public static BulkActionVirtualMachineResult BulkActionVirtualMachineResult(string name = default, ResourceIdentifier id = default, string @type = default, VMOperationStatus operationStatus = default, ComputeBulkActionsApiError error = default)
         {
-            return new VirtualMachine(
+            return new BulkActionVirtualMachineResult(
                 name,
                 id,
                 @type,
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <returns> A new <see cref="Models.ResourceOperationDetails"/> instance for mocking. </returns>
-        public static ResourceOperationDetails ResourceOperationDetails(string operationId = default, ResourceIdentifier resourceId = default, ResourceOperationType? opType = default, string subscriptionId = default, DateTimeOffset? deadlineOn = default, DeadlineType? deadlineType = default, OperationState? state = default, string timezone = default, ResourceOperationError resourceOperationError = default, DateTimeOffset? completedOn = default, BulkActionRetryPolicy retryPolicy = default)
+        public static ResourceOperationDetails ResourceOperationDetails(string operationId = default, ResourceIdentifier resourceId = default, ResourceOperationType? opType = default, string subscriptionId = default, DateTimeOffset? deadlineOn = default, DeadlineType? deadlineType = default, BulkActionOperationState? state = default, string timezone = default, ResourceOperationError resourceOperationError = default, DateTimeOffset? completedOn = default, BulkActionRetryPolicy retryPolicy = default)
         {
             return new ResourceOperationDetails(
                 operationId,

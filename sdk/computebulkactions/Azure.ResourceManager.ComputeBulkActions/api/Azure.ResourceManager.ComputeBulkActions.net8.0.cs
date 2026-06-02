@@ -146,28 +146,13 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public static bool operator !=(Azure.ResourceManager.ComputeBulkActions.Models.AcceleratorType left, Azure.ResourceManager.ComputeBulkActions.Models.AcceleratorType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AdditionalCapabilities : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.AdditionalCapabilities>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.AdditionalCapabilities>
-    {
-        public AdditionalCapabilities() { }
-        public bool? IsHibernationEnabled { get { throw null; } set { } }
-        public bool? IsUltraSsdEnabled { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.AdditionalCapabilities JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.AdditionalCapabilities PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ComputeBulkActions.Models.AdditionalCapabilities System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.AdditionalCapabilities>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.AdditionalCapabilities>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeBulkActions.Models.AdditionalCapabilities System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.AdditionalCapabilities>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.AdditionalCapabilities>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.AdditionalCapabilities>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class AdditionalUnattendContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.AdditionalUnattendContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.AdditionalUnattendContent>
     {
         public AdditionalUnattendContent() { }
         public Azure.ResourceManager.ComputeBulkActions.Models.AdditionalUnattendContentComponentName? ComponentName { get { throw null; } set { } }
         public string Content { get { throw null; } set { } }
         public Azure.ResourceManager.ComputeBulkActions.Models.AdditionalUnattendContentPassName? PassName { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.SettingName? SettingName { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.AdditionalUnattendContentSettingName? SettingName { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ComputeBulkActions.Models.AdditionalUnattendContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ComputeBulkActions.Models.AdditionalUnattendContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -211,6 +196,23 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AdditionalUnattendContentSettingName : System.IEquatable<Azure.ResourceManager.ComputeBulkActions.Models.AdditionalUnattendContentSettingName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AdditionalUnattendContentSettingName(string value) { throw null; }
+        public static Azure.ResourceManager.ComputeBulkActions.Models.AdditionalUnattendContentSettingName AutoLogon { get { throw null; } }
+        public static Azure.ResourceManager.ComputeBulkActions.Models.AdditionalUnattendContentSettingName FirstLogonCommands { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ComputeBulkActions.Models.AdditionalUnattendContentSettingName other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ComputeBulkActions.Models.AdditionalUnattendContentSettingName left, Azure.ResourceManager.ComputeBulkActions.Models.AdditionalUnattendContentSettingName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ComputeBulkActions.Models.AdditionalUnattendContentSettingName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ComputeBulkActions.Models.AdditionalUnattendContentSettingName? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ComputeBulkActions.Models.AdditionalUnattendContentSettingName left, Azure.ResourceManager.ComputeBulkActions.Models.AdditionalUnattendContentSettingName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AllocationStrategy : System.IEquatable<Azure.ResourceManager.ComputeBulkActions.Models.AllocationStrategy>
     {
         private readonly object _dummy;
@@ -248,11 +250,15 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
     public static partial class ArmComputeBulkActionsModelFactory
     {
         public static Azure.ResourceManager.ComputeBulkActions.Models.BulkActionResourceOperationInfo BulkActionResourceOperationInfo(Azure.Core.ResourceIdentifier resourceId = null, string errorCode = null, string errorDetails = null, Azure.ResourceManager.ComputeBulkActions.Models.ResourceOperationDetails operation = null) { throw null; }
+        public static Azure.ResourceManager.ComputeBulkActions.Models.BulkActionVirtualMachineResult BulkActionVirtualMachineResult(string name = null, Azure.Core.ResourceIdentifier id = null, string type = null, Azure.ResourceManager.ComputeBulkActions.Models.VMOperationStatus operationStatus = default(Azure.ResourceManager.ComputeBulkActions.Models.VMOperationStatus), Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsApiError error = null) { throw null; }
         public static Azure.ResourceManager.ComputeBulkActions.Models.CancelOperationsContent CancelOperationsContent(System.Collections.Generic.IEnumerable<string> operationIds = null, string correlationId = null) { throw null; }
         public static Azure.ResourceManager.ComputeBulkActions.Models.CancelOperationsResult CancelOperationsResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.BulkActionResourceOperationInfo> results = null) { throw null; }
         public static Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsApiError ComputeBulkActionsApiError(string code = null, string target = null, string message = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsApiErrorBase> details = null, Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsInnerError innererror = null) { throw null; }
         public static Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsApiErrorBase ComputeBulkActionsApiErrorBase(string code = null, string target = null, string message = null) { throw null; }
         public static Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsInnerError ComputeBulkActionsInnerError(string exceptionType = null, string errorDetail = null) { throw null; }
+        public static Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsNetworkProfile ComputeBulkActionsNetworkProfile(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.NetworkInterfaceReference> networkInterfaces = null, Azure.ResourceManager.ComputeBulkActions.Models.NetworkApiVersion? networkApiVersion = default(Azure.ResourceManager.ComputeBulkActions.Models.NetworkApiVersion?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations = null) { throw null; }
+        public static Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsOSProfile ComputeBulkActionsOSProfile(string computerName = null, string adminUsername = null, string adminPassword = null, string customData = null, Azure.ResourceManager.ComputeBulkActions.Models.WindowsConfiguration windowsConfiguration = null, Azure.ResourceManager.ComputeBulkActions.Models.LinuxConfiguration linuxConfiguration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.VaultSecretGroup> secrets = null, bool? isExtensionOperationsAllowed = default(bool?), bool? isGuestProvisionSignalRequired = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsStorageProfile ComputeBulkActionsStorageProfile(Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsImageReference imageReference = null, Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsOSDisk osDisk = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsDataDisk> dataDisks = null, Azure.ResourceManager.ComputeBulkActions.Models.DiskControllerType? diskControllerType = default(Azure.ResourceManager.ComputeBulkActions.Models.DiskControllerType?)) { throw null; }
         public static Azure.ResourceManager.ComputeBulkActions.Models.ComputeProfile ComputeProfile(Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachineProfile virtualMachineProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachineExtension> extensions = null, string computeApiVersion = null) { throw null; }
         public static Azure.ResourceManager.ComputeBulkActions.Models.CreateResourceOperationResult CreateResourceOperationResult(string description = null, string type = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.BulkActionResourceOperationInfo> results = null) { throw null; }
         public static Azure.ResourceManager.ComputeBulkActions.Models.DeallocateResourceOperationResult DeallocateResourceOperationResult(string description = null, string type = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.BulkActionResourceOperationInfo> results = null) { throw null; }
@@ -265,17 +271,13 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public static Azure.ResourceManager.ComputeBulkActions.Models.GetOperationStatusContent GetOperationStatusContent(System.Collections.Generic.IEnumerable<string> operationIds = null, string correlationId = null) { throw null; }
         public static Azure.ResourceManager.ComputeBulkActions.Models.GetOperationStatusResult GetOperationStatusResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.BulkActionResourceOperationInfo> results = null) { throw null; }
         public static Azure.ResourceManager.ComputeBulkActions.Models.HibernateResourceOperationResult HibernateResourceOperationResult(string description = null, string type = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.BulkActionResourceOperationInfo> results = null) { throw null; }
-        public static Azure.ResourceManager.ComputeBulkActions.Models.LaunchBulkInstancesOperationProperties LaunchBulkInstancesOperationProperties(Azure.ResourceManager.ComputeBulkActions.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ComputeBulkActions.Models.ProvisioningState?), int capacity = 0, Azure.ResourceManager.ComputeBulkActions.Models.CapacityType? capacityType = default(Azure.ResourceManager.ComputeBulkActions.Models.CapacityType?), Azure.ResourceManager.ComputeBulkActions.Models.PriorityProfile priorityProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.VmSizeProfile> vmSizesProfile = null, Azure.ResourceManager.ComputeBulkActions.Models.VMAttributes vmAttributes = null, Azure.ResourceManager.ComputeBulkActions.Models.ComputeProfile computeProfile = null, Azure.ResourceManager.ComputeBulkActions.Models.ZoneAllocationPolicy zoneAllocationPolicy = null, Azure.ResourceManager.ComputeBulkActions.Models.BulkActionRetryPolicy retryPolicy = null) { throw null; }
+        public static Azure.ResourceManager.ComputeBulkActions.Models.LaunchBulkInstancesOperationProperties LaunchBulkInstancesOperationProperties(Azure.ResourceManager.ComputeBulkActions.Models.BulkActionProvisioningState? provisioningState = default(Azure.ResourceManager.ComputeBulkActions.Models.BulkActionProvisioningState?), int capacity = 0, Azure.ResourceManager.ComputeBulkActions.Models.CapacityType? capacityType = default(Azure.ResourceManager.ComputeBulkActions.Models.CapacityType?), Azure.ResourceManager.ComputeBulkActions.Models.PriorityProfile priorityProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.VmSizeProfile> vmSizesProfile = null, Azure.ResourceManager.ComputeBulkActions.Models.VMAttributes vmAttributes = null, Azure.ResourceManager.ComputeBulkActions.Models.ComputeProfile computeProfile = null, Azure.ResourceManager.ComputeBulkActions.Models.ZoneAllocationPolicy zoneAllocationPolicy = null, Azure.ResourceManager.ComputeBulkActions.Models.BulkActionRetryPolicy retryPolicy = null) { throw null; }
         public static Azure.ResourceManager.ComputeBulkActions.LocationBasedLaunchBulkInstancesOperationData LocationBasedLaunchBulkInstancesOperationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ComputeBulkActions.Models.LaunchBulkInstancesOperationProperties properties = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<string> zones = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Models.ArmPlan plan = null) { throw null; }
-        public static Azure.ResourceManager.ComputeBulkActions.Models.NetworkProfile NetworkProfile(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.NetworkInterfaceReference> networkInterfaces = null, Azure.ResourceManager.ComputeBulkActions.Models.NetworkApiVersion? networkApiVersion = default(Azure.ResourceManager.ComputeBulkActions.Models.NetworkApiVersion?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations = null) { throw null; }
-        public static Azure.ResourceManager.ComputeBulkActions.Models.OSProfile OSProfile(string computerName = null, string adminUsername = null, string adminPassword = null, string customData = null, Azure.ResourceManager.ComputeBulkActions.Models.WindowsConfiguration windowsConfiguration = null, Azure.ResourceManager.ComputeBulkActions.Models.LinuxConfiguration linuxConfiguration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.VaultSecretGroup> secrets = null, bool? isExtensionOperationsAllowed = default(bool?), bool? isGuestProvisionSignalRequired = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.ComputeBulkActions.Models.ResourceOperationDetails ResourceOperationDetails(string operationId = null, Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.ComputeBulkActions.Models.ResourceOperationType? opType = default(Azure.ResourceManager.ComputeBulkActions.Models.ResourceOperationType?), string subscriptionId = null, System.DateTimeOffset? deadlineOn = default(System.DateTimeOffset?), Azure.ResourceManager.ComputeBulkActions.Models.DeadlineType? deadlineType = default(Azure.ResourceManager.ComputeBulkActions.Models.DeadlineType?), Azure.ResourceManager.ComputeBulkActions.Models.OperationState? state = default(Azure.ResourceManager.ComputeBulkActions.Models.OperationState?), string timezone = null, Azure.ResourceManager.ComputeBulkActions.Models.ResourceOperationError resourceOperationError = null, System.DateTimeOffset? completedOn = default(System.DateTimeOffset?), Azure.ResourceManager.ComputeBulkActions.Models.BulkActionRetryPolicy retryPolicy = null) { throw null; }
+        public static Azure.ResourceManager.ComputeBulkActions.Models.ResourceOperationDetails ResourceOperationDetails(string operationId = null, Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.ComputeBulkActions.Models.ResourceOperationType? opType = default(Azure.ResourceManager.ComputeBulkActions.Models.ResourceOperationType?), string subscriptionId = null, System.DateTimeOffset? deadlineOn = default(System.DateTimeOffset?), Azure.ResourceManager.ComputeBulkActions.Models.DeadlineType? deadlineType = default(Azure.ResourceManager.ComputeBulkActions.Models.DeadlineType?), Azure.ResourceManager.ComputeBulkActions.Models.BulkActionOperationState? state = default(Azure.ResourceManager.ComputeBulkActions.Models.BulkActionOperationState?), string timezone = null, Azure.ResourceManager.ComputeBulkActions.Models.ResourceOperationError resourceOperationError = null, System.DateTimeOffset? completedOn = default(System.DateTimeOffset?), Azure.ResourceManager.ComputeBulkActions.Models.BulkActionRetryPolicy retryPolicy = null) { throw null; }
         public static Azure.ResourceManager.ComputeBulkActions.Models.ResourceOperationError ResourceOperationError(string errorCode = null, string errorDetails = null) { throw null; }
         public static Azure.ResourceManager.ComputeBulkActions.Models.ResourceProvisionPayload ResourceProvisionPayload(System.Collections.Generic.IDictionary<string, System.BinaryData> baseProfile = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IDictionary<string, System.BinaryData>> resourceOverrides = null, int resourceCount = 0, string resourcePrefix = null) { throw null; }
         public static Azure.ResourceManager.ComputeBulkActions.Models.StartResourceOperationResult StartResourceOperationResult(string description = null, string type = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.BulkActionResourceOperationInfo> results = null) { throw null; }
-        public static Azure.ResourceManager.ComputeBulkActions.Models.StorageProfile StorageProfile(Azure.ResourceManager.ComputeBulkActions.Models.ImageReference imageReference = null, Azure.ResourceManager.ComputeBulkActions.Models.OSDisk osDisk = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.DataDisk> dataDisks = null, Azure.ResourceManager.ComputeBulkActions.Models.DiskControllerType? diskControllerType = default(Azure.ResourceManager.ComputeBulkActions.Models.DiskControllerType?)) { throw null; }
         public static Azure.ResourceManager.ComputeBulkActions.Models.VaultSecretGroup VaultSecretGroup(Azure.Core.ResourceIdentifier sourceVaultId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.VaultCertificate> vaultCertificates = null) { throw null; }
-        public static Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachine VirtualMachine(string name = null, Azure.Core.ResourceIdentifier id = null, string type = null, Azure.ResourceManager.ComputeBulkActions.Models.VMOperationStatus operationStatus = default(Azure.ResourceManager.ComputeBulkActions.Models.VMOperationStatus), Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsApiError error = null) { throw null; }
         public static Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachineExtensionProperties VirtualMachineExtensionProperties(string forceUpdateTag = null, string publisher = null, string type = null, string typeHandlerVersion = null, bool? isAutoUpgradeMinorVersionEnabled = default(bool?), bool? isAutomaticUpgradeEnabled = default(bool?), System.Collections.Generic.IDictionary<string, System.BinaryData> settings = null, System.Collections.Generic.IDictionary<string, System.BinaryData> protectedSettings = null, bool? isSuppressFailures = default(bool?), Azure.ResourceManager.ComputeBulkActions.Models.KeyVaultSecretReference protectedSettingsFromKeyVault = null, System.Collections.Generic.IEnumerable<string> provisionAfterExtensions = null) { throw null; }
         public static Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachineNetworkInterfaceConfiguration VirtualMachineNetworkInterfaceConfiguration(string name = null, Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachineNetworkInterfaceConfigurationProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachineNetworkInterfaceConfigurationProperties VirtualMachineNetworkInterfaceConfigurationProperties(bool? isPrimary = default(bool?), Azure.ResourceManager.ComputeBulkActions.Models.DeleteOption? deleteOption = default(Azure.ResourceManager.ComputeBulkActions.Models.DeleteOption?), bool? isAcceleratedNetworkingEnabled = default(bool?), bool? isTcpStateTrackingDisabled = default(bool?), bool? isFpgaEnabled = default(bool?), bool? isIPForwardingEnabled = default(bool?), Azure.Core.ResourceIdentifier networkSecurityGroupId = null, System.Collections.Generic.IEnumerable<string> dnsServers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations = null, Azure.Core.ResourceIdentifier dscpConfigurationId = null, Azure.ResourceManager.ComputeBulkActions.Models.NetworkInterfaceAuxiliaryMode? auxiliaryMode = default(Azure.ResourceManager.ComputeBulkActions.Models.NetworkInterfaceAuxiliaryMode?), Azure.ResourceManager.ComputeBulkActions.Models.NetworkInterfaceAuxiliarySku? auxiliarySku = default(Azure.ResourceManager.ComputeBulkActions.Models.NetworkInterfaceAuxiliarySku?)) { throw null; }
@@ -283,23 +285,8 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public static Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachinePublicIPAddressConfiguration VirtualMachinePublicIPAddressConfiguration(string name = null, Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachinePublicIPAddressConfigurationProperties properties = null, Azure.ResourceManager.ComputeBulkActions.Models.PublicIPAddressSku sku = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachinePublicIPAddressConfigurationProperties VirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes = default(int?), Azure.ResourceManager.ComputeBulkActions.Models.DeleteOption? deleteOption = default(Azure.ResourceManager.ComputeBulkActions.Models.DeleteOption?), Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachineIpTag> ipTags = null, Azure.Core.ResourceIdentifier publicIPPrefixId = null, Azure.ResourceManager.ComputeBulkActions.Models.IPVersion? publicIPAddressVersion = default(Azure.ResourceManager.ComputeBulkActions.Models.IPVersion?), Azure.ResourceManager.ComputeBulkActions.Models.PublicIPAllocationMethod? publicIPAllocationMethod = default(Azure.ResourceManager.ComputeBulkActions.Models.PublicIPAllocationMethod?)) { throw null; }
         public static Azure.ResourceManager.ComputeBulkActions.Models.VMAttributes VMAttributes(Azure.ResourceManager.ComputeBulkActions.Models.VMAttributeMinMaxInteger vCpuCount = null, Azure.ResourceManager.ComputeBulkActions.Models.VMAttributeMinMaxDouble memoryInGiB = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.ArchitectureType> architectureTypes = null, Azure.ResourceManager.ComputeBulkActions.Models.VMAttributeMinMaxDouble memoryInGiBPerVCpu = null, Azure.ResourceManager.ComputeBulkActions.Models.VMAttributeSupport? localStorageSupport = default(Azure.ResourceManager.ComputeBulkActions.Models.VMAttributeSupport?), Azure.ResourceManager.ComputeBulkActions.Models.VMAttributeMinMaxDouble localStorageInGiB = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.LocalStorageDiskType> localStorageDiskTypes = null, Azure.ResourceManager.ComputeBulkActions.Models.VMAttributeMinMaxInteger dataDiskCount = null, Azure.ResourceManager.ComputeBulkActions.Models.VMAttributeMinMaxInteger networkInterfaceCount = null, Azure.ResourceManager.ComputeBulkActions.Models.VMAttributeMinMaxDouble networkBandwidthInMbps = null, Azure.ResourceManager.ComputeBulkActions.Models.VMAttributeSupport? rdmaSupport = default(Azure.ResourceManager.ComputeBulkActions.Models.VMAttributeSupport?), Azure.ResourceManager.ComputeBulkActions.Models.VMAttributeMinMaxInteger rdmaNetworkInterfaceCount = null, Azure.ResourceManager.ComputeBulkActions.Models.VMAttributeSupport? acceleratorSupport = default(Azure.ResourceManager.ComputeBulkActions.Models.VMAttributeSupport?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.AcceleratorManufacturer> acceleratorManufacturers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.AcceleratorType> acceleratorTypes = null, Azure.ResourceManager.ComputeBulkActions.Models.VMAttributeMinMaxInteger acceleratorCount = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.VMCategory> vmCategories = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.CpuManufacturer> cpuManufacturers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.HyperVGeneration> hyperVGenerations = null, Azure.ResourceManager.ComputeBulkActions.Models.VMAttributeSupport? burstableSupport = default(Azure.ResourceManager.ComputeBulkActions.Models.VMAttributeSupport?), System.Collections.Generic.IEnumerable<string> allowedVMSizes = null, System.Collections.Generic.IEnumerable<string> excludedVMSizes = null) { throw null; }
-        public static Azure.ResourceManager.ComputeBulkActions.Models.WindowsConfiguration WindowsConfiguration(bool? isVMAgentProvisioned = default(bool?), bool? enableAutomaticUpdates = default(bool?), string timeZone = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.AdditionalUnattendContent> additionalUnattendContent = null, Azure.ResourceManager.ComputeBulkActions.Models.PatchSettings patchSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.WinRMListener> winRMListeners = null) { throw null; }
+        public static Azure.ResourceManager.ComputeBulkActions.Models.WindowsConfiguration WindowsConfiguration(bool? isVMAgentProvisioned = default(bool?), bool? enableAutomaticUpdates = default(bool?), string timeZone = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.AdditionalUnattendContent> additionalUnattendContent = null, Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsPatchSettings patchSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.WinRMListener> winRMListeners = null) { throw null; }
         public static Azure.ResourceManager.ComputeBulkActions.Models.ZoneAllocationPolicy ZoneAllocationPolicy(Azure.ResourceManager.ComputeBulkActions.Models.ZoneDistributionStrategy distributionStrategy = default(Azure.ResourceManager.ComputeBulkActions.Models.ZoneDistributionStrategy), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeBulkActions.Models.ZonePreference> zonePreferences = null) { throw null; }
-    }
-    public partial class BootDiagnostics : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.BootDiagnostics>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.BootDiagnostics>
-    {
-        public BootDiagnostics() { }
-        public bool? IsEnabled { get { throw null; } set { } }
-        public string StorageUri { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.BootDiagnostics JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.BootDiagnostics PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ComputeBulkActions.Models.BootDiagnostics System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.BootDiagnostics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.BootDiagnostics>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeBulkActions.Models.BootDiagnostics System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.BootDiagnostics>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.BootDiagnostics>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.BootDiagnostics>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class BulkActionExecutionConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.BulkActionExecutionConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.BulkActionExecutionConfig>
     {
@@ -315,6 +302,50 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         Azure.ResourceManager.ComputeBulkActions.Models.BulkActionExecutionConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.BulkActionExecutionConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.BulkActionExecutionConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.BulkActionExecutionConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BulkActionOperationState : System.IEquatable<Azure.ResourceManager.ComputeBulkActions.Models.BulkActionOperationState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BulkActionOperationState(string value) { throw null; }
+        public static Azure.ResourceManager.ComputeBulkActions.Models.BulkActionOperationState Blocked { get { throw null; } }
+        public static Azure.ResourceManager.ComputeBulkActions.Models.BulkActionOperationState Cancelled { get { throw null; } }
+        public static Azure.ResourceManager.ComputeBulkActions.Models.BulkActionOperationState Executing { get { throw null; } }
+        public static Azure.ResourceManager.ComputeBulkActions.Models.BulkActionOperationState Failed { get { throw null; } }
+        public static Azure.ResourceManager.ComputeBulkActions.Models.BulkActionOperationState PendingExecution { get { throw null; } }
+        public static Azure.ResourceManager.ComputeBulkActions.Models.BulkActionOperationState PendingScheduling { get { throw null; } }
+        public static Azure.ResourceManager.ComputeBulkActions.Models.BulkActionOperationState Scheduled { get { throw null; } }
+        public static Azure.ResourceManager.ComputeBulkActions.Models.BulkActionOperationState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.ComputeBulkActions.Models.BulkActionOperationState Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ComputeBulkActions.Models.BulkActionOperationState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ComputeBulkActions.Models.BulkActionOperationState left, Azure.ResourceManager.ComputeBulkActions.Models.BulkActionOperationState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ComputeBulkActions.Models.BulkActionOperationState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ComputeBulkActions.Models.BulkActionOperationState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ComputeBulkActions.Models.BulkActionOperationState left, Azure.ResourceManager.ComputeBulkActions.Models.BulkActionOperationState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BulkActionProvisioningState : System.IEquatable<Azure.ResourceManager.ComputeBulkActions.Models.BulkActionProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BulkActionProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.ComputeBulkActions.Models.BulkActionProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.ComputeBulkActions.Models.BulkActionProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.ComputeBulkActions.Models.BulkActionProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.ComputeBulkActions.Models.BulkActionProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.ComputeBulkActions.Models.BulkActionProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ComputeBulkActions.Models.BulkActionProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ComputeBulkActions.Models.BulkActionProvisioningState left, Azure.ResourceManager.ComputeBulkActions.Models.BulkActionProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ComputeBulkActions.Models.BulkActionProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ComputeBulkActions.Models.BulkActionProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ComputeBulkActions.Models.BulkActionProvisioningState left, Azure.ResourceManager.ComputeBulkActions.Models.BulkActionProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class BulkActionResourceOperationInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.BulkActionResourceOperationInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.BulkActionResourceOperationInfo>
     {
@@ -347,6 +378,24 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         Azure.ResourceManager.ComputeBulkActions.Models.BulkActionRetryPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.BulkActionRetryPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.BulkActionRetryPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.BulkActionRetryPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class BulkActionVirtualMachineResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.BulkActionVirtualMachineResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.BulkActionVirtualMachineResult>
+    {
+        internal BulkActionVirtualMachineResult() { }
+        public Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsApiError Error { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.VMOperationStatus OperationStatus { get { throw null; } }
+        public string Type { get { throw null; } }
+        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.BulkActionVirtualMachineResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.BulkActionVirtualMachineResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeBulkActions.Models.BulkActionVirtualMachineResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.BulkActionVirtualMachineResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.BulkActionVirtualMachineResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeBulkActions.Models.BulkActionVirtualMachineResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.BulkActionVirtualMachineResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.BulkActionVirtualMachineResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.BulkActionVirtualMachineResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CachingType : System.IEquatable<Azure.ResourceManager.ComputeBulkActions.Models.CachingType>
@@ -412,6 +461,21 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public static bool operator !=(Azure.ResourceManager.ComputeBulkActions.Models.CapacityType left, Azure.ResourceManager.ComputeBulkActions.Models.CapacityType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ComputeBulkActionsAdditionalCapabilities : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsAdditionalCapabilities>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsAdditionalCapabilities>
+    {
+        public ComputeBulkActionsAdditionalCapabilities() { }
+        public bool? IsHibernationEnabled { get { throw null; } set { } }
+        public bool? IsUltraSsdEnabled { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsAdditionalCapabilities JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsAdditionalCapabilities PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsAdditionalCapabilities System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsAdditionalCapabilities>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsAdditionalCapabilities>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsAdditionalCapabilities System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsAdditionalCapabilities>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsAdditionalCapabilities>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsAdditionalCapabilities>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ComputeBulkActionsApiError : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsApiError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsApiError>
     {
         internal ComputeBulkActionsApiError() { }
@@ -446,6 +510,66 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsApiErrorBase>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsApiErrorBase>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ComputeBulkActionsBootDiagnostics : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsBootDiagnostics>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsBootDiagnostics>
+    {
+        public ComputeBulkActionsBootDiagnostics() { }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public string StorageUri { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsBootDiagnostics JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsBootDiagnostics PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsBootDiagnostics System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsBootDiagnostics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsBootDiagnostics>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsBootDiagnostics System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsBootDiagnostics>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsBootDiagnostics>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsBootDiagnostics>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ComputeBulkActionsDataDisk : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsDataDisk>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsDataDisk>
+    {
+        public ComputeBulkActionsDataDisk(int lun, Azure.ResourceManager.ComputeBulkActions.Models.DiskCreateOptionType createOption) { }
+        public Azure.ResourceManager.ComputeBulkActions.Models.CachingType? Caching { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.DiskCreateOptionType CreateOption { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.DiskDeleteOptionType? DeleteOption { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.DiskDetachOptionType? DetachOption { get { throw null; } set { } }
+        public int? DiskSizeGB { get { throw null; } set { } }
+        public string ImageUri { get { throw null; } set { } }
+        public bool? IsToBeDetached { get { throw null; } set { } }
+        public bool? IsWriteAcceleratorEnabled { get { throw null; } set { } }
+        public int Lun { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.ManagedDiskInfo ManagedDisk { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceResourceId { get { throw null; } set { } }
+        public string VhdUri { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsDataDisk JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsDataDisk PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsDataDisk System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsDataDisk>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsDataDisk>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsDataDisk System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsDataDisk>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsDataDisk>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsDataDisk>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ComputeBulkActionsImageReference : Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsSubResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsImageReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsImageReference>
+    {
+        public ComputeBulkActionsImageReference() { }
+        public string CommunityGalleryImageId { get { throw null; } set { } }
+        public string Offer { get { throw null; } set { } }
+        public string Publisher { get { throw null; } set { } }
+        public string SharedGalleryImageId { get { throw null; } set { } }
+        public string Sku { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
+        protected override Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsSubResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsSubResource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsImageReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsImageReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsImageReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsImageReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsImageReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsImageReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsImageReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ComputeBulkActionsInnerError : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsInnerError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsInnerError>
     {
         internal ComputeBulkActionsInnerError() { }
@@ -460,6 +584,121 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsInnerError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsInnerError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsInnerError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsInnerError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ComputeBulkActionsNetworkProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsNetworkProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsNetworkProfile>
+    {
+        public ComputeBulkActionsNetworkProfile() { }
+        public Azure.ResourceManager.ComputeBulkActions.Models.NetworkApiVersion? NetworkApiVersion { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachineNetworkInterfaceConfiguration> NetworkInterfaceConfigurations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeBulkActions.Models.NetworkInterfaceReference> NetworkInterfaces { get { throw null; } }
+        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsNetworkProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsNetworkProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsNetworkProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsNetworkProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsNetworkProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsNetworkProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsNetworkProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsNetworkProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsNetworkProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ComputeBulkActionsOSDisk : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsOSDisk>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsOSDisk>
+    {
+        public ComputeBulkActionsOSDisk(Azure.ResourceManager.ComputeBulkActions.Models.DiskCreateOptionType createOption) { }
+        public Azure.ResourceManager.ComputeBulkActions.Models.CachingType? Caching { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.DiskCreateOptionType CreateOption { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.DiskDeleteOptionType? DeleteOption { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.DiffDiskSettings DiffDiskSettings { get { throw null; } set { } }
+        public int? DiskSizeGB { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.DiskEncryptionSettings EncryptionSettings { get { throw null; } set { } }
+        public string ImageUri { get { throw null; } set { } }
+        public bool? IsWriteAcceleratorEnabled { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.ManagedDiskInfo ManagedDisk { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.OperatingSystemType? OsType { get { throw null; } set { } }
+        public string VhdUri { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsOSDisk JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsOSDisk PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsOSDisk System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsOSDisk>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsOSDisk>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsOSDisk System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsOSDisk>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsOSDisk>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsOSDisk>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ComputeBulkActionsOSProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsOSProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsOSProfile>
+    {
+        public ComputeBulkActionsOSProfile() { }
+        public string AdminPassword { get { throw null; } set { } }
+        public string AdminUsername { get { throw null; } set { } }
+        public string ComputerName { get { throw null; } set { } }
+        public string CustomData { get { throw null; } set { } }
+        public bool? IsExtensionOperationsAllowed { get { throw null; } set { } }
+        public bool? IsGuestProvisionSignalRequired { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.LinuxConfiguration LinuxConfiguration { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeBulkActions.Models.VaultSecretGroup> Secrets { get { throw null; } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.WindowsConfiguration WindowsConfiguration { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsOSProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsOSProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsOSProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsOSProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsOSProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsOSProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsOSProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsOSProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsOSProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ComputeBulkActionsPatchSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsPatchSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsPatchSettings>
+    {
+        public ComputeBulkActionsPatchSettings() { }
+        public Azure.ResourceManager.ComputeBulkActions.Models.WindowsPatchAssessmentMode? AssessmentMode { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.WindowsVMGuestPatchAutomaticByPlatformSettings AutomaticByPlatformSettings { get { throw null; } set { } }
+        public bool? IsHotpatchingEnabled { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.WindowsVMGuestPatchMode? PatchMode { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsPatchSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsPatchSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsPatchSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsPatchSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsPatchSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsPatchSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsPatchSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsPatchSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsPatchSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ComputeBulkActionsSecurityProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsSecurityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsSecurityProfile>
+    {
+        public ComputeBulkActionsSecurityProfile() { }
+        public bool? IsEncryptionAtHostEnabled { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.ProxyAgentSettings ProxyAgentSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.SecurityType? SecurityType { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.UefiSettings UefiSettings { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier UserAssignedIdentityResourceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsSecurityProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsSecurityProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsSecurityProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsSecurityProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsSecurityProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsSecurityProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsSecurityProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsSecurityProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsSecurityProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ComputeBulkActionsStorageProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsStorageProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsStorageProfile>
+    {
+        public ComputeBulkActionsStorageProfile() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsDataDisk> DataDisks { get { throw null; } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.DiskControllerType? DiskControllerType { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsImageReference ImageReference { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsOSDisk OsDisk { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsStorageProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsStorageProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsStorageProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsStorageProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsStorageProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsStorageProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsStorageProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsStorageProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsStorageProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ComputeBulkActionsSubResource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsSubResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsSubResource>
     {
@@ -526,32 +765,6 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         Azure.ResourceManager.ComputeBulkActions.Models.CreateResourceOperationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.CreateResourceOperationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.CreateResourceOperationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.CreateResourceOperationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class DataDisk : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.DataDisk>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.DataDisk>
-    {
-        public DataDisk(int lun, Azure.ResourceManager.ComputeBulkActions.Models.DiskCreateOptionType createOption) { }
-        public Azure.ResourceManager.ComputeBulkActions.Models.CachingType? Caching { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.DiskCreateOptionType CreateOption { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.DiskDeleteOptionType? DeleteOption { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.DiskDetachOptionType? DetachOption { get { throw null; } set { } }
-        public int? DiskSizeGB { get { throw null; } set { } }
-        public string ImageUri { get { throw null; } set { } }
-        public bool? IsToBeDetached { get { throw null; } set { } }
-        public bool? IsWriteAcceleratorEnabled { get { throw null; } set { } }
-        public int Lun { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.ManagedDiskInfo ManagedDisk { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier SourceResourceId { get { throw null; } set { } }
-        public string VhdUri { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.DataDisk JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.DataDisk PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ComputeBulkActions.Models.DataDisk System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.DataDisk>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.DataDisk>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeBulkActions.Models.DataDisk System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.DataDisk>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.DataDisk>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.DataDisk>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DeadlineType : System.IEquatable<Azure.ResourceManager.ComputeBulkActions.Models.DeadlineType>
@@ -998,25 +1211,6 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public static bool operator !=(Azure.ResourceManager.ComputeBulkActions.Models.HyperVGeneration left, Azure.ResourceManager.ComputeBulkActions.Models.HyperVGeneration right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ImageReference : Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsSubResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ImageReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ImageReference>
-    {
-        public ImageReference() { }
-        public string CommunityGalleryImageId { get { throw null; } set { } }
-        public string Offer { get { throw null; } set { } }
-        public string Publisher { get { throw null; } set { } }
-        public string SharedGalleryImageId { get { throw null; } set { } }
-        public string Sku { get { throw null; } set { } }
-        public string Version { get { throw null; } set { } }
-        protected override Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsSubResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsSubResource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ComputeBulkActions.Models.ImageReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ImageReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.ImageReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeBulkActions.Models.ImageReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ImageReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ImageReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.ImageReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IPVersion : System.IEquatable<Azure.ResourceManager.ComputeBulkActions.Models.IPVersion>
     {
@@ -1071,7 +1265,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public Azure.ResourceManager.ComputeBulkActions.Models.CapacityType? CapacityType { get { throw null; } set { } }
         public Azure.ResourceManager.ComputeBulkActions.Models.ComputeProfile ComputeProfile { get { throw null; } set { } }
         public Azure.ResourceManager.ComputeBulkActions.Models.PriorityProfile PriorityProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.BulkActionProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ComputeBulkActions.Models.BulkActionRetryPolicy RetryPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.ComputeBulkActions.Models.VMAttributes VmAttributes { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ComputeBulkActions.Models.VmSizeProfile> VmSizesProfile { get { throw null; } }
@@ -1305,22 +1499,6 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.NetworkInterfaceReferenceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.NetworkInterfaceReferenceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.NetworkProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.NetworkProfile>
-    {
-        public NetworkProfile() { }
-        public Azure.ResourceManager.ComputeBulkActions.Models.NetworkApiVersion? NetworkApiVersion { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachineNetworkInterfaceConfiguration> NetworkInterfaceConfigurations { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeBulkActions.Models.NetworkInterfaceReference> NetworkInterfaces { get { throw null; } }
-        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.NetworkProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.NetworkProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ComputeBulkActions.Models.NetworkProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.NetworkProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.NetworkProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeBulkActions.Models.NetworkProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.NetworkProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.NetworkProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.NetworkProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OperatingSystemType : System.IEquatable<Azure.ResourceManager.ComputeBulkActions.Models.OperatingSystemType>
     {
@@ -1336,30 +1514,6 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public static implicit operator Azure.ResourceManager.ComputeBulkActions.Models.OperatingSystemType (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeBulkActions.Models.OperatingSystemType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ComputeBulkActions.Models.OperatingSystemType left, Azure.ResourceManager.ComputeBulkActions.Models.OperatingSystemType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OperationState : System.IEquatable<Azure.ResourceManager.ComputeBulkActions.Models.OperationState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public OperationState(string value) { throw null; }
-        public static Azure.ResourceManager.ComputeBulkActions.Models.OperationState Blocked { get { throw null; } }
-        public static Azure.ResourceManager.ComputeBulkActions.Models.OperationState Cancelled { get { throw null; } }
-        public static Azure.ResourceManager.ComputeBulkActions.Models.OperationState Executing { get { throw null; } }
-        public static Azure.ResourceManager.ComputeBulkActions.Models.OperationState Failed { get { throw null; } }
-        public static Azure.ResourceManager.ComputeBulkActions.Models.OperationState PendingExecution { get { throw null; } }
-        public static Azure.ResourceManager.ComputeBulkActions.Models.OperationState PendingScheduling { get { throw null; } }
-        public static Azure.ResourceManager.ComputeBulkActions.Models.OperationState Scheduled { get { throw null; } }
-        public static Azure.ResourceManager.ComputeBulkActions.Models.OperationState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.ComputeBulkActions.Models.OperationState Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ComputeBulkActions.Models.OperationState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ComputeBulkActions.Models.OperationState left, Azure.ResourceManager.ComputeBulkActions.Models.OperationState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ComputeBulkActions.Models.OperationState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ComputeBulkActions.Models.OperationState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ComputeBulkActions.Models.OperationState left, Azure.ResourceManager.ComputeBulkActions.Models.OperationState right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1380,31 +1534,6 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public static bool operator !=(Azure.ResourceManager.ComputeBulkActions.Models.OptimizationPreference left, Azure.ResourceManager.ComputeBulkActions.Models.OptimizationPreference right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class OSDisk : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.OSDisk>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.OSDisk>
-    {
-        public OSDisk(Azure.ResourceManager.ComputeBulkActions.Models.DiskCreateOptionType createOption) { }
-        public Azure.ResourceManager.ComputeBulkActions.Models.CachingType? Caching { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.DiskCreateOptionType CreateOption { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.DiskDeleteOptionType? DeleteOption { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.DiffDiskSettings DiffDiskSettings { get { throw null; } set { } }
-        public int? DiskSizeGB { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.DiskEncryptionSettings EncryptionSettings { get { throw null; } set { } }
-        public string ImageUri { get { throw null; } set { } }
-        public bool? IsWriteAcceleratorEnabled { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.ManagedDiskInfo ManagedDisk { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.OperatingSystemType? OsType { get { throw null; } set { } }
-        public string VhdUri { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.OSDisk JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.OSDisk PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ComputeBulkActions.Models.OSDisk System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.OSDisk>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.OSDisk>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeBulkActions.Models.OSDisk System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.OSDisk>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.OSDisk>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.OSDisk>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class OSImageNotificationProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.OSImageNotificationProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.OSImageNotificationProfile>
     {
         public OSImageNotificationProfile() { }
@@ -1419,45 +1548,6 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         Azure.ResourceManager.ComputeBulkActions.Models.OSImageNotificationProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.OSImageNotificationProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.OSImageNotificationProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.OSImageNotificationProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class OSProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.OSProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.OSProfile>
-    {
-        public OSProfile() { }
-        public string AdminPassword { get { throw null; } set { } }
-        public string AdminUsername { get { throw null; } set { } }
-        public string ComputerName { get { throw null; } set { } }
-        public string CustomData { get { throw null; } set { } }
-        public bool? IsExtensionOperationsAllowed { get { throw null; } set { } }
-        public bool? IsGuestProvisionSignalRequired { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.LinuxConfiguration LinuxConfiguration { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeBulkActions.Models.VaultSecretGroup> Secrets { get { throw null; } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.WindowsConfiguration WindowsConfiguration { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.OSProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.OSProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ComputeBulkActions.Models.OSProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.OSProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.OSProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeBulkActions.Models.OSProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.OSProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.OSProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.OSProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class PatchSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.PatchSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.PatchSettings>
-    {
-        public PatchSettings() { }
-        public Azure.ResourceManager.ComputeBulkActions.Models.WindowsPatchAssessmentMode? AssessmentMode { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.WindowsVMGuestPatchAutomaticByPlatformSettings AutomaticByPlatformSettings { get { throw null; } set { } }
-        public bool? IsHotpatchingEnabled { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.WindowsVMGuestPatchMode? PatchMode { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.PatchSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.PatchSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ComputeBulkActions.Models.PatchSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.PatchSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.PatchSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeBulkActions.Models.PatchSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.PatchSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.PatchSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.PatchSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class PriorityProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.PriorityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.PriorityProfile>
     {
@@ -1491,26 +1581,6 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public static implicit operator Azure.ResourceManager.ComputeBulkActions.Models.ProtocolType (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeBulkActions.Models.ProtocolType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ComputeBulkActions.Models.ProtocolType left, Azure.ResourceManager.ComputeBulkActions.Models.ProtocolType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.ComputeBulkActions.Models.ProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.ComputeBulkActions.Models.ProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.ComputeBulkActions.Models.ProvisioningState Creating { get { throw null; } }
-        public static Azure.ResourceManager.ComputeBulkActions.Models.ProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.ComputeBulkActions.Models.ProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.ComputeBulkActions.Models.ProvisioningState Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ComputeBulkActions.Models.ProvisioningState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ComputeBulkActions.Models.ProvisioningState left, Azure.ResourceManager.ComputeBulkActions.Models.ProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ComputeBulkActions.Models.ProvisioningState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ComputeBulkActions.Models.ProvisioningState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ComputeBulkActions.Models.ProvisioningState left, Azure.ResourceManager.ComputeBulkActions.Models.ProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1626,7 +1696,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public Azure.ResourceManager.ComputeBulkActions.Models.ResourceOperationError ResourceOperationError { get { throw null; } }
         public Azure.ResourceManager.ComputeBulkActions.Models.BulkActionRetryPolicy RetryPolicy { get { throw null; } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.OperationState? State { get { throw null; } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.BulkActionOperationState? State { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
         public string Timezone { get { throw null; } }
         protected virtual Azure.ResourceManager.ComputeBulkActions.Models.ResourceOperationDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1742,24 +1812,6 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public static bool operator !=(Azure.ResourceManager.ComputeBulkActions.Models.SecurityEncryptionType left, Azure.ResourceManager.ComputeBulkActions.Models.SecurityEncryptionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SecurityProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.SecurityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.SecurityProfile>
-    {
-        public SecurityProfile() { }
-        public bool? IsEncryptionAtHostEnabled { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.ProxyAgentSettings ProxyAgentSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.SecurityType? SecurityType { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.UefiSettings UefiSettings { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier UserAssignedIdentityResourceId { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.SecurityProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.SecurityProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ComputeBulkActions.Models.SecurityProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.SecurityProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.SecurityProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeBulkActions.Models.SecurityProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.SecurityProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.SecurityProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.SecurityProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SecurityType : System.IEquatable<Azure.ResourceManager.ComputeBulkActions.Models.SecurityType>
     {
@@ -1775,23 +1827,6 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public static implicit operator Azure.ResourceManager.ComputeBulkActions.Models.SecurityType (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.ComputeBulkActions.Models.SecurityType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ComputeBulkActions.Models.SecurityType left, Azure.ResourceManager.ComputeBulkActions.Models.SecurityType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SettingName : System.IEquatable<Azure.ResourceManager.ComputeBulkActions.Models.SettingName>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SettingName(string value) { throw null; }
-        public static Azure.ResourceManager.ComputeBulkActions.Models.SettingName AutoLogon { get { throw null; } }
-        public static Azure.ResourceManager.ComputeBulkActions.Models.SettingName FirstLogonCommands { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ComputeBulkActions.Models.SettingName other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ComputeBulkActions.Models.SettingName left, Azure.ResourceManager.ComputeBulkActions.Models.SettingName right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ComputeBulkActions.Models.SettingName (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ComputeBulkActions.Models.SettingName? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ComputeBulkActions.Models.SettingName left, Azure.ResourceManager.ComputeBulkActions.Models.SettingName right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class SshPublicKey : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.SshPublicKey>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.SshPublicKey>
@@ -1847,23 +1882,6 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public static implicit operator Azure.ResourceManager.ComputeBulkActions.Models.StorageAccountType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ComputeBulkActions.Models.StorageAccountType left, Azure.ResourceManager.ComputeBulkActions.Models.StorageAccountType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class StorageProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.StorageProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.StorageProfile>
-    {
-        public StorageProfile() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeBulkActions.Models.DataDisk> DataDisks { get { throw null; } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.DiskControllerType? DiskControllerType { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.ImageReference ImageReference { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.OSDisk OsDisk { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.StorageProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.StorageProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ComputeBulkActions.Models.StorageProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.StorageProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.StorageProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeBulkActions.Models.StorageProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.StorageProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.StorageProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.StorageProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TerminateNotificationProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.TerminateNotificationProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.TerminateNotificationProfile>
     {
@@ -1924,24 +1942,6 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         Azure.ResourceManager.ComputeBulkActions.Models.VaultSecretGroup System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.VaultSecretGroup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.VaultSecretGroup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.VaultSecretGroup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class VirtualMachine : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachine>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachine>
-    {
-        internal VirtualMachine() { }
-        public Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsApiError Error { get { throw null; } }
-        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
-        public string Name { get { throw null; } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.VMOperationStatus OperationStatus { get { throw null; } }
-        public string Type { get { throw null; } }
-        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachine JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachine PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachine System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachine>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachine>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachine System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachine>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachine>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachine>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class VirtualMachineExtension : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachineExtension>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachineExtension>
     {
@@ -2076,18 +2076,18 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
     public partial class VirtualMachineProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachineProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachineProfile>
     {
         public VirtualMachineProfile() { }
-        public Azure.ResourceManager.ComputeBulkActions.Models.AdditionalCapabilities AdditionalCapabilities { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.BootDiagnostics BootDiagnostics { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsAdditionalCapabilities AdditionalCapabilities { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsBootDiagnostics BootDiagnostics { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier CapacityReservationGroupId { get { throw null; } set { } }
         public string ExtensionsTimeBudget { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ComputeBulkActions.Models.VMGalleryApplication> GalleryApplications { get { throw null; } }
         public string LicenseType { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.NetworkProfile NetworkProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.OSProfile OsProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsNetworkProfile NetworkProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsOSProfile OsProfile { get { throw null; } set { } }
         public Azure.ResourceManager.ComputeBulkActions.Models.ScheduledEventsPolicy ScheduledEventsPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.ComputeBulkActions.Models.ScheduledEventsProfile ScheduledEventsProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.SecurityProfile SecurityProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.StorageProfile StorageProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsSecurityProfile SecurityProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsStorageProfile StorageProfile { get { throw null; } set { } }
         public string UserData { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ComputeBulkActions.Models.VirtualMachineProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2350,7 +2350,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.ComputeBulkActions.Models.AdditionalUnattendContent> AdditionalUnattendContent { get { throw null; } }
         public bool? EnableAutomaticUpdates { get { throw null; } set { } }
         public bool? IsVMAgentProvisioned { get { throw null; } set { } }
-        public Azure.ResourceManager.ComputeBulkActions.Models.PatchSettings PatchSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeBulkActions.Models.ComputeBulkActionsPatchSettings PatchSettings { get { throw null; } set { } }
         public string TimeZone { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ComputeBulkActions.Models.WinRMListener> WinRMListeners { get { throw null; } }
         protected virtual Azure.ResourceManager.ComputeBulkActions.Models.WindowsConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

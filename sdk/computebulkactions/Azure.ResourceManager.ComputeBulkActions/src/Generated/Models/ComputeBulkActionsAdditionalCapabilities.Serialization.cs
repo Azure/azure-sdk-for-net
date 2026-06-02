@@ -13,52 +13,52 @@ using Azure.ResourceManager.ComputeBulkActions;
 
 namespace Azure.ResourceManager.ComputeBulkActions.Models
 {
-    /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
-    public partial class BootDiagnostics : IJsonModel<BootDiagnostics>
+    /// <summary> Enables or disables a capability on the virtual machine or virtual machine scale set. </summary>
+    public partial class ComputeBulkActionsAdditionalCapabilities : IJsonModel<ComputeBulkActionsAdditionalCapabilities>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BootDiagnostics PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ComputeBulkActionsAdditionalCapabilities PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BootDiagnostics>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeBulkActionsAdditionalCapabilities>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBootDiagnostics(document.RootElement, options);
+                        return DeserializeComputeBulkActionsAdditionalCapabilities(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BootDiagnostics)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeBulkActionsAdditionalCapabilities)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BootDiagnostics>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeBulkActionsAdditionalCapabilities>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeBulkActionsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BootDiagnostics)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeBulkActionsAdditionalCapabilities)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BootDiagnostics>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ComputeBulkActionsAdditionalCapabilities>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BootDiagnostics IPersistableModel<BootDiagnostics>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ComputeBulkActionsAdditionalCapabilities IPersistableModel<ComputeBulkActionsAdditionalCapabilities>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BootDiagnostics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeBulkActionsAdditionalCapabilities>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BootDiagnostics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeBulkActionsAdditionalCapabilities>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BootDiagnostics>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeBulkActionsAdditionalCapabilities>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BootDiagnostics)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeBulkActionsAdditionalCapabilities)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsUltraSsdEnabled))
             {
-                writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(IsEnabled.Value);
+                writer.WritePropertyName("ultraSSDEnabled"u8);
+                writer.WriteBooleanValue(IsUltraSsdEnabled.Value);
             }
-            if (Optional.IsDefined(StorageUri))
+            if (Optional.IsDefined(IsHibernationEnabled))
             {
-                writer.WritePropertyName("storageUri"u8);
-                writer.WriteStringValue(StorageUri);
+                writer.WritePropertyName("hibernationEnabled"u8);
+                writer.WriteBooleanValue(IsHibernationEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,46 +103,50 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BootDiagnostics IJsonModel<BootDiagnostics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ComputeBulkActionsAdditionalCapabilities IJsonModel<ComputeBulkActionsAdditionalCapabilities>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BootDiagnostics JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ComputeBulkActionsAdditionalCapabilities JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BootDiagnostics>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeBulkActionsAdditionalCapabilities>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BootDiagnostics)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeBulkActionsAdditionalCapabilities)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBootDiagnostics(document.RootElement, options);
+            return DeserializeComputeBulkActionsAdditionalCapabilities(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BootDiagnostics DeserializeBootDiagnostics(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeBulkActionsAdditionalCapabilities DeserializeComputeBulkActionsAdditionalCapabilities(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? isEnabled = default;
-            string storageUri = default;
+            bool? isUltraSsdEnabled = default;
+            bool? isHibernationEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("enabled"u8))
+                if (prop.NameEquals("ultraSSDEnabled"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isEnabled = prop.Value.GetBoolean();
+                    isUltraSsdEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("storageUri"u8))
+                if (prop.NameEquals("hibernationEnabled"u8))
                 {
-                    storageUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isHibernationEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +154,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BootDiagnostics(isEnabled, storageUri, additionalBinaryDataProperties);
+            return new ComputeBulkActionsAdditionalCapabilities(isUltraSsdEnabled, isHibernationEnabled, additionalBinaryDataProperties);
         }
     }
 }

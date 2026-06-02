@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             bool? enableAutomaticUpdates = default;
             string timeZone = default;
             IList<AdditionalUnattendContent> additionalUnattendContent = default;
-            PatchSettings patchSettings = default;
+            ComputeBulkActionsPatchSettings patchSettings = default;
             WinRMConfiguration winRM = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    patchSettings = PatchSettings.DeserializePatchSettings(prop.Value, options);
+                    patchSettings = ComputeBulkActionsPatchSettings.DeserializeComputeBulkActionsPatchSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("winRM"u8))

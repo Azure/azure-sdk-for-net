@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
+            BulkActionProvisioningState? provisioningState = default;
             int capacity = default;
             CapacityType? capacityType = default;
             PriorityProfile priorityProfile = default;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new BulkActionProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("capacity"u8))

@@ -12,24 +12,24 @@ using Azure.Core;
 namespace Azure.ResourceManager.ComputeBulkActions.Models
 {
     /// <summary> An instant Fleet's virtual machine. </summary>
-    public partial class VirtualMachine
+    public partial class BulkActionVirtualMachineResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachine"/>. </summary>
-        internal VirtualMachine()
+        /// <summary> Initializes a new instance of <see cref="BulkActionVirtualMachineResult"/>. </summary>
+        internal BulkActionVirtualMachineResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachine"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkActionVirtualMachineResult"/>. </summary>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="id"> The compute RP resource id of the virtual machine. subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}. </param>
         /// <param name="type"> Type of the virtual machine. </param>
         /// <param name="operationStatus"> This represents the operationStatus of the virtual machine in response to the last operation that was performed on it by Azure Fleet resource. </param>
         /// <param name="error"> Error information when `operationStatus` is `Failed`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachine(string name, ResourceIdentifier id, string @type, VMOperationStatus operationStatus, ComputeBulkActionsApiError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkActionVirtualMachineResult(string name, ResourceIdentifier id, string @type, VMOperationStatus operationStatus, ComputeBulkActionsApiError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Id = id;

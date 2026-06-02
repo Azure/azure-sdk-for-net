@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="capacityReservation"> Specifies information about the capacity reservation that is used to allocate virtual machine. Minimum compute api-version: 2021-04-01. </param>
         /// <param name="applicationProfile"> Specifies the gallery applications that should be made available to the VM. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineProfile(ScheduledEventsPolicy scheduledEventsPolicy, StorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, OSProfile osProfile, NetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string extensionsTimeBudget, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineProfile(ScheduledEventsPolicy scheduledEventsPolicy, ComputeBulkActionsStorageProfile storageProfile, ComputeBulkActionsAdditionalCapabilities additionalCapabilities, ComputeBulkActionsOSProfile osProfile, ComputeBulkActionsNetworkProfile networkProfile, ComputeBulkActionsSecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string extensionsTimeBudget, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ScheduledEventsPolicy = scheduledEventsPolicy;
             StorageProfile = storageProfile;
@@ -59,19 +59,19 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public ScheduledEventsPolicy ScheduledEventsPolicy { get; set; }
 
         /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
-        public StorageProfile StorageProfile { get; set; }
+        public ComputeBulkActionsStorageProfile StorageProfile { get; set; }
 
         /// <summary> Specifies additional capabilities enabled or disabled on the virtual machine. </summary>
-        public AdditionalCapabilities AdditionalCapabilities { get; set; }
+        public ComputeBulkActionsAdditionalCapabilities AdditionalCapabilities { get; set; }
 
         /// <summary> Specifies the operating system settings used while creating the virtual machine. Some of the settings cannot be changed once VM is provisioned. </summary>
-        public OSProfile OsProfile { get; set; }
+        public ComputeBulkActionsOSProfile OsProfile { get; set; }
 
         /// <summary> Specifies the network interfaces of the virtual machine. </summary>
-        public NetworkProfile NetworkProfile { get; set; }
+        public ComputeBulkActionsNetworkProfile NetworkProfile { get; set; }
 
         /// <summary> Specifies the Security related profile settings for the virtual machine. </summary>
-        public SecurityProfile SecurityProfile { get; set; }
+        public ComputeBulkActionsSecurityProfile SecurityProfile { get; set; }
 
         /// <summary> Specifies the boot diagnostic settings state. Minimum compute api-version: 2015-06-15. </summary>
         internal DiagnosticsProfile DiagnosticsProfile { get; set; }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         internal ApplicationProfile ApplicationProfile { get; set; }
 
         /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. <b>NOTE</b>: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
-        public BootDiagnostics BootDiagnostics
+        public ComputeBulkActionsBootDiagnostics BootDiagnostics
         {
             get
             {

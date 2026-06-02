@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ComputeBulkActions.Models
 {
     /// <summary> Enables or disables a capability on the virtual machine or virtual machine scale set. </summary>
-    public partial class AdditionalCapabilities
+    public partial class ComputeBulkActionsAdditionalCapabilities
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AdditionalCapabilities"/>. </summary>
-        public AdditionalCapabilities()
+        /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsAdditionalCapabilities"/>. </summary>
+        public ComputeBulkActionsAdditionalCapabilities()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AdditionalCapabilities"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsAdditionalCapabilities"/>. </summary>
         /// <param name="isUltraSsdEnabled"> The flag that enables or disables a capability to have one or more managed data disks with UltraSSD_LRS storage account type on the VM or VMSS. Managed disks with storage account type UltraSSD_LRS can be added to a virtual machine or virtual machine scale set only if this property is enabled. </param>
         /// <param name="isHibernationEnabled"> The flag that enables or disables hibernation capability on the VM. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AdditionalCapabilities(bool? isUltraSsdEnabled, bool? isHibernationEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkActionsAdditionalCapabilities(bool? isUltraSsdEnabled, bool? isHibernationEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsUltraSsdEnabled = isUltraSsdEnabled;
             IsHibernationEnabled = isHibernationEnabled;

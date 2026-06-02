@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <summary> Initializes a new instance of <see cref="DiagnosticsProfile"/>. </summary>
         /// <param name="bootDiagnostics"> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. <b>NOTE</b>: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticsProfile(BootDiagnostics bootDiagnostics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiagnosticsProfile(ComputeBulkActionsBootDiagnostics bootDiagnostics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BootDiagnostics = bootDiagnostics;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. <b>NOTE</b>: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
-        public BootDiagnostics BootDiagnostics { get; set; }
+        public ComputeBulkActionsBootDiagnostics BootDiagnostics { get; set; }
     }
 }

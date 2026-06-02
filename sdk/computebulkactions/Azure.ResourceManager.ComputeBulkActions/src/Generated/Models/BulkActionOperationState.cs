@@ -12,7 +12,7 @@ using Azure.ResourceManager.ComputeBulkActions;
 namespace Azure.ResourceManager.ComputeBulkActions.Models
 {
     /// <summary> Values that define the states of operations in BulkActions. </summary>
-    public readonly partial struct OperationState : IEquatable<OperationState>
+    public readonly partial struct BulkActionOperationState : IEquatable<BulkActionOperationState>
     {
         private readonly string _value;
         /// <summary> The default value for the operation state enum. </summary>
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <summary> Operations that are blocked. </summary>
         private const string BlockedValue = "Blocked";
 
-        /// <summary> Initializes a new instance of <see cref="OperationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkActionOperationState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public OperationState(string value)
+        public BulkActionOperationState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -45,56 +45,56 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         }
 
         /// <summary> The default value for the operation state enum. </summary>
-        public static OperationState Unknown { get; } = new OperationState(UnknownValue);
+        public static BulkActionOperationState Unknown { get; } = new BulkActionOperationState(UnknownValue);
 
         /// <summary> Operations that are pending scheduling. </summary>
-        public static OperationState PendingScheduling { get; } = new OperationState(PendingSchedulingValue);
+        public static BulkActionOperationState PendingScheduling { get; } = new BulkActionOperationState(PendingSchedulingValue);
 
         /// <summary> Operations that have been scheduled. </summary>
-        public static OperationState Scheduled { get; } = new OperationState(ScheduledValue);
+        public static BulkActionOperationState Scheduled { get; } = new BulkActionOperationState(ScheduledValue);
 
         /// <summary> Operations that are waiting to be executed. </summary>
-        public static OperationState PendingExecution { get; } = new OperationState(PendingExecutionValue);
+        public static BulkActionOperationState PendingExecution { get; } = new BulkActionOperationState(PendingExecutionValue);
 
         /// <summary> Operations that are in the process of being executed. </summary>
-        public static OperationState Executing { get; } = new OperationState(ExecutingValue);
+        public static BulkActionOperationState Executing { get; } = new BulkActionOperationState(ExecutingValue);
 
         /// <summary> Operations that succeeded. </summary>
-        public static OperationState Succeeded { get; } = new OperationState(SucceededValue);
+        public static BulkActionOperationState Succeeded { get; } = new BulkActionOperationState(SucceededValue);
 
         /// <summary> Operations that have failed. </summary>
-        public static OperationState Failed { get; } = new OperationState(FailedValue);
+        public static BulkActionOperationState Failed { get; } = new BulkActionOperationState(FailedValue);
 
         /// <summary> Operations that have been Cancelled by the user. </summary>
-        public static OperationState Cancelled { get; } = new OperationState(CancelledValue);
+        public static BulkActionOperationState Cancelled { get; } = new BulkActionOperationState(CancelledValue);
 
         /// <summary> Operations that are blocked. </summary>
-        public static OperationState Blocked { get; } = new OperationState(BlockedValue);
+        public static BulkActionOperationState Blocked { get; } = new BulkActionOperationState(BlockedValue);
 
-        /// <summary> Determines if two <see cref="OperationState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="BulkActionOperationState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(OperationState left, OperationState right) => left.Equals(right);
+        public static bool operator ==(BulkActionOperationState left, BulkActionOperationState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="OperationState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="BulkActionOperationState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(OperationState left, OperationState right) => !left.Equals(right);
+        public static bool operator !=(BulkActionOperationState left, BulkActionOperationState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="OperationState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BulkActionOperationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationState(string value) => new OperationState(value);
+        public static implicit operator BulkActionOperationState(string value) => new BulkActionOperationState(value);
 
-        /// <summary> Converts a string to a <see cref="OperationState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BulkActionOperationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationState?(string value) => value == null ? null : new OperationState(value);
+        public static implicit operator BulkActionOperationState?(string value) => value == null ? null : new BulkActionOperationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is OperationState other && Equals(other);
+        public override bool Equals(object obj) => obj is BulkActionOperationState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(OperationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BulkActionOperationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

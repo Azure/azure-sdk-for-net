@@ -182,11 +182,11 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 return null;
             }
             ScheduledEventsPolicy scheduledEventsPolicy = default;
-            StorageProfile storageProfile = default;
-            AdditionalCapabilities additionalCapabilities = default;
-            OSProfile osProfile = default;
-            NetworkProfile networkProfile = default;
-            SecurityProfile securityProfile = default;
+            ComputeBulkActionsStorageProfile storageProfile = default;
+            ComputeBulkActionsAdditionalCapabilities additionalCapabilities = default;
+            ComputeBulkActionsOSProfile osProfile = default;
+            ComputeBulkActionsNetworkProfile networkProfile = default;
+            ComputeBulkActionsSecurityProfile securityProfile = default;
             DiagnosticsProfile diagnosticsProfile = default;
             string licenseType = default;
             string extensionsTimeBudget = default;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    storageProfile = StorageProfile.DeserializeStorageProfile(prop.Value, options);
+                    storageProfile = ComputeBulkActionsStorageProfile.DeserializeComputeBulkActionsStorageProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("additionalCapabilities"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    additionalCapabilities = AdditionalCapabilities.DeserializeAdditionalCapabilities(prop.Value, options);
+                    additionalCapabilities = ComputeBulkActionsAdditionalCapabilities.DeserializeComputeBulkActionsAdditionalCapabilities(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("osProfile"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    osProfile = OSProfile.DeserializeOSProfile(prop.Value, options);
+                    osProfile = ComputeBulkActionsOSProfile.DeserializeComputeBulkActionsOSProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("networkProfile"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    networkProfile = NetworkProfile.DeserializeNetworkProfile(prop.Value, options);
+                    networkProfile = ComputeBulkActionsNetworkProfile.DeserializeComputeBulkActionsNetworkProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("securityProfile"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    securityProfile = SecurityProfile.DeserializeSecurityProfile(prop.Value, options);
+                    securityProfile = ComputeBulkActionsSecurityProfile.DeserializeComputeBulkActionsSecurityProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("diagnosticsProfile"u8))

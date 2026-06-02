@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 return null;
             }
-            BootDiagnostics bootDiagnostics = default;
+            ComputeBulkActionsBootDiagnostics bootDiagnostics = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    bootDiagnostics = BootDiagnostics.DeserializeBootDiagnostics(prop.Value, options);
+                    bootDiagnostics = ComputeBulkActionsBootDiagnostics.DeserializeComputeBulkActionsBootDiagnostics(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

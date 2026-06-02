@@ -14,51 +14,51 @@ using Azure.ResourceManager.ComputeBulkActions;
 namespace Azure.ResourceManager.ComputeBulkActions.Models
 {
     /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
-    public partial class StorageProfile : IJsonModel<StorageProfile>
+    public partial class ComputeBulkActionsStorageProfile : IJsonModel<ComputeBulkActionsStorageProfile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StorageProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ComputeBulkActionsStorageProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeBulkActionsStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeStorageProfile(document.RootElement, options);
+                        return DeserializeComputeBulkActionsStorageProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeBulkActionsStorageProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeBulkActionsStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeBulkActionsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(StorageProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeBulkActionsStorageProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StorageProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ComputeBulkActionsStorageProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StorageProfile IPersistableModel<StorageProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ComputeBulkActionsStorageProfile IPersistableModel<ComputeBulkActionsStorageProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StorageProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeBulkActionsStorageProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<StorageProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeBulkActionsStorageProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeBulkActionsStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeBulkActionsStorageProfile)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(ImageReference))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 writer.WritePropertyName("dataDisks"u8);
                 writer.WriteStartArray();
-                foreach (DataDisk item in DataDisks)
+                foreach (ComputeBulkActionsDataDisk item in DataDisks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -118,32 +118,32 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StorageProfile IJsonModel<StorageProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ComputeBulkActionsStorageProfile IJsonModel<ComputeBulkActionsStorageProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StorageProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ComputeBulkActionsStorageProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeBulkActionsStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeBulkActionsStorageProfile)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStorageProfile(document.RootElement, options);
+            return DeserializeComputeBulkActionsStorageProfile(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static StorageProfile DeserializeStorageProfile(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeBulkActionsStorageProfile DeserializeComputeBulkActionsStorageProfile(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ImageReference imageReference = default;
-            OSDisk osDisk = default;
-            IList<DataDisk> dataDisks = default;
+            ComputeBulkActionsImageReference imageReference = default;
+            ComputeBulkActionsOSDisk osDisk = default;
+            IList<ComputeBulkActionsDataDisk> dataDisks = default;
             DiskControllerType? diskControllerType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    imageReference = ImageReference.DeserializeImageReference(prop.Value, options);
+                    imageReference = ComputeBulkActionsImageReference.DeserializeComputeBulkActionsImageReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("osDisk"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    osDisk = OSDisk.DeserializeOSDisk(prop.Value, options);
+                    osDisk = ComputeBulkActionsOSDisk.DeserializeComputeBulkActionsOSDisk(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("dataDisks"u8))
@@ -172,10 +172,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    List<DataDisk> array = new List<DataDisk>();
+                    List<ComputeBulkActionsDataDisk> array = new List<ComputeBulkActionsDataDisk>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DataDisk.DeserializeDataDisk(item, options));
+                        array.Add(ComputeBulkActionsDataDisk.DeserializeComputeBulkActionsDataDisk(item, options));
                     }
                     dataDisks = array;
                     continue;
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StorageProfile(imageReference, osDisk, dataDisks ?? new ChangeTrackingList<DataDisk>(), diskControllerType, additionalBinaryDataProperties);
+            return new ComputeBulkActionsStorageProfile(imageReference, osDisk, dataDisks ?? new ChangeTrackingList<ComputeBulkActionsDataDisk>(), diskControllerType, additionalBinaryDataProperties);
         }
     }
 }

@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ComputeBulkActions.Models
 {
     /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
-    public partial class BootDiagnostics
+    public partial class ComputeBulkActionsBootDiagnostics
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BootDiagnostics"/>. </summary>
-        public BootDiagnostics()
+        /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsBootDiagnostics"/>. </summary>
+        public ComputeBulkActionsBootDiagnostics()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BootDiagnostics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsBootDiagnostics"/>. </summary>
         /// <param name="isEnabled"> Whether boot diagnostics should be enabled on the Virtual Machine. </param>
         /// <param name="storageUri"> Uri of the storage account to use for placing the console output and screenshot. If storageUri is not specified while enabling boot diagnostics, managed storage will be used. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BootDiagnostics(bool? isEnabled, string storageUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkActionsBootDiagnostics(bool? isEnabled, string storageUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
             StorageUri = storageUri;

@@ -12,24 +12,24 @@ using Azure.ResourceManager.ComputeBulkActions;
 namespace Azure.ResourceManager.ComputeBulkActions.Models
 {
     /// <summary> Specifies the network interfaces or the networking configuration of the virtual machine. </summary>
-    public partial class NetworkProfile
+    public partial class ComputeBulkActionsNetworkProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkProfile"/>. </summary>
-        public NetworkProfile()
+        /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsNetworkProfile"/>. </summary>
+        public ComputeBulkActionsNetworkProfile()
         {
             NetworkInterfaces = new ChangeTrackingList<NetworkInterfaceReference>();
             NetworkInterfaceConfigurations = new ChangeTrackingList<VirtualMachineNetworkInterfaceConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsNetworkProfile"/>. </summary>
         /// <param name="networkInterfaces"> Specifies the list of resource Ids for the network interfaces associated with the virtual machine. </param>
         /// <param name="networkApiVersion"> specifies the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations. </param>
         /// <param name="networkInterfaceConfigurations"> Specifies the networking configurations that will be used to create the virtual machine networking resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkProfile(IList<NetworkInterfaceReference> networkInterfaces, NetworkApiVersion? networkApiVersion, IList<VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkActionsNetworkProfile(IList<NetworkInterfaceReference> networkInterfaces, NetworkApiVersion? networkApiVersion, IList<VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkInterfaces = networkInterfaces;
             NetworkApiVersion = networkApiVersion;

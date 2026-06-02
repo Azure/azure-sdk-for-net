@@ -12,14 +12,14 @@ using Azure.Core;
 namespace Azure.ResourceManager.ComputeBulkActions.Models
 {
     /// <summary> Specifies information about the image to use. You can specify information about platform images, marketplace images, or virtual machine images. This element is required when you want to use a platform image, marketplace image, or virtual machine image, but is not used in other creation operations. NOTE: Image reference publisher and offer can only be set when you create the scale set. </summary>
-    public partial class ImageReference : ComputeBulkActionsSubResource
+    public partial class ComputeBulkActionsImageReference : ComputeBulkActionsSubResource
     {
-        /// <summary> Initializes a new instance of <see cref="ImageReference"/>. </summary>
-        public ImageReference()
+        /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsImageReference"/>. </summary>
+        public ComputeBulkActionsImageReference()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsImageReference"/>. </summary>
         /// <param name="id"> The ID of the sub-resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="publisher"> The image publisher. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="version"> Specifies the version of the platform image or marketplace image used to create the virtual machine. The allowed formats are Major.Minor.Build or 'latest'. Major, Minor, and Build are decimal numbers. Specify 'latest' to use the latest version of an image available at deploy time. Even if you use 'latest', the VM image will not automatically update after deploy time even if a new version becomes available. Please do not use field 'version' for gallery image deployment, gallery image should always use 'id' field for deployment, to use 'latest' version of gallery image, just set '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageName}' in the 'id' field without version input. </param>
         /// <param name="sharedGalleryImageId"> Specified the shared gallery image unique id for vm deployment. This can be fetched from shared gallery image GET call. </param>
         /// <param name="communityGalleryImageId"> Specified the community gallery image unique id for vm deployment. This can be fetched from community gallery image GET call. </param>
-        internal ImageReference(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string publisher, string offer, string sku, string version, string sharedGalleryImageId, string communityGalleryImageId) : base(id, additionalBinaryDataProperties)
+        internal ComputeBulkActionsImageReference(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string publisher, string offer, string sku, string version, string sharedGalleryImageId, string communityGalleryImageId) : base(id, additionalBinaryDataProperties)
         {
             Publisher = publisher;
             Offer = offer;

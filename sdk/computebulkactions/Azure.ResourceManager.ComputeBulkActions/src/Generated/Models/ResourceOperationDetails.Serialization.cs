@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             string subscriptionId = default;
             DateTimeOffset? deadlineOn = default;
             DeadlineType? deadlineType = default;
-            OperationState? state = default;
+            BulkActionOperationState? state = default;
             string timezone = default;
             ResourceOperationError resourceOperationError = default;
             DateTimeOffset? completedOn = default;
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    state = new OperationState(prop.Value.GetString());
+                    state = new BulkActionOperationState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("timezone"u8))

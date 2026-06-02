@@ -12,21 +12,21 @@ using Azure.Core;
 namespace Azure.ResourceManager.ComputeBulkActions.Models
 {
     /// <summary> Describes a data disk. </summary>
-    public partial class DataDisk
+    public partial class ComputeBulkActionsDataDisk
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DataDisk"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsDataDisk"/>. </summary>
         /// <param name="lun"> Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. </param>
         /// <param name="createOption"> Specifies how the virtual machine disk should be created. Possible values are Attach, FromImage, Empty, Copy, Restore. </param>
-        public DataDisk(int lun, DiskCreateOptionType createOption)
+        public ComputeBulkActionsDataDisk(int lun, DiskCreateOptionType createOption)
         {
             Lun = lun;
             CreateOption = createOption;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataDisk"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsDataDisk"/>. </summary>
         /// <param name="lun"> Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. </param>
         /// <param name="name"> The disk name. </param>
         /// <param name="vhd"> The virtual hard disk. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="detachOption"> Specifies the detach behavior to be used while detaching a disk or which is already in the process of detachment from the virtual machine. Supported values: ForceDetach. This feature is still in preview. To force-detach a data disk update toBeDetached to 'true' along with setting detachOption: 'ForceDetach'. </param>
         /// <param name="deleteOption"> Specifies whether data disk should be deleted or detached upon VM deletion. Possible values are: Delete, Detach. The default value is set to Detach. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataDisk(int lun, string name, VirtualHardDisk vhd, VirtualHardDisk image, CachingType? caching, bool? isWriteAcceleratorEnabled, DiskCreateOptionType createOption, int? diskSizeGB, ManagedDiskInfo managedDisk, ApiEntityReference sourceResource, bool? isToBeDetached, DiskDetachOptionType? detachOption, DiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkActionsDataDisk(int lun, string name, VirtualHardDisk vhd, VirtualHardDisk image, CachingType? caching, bool? isWriteAcceleratorEnabled, DiskCreateOptionType createOption, int? diskSizeGB, ManagedDiskInfo managedDisk, ApiEntityReference sourceResource, bool? isToBeDetached, DiskDetachOptionType? detachOption, DiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Lun = lun;
             Name = name;

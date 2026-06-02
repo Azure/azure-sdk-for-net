@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="patchSettings"> [Preview Feature] Specifies settings related to VM Guest Patching on Windows. </param>
         /// <param name="winRM"> Specifies the Windows Remote Management listeners. This enables remote Windows PowerShell. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WindowsConfiguration(bool? isVMAgentProvisioned, bool? enableAutomaticUpdates, string timeZone, IList<AdditionalUnattendContent> additionalUnattendContent, PatchSettings patchSettings, WinRMConfiguration winRM, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WindowsConfiguration(bool? isVMAgentProvisioned, bool? enableAutomaticUpdates, string timeZone, IList<AdditionalUnattendContent> additionalUnattendContent, ComputeBulkActionsPatchSettings patchSettings, WinRMConfiguration winRM, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsVMAgentProvisioned = isVMAgentProvisioned;
             EnableAutomaticUpdates = enableAutomaticUpdates;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public IList<AdditionalUnattendContent> AdditionalUnattendContent { get; }
 
         /// <summary> [Preview Feature] Specifies settings related to VM Guest Patching on Windows. </summary>
-        public PatchSettings PatchSettings { get; set; }
+        public ComputeBulkActionsPatchSettings PatchSettings { get; set; }
 
         /// <summary> Specifies the Windows Remote Management listeners. This enables remote Windows PowerShell. </summary>
         internal WinRMConfiguration WinRM { get; set; }

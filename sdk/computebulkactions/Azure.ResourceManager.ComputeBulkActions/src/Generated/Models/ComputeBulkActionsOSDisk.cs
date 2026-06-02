@@ -11,19 +11,19 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ComputeBulkActions.Models
 {
     /// <summary> Specifies information about the operating system disk used by the virtual machine. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </summary>
-    public partial class OSDisk
+    public partial class ComputeBulkActionsOSDisk
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OSDisk"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsOSDisk"/>. </summary>
         /// <param name="createOption"> Specifies how the virtual machine disk should be created. Possible values are Attach, FromImage. If you are using a platform image, you should also use the imageReference element described above. If you are using a marketplace image, you should also use the plan element previously described. </param>
-        public OSDisk(DiskCreateOptionType createOption)
+        public ComputeBulkActionsOSDisk(DiskCreateOptionType createOption)
         {
             CreateOption = createOption;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OSDisk"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsOSDisk"/>. </summary>
         /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. Possible values are: Windows, Linux. </param>
         /// <param name="encryptionSettings"> Specifies the encryption settings for the OS Disk. Minimum compute api-version: 2015-06-15. </param>
         /// <param name="name"> The disk name. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="managedDisk"> The managed disk parameters. </param>
         /// <param name="deleteOption"> Specifies whether OS Disk should be deleted or detached upon VM deletion. Possible values are: Delete, Detach. The default value is set to Detach. For an ephemeral OS Disk, the default value is set to Delete. The user cannot change the delete option for an ephemeral OS Disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OSDisk(OperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, VirtualHardDisk vhd, VirtualHardDisk image, CachingType? caching, bool? isWriteAcceleratorEnabled, DiffDiskSettings diffDiskSettings, DiskCreateOptionType createOption, int? diskSizeGB, ManagedDiskInfo managedDisk, DiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkActionsOSDisk(OperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, VirtualHardDisk vhd, VirtualHardDisk image, CachingType? caching, bool? isWriteAcceleratorEnabled, DiffDiskSettings diffDiskSettings, DiskCreateOptionType createOption, int? diskSizeGB, ManagedDiskInfo managedDisk, DiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OsType = osType;
             EncryptionSettings = encryptionSettings;
